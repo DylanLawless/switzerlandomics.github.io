@@ -1,0 +1,54 @@
+<!-- Sidebar -->
+  <div id="sidebar">
+    <div class="inner">
+
+      <!-- <!-1- Search -1-> -->
+      <!--   <section id="search" class="alt"> -->
+      <!--     <form method="post" action="#"> -->
+      <!--       <input type="text" name="query" id="query" placeholder="Search" /> -->
+      <!--     </form> -->
+      <!--   </section> -->
+
+      <!-- Menu -->
+        <nav id="menu">
+          <header class="major">
+            <h2>Menu</h2>
+          </header>
+          <ul>
+            <li><a href="{{ '/' | site.baseurl }}">Homepage</a></li>
+            <li><a href="{{ 'about.html' | site.baseurl }}">About</a></li>
+            <!-- <li><a href="{{ 'patient_checklist.html' | site.baseurl }}">Patient checklist</a></li> -->
+            <li>
+              <span class="opener">Projects</span>
+              <ul>
+                <li><a href="{{ 'lighthouse_project.html' | site.baseurl }}">Lighthouse</a></li>
+              </ul>
+            </li>
+            <li><a href="{{ '/404.html' | site.baseurl }}">Funding</a></li>
+            <li><a href="{{ '/index.html#news' | site.baseurl }}">In the news</a></li>
+          </ul>
+        </nav>
+
+      <!-- Section -->
+        <section>
+          <header class="major">
+            <h2>Highlights for patients</h2>
+          </header>
+          <div class="mini-posts">
+            <article>
+              <a href="{% link information_genomic_analysis.md %}" class="image"><img src="assets/images/national-cancer-institute-W6yy0wYV-hk-unsplash.jpg" alt="" /></a>
+              <p>Genomic analysis allows our scientists to identify health concerns and discover new treatments.</p>
+            </article>
+          </div>
+          <!-- <ul class="actions"> -->
+          <!--   <li><a href="#" class="button">More</a></li> -->
+          <!-- </ul> -->
+        </section>
+
+      <!-- Footer -->
+        <footer id="footer">
+			<p class="copyright">&copy; {{ site.title }}. All rights reserved. Images: <a href="https://unsplash.com/license">license</a> and <a href="https://creativecommons.org/licenses/by-nc/4.0/legalcode">AI generated image license</a>. Design: <a href="https://html5up.net">HTML5 UP</a> Production: <a href="https://lawlessgenomics.com">Dylan Lawless</a>.</p>
+        </footer>
+
+    </div>
+  </div>

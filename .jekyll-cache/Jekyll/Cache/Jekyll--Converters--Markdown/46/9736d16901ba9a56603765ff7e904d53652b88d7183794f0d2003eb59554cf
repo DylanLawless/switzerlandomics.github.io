@@ -1,0 +1,40 @@
+I"<h2 id="infectious-diseases-antibiotic-utilization-patterns-to-inform-regulatory-and-strategic-trials-responsible-bielicki-giannoni">Infectious diseases: antibiotic utilization patterns to inform regulatory and strategic trials (Responsible: Bielicki, Giannoni).</h2>
+
+<h3 id="study-overview">Study Overview</h3>
+
+<p>The study aims to determine antibiotic utilization patterns to inform regulatory and strategic trials for newborns and children with infectious diseases.
+The evidence-base for antibiotic selection, duration, and route of administration is often lacking, leading to increased antimicrobial resistance, unnecessary side effects, or subtherapeutic administration.
+Gold-standard randomized controlled trials (RCT) are time-consuming and resource-intensive.</p>
+
+<h3 id="study-objectives">Study Objectives</h3>
+<ol>
+  <li>Determine data completeness, quantity, and quality from EHR (retrospective) against SwissPedData.</li>
+  <li>Determine antibiotic use patterns by hospital and key subgroups.</li>
+  <li>Describe variations in antibiotic use patterns for specific indications.</li>
+  <li>Assess adherence of dosing to SwissPedDose guidance.</li>
+  <li>Explore continuous mock screening for future trials.</li>
+</ol>
+
+<h3 id="methods">Methods</h3>
+
+<p>Datasets will be extracted for children receiving antibiotics and seen in SwissPedHealth hospitals from 2017-2020 and from 2021-2023.
+Detailed antibiotic treatment information will be captured, and implementation of simple queries in the EHR will be explored for timely mock-screening.
+Transfer of query results to CDWs for indexing and FAIRification.</p>
+
+<h3 id="significance">Significance</h3>
+
+<p>Iterative improvement of EHR data capture to improve SwissPedData, using commonly prescribed medications as a proof of principle.
+Advanced and internationally competitive readiness for clinical antibiotic trials.</p>
+
+<h2 id="original-description">Original description</h2>
+
+<p>NP4: Infectious diseases: antibiotic utilization patterns to inform regulatory and strategic trials (Responsible: Bielicki, Giannoni).</p>
+
+<p>Background: Despite being commonly used for newborns and children, including those with rare diseases, the evidence-base for antibiotic selection, duration, and route of administration is often lacking113. This leads to increased antimicrobial resistance, unnecessary side effects, or subtherapeutic administration114-116. Gold-standard randomized controlled trials (RCT) are time-consuming and resource-intensive. Novel designs require reliable data on antibiotic use patterns to define relevant questions and eligible patients.</p>
+
+<p>Aims: For a high-impact pharmacological intervention, we will 1) determine data completeness, quantity, and quality from EHR (retrospective) against SwissPedData; 2) determine antibiotic use patterns by hospital and key subgroups; 3) describe variations in antibiotic use patterns for specific indications, identifiable from SwissPedData/SPHN dataset; 4) assess adherence of dosing to SwissPedDose guidance, and 5) explore continuous mock screening for future trials.</p>
+
+<p>Methods: Like NP1 &amp; 2, datasets will be extracted for children receiving antibiotics and seen in SwissPedHealth hospitals from 2017- 2020, and from 2021-2023. In addition to basic data, we will capture detailed antibiotic treatment information. For this, we will build on the experiences of SwissPKcdw, which focused on few medications of interest. We will explore implementation of simple queries in the EHR for timely mock-screening, including transfer of query results to CDWs for indexing and FAIRification.</p>
+
+<p>Significance: Iterative improvement of EHR data capture to improve SwissPedData, using commonly prescribed medications as a proof of principle; Advanced and internationally competitive readiness for clinical antibiotic trials117.</p>
+:ET
