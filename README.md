@@ -1,5 +1,5 @@
-# This is the data for swisspedhealth
-[swisspedhealth.ch](https://swisspedhealth.ch) hosted via [swisspedhealth.github.io](https://swisspedhealth.github.io)
+# This is the data for switzerlandomics
+[switzerlandomics.ch](https://switzerlandomics.ch) hosted via [switzerlandomics.github.io](https://switzerlandomics.github.io)
 
 Some installs may be required to serve this site locally for testing; 
 e.g. at least requires:
@@ -10,7 +10,7 @@ into a static site and then pushed to GitHub.
 Jekyll serve runs this site locally for testing and building before pushing 
 (jek.sh and rake commit_deploy). 
 This site is built from writings in Markdown and rendered as a 
-minimalist source for the swisspedhealth project, without popups, ads, or heavy content. 
+minimalist source for the switzerlandomics project, without popups, ads, or heavy content. 
 
 The data is stored on GitHub and in private backups so that content is not 
 lost and can be pushed from many locations.
@@ -120,7 +120,7 @@ You may not reuse anything therein without my permission (although I am unlikely
 All other directories and files are MIT Licensed. Feel free to use the HTML and
 CSS as you please. If you a copy the jekyll site generator, a link back to
 http://github.com/mojombo/jekyll would be appreciated by the devolper, but is not required.
-If you copy my pushlished content, a link back to https://swisspedhealth.com would be appreciated.
+If you copy my pushlished content, a link back to https://switzerlandomics.com would be appreciated.
 
 For git tracking, test:
 `git config merge.conflictstyle diff3`
@@ -144,10 +144,10 @@ In the .ssh directory, the config file will assign the key to each git repositor
 cd ~/.ssh/config
 
 # set such that Host and User are custom
-# swisspedhealth repo
-Host swisspedhealth.github.com
+# switzerlandomics repo
+Host switzerlandomics.github.com
   HostName github.com
-  User swisspedhealth
+  User switzerlandomics
   PreferredAuthentications publickey
   IdentityFile ~/.ssh/key1_rsa
   IdentitiesOnly yes
@@ -168,15 +168,15 @@ Then clone your repo using the custom Host instead of the default provided by gi
 # Clone using the correct Host as per config.
 # As shown at the end of this page, you may need to clone with submodules.
 # You can do by add the "--recursive" flag. 
-git clone --recursive git@swisspedhealth.github.com:swisspedhealth/swisspedhealth.github.io.git
+git clone --recursive git@github.com:DylanLawless/switzerlandomics.github.io.git
 
 # Set the local user here (instead of global, i.e. /Users/user/.gitconfig)
 cd "the clone repo dir"
 git config user.email personemail@addess.com
-git config user.name swisspedhealth
+git config user.name switzerlandomics
 
 # Clone using the correct Host as per config
-git clone git@swisspedhealth.github.com:swisspedhealth/swisspedhealth.github.io.git
+git clone git@github.com:DylanLawless/switzerlandomics.github.io.git
 
 cd "the clone repo dir"
 git config user.email someotheremail@address.com
@@ -215,9 +215,9 @@ And if you are using the ssh method shown above you will need to define the path
 To be able to clone the submodule (e.g. \_plugins/jekyll-reading-time), 
 modify the .gitmodules url
 
-From:	`url = git@github.com:swisspedhealth/jekyll-reading-time.git`
+From:	`url = git@github.com:switzerlandomics/jekyll-reading-time.git`
 
-To:		`url = git@swisspedhealth.github.com:swisspedhealth/jekyll-reading-time.git`
+To:		`url = git@switzerlandomics.github.com:switzerlandomics/jekyll-reading-time.git`
 
 Set git to use the updated .gitmodules:
 
@@ -237,7 +237,7 @@ This is not common, but to keep the repo size small files that are not required 
 This is not common but required to keep the repo size small.
 The jar of bfg was used as follows:
 
-`java -jar ~/Downloads/bfg-1.14.0.jar --no-blob-protection --strip-blobs-bigger-than 60M ~/web/swisspedhealth.github.io/`
+`java -jar ~/Downloads/bfg-1.14.0.jar --no-blob-protection --strip-blobs-bigger-than 60M ~/web/switzerlandomics.github.io/`
 
 `git reflog expire --expire=now --all && git gc --prune=now --aggressive`
 

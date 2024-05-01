@@ -2070,6 +2070,7 @@ font-family: 'IBM Plex Sans Condensed', sans-serif;
 :root {
   --swissgrey: #A3A3A3;
   --swissblack: #191919;
+  --swissblack: #212121;
 }
 
 	body {
@@ -2096,7 +2097,8 @@ font-family: 'IBM Plex Sans Condensed', sans-serif;
 		color: #D1D1D1;
 		/* font-family: "Open Sans", sans-serif; */
 		font-family: 'IBM Plex Sans', sans-serif;
-		font-size: 13pt;
+		/* font-size: 13pt; */
+		font-size: 14pt;
 		font-weight: 400;
 		line-height: 1.65;
 	}
@@ -2104,7 +2106,8 @@ font-family: 'IBM Plex Sans Condensed', sans-serif;
 		@media screen and (max-width: 1680px) {
 
 			body, input, select, textarea {
-				font-size: 11pt;
+				/* font-size: 11pt; */
+				font-size: 13pt;
 			}
 
 		}
@@ -2113,6 +2116,7 @@ font-family: 'IBM Plex Sans Condensed', sans-serif;
 
 			body, input, select, textarea {
 				font-size: 10pt;
+				font-size: 12pt;
 			}
 
 		}
@@ -2121,6 +2125,7 @@ font-family: 'IBM Plex Sans Condensed', sans-serif;
 
 			body, input, select, textarea {
 				font-size: 9pt;
+				font-size: 12pt;
 			}
 
 		}
