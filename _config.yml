@@ -7,12 +7,11 @@ description: Precision medicine
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site
 author:
-street_address: Haus der Akademien Laupenstrasse 7
-city: Bern
-# state: Bern
-zip_code: 3001
+street_address: Steinwiesstrasse 75
+city: Zürich
+zip_code: 8032
 country: Switzerland
-phone: +41 21 693 18 74
+# phone: +41 21 693 18 74
 
 # Social settings
 # 500px_url:

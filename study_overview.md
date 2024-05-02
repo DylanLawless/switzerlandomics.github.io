@@ -11,11 +11,7 @@ All NPs will test availability and quality of information from the electronic he
 
 ## Project detail pages
 You can find more detail on each project pages:
-* <a href="{% link lighthouse_project.md %}">Lighthouse project</a>
-* <a href="{% link nested_project_1.md %}">Nested project 1</a>
-* <a href="{% link nested_project_2.md %}">Nested project 2</a>
-* <a href="{% link nested_project_3.md %}">Nested project 3</a>
-* <a href="{% link nested_project_4.md %}">Nested project 4</a>
+* <a href="{% link multi-omic_project.md %}">Multi-omic project</a>
 
 ## Study Objectives
 

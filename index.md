@@ -94,59 +94,44 @@ layout: default
 			</div>
 		</article>
 		<article>
-			<span class="icon fa-paper-plane"></span>
-			<div class="content">
-				<h3>Patient and public involvement</h3>
-				<p>SwissPedHealth places major importance on the involvement of all patients, family, and the public. Openness and fairness is a key requirement to build a productive and functional personalised health network. Learn how your involvement can help us to deliver world-class treatments, today and into the future.
-				<a href="{% link nested_project_ppi.md %}"> &#10132; Read more</a>
-				</p>
-			</div>
-		</article>
-		<article>
 			<span class="icon fa-rocket"></span>
 			<div class="content">
 				<h3>Multi-omic diagnosis of for children with rare disease</h3>
 				<p>By harnessing cutting-edge scientific methods we can detect the causes of illness with better precision and make new discoveries for all society in the future.
-				<a href="{% link lighthouse_project.md %}"> &#10132; Read more</a>
+				<a href="{% link multi-omic_project.md %}"> &#10132; Read more</a>
 				</p>
 			</div>
 		</article>
-		<article>
-			<span class="icon fa-signal"></span>
-			<div class="content">
-				<h3>Basic anthropometric information from all children</h3>
-				<p>Several national registries are used to study birth records (height, weight, head circumference, gestational age) alongside electronic health records to understand and improve our detection and treatment of disease.
-                <a href="{% link nested_project_1.md %}">&#10132; Read more</a>
-				</p>
-			</div>
-		</article>
-		<article>
-			<span class="icon fa-life-saver"></span>
-			<div class="content">
-				<h3>Oncology patients</h3>
-				<p>By modernising our monitoring process, we can improve the detection of illness and standard of care. This is achieved by linking electronic health records with our national cancer registries.
-                <a href="{% link nested_project_2.md %}">&#10132; Read more</a>
-				</p>
-			</div>
-		</article>
-		<article>
-			<span class="icon fa-paperclip"></span>
-			<div class="content">
-				<h3>Outpatients with respiratory problems</h3>
-				<p>We are developing national-scale analysis of essential diagnostic data for outpatients with respiratory problems to improve interpretation, quality control, and reporting for patients.
-                <a href="{% link nested_project_3.md %}">&#10132; Read more</a>
-				</p>
-			</div>
-		</article>
-		<article>
-			<span class="icon fa-eyedropper"></span>
-			<div class="content">
-				<h3>Antibiotics use</h3>
-				<p> We monitor infectious diseases and  antibiotic utilization patterns to inform regulatory and strategic trials. With this data we are transforming the evidence-base for antibiotic selection, duration, and route of administration.
-                <a href="{% link nested_project_4.md %}">&#10132; Read more</a>
-				</p>
-			</div>
-		</article>
+		<!-- <article> -->
+		<!-- 	<span class="icon fa-paper-plane"></span> -->
+		<!-- 	<div class="content"> -->
+		<!-- 		<h3>Patient and public involvement</h3> -->
+		<!-- 	</div> -->
+		<!-- </article> -->
+		<!-- <article> -->
+		<!-- 	<span class="icon fa-signal"></span> -->
+		<!-- 	<div class="content"> -->
+		<!-- 		<h3>Basic anthropometric information from all children</h3> -->
+		<!-- 	</div> -->
+		<!-- </article> -->
+		<!-- <article> -->
+		<!-- 	<span class="icon fa-life-saver"></span> -->
+		<!-- 	<div class="content"> -->
+		<!-- 		<h3>Oncology patients</h3> -->
+		<!-- 	</div> -->
+		<!-- </article> -->
+		<!-- <article> -->
+		<!-- 	<span class="icon fa-paperclip"></span> -->
+		<!-- 	<div class="content"> -->
+		<!-- 		<h3>Outpatients with respiratory problems</h3> -->
+		<!-- 	</div> -->
+		<!-- </article> -->
+		<!-- <article> -->
+		<!-- 	<span class="icon fa-eyedropper"></span> -->
+		<!-- 	<div class="content"> -->
+		<!-- 		<h3>Antibiotics use</h3> -->
+		<!-- 	</div> -->
+		<!-- </article> -->
 	</div>
 </section>
 
@@ -190,10 +175,11 @@ layout: default
 <div class="posts">
 <article>
   <h3>Contact</h3>
-  <p>For clinic appointments please consult your physician. For research inquiries please use the contact information provided. For patient involvement please contact xyz@email.</p>
+  <p>For clinic appointments please consult your physician. For research inquiries please use the contact information provided. 
+  </p>
   <ul class="contact">
     <li class="fa-envelope-o"><a href="#">{{ site.email }}</a></li>
-    <li class="fa-phone">{{ site.phone }}</li>
+    <!-- <li class="fa-phone">{{ site.phone }}</li> -->
     <li class="fa-home">{{ site.street_address }}<br />
     {{ site.city }}, {{ site.state }} {{ site.zip_code }}<br />
     {{ site.country }}</li>
