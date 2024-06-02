@@ -5,14 +5,29 @@ layout: default
  <!-- <object id="swiss-map" type="image/svg+xml" data="assets/images/swiss_map.svg"></object> -->
 
 <!-- Section Information -->
-
-
-
-
 <section>
 	<header class="major">
-		<h2>Information</h2>
+		<h2>Technical</h2>
 	</header>
+	<article>
+		<!-- <a href="{% link tech_gatk_wgspipeline.md %}" class="image"><img src="assets/images/genomics-research.jpg" alt="" /></a> -->
+		<h3>High-throughput WGS analysis</h3>
+		<p>
+		Explore an overview our GATK-based pipeline, designed for efficient and accurate whole-genome sequencing analysis. This resource is tailored for professionals in clinical genetics, integrating variant discovery, annotation, and interpretation to identify potential causes of disease.		</p>
+		<ul class="actions">
+		    <li><a href="{% link tech_gatk_wgspipeline.md %}" class="button">More</a></li>
+		</ul>
+</article>
+	<article>
+		<!-- <a href="{% link tech_genomeswift.md %}" class="image"><img src="assets/images/logos/genomeswift_20240412.webp" alt="" /></a> -->
+		<h3>GenomeSwift</h3>
+		<p>
+		 A comprehensive genomic analysis suite. Read about our cutting-edge tools to deliver rapid clinical genetics.
+		</p>
+		<ul class="actions">
+		    <li><a href="{% link tech_genomeswift.md %}" class="button">More</a></li>
+		</ul>
+</article>
 	<!-- <div class="posts"> -->
 	<!-- 	<article> -->
 	<!-- 		<a href="{% link information_patient_involvement.md %}" class="image"><img src="assets/images/kelly-sikkema-fvxG34jv6Gc-unsplash.jpg" alt="" /></a> -->
