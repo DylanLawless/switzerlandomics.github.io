@@ -27,3 +27,5 @@ slack_url:
 
 # Build settings
 markdown: kramdown
+kramdown:
+  # toc_levels: "2..6"

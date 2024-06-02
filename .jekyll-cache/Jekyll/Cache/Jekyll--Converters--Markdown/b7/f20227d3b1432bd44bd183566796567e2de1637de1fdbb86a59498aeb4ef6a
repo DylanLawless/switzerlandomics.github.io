@@ -1,0 +1,71 @@
+I"�<h2 id="data-notation">Data Notation</h2>
+
+<ul>
+  <li>Assume \(n\) subjects are sequenced in a region with ( p ) variant sites observed.</li>
+  <li>Covariates might include age, gender, and top principal components of genetic variation for controlling population stratification.</li>
+  <li>For the ( i )-th subject,
+    <ul>
+      <li>( y_i ) denotes the phenotype variable,</li>
+      <li>( X_i = (X_{i1}, X_{i2}, …, X_{im}) ) the covariates,</li>
+      <li>( G_i = (G_{i1}, G_{i2}, …, G_{ip}) ) the genotypes for the ( p ) variants within the region.</li>
+    </ul>
+  </li>
+  <li>Typically, we assume an additive genetic model and let ( G_{ij} = 0, 1, ) or ( 2 ) represent the number of copies of the minor allele.</li>
+  <li>Dominant and recessive models can also be considered.</li>
+</ul>
+
+<p>For example, let’s consider that we have sequenced 200 subjects and only have 10 variant sites in a particular genomic region. We have three covariates: age, gender, and the first principal component of genetic variation (PC1).</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Subject | Phenotype (<span class="se">\(</span> y_i <span class="se">\)</span>) | Covariates (<span class="se">\(</span> X_i <span class="se">\)</span>)      | Genotypes (<span class="se">\(</span> G_i <span class="se">\)</span>)                |
+|---------|-----------------------|-----------------------------|--------------------------------------|
+| 1       | <span class="se">\(</span> y_1 <span class="se">\)</span>             | <span class="se">\(</span> X_{11}, X_{12}, ..., X_{1m} <span class="se">\)</span> | <span class="se">\(</span> G_{11}, G_{12}, ..., G_{1p} <span class="se">\)</span> |
+| 2       | <span class="se">\(</span> y_2 <span class="se">\)</span>             | <span class="se">\(</span> X_{21}, X_{22}, ..., X_{2m} <span class="se">\)</span> | <span class="se">\(</span> G_{21}, G_{22}, ..., G_{2p} <span class="se">\)</span> |
+| ...     | ...                   | ...                         | ...                                  |
+| <span class="se">\(</span> i <span class="se">\)</span> | <span class="se">\(</span> y_i <span class="se">\)</span>             | <span class="se">\(</span> X_{i1}, X_{i2}, ..., X_{im} <span class="se">\)</span> | <span class="se">\(</span> G_{i1}, G_{i2}, ..., G_{ip} <span class="se">\)</span> |
+| ...     | ...                   | ...                         | ...                                  |
+| <span class="se">\(</span> n <span class="se">\)</span> | <span class="se">\(</span> y_n <span class="se">\)</span>             | <span class="se">\(</span> X_{n1}, X_{n2}, ..., X_{nm} <span class="se">\)</span> | <span class="se">\(</span> G_{n1}, G_{n2}, ..., G_{np} <span class="se">\)</span> |
+</code></pre></div></div>
+
+<p><em>Table: Tabular representation of the data for ( n ) subjects, each with their phenotype, covariates, and genotypes for ( p ) variants within the region.</em></p>
+
+<h2 id="linear-skat-model-and-test">Linear SKAT Model and Test</h2>
+
+<p>To analyze this data using a statistical model, we consider the phenotype as a continuous trait, employing a linear model described by:</p>
+
+<p>[
+y_i = \alpha_0 + \alpha’X_i + \beta’G_i + \epsilon_i
+]</p>
+
+<ul>
+  <li>( \alpha_0 ) is an intercept term,</li>
+  <li>( \alpha ) is the vector of regression coefficients for the covariates,</li>
+  <li>( \beta ) is the vector of regression coefficients for the genetic variants in the region.</li>
+</ul>
+
+<p>For dichotomous traits like blood pressure (high or normal), a logistic model is used:</p>
+
+<p>[
+\text{logit} P(y_i = 1) = \alpha_0 + \alpha’X_i + \beta’G_i
+]</p>
+
+<p>Here, ( P(y_i = 1) ) represents the probability of the ( i )-th subject having high blood pressure.</p>
+
+<h3 id="skat-analysis">SKAT Analysis</h3>
+
+<p>SKAT improves test power by assuming each ( \beta_j ) follows an arbitrary distribution with mean zero and variance ( w_j\tau ), where ( \tau ) is a variance component and ( w_j ) is a pre-specified weight for variant ( j ).</p>
+
+<p>The SKAT model tests whether the gene variants influence the phenotype, adjusting for covariates, corresponding to the null hypothesis ( H_0: \beta = 0 ).</p>
+
+<h3 id="example-calculation">Example Calculation</h3>
+
+<p>Given a matrix ( G ) of genotypes and a diagonal matrix ( W ) of weights, we compute the kernel matrix ( K ) as follows:</p>
+
+<p>[
+K = GWG’
+]</p>
+
+<p>where ( K(G_i, G_j) = \sum_{k=1}^{p} w_k G_{ik} G_{jk} ) measures the genetic similarity between subjects based on their genotypes adjusted by variant weights.</p>
+
+<p>This analytical framework allows for a robust examination of the influences of multiple genetic variants on diseases such as high blood pressure, providing insights that are crucial for advancing personalized  medicine.</p>
+
+:ET

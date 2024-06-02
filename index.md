@@ -17,7 +17,7 @@ layout: default
 		<ul class="actions">
 		    <li><a href="{% link tech_gatk_wgspipeline.md %}" class="button">More</a></li>
 		</ul>
-</article>
+    </article>
 	<article>
 		<!-- <a href="{% link tech_genomeswift.md %}" class="image"><img src="assets/images/logos/genomeswift_20240412.webp" alt="" /></a> -->
 		<h3>GenomeSwift</h3>
@@ -27,7 +27,16 @@ layout: default
 		<ul class="actions">
 		    <li><a href="{% link tech_genomeswift.md %}" class="button">More</a></li>
 		</ul>
-</article>
+    </article>
+	<article>
+		<!-- <a href="{% link tech_gatk_wgspipeline.md %}" class="image"><img src="assets/images/genomics-research.jpg" alt="" /></a> -->
+		<h3>Association testing</h3>
+		<p>
+		</p>
+		<ul class="actions">
+		    <li><a href="{% link tech_association_test.md %}" class="button">More</a></li>
+		</ul>
+    </article>
 	<!-- <div class="posts"> -->
 	<!-- 	<article> -->
 	<!-- 		<a href="{% link information_patient_involvement.md %}" class="image"><img src="assets/images/kelly-sikkema-fvxG34jv6Gc-unsplash.jpg" alt="" /></a> -->
