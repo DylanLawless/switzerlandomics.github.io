@@ -1,6 +1,7 @@
 # This is the data for switzerlandomics
 [switzerlandomics.ch](https://switzerlandomics.ch) hosted via [switzerlandomics.github.io](https://switzerlandomics.github.io)
 
+
 Some installs may be required to serve this site locally for testing; 
 e.g. at least requires:
 "gem install jekyll-scholar"
