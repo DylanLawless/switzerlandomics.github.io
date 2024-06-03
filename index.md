@@ -32,6 +32,7 @@ layout: default
 		<!-- <a href="{% link tech_gatk_wgspipeline.md %}" class="image"><img src="assets/images/genomics-research.jpg" alt="" /></a> -->
 		<h3>Association testing</h3>
 		<p>
+        Understand how our choice of statistical methods like SKAT provides advanced insights into genetic influences on phenotypes. Our analysis surpasses traditional models like GLM by focusing on complex interactions and rare variations in genetic epidemiology.
 		</p>
 		<ul class="actions">
 		    <li><a href="{% link tech_association_test.md %}" class="button">More</a></li>
