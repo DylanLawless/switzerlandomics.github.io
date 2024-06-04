@@ -1,4 +1,4 @@
-I"1V<h2 id="background">Background</h2>
+I"÷U<h2 id="background">Background</h2>
 
 <p>The integration of genomic technology into healthcare, especially for rare diseases, represents a crucial frontier in medical science. Despite advancements, the fragmented nature of current genome analysis methodologies in Swiss healthcare notably delays diagnoses and treatment. The accumulation of extensive genomic datasets necessitates a shift towards more integrated and automated processes.</p>
 
@@ -79,7 +79,7 @@
 A project mentor oversees the work and schedule; project management, expected milestones, and outcomes are tracked with progress reports. 
 A field expert will provide advice on the tool requirements, essential guidance on data privacy, consent, and ethical considerations, ensuring that GenomeSwift adheres to the highest standards of research ethics and data protection. 
 A project leader: established in genomics and bioinformatics, with extensive experience in developing computational tools for genomic analysis. The project leader has expertise in understanding genetic variations and their implications in diseases, especially in the context of rare disease in children. Additional collaborating bioinformatics specialists from UZH, ETHZ, EPFL, and CHUV collaborate with our team to integrate and optimise the computational tools within GenomeSwift. 
-Our testing collaborators check the flow of data in the format matching our data providers (1) (e.g., <a href="http://smoc.ethz.ch/">SwissMultiOmic Centre</a>) to (2) HPC clusters (e.g., BioMedIT) into (3) GenomeSwift. They also test the clinical applicability and relevance of the pipeline. Open-source development is tested by our collaborators in <a href="https://www.swisspedhealth.ch/">swisspedhealth.ch</a>, and <a href="https://www.epfl.ch/">EPFL</a>. Software is tested on multiple nodes including ETHZ <a href="https://unlimited.ethz.ch/display/LeoMed2/Leonhard+Med+Intro+for+shareholders">SIS Leonhard Med</a> and University of Basel <a href="https://scicore.unibas.ch/">sciCORE Med</a>.</p>
+Our testing collaborators check the flow of data in the format matching our data providers (1) (e.g., Swiss omic data provider to (2) HPC clusters (e.g., BioMedIT) into (3) GenomeSwift. They also test the clinical applicability and relevance of the pipeline. Open-source development is tested by our collaborators in <a href="https://www.uzh.ch/">UZH</a>, and <a href="https://www.epfl.ch/">EPFL</a>. Software is tested on multiple nodes including ETHZ <a href="https://unlimited.ethz.ch/display/LeoMed2/Leonhard+Med+Intro+for+shareholders">SIS Leonhard Med</a> and University of Basel <a href="https://scicore.unibas.ch/">sciCORE Med</a>.</p>
 
 <h2 id="national--international-collaborations">National / international collaborations</h2>
 
