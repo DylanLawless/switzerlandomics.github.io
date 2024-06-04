@@ -38,6 +38,16 @@ layout: default
 		    <li><a href="{% link tech_association_test.md %}" class="button">More</a></li>
 		</ul>
     </article>
+	<article>
+		<!-- <a href="{% link tech_ml.md %}" class="image"><img src="assets/images/genomics-research.jpg" alt="" /></a> -->
+		<h3>Advanced ML-driven patient care prediction</h3>
+		<p>
+		Our advanced ML-driven patient care approach to develop predictive models that improve clinical outcomes by accurately forecasting critical healthcare events using comprehensive ICU data.
+		</p>
+		<ul class="actions">
+		    <li><a href="{% link tech_ml.md %}" class="button">More</a></li>
+		</ul>
+    </article>
 	<!-- <div class="posts"> -->
 	<!-- 	<article> -->
 	<!-- 		<a href="{% link information_patient_involvement.md %}" class="image"><img src="assets/images/kelly-sikkema-fvxG34jv6Gc-unsplash.jpg" alt="" /></a> -->

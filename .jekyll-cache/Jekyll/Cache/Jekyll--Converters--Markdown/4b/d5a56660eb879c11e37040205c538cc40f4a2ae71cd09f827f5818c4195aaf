@@ -1,4 +1,4 @@
-I"ì&<p><!-- <object id="swiss-map" type="image/svg+xml" data="assets/images/swiss_map.svg"></object> --></p>
+I"Ö(<p><!-- <object id="swiss-map" type="image/svg+xml" data="assets/images/swiss_map.svg"></object> --></p>
 
 <!-- Section Information -->
 <section>
@@ -28,10 +28,20 @@
 		<!-- <a href="/tech_gatk_wgspipeline.html" class="image"><img src="assets/images/genomics-research.jpg" alt="" /></a> -->
 		<h3>Association testing</h3>
 		<p>
-        Understand how our choice of statistical methods like SKAT provide advanced insights into genetic influences on phenotypes. Our analysis surpass traditional models like GLM by focusing on complex interactions and rare variations in genetic epidemiology.
+        Understand how our choice of statistical methods like SKAT provides advanced insights into genetic influences on phenotypes. Our analysis surpasses traditional models like GLM by focusing on complex interactions and rare variations in genetic epidemiology.
 		</p>
 		<ul class="actions">
 		    <li><a href="/tech_association_test.html" class="button">More</a></li>
+		</ul>
+    </article>
+	<article>
+		<!-- <a href="/tech_ml.html" class="image"><img src="assets/images/genomics-research.jpg" alt="" /></a> -->
+		<h3>Advanced ML-driven patient care prediction</h3>
+		<p>
+		Our advanced ML-driven patient care approach to develop predictive models that improve clinical outcomes by accurately forecasting critical healthcare events using comprehensive ICU data.
+		</p>
+		<ul class="actions">
+		    <li><a href="/tech_ml.html" class="button">More</a></li>
 		</ul>
     </article>
 	<!-- <div class="posts"> -->

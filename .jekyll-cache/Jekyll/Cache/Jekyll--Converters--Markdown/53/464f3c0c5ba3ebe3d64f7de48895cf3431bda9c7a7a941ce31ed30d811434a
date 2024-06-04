@@ -1,4 +1,4 @@
-I"æ%<p><!-- <object id="swiss-map" type="image/svg+xml" data="assets/images/swiss_map.svg"></object> --></p>
+I"R)<p><!-- <object id="swiss-map" type="image/svg+xml" data="assets/images/swiss_map.svg"></object> --></p>
 
 <!-- Section Information -->
 <section>
@@ -28,9 +28,20 @@
 		<!-- <a href="/tech_gatk_wgspipeline.html" class="image"><img src="assets/images/genomics-research.jpg" alt="" /></a> -->
 		<h3>Association testing</h3>
 		<p>
+        Understand how our choice of statistical methods like SKAT provides advanced insights into genetic influences on phenotypes. Our analysis surpasses traditional models like GLM by focusing on complex interactions and rare variations in genetic epidemiology.
 		</p>
 		<ul class="actions">
 		    <li><a href="/tech_association_test.html" class="button">More</a></li>
+		</ul>
+    </article>
+	<article>
+		<!-- <a href="/tech_gatk_wgspipeline.html" class="image"><img src="assets/images/genomics-research.jpg" alt="" /></a> -->
+		<h3>Advanced ML-driven patient care prediction
+</h3>
+		<p>
+		Explore an overview our GATK-based pipeline, designed for efficient and accurate whole-genome sequencing analysis. This resource is tailored for professionals in clinical genetics, integrating variant discovery, annotation, and interpretation to identify potential causes of disease.		</p>
+		<ul class="actions">
+		    <li><a href="/tech_gatk_wgspipeline.html" class="button">More</a></li>
 		</ul>
     </article>
 	<!-- <div class="posts"> -->
