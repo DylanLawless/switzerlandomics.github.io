@@ -70,4 +70,90 @@ git config user.name DylanLawless
 
 You should now be able to pull and push from that repo without the ["incorrect user" problems](https://stackoverflow.com/questions/4665337/git-pushing-to-remote-github-repository-as-wrong-user).
 
+## Rake deploy pre-build before hosting
+For various reason, such as plugins which cannot be run on GitHub pages, the site is run by using the \_site directory as the root as described by [davidensinger.com](http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake/).
+
+To allow this to work, two branches are created:
+* _source_
+* _master_
+
+Normally, GH pages looks for the _master_ branch. 
+It will build the website project from the \_root directory and compile the website itself in safe-mode.
+It would create its own version of the \_site subdirectory, as is produced when you run Jekyll locally.
+
+Since we run plugins that GH pages does not use (scholar citations), the build would fail.
+All writing is done from the _source_ branch. 
+This contains the complete website data.
+This branch is compiled by Jekyll locally and the resulting output is in \_site.
+
+Then on the _master_ branch, we force the \_site subdirectory to act as the project root.
+GH pages will host the pre-compiled site for us. 
+If we no longer want this and prefer GH-pages to compile, 
+we can go back to a single branch converting _source_ to be _master_.
+
+**Normal version**
+* branch _master_ 
+	- \_root &rarr; GH pages build &rarr; host site.
+	- \_site &rarr; ignored by GH pages.
+
+**Modified version**
+* branch _source_ 
+	- \_root &rarr; jekyll local build &rarr; \_site.
+* branch _master_
+	- \_site &rarr; GH pages no build &rarr; host site.
+
+**Protocol**
+
+The Rakefile contains the final version of this description.
+The steps are outlined here for clarity.
+For the inital set up, we must create the source branch:
+```
+git branch -a
+git checkout -b source
+```
+
+The following tasks are then automated by putting them in a rake file.
+Delete master branch:
+```
+git branch -D master
+```
+Check out a new master branch:
+```
+git checkout -b master
+```
+Force the \_site subdirectory to be project root:
+```
+git filter-branch --subdirectory-filter _site/ -f
+```
+Checkout the source branch:
+```
+git checkout source
+```
+Push all branches to origin:
+```
+git push --all origin
+```
+
+**Rakefile**
+
+The rake file is used as follows:
+
+List the tasks from the Rakefile
+```
+rake -T
+```
+
+Run these individually
+```
+rake preview
+```
+
+The normal protocol is to run the tasks in order with one command
+```
+rake commit_deploy
+```
+
+Make sure that `sh jek.sh` is run so that jekyll compiles the site and populates
+\_site before commiting and pushing the _master_ to the live site. 
+
 
