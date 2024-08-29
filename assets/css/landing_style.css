@@ -476,3 +476,29 @@ a {
 			}
 
 		}
+
+/* Registry */
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Creates columns that grow and shrink */
+  gap: 10px; /* Spacing between plots */
+  padding: 10px; /* Padding around the grid */
+}
+.plot {
+  width: 200%; /* Full width of the column */
+  height: auto; /* Height scales with the content */
+  /* aspect-ratio: 1; /1* Keeps plots square *1/ */
+}
+
+div.full-width {
+  width: 100vw; /* Full width of the viewport */
+    height: 100%; /* Adjust height as needed, or set to a fixed height */
+    overflow-x: hidden; /* Prevents horizontal scroll if there's a slight overflow */
+}
+
+object.full-width {
+  /* width: 100%; /1* Ensures the object takes up the full width of its container *1/ */
+    /* height: 100%; /1* Adjust height as needed, or set to a fixed height *1/ */
+}
+
