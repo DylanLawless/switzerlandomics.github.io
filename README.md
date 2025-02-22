@@ -1,159 +1,103 @@
-# SwissPedHealth PipeDev landing
+# Jekyll Serif Theme
 
-This is the initial README for the PipelineDev page:
-<https://swisspedhealth-pipelinedev.github.io>.
+Serif is a modern business theme for Jekyll. It contains multiple content types for a typical brochure/marketing website. The theme is fully responsive, blazing fast and artfully illustrated.
 
-## Cloning and keys
-### Summary
-Instead of the default method for cloning, if:
-1. you have a ssh key set up for your github account and 
-2. you are an organisation member, you can specify your username for github to clone:
+[Live Demo](https://jekyll-serif.netlify.app/) |
+[Zerostatic Themes](https://www.zerostatic.io)
 
-`git clone git@dylanlawless.github.com:SwissPedHealth-PipelineDev/SwissPedHealth-PipelineDev.github.io.git`
+<a href="https://www.buymeacoffee.com/zerostatic" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
-Then set the local user 
-`cd docs`
-`git config user.email personemail@addess.com`
-`git config user.name DylanLawless`
+![Jekyll Serif Theme screenshot](https://www.zerostatic.io/theme/jekyll-serif/jekyll-serif-screenshot.png)
 
-### Datails of why this is done
-Since I work with others and use different accounts, machines, emails, here are some notes incase you or I need them.
+### Theme features
 
-To push to multiple github accounts with different keys,
-and different machines, these settings can be used.
-Instead of a global git config, local configs are used for each repo.
-Here is the example with two of my repos.
-The custom usernames for the local repo is shown (but custom email is removed to prevent spam).
-[Create your ssh keys as per github recommendation](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). 
-In the .ssh directory, the config file will assign the key to each git repository that you clone based on the Host that you use. i.e. custom instead of the default:
+- Jekyll 4.2+
+- Netlify & Github Pages ready
+- Services (Collection)
+- Team (Collection)
+- Features (Data)
+- SCSS
+- 100% Responsive design, animated hamburger and mobile slide in menu
+- Bootstrap 4.6 - _Only the bootstrap grid and utilites are imported by default. If you want to use more of the Boostrap library you can uncomment the `@import` in `style.scss`_
+- 100/100 Google Lighthouse speed score
+- 100/100 Google Lighthouse seo score
+- 100/100 Google Lighthouse accessibility score
+- 100/100 Google Lighthouse best practices score
+- Under 50KB without images or 80KB with images and illustrations ⚡
+- Under 20KB without Google fonts ⚡⚡⚡
+- Robust example content included
+- Royalty free illustrations included
 
-* git clone git@custom.github.com:accout/repo.git
-* git clone git@github.com:accout/repo.git
+## Installation
 
+### Installing Ruby & Jekyll
 
-``` bash 
-## Set up the ssh config file
-cd ~/.ssh/config
+If this is your first time using Jekyll, please follow the [Jekyll docs](https://jekyllrb.com/docs/installation/) and make sure your local environment (including Ruby) is setup correctly.
 
-## set such that Host and User are custom
-# lawlessgenomics repo
-Host dylanlawless.github.com
-  HostName github.com
-  User DylanLawless
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/key1_rsa
-  IdentitiesOnly yes
+### Installing Theme
 
-# other repo
-Host otherrepo.github.com
-  HostName github.com
-  User username
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/key2_rsa
-  IdentitiesOnly yes
+Download or clone the theme.
+
+To run the theme locally, navigate to the theme directory and run:
 
 ```
-
-Then clone your repo using the custom Host instead of the default provided by github when you use button "clone/ssh/copy".
-
-``` bash
-# Clone using the correct Host as per config.
-# As shown at the end of this page, you may need to clone with submodules.
-# You can do by add the "--recursive" flag. 
-git clone --recursive git@dylanlawless.github.com:SwissPedHealth-PipelineDev.github.io.git
-
-# Set the local user here (instead of global, i.e. /Users/user/.gitconfig)
-cd "the cloned repo dir"
-git config user.email personemail@addess.com
-git config user.name DylanLawless
+bundle install
 ```
 
-You should now be able to pull and push from that repo without the ["incorrect user" problems](https://stackoverflow.com/questions/4665337/git-pushing-to-remote-github-repository-as-wrong-user).
+To start the Jekyll local development server.
 
-## Rake deploy pre-build before hosting
-For various reason, such as plugins which cannot be run on GitHub pages, the site is run by using the \_site directory as the root as described by [davidensinger.com](http://davidensinger.com/2013/07/automating-jekyll-deployment-to-github-pages-with-rake/).
-
-To allow this to work, two branches are created:
-* _source_
-* _master_
-
-Normally, GH pages looks for the _master_ branch. 
-It will build the website project from the \_root directory and compile the website itself in safe-mode.
-It would create its own version of the \_site subdirectory, as is produced when you run Jekyll locally.
-
-Since we run plugins that GH pages does not use (scholar citations), the build would fail.
-All writing is done from the _source_ branch. 
-This contains the complete website data.
-This branch is compiled by Jekyll locally and the resulting output is in \_site.
-
-Then on the _master_ branch, we force the \_site subdirectory to act as the project root.
-GH pages will host the pre-compiled site for us. 
-If we no longer want this and prefer GH-pages to compile, 
-we can go back to a single branch converting _source_ to be _master_.
-
-**Normal version**
-* branch _master_ 
-	- \_root &rarr; GH pages build &rarr; host site.
-	- \_site &rarr; ignored by GH pages.
-
-**Modified version**
-* branch _source_ 
-	- \_root &rarr; jekyll local build &rarr; \_site.
-* branch _master_
-	- \_site &rarr; GH pages no build &rarr; host site.
-
-**Protocol**
-
-The Rakefile contains the final version of this description.
-The steps are outlined here for clarity.
-For the inital set up, we must create the source branch:
 ```
-git branch -a
-git checkout -b source
+bundle exec jekyll serve
 ```
 
-The following tasks are then automated by putting them in a rake file.
-Delete master branch:
+To build the theme.
+
 ```
-git branch -D master
-```
-Check out a new master branch:
-```
-git checkout -b master
-```
-Force the \_site subdirectory to be project root:
-```
-git filter-branch --subdirectory-filter _site/ -f
-```
-Checkout the source branch:
-```
-git checkout source
-```
-Push all branches to origin:
-```
-git push --all origin
+bundle exec jekyll build
 ```
 
-**Rakefile**
+## Deployment
 
-The rake file is used as follows:
+### Netlify
 
-List the tasks from the Rakefile
-```
-rake -T
-```
+Use Netlify to deploy this theme. This theme contains a valid and tested `netlify.toml` - Feel free to use the 1-click deploy below.
 
-Run these individually
-```
-rake preview
-```
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/zerostaticthemes/jekyll-serif-theme)
 
-The normal protocol is to run the tasks in order with one command
-```
-rake commit_deploy
-```
+### Github Pages
 
-Make sure that `sh jek.sh` is run so that jekyll compiles the site and populates
-\_site before commiting and pushing the _master_ to the live site. 
+This theme has been tested to work with Github Pages (and Github Project Pages). When using Github Pages you will need to update the `baseurl` in the `_config.yml` otherwise all the css, images and paths will be broken.
 
+For example the site https://zerostaticthemes.github.io/jekyll-serif-theme would have `baseurl: "/jekyll-serif-theme/"`
 
+## Extras
+
+### License
+
+- You cannot create ports of this theme
+- You cannot re-sell this theme
+
+### Credits
+
+- Beautiful royalty free Illustrations by Icons8 - https://icons8.com/illustrations/style--pixeltrue
+- Stock images by Unsplash - https://unsplash.com/
+- Feature icons by Noun Project - https://thenounproject.com/
+
+## Support My Work
+
+I've been building open source themes for all the main static site generators for over 4 years now. My premium themes allow me to continue to allocate time to maintain, improve and build new open source themes.
+
+1. Leave a star ⭐🙏🏻
+2. Make a contribution to this theme, add a feature, fix a bug, nothing is to small 
+2. Mention this theme on twitter [@zerostaticio](https://twitter.com/zerostaticio) 📢
+3. Purchase a premium theme 🔥
+
+### All Jekyll Themes by Zerostatic
+
+- [Jekyll Serif (Open Source)](https://www.zerostatic.io/theme/jekyll-serif/)
+- [Jekyll Atlantic (Open Source)](https://www.zerostatic.io/theme/jekyll-atlantic/)
+- [Jekyll Advance (Premium)](https://www.zerostatic.io/theme/jekyll-advance/)
+- [Jekyll Origin (Premium)](https://www.zerostatic.io/theme/jekyll-origin/)
+- [Jekyll Curate (Premium)](https://www.zerostatic.io/theme/jekyll-curate/)
+
+🇦🇺 **Made in Australia** by Robert Austin

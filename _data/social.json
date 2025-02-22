@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Github",
+    "link": "https://github.com/DylanLawless/switzerlandomics.github.io",
+    "image": "images/social/github.svg"
+  },
+  {
+    "name": "Twitter",
+    "link": "https://twitter.com",
+    "image": "images/social/twitter.svg"
+  },
+  {
+      "name": "Facebook",
+      "link": "https://facebook.com",
+      "image": "images/social/facebook.svg"
+  },
+  {
+      "name": "Email",
+      "link": "mailto:building@example.com ",
+      "image": "images/social/email.svg"
+  },
+  {
+      "name": "Discord",
+      "link": "https://discord.com",
+      "image": "images/social/discord.svg"
+  }
+
+]
