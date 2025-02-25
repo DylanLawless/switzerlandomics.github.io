@@ -9,7 +9,7 @@ bodyClass: page-about
 
 
 Switzerland Omics is merging cutting-edge omics with real-world clinical applications to transform research and clinical adoption.
-Directed by Dylan Lawless, a seasoned bioinformatician, our team is dedicated to developing the tools needed to bridge the gap between complex genomic data and actionable medical insights.
+We are dedicated to developing the tools needed to bridge the gap between complex genomic data and actionable medical insights.
 
 We have pioneered national-scale projects that integrate clinical practice with multi-omic research, significantly enhancing patient outcomes. 
 Our focus extends from the integration of omics data and precision medicine to navigating regulatory landscapes, ensuring compliance with standards like IHC and EudraLex.
