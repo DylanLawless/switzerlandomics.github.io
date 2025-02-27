@@ -10,7 +10,4 @@ show_call_box: true
 
 # Switzerland Omics
 
-## Making research actionable
-
-At the forefront of multi-omics, our expertise in genomics, proteomics, and advanced data analysis drives innovation in precision medicine. We deliver tailored solutions for healthcare and discovery.
-
+## Precise, actionable insights, quantified with the highest accuracy to drive informed decisions in precision medicine.

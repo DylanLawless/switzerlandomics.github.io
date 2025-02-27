@@ -17,8 +17,10 @@ $link-hover-color: lighten($primary, 10%);
 $link-hover-decoration: underline;
 
 // Fonts
-$font-family-base: Helvetica, Arial, sans-serif, -apple-system;
-$font-family-heading: "Playfair Display", serif, -apple-system;
+$font-family-base: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-heading: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+// $font-family-base: Helvetica, Arial, sans-serif, -apple-system;
+// $font-family-heading: "Playfair Display", serif, -apple-system;
 
 // Footer
 $footer-background-color: $primary;
@@ -116,3 +118,21 @@ body {
     line-height: 1.3;
   }
 }
+
+.header a, .header a:hover {
+    text-decoration: none; /* Removes underline for the whole link */
+    display: flex; /* Flexbox for inline positioning of elements */
+    align-items: center; /* Center items vertically */
+}
+
+.logo-text {
+    font-size: 20px; /* Set font size, adjust as needed */
+    color: #000; /* Set text color, change as needed */
+    margin-left: 10px; /* Space between logo and text */
+}
+
+.logo a {
+  display: flex;
+  align-items: center;  /* Aligns items vertically centered */
+}
+
