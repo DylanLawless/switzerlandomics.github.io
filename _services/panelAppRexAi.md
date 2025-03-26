@@ -6,8 +6,11 @@ weight: 1
 
 PanelAppRex AI introduces a sophisticated search function within our Panel App, designed to simplify the discovery of disease gene panels.
 
-With natural language queries, you can search by gene names, phenotypes, and other key data. Our system aggregates and analyses gene panel data from Genomics England’s PanelApp and other trusted sources. This comprehensive resource supports both the NHS National Genomic Test Directory and the virtual gene panels utilised in the 100,000 Genomes Project, providing valuable insights into disease–gene correlations and enhancing variant interpretation. We offer this dataset openly to help clinicians rapidly narrow their search space and make informed diagnoses. For further details, visit Genomics England’s PanelApp at <https://panelapp.genomicsengland.co.uk/panels/>.
+With natural language queries, you can search by gene names, phenotypes, and other key data. Our system aggregates and analyses gene panel data from Genomics England’s PanelApp and other trusted sources. This comprehensive resource supports both the NHS National Genomic Test Directory and the virtual gene panels utilised in the 100,000 Genomes Project, providing valuable insights into disease–gene correlations and enhancing variant interpretation. We offer this dataset openly to help clinicians rapidly narrow their search space and make informed diagnoses. 
+<!-- For further details, visit Genomics England’s PanelApp at <https://panelapp.genomicsengland.co.uk/panels/>. -->
 [^bignote]
+**Please cite:**
+Lawless, Dylan, et al. "PanelAppRex aggregates disease gene panels and facilitates sophisticated search". medRxiv 2025.03.20.25324319; doi: <https://doi.org/10.1101/2025.03.20.25324319> - [PDF download](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v1.full.pdf).
 
 **Example search queries**:
 

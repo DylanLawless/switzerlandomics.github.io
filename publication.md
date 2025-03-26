@@ -12,11 +12,12 @@ intro_image_hide_on_mobile: false
 * Conceptualising qualifying variants for genomic analysis. Pre-print 2025.
 * Archipelago plot method for illustration of variant set association test statistics. Pre-print 2025.
 * Empowering precision medicine with GuRu and Heracles for enhanced classification and interpretation of genomic sequence variants. Pre-print 2025.
+* Lawless, Dylan, et al. "PanelAppRex aggregates disease gene panels and facilitates sophisticated search". medRxiv 2025.03.20.25324319; doi: <https://doi.org/10.1101/2025.03.20.25324319> - [PDF download](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v1.full.pdf).
 
 ## Selected work in our history
 
+
 * Masters, Seth L., et al. "[Familial autoinflammation with neutrophilic dermatosis reveals a regulatory mechanism of pyrin activation](https://www.science.org/doi/abs/10.1126/scitranslmed.aaf1471?casa_token=ipq2OGm4M-QAAAAA:fHlOxMA_v1idvSgFTtU8GYnkplRPXwjQLe4taTfIREKxiEYrmqwttFfzWYNmxnAi2tqvww4LfS1Isn4&casa_token=ooPKruxkWM0AAAAA:byzIDVsA0LFThP1JGXxa0N4TB5JS4EJtA7enMfuPclYVuxu-jYJRSPTgeFOINarkLMKohszFC1-eGGo)" Science translational medicine 8.332 (2016): 332ra45-332ra45.
-complex that drives the cleavage and secretion of interleukin-1β (IL-1β). Mutations in …
 
 * Stremenova Spegarova, Jarmila, et al. "[Germline TET2 loss of function causes childhood immunodeficiency and lymphoma.](https://ashpublications.org/blood/article-abstract/136/9/1055/460739)" Blood, The Journal of the American Society of Hematology 136.9 (2020): 1055-1066.
 
