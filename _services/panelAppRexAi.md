@@ -28,4 +28,8 @@ Lawless, Dylan, et al. "PanelAppRex aggregates disease gene panels and facilitat
 
 <!-- <img src="/images/freepik_vectorjuice/artificial-intelligence-abstract-concept-illustration-ai-machine-learning-artificial-intelligence-evolution-high-tech-cutting-edge-technology-cognitive-robotics_335657-483.jpg" alt="AI panel app" width="200" /> <!-1- Adjust the width as needed -1-> -->
 
+<!-- <div class="table-responsive" markdown="block"> -->
+
 <iframe height="1200" width="150%" frameborder="yes" src="/assets/panel_ai/landing_page.html"> </iframe>
+
+<!-- </div> -->

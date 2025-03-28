@@ -36,8 +36,14 @@ FAIR data is data which meets the FAIR principles of findability, accessibility,
 
 ## Current public QV database
 
+<div class="table-responsive" markdown="block">
+
 | View Link | Direct Download | Filename | SHA256 |
 | --------- | --------------- | -------- | ------ |
 | [View](/assets/qv_database/qv_acmg_svnindel_criteria_20250225.yaml) | [Download](/assets/qv_database/qv_acmg_svnindel_criteria_20250225.yaml){:download="qv_acmg_svnindel_criteria_20250225.yaml"} | qv_acmg_svnindel_criteria_20250225.yaml | `d91fde41a5fff48631adecba38773d619ae8cd5cff9b9b42ef7f5efbd6bbfcdf` |
+
+{: .table .table-hover}
+
+</div>
 
 

@@ -5,23 +5,13 @@
     "image": "images/social/github.svg"
   },
   {
-    "name": "Twitter",
-    "link": "https://twitter.com",
-    "image": "images/social/twitter.svg"
-  },
-  {
-      "name": "Facebook",
-      "link": "https://facebook.com",
-      "image": "images/social/facebook.svg"
-  },
-  {
       "name": "Email",
-      "link": "mailto:building@example.com ",
+      "link": "mailto:dylan.lawless@kispi.uzh.ch ",
       "image": "images/social/email.svg"
   },
   {
       "name": "Discord",
-      "link": "https://discord.com",
+      "link": "https://discord.gg/jn8rWJVu",
       "image": "images/social/discord.svg"
   }
 
