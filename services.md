@@ -11,5 +11,5 @@ intro_image_hide_on_mobile: true
 
 ### Your Gateway to Advanced Analysis
 
-Discover the full spectrum of our omic services, offering cutting-edge solutions from data processing to clinical reporting. 
+Discover the full spectrum of our open-source tools for cutting-edge research and clinical reporting.
 
