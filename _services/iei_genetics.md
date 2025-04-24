@@ -1,13 +1,13 @@
-<!-- --- -->
-<!-- title: "IEI genetics database" -->
-<!-- date: 2025-01-01T00:00:01+10:00 -->
-<!-- weight: 1 -->
-<!-- --- -->
+---
+title: "IEI genetics database"
+date: 2025-01-01T00:00:01+10:00
+weight: 1
+---
 
 ## Streamline genetic diagnosis of IEI 
 to quantify both known and uncertain evidence into a single, evidence-based conclusion
 
-![WGS analysis](/images/services/var_risk_est_iei_genetics.png)
+[![I.E.I genetics database](/images/services/var_risk_est_iei_genetics.png)](https://iei-genetics.github.io)
 
 ## What we offer
 
@@ -38,8 +38,12 @@ to quantify both known and uncertain evidence into a single, evidence-based conc
 
 ## Free version
 
-The public base model IEI genetics database is avaiable at
-<https://iei-genetics.github.io>.
+The public base model IEI genetics database is available at:
+
+**<https://iei-genetics.github.io>**
+
+This resource provides core data, and the related publication covers the foundational technical implementations.
+Full text: [PDF link](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v3.full.pdf+html).
 
 Please cite: 
 
@@ -55,14 +59,18 @@ Please cite:
 
 ## Professional version
 
-The professional version includes extended data through a database download ([readme.md](https://drive.google.com/file/d/1cDE3gETAr8KkVnJ-WfKANHricGWGTBiU/view?usp=share_link)) containing flat files including TSV, Rds, and HTML interface, and a licence for commercial use.
+A professional version was developed as a follow up to the open source public version.
+It includes extended data via a database download ([readme.md](https://drive.google.com/file/d/1cDE3gETAr8KkVnJ-WfKANHricGWGTBiU/view?usp=share_link)) containing flat files in TSV, Rds and an HTML interface, and is licenced for commercial use. 
+This version is available for companies wishing to use these data in their analysis results, in cases where the public licence may restrict commercial product development.
 
-<script async
-  src="https://js.stripe.com/v3/buy-button.js">
-</script>
+<!-- Our licence covers the necessary use of commercial cloud high-performance computing for development. -->
 
-<stripe-buy-button
-  buy-button-id="buy_btn_1RHOGH2MuWhgHdB6QlL4hC5O"
-  publishable-key="pk_live_51RHMa52MuWhgHdB68R2P58CJu2YtBR6fOCHE28yaSapxKGbafxhmUMFuQ8fowJud5Gbt01k5lXbztuJQnqI93XGI00HGGGyhdA"
->
-</stripe-buy-button>
+<!-- <script async -->
+<!--   src="https://js.stripe.com/v3/buy-button.js"> -->
+<!-- </script> -->
+
+<!-- <stripe-buy-button -->
+<!--   buy-button-id="buy_btn_1RHOGH2MuWhgHdB6QlL4hC5O" -->
+<!--   publishable-key="pk_live_51RHMa52MuWhgHdB68R2P58CJu2YtBR6fOCHE28yaSapxKGbafxhmUMFuQ8fowJud5Gbt01k5lXbztuJQnqI93XGI00HGGGyhdA" -->
+<!-- > -->
+<!-- </stripe-buy-button> -->

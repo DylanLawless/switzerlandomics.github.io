@@ -8,7 +8,7 @@ intro_image_hide_on_mobile: true
 show_call_box: false
 ---
 
-# Switzerland Omics
+<!-- # Switzerland Omics -->
 
 <!-- ## Precise, actionable insights, quantified with the highest accuracy to drive informed decisions in precision medicine. -->
 
