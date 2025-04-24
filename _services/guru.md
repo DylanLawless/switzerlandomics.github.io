@@ -1,5 +1,5 @@
 ---
-title: "GuRu: precision genomics interpretation"
+title: "GuRu interpretation"
 date: 2025-01-01T00:00:01+10:00
 weight: 1
 ---
