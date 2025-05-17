@@ -16,6 +16,7 @@
   <!-- Self host font -->
   <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
   <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
   
   
   <meta property="og:title" content="PanelAppRex AI"/>
@@ -115,13 +116,8 @@
     <div class="col-12 col-md-8">
       <div class="service service-single">
         <h1 class="title">PanelAppRex AI</h1>
-        <div class="content"><p>PanelAppRex AI introduces a sophisticated search function within our Panel App, designed to simplify the discovery of disease gene panels.</p>
-
-<p>With natural language queries, you can search by gene names, phenotypes, and other key data. Our system aggregates and analyses gene panel data from Genomics England’s PanelApp and other trusted sources. This comprehensive resource supports both the NHS National Genomic Test Directory and the virtual gene panels utilised in the 100,000 Genomes Project, providing valuable insights into disease–gene correlations and enhancing variant interpretation. We offer this dataset openly to help clinicians rapidly narrow their search space and make informed diagnoses. 
-<!-- For further details, visit Genomics England’s PanelApp at <https://panelapp.genomicsengland.co.uk/panels/>. -->
-<sup id="fnref:bignote"><a href="#fn:bignote" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>
-<strong>Please cite:</strong>
-Lawless, Dylan, et al. “PanelAppRex aggregates disease gene panels and facilitates sophisticated search”. medRxiv 2025.03.20.25324319; doi: <a href="https://doi.org/10.1101/2025.03.20.25324319">https://doi.org/10.1101/2025.03.20.25324319</a> - <a href="https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v1.full.pdf">PDF download</a>.</p>
+        <div class="content"><p>PanelAppRex AI introduces a sophisticated search function within our Panel App, designed to simplify the discovery of disease gene panels. Depend on trusted data
+<sup id="fnref:bignote"><a href="#fn:bignote" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>.</p>
 
 <p><strong>Example search queries</strong>:</p>
 
@@ -141,13 +137,36 @@ Lawless, Dylan, et al. “PanelAppRex aggregates disease gene panels and facilit
 
 <!-- <div class="table-responsive" markdown="block"> -->
 
-<iframe height="1200" width="150%" frameborder="yes" src="/assets/panel_ai/landing_page.html"> </iframe>
-
+<!-- <iframe height="1200" width="150%" frameborder="yes" src="/assets/panel_ai/landing_page.html"> </iframe> -->
+<!-- <div class="iframe-wrapper"> -->
+<!--   <iframe height="1200" width="150%" frameborder="yes" src="/assets/panel_ai/landing_page.html"></iframe> -->
 <!-- </div> -->
+
+<!-- see js in _layouts/default.html -->
+<!-- <div class="full-width-iframe"> -->
+<!--   <iframe -->
+<!--     id="responsive-iframe" -->
+<!--     src="/assets/panel_ai/landing_page.html" -->
+<!-- > -->
+<!--     <!-1- style="width: 100%; border: none; display: block;" -1-> -->
+<!-- </iframe> -->
+
+<div class="full-width-iframe">
+  <iframe id="responsive-iframe" src="/assets/panel_ai/landing_page.html" style="width: 100%; border: none; display: block;">
+  </iframe>
+</div>
+
+<p>With natural language queries, you can search by gene names, phenotypes, and other key data. Our system aggregates and analyses gene panel data from Genomics England’s PanelApp and other trusted sources. This comprehensive resource supports both the NHS National Genomic Test Directory and the virtual gene panels utilised in the 100,000 Genomes Project, providing valuable insights into disease–gene correlations and enhancing variant interpretation. We offer this dataset openly to help clinicians rapidly narrow their search space and make informed diagnoses. 
+While our robust database underpins this tool, we are actively refining the user interface. To aid in our development, we provide open early access, allowing users to explore and utilize our evolving features.
+<!-- For further details, visit Genomics England’s PanelApp at <https://panelapp.genomicsengland.co.uk/panels/>. -->
+<strong>Please cite:</strong>
+Lawless, Dylan, et al. “PanelAppRex aggregates disease gene panels and facilitates sophisticated search”. medRxiv 2025.03.20.25324319; doi: <a href="https://doi.org/10.1101/2025.03.20.25324319">https://doi.org/10.1101/2025.03.20.25324319</a> - <a href="https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v1.full.pdf">PDF download</a>.</p>
+
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:bignote">
-      <p>While our robust database underpins this tool, we are actively refining the user interface. To aid in our development, we provide open early access, allowing users to explore and utilize our evolving features. <a href="#fnref:bignote" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+
+      <p><a href="#fnref:bignote" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -206,5 +225,30 @@ Lawless, Dylan, et al. “PanelAppRex aggregates disease gene panels and facilit
 </div>
   <script type="text/javascript" src="/assets/js/scripts.js"></script>
   
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
 </body>
+
 </html>
