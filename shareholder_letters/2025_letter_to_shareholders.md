@@ -13,7 +13,7 @@ But I knew it could be done.
 It just hadn't been done yet.
 
 Precision medicine, as it's widely practised today, operates on the idea of "good enough." 
-Most tools focus on detecting what is present, typically the easy-to-find true positives, and then stop
+Most tools focus on detecting what is present, typically the easy-to-find true positives, and then stop.
 But when it comes to life-changing decisions in clinical genetics, "good enough" is not good enough.
 
 I believed that the most valuable contribution I could make was to take the harder path. 
@@ -33,7 +33,7 @@ They also assign a clear level of certainty to them, and just as importantly, to
 We expand classical population genetics and Bayesian reasoning into a full diagnostic framework.
 For instance, in recent work, this means the result is not just variant-level reporting, but gene- and panel-level conclusions that are accountable and reproducible.
 
-This year, we released a flagship dataset of calculated prior probabilities for every reliable-known disease-related variant across all major inheritance modes.
+This year, we released a flagship dataset of calculated prior probabilities for every reliably-known disease-related variant across all major inheritance modes.
 To our knowledge, this had never been done at scale.
 We developed a method for combining observed and unobserved variants into a single probability of disease.
 We validated the model against national-level cohorts and showed strong alignment with real case data. 
