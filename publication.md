@@ -7,15 +7,22 @@ intro_image_absolute: true
 intro_image_hide_on_mobile: false
 ---
 
-## Pre-prints
+<!-- * Empowering precision medicine with GuRu and Heracles for enhanced classification and interpretation of genomic sequence variants. Pre-print 2025. -->
 
-* Conceptualising qualifying variants for genomic analysis. Pre-print 2025.
-* Archipelago plot method for illustration of variant set association test statistics. Pre-print 2025.
-* Empowering precision medicine with GuRu and Heracles for enhanced classification and interpretation of genomic sequence variants. Pre-print 2025.
-* Lawless, Dylan, et al. "PanelAppRex aggregates disease gene panels and facilitates sophisticated search". medRxiv 2025.03.20.25324319; doi: <https://doi.org/10.1101/2025.03.20.25324319> - [PDF download](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v1.full.pdf).
 
-## Selected work in our history
+## Selected works
 
+* Lawless, C., et al. "[Application of qualifying variants for genomic analysis](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2)" *medRxiv* preprint (2025).\\
+[DOI](https://doi.org/10.1101/2025.05.09.25324975) | [PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2.full.pdf)  
+
+* Lawless, C., et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4)" *medRxiv* preprint (2025).\\
+[DOI](https://doi.org/10.1101/2025.03.25.25324607) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4.full.pdf)  
+
+* Lawless, C., et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2)" *medRxiv* preprint (2025).\\
+[DOI](https://doi.org/10.1101/2025.03.20.25324319) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2.full.pdf)  
+
+* Lawless, C., et al. "[Archipelago method for variant set association test statistics](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v1)" *medRxiv* preprint (2025).\\
+[DOI](https://doi.org/10.1101/2025.03.17.25324111) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v1.full.pdf)  
 
 * Masters, Seth L., et al. "[Familial autoinflammation with neutrophilic dermatosis reveals a regulatory mechanism of pyrin activation](https://www.science.org/doi/abs/10.1126/scitranslmed.aaf1471?casa_token=ipq2OGm4M-QAAAAA:fHlOxMA_v1idvSgFTtU8GYnkplRPXwjQLe4taTfIREKxiEYrmqwttFfzWYNmxnAi2tqvww4LfS1Isn4&casa_token=ooPKruxkWM0AAAAA:byzIDVsA0LFThP1JGXxa0N4TB5JS4EJtA7enMfuPclYVuxu-jYJRSPTgeFOINarkLMKohszFC1-eGGo)" Science translational medicine 8.332 (2016): 332ra45-332ra45.
 
