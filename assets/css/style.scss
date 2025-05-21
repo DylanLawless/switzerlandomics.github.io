@@ -110,11 +110,11 @@ $sub-footer-text-color: $white;
 @import "pages/page-service";
 
 body {
-  font-size: 16px;
+  font-size: 1rem;
   line-height: 1.2;
   font-family: $font-family-base;
   @include media-breakpoint-up(md) {
-    font-size: 16px;
+	font-size: 1rem;
     line-height: 1.3;
   }
 }
@@ -135,4 +135,8 @@ body {
   display: flex;
   align-items: center;  /* Aligns items vertically centered */
 }
+
+html {
+	  font-size: 110%; // 110% of browser default (16px = 17.6px)
+  }
 

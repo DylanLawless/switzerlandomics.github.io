@@ -2,7 +2,6 @@
   overflow-x: scroll;
 }
 
-
 /* Custom iframe overflow scroll box for PanelAppRex */
 
 .full-width-iframe iframe {
@@ -17,9 +16,5 @@
   padding-bottom: 0 !important;
   display: block;
 }
-
-
-
-
 
 

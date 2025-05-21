@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Quantifying variant classifications with probabilistic reasoning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  
+  <meta property="og:title" content="Quantifying variant classifications with probabilistic reasoning"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/services/">Services</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/services/">Services</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="service service-single">
+                <h1 class="title">Quantifying variant classifications with probabilistic reasoning</h1>
+                <div class="content"><p>2025-05-21</p>
+
+<p>I’m in Rome on holiday, and over coffee this morning, I started writing down some thoughts on the origins of “Quant”, how it began and where the first ideas came from.</p>
+
+<p>In clinical genetics, the current paradigm focuses heavily on identifying and confirming true positives: known pathogenic variants observed in affected individuals. While this approach has served as the backbone of variant interpretation for decades, it underutilises the broader statistical landscape. Benign variants (true negatives), missed pathogenic variants (false negatives), and those of uncertain or moderate clinical significance all carry informative signals. These signals are rarely formalised or quantified, leaving major gaps in diagnostic interpretation and model calibration.</p>
+
+<p>Over several years of considering this problem, it became clear that interpreting genetic data systematically requires 
+more than a binary or quantitative classification of individual variants. 
+It also demands a fundamentally Bayesian approach. 
+I made a conscious decision to slow down on publishing and instead invest time in learning this side of statistics and simulation properly. 
+Much of that time was spent working through textbooks. 
+A major one was <em>Bayesian Data Analysis</em> by Gelman, Carlin, Stern, Dunson, Vehtari, and Rubin.</p>
+
+<p>Variant outcomes represent a continuum of evidence, uncertainty, and causality. When I began simulating these probabilities more rigorously, I noticed a layered structure: single nucleotide variants follow relatively well-understood frequency distributions based on population data and inheritance models, but larger structural events or ambiguous annotations introduce cascading uncertainty. Unlike discrete events that map cleanly to allele frequency, these more complex variants often require probabilistic treatment across multiple steps of biological and interpretive inference.</p>
+
+<p>This prompted a decision to proceed incrementally. Rather than attempting to solve all aspects of variant interpretation at once, we focus first on calculating prior probabilities for estimates of how likely a variant with a given classification (e.g. pathogenic, uncertain, benign) is to be observed in a given gene relative to phenotype (this causal condition is key), independent of the patient. These priors are based on known population allele frequencies, mode of inheritance, and curated variant classifications, forming a reference layer that can be precomputed and made widely accessible.</p>
+
+<p>The resulting probabilistic model allows a shift from reactive confirmation toward expectation-driven inference. By quantifying what should be seen, even when it is not observed, this approach reframes variant interpretation in terms of calibrated genomic probabilities. It sets the foundation for integrating sequencing outcomes, variant uncertainty, and patient-specific data into a coherent Bayesian framework.</p>
+
+<p>To formalise this, I define a framework for calculating prior probabilities of variant classifications across the genome. These priors are derived from whatever evidence sources are most reliable and at a minimum have to include population allele frequencies, classification (such as ClinVar), and the mode of inheritance (MOI). They are precomputed, gene- and classification-specific estimates of how likely a variant is to be observed in the population, regardless of any individual patient. These priors are then incorporated into a posterior model that updates based on observed sequencing evidence, enabling inference even in the absence of known pathogenic findings.</p>
+
+<p>A quick side note: there are two simplifications I sometimes use when explaining this, though I don’t rely on them myself, are:</p>
+<ol>
+  <li><strong>ClinVar-style labels</strong> like “benign” or “pathogenic” are just conveniences. Internally, I use the underlying evidence or a summarised statistic (e.g. quantified ACMG-style criteria).</li>
+  <li><strong>“Pathogenic” as a label</strong> is only useful because it’s familiar to others. In my actual model, it carries no special status. Every classification contributes equally to inference. I use it in examples because most people struggle to picture the joint evidence distribution. If you can see that distribution instead, then great, just replace “pathogenic” with the full spectrum of evidence across variant-phenotype combinations.</li>
+</ol>
+
+<p>At the variant level, we assign each variant \(i\) a population allele frequency \(p_i\), and define the total frequency across a gene as:</p>
+
+\[P_{\text{tot}} = \sum_i p_i\]
+
+<p>For dominant (autosomal or X-linked) conditions, where a single pathogenic allele is sufficient, the disease probability attributable to variant \(i\) is:</p>
+
+\[p_{\text{disease},i} = p_i\]
+
+<p>For recessive conditions, in which two pathogenic alleles are required, the total probability of a disease-causing genotype is:</p>
+
+\[P_{\text{AR}} = P_{\text{tot}}^2 = \sum_i p_i^2 + 2\sum_{i &lt; j} p_i p_j\]
+
+<p>In earlier models I made the error of counting twice, which I think is an easy mistake to make.
+To avoid double-counting compound heterozygotes, we partition this risk proportionally across variants:</p>
+
+\[p_{\text{disease},i} = p_i \cdot P_{\text{tot}}\]
+
+<p>If a variant is unobserved in the reference database (\(p_i = 0\)), I decided to assign a minimal occurrence probability. 
+The idea is that if we’ve sequenced 100,000 individuals and never seen the variant, observing it in the next person is still possible. 
+This minimum sets the lowest plausible frequency based on the available data, which is important when we want to avoid underestimating the chance of a rare but real variant.</p>
+
+\[p_i = \frac{1}{\max(\text{AN}) + 1}\]
+
+<p>Each variant is annotated with a classification score. In an early model I used ClinVar classifications, converted to a normally distributed score range of roughly benign = -5, uncertain = 0, pathogenic = +5. 
+This is converted into a weight \(W_i\) between 0 and 1. The weighted prior becomes:</p>
+
+\[p_i^\ast = W_i \cdot p_i\]
+
+<p>To account for uncertainty and inter-individual variability, we define a Beta prior distribution for the allele in a cohort of $N$ diploid individuals:</p>
+
+\[\pi_i \sim \text{Beta}(\alpha_i, \beta_i), \quad \alpha_i = \text{round}(2Np_i^\ast) + \tilde w_i,\; \beta_i = 2N - \text{round}(2Np_i^\ast) + 1\]
+
+<p>where $\tilde w_i = \max(1, S_i + 1)$ adds a pseudo-count based on classification strength.</p>
+
+<p>Simulating \(M\) draws from this prior, we compute normalised weights:</p>
+
+\[\tilde\pi_i^{(m)} = \frac{\pi_i^{(m)}}{\sum_j \pi_j^{(m)}}\]
+
+<p>The final step integrates observed sequencing status. Let \(G_i\) indicate whether variant \(i\) was detected, missed, or confirmed absent:</p>
+
+<ul>
+  <li>\(G_i = 1\) if the variant is observed in the sample</li>
+  <li>\(G_i = 0\) if the site was sequenced and no variant was found</li>
+  <li>\(G_i = p_i\) if the site is unsequenced or failed QC</li>
+</ul>
+
+<p>The gene-level posterior probability that a pathogenic variant is present is:</p>
+
+\[P^{(m)} = \sum_{i:\,S_i &gt; 3} \tilde\pi_i^{(m)} \cdot G_i^{(m)}\]
+
+<p>where \(S_i &gt; 3\) filters for likely or fully pathogenic classifications based on my simple ClinVar scoring system in this model. 
+Taking the median and quantiles of \(P^{(m)}\) over 10,000 simulations yields a credible interval that quantifies the confidence in a complete genetic diagnosis.</p>
+
+<p>By precomputing variant-level priors across all classifications, and combining these with sequencing evidence, the framework generates a calibrated, evidence-aware estimate of genetic causality. This approach supports real-time clinical interpretation, streamlines inconclusive cases, and enables robust downstream use in AI, statistics, and decision-making pipelines.</p>
+
+<p>To demonstrate the power of this method, I simulated three real-world diagnostic scenarios that show how a Bayesian, simulation-based framework yields not just results but structured, evidence-aware conclusions. 
+In the first, a single known pathogenic variant was observed with full sequencing coverage, resulting in a posterior probability of 1 for a correct diagnosis. 
+In the second, which is more representative of typical cases, a good canidate variant was found but also a likely pathogenic variant was unsequenced. 
+The model distributed posterior probability across both observed and missing variants (along with all other trivial variants), yielding a probability of 0.54 (95% CrI: 0.26 to 0.80) that the result is conclusively the best. 
+If follow-up confirms that the missing variant is absent, the posterior rises to 1, making the interpretation definitive. 
+In the third scenario, no variants were observed and all likely candidates were unsequenced, so the posterior correctly dropped to zero.</p>
+
+<p>This framework does not return an opaque result. 
+It provides a single summary of calibrated confidence, but this summary reflects a probability distribution with multiple layers of evidence, each contributing differently. 
+The result makes it clear how and why a diagnostic conclusion was reached. 
+It also shows exactly how much new evidence would improve certainty and when a result is already as complete as possible. 
+This is the key shift: uncertainty becomes a measurable input into clinical and research decision-making.</p>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <h2 class="footer-title">SwitzerlandOmics</h2>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:dylan.lawless@kispi.uzh.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://discord.gg/jn8rWJVu" target="blank"><img src="/images/social/discord.svg" title="Discord" alt="Discord" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

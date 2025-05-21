@@ -21,6 +21,10 @@ collections:
     sort_by: weight
   team:
     output: true
+  blog:
+    output: true
+    permalink: /blog/:name/
+
 
 defaults:
   - scope:

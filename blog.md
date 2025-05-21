@@ -1,17 +1,8 @@
 ---
-title: About
 layout: page
-description: About
-bodyClass: page-about
+title: Blog pages
+permalink: /blog/
 ---
-
-<!-- * [About page](about_page) -->
-## Letters
-
-* [2025 Letter to shareholders](/shareholder_letters/2025_letter_to_shareholders)
-
-## Blog posts
-<!-- * [Blog](/blog) -->
 
 <ul>
   {% assign posts = site.blog | sort: 'date' | reverse %}
