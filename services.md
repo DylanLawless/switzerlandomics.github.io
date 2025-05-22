@@ -11,5 +11,5 @@ intro_image_hide_on_mobile: true
 
 ### Your Gateway to Advanced Analysis
 
-Discover the full spectrum of our open-source tools for cutting-edge research and clinical reporting.
+Discover the full spectrum of our tools for cutting-edge research and clinical reporting.
 
