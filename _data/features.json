@@ -1,7 +1,7 @@
 [
   {
 	    "title": "Community Support",
-    "description": "We offer free access to our tools and foster a collaborative environment for omics research.",
+    "description": "We offer free access to data and technical documents to foster a collaborative environment.",
     
     "image": {
       "url": "images/features/noun_branding_1885335.svg",
@@ -10,8 +10,8 @@
     }
   },
   {
-    "title": "Expert analysts",
-    "description": "Our contributors sepcialise in different omics technology and experiment design.",
+    "title": "Designed for clarity",
+    "description": "Our tools distil complex omic evidence into clean, confident answers, built for those who need to know, not guess.",
     "image": {
       "url": "images/features/noun_The Process_1885341.svg",
       "width": 80,

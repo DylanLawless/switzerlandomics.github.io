@@ -4,7 +4,7 @@ layout: contact
 description: Contact
 ---
 
-**We're focused on building** so we are not taking on external work at the moment.
+**We are currently focused on building**.
 
 1. Stay in the loop via our mailing list:\\
 **[Blog and Breakthroughs →](/assets/submission_mailing_list)**

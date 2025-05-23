@@ -11,8 +11,10 @@ show_call_box: false
 <!-- # Switzerland Omics -->
 
 <!-- ## Precise, actionable insights, quantified with the highest accuracy to drive informed decisions in precision medicine. -->
+<!-- Quantify both known and uncertain evidence into a single, evidence-based conclusion, empowering decision makers to act with full clarity and certainty. -->
 
-## Fill the final gap in omics analysis. Quantify both known and uncertain evidence into a single, evidence-based conclusion, empowering decision makers to act with full clarity and certainty.
+<!-- ## Fill the final gap in omics analysis. --> 
+## Omics data is full of complex signals. We quantify the unimaginable into clear, actionable insights. Our models deliver calibrated answers you can trust - not guesses you have to interpret.
 
 
 <!-- Display the countdown timer in an element -->
