@@ -22,3 +22,4 @@ This video presents the first implementation of the Quant base model, which was 
 Explore the [IEI-genetics database](../iei_genetics) for access to core data.
 The accompanying publication details the technical foundations can be found [here](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4.full.pdf+html).
 
+<img src="/images/services/quant_logo_three_step_v2.png" alt="Logo for quant, database, scan, calculate." width="200" />
