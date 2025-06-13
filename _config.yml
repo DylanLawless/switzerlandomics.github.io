@@ -1,6 +1,7 @@
 baseurl: '/'
 permalink: pretty
 title: 'SwitzerlandOmics'
+motto: 'Technically sound. Incredibly simple.'
 
 logo:
   mobile: "images/logo/logo_v2.svg"
