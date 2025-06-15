@@ -7,9 +7,9 @@ intro_image_absolute: false
 intro_image_hide_on_mobile: true
 ---
 
-<h1>Our multi-omic services</h1>
+<h1>Our services</h1>
 
-### Your Gateway to Advanced Analysis
+### Purpose-built tools for modern genomics
 
-Discover the full spectrum of our tools for cutting-edge research and clinical reporting.
+Explore our suite of technologies and databases designed for advanced discovery, precision diagnostics, and clinical clarity.
 

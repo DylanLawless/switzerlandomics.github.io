@@ -8,4 +8,4 @@ promoted: true
 weight: 1
 ---
 
-Over ten years of experience leading bioinformatic study.
+Built teams, tools, and ideas at the core of modern bioinformatics for over a decade. A focus on clarity, utility, and reproducibility.
