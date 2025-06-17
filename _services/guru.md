@@ -4,7 +4,7 @@ date: 2025-01-01T00:00:01+10:00
 weight: 1
 ---
 
-GuRu revolutionises genomic research and clinical diagnostics by automating the interpretation of variant evidence with precision and adherence to open standards and guidelines. 
+GuRu automates the interpretation of variant evidence with precision and adherence to open standards and guidelines. 
 
 ![GuRu interpretation](/images/freepik_vectorjuice/data-analyst-oversees-governs-income-expenses-with-magnifier-financial-management-system-finance-software-it-management-tool-concept_335657-1891.jpg)
 

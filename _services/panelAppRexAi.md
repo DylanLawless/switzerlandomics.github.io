@@ -4,7 +4,9 @@ date: 2025-01-01T00:00:01+10:00
 weight: 1
 ---
 
-PanelAppRex AI introduces a sophisticated search function within our Panel App, designed to simplify the discovery of disease gene panels. Depend on trusted data
+<!-- PanelAppRex AI introduces --> 
+The leading disease-gene database with sophisticated search,
+designed to simplify the discovery of disease. Depend on trusted data
 [^bignote].
 
 

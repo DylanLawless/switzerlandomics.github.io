@@ -4,7 +4,8 @@ date: 2025-01-01T00:00:01+10:00
 weight: 1
 ---
 
-Enhancing precision in genomic interpretation through FAIR data, open and reproducible analysis criteria.
+<!-- Enhancing precision in genomic interpretation through FAIR data, open and reproducible analysis criteria. -->
+The open standard for variant interpretation, with trusted QV sets to enhance clarity and reproducibility in WGS.
 
 The Qualifying variant (QV) database offers an open, shareable, and reproducible framework for genomic interpretation. Central to this framework are the QV criteria YAML files, which define specific genomic variant criteria used within analysis pipelines. These files provide structured, machine-readable definitions that standardise how variants are selected and interpreted across different genomic studies, ensuring consistency and reproducibility in genetic analysis. Demonstrated effectively in our validation case studies, these files facilitate streamlined and accurate variant interpretation, critical for both research and clinical diagnostics.
 FAIR data is data which meets the FAIR principles of findability, accessibility, interoperability, and reusability

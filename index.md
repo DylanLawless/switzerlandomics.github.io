@@ -2,12 +2,13 @@
 title: SwitzerlandOmics
 layout: home
 description: Empowering precision medicine
-intro_image: "images/freepik_vectorjuice/scientists-lab-working-with-huge-dna-chain-glass-bulb-gene-therapy-gene-transfer-functioning-gene-concept-white-background-bright-vibrant-violet-isolated-illustration_335657-485.jpg"
+intro_image: "images/2025_E_L_Laurent_etherial_precision/1EBA3CDE-7455-49FD-8686-017F290965E3_wide.jpeg"
 intro_image_absolute: true
 intro_image_hide_on_mobile: true
 show_call_box: false
 ---
 
+<!-- intro_image: "images/freepik_vectorjuice/scientists-lab-working-with-huge-dna-chain-glass-bulb-gene-therapy-gene-transfer-functioning-gene-concept-white-background-bright-vibrant-violet-isolated-illustration_335657-485.jpg" -->
 <!-- # Switzerland Omics -->
 
 <!-- ## Omics data is full of complex signals. We quantify the unimaginable into clear, actionable insights. Our models deliver calibrated answers you can trust - not guesses you have to interpret. -->

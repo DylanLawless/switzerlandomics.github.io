@@ -4,7 +4,7 @@ date: 2025-01-01T00:00:01+10:00
 weight: 1
 ---
 
-Dante leads in converting genomic data into precise, clinical-grade reports.
+Dante converts interpreted genomic data into precise, clinical-grade reports.
 
 ![Dante reporting](/images/freepik_vectorjuice/ecological-strategy-development-natural-resources-access-ecologists-cartoon-characters_335657-3249.jpg)
 
