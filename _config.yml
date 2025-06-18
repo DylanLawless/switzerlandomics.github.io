@@ -25,6 +25,8 @@ collections:
   blog:
     output: true
     permalink: /blog/:name/
+  release:
+    output: true
 
 
 defaults:

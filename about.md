@@ -26,6 +26,18 @@ We build technically rigorous, precision medicine tools that make omic interpret
   {% endfor %}
 </ul>
 
+## Media
+
+<ul>
+  {% assign releases = site.release | sort: 'date' | reverse %}
+  {% for item in releases %}
+    <li>
+      <a href="{{ item.url }}">{{ item.title }}</a> — {{ item.date | date: "%Y-%m-%d" }}
+    </li>
+  {% endfor %}
+</ul>
+
+
 
 ## Mailing list
 
