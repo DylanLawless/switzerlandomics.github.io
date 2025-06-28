@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Services</title>
+  <title>AI HPO finder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
   <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
@@ -18,24 +18,24 @@
   <link href="/assets/css/style.css" rel="stylesheet">
   <link href="/assets/css/custom.css" rel="stylesheet">
   
-  <meta name="description" content="Services" />
-  <meta property="og:title" content="Services"/>
+  
+  <meta property="og:title" content="AI HPO finder"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
-  <meta property="og:description" content="Services"/>
+  
   <meta name="twitter:card" content="summary"/>
   
   
 
 </head>
 
-<body class='page page-services'>
+<body class='page page-service'>
   <div id="main-menu-mobile" class="main-menu-mobile">
   
   <ul>
     
-    <li class="active">
+    <li class="">
       <a href="/services/">Services</a>
     </li>
     
@@ -79,7 +79,7 @@
   
   <ul>
     
-    <li class="active">
+    <li class="">
       <a href="/services/">Services</a>
     </li>
     
@@ -115,118 +115,73 @@
 
 
 
-    <div class="intro">
-  <div class="container">
-    <div class="row justify-content-start">
-      <div class="col-12 col-md-7 col-lg-6 order-2 order-md-1">
-        <h1>Our services</h1>
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="service service-single">
+        <h1 class="title">AI HPO finder</h1>
+        <div class="content"><h3 id="example-terms">Example terms</h3>
 
-<h3 id="purpose-built-tools-for-modern-genomics">Purpose-built tools for modern genomics</h3>
+<ul>
+  <li>Arachnodactyly, Marfan syndrome, FBN1</li>
+  <li>Test: Atrial septal defect, coronary sinus type, Pancreatic and cerebellar agenesis, Down syndrome
+    <ul>
+      <li>HP:0001667 = Right ventricular hypertrophy</li>
+      <li>HP:0012652 = Exercise-induced asthma</li>
+      <li>HP:0002615 = Hypotension</li>
+      <li>HP:0001631 = Atrial septal defect</li>
+    </ul>
+  </li>
+</ul>
 
-<p>Explore our suite of technologies and databases designed for advanced discovery, precision diagnostics, and clinical clarity.</p>
+<p><input id="hpoInput" type="text" placeholder="Enter HPO terms or IDs" />
+<button id="sendBtn">Search</button></p>
 
+<pre id="results"></pre>
 
+<script>
+document.getElementById("sendBtn").addEventListener("click", async () => {
+  const input = document.getElementById("hpoInput").value;
+
+  const res = await fetch("https://dynamic-manatee-fe5240.netlify.app/.netlify/functions/agent", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ hpo: input })
+  });
+
+  const data = await res.json();
+
+  // Try to parse the reply as JSON array
+  let terms;
+  try {
+    terms = JSON.parse(data.reply);
+  } catch(e) {
+    terms = [];
+  }
+
+  let html = "";
+
+  if (terms.length > 0) {
+    html += "<ul>";
+    terms.forEach(term => {
+      html += `<li>${term}</li>`;
+    });
+    html += "</ul>";
+  } else {
+    html = "<p>No HPO terms found.</p>";
+  }
+
+  document.getElementById("results").innerHTML = html;
+});
+</script>
+
+</div>
       </div>
-      
-      <div class="col-12 col-md-5 col-lg-6 order-1 order-md-2 position-relative">
-        <img alt=Services class="intro-image intro-image-hide-mobile" src="/images/freepik_vectorjuice/collaborative-robotics-abstract-concept-illustration_335657-2115.jpg" />
-      </div>
-      
     </div>
   </div>
 </div>
-
-<div class="container pt-6 pb-6">
-  <div class="row">
-    
-    <div class="col-12 col-md-6 mb-3">
-      <div class="service service-summary">
-        <div class="service-content">
-          <h2 class="service-title">
-            <a href="/services/dante/">Dante reporting</a>
-          </h2>
-          <p>Dante converts interpreted genomic data into precise, clinical-grade reports.
-</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-6 mb-3">
-      <div class="service service-summary">
-        <div class="service-content">
-          <h2 class="service-title">
-            <a href="/services/guru/">GuRu interpretation</a>
-          </h2>
-          <p>GuRu automates the interpretation of variant evidence with precision and adherence to open standa...</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-6 mb-3">
-      <div class="service service-summary">
-        <div class="service-content">
-          <h2 class="service-title">
-            <a href="/services/iei_genetics/">IEI genetics database</a>
-          </h2>
-          <p>Streamline genetic diagnosis of IEI
-to quantify both known and uncertain evidence into a single, ...</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-6 mb-3">
-      <div class="service service-summary">
-        <div class="service-content">
-          <h2 class="service-title">
-            <a href="/services/panelAppRexAi/">PanelAppRex AI</a>
-          </h2>
-          <p>
-The leading disease-gene database with sophisticated search,
-designed to simplify the discovery ...</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-6 mb-3">
-      <div class="service service-summary">
-        <div class="service-content">
-          <h2 class="service-title">
-            <a href="/services/quant/">Quant</a>
-          </h2>
-          <p>Our flagship tech:
-bring statistical confidence to decision making in genetic diagnosis.
-</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-6 mb-3">
-      <div class="service service-summary">
-        <div class="service-content">
-          <h2 class="service-title">
-            <a href="/services/qv_database/">Qualifying variant database</a>
-          </h2>
-          <p>
-The open standard for variant interpretation, with trusted QV sets to enhance clarity and reprod...</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="col-12 col-md-6 mb-3">
-      <div class="service service-summary">
-        <div class="service-content">
-          <h2 class="service-title">
-            <a href="/services/agent/">AI HPO finder</a>
-          </h2>
-          <p>Example terms
-</p>
-        </div>
-      </div>
-    </div>
-    
-  </div>
-</div>
-
   </div>
   <div class="footer">
   <div class="container">
