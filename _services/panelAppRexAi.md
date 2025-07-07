@@ -9,6 +9,7 @@ The leading disease-gene database with sophisticated search,
 designed to simplify the discovery of disease. Depend on trusted data
 [^bignote].
 
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1099451293?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Qualifying variants"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
 
 **Example search queries**:
 
@@ -49,6 +50,7 @@ designed to simplify the discovery of disease. Depend on trusted data
     style="width: 100%; border: none; display: block;">
   </iframe>
 </div>
+
 
 [^bignote]: 
 With natural language queries, you can search by gene names, phenotypes, and other key data. Our system aggregates and analyses gene panel data from Genomics England’s PanelApp and other trusted sources. This comprehensive resource supports both the NHS National Genomic Test Directory and the virtual gene panels utilised in the 100,000 Genomes Project, providing valuable insights into disease–gene correlations and enhancing variant interpretation. We offer this dataset openly to help clinicians rapidly narrow their search space and make informed diagnoses. 

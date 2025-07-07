@@ -10,19 +10,21 @@ intro_image_hide_on_mobile: false
 <!-- * Empowering precision medicine with GuRu and Heracles for enhanced classification and interpretation of genomic sequence variants. Pre-print 2025. -->
 
 
-## Selected works
+## Flagship tech
 
-* Lawless, Dylan, et al. "[Application of qualifying variants for genomic analysis](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2)" *medRxiv* preprint (2025).\\
-[DOI](https://doi.org/10.1101/2025.05.09.25324975) | [PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2.full.pdf) | [Video](https://switzerlandomics.ch/services/qv_database/)
-
-* Lawless, Dylan, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4)" *medRxiv* preprint (2025).\\
+* **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.03.25.25324607) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4.full.pdf)  
 
-* Lawless, Dylan, et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2)" *medRxiv* preprint (2025).\\
-[DOI](https://doi.org/10.1101/2025.03.20.25324319) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2.full.pdf)  
+* **QV**: Lawless, Dylan, et al. "[Application of qualifying variants for genomic analysis](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2)" *medRxiv* preprint (2025).\\
+[DOI](https://doi.org/10.1101/2025.05.09.25324975) | [PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2.full.pdf) | [Video](https://player.vimeo.com/video/1083533047) | [Application](https://switzerlandomics.ch/services/qv_database/)
 
-* Lawless, Dylan, et al. "[Archipelago method for variant set association test statistics](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v1)" *medRxiv* preprint (2025).\\
+* **PanelAppRex**: The quantitative omic epidemiology group, et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2)" *medRxiv* preprint (2025).\\
+[DOI](https://doi.org/10.1101/2025.03.20.25324319) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2.full.pdf) | [Video](https://player.vimeo.com/video/1099451293) | [Application](https://switzerlandomics.ch/services/panelAppRexAi/)
+
+* **Archipelago**: Lawless, Dylan, et al. "[Archipelago method for variant set association test statistics](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v1)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.03.17.25324111) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v1.full.pdf)  
+
+## Other works
 
 * Masters, Seth L., et al. "[Familial autoinflammation with neutrophilic dermatosis reveals a regulatory mechanism of pyrin activation](https://www.science.org/doi/abs/10.1126/scitranslmed.aaf1471?casa_token=ipq2OGm4M-QAAAAA:fHlOxMA_v1idvSgFTtU8GYnkplRPXwjQLe4taTfIREKxiEYrmqwttFfzWYNmxnAi2tqvww4LfS1Isn4&casa_token=ooPKruxkWM0AAAAA:byzIDVsA0LFThP1JGXxa0N4TB5JS4EJtA7enMfuPclYVuxu-jYJRSPTgeFOINarkLMKohszFC1-eGGo)" Science translational medicine 8.332 (2016): 332ra45-332ra45.\\
 [DOI](https://doi.org/10.1126/scitranslmed.aaf1471)

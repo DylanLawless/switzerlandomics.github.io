@@ -6,7 +6,7 @@ weight: 1
 
 Dante converts interpreted genomic data into precise, clinical-grade reports.
 
-![Dante reporting](/images/freepik_vectorjuice/ecological-strategy-development-natural-resources-access-ecologists-cartoon-characters_335657-3249.jpg)
+<!-- ![Dante reporting](/images/freepik_vectorjuice/ecological-strategy-development-natural-resources-access-ecologists-cartoon-characters_335657-3249.jpg) -->
 
 
 Dante is a state-of-the-art genomics analysis tool that generates clinical-grade genomic reports from Whole Genome Sequencing (WGS) data. 

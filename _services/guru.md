@@ -6,7 +6,7 @@ weight: 1
 
 GuRu automates the interpretation of variant evidence with precision and adherence to open standards and guidelines. 
 
-![GuRu interpretation](/images/freepik_vectorjuice/data-analyst-oversees-governs-income-expenses-with-magnifier-financial-management-system-finance-software-it-management-tool-concept_335657-1891.jpg)
+<!-- ![GuRu interpretation](/images/freepik_vectorjuice/data-analyst-oversees-governs-income-expenses-with-magnifier-financial-management-system-finance-software-it-management-tool-concept_335657-1891.jpg) -->
 
 GuRu is a **state-of-the-art tool** designed to **automate the interpretation of variant evidence**, specifically tailored for use in genomic research and clinical diagnostics. 
 This innovative tool simplifies the complex process of variant classification according **guidelines** including ACMG/AMP, ensuring **accurate**, **reliable**, and **reproducible results**.
