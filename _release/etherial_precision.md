@@ -1,11 +1,10 @@
 ---
 title: Etherial precision
 layout: page
-description: release
-permalink: "/etherial_precision/"
-intro_image_absolute: true
-intro_image_hide_on_mobile: false
+description: Precision analysis concept.
 ---
+
+<!-- permalink: "/etherial_precision/" -->
 
 <iframe src="{{ '/assets/release/release_1.pdf' | relative_url }}" width="100%" height="600px">
 </iframe>

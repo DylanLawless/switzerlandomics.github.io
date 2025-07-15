@@ -10,19 +10,30 @@ intro_image_hide_on_mobile: false
 <!-- * Empowering precision medicine with GuRu and Heracles for enhanced classification and interpretation of genomic sequence variants. Pre-print 2025. -->
 
 
-## Flagship tech
+## Flagship technologies
 
 * **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4)" *medRxiv* preprint (2025).\\
-[DOI](https://doi.org/10.1101/2025.03.25.25324607) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf)  
+[DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
+[PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf)  
 
 * **QV**: Lawless, Dylan, et al. "[Application of qualifying variants for genomic analysis](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2)" *medRxiv* preprint (2025).\\
-[DOI](https://doi.org/10.1101/2025.05.09.25324975) | [PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2.full.pdf) | [Video](https://player.vimeo.com/video/1083533047) | [Application](https://switzerlandomics.ch/services/qv_database/)
+[DOI](https://doi.org/10.1101/2025.05.09.25324975) | 
+[PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2.full.pdf) | 
+[Video](https://player.vimeo.com/video/1083533047) | 
+[Database](https://switzerlandomics.ch/technologies/qv_database/)  
 
 * **PanelAppRex**: The quantitative omic epidemiology group, et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2)" *medRxiv* preprint (2025).\\
-[DOI](https://doi.org/10.1101/2025.03.20.25324319) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3.full.pdf) | [Video](https://player.vimeo.com/video/1099451293) | [Application](https://switzerlandomics.ch/services/panelAppRexAi/)
+[Repository](https://github.com/DylanLawless/PanelAppRex) |
+[DOI](https://doi.org/10.1101/2025.03.20.25324319) | 
+[PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3.full.pdf) | 
+[Video](https://player.vimeo.com/video/1099451293) | 
+[Application](https://switzerlandomics.ch/technologies/panelAppRexAi/) | 
+[Dataset](https://doi.org/10.5281/zenodo.15736688)  
 
 * **Archipelago**: Lawless, Dylan, et al. "[Archipelago method for variant set association test statistics](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v1)" *medRxiv* preprint (2025).\\
-[DOI](https://doi.org/10.1101/2025.03.17.25324111) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v2.full.pdf)  
+[DOI](https://doi.org/10.1101/2025.03.17.25324111) | 
+[PDF](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v2.full.pdf) | 
+[Repository](https://github.com/DylanLawless/archipelago)  
 
 ## Other works
 

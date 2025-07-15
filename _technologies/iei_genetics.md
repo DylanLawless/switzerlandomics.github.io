@@ -7,7 +7,7 @@ weight: 1
 ## Streamline genetic diagnosis of IEI 
 to quantify both known and uncertain evidence into a single, evidence-based conclusion
 
-[![I.E.I genetics database](/images/services/var_risk_est_iei_genetics.png)](https://iei-genetics.github.io)
+[![I.E.I genetics database](/images/technologies/var_risk_est_iei_genetics.png)](https://iei-genetics.github.io)
 
 ## What we offer
 

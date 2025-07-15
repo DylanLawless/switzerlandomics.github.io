@@ -1,6 +1,6 @@
 #!/bin/bash
 # Navigate to the correct directory
-cd ~/web/switzerlandomics.github.io/_services
+cd ~/web/switzerlandomics.github.io/_technologies
 
 # Start by creating a new Markdown file with front matter
 cat > qv_database.md <<EOF

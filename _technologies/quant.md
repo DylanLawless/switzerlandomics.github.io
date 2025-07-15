@@ -9,7 +9,7 @@ bring statistical confidence to decision making in genetic diagnosis.
 
 <!-- Quant delivers evidence-based probabilities for clear and confident genetic diagnoses -->
 
-![Quant](/images/services/quant_icons.png)
+![Quant](/images/technologies/quant_icons.png)
 
     
 Quant is a statistical framework that transforms how we interpret genomic data by assigning calibrated, quantitative confidence to variant classification.
@@ -28,7 +28,7 @@ The supporting algorithms, <strong>Quant scan</strong> for extracting variant ev
 
 <!-- <div class="row align-items-center mb-4"> -->
 <!--   <div class="col-md-auto mb-3 mb-md-0"> -->
-<!--     <img src="/images/services/quant_logo_three_step_v2.png" -->
+<!--     <img src="/images/tech/quant_logo_three_step_v2.png" -->
 <!--          alt="Logo for quant, database, scan, calculate." -->
 <!--          style="width: 200px; height: auto;" /> -->
 <!--   </div> -->
@@ -52,7 +52,7 @@ The accompanying publication details the technical foundations can be found [her
 
 **Technically sound. Incredibly simple. The missing element in genomic interpretation.**
 
-<!-- <img src="/images/services/quant_logo_three_step_v2.png" alt="Logo for quant, database, scan, calculate." width="200" /> -->
+<!-- <img src="/images/tech/quant_logo_three_step_v2.png" alt="Logo for quant, database, scan, calculate." width="200" /> -->
 
 
 

@@ -14,12 +14,11 @@ logo:
   # 391 × 341
 
 home: 
-  limit_services: 6
+  limit_technologies: 6
 
 collections:
-  services:
+  technologies:
     output: true
-    sort_by: weight
   team:
     output: true
   blog:
@@ -27,14 +26,15 @@ collections:
     permalink: /blog/:name/
   release:
     output: true
+    permalink: /release/:name/
 
 
 defaults:
   - scope:
       path: ""
-      type: "services"
+      type: "technologies"
     values:
-      layout: "service"
+      layout: "tech"
   - scope:
       path: ""
       type: "team"
@@ -45,6 +45,11 @@ defaults:
       type: "publications"
     values:
       layout: "publication"
+  - scope:
+      path: ""
+      type: "releases"
+    values:
+      layout: "page"
 
 sass:
   style: compressed # possible values: nested expanded compact compressed
