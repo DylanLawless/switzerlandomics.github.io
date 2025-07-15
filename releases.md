@@ -29,7 +29,8 @@ intro_image_hide_on_mobile: false
 
 * **Genetic diagnosis of inborn-errors of immunity (IEI)**: open-source, world-leading database of IEI genetics provided as a subset of PanelAppRex for the community.\
 [Homepage](https://iei-genetics.github.io) | 
-[Database](https://iei-genetics.github.io/assets/iusis_iei_table_2025.html)  
+[Database](https://iei-genetics.github.io/assets/iusis_iei_table_2025.html) | 
+[Repository](https://github.com/DylanLawless/iei_genetics)  
 
 ## Media
 <ul>
