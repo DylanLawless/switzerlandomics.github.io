@@ -5,7 +5,7 @@ weight: 1
 ---
 
 Our flagship tech that
-bring statistical confidence to decision making in genetic diagnosis.
+brings statistical confidence to decision making in genetic diagnosis.
 
 <!-- Quant delivers evidence-based probabilities for clear and confident genetic diagnoses -->
 

@@ -48,5 +48,5 @@ Get occasional updates on our blog and breakthroughs. No spam, ever.
 }
 </style>
 
-<p><a href="/assets/submission_mailing_list" class="button-link">Join »</a></p>
+<p><a href="/assets/submission_mailing_list" class="button-link">Notify me »</a></p>
 
