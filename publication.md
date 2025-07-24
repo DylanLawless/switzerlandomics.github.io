@@ -14,7 +14,8 @@ intro_image_hide_on_mobile: false
 
 * **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
-[PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf)  
+[PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf) | 
+[Video](https://player.vimeo.com/video/1103512246)  
 
 * **QV**: Lawless, Dylan, et al. "[Application of qualifying variants for genomic analysis](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.05.09.25324975) | 

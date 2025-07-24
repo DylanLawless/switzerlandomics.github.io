@@ -7,9 +7,11 @@ weight: 1
 Our flagship tech that
 brings statistical confidence to decision making in genetic diagnosis.
 
+<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1103512246?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Qualifying variants"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+
+<br/>
 <!-- Quant delivers evidence-based probabilities for clear and confident genetic diagnoses -->
 
-![Quant](/images/technologies/quant_icons.png)
 
     
 Quant is a statistical framework that transforms how we interpret genomic data by assigning calibrated, quantitative confidence to variant classification.
@@ -18,6 +20,8 @@ For over a century, statisticians and geneticists have sought to quantify the pr
 Unlike traditional approaches that stop at binary calls of "pathogenic" or "benign," Quant measures every interpretation, integrating both observed variants and unobserved possibilities into a rigorous probabilistic model.
 Built on foundations of population genetics, Hardy-Weinberg expectations, and Bayesian inference, it delivers formal genome-wide priors tailored to each inheritance model: autosomal dominant, recessive, and X-linked.
 The system quantifies not only true positives, but also the probability of missed causal variants, enabling fully accountable and transparent conclusions.
+
+![Quant](/images/technologies/quant_icons.png)
 
 <!-- We provide the **Quant Database** of credible intervals as an exact, quantitative measure of variant interpretation. -->
 <!-- The supporting algorithms, **Quant Scan** for extracting variant evidence and **Quant Calc** for computing disease probabilities, can be applied to new datasets or integrated into existing diagnostic pipelines. -->

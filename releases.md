@@ -7,6 +7,13 @@ intro_image_absolute: true
 intro_image_hide_on_mobile: false
 ---
 
+* **Quant calc 001**: Base model with structured priors, full statistical framework, and real-world application. (Early access partners)
+
+* **Quant calc 000**: Minimal prototype showcasing core Bayesian engine, public data, and open-source code.\
+[DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
+[PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf) | 
+[Video](https://player.vimeo.com/video/1103512246)  
+
 * **Qualifying variant (QV)**: The QV database offers an open, shareable, and reproducible framework for genomic interpretation.\
 [DOI](https://doi.org/10.1101/2025.05.09.25324975) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2.full.pdf) | 
@@ -31,6 +38,10 @@ intro_image_hide_on_mobile: false
 [Homepage](https://iei-genetics.github.io) | 
 [Database](https://iei-genetics.github.io/assets/iusis_iei_table_2025.html) | 
 [Repository](https://github.com/DylanLawless/iei_genetics)  
+
+
+
+
 
 ## Media
 <ul>
