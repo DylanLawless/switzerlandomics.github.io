@@ -20,7 +20,8 @@ bodyClass: "page-technologies"
 
 <div class="container pt-6 pb-6">
   <div class="row">
-    {% for tech in site.technologies %}
+	{% assign sorted_techs = site.technologies | sort: "weight" %}
+	{% for tech in sorted_techs limit: limit %}
     <div class="col-12 col-md-6 mb-3">
       <div class="tech tech-summary">
         <div class="tech-content">

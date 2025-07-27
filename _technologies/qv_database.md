@@ -1,7 +1,7 @@
 ---
 title: "Qualifying variant database"
 date: 2025-01-01T00:00:01+10:00
-weight: 1
+weight: 2
 ---
 
 <!-- Enhancing precision in genomic interpretation through FAIR data, open and reproducible analysis criteria. -->

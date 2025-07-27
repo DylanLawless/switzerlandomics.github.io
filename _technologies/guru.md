@@ -1,7 +1,7 @@
 ---
 title: "GuRu interpretation"
 date: 2025-01-01T00:00:01+10:00
-weight: 1
+weight: 9
 ---
 
 GuRu automates the interpretation of variant evidence with precision and adherence to open standards and guidelines. 

@@ -1,7 +1,7 @@
 ---
 title: "Dante reporting"
 date: 2025-01-01T00:00:01+10:00
-weight: 1
+weight: 3
 ---
 
 Dante converts interpreted genomic data into precise, clinical-grade reports.
