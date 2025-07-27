@@ -11,12 +11,15 @@ main:
   - name: "Releases"
     url: "/releases/"
     weight: 4
+  - name: "Partners"
+    url: "/partnerships/"
+    weight: 5
   - name: "About"
     url: "/about/"
-    weight: 5
+    weight: 6
   - name: "Contact"
     url: "/contact/"
-    weight: 6
+    weight: 7
 
 footer:
   - name: "Home"
