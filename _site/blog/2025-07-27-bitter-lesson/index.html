@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>IEI genetics database</title>
+  <title>Alignment with Sutton's bitter lesson</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
   <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
@@ -19,7 +19,7 @@
   <link href="/assets/css/custom.css" rel="stylesheet">
   
   
-  <meta property="og:title" content="IEI genetics database"/>
+  <meta property="og:title" content="Alignment with Sutton's bitter lesson"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
@@ -30,7 +30,7 @@
 
 </head>
 
-<body class='page page-tech'>
+<body class='page page-basic'>
   <div id="main-menu-mobile" class="main-menu-mobile">
   
   <ul>
@@ -129,102 +129,45 @@
 
 
 
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
 
 
     <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
-  <div class="row justify-content-start">
-    <div class="col-12 col-md-8">
-      <div class="tech tech-single">
-        <h1 class="title">IEI genetics database</h1>
-        <div class="content"><h2 id="streamline-genetic-diagnosis-of-iei">Streamline genetic diagnosis of IEI</h2>
-<p>to quantify both known and uncertain evidence into a single, evidence-based conclusion</p>
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">Alignment with Sutton's bitter lesson</h1>
+                <div class="content"><p>2025-07-27</p>
 
-<p><a href="https://iei-genetics.github.io"><img src="/images/technologies/var_risk_est_iei_genetics.png" alt="I.E.I genetics database" /></a></p>
+<p>Sutton (2019)<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>  described a recurring pattern in the history of artificial intelligence: methods that rely on domain-specific human knowledge tend to perform well initially but are ultimately surpassed by general techniques that scale with increasing computation. Search and learning improve with scale and data availability, while expert-driven heuristics tend to plateau and resist generalisation. The lesson is not only empirical but structural, reflecting the long-term limitations of manually designed systems in settings where computation can be leveraged to discover patterns and optimise inference.</p>
 
-<h2 id="what-we-offer">What we offer</h2>
+<p>This principle applies directly to the design philosophy behind our work. Rather than embedding fixed assertions about gene function or variant effect, our approach is constructed around the premise that well-calibrated inputs and scalable models provide more durable progress. PanelAppRex produces harmonised disease-gene annotations that are optimised for statistical integration, with a focus on preserving traceability, mode of inheritance, and empirical evidence. While the choice of inputs inevitably reflects curatorial decisions, these are structured to facilitate inference, not to constrain it.</p>
 
-<ul>
-  <li><strong>Pre-calculated variant probabilities</strong>
-    <ul>
-      <li>Prior probabilities for 54 814 ClinVar variants across 557 IEI genes</li>
-      <li>Integrates population allele frequencies, ClinVar classifications and Hardy-Weinberg expectations under AD, AR and X-linked models</li>
-      <li>Available as flat files with TSV, Rds and HTML interface</li>
-    </ul>
-  </li>
-  <li><strong>Gene summary datasets</strong>
-    <ul>
-      <li>Per-gene summaries of pathogenic burden and inheritance mode distribution</li>
-      <li>Aligned to IUIS classification and ACMG guidelines</li>
-      <li>Ready for direct import into your analysis pipelines</li>
-    </ul>
-  </li>
-</ul>
+<p>Quant, our probabilistic interpretation system, adopts this foundation. The initial implementation used scaled ClinVar classifications to align with mainstream expectations and communicate the framework effectively. However, the system is agnostic to the provenance of evidence and supports probabilistic integration across multiple sources, including empirical frequency data, gene-level priors, and variant consequence predictions. The aim is to model the probability that any given variant explains a phenotype, accounting for both observed and unobserved causes, rather than replicating prior classifications.</p>
 
-<h2 id="what-you-can-do">What you can do</h2>
+<p>Sutton’s warning that “building in how we think we think” limits progress is particularly relevant in statistical genomics, where long-standing classification systems are often treated as final rather than provisional. By contrast, our approach treats variant interpretation as a statistical problem, grounded in likelihoods and calibrated inputs. The frameworks should be designed to improve as more data becomes available, without requiring redesign or human re-specification of interpretative rules.</p>
 
-<ul>
-  <li><strong>Evidence-aware diagnosis</strong>
-    <ul>
-      <li>Combine observed and unobserved variants in a Bayesian framework</li>
-      <li>Generate posterior probabilities with credible intervals for each candidate gene or variant</li>
-      <li>Distinguish supported, plausible-but-unseen and excluded findings</li>
-    </ul>
-  </li>
-  <li><strong>Streamlined reporting</strong>
-    <ul>
-      <li>Produce structured, confidence-ranked reports for clinicians or end users</li>
-      <li>Accelerate candidate gene ranking and manual review</li>
-    </ul>
-  </li>
-  <li><strong>Seamless integration</strong>
-    <ul>
-      <li>Plug in datasets as a diagnostic engine into your bioinformat platform</li>
-      <li>Reduce manual curation, speed up turnaround and deliver a consistent, high-confidence product</li>
-    </ul>
-  </li>
-</ul>
-
-<h2 id="free-version">Free version</h2>
-
-<p>The public base model IEI genetics database is available at:</p>
-
-<p><strong><a href="https://iei-genetics.github.io">https://iei-genetics.github.io</a></strong></p>
-
-<p>This resource provides core data, and the related publication covers the foundational technical implementations.
-Full text: <a href="https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v3.full.pdf+html">PDF link</a>.</p>
-
-<p>Please cite:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@article {Lawless2025VarRiskEst,
-	author = {Lawless, Dylan},
-	title = {Quantitative prior probabilities for disease-causing variants reveal the top genetic contributors in inborn errors of immunity},
-	year = {2025},
-	doi = {10.1101/2025.03.25.25324607},
-	publisher = {Cold Spring Harbor Laboratory Press}
-}
-</code></pre></div></div>
-
-<h2 id="professional-version">Professional version</h2>
-
-<p>A professional version was developed as a follow up to the open source public version.
-It includes extended data via a database download (<a href="https://drive.google.com/file/d/1cDE3gETAr8KkVnJ-WfKANHricGWGTBiU/view?usp=share_link">readme.md</a>) containing flat files in TSV, Rds and an HTML interface, and is licenced for commercial use. 
-This version is available for companies wishing to use these data in their analysis results, in cases where the public licence may restrict commercial product development.</p>
-
-<!-- Our licence covers the necessary use of commercial cloud high-performance computing for development. -->
-
-<!-- <script async -->
-<!--   src="https://js.stripe.com/v3/buy-button.js"> -->
-<!-- </script> -->
-
-<!-- <stripe-buy-button -->
-<!--   buy-button-id="buy_btn_1RHOGH2MuWhgHdB6QlL4hC5O" -->
-<!--   publishable-key="pk_live_51RHMa52MuWhgHdB68R2P58CJu2YtBR6fOCHE28yaSapxKGbafxhmUMFuQ8fowJud5Gbt01k5lXbztuJQnqI93XGI00HGGGyhdA" -->
-<!-- > -->
-<!-- </stripe-buy-button> -->
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Sutton, R.S. (2019). <em>The Bitter Lesson</em> (<a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">http://www.incompleteideas.net/IncIdeas/BitterLesson.html</a>). <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
 </div>
-      </div>
+</div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
   </div>

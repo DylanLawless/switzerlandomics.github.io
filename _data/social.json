@@ -8,11 +8,6 @@
       "name": "Email",
       "link": "mailto:admin@switzerlandomics.ch ",
       "image": "images/social/email.svg"
-  },
-  {
-      "name": "Discord",
-      "link": "https://discord.gg/jn8rWJVu",
-      "image": "images/social/discord.svg"
   }
 
 ]

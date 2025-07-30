@@ -1,52 +1,51 @@
 ---
-title: Switzerland Omics CEO Page
+title: Switzerland Omics CEO page
 layout: page
 ---
 
-Someone on your clinical or technical team just recommended Switzerland Omics for genomic variant interpretation or diagnostics.
+Someone on your clinical or technical team has recommended Switzerland Omics for more advanced genomics.
 
-It was easy to convince them. Our approach is technically rigorous, clinically explainable, and designed to make sense from first principles. It's built for professionals who value clarity, precision, and accountability.
+They were likely persuaded by the rigour, transparency, and statistical clarity of our methods. The systems are built to support decision-making that is accountable, explainable, and aligned with the principles of clinical genetics.
 
-Here's why you should follow their recommendation.
-
----
-
-**Built for precision medicine from day one**
-
-Switzerland Omics was founded to address a fundamental gap: variant interpretation today is fragmented, heuristic, and often reactive. Our solution is based on stringent statistical modelling with Bayesian probability, integrating observed and unobserved evidence to yield decisive, transparent answers.
-
-We focus on accuracy and auditability, not hype. Our methods quantify what can be known, what is missing, and what can never be concluded, so that each clinical result is fully evidence-aware.
+Here is what that means for you.
 
 ---
 
-**Independent, accountable, and trustworthy**
+**Designed for precision medicine from first principles**
 
-We are not a wrapper on someone else's pipeline. We own the full stack — from variant datasets to probabilistic reasoning frameworks — and build everything in-house.
-We use our own models clinically, and all methods are openly documented and reproducible.
+Switzerland Omics addresses a structural problem in variant interpretation: methods are often fragmented, heuristic, and difficult to audit. We take a different approach, based on statistical modelling grounded in Bayesian probability. Our framework quantifies not only observed findings but also unobserved and uncertain elements, enabling a principled estimate of what the data supports, what it cannot exclude, and where uncertainty remains.
 
-We're not trying to sell a mystery. You'll know how every conclusion was made.
-
----
-
-**Regulatory-ready, data-proven**
-
-We follow best practices for variant classification, ACMG standards, and population-scale statistical modelling. Our frameworks have been validated on national cohorts and are aligned with clinical guidelines.
-We support reproducible audits and technical reports that can be reviewed by both researchers and regulators.
+This allows each result to be evidence-calibrated, traceable, and compatible with evolving data resources.
 
 ---
 
-**Clear pricing, honest support, no lock-in**
+**Independent implementation, full technical control**
 
-We don't charge per click or hide features behind pricing tiers. Whether you're a single hospital or a national lab, you'll get full access to our platform with transparent pricing and straightforward support.
-Our outputs are standardised, open-format, and designed for integration, not entrapment.
+All core methods are developed in-house, from curated datasets to the probabilistic inference systems that support interpretation and reporting. Where appropriate, we incorporate open-source tools that form part of the established omics infrastructure, provided they are transparent, documented, and stable for use. We do not license commercial third-party pipelines or depend on black-box systems. The models we provide are those we use ourselves with public evaluation and reporting.
+
+Documentation is openly available, and all logic is reproducible. You will always be able to understand how conclusions were derived.
 
 ---
 
-**More information**
+**Standards-aligned, audit-capable**
 
-Switzerland Omics offers detailed documentation and clinical report examples.
-You'll find our publications, data models, and validation studies online.
-We welcome questions, real-world test cases, or audits of our methods.
+Switzerland Omics operates as a precision system. Every component, from source code to variant database to financial documentation, is versioned and traceable. Models are developed in line with recognised clinical and statistical standards, and are structured for compatibility with research and regulatory review.
 
-Please contact [admin@switzerlandomics.ch](mailto:admin@switzerlandomics.ch) - or reach out directly to the founder, Dylan Lawless ([dylan@switzerlandomics.ch](mailto:dylan@switzerlandomics.ch)).
+Our algorithms and datasets are built to support reproducible, independent audit by the clinical and technical teams that apply them in practice.
 
+---
+
+**Transparent terms, long-term use**
+
+We offer full technical access under clear terms, without lllsage-based pricing or feature gating. Support is matched to the operational needs. Outputs follow open formats, with consistent structure and clear specification for downstream integration.
+
+There are no dependencies that restrict use or reuse. Data can be exported, validated, and incorporated into other systems without modification.
+
+---
+
+**Further materials and contact**
+
+We publish validation work, data model specifications, and clinical report examples for review. 
+All documentation is available online.
+
+Enquiries can be sent to [admin@switzerlandomics.ch](mailto:admin@switzerlandomics.ch) or directly to the founder, Dylan Lawless ([dylan@switzerlandomics.ch](mailto:dylan@switzerlandomics.ch)).
