@@ -1,73 +1,79 @@
-# SwissPedHealth PipeDev landing
+# Switzerland Omics Website
 
-This is the initial README for the PipelineDev page:
-<https://swisspedhealth-pipelinedev.github.io>.
+This is the public website for [Switzerland Omics](https://switzerlandomics.ch), a Zurich-based genomics technology company building statistical frameworks, inference systems, and omic tools for bleeding-edge tech.
 
-## Cloning and keys
-### Summary
-Instead of the default method for cloning, if:
-1. you have a ssh key set up for your github account and 
-2. you are an organisation member, you can specify your username for github to clone:
+> 🌐 Live site: [switzerlandomics.ch](https://switzerlandomics.ch)  
+> 📂 Site git: (here) [github.com/switzerlandomics.github.io](https://github.com/DylanLawless/switzerlandomics.github.io)  
+> 📘 Technical docs: [docs.switzerlandomics.ch](https://docs.switzerlandomics.ch)  
+> 📂 Docs git: [github.com/docs-switzerlandomics.github.io](https://github.com/docs-switzerlandomics.github.io)
 
-`git clone git@dylanlawless.github.com:SwissPedHealth-PipelineDev/SwissPedHealth-PipelineDev.github.io.git`
+---
 
-Then set the local user 
-`cd docs`
-`git config user.email personemail@addess.com`
-`git config user.name DylanLawless`
+## Overview
 
-### Datails of why this is done
-Since I work with others and use different accounts, machines, emails, here are some notes incase you or I need them.
+The main website is a static Jekyll site styled for clarity, minimalism, and credibility.  
+It introduces Switzerland Omics' products (e.g. **Quant**, **PanelAppRex AI**), outlines our approach to variant interpretation, and includes information about partnerships, research, and contact.
 
-To push to multiple github accounts with different keys,
-and different machines, these settings can be used.
-Instead of a global git config, local configs are used for each repo.
-Here is the example with two of my repos.
-The custom usernames for the local repo is shown (but custom email is removed to prevent spam).
-[Create your ssh keys as per github recommendation](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). 
-In the .ssh directory, the config file will assign the key to each git repository that you clone based on the Host that you use. i.e. custom instead of the default:
+Some parts of the broader Switzerland Omics web stack use additional infrastructure including:
 
-* git clone git@custom.github.com:accout/repo.git
-* git clone git@github.com:accout/repo.git
+- 🔧 **Netlify functions** support on-demand content and integrations, including AI agents  
+- 🧬 A separate authenticated platform (customer-facing) uses:
+  - **Next.js 15 (Turbopack)**  
+  - **Supabase** for auth, database, and storage  
+  - **Stripe** for one-time payments  
+  - **Drizzle ORM**, **Tailwind CSS**, and **Radix UI**
 
+These systems are not part of the main static site but are developed internally under `~/so`, alongside `~/so/web/switzerlandomics.ch`, on dedicated company infrastructure.
 
-``` bash 
-## Set up the ssh config file
-cd ~/.ssh/config
+---
 
-## set such that Host and User are custom
-# lawlessgenomics repo
-Host dylanlawless.github.com
-  HostName github.com
-  User DylanLawless
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/key1_rsa
-  IdentitiesOnly yes
+## Local development
 
-# other repo
-Host otherrepo.github.com
-  HostName github.com
-  User username
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/key2_rsa
-  IdentitiesOnly yes
+To serve the static site locally:
 
-```
+```bash
+sh jek.sh
+sh kill_serve.sh
+````
 
-Then clone your repo using the custom Host instead of the default provided by github when you use button "clone/ssh/copy".
+This will stop and start the testing env, equivalent to: 
 
-``` bash
-# Clone using the correct Host as per config.
-# As shown at the end of this page, you may need to clone with submodules.
-# You can do by add the "--recursive" flag. 
-git clone --recursive git@dylanlawless.github.com:SwissPedHealth-PipelineDev.github.io.git
+```bash
+bundle install
+bundle exec jekyll serve
+````
 
-# Set the local user here (instead of global, i.e. /Users/user/.gitconfig)
-cd "the cloned repo dir"
-git config user.email personemail@addess.com
-git config user.name DylanLawless
-```
+Site runs at [http://localhost:4000](http://localhost:4000).
 
-You should now be able to pull and push from that repo without the ["incorrect user" problems](https://stackoverflow.com/questions/4665337/git-pushing-to-remote-github-repository-as-wrong-user).
+---
 
+## Site structure
+
+* Main content pages include:
+	- `*.md` - top-level pages (e.g. `about.md`, `technologies.md`, `pitch.md`)
+	- `_technologies/` - the main product pages such as `quant.md`
+* Supporting pages:
+	- `_includes/` - reusable components (e.g. callout boxes)
+	- `_layouts/` - page templates
+	- `_data/` - contact metadata and config
+	- `_sass/` - custom styling rules
+	- `assets/` - images, fonts, and design assets
+
+---
+
+## Contributions
+
+This site is maintained by the Switzerland Omics team.
+External contributions are not accepted at this time.
+Valid pull requests are appreciated, likely to be accepted, and used.
+If you notice an issue, feel free to open one.
+
+For technical frameworks and probabilistic inference tooling, see our [documentation portal](https://docs.switzerlandomics.ch).
+
+---
+
+## License
+
+Website source code is released under the [MIT License](LICENSE).
+All content, trademarks, and product names are © Switzerland Omics. All rights reserved.
 

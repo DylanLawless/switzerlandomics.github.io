@@ -9,14 +9,14 @@ intro_image_hide_on_mobile: false
 
 **We build systems. You build with them.**
 
-Switzerland Omics partners with teams building the next generation of genomic infrastructure.  
+Switzerland Omics partners with teams building the next generation of genomic infrastructure.
 We offer direct access to statistical engines, structured datasets, and variant-level inference frameworks, ready to integrate, adapt, or extend.
 
 ---
 
 ## What we offer
 
-We don’t deliver outputs. We deliver systems that make outputs accountable.
+We don't deliver outputs. We deliver systems that make outputs accountable.
 
 - **Probabilistic frameworks** for variant interpretation and evidence quantification  
 - **Structured databases** of priors, classification signals, and causal architecture  
