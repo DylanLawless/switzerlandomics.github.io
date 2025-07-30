@@ -14,6 +14,11 @@ Traditional approaches stop at labels like *pathogenic*, *benign*, or *damaging*
 
 Quant replaces labels with a probabilistic framework. It estimates how likely any variant, observed or not, explains a functional effect.
 
+> For every possible variant and effect combination, we get:  
+> "Overall probability of a correct causal diagnosis due to SNV/INDEL with current evidence: **0.511 (95% CrI: 0.237–0.774)**."
+
+The same structure applies in numerous scenarios including rare disease diagnosis, drug target selection, variant reclassification, and genome design.
+
 Built on Hardy-Weinberg theory, Bayesian inference, and population-scale priors, Quant turns variant interpretation into a reproducible, rigorous system.
 
 ---
@@ -24,6 +29,23 @@ Built on Hardy-Weinberg theory, Bayesian inference, and population-scale priors,
 <script src="https://player.vimeo.com/api/player.js"></script>
 
 ---
+
+## Who it’s for
+
+**Quant is built for universal use by:**
+
+- Global biotech companies  
+- Major hospital systems  
+- Small, focused research teams  
+
+**Across cutting-edge applications:**
+
+- AI models for genomic interpretation  
+- Genome editing and design platforms  
+- Large-scale population reference datasets  
+- Clinical diagnostics and variant pipelines  
+- Digital twin platforms for personalised simulation  
+
 
 ## A complete inference system
 
@@ -39,9 +61,14 @@ Validated in national studies. AI-ready format. Built for clinical labs, researc
 
 ---
 
+<!-- <div class="call"> -->
+<!-- For over a century, genomics lacked a way to quantify whether a variant causes an effect. Quant is the first system to compute genome-wide causal probabilities for every variant-phenotype pair; even including unobserved variants. -->
+<!-- </p> -->
+<!-- </div> -->
+
 ## Publications and data
 
-* **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4)" *medRxiv* preprint (2025).\\
+* **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf) | 
 [Video](https://player.vimeo.com/video/1103512246)  

@@ -12,18 +12,18 @@ intro_image_hide_on_mobile: false
 
 ## Flagship technologies
 
-* **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4)" *medRxiv* preprint (2025).\\
+* **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf) | 
 [Video](https://player.vimeo.com/video/1103512246)  
 
-* **QV**: Lawless, Dylan, et al. "[Application of qualifying variants for genomic analysis](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2)" *medRxiv* preprint (2025).\\
+* **QV**: Lawless, Dylan, et al. "[Application of qualifying variants for genomic analysis](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v3)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.05.09.25324975) | 
-[PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v2.full.pdf) | 
+[PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v3.full.pdf) | 
 [Video](https://player.vimeo.com/video/1083533047) | 
 [Database](https://switzerlandomics.ch/technologies/qv_database/)  
 
-* **PanelAppRex**: The quantitative omic epidemiology group, et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2)" *medRxiv* preprint (2025).\\
+* **PanelAppRex**: Quant Group, et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3)" *medRxiv* preprint (2025).\\
 [Repository](https://github.com/DylanLawless/PanelAppRex) |
 [DOI](https://doi.org/10.1101/2025.03.20.25324319) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3.full.pdf) | 

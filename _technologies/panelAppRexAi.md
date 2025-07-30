@@ -58,5 +58,10 @@ While our robust database underpins this tool, we are actively refining the user
 <!-- For further details, visit Genomics England’s PanelApp at <https://panelapp.genomicsengland.co.uk/panels/>. -->
 **Please cite:**
 <!-- Lawless, Dylan, et al. "PanelAppRex aggregates disease gene panels and facilitates sophisticated search". medRxiv 2025.03.20.25324319; doi: <https://doi.org/10.1101/2025.03.20.25324319> - [PDF download](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v1.full.pdf). -->
-Lawless, C., et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2)" *medRxiv* preprint (2025).\\
-[DOI](https://doi.org/10.1101/2025.03.20.25324319) | [PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v2.full.pdf)  
+Quant Group, et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3)" *medRxiv* preprint (2025).\\
+[Repository](https://github.com/DylanLawless/PanelAppRex) |
+[DOI](https://doi.org/10.1101/2025.03.20.25324319) | 
+[PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3.full.pdf) | 
+[Video](https://player.vimeo.com/video/1099451293) | 
+[Application](https://switzerlandomics.ch/technologies/panelAppRexAi/) | 
+[Dataset](https://doi.org/10.5281/zenodo.15736688)  
