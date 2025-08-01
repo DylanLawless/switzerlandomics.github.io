@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>The new paradigm of causal genomic interpretation through Bayesian posterior inference</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  
+  <meta property="og:title" content="The new paradigm of causal genomic interpretation through Bayesian posterior inference"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">The new paradigm of causal genomic interpretation through Bayesian posterior inference</h1>
+                <div class="content"><p>2025-08-01</p>
+
+<p>Precision medicine, pharmaceutical development, biotechnology, and genomic research have all advanced under a framework that classifies variants into fixed categories such as pathogenic or benign. This was a necessary compromise, adopted when reference data were limited and statistical infrastructure immature. But categorical labels collapse uncertainty and obscure quantitative reasoning.</p>
+
+<p>With a massive scale of genomics and refernce data now available, we can return to the foundational tools of probability theory and statistical inference, methods originally developed to address uncertainty in biological. These same principles underpin modern AI, bioinformatics, and statistical genetics. The correct frame of reference provides a coherent framework for replacing categorical classification with rigorous, probabilistic interpretation of variant effect.</p>
+
+<p>We demonstrate this approach with a simplified example.
+Imaging a human who is suffering from a rare genetic disease. An autosomal dominat autoinflammatory condition, potentially caused by a gain-of-function variant in a gene that is known to cause this condition.</p>
+
+<p>We begin with priors derived from population-scale datasets capturing biological knowledge such as variant frequency, gene and protein function, domain-level constraint, and regional tolerance to variation.</p>
+
+<div style="display: flex; justify-content: center; flex-wrap: wrap;">
+  <div style="flex: 0 0 50%; min-width: 300px;">
+    <img src="/images/var_risk_est/animate/quant_anim0.gif" alt="Quant animation 0" style="width: 100%;" />
+  </div>
+</div>
+
+<p>Cumulative evidence from these sources is integrated to estimate the prior probability of occurrence for each variant. Some variants are predicted to be highly damaging based on structural or functional annotations, such as AlphaFold or AlphaMissense. Others are constrained by population frequency, with resources like gnomAD enabling the estimation of how likely a random individual is to carry a given variant. Together, these data define a structured prior over the space of plausible causal alleles and provide the foundation for probabilistic inference.</p>
+
+<p>Rather than limiting inference to variants observed in the patient’s sequencing data, it is important to also model potential false negatives, including plausible causal variants that may be missing due to technical artefacts or incomplete coverage. In this simplified example we can define four variant classes: observed causal, observed non-causal, missing causal, and missing non-causal. Prior probabilities are distributed across these classes based on allele frequency, gene-disease associations, and functional annotation.</p>
+
+<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+  <div style="flex: 1 1 300px; min-width: 300px;">
+    <img src="/images/var_risk_est/animate/quant_anim1.gif" alt="Quant animation 1" style="width: 100%;" />
+  </div>
+  <div style="flex: 1 1 300px; min-width: 300px;">
+    <img src="/images/var_risk_est/animate/quant_anim2.gif" alt="Quant animation 2" style="width: 100%;" />
+  </div>
+</div>
+
+<p>Prior probabilities are computed for all plausible variants, regardless of whether they are ultimately observed in a given patient. 
+This inference step integrates annotation, allele frequency, and gene-phenotype relevance, informed by the patient’s data context (e.g. sequencing scope and phenotype).</p>
+
+<p>Some variants may never appear in the data, but from prior knowledge alone, they remain valid candidates. 
+The model evaluates every plausible variant, not just the ones you can see.</p>
+
+<p>In the example case, two variants dominate the posterior: one observed (p.Ser237Ter) and one unobserved but biologically plausible (c.159+1G&gt;A). 
+The second variant is absent from the patient’s data, but cannot be dismissed, as its pathogenicity and gene context make it a credible candidate. 
+Variants with minimal prior support contribute little to the posterior, but are retained for completeness.</p>
+
+<div style="display: flex; justify-content: center; flex-wrap: wrap;">
+  <div style="flex: 0 0 50%; min-width: 300px;">
+    <img src="/images/var_risk_est/animate/quant_anim3.gif" alt="Quant animation 3" style="width: 100%;" />
+  </div>
+</div>
+
+<p>Posterior mass is aggregated by event. 
+All events are independently assessed. 
+The observed variant contributes 43.1% to the posterior probability of disease causation. 
+The other unobserved candidate accounts for the next largest proportion of 40.2%, and the remainder is distributed across low-impact variants. 
+This distribution reflects both statistical uncertainty and the presence of unsequenced positions.</p>
+
+<p><img src="/images/var_risk_est/animate/quant_anim4.gif" alt="Quant animation 4" /></p>
+
+<p>When follow-up analysis confirms that the unobserved candidate is wild-type, the posterior shifts. 
+The probability that the observed variant is causal rises to 77%, with a 95% credible interval of [0.65, 0.90]. 
+The previously unresolved uncertainty is now quantified and updated.</p>
+
+<p>Quant Calc enables variant interpretation through explicit statistical inference. 
+By modelling all potential events, and updating beliefs as new evidence arrives, it delivers rigorous, interpretable conclusions grounded in prior probability and posterior support.</p>
+
+<p>For deeper reading, see:</p>
+<ul>
+  <li><strong>Quant</strong>: The quantitative omic epidemiology group, et al. “<a href="https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5">Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity</a>” <em>medRxiv</em> preprint (2025).<br />
+<a href="https://doi.org/10.1101/2025.03.25.25324607">DOI</a> | 
+<a href="https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf">PDF</a></li>
+</ul>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
