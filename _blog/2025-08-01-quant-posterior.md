@@ -67,6 +67,13 @@ The previously unresolved uncertainty is now quantified and updated.
 Quant Calc enables variant interpretation through explicit statistical inference. 
 By modelling all potential events, and updating beliefs as new evidence arrives, it delivers rigorous, interpretable conclusions grounded in prior probability and posterior support.
 
+Consider the possibilities of scaling across every combination. 
+A database of **empirical priors** (like Quant DB) is a powerful tool on its own. In combination with the new layers (using Quant Scan and Calc) we reach a further **posterior** probability that is conclusive given the peak of our current knowledge. 
+
+![Quant animation 5](/images/var_risk_est/animate/geno_pheno_scan_animated.gif)
+
+> "This is your last chance. After this, there is no turning back. You take the blue pill - the story ends, you wake up in your bed and believe whatever you want to believe. You take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes. Remember, all I'm offering is the truth - nothing more." 
+
 For deeper reading, see:
 * **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
