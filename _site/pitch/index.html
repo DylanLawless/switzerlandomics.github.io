@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Quant by SwitzerlandOmics</title>
+  <title>Quant seed funding pitch</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
   <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
@@ -18,12 +18,12 @@
   <link href="/assets/css/style.css" rel="stylesheet">
   <link href="/assets/css/custom.css" rel="stylesheet">
   
-  <meta name="description" content="Pitch" />
-  <meta property="og:title" content="Quant by SwitzerlandOmics"/>
+  <meta name="description" content="Seed funding pitch" />
+  <meta property="og:title" content="Quant seed funding pitch"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
-  <meta property="og:description" content="Pitch"/>
+  <meta property="og:description" content="Seed funding pitch"/>
   <meta name="twitter:card" content="summary"/>
   
   
@@ -135,60 +135,150 @@
     <div class="row justify-content-start">
         <div class="col-12 col-md-8">
             <div class="tech tech-single">
-                <h1 class="title">Quant by SwitzerlandOmics</h1>
-                <div class="content"><p><strong>Quant is the critical layer that makes genomics work: interpretable, actionable, and accountable.</strong></p>
+                <h1 class="title">Quant seed funding pitch</h1>
+                <div class="content"><hr />
 
-<p><em>Technically sound. Incredibly simple.</em></p>
+<p><strong>Company:</strong><br />
+Switzerland Omics GmbH/Sàrl (in formation)<br />
+<a href="https://switzerlandomics.ch">switzerlandomics.ch</a></p>
+
+<p><strong>Product:</strong><br />
+Quant (<a href="/technologies/quant/">product page</a>)
+is the missing layer that makes genomics work.
+Interpretable, actionable, and accountable.</p>
+
+<p><strong>Founders:</strong><br />
+12 years of PhD-level experience in applied genomics and statistical modelling. 
+Backed by federal funding, national-scale clinical studies, and six years of development across UZH, EPFL, and ETH Zurich. 
+Supported by senior advisors with academic, commercial, and regulatory expertise.</p>
+
+<p><strong>Stage:</strong> Pre-incorporation.<br />
+<strong>Grant requested:</strong> CHF 75,000 for legal setup and secure infrastructure.</p>
 
 <hr />
 
-<p><strong>Company name:</strong>
-<em>SwitzerlandOmics GmbH</em> (in formation)</p>
+<h2 id="pitch-deck">Pitch deck</h2>
 
-<p><strong>Website:</strong>
-<a href="https://switzerlandomics.ch">SwitzerlandOmics.ch</a></p>
+<div class="quant-slideshow">
+  <img src="/images/pitch_deck/pitch_deck_01/Slide1.png" class="quant-slide" alt="Slide 1" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide2.png" class="quant-slide" alt="Slide 2" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide3.png" class="quant-slide" alt="Slide 3" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide4.png" class="quant-slide" alt="Slide 4" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide5.png" class="quant-slide" alt="Slide 5" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide6.png" class="quant-slide" alt="Slide 6" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide7.png" class="quant-slide" alt="Slide 7" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide8.png" class="quant-slide" alt="Slide 8" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide9.png" class="quant-slide" alt="Slide 9" />
+  <img src="/images/pitch_deck/pitch_deck_01/Slide10.png" class="quant-slide" alt="Slide 10" />
 
-<p><strong>Founders:</strong>
-12 years of PhD-level experience in applied genomics and statistical modelling.
-Backed by federal funding, national-scale clinical studies, and a proven track record of delivering complex projects on time and on budget-including six years of development across UZH, EPFL, and ETH Zurich.</p>
+  <div class="quant-controls">
+    <button onclick="quantPrevSlide()">← Previous</button>
+    <button onclick="quantNextSlide()">Next →</button>
+  </div>
+</div>
 
-<p><strong>Stage:</strong> Pre-incorporation</p>
+<style>
+  .quant-slideshow {
+    margin: 2rem 0;
+  }
+  .quant-slide {
+    display: none;
+    width: 100%;
+    height: auto;
+  }
+  .quant-slide.quant-active {
+    display: block;
+  }
+  .quant-controls {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+  .quant-controls button {
+    background: #eee;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    margin: 0 0.4rem;
+    cursor: pointer;
+  }
+</style>
 
-<p><strong>Grant requested:</strong> CHF 10,000 for company registration and secure data hosting.</p>
+<script>
+  const quantSlides = document.querySelectorAll('.quant-slide');
+  let quantCurrent = 0;
+
+  function quantShowSlide(index) {
+    quantSlides.forEach((slide, i) => {
+      slide.classList.toggle('quant-active', i === index);
+    });
+  }
+
+  function quantNextSlide() {
+    quantCurrent = (quantCurrent + 1) % quantSlides.length;
+    quantShowSlide(quantCurrent);
+  }
+
+  function quantPrevSlide() {
+    quantCurrent = (quantCurrent - 1 + quantSlides.length) % quantSlides.length;
+    quantShowSlide(quantCurrent);
+  }
+
+  // Show first slide on load
+  quantShowSlide(quantCurrent);
+</script>
 
 <hr />
 
 <h2 id="-the-gap">🧭 The gap</h2>
 
-<p><strong>Genomics has extraordinary promise—but it remains underused.</strong>
-From patient diagnosis to drug development, medical decisions depend on understanding how genetic variants cause disease. Sequencing is fast and affordable. But one thing is still missing:</p>
+<p>Genomic sequencing is fast and affordable. But interpretation remains the bottleneck.</p>
+
+<p>Clinical and pharmaceutical decisions depend on variant interpretation - yet current methods are fragmented, uncertain, and incomplete.</p>
 
 <blockquote>
-  <p>A systematic, probability-based framework to interpret genetic variants—across all genes, inheritance modes, and evidence types.</p>
+  <p>This is a 100-year-old problem requiring data and algorithms. Despite decades of theory, no complete solution existed until now.</p>
 </blockquote>
-
-<p>Despite over a century of theoretical groundwork, this problem has never been solved. Until now.</p>
 
 <hr />
 
-<h2 id="-our-solution-quant">🧬 Our Solution: Quant</h2>
-
-<p><strong>Quant is a statistical engine and product suite that delivers calibrated, genome-wide probabilities of disease causality.</strong>
-It includes three interoperable components:</p>
+<h2 id="-our-solution">🧬 Our solution</h2>
+<p>Quant (<a href="/technologies/quant/">product page</a>)
+is the first calibrated, genome-wide framework that turns raw variant evidence into interpretable, probabilistic Bayesian conclusions.
+It is a statistical engine and product suite.
+It consists of three interoperable tools:</p>
 
 <ul>
-  <li><strong>Quant database</strong> - pre-computed, licensable genome-wide priors.</li>
-  <li><strong>Quant scan</strong> - applies priors to real-world variant data for case interpretation.</li>
-  <li><strong>Quant calc</strong> - licensable algorithms to perform full probabilistic inference on new datasets.</li>
+  <li><strong>Quant database</strong>: pre-computed genome-wide priors.</li>
+  <li><strong>Quant scan</strong>: prepares and structures customer input.</li>
+  <li><strong>Quant calc</strong>: performs probabilistic inference and outputs credible intervals.</li>
 </ul>
 
-<p>Key capabilities:</p>
+<p>Capabilities:</p>
 
 <ul>
-  <li>Priors tailored for autosomal dominant, recessive, and X-linked models.</li>
-  <li>Integration of allele frequencies, Hardy-Weinberg equilibrium, ClinVar classifications, and uncertainty.</li>
-  <li>Outputs <strong>credible intervals</strong> and variant-/gene-level disease probabilities.</li>
-  <li>Validated on national-level cohorts across immune and rare disease genetics.</li>
+  <li>Genome and variant-level confidence outputs with full uncertainty accounting.</li>
+  <li>Tailored priors for dominant, recessive, and X-linked models in disease.</li>
+  <li>Integration of trusted databases including allele frequencies and clincal genetics.</li>
+  <li>Validated on national-scale disease datasets.</li>
+</ul>
+
+<hr />
+
+<h2 id="-vision">📈 Vision</h2>
+<p>Quant brings a generational shift in how genetic variation is understood.</p>
+<ul>
+  <li>Our long-term goal is to license Quant across diagnostics, drug pipelines, and commercial genomics.</li>
+  <li>A free tier is popularising our work through open-source, academically licensed software and datasets.</li>
+  <li>We continue to build complementary products, including <strong>PanelAppRex AI</strong> (curated gene panels), <strong>Dante</strong> (AI-assisted clinical reporting), and related public/private databases to support scalable growth.</li>
+</ul>
+
+<hr />
+
+<h2 id="-traction">📍 Traction</h2>
+<ul>
+  <li>Used in national rare disease diagnostics (Switzerland).</li>
+  <li>Users of our documentation, codebase, and datasets.</li>
+  <li>2000+ online users.</li>
+  <li>300+ database users (i.e. downloads suitable for professionals).</li>
 </ul>
 
 <hr />
@@ -196,88 +286,122 @@ It includes three interoperable components:</p>
 <h2 id="-product-maturity">🧱 Product maturity</h2>
 
 <ul>
-  <li><strong>6 years of development</strong> at UZH, EPFL, ETH Zurich</li>
-  <li><strong>Peer-reviewed publications</strong> and real-world validation</li>
-  <li>Tools ready for use: <strong>Quant database</strong>  <strong>Quant scan</strong>, <strong>Quant calc</strong>, <strong>PanelAppRex AI</strong>, <strong>QV database</strong></li>
+  <li>6 years of development at UZH, EPFL, ETH Zurich.</li>
+  <li>Peer-reviewed publications and cohort-scale validation.</li>
+  <li>Ready-to-use tools: <strong>Quant db</strong>, <strong>Quant scan</strong>, <strong>Quant calc</strong>, <strong>QV database</strong>, <strong>PanelAppRex AI</strong>.</li>
 </ul>
 
 <hr />
 
-<h2 id="-use-of-funds-chf-10000">💰 Use of funds (CHF 10,000)</h2>
+<h2 id="-use-of-funds-chf-75000">💰 Use of funds (CHF 75,000)</h2>
 
 <table>
   <thead>
     <tr>
       <th>Purpose</th>
-      <th>Estimate</th>
+      <th style="text-align: right">Estimate (CHF)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>Legal &amp; incorporation (GmbH)</td>
-      <td>CHF 3,000</td>
+      <td>Legal registration (GmbH)</td>
+      <td style="text-align: right">3’000</td>
     </tr>
     <tr>
-      <td>Legal setup &amp; banking</td>
-      <td>CHF 2,000</td>
+      <td>Legal setup and banking</td>
+      <td style="text-align: right">2’000</td>
     </tr>
     <tr>
-      <td>Secure Swiss-based hosting</td>
-      <td>CHF 3,500</td>
+      <td>Secure Swiss cloud servers</td>
+      <td style="text-align: right">10’000</td>
     </tr>
     <tr>
-      <td>Launch of public Quant dataset</td>
-      <td>CHF 1,500</td>
+      <td>Secure off-site NAS 20TB</td>
+      <td style="text-align: right">5’000</td>
+    </tr>
+    <tr>
+      <td>Launch of public Quant</td>
+      <td style="text-align: right">3’000</td>
+    </tr>
+    <tr>
+      <td>Initial capital</td>
+      <td style="text-align: right">20’000</td>
+    </tr>
+    <tr>
+      <td>Other (hardware, ops)</td>
+      <td style="text-align: right">23’500</td>
+    </tr>
+    <tr>
+      <td>Partial salary</td>
+      <td style="text-align: right">8’500</td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td style="text-align: right"><strong>75’000</strong></td>
     </tr>
   </tbody>
 </table>
 
-<p><em>Enables legal formation, privacy-compliant infrastructure, and first release of our public-calibrated dataset.</em></p>
+<p><em>Covers full legal and operational setup and enables release of our full suite.</em></p>
 
 <hr />
 
-<h2 id="-impact">🌍 Impact</h2>
-
-<p>Quant makes variant interpretation <strong>transparent, scalable, and reproducible</strong>. It enables:</p>
+<h2 id="-scientific-and-regulatory-foundation">🌍 Scientific and regulatory foundation</h2>
 
 <ul>
-  <li><strong>Clinical diagnostics</strong> with confidence</li>
-  <li><strong>AI genomics models</strong> trained on real probability</li>
-  <li><strong>Pharma &amp; research</strong> to quantify risk across genes and inheritance modes</li>
+  <li>Independent development with open-access, peer-reviewed validation.</li>
+  <li>Prior art discovery confirming <strong>freedom to operate</strong>.</li>
+  <li>Public documentation; auditable code, data, and financials.</li>
+  <li><strong>Regulation-ready</strong> for CH, EU, and US (EudraLex, ICH, FDA).</li>
 </ul>
 
-<p>We provide the statistical foundation modern genomics has been missing.</p>
+<hr />
 
-<blockquote>
-  <p><em>SwitzerlandOmics is building the missing layer between raw DNA and confident interpretation.</em></p>
-</blockquote>
+<h2 id="-impact">🧪 Impact</h2>
+
+<ul>
+  <li>
+    <p><strong>Research partnerships</strong><br />
+Joint exploration of inference models, variant priors, or statistical architectures.</p>
+  </li>
+  <li>
+    <p><strong>Technology integration</strong><br />
+Embed Quant, PanelAppRex AI, or other tools into internal pipelines with production-ready code, formats, and documentation.</p>
+  </li>
+  <li>
+    <p><strong>Co-development</strong><br />
+Build custom datasets, metrics, or systems, grounded in shared standards, calibrated evidence, and mutual accountability.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="-who-its-for">🤝 Who it’s for</h2>
+
+<p>We collaborate with partners who build:</p>
+
+<ul>
+  <li>AI models for genomic interpretation.</li>
+  <li>Pharmacogenomics systems.</li>
+  <li>Genome editing and design platforms.</li>
+  <li>Large-scale population reference datasets.</li>
+  <li>Clinical diagnostics and variant pipelines.</li>
+  <li>Digital twin platforms for personalised simulation.</li>
+</ul>
 
 <hr />
 
 <h2 id="-request">✅ Request</h2>
 
+<p>We seek:</p>
+
 <ul>
-  <li>CHF 10,000 seed grant for incorporation and infrastructure</li>
-  <li>Additional materials available: pitch deck, data preview, letters of support</li>
+  <li>CHF 75,000 seed grant for company registration and launch infrastructure.</li>
+  <li>Collaboration with investors, institutions, and partners ready to scale robust genomic interpretation.</li>
 </ul>
 
-<hr />
-
-<!-- ## A century-old challenge, a modern solution -->
-
-<!-- **Analogy:** -->
-<!-- In the early 1900s, Sam Zemurray revolutionized the banana industry by seeing value where others saw waste—selling ripe bananas locally when everyone else focused on unripe fruit for long distances. He solved a logistics problem and changed an industry. -->
-
-<!-- **The Problem (in simple terms):** -->
-<!-- Today, genomics faces its own century-old challenge: despite incredible advances in DNA sequencing, we still struggle to reliably interpret what genetic variations mean for health, drug discovery, and personalized medicine. -->
-
-<!-- **The Solution (in simple terms):** -->
-<!-- Quant is our answer. It transforms complex genetic data into clear, probabilistic insights. Just as Zemurray turned overlooked bananas into a market advantage, Quant turns genetic uncertainty into actionable knowledge. -->
-
-<!-- **The Scientific Side:** -->
-<!-- Built on rigorous Bayesian statistics, population genetics, and years of real-world testing, Quant provides a systematic, probability-based framework for interpreting genetic variants. -->
-
-<hr />
 </div>
             </div>
         </div>
