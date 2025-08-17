@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Vault door transition demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --vault-duration: 700ms;
+      --vault-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+      --page-max: 1100px;
+    }
+
+    html, body {
+      height: 100%;
+      background: #fff;
+      color: #111;
+      margin: 0;
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    .wrap {
+      max-width: var(--page-max);
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: #111;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 160ms ease, opacity 160ms ease, background 160ms ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    main { padding: 40px 0 80px; }
+    .card {
+      border: 1px solid #e6e6e6;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+    }
+
+    /* Overlay */
+    .vault-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .vault-panel {
+      background: #000;
+      transform-origin: left center;
+      transform: scaleX(0);
+      transition: transform var(--vault-duration) var(--vault-ease);
+    }
+    .vault-panel.right { transform-origin: right center; }
+    .vault-overlay.active { pointer-events: all; }
+    .vault-overlay.active .vault-panel { transform: scaleX(1); }
+
+    .vault-seam {
+      position: fixed;
+      top: 0; bottom: 0; left: 50%;
+      width: 0;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity var(--vault-duration) var(--vault-ease);
+    }
+    .vault-overlay.active ~ .vault-seam { opacity: 1; }
+
+    /* Instant reset state to avoid showing closed doors when returning via back-forward cache */
+    .vault-reset .vault-panel {
+      transition: none !important;
+      transform: scaleX(0) !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vault-panel { transition: none; }
+      .vault-seam { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1 style="margin:0; font-size:24px;">Demo site with max width</h1>
+      <button class="btn vault-link" data-href="https://genomevault.switzerlandomics.ch">
+        Go to genomevault.switzerlandomics.ch
+      </button>
+    </header>
+
+    <main>
+      <div class="card">
+        <p>This is a minimal page to test a vault door style transition. Click the button to trigger the animation, then navigate.</p>
+        <p>
+          You can also <a href="https://genomevault.switzerlandomics.ch" class="vault-link">use this text link</a>.
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Overlay panels -->
+  <div class="vault-overlay" aria-hidden="true">
+    <div class="vault-panel left"></div>
+    <div class="vault-panel right"></div>
+  </div>
+  <div class="vault-seam" aria-hidden="true"></div>
+
+  <script>
+    (function () {
+      const overlay = document.querySelector('.vault-overlay');
+      const left = overlay.querySelector('.left');
+      const right = overlay.querySelector('.right');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const duration = 700;
+
+      function resetVaultInstant() {
+        // Remove active, force instant open state without anim
+        overlay.classList.remove('active');
+        overlay.classList.add('vault-reset');
+        // Next frame remove the reset class so future animations work
+        requestAnimationFrame(() => {
+          overlay.classList.remove('vault-reset');
+        });
+      }
+
+      // Reset on normal load
+      document.addEventListener('DOMContentLoaded', resetVaultInstant);
+
+      // Reset when page is shown from bfcache or after back/forward navigation
+      window.addEventListener('pageshow', function (e) {
+        // Always reset, whether persisted or not, to be safe across browsers
+        resetVaultInstant();
+      });
+
+      // Safety: if tab becomes visible again
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') resetVaultInstant();
+      });
+
+      function navigateWithVault(url) {
+        if (!url) return;
+        if (reduceMotion) {
+          window.location.href = url;
+          return;
+        }
+
+        // Ensure starting from open state
+        overlay.classList.remove('active');
+        // Two RAFs to guarantee a paint of the open state before activating
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            overlay.classList.add('active');
+
+            // Navigate when the right panel finishes the transform
+            const onEnd = (e) => {
+              if (e.propertyName !== 'transform') return;
+              right.removeEventListener('transitionend', onEnd);
+              window.location.href = url;
+            };
+            right.addEventListener('transitionend', onEnd, { once: true });
+
+            // Fallback in case transitionend does not fire
+            setTimeout(() => {
+              right.removeEventListener('transitionend', onEnd);
+              if (document.visibilityState === 'visible') {
+                window.location.href = url;
+              }
+            }, duration + 150);
+          });
+        });
+      }
+
+      document.addEventListener('click', function (e) {
+        const a = e.target.closest('.vault-link');
+        if (!a) return;
+
+        // Allow normal browser behaviour for modifier clicks
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1) return;
+
+        const href = a.getAttribute('data-href') || a.getAttribute('href');
+        if (!href) return;
+
+        e.preventDefault();
+        navigateWithVault(href);
+      }, { passive: false });
+    })();
+  </script>
+
+
+
+	<!-- compact, protected vault button linking to GenomeVault -->
+<a href="https://genomevault.switzerlandomics.ch" class="vault-btn" aria-label="Genomic Vault">
+  <div class="vault-btn__stage">
+    <div class="vault-door-outer active">
+      <div class="vault-door-inner">
+        <div class="vault-door-lock-shadow"></div>
+        <div class="vault-door-lock-wrapper">
+          <div class="vault-door-lock vault-door-circle"></div>
+          <div class="vault-door-lock vault-door-pistons">
+            <div class="piston piston1"></div>
+            <div class="piston piston2"></div>
+            <div class="piston piston3"></div>
+            <div class="piston piston4"></div>
+          </div>
+        </div>
+        <div class="vault-door-handle-shadow"></div>
+        <div class="vault-door-handle-long-shadow"></div>
+        <div class="vault-door-handle">
+          <div class="handle-bar bar1"></div>
+          <div class="handle-bar bar2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
+
+<style>
+/* container protection and sizing */
+.vault-btn {
+  display: inline-block;
+  width: 56px;
+  height: 56px;
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+  text-decoration: none;
+  cursor: pointer;
+}
+.vault-btn__stage {
+  position: absolute;
+  inset: 0;
+}
+.vault-btn__stage .vault-door-outer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(0.28); /* adjust scale to match text button size */
+  transform-origin: center;
+}
+
+/* scoped styles (no global leakage) */
+.vault-btn .vault-door-outer {
+  width: 50vh;
+  height: 50vh;
+  background: #b3e5fc;
+  border-radius: 6%;
+  box-shadow: 0 0 41px #7c4dff;
+}
+.vault-btn .vault-door-inner {
+  position: absolute;
+  margin: 10%;
+  width: 78%;
+  height: 78%;
+  background: #03a9f4;
+  border-radius: 25%;
+}
+.vault-btn .vault-door-lock-shadow {
+  position: absolute;
+  width: 68%;
+  height: 36%;
+  background: linear-gradient(rgba(160,160,160,0.2), transparent);
+  margin: 34% 18%;
+  transform: rotate(-45deg);
+  transition: all 0.2s ease-out;
+}
+.vault-btn .vault-door-lock { background: #023c7e; }
+.vault-btn .vault-door-circle {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  margin: 10%;
+  border-radius: 50%;
+}
+.vault-btn .vault-door-pistons {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  margin: 47% 6.5%;
+  background: none;
+}
+.vault-btn .vault-door-pistons .piston {
+  position: absolute;
+  background: #0288d1;
+  width: 100%;
+  height: 7%;
+  border-radius: 8px;
+  transition: all 0.5s ease-out;
+}
+.vault-btn .vault-door-pistons .piston.piston2 { transform: rotate(45deg); }
+.vault-btn .vault-door-pistons .piston.piston3 { transform: rotate(90deg); }
+.vault-btn .vault-door-pistons .piston.piston4 { transform: rotate(135deg); }
+.vault-btn .vault-door-handle-shadow {
+  position: absolute;
+  background: #00499c;
+  width: 40%;
+  height: 40%;
+  margin: 32%;
+  border-radius: 50%;
+}
+.vault-btn .vault-door-handle-long-shadow {
+  position: absolute;
+  background: linear-gradient(#00499c, transparent);
+  width: 45%;
+  height: 45%;
+  margin: 50%;
+  transform: rotate(-45deg);
+}
+.vault-btn .vault-door-handle {
+  position: absolute;
+  border: solid 2.5vh #0288d1;
+  width: 34%;
+  height: 34%;
+  margin: 28%;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+.vault-btn .vault-door-handle .handle-bar {
+  position: absolute;
+  background: #0288d1;
+  height: 18%;
+  width: 115%;
+  margin: 40% -8%;
+}
+.vault-btn .vault-door-handle .handle-bar.bar1 { transform: rotate(45deg); }
+.vault-btn .vault-door-handle .handle-bar.bar2 { transform: rotate(135deg); }
+
+/* hover animation */
+.vault-btn:hover .vault-door-lock-shadow {
+  width: 40%;
+  margin: 44% 6.5%;
+  transition: all 0.5s ease-out;
+}
+.vault-btn:hover .piston {
+  width: 70%;
+  margin-left: 14%;
+  margin-right: 5%;
+  transition: all 0.5s ease-out;
+}
+.vault-btn:hover .vault-door-handle {
+  transform: rotate(-180deg);
+  transition: all 1s ease-in-out;
+}
+
+/* make it crisp on retina */
+.vault-btn, .vault-btn * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+</style>
+
+</body>
+</html>
+

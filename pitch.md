@@ -8,8 +8,10 @@ intro_image_absolute: true
 intro_image_hide_on_mobile: false
 ---
 
-
 ---
+
+/* Icon source */
+/* https://icon-sets.iconify.design/material-symbols/page-2.html?icon-filter=slide */
 
 **Company:** Switzerland Omics GmbH/Sàrl (in formation) [switzerlandomics.ch](https://switzerlandomics.ch).
 
