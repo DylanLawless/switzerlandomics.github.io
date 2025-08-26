@@ -11,8 +11,214 @@ show_call_box: false
 # Quantified genomics
 ## We build the algorithms and data systems that enable rigorous genomic interpretation at scale. Our tools power clinical confidence, pharmacogenomic inference, and genome-scale engineering in real-world settings.
 
-<!-- <p id="countdowntimer" style="min-width: 140px;"></p> -->
-<!-- <p><a href="/assets/submission_mailing_list" class="button-link">Notify me »</a></p> -->
+<style>
+:root {
+  /* core vault */
+  --vault-bg: #0b0c0e;
+  --vault-text: #f2f3f5;
+  --vault-hover: #2f2f41;
+  --vault-panel: #0b0c0e;
+  --vault-seam: #ffffff14;
+
+  /* card and typography */
+  --card-bg: #1a1b1e;
+  --card-fg: #e1e3e6;
+
+  /* card gradients */
+  --card-grad-top: #ffffff8c;        /* 55% */
+  --card-grad-top-fade: #00000000;   /* 0%  */
+  --card-grad-bottom-light: #00000008; /* 3% */
+  --card-grad-bottom-dark: #0000000f;  /* 6% */
+
+  /* card shadows */
+  --card-inset-top: #ffffffb3;     /* 70% */
+  --card-inset-bottom: #00000014;  /* 8%  */
+  --card-outer: #0000000f;         /* 6%  */
+
+  /* toggle track and knob */
+  --toggle-track-bg: #2a2b2f;
+  --knob-icon: #000000;          /* 8% */
+  --knob-bg: #343436;
+
+  /* knob shadows */
+  --knob-shadow-outer: #00000026;  /* 15% */
+  --knob-shadow-top: #ffffffcc;    /* 80% */
+  --knob-shadow-bottom: #00000014; /* 8%  */
+
+  /* knob text shadow */
+  --knob-text-shadow-top: #ffffffb3;       /* 70% */
+  --knob-text-shadow-outline: #0000004d;   /* 30% */
+
+  /* icons and states */
+  --icon-base: #ffffff;
+  --icon-locked: #c8c9cb;
+  --icon-unlocked: #950900;
+  --toggle-on: #e0312d;
+
+  /* track subtle highlights */
+  --track-top-highlight: #ffffff66;  /* 40% */
+  --track-inner-top: #0000001a;      /* 10% */
+  --track-inner-bottom: #ffffff59;   /* 35% */
+}
+
+
+/* button */
+.button-link {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: var(--vault-bg);
+  color: var(--vault-text);
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 16px;
+}
+.button-link:hover {
+  background-color: var(--vault-hover);
+}
+
+/* overlay */
+.vault-overlay {
+  position: fixed; inset: 0; pointer-events: none;
+  z-index: 9999; display: grid; grid-template-columns: 1fr 1fr;
+}
+.vault-panel {
+  background: var(--vault-panel);
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.vault-panel.right { transform-origin: right center; }
+.vault-overlay.active { pointer-events: all; }
+.vault-overlay.active .vault-panel { transform: scaleX(1); }
+
+.vault-seam {
+  position: fixed; top: 0; bottom: 0; left: 50%;
+  width: 0; border-left: 1px solid var(--vault-seam);
+  z-index: 10000; opacity: 0;
+  transition: opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.vault-overlay.active ~ .vault-seam { opacity: 1; }
+.vault-reset .vault-panel { transition: none !important; transform: scaleX(0) !important; }
+
+/* inline layout: toggle then text */
+.vault-card{
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  text-decoration:none;
+  background:var(--card-bg);
+  color:var(--card-fg);
+  border-radius:60px;
+  padding:10px 14px;
+
+  /* subtle bevel shading */
+  background-image:
+    linear-gradient(to bottom, var(--card-grad-top), var(--card-grad-top-fade) 42%),
+    linear-gradient(to bottom, var(--card-grad-bottom-light), var(--card-grad-bottom-dark));
+  box-shadow:
+    inset 0 1px 0 var(--card-inset-top),    /* inner top highlight */
+    inset 0 -1px 0 var(--card-inset-bottom),/* inner bottom shade */
+    0 1px 2px var(--card-outer);            /* soft outer seat */
+}
+
+/* text */
+.vault-card .label{ 
+  font-weight:600;
+  font-size:16px;
+  letter-spacing:.2px;
+}
+
+.vault-card .label::after {
+  content: '';
+  display: inline-block;
+  width: 1.5ch;
+}
+
+/* toggle track */
+.vault-card .toggle{
+  pointer-events:none;
+  position:relative;
+  width:152px;
+  height:76px;
+  background:var(--toggle-track-bg);
+  border-radius:60px;
+  overflow:hidden;
+  transition:background-color .25s linear;
+}
+
+/* knob: soft drop plus inner highlight and tiny inner bottom shadow */
+.vault-card .slide{
+  color:var(--knob-icon);
+  background:var(--knob-bg);
+  border-radius:50%;
+  font-size:30px;
+  line-height:68px;
+  text-align:center;
+  height:66px;
+  width:66px;
+  position:absolute;
+  top:5px;
+  left:5px;
+  transition:all .3s cubic-bezier(0.43,1.3,0.86,1);
+  box-shadow:
+    0 1px 2px var(--knob-shadow-outer),     /* soft outer */
+    inset 0 1px 1px var(--knob-shadow-top), /* inner top sheen */
+    inset 0 -1px 0 var(--knob-shadow-bottom);/* inner bottom shade */
+}
+
+/* keep the icon glow on the knob */
+.vault-card .slide span{
+  text-shadow: 0 1px 1px var(--knob-text-shadow-top), 0 0 1px var(--knob-text-shadow-outline);
+}
+.vault-card .slide:before,
+.vault-card .slide:after{
+  color:var(--icon-base);
+  content:"\f023"; /* lock */
+  font-family:FontAwesome;
+  font-size:34px;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+}
+.vault-card .slide:before{ right:-50px; color:var(--icon-locked); opacity:.8; }
+.vault-card .slide:after{ content:"\f09c"; left:-50px; color:var(--icon-unlocked); }
+
+/* click animation only */
+.vault-card.on .toggle{ background:var(--toggle-on); }
+.vault-card.on .slide{ left:80px; color:var(--toggle-on); }
+
+/* track: subtle highlight top, soft inner shadows */
+.vault-card .toggle{
+  pointer-events:none;
+  position:relative;
+  width:152px;
+  height:76px;
+  background:var(--toggle-track-bg);
+  border-radius:60px;
+  overflow:hidden;
+  transition:background-color .25s linear;
+  box-shadow:
+    0 1px 1px var(--track-top-highlight), /* top highlight */
+    inset 0 1px 0 var(--track-inner-top), /* inner top shadow */
+    inset 0 -1px 0 var(--track-inner-bottom);/* inner bottom highlight */
+}
+
+/* mobile */
+@media (max-width:520px){
+  .vault-card{ padding:16px 18px 14px; }
+  .vault-card .toggle{ width:120px; height:60px; }
+  .vault-card .slide{ height:52px; width:52px; line-height:54px; }
+}
+</style>
+
+
+
+
+
+
+
 
 <script>
   var countDownDate = new Date("Sept 01, 2025 07:00:00").getTime();
@@ -30,19 +236,9 @@ show_call_box: false
   var x = setInterval(updateCountdown, 1000);
 </script>
 
+
+
 <div class="submission-message">
-<style>
-.button-link {
-  display: inline-block;
-  padding: 12px 20px;
-  background-color: #000000;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 16px;
-}
-.button-link:hover { background-color: #2f2f41; }
-</style>
 
 </div>
 
@@ -53,29 +249,47 @@ show_call_box: false
 </div>
 <div class="vault-seam" aria-hidden="true"></div>
 
-<style>
-.vault-overlay {
-  position: fixed; inset: 0; pointer-events: none;
-  z-index: 9999; display: grid; grid-template-columns: 1fr 1fr;
-}
-.vault-panel {
-  background: #000;
-  transform-origin: left center;
-  transform: scaleX(0);
-  transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.vault-panel.right { transform-origin: right center; }
-.vault-overlay.active { pointer-events: all; }
-.vault-overlay.active .vault-panel { transform: scaleX(1); }
-.vault-seam {
-  position: fixed; top: 0; bottom: 0; left: 50%;
-  width: 0; border-left: 1px solid rgba(255,255,255,0.08);
-  z-index: 10000; opacity: 0;
-  transition: opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.vault-overlay.active ~ .vault-seam { opacity: 1; }
-.vault-reset .vault-panel { transition: none !important; transform: scaleX(0) !important; }
-</style>
+<!-- Vault lock -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+
+<a href="https://genomicvault.switzerlandomics.ch"
+   class="vault-card vault-link"
+   aria-label="Open Genomic Vault">
+  <span class="toggle" aria-hidden="true">
+    <span class="slide">
+      <span class="fa fa-circle-o" aria-hidden="true"></span>
+    </span>
+  </span>
+  <span class="label">Genomic Vault</span>
+</a>
+
+
+
+
+
+
+
+
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    const card = e.target.closest('.vault-card');
+    if(!card) return;
+    card.classList.add('on');
+  }, { passive:true });
+
+  document.addEventListener('keydown', function(e){
+    const card = e.target.closest && e.target.closest('.vault-card');
+    if(!card) return;
+    if(e.key === ' ' || e.key === 'Spacebar'){
+      e.preventDefault();
+      card.classList.add('on');
+      card.click();
+    }
+  });
+})();
+</script>
 
 <script>
 (function () {
@@ -102,7 +316,6 @@ show_call_box: false
     requestAnimationFrame(() => { overlay.classList.remove('vault-reset'); });
   }
 
-  // Invalidate any old pending timeouts when this page comes back
   window.addEventListener('pageshow', function () {
     newToken();
     resetVaultInstant();
@@ -113,7 +326,6 @@ show_call_box: false
     resetVaultInstant();
   });
 
-  // Also invalidate if page is being hidden or unloaded
   window.addEventListener('pagehide', newToken);
   window.addEventListener('beforeunload', newToken);
   document.addEventListener('visibilitychange', function () {
@@ -127,10 +339,7 @@ show_call_box: false
     if (!url) return;
     if (reduceMotion) { window.location.href = url; return; }
 
-    // Capture token at the time of scheduling
     const myToken = currentToken();
-
-    // Ensure open state then animate
     overlay.classList.remove('active');
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -139,13 +348,11 @@ show_call_box: false
         const onEnd = e => {
           if (e.propertyName !== 'transform') return;
           right.removeEventListener('transitionend', onEnd);
-          // Invalidate any previous timers before leaving
           newToken();
           window.location.href = url;
         };
         right.addEventListener('transitionend', onEnd, { once: true });
 
-        // Fallback. Only act if token still matches.
         const fallback = setTimeout(() => {
           if (currentToken() !== myToken) return;
           if (document.visibilityState === 'visible') {
@@ -154,7 +361,6 @@ show_call_box: false
           }
         }, duration + 150);
 
-        // If the page is about to be hidden, cancel fallback
         window.addEventListener('pagehide', function cancel() {
           clearTimeout(fallback);
           right.removeEventListener('transitionend', onEnd);
@@ -173,199 +379,6 @@ show_call_box: false
     e.preventDefault();
     navigateWithVault(href);
   }, { passive: false });
-})();
-</script>
-
-
-
-
-
-
-
-<!-- Vault lock -->
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-
-<a href="https://genomicvault.switzerlandomics.ch"
-   class="vault-card vault-link"
-   aria-label="Open Genomic Vault">
-  <span class="toggle" aria-hidden="true">
-    <span class="slide">
-      <span class="fa fa-circle-o" aria-hidden="true"></span>
-    </span>
-  </span>
-  <span class="label">Genomic Vault</span>
-</a>
-
-<style>
-/* inline layout: toggle then text */
-
-.vault-card{
-  display:inline-flex;
-  align-items:center;
-  gap:14px;
-  text-decoration:none;
-  background:#efefef;
-  color:#2f2f41;
-  border-radius:60px;
-  padding:10px 14px;
-
-  /* subtle bevel shading */
-  background-image:
-    linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,0) 42%),
-    linear-gradient(to bottom, rgba(0,0,0,.03), rgba(0,0,0,.06));
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.70),   /* inner top highlight */
-    inset 0 -1px 0 rgba(0,0,0,.08),        /* inner bottom shade */
-    0 1px 2px rgba(0,0,0,.06);             /* soft outer seat */
-}
-
-/* text */
-.vault-card .label{ 
-	font-weight:600;
-	font-size:16px;
-	letter-spacing:.2px;
-}
-
-.vault-card .label::after {
-  content: '';
-  display: inline-block;
-  width: 1.5ch;
-}
-
-/* toggle track */
-.vault-card .toggle{
-  pointer-events:none;
-  position:relative;
-  width:152px;
-  height:76px;
-  background:#ddddde;
-  border-radius:60px;
-  overflow:hidden;
-  transition:background-color .25s linear;
-}
-
-<!-- /* knob */ -->
-<!-- .vault-card .slide{ -->
-<!--   color:rgba(0,0,0,.15); -->
-<!--   background:#ffffff; -->
-<!--   border-radius:50%; -->
-<!--   font-size:30px; -->
-<!--   line-height:68px; -->
-<!--   text-align:center; -->
-<!--   height:66px; -->
-<!--   width:66px; -->
-<!--   position:absolute; -->
-<!--   top:5px; -->
-<!--   left:5px; -->
-<!--   transition:all .3s cubic-bezier(0.43,1.3,0.86,1); -->
-<!-- } -->
-
-/* knob: soft drop plus inner highlight and tiny inner bottom shadow */
-.vault-card .slide{
-  color:rgba(0,0,0,.15);
-  background:#efefef;
-  border-radius:50%;
-  font-size:30px;
-  line-height:68px;
-  text-align:center;
-  height:66px;
-  width:66px;
-  position:absolute;
-  top:5px;
-  left:5px;
-  transition:all .3s cubic-bezier(0.43,1.3,0.86,1);
-  box-shadow:
-    0 1px 2px rgba(0,0,0,.15),           /* soft outer */
-    inset 0 1px 1px rgba(255,255,255,.80),/* inner top sheen */
-    inset 0 -1px 0 rgba(0,0,0,.08);      /* inner bottom shade */
-}
-
-/* keep the icon glow on the knob */
-.vault-card .slide span{
-  text-shadow: 0 1px 1px rgba(255,255,255,.7), 0 0 1px rgba(0,0,0,.3);
-}
-.vault-card .slide:before,
-.vault-card .slide:after{
-  color:#fff;
-  content:"\f023"; /* lock */
-  font-family:FontAwesome;
-  font-size:34px;
-  font-weight:400;
-  -webkit-font-smoothing:antialiased;
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-}
-.vault-card .slide:before{ right:-50px; color:#2a2b2c; opacity:.8; }
-.vault-card .slide:after{ content:"\f09c"; left:-50px; color:#a01b16; }
-
-/* click animation only */
-.vault-card.on .toggle{ background:#e5261f; }
-.vault-card.on .slide{ left:80px; color:#e5261f; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* track: subtle highlight top, soft inner shadows */
-.vault-card .toggle{
-  pointer-events:none;
-  position:relative;
-  width:152px;
-  height:76px;
-  background:#ddddde;
-  border-radius:60px;
-  overflow:hidden;
-  transition:background-color .25s linear;
-  box-shadow:
-    0 1px 1px rgba(255,255,255,.40),     /* top highlight */
-    inset 0 1px 0 rgba(0,0,0,.10),       /* inner top shadow */
-    inset 0 -1px 0 rgba(255,255,255,.35);/* inner bottom highlight */
-}
-
-
-
-
-
-
-
-
-/* mobile */
-@media (max-width:520px){
-  .vault-card{ padding:16px 18px 14px; }
-  .vault-card .toggle{ width:120px; height:60px; }
-  .vault-card .slide{ height:52px; width:52px; line-height:54px; }
-}
-</style>
-
-<script>
-(function(){
-  document.addEventListener('click', function(e){
-    const card = e.target.closest('.vault-card');
-    if(!card) return;
-    card.classList.add('on');
-  }, { passive:true });
-
-  document.addEventListener('keydown', function(e){
-    const card = e.target.closest && e.target.closest('.vault-card');
-    if(!card) return;
-    if(e.key === ' ' || e.key === 'Spacebar'){
-      e.preventDefault();
-      card.classList.add('on');
-      card.click();
-    }
-  });
 })();
 </script>
 
