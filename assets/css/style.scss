@@ -140,3 +140,36 @@ html {
 	  font-size: 110%; // 110% of browser default (16px = 17.6px)
   }
 
+// custom buttoms
+.button-link {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: $primary;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+    border:1px solid $black;     // add border colour
+  font-size: 16px;
+}
+.button-link:hover {
+  background-color: $secondary;
+}
+
+/* CSS */
+.submission-message .button-row{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  flex-wrap:wrap;      /* wraps on small screens */
+}
+@media (min-width:768px){
+  .submission-message .button-row{
+    flex-wrap:nowrap;  /* inline on desktop */
+  }
+}
+.submission-message .button-row .button-link{
+  display:inline-flex;
+  align-items:center;
+  white-space:nowrap;
+}
+
