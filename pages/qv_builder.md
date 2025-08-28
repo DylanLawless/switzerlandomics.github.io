@@ -34,20 +34,18 @@ show_call_box: false
       <div class="copy-example" data-text='meta description_patient="There is a strong family history of early heart attacks. I would like clear information on any inherited cardiac risk and what I can do next."'><code>meta description_patient="There is a strong family history of early heart attacks. I would like clear information on any inherited cardiac risk and what I can do next."</code></div>
       <div class="copy-example" data-text='meta description_ppie="The PPIE working group reviewed the qualifying criteria and approved their recommendation document on 2025-08-15."'><code>meta description_ppie="The PPIE working group reviewed the qualifying criteria and approved the final protocol on 2025-08-15."</code></div>
       <div class="copy-example" data-text='criteria ACMG_PVS1 logic=and description="Null variants (IMPACT == HIGH) in genes where loss of function causes disease. Includes homozygous variants, compound heterozygous cases, or dominant inheritance. Warning to phase check compound heterozygosity."
-criteria ACMG_PVS1 field=IMPACT operator="==" value=HIGH
-criteria ACMG_PVS1 group=any_of:start
-criteria ACMG_PVS1 field=genotype operator="==" value=2
-criteria ACMG_PVS1 field=Inheritance operator="==" value=AD
-criteria ACMG_PVS1 field=comp_het_flag operator="==" value=1
-criteria ACMG_PVS1 group=any_of:end'><code>criteria ACMG_PVS1 logic=and description="Null variants (IMPACT == HIGH) in genes where loss of function causes disease. Includes homozygous variants, compound heterozygous cases, or dominant inheritance. Warning to phase check compound heterozygosity."
-criteria ACMG_PVS1 field=IMPACT operator="==" value=HIGH
-criteria ACMG_PVS1 group=any_of:start
-criteria ACMG_PVS1 field=genotype operator="==" value=2
-criteria ACMG_PVS1 field=Inheritance operator="==" value=AD
-criteria ACMG_PVS1 field=comp_het_flag operator="==" value=1
-criteria ACMG_PVS1 group=any_of:end</code></div>
-
-
+        criteria ACMG_PVS1 field=IMPACT operator="==" value=HIGH
+        criteria ACMG_PVS1 group=any_of:start
+        criteria ACMG_PVS1 field=genotype operator="==" value=2
+        criteria ACMG_PVS1 field=Inheritance operator="==" value=AD
+        criteria ACMG_PVS1 field=comp_het_flag operator="==" value=1
+        criteria ACMG_PVS1 group=any_of:end'><code>criteria ACMG_PVS1 logic=and description="Null variants (IMPACT == HIGH) in genes where loss of function causes disease. Includes homozygous variants, compound heterozygous cases, or dominant inheritance. Warning to phase check compound heterozygosity."
+        criteria ACMG_PVS1 field=IMPACT operator="==" value=HIGH
+        criteria ACMG_PVS1 group=any_of:start
+        criteria ACMG_PVS1 field=genotype operator="==" value=2
+        criteria ACMG_PVS1 field=Inheritance operator="==" value=AD
+        criteria ACMG_PVS1 field=comp_het_flag operator="==" value=1
+        criteria ACMG_PVS1 group=any_of:end</code></div>
   </div>
   </section>
 
