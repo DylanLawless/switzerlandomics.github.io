@@ -36,6 +36,7 @@ intro_image_hide_on_mobile: false
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v2.full.pdf) | 
 [Repository](https://github.com/DylanLawless/archipelago)  
 
+
 ## Currently under review
 
 * **Perspective**: Hardy-Weinberg a century later and new horizons in clinical genomics. Under review.
@@ -73,3 +74,8 @@ intro_image_hide_on_mobile: false
 [DOI](https://doi.org/10.7554/eLife.72559)
 
 * Credited for newly added gene _CRACR2A_ as cause of disease on the [IUIS inborn errors of immuninity](https://link.springer.com/article/10.1007/s10875-021-00980-1).
+
+## Related
+
+* **SPHN RDF Omic**: van der Horst,  E.; Unni,  D.; Kopmels,  F.; Armida,  J.; Touré,  V.; Franke,  W.; Crameri,  K.; Cirillo,  E.; Österle,  S. "[Bridging Clinical and Genomic Knowledge: An Extension of the SPHN RDF Schema for Seamless Integration and FAIRification of Omics Data.](https://www.preprints.org/manuscript/202312.0373/v1)" *Preprints.org* (2023).\\
+[DOI](https://doi.org/10.20944/preprints202312.0373.fHlOxMA_v1idvSgFTtU8GYnkplRPXwjQLe4taTfIREKxiEYrmqwttFfzWYNmxnAi2tqvww4LfS1Isn4) | [PDF](https://www.preprints.org/frontend/manuscript/6d089babeb3de4497a0bcdd6b1696d04/download_pub)
