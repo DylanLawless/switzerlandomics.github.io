@@ -44,7 +44,18 @@ intro_image_hide_on_mobile: false
   <img src="/images/pitch_deck/pitch_deck_02/Slide18.png" class="quant-slide" alt="Slide 18">
   <img src="/images/pitch_deck/pitch_deck_02/Slide19.png" class="quant-slide" alt="Slide 19">
   <img src="/images/pitch_deck/pitch_deck_02/Slide20.png" class="quant-slide" alt="Slide 20">
-
+  <img src="/images/pitch_deck/pitch_deck_02/Slide21.png" class="quant-slide" alt="Slide 21">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide22.png" class="quant-slide" alt="Slide 22">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide23.png" class="quant-slide" alt="Slide 23">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide24.png" class="quant-slide" alt="Slide 24">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide25.png" class="quant-slide" alt="Slide 25">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide26.png" class="quant-slide" alt="Slide 26">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide27.png" class="quant-slide" alt="Slide 27">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide28.png" class="quant-slide" alt="Slide 28">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide29.png" class="quant-slide" alt="Slide 29">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide30.png" class="quant-slide" alt="Slide 30">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide31.png" class="quant-slide" alt="Slide 31">
+  <img src="/images/pitch_deck/pitch_deck_02/Slide32.png" class="quant-slide" alt="Slide 32">
 
   <div class="quant-controls">
     <button onclick="quantPrevSlide()">← Previous</button>
@@ -191,6 +202,10 @@ Our finance model combines direct custody revenue with long-term security throug
 * Research groups and biobanks
 * Pharmacogenomics and trial sponsors
 * Health insurers seeking compliant prevention programmes
+
+## Intellectual property
+
+Genomic Vault is grounded in insider knowledge of how Swiss research, law, and funding systems operate. It reflects the trust, precision, and shared responsibility that define this community. As with Switzerland Omics’ algorithms, some critical components are protected intellectual property, but the priority remains transparency and public trust. What matters most is that the system aligns with the way Swiss institutions and researchers already work, ensuring credibility and long-term acceptance.
 
 
 <!-- ## Request -->
