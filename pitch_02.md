@@ -113,7 +113,7 @@ Genomics is now mainstream, yet data fragments across providers and time. There 
 
 **Genomic Vault** keeps one secure record under the patient’s control.
 
-* Long-term custody of raw files and derived sets in clinical formats
+* Long-term (+10 year) custody of raw files and derived sets in clinical formats
 * Private by default with explicit, logged sharing to named recipients
 * Standard delivery every time for clinics and research groups
 * SPHN-compliant RDF metadata for hospital integration
@@ -147,20 +147,26 @@ Better health insurance and better healthcare without disclosing genetic results
 
 ---
 
-## <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M2 20V4h20v16zm6-3h2v-1h1q.425 0 .713-.288T12 15v-3q0-.425-.288-.712T11 11H8v-1h4V8h-2V7H8v1H7q-.425 0-.712.288T6 9v3q0 .425.288.713T7 13h3v1H6v2h2zm8-.75l2-2h-4zM14 10h4l-2-2z"/></svg> Use of funds
+## <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M2 20V4h20v16zm6-3h2v-1h1q.425 0 .713-.288T12 15v-3q0-.425-.288-.712T11 11H8v-1h4V8h-2V7H8v1H7q-.425 0-.712.288T6 9v3q0 .425.288.713T7 13h3v1H6v2h2zm8-.75l2-2h-4zM14 10h4l-2-2z"/></svg> Finance model
 
-| Purpose                        |        CHF |
-| ------------------------------ | ---------: |
-| Swiss hosting and backups      |    |
-| Key management and monitoring  |    |
-| Legal registration and counsel |    |
-| Consent UX and portal polish   |    |
-| Off-site encrypted storage     |    |
-| Security review and hardening  |    |
-| Initial capital and ops        |    |
-| **Total**                      | **...** |
+Our finance model combines direct custody revenue with long-term security through a Swiss federally guaranteed reserve bond. Sequencing partners deliver data directly into Genomic Vault, where each genome is preserved for a 10-year cycle under the same structure for institutions and private individuals alike. A portion of all fees funds the reserve bond, ensuring continuity and data protection even in the event of operational or market disruption. Over time, insurers will subsidise access as part of preventive healthcare funding, maintaining full privacy while reducing healthcare costs. This creates a transparent, stable, and legally grounded model for national-scale genomic custody.
 
 ---
+<!---->
+<!-- ## <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M2 20V4h20v16zm6-3h2v-1h1q.425 0 .713-.288T12 15v-3q0-.425-.288-.712T11 11H8v-1h4V8h-2V7H8v1H7q-.425 0-.712.288T6 9v3q0 .425.288.713T7 13h3v1H6v2h2zm8-.75l2-2h-4zM14 10h4l-2-2z"/></svg> Use of funds -->
+<!---->
+<!-- | Purpose                        |        CHF | -->
+<!-- | ------------------------------ | ---------: | -->
+<!-- | Swiss hosting and backups      |    | -->
+<!-- | Key management and monitoring  |    | -->
+<!-- | Legal registration and counsel |    | -->
+<!-- | Consent UX and portal polish   |    | -->
+<!-- | Off-site encrypted storage     |    | -->
+<!-- | Security review and hardening  |    | -->
+<!-- | Initial capital and ops        |    | -->
+<!-- | **Total**                      | **...** | -->
+<!---->
+<!-- --- -->
 
 ## Scientific and regulatory foundation
 
