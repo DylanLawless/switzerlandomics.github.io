@@ -269,12 +269,27 @@ vcftools \
     if (includeExtra) altAlleles += 1;
 
     const mafMax = altAlleles / nAlleles;
+    const mafPercent = mafMax * 100;
+
+    const hetPercent = Math.min((altAlleles / nIndividuals) * 100, 100);
+    const homPercent = Math.min((altAlleles / 2 / nIndividuals) * 100, 100);
 
     document.getElementById('result').innerHTML = `
-      <strong>Results:</strong><br>
+      <div style="margin-bottom:12px;">
+      <strong>Result:</strong><br>
+        Maximum allele frequency (MAFₘₐₓ):
+        <button id="copyBtn" onclick="copyMAF('${mafMax.toFixed(6)}')" 
+          style="margin-left:8px; padding:6px 10px; border:none; border-radius:5px; background:#007bff; color:white; cursor:pointer; font-size:0.95em;">
+          ${mafMax.toFixed(6)}
+        </button>
+        <span id="copyMsg" style="color:green; font-size:0.9em; display:none; margin-left:8px;">copied!</span>
+      </div>
+      <strong>Summary:</strong><br>
       Total alleles in cohort: ${nAlleles}<br>
       Total alternate alleles observed (with adjustment): ${altAlleles}<br>
-      Maximum allele frequency (MAFₘₐₓ): <strong>${mafMax.toFixed(6)}</strong><br><br>
+      MAF as percentage of all alleles: <strong>${mafPercent.toFixed(2)}%</strong><br>
+      Estimated carrier percentage (heterozygous): <strong>${hetPercent.toFixed(2)}%</strong><br>
+      Estimated carrier percentage (homozygous): <strong>${homPercent.toFixed(2)}%</strong><br><br>
       Example usage:<br>
       <pre style="margin-top:10px;">
 vcftools \\
@@ -284,6 +299,13 @@ vcftools \\
   --out filtered_output
       </pre>
     `;
+  }
+
+  function copyMAF(value) {
+    navigator.clipboard.writeText(value);
+    const msg = document.getElementById('copyMsg');
+    msg.style.display = 'inline';
+    setTimeout(() => { msg.style.display = 'none'; }, 1500);
   }
 </script>
 
