@@ -246,6 +246,17 @@ designed to simplify the discovery ...</p>
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
+              <a href="/technologies/max_maf/">MAFₘₐₓ calculator</a>
+            </h2>
+            <p>Estimate the maximum minor allele frequency (MAF) your cohort can support. A quick, transparent t...</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 mb-1">
+        <div class="tech tech-summary">
+          <div class="tech-content">
+            <h2 class="tech-title">
               <a href="/technologies/iei_genetics/">IEI genetics database</a>
             </h2>
             <p>Streamline genetic diagnosis of IEI
