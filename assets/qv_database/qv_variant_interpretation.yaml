@@ -1,0 +1,205 @@
+qv_set_id: qv_rare_singlecase_interpretation_v1_20251105
+version: 1.0.0
+title: Rare variant single case interpretation
+metadata:
+  created: '2025-11-05'
+  authors: DylanLawless
+criteria:
+  gnomad_flags:
+    conditions:
+      - field: gnomad_flag
+        operator: '="'
+        value: NA
+      - field: gnomad_flag
+        operator: in
+        value: AC0,AS-VQSR,InbreedingCoeff,RF,Not in exomes,Not in genomes,No data,Discrepant Frequencies,CHIP,Monoallelic,Only heterozygous,MNV,LCR,LC pLoF,pLoF Flag,NC Transcript,SEGDUP,Common low heteroplasmy
+    description: Variant has no gnomAD flags or will be reviewed in report generation
+    logic: or
+  acmg_criteria:
+    conditions:
+      - field: ACMG_criteria
+        operator: not_contains
+        value: B
+      - field: ACMG_criteria
+        operator: contains
+        value: BA1,BS1,BS2,BS3,BS4,BP1,BP2,BP3,BP4,BP5,BP6,BP7,BP8
+    description: Variant has no benign ACMG evidence or will be reviewed in report generation
+    logic: or
+  ppie_reporting:
+    conditions:
+      - field: ppie_status
+        operator: in
+        value: fulfilled,not_applicable,declined,pending
+    description: Record presence and fulfilment of patient or public representation (PPIE) requirements
+    logic: or
+  gt_valid:
+    conditions:
+      - field: proband_geno
+        operator: in
+        value: HET,HOM,HEMI
+  comp_het:
+    conditions:
+      - group_by: sample,SYMBOL
+        count: '>=2'
+    description: Two distinct variants in one gene
+  not_hom_parent:
+    conditions:
+      - field: proband_geno
+        operator: '=='
+        value: HOM
+      - field: mother_geno
+        operator: '!='
+        value: HOM
+      - field: father_geno
+        operator: '!='
+        value: HOM
+  not_hemi_parent:
+    conditions:
+      - field: proband_geno
+        operator: '=='
+        value: HEMI
+      - field: father_geno
+        operator: '!='
+        value: HEMI
+  not_same_parent:
+    conditions:
+      - field: PARENT_GENOTYPE_MATCH
+        operator: '=='
+        value: 'false'
+  phase_ok:
+    conditions:
+      - field: PHASE
+        operator: in
+        value: TRANS,UNKNOWN
+  allow_dn:
+    conditions:
+      - field: DE_NOVO
+        operator: '=='
+        value: 'true'
+    logic: or
+  rna_in_controls:
+    conditions:
+      - field: RNA_TPM_controls_median
+        operator: '>'
+        value: 0.1
+    description: Transcript detected in controls
+  rna_in_any_control:
+    conditions:
+      - field: RNA_TPM_controls_max
+        operator: '>'
+        value: 0
+    description: Transcript seen in at least one control
+  rna_patient_quantifiable:
+    conditions:
+      - field: RNA_TPM_patient
+        operator: '>'
+        value: 0
+    description: Patient transcript quantified
+  rna_pass:
+    conditions:
+      - field: RNA_TPM_controls_max
+        operator: '>'
+        value: 0
+      - field: RNA_TPM_patient
+        operator: '>'
+        value: 0
+    description: RNA quant suitable for interpretation
+    logic: and
+  rna_fail:
+    conditions:
+      - field: RNA_TPM_controls_max
+        operator: '=='
+        value: 0
+    description: Transcript not seen in any control, quantification unreliable
+    logic: and
+  max_freq_flag:
+    conditions:
+      - field: MAX_FREQ
+        operator: '>'
+        value: ${MAX_FREQ_THRESHOLD}
+    description: Variant frequency exceeds rare disease threshold
+    logic: or
+  uniprot_hits_any_feature:
+    conditions:
+      - field: uniprot_overlap_any
+        operator: '=='
+        value: true
+    description: Overlaps any UniProt feature
+  uniprot_hits_domain_like:
+    conditions:
+      - field: uniprot_domain_like
+        operator: '=='
+        value: true
+    description: Overlaps domain like element
+  uniprot_hits_structural_like:
+    conditions:
+      - field: uniprot_structural_like
+        operator: '=='
+        value: true
+    description: Overlaps structural element
+  uniprot_hits_ptm_like:
+    conditions:
+      - field: uniprot_ptm_like
+        operator: '=='
+        value: true
+    description: Overlaps post translational modification
+  uniprot_hits_binding_like:
+    conditions:
+      - field: uniprot_binding_like
+        operator: '=='
+        value: true
+    description: Overlaps binding or active site element
+  uniprot_hits_variant_like:
+    conditions:
+      - field: uniprot_variant_like
+        operator: '=='
+        value: true
+    description: Overlaps natural variant or mutagenesis record
+  uniprot_is_lof:
+    conditions:
+      - field: variant_type
+        operator: in
+        value:
+          - stop_gained
+          - frameshift_variant
+    description: Loss of function class
+  uniprot_predicted_nmd:
+    conditions:
+      - field: is_lof
+        operator: '=='
+        value: true
+    description: LOF variant expected to trigger NMD
+  uniprot_truncates_feature:
+    conditions:
+      - field: uniprot_truncates_feature
+        operator: '=='
+        value: true
+    description: LOF truncates downstream UniProt annotation
+notes:
+  - 'gnomad: gnomAD flags are retained for review; presence of any flag requires explicit mention or justification in final causal report. For information see https://gnomad.broadinstitute.org/help'
+  - 'ACMG: ACMG benign evidence codes are retained for review; variants carrying these codes must be justified in the final causal interpretation report'
+  - 'ACMG: For details on ACMG criteria see Richards et al. 2015, Li et al. 2017, Riggs et al. 2020, Tavtigian et al. 2020'
+  - 'ACMG: Variants containing benign evidence codes (BA, BS, BP) are not excluded but must be explicitly reviewed in the final report'
+  - 'PPIE: For each case, record whether patient or public representation requirements were met according to context (clinical, research, or commercial).'
+  - 'PPIE: Minimum record includes: opportunity for expert consultation, whether discussion occurred, and whether non-actionable findings were addressed.'
+  - 'PPIE: In commercial contexts, the report itself may satisfy this requirement if it conveys the relevant information clearly and accessibly without requiring direct consultation.'
+  - 'PPIE: In research or cohort studies, record whether participants were informed about data use and whether individual feedback was planned.'
+  - 'inheritance priority ordering applied downstream: compound_het > biallelic_hom > de_novo > possible_compound_het > single_het_parent > proband_geno'
+  - compound_het includes inherited, inherited+de novo, and dual de novo in trans (phasing required downstream)
+  - missing parent genotypes allow de_novo and possible_compound_het, and may still support compound_het depending on counts
+  - 'genotype mapping applied upstream: 00=REF, 01=HET, 10=HET, 11=HOM'
+  - 'RNA filter: transcript must be observed in at least one control sample to consider patient quantification reliable'
+  - RNA FAIL indicates no expression in all controls, patient value should not be interpreted quantitatively
+  - 'MAX_FREQ: High population frequency reduces plausibility for rare disease and requires explicit review.'
+  - uniprot_domain_like="Structural or functional regions with biochemical or evolutionary relevance"
+  - uniprot_structural_like="Elements contributing to secondary structure"
+  - uniprot_ptm_like="Post translational modifications and chemical changes"
+  - uniprot_binding_like="Ligand and interaction features"
+  - uniprot_variant_like="Experimentally annotated variant or mutagenesis sites"
+  - 'Uniprot: Overlap is defined by protein position'
+  - 'Uniprot: Positions are numeric and resolved from HGVS p'
+  - 'Uniprot: Variants may activate several flags'
+  - 'Uniprot: Categories have no weights'
+  - 'Uniprot: YAML defines semantics only, R code implements logic'
+  - 'Uniprot: New UniProt feature types must be mapped to a category'
+

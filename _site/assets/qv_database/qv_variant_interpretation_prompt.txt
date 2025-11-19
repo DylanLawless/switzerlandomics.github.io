@@ -1,0 +1,77 @@
+meta qv_set_id="qv_rare_singlecase_interpretation_v1_20251105"
+meta version="1.0.0"
+meta title="Rare variant single case interpretation"
+meta created="2025-11-05"
+meta authors=DylanLawless
+
+criteria gnomad_flags logic=or desc="Variant has no gnomAD flags or will be reviewed in report generation"
+criteria gnomad_flags field=gnomad_flag operator==" value=NA
+criteria gnomad_flags field=gnomad_flag operator="in" value="AC0,AS-VQSR,InbreedingCoeff,RF,Not in exomes,Not in genomes,No data,Discrepant Frequencies,CHIP,Monoallelic,Only heterozygous,MNV,LCR,LC pLoF,pLoF Flag,NC Transcript,SEGDUP,Common low heteroplasmy"
+note "gnomad: gnomAD flags are retained for review; presence of any flag requires explicit mention or justification in final causal report. For information see https://gnomad.broadinstitute.org/help"
+
+criteria acmg_criteria logic=or desc="Variant has no benign ACMG evidence or will be reviewed in report generation"
+criteria acmg_criteria field=ACMG_criteria operator="not_contains" value="B"
+criteria acmg_criteria field=ACMG_criteria operator="contains" value="BA1,BS1,BS2,BS3,BS4,BP1,BP2,BP3,BP4,BP5,BP6,BP7,BP8"
+note "ACMG: ACMG benign evidence codes are retained for review; variants carrying these codes must be justified in the final causal interpretation report"
+note "ACMG: For details on ACMG criteria see Richards et al. 2015, Li et al. 2017, Riggs et al. 2020, Tavtigian et al. 2020"
+note "ACMG: Variants containing benign evidence codes (BA, BS, BP) are not excluded but must be explicitly reviewed in the final report"
+
+criteria ppie_reporting logic=or desc="Record presence and fulfilment of patient or public representation (PPIE) requirements"
+criteria ppie_reporting field=ppie_status operator="in" value="fulfilled,not_applicable,declined,pending"
+note "PPIE: For each case, record whether patient or public representation requirements were met according to context (clinical, research, or commercial)."
+note "PPIE: Minimum record includes: opportunity for expert consultation, whether discussion occurred, and whether non-actionable findings were addressed."
+note "PPIE: In commercial contexts, the report itself may satisfy this requirement if it conveys the relevant information clearly and accessibly without requiring direct consultation."
+note "PPIE: In research or cohort studies, record whether participants were informed about data use and whether individual feedback was planned."
+
+criteria gt_valid field="proband_geno" operator="in" value="HET,HOM,HEMI"
+criteria comp_het group_by="sample,SYMBOL" count=">=2" desc="Two distinct variants in one gene"
+criteria not_hom_parent field="proband_geno" operator="==" value="HOM"
+criteria not_hom_parent field="mother_geno" operator="!=" value="HOM"
+criteria not_hom_parent field="father_geno" operator="!=" value="HOM"
+criteria not_hemi_parent field="proband_geno" operator="==" value="HEMI"
+criteria not_hemi_parent field="father_geno" operator="!=" value="HEMI"
+criteria not_same_parent field="PARENT_GENOTYPE_MATCH" operator="==" value="false"
+criteria phase_ok field="PHASE" operator="in" value="TRANS,UNKNOWN"
+criteria allow_dn field="DE_NOVO" operator="==" value="true" logic="or"
+note "inheritance priority ordering applied downstream: compound_het > biallelic_hom > de_novo > possible_compound_het > single_het_parent > proband_geno"
+note "compound_het includes inherited, inherited+de novo, and dual de novo in trans (phasing required downstream)"
+note "missing parent genotypes allow de_novo and possible_compound_het, and may still support compound_het depending on counts"
+note "genotype mapping applied upstream: 00=REF, 01=HET, 10=HET, 11=HOM"
+
+criteria rna_in_controls field="RNA_TPM_controls_median" operator=">" value=0.1 desc="Transcript detected in controls"
+criteria rna_in_any_control field="RNA_TPM_controls_max" operator=">" value=0.0 desc="Transcript seen in at least one control"
+criteria rna_patient_quantifiable field="RNA_TPM_patient" operator=">" value=0 desc="Patient transcript quantified"
+criteria rna_pass logic="and" desc="RNA quant suitable for interpretation"
+criteria rna_pass field="RNA_TPM_controls_max" operator=">" value=0
+criteria rna_pass field="RNA_TPM_patient" operator=">" value=0
+criteria rna_fail logic="and" desc="Transcript not seen in any control, quantification unreliable"
+criteria rna_fail field="RNA_TPM_controls_max" operator="==" value=0
+note "RNA filter: transcript must be observed in at least one control sample to consider patient quantification reliable"
+note "RNA FAIL indicates no expression in all controls, patient value should not be interpreted quantitatively"
+
+criteria max_freq_flag field=MAX_FREQ operator=">" value=${MAX_FREQ_THRESHOLD} desc="Variant frequency exceeds rare disease threshold" logic=or
+note "MAX_FREQ: High population frequency reduces plausibility for rare disease and requires explicit review."
+
+note uniprot_domain_like="Structural or functional regions with biochemical or evolutionary relevance"
+note uniprot_structural_like="Elements contributing to secondary structure"
+note uniprot_ptm_like="Post translational modifications and chemical changes"
+note uniprot_binding_like="Ligand and interaction features"
+note uniprot_variant_like="Experimentally annotated variant or mutagenesis sites"
+
+criteria uniprot_hits_any_feature field=uniprot_overlap_any operator="==" value=true desc="Overlaps any UniProt feature"
+criteria uniprot_hits_domain_like field=uniprot_domain_like operator="==" value=true desc="Overlaps domain like element"
+criteria uniprot_hits_structural_like field=uniprot_structural_like operator="==" value=true desc="Overlaps structural element"
+criteria uniprot_hits_ptm_like field=uniprot_ptm_like operator="==" value=true desc="Overlaps post translational modification"
+criteria uniprot_hits_binding_like field=uniprot_binding_like operator="==" value=true desc="Overlaps binding or active site element"
+criteria uniprot_hits_variant_like field=uniprot_variant_like operator="==" value=true desc="Overlaps natural variant or mutagenesis record"
+criteria uniprot_is_lof field=variant_type operator=in value=stop_gained,frameshift_variant desc="Loss of function class"
+criteria uniprot_predicted_nmd field=is_lof operator="==" value=true desc="LOF variant expected to trigger NMD"
+criteria uniprot_truncates_feature field=uniprot_truncates_feature operator="==" value=true desc="LOF truncates downstream UniProt annotation"
+
+note "Uniprot: Overlap is defined by protein position"
+note "Uniprot: Positions are numeric and resolved from HGVS p"
+note "Uniprot: Variants may activate several flags"
+note "Uniprot: Categories have no weights"
+note "Uniprot: YAML defines semantics only, R code implements logic"
+note "Uniprot: New UniProt feature types must be mapped to a category"
+
