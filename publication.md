@@ -12,6 +12,11 @@ intro_image_hide_on_mobile: false
 
 ## Flagship technologies
 
+* **QuantBayES**: The quantitative omic epidemiology group, et al. "[A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease](https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1)" *medRxiv* preprint (2025).\\
+[DOI](https://doi.org/10.1101/2025.12.02.25341503) |
+[PDF](https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1.full.pdf) |
+[Application](https://switzerlandomics.ch/technologies/quantbayes/)
+
 * **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5)" *medRxiv* preprint (2025).\\
 [DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf) | 

@@ -327,6 +327,19 @@
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
+              <a href="/technologies/quantbayes/">QuantBayes</a>
+            </h2>
+            <p>Gives genomics a shared evidence language.
+Every variant. Every pipeline. Every institution.
+</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 mb-1">
+        <div class="tech tech-summary">
+          <div class="tech-content">
+            <h2 class="tech-title">
               <a href="/technologies/qv_database/">Qualifying Variant database</a>
             </h2>
             <p>
