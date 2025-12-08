@@ -114,7 +114,8 @@ A patient was evaluated for genetic disease using Whole Genome Sequencing, which
 > For the leading candidate, the posterior evidence sufficiency **$$\theta$$** and its 95 percent credible interval were **0.731 (0.549 to 0.879)**, with a **percentile of 99.88** relative to all evaluated variants in the genome. The global distribution of evidence sufficiency had a mean **$$\theta$$** with a 95 percent credible interval of **0.52 (0.38 to 0.65)**. These values describe how complete the available evidence is, not the probability of pathogenicity.
 > 
 > **Clinical scenario**: autosomal recessive cystic fibrosis.\\
-> **Candidate variant**: NC_000007.14:g.117559592_117559594delCTT.\\
+> **Candidate**: NC_000007.14: g.117559592_117559594delCTT.\\
+> **Gene**: *CFTR*.\\
 > **QuantBayES $$\theta$$ (theta) 95% CrI**: 0.731 (0.549-0.879).\\
 > **Percentile**: 99.88.
 > 
