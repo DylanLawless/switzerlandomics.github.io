@@ -150,16 +150,19 @@
         <div class="content"><p>Gives genomics a shared evidence language.
 Every variant. Every pipeline. Every institution.</p>
 
-<p>It does not replace your analysis tools. It connects them.
-Whatever system identifies your candidate variants, QuantBayES measures how strong the verifiable evidence is for each one, using a lightning-fast standard that behaves exactly the same everywhere.</p>
+<p>It does not estimate pathogenicity.
+It does not replace your analysis tools. It connects them.</p>
 
-<p>For the first time, laboratories can speak in a common scale without revealing proprietary models or changing their internal workflows. Everyone keeps their own technology. Everyone gains a transparent, reproducible measure of evidence that can move across hospitals, platforms, and countries.</p>
+<p>QuantBayes measures how complete and verifiable the evidence is for any variant that your pipeline selects, using a lightning-fast and universal standard that behaves the same everywhere. Laboratories keep their own technology and gain a transparent, reproducible measure of evidence that can move across hospitals, platforms, and countries.</p>
 
-<p>A strongly supported variant might score <strong>0.95 with a credible interval from 0.91 to 0.98</strong>.
-A weaker result might score <strong>0.32 with a wide interval</strong>.
+<p>A strongly supported variant might score <strong>0.95 with a 95% credible interval from 0.91 to 0.98</strong>.
+A weaker result might score <strong>0.32 with a wider interval</strong>.
 The numbers are universal and independent of the pipeline that produced the candidate.</p>
 
-<p>QuantBayES makes genomic evidence transferable, comparable, and auditable, while leaving existing systems untouched.</p>
+<p>This separates variant discovery from evidence assessment and gives genomics a common, auditable evidence scale that leaves existing systems untouched.</p>
+
+<p><img src="/images/quantbayes/qv_bayes_short.png" style="width:100 percent; height:auto;" />
+<strong><em>Figure 1. From siloed workflows to a universal evidence model</em></strong>.</p>
 
 <hr />
 
@@ -194,7 +197,7 @@ The numbers are universal and independent of the pipeline that produced the cand
   </table>
 </div>
 
-<p>Source code is available in the public repository. The R package quantbayes is available on CRAN and provides the same core model with optional visualisation tools.</p>
+<p>Source code is available in the public repository. The R package quantbayes is available on CRAN and provides the same core model with optional visualisation tools. The release fork of the R package source can be on <a href="https://github.com/DylanLawless/src-quantbayes_package">GitHub</a>.</p>
 
 <hr />
 
@@ -209,7 +212,7 @@ The numbers are universal and independent of the pipeline that produced the cand
 <p>Generate JSON outputs:<br />
 <code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --json</code></p>
 
-<p>QuantBayES writes:</p>
+<p>QuantBayes writes:</p>
 
 <ul>
   <li>per variant summaries</li>
@@ -219,7 +222,7 @@ The numbers are universal and independent of the pipeline that produced the cand
 
 <h2 id="installation">Installation</h2>
 
-<p>QuantBayES is distributed as a standalone binary. It runs directly from the extracted directory, with no system installation and no administrator privileges. This model is compatible with macOS, Linux, HPC environments, and shared compute clusters.</p>
+<p>QuantBayes is distributed as a standalone binary. It runs directly from the extracted directory, with no system installation and no administrator privileges. This model is compatible with macOS, Linux, HPC environments, and shared compute clusters.</p>
 
 <p><strong>Download and extract</strong></p>
 
@@ -233,26 +236,26 @@ LICENSE
 README.md
 </code></pre></div></div>
 
-<p><strong>Run QuantBayES directly</strong><br />
+<p><strong>Run QuantBayes directly</strong><br />
 <code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt</code></p>
 
-<p>QuantBayES does not need to be copied into system locations.
+<p>QuantBayes does not need to be copied into system locations.
 You may keep it in any folder where you have execute permissions.</p>
 
 <p><strong>macOS note</strong></p>
 
 <p>macOS attaches a quarantine flag to downloaded binaries. 
 This behaviour applies to all unsigned scientific software on macOS.
-If you see a security warning the first time you run QuantBayES, remove the flag with:<br />
+If you see a security warning the first time you run QuantBayes, remove the flag with:<br />
 <code class="language-plaintext highlighter-rouge">xattr -d com.apple.quarantine quantbayes</code></p>
 
 <p><strong>Linux and HPC note</strong></p>
 
-<p>Most HPC clusters do not allow sudo. QuantBayES can be placed in your home directory or project space and used as is.
+<p>Most HPC clusters do not allow sudo. QuantBayes can be placed in your home directory or project space and used as is.
 Cluster administrators may optionally expose it through an environment module, without any special configuration:<br />
 <code class="language-plaintext highlighter-rouge">module load quantbayes</code></p>
 
-<p><strong>Optional: add QuantBayES to your PATH</strong></p>
+<p><strong>Optional: add QuantBayes to your PATH</strong></p>
 
 <p>For convenience:<br />
 <code class="language-plaintext highlighter-rouge">mkdir -p $HOME/.local/bin</code><br />
@@ -271,7 +274,7 @@ Cluster administrators may optionally expose it through an environment module, w
 
 <h2 id="example-clinical-genetics">Example: clinical genetics</h2>
 
-<p>A patient was evaluated for genetic disease using Whole Genome Sequencing, which produced a ranked set of candidate variants from a standard prioritisation workflow. QuantBayES assessed the independent evidence available for each candidate using the binary evidence matrix derived from the Evidence Standard rules. These rules cover domains such as inheritance consistency when parental data are available and functional evidence supporting the proposed mechanism.</p>
+<p>A patient was evaluated for genetic disease using Whole Genome Sequencing, which produced a ranked set of candidate variants from a standard prioritisation workflow. QuantBayes assessed the independent evidence available for each candidate using the binary evidence matrix derived from the Evidence Standard rules. These rules cover domains such as inheritance consistency when parental data are available and functional evidence supporting the proposed mechanism.</p>
 
 <blockquote>
   <p>For the leading candidate, the posterior evidence sufficiency <strong>\(\theta\)</strong> and its 95 percent credible interval were <strong>0.731 (0.549 to 0.879)</strong>, with a <strong>percentile of 99.88</strong> relative to all evaluated variants in the genome. The global distribution of evidence sufficiency had a mean <strong>\(\theta\)</strong> with a 95 percent credible interval of <strong>0.52 (0.38 to 0.65)</strong>. These values describe how complete the available evidence is, not the probability of pathogenicity.</p>
@@ -279,7 +282,7 @@ Cluster administrators may optionally expose it through an environment module, w
   <p><strong>Clinical scenario</strong>: autosomal recessive cystic fibrosis.<br />
 <strong>Candidate</strong>: NC_000007.14: g.117559592_117559594delCTT.<br />
 <strong>Gene</strong>: <em>CFTR</em>.<br />
-<strong>QuantBayES \(\theta\) (theta) 95% CrI</strong>: 0.731 (0.549-0.879).<br />
+<strong>QuantBayes \(\theta\) (theta) 95% CrI</strong>: 0.731 (0.549-0.879).<br />
 <strong>Percentile</strong>: 99.88.</p>
 
   <p>Higher values indicate that most required evidence elements are available.
@@ -351,7 +354,7 @@ Lower values indicate sparse or incomplete support.</p>
   </table>
 
 </div>
-<p><em><strong>Table 1. QuantBayES results table</strong>. variant_id is the identifier used in the upstream analysis.
+<p><em><strong>Table 1. QuantBayes results table</strong>. variant_id is the identifier used in the upstream analysis.
 k is the number of evidence rules supported by data.
 m is the total number of rules evaluated.
 theta mean is the posterior expectation of evidence sufficiency.
@@ -362,14 +365,14 @@ percentile shows how the variant ranks relative to all evaluated variants.</em><
 
 <p><img src="/images/quantbayes/quantbayes_example.png" style="width:100 percent; height:auto;" /></p>
 
-<p><em><strong>Figure 1: Global evidence sufficiency distribution with candidate overlay</strong>. The grey background shows the genome wide mixture of theta. Overlay lines mark the top prioritised candidates. The red point marks the variant with the strongest evidence sufficiency credible interval.</em></p>
+<p><em><strong>Figure 2: Global evidence sufficiency distribution with candidate overlay</strong>. The grey background shows the genome wide mixture of theta. Overlay lines mark the top prioritised candidates. The red point marks the variant with the strongest evidence sufficiency credible interval.</em></p>
 
 <hr />
 
 <h2 id="preparing-an-evidence-matrix">Preparing an evidence matrix</h2>
 
-<p>QuantBayES expects that candidate variants are first identified by upstream tools or service providers such as <a href="https://exomiser.readthedocs.io">Exomiser</a>, <a href="https://varsome.com">VarSome</a>, <a href="https://www.sophiagenetics.com">SOPHiA GENETICS</a>, or standard clinical pipelines. 
-. These systems provide analysis results for each variant, but they do not need to disclose internal algorithms or proprietary models. QuantBayES operates on an independent and verifiable evidence checklist, so each candidate can be evaluated in a standardised and reproducible way regardless of how it was generated or prioritised upstream.
+<p>QuantBayes expects that candidate variants are first identified by upstream tools or service providers such as <a href="https://exomiser.readthedocs.io">Exomiser</a>, <a href="https://varsome.com">VarSome</a>, <a href="https://www.sophiagenetics.com">SOPHiA GENETICS</a>, or standard clinical pipelines. 
+These systems provide analysis results for each variant, but they do not need to disclose internal algorithms or proprietary models. QuantBayes operates on an independent and verifiable evidence checklist, so each candidate can be evaluated in a standardised and reproducible way regardless of how it was generated or prioritised upstream.
 To make results comparable across institutions, the Swiss Genomics Association provides a national-scale</p>
 
 <p>This standard defines how raw annotations map to binary evidence rules. Each rule evaluates one independent domain of support. A short example:</p>
@@ -412,7 +415,7 @@ To make results comparable across institutions, the Swiss Genomics Association p
       <tr>
         <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_uniprot_hits_any_feature</span></td>
         <td>FALSE</td>
-        <td>no known_feature</td>
+        <td>no_known_feature</td>
         <td>NA</td>
       </tr>
       <tr>
@@ -425,13 +428,13 @@ To make results comparable across institutions, the Swiss Genomics Association p
   </table>
 </div>
 
-<p>Applying these mappings creates the binary evidence matrix that QuantBayES reads.</p>
+<p>Applying these mappings creates the binary evidence matrix that QuantBayes reads.</p>
 
 <hr />
 
 <h2 id="matrix-input-example">Matrix input example</h2>
 
-<p>The QuantBayES distribution provides an example input database at <code class="language-plaintext highlighter-rouge">tests/data/test_matrix_01.txt</code>. The first rows are:</p>
+<p>The QuantBayes distribution provides an example input database at <code class="language-plaintext highlighter-rouge">tests/data/test_matrix_01.txt</code>. The first rows are:</p>
 
 <div class="table-responsive">
   <table class="table table-hover">
@@ -500,13 +503,13 @@ To make results comparable across institutions, the Swiss Genomics Association p
   </table>
 </div>
 
-<p>Each row is a variant. Each column is an evidence rule. A one indicates support. A zero indicates absence or contradiction. NA indicates information that was not available. QuantBayES converts NA to zero internally to maintain universal behaviour.</p>
+<p>Each row is a variant. Each column is an evidence rule. A one indicates support. A zero indicates absence or contradiction. NA indicates information that was not available. QuantBayes converts NA to zero internally to maintain universal behaviour.</p>
 
 <hr />
 
 <h2 id="method-overview">Method overview</h2>
 
-<p>A very simple overview is that QuantBayES models the number of supported evidence items (k) out of (m) using a Beta Binomial update. The posterior
+<p>A very simple overview is that QuantBayes models the number of supported evidence items (k) out of (m) using a Beta Binomial update. The posterior
 \(\theta \mid k \sim \mathrm{Beta}(1 + k,\; 1 + m - k)\)
 provides a reproducible measure of evidence sufficiency, expressed through a posterior mean, a credible interval, and a percentile. 
 These values describe how complete and verifiable the available evidence is for each variant. 
@@ -514,7 +517,7 @@ They do not estimate pathogenicity.</p>
 
 <p><img src="/images/quantbayes/qv_quant.png" style="width:100 percent; height:auto;" /></p>
 
-<p><em><strong>Figure 2. A graphical overview of quantbayes on the Quant Evidence Standard</strong>. The method provides a clear, quantitative measure of how well each variant is supported by the scientific evidence required for Mendelian disease interpretation. Starting from the binary evidence matrix defined by the Qualifying Variant Evidence Standard, Quant ES applies a principled statistical model to measure the completeness of the available evidence. This separates Whole Genome Sequencing outputs from downstream interpretation and delivers a universal, uncertainty calibrated assessment of evidential credibility.</em></p>
+<p><em><strong>Figure 3. A graphical overview of quantbayes on the Quant Evidence Standard</strong>. The method provides a clear, quantitative measure of how well each variant is supported by the scientific evidence required for Mendelian disease interpretation. Starting from the binary evidence matrix defined by the Qualifying Variant Evidence Standard, Quant ES applies a principled statistical model to measure the completeness of the available evidence. This separates Whole Genome Sequencing outputs from downstream interpretation and delivers a universal, uncertainty-calibrated assessment of evidential credibility.</em></p>
 
 <hr />
 
@@ -534,7 +537,7 @@ res &lt;- quant_es_core(x)
 
 <h2 id="validation">Validation</h2>
 
-<p>QuantBayES includes a test dataset and example scripts. Running them confirms that the installation matches the reference outputs to floating point precision.</p>
+<p>QuantBayes includes a test dataset and example scripts. Running them confirms that the installation matches the reference outputs to floating point precision.</p>
 
 <hr />
 
@@ -549,7 +552,7 @@ res &lt;- quant_es_core(x)
 
 <h2 id="licence">Licence</h2>
 
-<p>QuantBayES is provided under the MIT Licence. A permissive licence ensures that the statistical framework can be inspected, reproduced, and integrated into clinical and research workflows without restrictions. Open availability supports consistent use across institutions and simplifies independent verification.</p>
+<p>QuantBayes is provided under the MIT Licence. A permissive licence ensures that the statistical framework can be inspected, reproduced, and integrated into clinical and research workflows without restrictions. Open availability supports consistent use across institutions and simplifies independent verification.</p>
 </div>
       </div>
     </div>
