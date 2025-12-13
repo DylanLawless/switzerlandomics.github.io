@@ -179,9 +179,9 @@ The numbers are universal and independent of the pipeline that produced the cand
     </thead>
     <tbody>
       <tr>
-        <td>macOS_Intel</td>
-        <td><a href="/assets/release/quantbayes/quantbayes_v1.0.0_macos_x86_64.tar.gz" download="quantbayes_v1.0.0_macos_x86_64.tar.gz">quantbayes_v1.0.0_macos_x86_64.tar.gz</a></td>
-        <td><code class="language-plaintext highlighter-rouge">c15d4ac299d4f557941b1a8518e75c44fd026cf9908edf8e85475b9f9e056035</code></td>
+        <td>macOS_universal</td>
+        <td><a href="/assets/release/quantbayes/quantbayes_v1.0.0_macos_universal.tar.gz" download="quantbayes_v1.0.0_macos_universal.tar.gz">quantbayes_v1.0.0_macos_universal.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">ab8824f0c29fce57328a3037677dbc20768b5a9d388fda1215362d1d3b99291e</code></td>
       </tr>
       <tr>
         <td>Linux_x86_64</td>
@@ -192,28 +192,9 @@ The numbers are universal and independent of the pipeline that produced the cand
   </table>
 </div>
 
-<p>Source code is available in the public repository. The R package quantbayes is available on CRAN and provides the same core model with optional visualisation tools. The release fork of the R package source can be on <a href="https://github.com/DylanLawless/src-quantbayes_package">GitHub</a>.</p>
+<p>Source code is available in the public repository. The universal macOS binary runs natively on both Intel x86_64 based Macs and Apple silicon arm64 systems. The R package quantbayes is available on CRAN and provides the same core model with optional visualisation tools. The release fork of the R package source can be on <a href="https://github.com/DylanLawless/src-quantbayes_package">GitHub</a>.</p>
 
 <hr />
-
-<h2 id="quick-start">Quick start</h2>
-
-<p>Run and include a human readable summary:<br />
-<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report --out sample1</code></p>
-
-<p>Minimal run on the example matrix:<br />
-<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt</code></p>
-
-<p>Generate JSON outputs:<br />
-<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --json</code></p>
-
-<p>QuantBayes writes:</p>
-
-<ul>
-  <li>per variant summaries</li>
-  <li>global summaries</li>
-  <li>optional human readable reports</li>
-</ul>
 
 <h2 id="installation">Installation</h2>
 
@@ -232,7 +213,7 @@ README.md
 </code></pre></div></div>
 
 <p><strong>Run QuantBayes directly</strong><br />
-<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt</code></p>
+<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report</code></p>
 
 <p>QuantBayes does not need to be copied into system locations.
 You may keep it in any folder where you have execute permissions.</p>
@@ -264,6 +245,27 @@ Cluster administrators may optionally expose it through an environment module, w
 
 <p>On systems where man -l is not available (common on HPC clusters):<br />
 <code class="language-plaintext highlighter-rouge">groff -Tutf8 -man quantbayes.1 | less -R</code></p>
+
+<hr />
+
+<h2 id="quick-start">Quick start</h2>
+
+<p>Run and include a human readable summary:<br />
+<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report --out sample1</code></p>
+
+<p>Minimal run on the example matrix:<br />
+<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt</code></p>
+
+<p>Generate JSON outputs:<br />
+<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --json</code></p>
+
+<p>QuantBayes writes:</p>
+
+<ul>
+  <li>per variant summaries</li>
+  <li>global summaries</li>
+  <li>optional human readable reports</li>
+</ul>
 
 <hr />
 
@@ -542,6 +544,8 @@ res &lt;- quant_es_core(x)
 <a href="https://doi.org/10.1101/2025.12.02.25341503">DOI</a> |
 <a href="https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1.full.pdf">PDF</a> |
 <a href="https://switzerlandomics.ch/technologies/quantbayes/">Application</a></p>
+
+<p>All software is available on Zenodo <a href="https://zenodo.org/records/17919369">https://zenodo.org/records/17919369</a>.</p>
 
 <hr />
 
