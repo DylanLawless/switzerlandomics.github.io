@@ -29,12 +29,20 @@ This separates variant discovery from evidence assessment and gives genomics a c
 <div class="table-responsive" markdown="block">
 | OS | File | SHA256 |
 | --- | --- | --- |
-| macOS_universal | [quantbayes_v1.0.0_macos_universal.tar.gz](/assets/release/quantbayes/quantbayes_v1.0.0_macos_universal.tar.gz){:download="quantbayes_v1.0.0_macos_universal.tar.gz"} | `ab8824f0c29fce57328a3037677dbc20768b5a9d388fda1215362d1d3b99291e` |
-| Linux_x86_64 | [quantbayes_v1.0.0_linux_x86_64.tar.gz](/assets/release/quantbayes/quantbayes_v1.0.0_linux_x86_64.tar.gz){:download="quantbayes_v1.0.0_linux_x86_64.tar.gz"} | `440c5d92354285a5b7790d19f017205a849ecb76a4fc80804f726d420f06080d` |
+| R_package | [quantbayes_v0.1.0_R.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v0.1.0_R.tar.gz?download=1){:download="quantbayes_v0.1.0_R.tar.gz"} | `dfa919d1848070cf8125d49eb029dbfd49d09558cd84deb7d50c1a6c188f1f63` |
+| Linux_x86_64 | [quantbayes_v1.0.0_linux_x86_64.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_linux_x86_64.tar.gz?download=1){:download="quantbayes_v1.0.0_linux_x86_64.tar.gz"} | `440c5d92354285a5b7790d19f017205a849ecb76a4fc80804f726d420f06080d` |
+| macOS_universal | [quantbayes_v1.0.0_macos_universal.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_universal.tar.gz?download=1){:download="quantbayes_v1.0.0_macos_universal.tar.gz"} | `ab8824f0c29fce57328a3037677dbc20768b5a9d388fda1215362d1d3b99291e` |
+| macOS_x86_64 | [quantbayes_v1.0.0_macos_x86_64.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_x86_64.tar.gz?download=1){:download="quantbayes_v1.0.0_macos_x86_64.tar.gz"} | `c15d4ac299d4f557941b1a8518e75c44fd026cf9908edf8e85475b9f9e056035` |
 {: .table .table-hover}
 </div>
 
-Source code is available in the public repository. The universal macOS binary runs natively on both Intel x86_64 based Macs and Apple silicon arm64 systems. The R package quantbayes is available on CRAN and provides the same core model with optional visualisation tools. The release fork of the R package source can be on [GitHub](https://github.com/DylanLawless/src-quantbayes_package).
+Source code is available in the public repository. The universal macOS binary runs natively on both Intel x86_64 based Macs and Apple silicon arm64 systems. The R package quantbayes is available on CRAN and provides the same core model with optional visualisation tools. The release fork of the R package source can be on [GitHub](https://github.com/DylanLawless/src-quantbayes_package). Downloadable dev [README.html](https://zenodo.org/records/17919369/files/README.html?download=1) file.
+Download links are hosted by [Zenodo](https://zenodo.org/records/17919369).
+
+**Verify checksums**
+
+`shasum -a 256 quantbayes_v1.0.0_*.tar.gz`
+
 
 ---
 
@@ -237,7 +245,6 @@ The quantitative omic epidemiology group, et al. "[A Bayesian model for quantify
 [PDF](https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1.full.pdf) |
 [Application](https://switzerlandomics.ch/technologies/quantbayes/)
 
-All software is available on Zenodo <https://zenodo.org/records/17919369>.
 
 ---
 
