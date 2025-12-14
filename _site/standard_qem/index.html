@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Qualifying Evidence Matrix standard for verifiable evidence</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="QEM standard" />
+  <meta property="og:title" content="Qualifying Evidence Matrix standard for verifiable evidence"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="QEM standard"/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">Qualifying Evidence Matrix standard for verifiable evidence</h1>
+                <div class="content"><p>Swiss Genomics Association<br />
+2025</p>
+
+<hr />
+
+<p><strong>Version 1.0</strong><br />
+<strong>Standard identifier</strong>: SGA-QEM-1.0<br />
+This document defines a normative standard published by the Swiss Genomics          Association.</p>
+
+<h2 id="1-introduction">1. Introduction</h2>
+
+<p>The Qualifying Evidence Matrix (QEM) standard for verifiable evidence defines a minimal, interoperable representation of evidence availability derived from rule-based evaluations. It specifies how the outcomes of predefined evidence rules are converted into a binary matrix that records whether verifiable evidence is present or absent for each evaluated item.</p>
+
+<p>In this context, an evidence rule is an externally defined, declarative check that assesses a specific condition for a given item under a declared interpretation context and emits a raw outcome of TRUE, FALSE, or NA. These raw outcomes encode whether a potential contradiction, consistency, or lack of information is observed. The Qualifying Evidence Matrix standard does not define the rules themselves, but specifies how their outcomes are interpreted uniformly.</p>
+
+<p>The standard defines how evidence availability is represented, not what constitutes evidence. It is independent of analysis pipelines, domain-specific interpretation logic, and downstream statistical or decision-making methods.</p>
+
+<p>The resulting binary evidence matrix is a lossy abstraction. Raw rule outcomes and their provenance MUST be preserved upstream if semantic detail, context, or re-interpretation is required.</p>
+
+<hr />
+
+<h2 id="2-scope-and-non-goals">2. Scope and non-goals</h2>
+
+<h3 id="21-in-scope">2.1 In scope</h3>
+
+<p>The QEM standard defines:</p>
+
+<ul>
+  <li>the structure of a binary evidence matrix</li>
+  <li>the allowed values of matrix entries</li>
+  <li>the normative mapping from raw rule outcomes to matrix entries</li>
+  <li>minimal integrity, provenance, and ordering requirements</li>
+</ul>
+
+<h3 id="22-out-of-scope">2.2 Out of scope</h3>
+
+<p>The Qualifying Evidence Matrix standard does not define:</p>
+
+<ul>
+  <li>data generation, other processing, or annotation formats</li>
+  <li>domain-specific interpretation rules</li>
+  <li>causal classification</li>
+  <li>statistical inference or decision support</li>
+</ul>
+
+<hr />
+
+<h2 id="3-terminology-and-conventions">3. Terminology and conventions</h2>
+
+<p>The key words <strong>MUST</strong>, <strong>MUST NOT</strong>, <strong>SHOULD</strong>, and <strong>MAY</strong> are to be interpreted as described in RFC 2119.</p>
+
+<p>An <strong>evaluated item</strong> is a uniquely identifiable entity supplied by an upstream process. For instance, in genomic applications, this is typically a genetic variant.</p>
+
+<p>An <strong>evidence rule</strong> is a declarative check that evaluates a specific condition for an evaluated item and emits a raw outcome.
+Evidence rules <strong>MUST</strong> be defined such that a raw outcome of TRUE indicates a detected contradiction, absence, or weakening of evidence with respect to the evaluated hypothesis, while a raw outcome of FALSE indicates that no such contradiction was detected.
+A raw outcome of NA indicates that the rule could not be evaluated and does not constitute evidence.</p>
+
+<p>The definition, semantics, and evaluation logic of evidence rules are external to this standard.</p>
+
+<p>A <strong>raw rule outcome</strong> takes one of three values:</p>
+
+<ul>
+  <li>TRUE</li>
+  <li>FALSE</li>
+  <li>Not Available (NA)</li>
+</ul>
+
+<p>An <strong>evidence matrix</strong> is a two-dimensional array indexed by evaluated items and evidence rules.</p>
+
+<hr />
+
+<h2 id="4-data-model">4. Data model</h2>
+
+<h3 id="41-matrix-definition">4.1 Matrix definition</h3>
+
+<p>Let there be \(n\) evaluated items and \(m\) evidence rules.</p>
+
+<p>The Qualifying Evidence Matrix is defined as:</p>
+
+\[X \in \{0,1\}^{n \times m}\]
+
+<p>where each entry \(X_{ij}\) corresponds to evaluated item \(i\) and evidence rule \(j\).</p>
+
+<h3 id="42-ordering-requirements">4.2 Ordering requirements</h3>
+
+<ul>
+  <li>Rows <strong>MUST</strong> correspond to evaluated items in a defined and stable order.</li>
+  <li>Columns <strong>MUST</strong> correspond to evidence rules in a defined and stable order.</li>
+  <li>The ordering <strong>MUST</strong> be documented and reproducible.</li>
+  <li>Reordering of items or rules constitutes a different matrix instance and <strong>MUST</strong> be documented.</li>
+</ul>
+
+<hr />
+
+<h2 id="5-mapping-from-raw-rule-outcomes">5. Mapping from raw rule outcomes</h2>
+
+<p>For each evaluated item \(i\) and evidence rule \(j\), an upstream process produces a raw rule outcome in<br />
+\(\{\text{TRUE}, \text{FALSE}, \text{NA}\}\).</p>
+
+<p>The Qualifying Evidence Matrix standard defines the following <strong>normative mapping</strong>:</p>
+
+\[X_{ij} =
+\begin{cases}
+1, &amp; \text{if the raw outcome is FALSE}, \\
+0, &amp; \text{if the raw outcome is TRUE}, \\
+0, &amp; \text{if the raw outcome is NA}.
+\end{cases}\]
+
+<p>A value of \(X_{ij} = 1\) indicates that no contradiction or weakening signal was detected for evidence rule \(j\) and that verifiable evidence is present for evaluated item \(i\) under that rule.</p>
+
+<p>A value of \(X_{ij} = 0\) indicates either a detected contradiction or the absence of evaluable information.</p>
+
+<p>Evidence is accrued only from entries with value 1.</p>
+
+<hr />
+
+<h2 id="6-integrity-and-provenance-requirements">6. Integrity and provenance requirements</h2>
+
+<p>A Qualifying Evidence Matrix instance <strong>MUST</strong> include or reference sufficient metadata to ensure unambiguous interpretation and reproducibility.</p>
+
+<p>At a minimum, this metadata <strong>MUST</strong> specify:</p>
+
+<ul>
+  <li>a unique identifier for each evidence rule corresponding to the matrix columns</li>
+  <li>the version or identifier of the evidence rule set used</li>
+  <li>the version of the Qualifying Evidence Matrix standard applied</li>
+</ul>
+
+<p>Where the matrix rows correspond to identifiable items, stable item identifiers <strong>MUST</strong> be provided or referenced.</p>
+
+<p>Rule identifiers and item identifiers MAY be embedded in the matrix representation or supplied as external metadata.</p>
+
+<p>The binary evidence matrix <strong>MUST</strong> be derivable deterministically from the declared raw rule outcomes under the referenced rule set and standard version.</p>
+
+<hr />
+
+<h2 id="7-example-informative">7. Example (informative)</h2>
+
+<p>The following example illustrates a genomics-specific use of the Qualifying Evidence Matrix.</p>
+
+<p>In clinical genetics, some evidence depends on whether parental genotypes were assessed. This reflects the completeness of evidence collection, not the validity of any inheritance model.</p>
+
+<p>An evidence rule named <code class="language-plaintext highlighter-rouge">parent_gt_unavailable</code> records this at the raw outcome level (TRUE, FALSE, or NA), indicating whether the required information is missing, present, or unknown. This raw outcome is then converted into the binary evidence matrix, where a FALSE indicates that this evidence source is available (1) and a value of 0 indicates that it is not.</p>
+
+<p>This two-step design enforces an unambiguous evidence question: whether verifiable evidence is present. Both detected contradictions (TRUE) and missing information (NA) therefore map to absence of evidence. Situations in which missingness itself is informative should be captured by separate, explicit rules, rather than overloading the binary evidence representation.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>rule name</th>
+      <th>raw outcome</th>
+      <th>meaning</th>
+      <th>\(X_{ij}\)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>parent_gt_unavailable</td>
+      <td>TRUE</td>
+      <td>parental genotype unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent_gt_unavailable</td>
+      <td>FALSE</td>
+      <td>parental genotype available</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>parent_gt_unavailable</td>
+      <td>NA</td>
+      <td>availability unknown</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For a given evaluated item \(i\) and evidence rule \(j\), exactly one raw outcome
+\(r_{ij}\) in \(\{\text{TRUE}, \text{FALSE}, \text{NA}\}\) applies.
+The corresponding matrix entry \(X_{ij}\) is defined uniquely by this realised outcome:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>evaluated item ID</th>
+      <th>parent_gt_unavailable</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>item_001</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In this example, the rule does not assert pathogenicity or inheritance correctness. It records only whether a specific evidence source is present. The resulting matrix entry reflects evidence availability and might be combined with other rules to assess the overall completeness of verifiable evidence.</p>
+
+<hr />
+
+<h2 id="8-non-goals-and-interpretation">8. Non-goals and interpretation</h2>
+
+<p>The QEM does not assert causality, or for instance in genetics pathogenicity, or diagnostic correctness. It represents evidence availability only.</p>
+
+<p>Downstream interpretation, ranking, or inference is outside the scope of this standard.</p>
+
+<p>Evidence rules are not required to be independent. Correlation or dependency between rules is expected in practical applications. 
+The Qualifying Matrix standard does not assume rule independence and does not address the detection, modelling, or correction of correlated evidence. Management of rule correlation, including upstream rule design or downstream statistical handling, is outside the scope of this standard.</p>
+
+<hr />
+
+<h2 id="9-versioning">9. Versioning</h2>
+
+<p>This document defines <strong>Qualifying Evidence Matrix version 1.0</strong>.<br />
+Future revisions <strong>MUST</strong> preserve backward compatibility of the binary semantics.</p>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
