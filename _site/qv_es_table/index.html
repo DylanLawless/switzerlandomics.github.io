@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>QV ES</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="QV ES" />
+  <meta property="og:title" content="QV ES"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="QV ES"/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">QV ES</h1>
+                <div class="content"><p><strong>QV ES evidence interpretation table (rare single case interpretation)</strong></p>
+
+<p>Each rule maps raw flags (TRUE, FALSE, NA) to binary evidence indicators based on whether the observed data contradict the underlying hypothesis.<br />
+Rule names describe what a TRUE flag detects.<br />
+A value of 1 indicates that no contradiction is observed.<br />
+Missing data (NA) never counts as evidence present.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>rule name</th>
+      <th>flag</th>
+      <th>meaning</th>
+      <th>X_ij</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>gnomad flag present</td>
+      <td>TRUE</td>
+      <td>at least one gnomAD quality or annotation flag is present</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>gnomad flag present</td>
+      <td>FALSE</td>
+      <td>no gnomAD flags observed</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>gnomad flag present</td>
+      <td>NA</td>
+      <td>gnomAD flag status unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>acmg benign evidence present</td>
+      <td>TRUE</td>
+      <td>ACMG benign evidence code detected</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>acmg benign evidence present</td>
+      <td>FALSE</td>
+      <td>no ACMG benign evidence detected</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>acmg benign evidence present</td>
+      <td>NA</td>
+      <td>ACMG evidence unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ppie requirement unmet</td>
+      <td>TRUE</td>
+      <td>patient or public involvement requirement not fulfilled</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>ppie requirement unmet</td>
+      <td>FALSE</td>
+      <td>PPIE requirement fulfilled or not applicable</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>ppie requirement unmet</td>
+      <td>NA</td>
+      <td>PPIE status not recorded</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>proband genotype invalid</td>
+      <td>TRUE</td>
+      <td>proband genotype missing or non interpretable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>proband genotype invalid</td>
+      <td>FALSE</td>
+      <td>proband genotype valid</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>proband genotype invalid</td>
+      <td>NA</td>
+      <td>proband genotype unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable mother</td>
+      <td>TRUE</td>
+      <td>maternal genotype unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable mother</td>
+      <td>FALSE</td>
+      <td>maternal genotype available</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable mother</td>
+      <td>NA</td>
+      <td>availability unknown</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable father</td>
+      <td>TRUE</td>
+      <td>paternal genotype unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable father</td>
+      <td>FALSE</td>
+      <td>paternal genotype available</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable father</td>
+      <td>NA</td>
+      <td>availability unknown</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable any</td>
+      <td>TRUE</td>
+      <td>at least one parental genotype unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable any</td>
+      <td>FALSE</td>
+      <td>both parental genotypes available</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>parent gt unavailable any</td>
+      <td>NA</td>
+      <td>availability unknown</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt homozygous</td>
+      <td>TRUE</td>
+      <td>a parent is homozygous for the variant</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt homozygous</td>
+      <td>FALSE</td>
+      <td>no parent homozygous for the variant</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>parent gt homozygous</td>
+      <td>NA</td>
+      <td>parental genotype unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt mechanistically inconsistent ar</td>
+      <td>TRUE</td>
+      <td>parental genotypes contradict autosomal recessive inheritance</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>parent gt mechanistically inconsistent ar</td>
+      <td>FALSE</td>
+      <td>no contradiction with autosomal recessive inheritance observed</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>parent gt mechanistically inconsistent ar</td>
+      <td>NA</td>
+      <td>parental genotype unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>unaffected relative homozygous alt</td>
+      <td>TRUE</td>
+      <td>unaffected parent or close relative carries the same homozygous ALT</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>unaffected relative homozygous alt</td>
+      <td>FALSE</td>
+      <td>no unaffected relative with the same genotype observed</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>unaffected relative homozygous alt</td>
+      <td>NA</td>
+      <td>phenotype or genotype information unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>compound het phase inconsistent</td>
+      <td>TRUE</td>
+      <td>phase or configuration contradicts compound heterozygosity</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>compound het phase inconsistent</td>
+      <td>FALSE</td>
+      <td>no phase contradiction observed</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>compound het phase inconsistent</td>
+      <td>NA</td>
+      <td>phase information unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>denovo mechanism excluded</td>
+      <td>TRUE</td>
+      <td>parental genotypes exclude a de novo mechanism</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>denovo mechanism excluded</td>
+      <td>FALSE</td>
+      <td>de novo mechanism not excluded</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>denovo mechanism excluded</td>
+      <td>NA</td>
+      <td>parental genotypes unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>population frequency common</td>
+      <td>TRUE</td>
+      <td>population frequency incompatible with rare disease</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>population frequency common</td>
+      <td>FALSE</td>
+      <td>population frequency compatible with rare disease</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>population frequency common</td>
+      <td>NA</td>
+      <td>population frequency unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>population frequency unavailable</td>
+      <td>TRUE</td>
+      <td>no population frequency information available</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>population frequency unavailable</td>
+      <td>FALSE</td>
+      <td>population frequency available</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>population frequency unavailable</td>
+      <td>NA</td>
+      <td>population frequency unknown</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>transcript not expressed in controls</td>
+      <td>TRUE</td>
+      <td>transcript not detected in any control sample</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>transcript not expressed in controls</td>
+      <td>FALSE</td>
+      <td>transcript detected in controls</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>transcript not expressed in controls</td>
+      <td>NA</td>
+      <td>control expression unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>transcript not quantifiable in patient</td>
+      <td>TRUE</td>
+      <td>patient transcript not quantifiable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>transcript not quantifiable in patient</td>
+      <td>FALSE</td>
+      <td>patient transcript quantifiable</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>transcript not quantifiable in patient</td>
+      <td>NA</td>
+      <td>patient expression unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>transcript non canonical</td>
+      <td>TRUE</td>
+      <td>variant does not affect MANE or curated clinical transcript</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>transcript non canonical</td>
+      <td>FALSE</td>
+      <td>variant affects MANE or curated clinical transcript</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>transcript non canonical</td>
+      <td>NA</td>
+      <td>transcript relevance unknown</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>genedisease validity weak</td>
+      <td>TRUE</td>
+      <td>ClinGen gene disease validity not strong or definitive</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>genedisease validity weak</td>
+      <td>FALSE</td>
+      <td>ClinGen gene disease validity strong or definitive</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>genedisease validity weak</td>
+      <td>NA</td>
+      <td>ClinGen validity unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>omim inconsistency</td>
+      <td>TRUE</td>
+      <td>OMIM disease entry missing or mode of inheritance mismatch</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>omim inconsistency</td>
+      <td>FALSE</td>
+      <td>OMIM disease entry present with matching inheritance</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>omim inconsistency</td>
+      <td>NA</td>
+      <td>OMIM information unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>lof mechanism inconsistent</td>
+      <td>TRUE</td>
+      <td>loss of function mechanism inconsistent with known gene biology</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>lof mechanism inconsistent</td>
+      <td>FALSE</td>
+      <td>loss of function consistent with known gene mechanism</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>lof mechanism inconsistent</td>
+      <td>NA</td>
+      <td>loss of function context unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>clinvar benign conflict</td>
+      <td>TRUE</td>
+      <td>ClinVar contains benign or conflicting interpretations</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>clinvar benign conflict</td>
+      <td>FALSE</td>
+      <td>no benign conflict in ClinVar</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>clinvar benign conflict</td>
+      <td>NA</td>
+      <td>ClinVar information unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>phenotype mismatch</td>
+      <td>TRUE</td>
+      <td>phenotype similarity below threshold</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>phenotype mismatch</td>
+      <td>FALSE</td>
+      <td>phenotype similarity sufficient</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>phenotype mismatch</td>
+      <td>NA</td>
+      <td>phenotype information unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>disease spectrum mismatch</td>
+      <td>TRUE</td>
+      <td>clinical presentation inconsistent with known disease spectrum</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>disease spectrum mismatch</td>
+      <td>FALSE</td>
+      <td>clinical presentation consistent</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>disease spectrum mismatch</td>
+      <td>NA</td>
+      <td>disease spectrum information unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>present in controls</td>
+      <td>TRUE</td>
+      <td>variant observed in unrelated controls</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>present in controls</td>
+      <td>FALSE</td>
+      <td>variant absent from controls</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>present in controls</td>
+      <td>NA</td>
+      <td>control data unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>hgmd support absent</td>
+      <td>TRUE</td>
+      <td>no HGMD disease association</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>hgmd support absent</td>
+      <td>FALSE</td>
+      <td>HGMD disease association reported</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>hgmd support absent</td>
+      <td>NA</td>
+      <td>HGMD data unavailable</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>literature mechanism discordant</td>
+      <td>TRUE</td>
+      <td>published mechanism conflicts with proposed effect</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>literature mechanism discordant</td>
+      <td>FALSE</td>
+      <td>published evidence concordant</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>literature mechanism discordant</td>
+      <td>NA</td>
+      <td>literature evidence unavailable</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
