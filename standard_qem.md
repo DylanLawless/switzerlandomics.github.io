@@ -18,7 +18,7 @@ This document defines a normative standard published by the Swiss Genomics      
 
 The Qualifying Evidence Matrix (QEM) standard for verifiable evidence defines a minimal, interoperable representation of evidence availability derived from rule-based evaluations. It specifies how the outcomes of predefined evidence rules are converted into a binary matrix that records whether verifiable evidence is present or absent for each evaluated item.
 
-In this context, an evidence rule is an externally defined, declarative check that assesses a specific condition for a given item under a declared interpretation context and emits a raw outcome of TRUE, FALSE, or NA. These raw outcomes encode whether a potential contradiction, consistency, or lack of information is observed. The Qualifying Evidence Matrix standard does not define the rules themselves, but specifies how their outcomes are interpreted uniformly.
+In this context, an evidence rule is an externally defined, declarative check that assesses a specific condition for a given item under a declared interpretation context and emits a raw outcome of TRUE, FALSE, or NA. These raw outcomes encode whether a potential contradiction, consistency, or lack of information is observed. The QEM standard does not define the rules themselves, but specifies how their outcomes are interpreted uniformly.
 
 The standard defines how evidence availability is represented, not what constitutes evidence. It is independent of analysis pipelines, domain-specific interpretation logic, and downstream statistical or decision-making methods.
 
@@ -39,7 +39,7 @@ The QEM standard defines:
 
 ### 2.2 Out of scope
 
-The Qualifying Evidence Matrix standard does not define:
+The QEM standard does not define:
 
 * data generation, other processing, or annotation formats
 * domain-specific interpretation rules
@@ -76,7 +76,7 @@ An **evidence matrix** is a two-dimensional array indexed by evaluated items and
 
 Let there be $$ n $$ evaluated items and $$ m $$ evidence rules.
 
-The Qualifying Evidence Matrix is defined as:
+The QEM is defined as:
 
 $$
 X \in \{0,1\}^{n \times m}
@@ -84,12 +84,16 @@ $$
 
 where each entry $$ X_{ij} $$ corresponds to evaluated item $$ i $$ and evidence rule $$ j $$.
 
-### 4.2 Ordering requirements
 
-* Rows **MUST** correspond to evaluated items in a defined and stable order.
-* Columns **MUST** correspond to evidence rules in a defined and stable order.
-* The ordering **MUST** be documented and reproducible.
-* Reordering of items or rules constitutes a different matrix instance and **MUST** be documented.
+### 4.2 Ordering and identifier requirements
+
+Each QEM instance **MUST** define a stable and unambiguous structural association between evaluated items and evidence rules.
+
+Where the matrix is represented as a two-dimensional table, rows **MUST** correspond to evaluated items in a defined and stable order, and columns **MUST** correspond to evidence rules in a defined and stable order.
+
+Where the matrix is represented in a non-tabular form, such as a relational database or graph-based representation, stable and unique identifiers for evaluated items and evidence rules **MUST** be provided, and a deterministic mapping to an ordered matrix view **MUST** be defined and documented.
+
+Reordering of evaluated items or evidence rules, or changes to their identifiers, constitutes a different matrix instance and **MUST** be documented.
 
 ---
 
@@ -98,7 +102,7 @@ where each entry $$ X_{ij} $$ corresponds to evaluated item $$ i $$ and evidence
 For each evaluated item $$ i $$ and evidence rule $$ j $$, an upstream process produces a raw rule outcome in  
 $$ \{\text{TRUE}, \text{FALSE}, \text{NA}\} $$.
 
-The Qualifying Evidence Matrix standard defines the following **normative mapping**:
+The QEM standard defines the following **normative mapping**:
 
 $$
 X_{ij} =
@@ -125,7 +129,7 @@ At a minimum, this metadata **MUST** specify:
 
 * a unique identifier for each evidence rule corresponding to the matrix columns
 * the version or identifier of the evidence rule set used
-* the version of the Qualifying Evidence Matrix standard applied
+* the version of the QEM standard applied
 
 Where the matrix rows correspond to identifiable items, stable item identifiers **MUST** be provided or referenced.
 
@@ -133,13 +137,11 @@ Rule identifiers and item identifiers MAY be embedded in the matrix representati
 
 The binary evidence matrix **MUST** be derivable deterministically from the declared raw rule outcomes under the referenced rule set and standard version.
 
-
-
 ---
 
 ## 7. Example (informative)
 
-The following example illustrates a genomics-specific use of the Qualifying Evidence Matrix.
+The following example illustrates a genomics-specific use of the QEM.
 
 In clinical genetics, some evidence depends on whether parental genotypes were assessed. This reflects the completeness of evidence collection, not the validity of any inheritance model.
 
@@ -154,7 +156,6 @@ This two-step design enforces an unambiguous evidence question: whether verifiab
 | parent_gt_unavailable  | FALSE       | parental genotype available   | 1            |
 | parent_gt_unavailable  | NA          | availability unknown          | 0            |
 
-
 For a given evaluated item $$i$$ and evidence rule $$j$$, exactly one raw outcome
 $$r_{ij}$$ in $$\{\text{TRUE}, \text{FALSE}, \text{NA}\}$$ applies.
 The corresponding matrix entry $$X_{ij}$$ is defined uniquely by this realised outcome:
@@ -162,7 +163,6 @@ The corresponding matrix entry $$X_{ij}$$ is defined uniquely by this realised o
 | evaluated item ID | parent_gt_unavailable |
 |-------------------|-----------------------|
 | item_001          | 1                     |
-
 
 In this example, the rule does not assert pathogenicity or inheritance correctness. It records only whether a specific evidence source is present. The resulting matrix entry reflects evidence availability and might be combined with other rules to assess the overall completeness of verifiable evidence.
 
@@ -175,7 +175,7 @@ The QEM does not assert causality, or for instance in genetics pathogenicity, or
 Downstream interpretation, ranking, or inference is outside the scope of this standard.
 
 Evidence rules are not required to be independent. Correlation or dependency between rules is expected in practical applications. 
-The Qualifying Matrix standard does not assume rule independence and does not address the detection, modelling, or correction of correlated evidence. Management of rule correlation, including upstream rule design or downstream statistical handling, is outside the scope of this standard.
+The QEM standard does not assume rule independence and does not address the detection, modelling, or correction of correlated evidence. Management of rule correlation, including upstream rule design or downstream statistical handling, is outside the scope of this standard.
 
 ---
 

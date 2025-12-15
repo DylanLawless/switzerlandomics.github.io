@@ -160,7 +160,7 @@ This document defines a normative standard published by the Swiss Genomics      
 
 <p>The Qualifying Evidence Matrix (QEM) standard for verifiable evidence defines a minimal, interoperable representation of evidence availability derived from rule-based evaluations. It specifies how the outcomes of predefined evidence rules are converted into a binary matrix that records whether verifiable evidence is present or absent for each evaluated item.</p>
 
-<p>In this context, an evidence rule is an externally defined, declarative check that assesses a specific condition for a given item under a declared interpretation context and emits a raw outcome of TRUE, FALSE, or NA. These raw outcomes encode whether a potential contradiction, consistency, or lack of information is observed. The Qualifying Evidence Matrix standard does not define the rules themselves, but specifies how their outcomes are interpreted uniformly.</p>
+<p>In this context, an evidence rule is an externally defined, declarative check that assesses a specific condition for a given item under a declared interpretation context and emits a raw outcome of TRUE, FALSE, or NA. These raw outcomes encode whether a potential contradiction, consistency, or lack of information is observed. The QEM standard does not define the rules themselves, but specifies how their outcomes are interpreted uniformly.</p>
 
 <p>The standard defines how evidence availability is represented, not what constitutes evidence. It is independent of analysis pipelines, domain-specific interpretation logic, and downstream statistical or decision-making methods.</p>
 
@@ -183,7 +183,7 @@ This document defines a normative standard published by the Swiss Genomics      
 
 <h3 id="22-out-of-scope">2.2 Out of scope</h3>
 
-<p>The Qualifying Evidence Matrix standard does not define:</p>
+<p>The QEM standard does not define:</p>
 
 <ul>
   <li>data generation, other processing, or annotation formats</li>
@@ -224,20 +224,21 @@ A raw outcome of NA indicates that the rule could not be evaluated and does not 
 
 <p>Let there be \(n\) evaluated items and \(m\) evidence rules.</p>
 
-<p>The Qualifying Evidence Matrix is defined as:</p>
+<p>The QEM is defined as:</p>
 
 \[X \in \{0,1\}^{n \times m}\]
 
 <p>where each entry \(X_{ij}\) corresponds to evaluated item \(i\) and evidence rule \(j\).</p>
 
-<h3 id="42-ordering-requirements">4.2 Ordering requirements</h3>
+<h3 id="42-ordering-and-identifier-requirements">4.2 Ordering and identifier requirements</h3>
 
-<ul>
-  <li>Rows <strong>MUST</strong> correspond to evaluated items in a defined and stable order.</li>
-  <li>Columns <strong>MUST</strong> correspond to evidence rules in a defined and stable order.</li>
-  <li>The ordering <strong>MUST</strong> be documented and reproducible.</li>
-  <li>Reordering of items or rules constitutes a different matrix instance and <strong>MUST</strong> be documented.</li>
-</ul>
+<p>Each QEM instance <strong>MUST</strong> define a stable and unambiguous structural association between evaluated items and evidence rules.</p>
+
+<p>Where the matrix is represented as a two-dimensional table, rows <strong>MUST</strong> correspond to evaluated items in a defined and stable order, and columns <strong>MUST</strong> correspond to evidence rules in a defined and stable order.</p>
+
+<p>Where the matrix is represented in a non-tabular form, such as a relational database or graph-based representation, stable and unique identifiers for evaluated items and evidence rules <strong>MUST</strong> be provided, and a deterministic mapping to an ordered matrix view <strong>MUST</strong> be defined and documented.</p>
+
+<p>Reordering of evaluated items or evidence rules, or changes to their identifiers, constitutes a different matrix instance and <strong>MUST</strong> be documented.</p>
 
 <hr />
 
@@ -246,7 +247,7 @@ A raw outcome of NA indicates that the rule could not be evaluated and does not 
 <p>For each evaluated item \(i\) and evidence rule \(j\), an upstream process produces a raw rule outcome in<br />
 \(\{\text{TRUE}, \text{FALSE}, \text{NA}\}\).</p>
 
-<p>The Qualifying Evidence Matrix standard defines the following <strong>normative mapping</strong>:</p>
+<p>The QEM standard defines the following <strong>normative mapping</strong>:</p>
 
 \[X_{ij} =
 \begin{cases}
@@ -272,7 +273,7 @@ A raw outcome of NA indicates that the rule could not be evaluated and does not 
 <ul>
   <li>a unique identifier for each evidence rule corresponding to the matrix columns</li>
   <li>the version or identifier of the evidence rule set used</li>
-  <li>the version of the Qualifying Evidence Matrix standard applied</li>
+  <li>the version of the QEM standard applied</li>
 </ul>
 
 <p>Where the matrix rows correspond to identifiable items, stable item identifiers <strong>MUST</strong> be provided or referenced.</p>
@@ -285,7 +286,7 @@ A raw outcome of NA indicates that the rule could not be evaluated and does not 
 
 <h2 id="7-example-informative">7. Example (informative)</h2>
 
-<p>The following example illustrates a genomics-specific use of the Qualifying Evidence Matrix.</p>
+<p>The following example illustrates a genomics-specific use of the QEM.</p>
 
 <p>In clinical genetics, some evidence depends on whether parental genotypes were assessed. This reflects the completeness of evidence collection, not the validity of any inheritance model.</p>
 
@@ -354,7 +355,7 @@ The corresponding matrix entry \(X_{ij}\) is defined uniquely by this realised o
 <p>Downstream interpretation, ranking, or inference is outside the scope of this standard.</p>
 
 <p>Evidence rules are not required to be independent. Correlation or dependency between rules is expected in practical applications. 
-The Qualifying Matrix standard does not assume rule independence and does not address the detection, modelling, or correction of correlated evidence. Management of rule correlation, including upstream rule design or downstream statistical handling, is outside the scope of this standard.</p>
+The QEM standard does not assume rule independence and does not address the detection, modelling, or correction of correlated evidence. Management of rule correlation, including upstream rule design or downstream statistical handling, is outside the scope of this standard.</p>
 
 <hr />
 

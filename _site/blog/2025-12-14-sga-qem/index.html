@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Why evidence availability needs a standard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  
+  <meta property="og:title" content="Why evidence availability needs a standard"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">Why evidence availability needs a standard</h1>
+                <div class="content"><p>2025-12-15</p>
+
+<p>Modern data systems are good at producing answers. They are much worse at stating what evidence was actually available when those answers were produced.</p>
+
+<p>The <a href="https://www.swissgenomicsassociation.ch/assets/release/sga_qem/latest/sga_qem_1.0/">Qualifying Evidence Matrix (QEM)</a> standard exists to solve this specific problem. It is not an interpretative or decision making framework. It is a normalisation standard for evidence availability.</p>
+
+<p>In computer science terms, QEM plays a role similar to an <a href="https://en.wikipedia.org/wiki/Intermediate_representation"><em>intermediate representation (IR)</em></a>, a stable <strong>data structure</strong> that sits between raw rule evaluation and downstream interpretation. Its purpose is simple: to record, in a fixed and interoperable way, whether verifiable evidence was present.</p>
+
+<h2 id="a-simple-example">A simple example</h2>
+
+<p>A student has no recorded result for an exam.</p>
+
+<p>One teacher assumes the student failed. Another assumes the student was absent. A third assumes the grade was lost.</p>
+
+<p>Now consider a fourth possibility. The student attended a private school in another country. The school has an excellent reputation, but it does not use a pass or fail grading system at all.</p>
+
+<p>If the register records only pass or fail, all four situations collapse into the same outcome. The difference between failure, non assessment, missing data, and incompatible grading disappears. Any later judgement becomes unreliable.</p>
+
+<p>A proper exam register first records whether the exam was actually taken. Only then does a grade, in whatever system applies, have meaning.</p>
+
+<p>Evidence systems face the same issue.</p>
+
+<h2 id="evaluation-before-interpretation">Evaluation before interpretation</h2>
+
+<p>Many evidence rules cannot always be evaluated. Data may be missing or unavailable at the time of analysis.</p>
+
+<p>QEM enforces a strict order. Each rule must first emit a raw outcome that distinguishes evaluated states, TRUE, FALSE, or NA. This follows the logic of <a href="https://en.wikipedia.org/wiki/Three-valued_logic"><em>three-valued logic</em></a>, where NA represents not evaluable rather than true or false.</p>
+
+<p>Only in a second step is this outcome mapped into a <strong>binary</strong> record of evidence availability, using standard <a href="https://en.wikipedia.org/wiki/Binary_number"><em>binary</em></a> or <a href="https://en.wikipedia.org/wiki/Boolean_data_type"><em>boolean</em></a> representations.</p>
+
+<p>Skipping this step and writing a binary result directly loses essential information. QEM explicitly disallows this.</p>
+
+<h2 id="why-separation-matters">Why separation matters</h2>
+
+<p>Ambiguity arises when identical outputs can mean different things. A negative result may reflect a true absence, or it may reflect that nothing was assessed at all.</p>
+
+<p>QEM removes this ambiguity by separating rule outcomes from evidence availability. This mirrors a well established principle in <a href="https://en.wikipedia.org/wiki/Formal_system"><em>formal systems</em></a>, where <a href="https://en.wikipedia.org/wiki/Syntax"><em>syntax</em></a> is handled before <a href="https://en.wikipedia.org/wiki/Semantics"><em>semantics</em></a>, so meaning is constructed on stable ground.</p>
+
+<p>QEM does not assess correctness, causality, or confidence. It performs <em>normalisation</em> only, using a fixed mapping from rule outcomes to availability, consistent with established <a href="https://en.wikipedia.org/wiki/Database_normalization"><em>data normalisation</em></a> principles.</p>
+
+<p>Interpretation is deferred by design.</p>
+
+<h2 id="no-single-existing-standard-fully-addresses-this-problem">No single existing standard fully addresses this problem.</h2>
+
+<p>In databases and programming languages, <a href="https://en.wikipedia.org/wiki/Three-valued_logic"><em>three-valued logic</em></a> and <code class="language-plaintext highlighter-rouge">NULL</code> semantics distinguish TRUE, FALSE, and unknown states. This captures non evaluability at the representation level, but does not mandate how such states are propagated, normalised, or audited across heterogeneous rule systems.</p>
+
+<p>Data modelling standards and <a href="https://en.wikipedia.org/wiki/Canonical_model"><em>canonical data models</em></a> define structure, but assume field semantics are already agreed. They do not treat non evaluability or absence of evidence as first class information.</p>
+
+<p>Provenance frameworks such as <a href="https://en.wikipedia.org/wiki/W3C_Prov"><em>W3C PROV</em></a> describe how data was generated or transformed, but do not define a minimal, deterministic normal form for evidence availability itself.</p>
+
+<p>Clinical and regulatory standards, including <a href="https://en.wikipedia.org/wiki/Health_Level_7"><em>HL7</em></a>, <a href="https://en.wikipedia.org/wiki/Fast_Healthcare_Interoperability_Resources"><em>FHIR</em></a>, and <a href="https://en.wikipedia.org/wiki/OpenEHR"><em>openEHR</em></a>, include domain specific markers such as “unknown” or “not done”. These conventions mix representation and interpretation and do not generalise across systems.</p>
+
+<p>Frameworks for <a href="https://en.wikipedia.org/wiki/AI_governance"><em>AI governance</em></a> recognise the importance of missing or unevaluated evidence, but lack a low level, system independent representation that enforces this separation mechanically.</p>
+
+<p>The gap is therefore not awareness, but the absence of a small, explicit, interoperable normal form whose sole purpose is to record whether verifiable evidence was present. This is the layer QEM defines.</p>
+
+<h2 id="the-consequence-for-trustworthy-systems">The consequence for trustworthy systems</h2>
+
+<p>Many failures in <a href="https://en.wikipedia.org/wiki/Artificial_intelligence"><em>artificial intelligence (AI)</em></a> and data-driven decision making do not stem from incorrect models. They stem from uncertainty about what information the system actually had access to.</p>
+
+<p>Without an explicit record of evidence availability, absence is silently treated as evidence. Gaps are misread as conclusions.</p>
+
+<p>QEM provides a minimal but essential layer. It ensures that any downstream interpretation rests on a clear, auditable account of whether the required evidence was present.</p>
+
+<p>It does not make systems trustworthy by itself. It makes trust claims structurally complete.</p>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
