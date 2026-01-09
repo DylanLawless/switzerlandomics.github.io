@@ -7,7 +7,8 @@ $primary-dark: #a01b16;//dark red
 $secondary: #f88379;// light red 
 $black: #2f2f41;
 $white: #ffffff;
-$white-offset: #fff6f8;
+// $white-offset: #fff6f8;
+$white-offset: #f3f2f2;
 $steel: #5c5a5a;
 
 // Links
@@ -180,3 +181,24 @@ html {
     padding-top: 3rem !important;
     margin-top: 0 !important;
     }
+
+
+/* copy friendly code blocks, e.g. BibTeX */
+
+pre.code-copy {
+  background: $white-offset;
+  border: 1px solid lighten($steel, 25%);
+  border-radius: 6px;
+  padding: 1rem;
+
+  overflow-x: visible;
+  white-space: pre-wrap;       /* allow wrapping */
+  word-break: break-word;      /* break long urls */
+}
+
+pre.code-copy code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.9rem;
+}
+

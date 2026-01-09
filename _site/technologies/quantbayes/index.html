@@ -147,26 +147,26 @@
     <div class="col-12 col-md-8">
       <div class="tech tech-single">
         <h1 class="title">QuantBayes</h1>
-        <div class="content"><p>Gives genomics a shared evidence language.
+        <div class="content"><p>Gives genomics a shared evidence language.<br />
 Every variant. Every pipeline. Every institution.</p>
 
-<p>It does not estimate pathogenicity.
-It does not replace your analysis tools. It connects them.</p>
+<p>QuantBayes does not estimate pathogenicity.<br />
+It does not replace analysis pipelines. It connects them.</p>
 
-<p>QuantBayes measures how complete and verifiable the evidence is for any variant that your pipeline selects, using a lightning-fast and universal standard that behaves the same everywhere. Laboratories keep their own technology and gain a transparent, reproducible measure of evidence that can move across hospitals, platforms, and countries.</p>
+<p>QuantBayes measures how complete and verifiable the available evidence is for any variant selected by an upstream workflow. It applies a universal statistical standard that behaves identically across laboratories, platforms, and countries. Existing technologies remain unchanged while gaining a transparent, reproducible evidence scale that can move across institutions.</p>
 
-<p>A strongly supported variant might score <strong>0.95 with a 95% credible interval from 0.91 to 0.98</strong>.
-A weaker result might score <strong>0.32 with a wider interval</strong>.
-The numbers are universal and independent of the pipeline that produced the candidate.</p>
+<p>A strongly supported variant might score <strong>0.95 with a 95 percent credible interval from 0.91 to 0.98</strong>. 
+A weaker result might score <strong>0.32 with a wider interval</strong>.</p>
 
-<p>This separates variant discovery from evidence assessment and gives genomics a common, auditable evidence scale that leaves existing systems untouched.</p>
+<p>These values are independent of the pipeline that produced the candidate variant.
+This separation of variant discovery from evidence assessment provides a common, auditable evidence language for genomics.</p>
 
 <p><img src="/images/quantbayes/qv_bayes_short.png" style="width:100 percent; height:auto;" />
 <strong><em>Figure 1. From siloed workflows to a universal evidence model</em></strong>.</p>
 
 <hr />
 
-<h2 id="download">Download</h2>
+<h2 id="downloads">Downloads</h2>
 
 <div class="table-responsive">
   <table class="table table-hover">
@@ -179,22 +179,22 @@ The numbers are universal and independent of the pipeline that produced the cand
     </thead>
     <tbody>
       <tr>
-        <td>R_package</td>
+        <td>R package</td>
         <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v0.1.0_R.tar.gz?download=1" download="quantbayes_v0.1.0_R.tar.gz">quantbayes_v0.1.0_R.tar.gz</a></td>
         <td><code class="language-plaintext highlighter-rouge">dfa919d1848070cf8125d49eb029dbfd49d09558cd84deb7d50c1a6c188f1f63</code></td>
       </tr>
       <tr>
-        <td>Linux_x86_64</td>
+        <td>Linux x86_64</td>
         <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_linux_x86_64.tar.gz?download=1" download="quantbayes_v1.0.0_linux_x86_64.tar.gz">quantbayes_v1.0.0_linux_x86_64.tar.gz</a></td>
         <td><code class="language-plaintext highlighter-rouge">440c5d92354285a5b7790d19f017205a849ecb76a4fc80804f726d420f06080d</code></td>
       </tr>
       <tr>
-        <td>macOS_universal</td>
+        <td>macOS universal</td>
         <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_universal.tar.gz?download=1" download="quantbayes_v1.0.0_macos_universal.tar.gz">quantbayes_v1.0.0_macos_universal.tar.gz</a></td>
         <td><code class="language-plaintext highlighter-rouge">ab8824f0c29fce57328a3037677dbc20768b5a9d388fda1215362d1d3b99291e</code></td>
       </tr>
       <tr>
-        <td>macOS_x86_64</td>
+        <td>macOS x86_64</td>
         <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_x86_64.tar.gz?download=1" download="quantbayes_v1.0.0_macos_x86_64.tar.gz">quantbayes_v1.0.0_macos_x86_64.tar.gz</a></td>
         <td><code class="language-plaintext highlighter-rouge">c15d4ac299d4f557941b1a8518e75c44fd026cf9908edf8e85475b9f9e056035</code></td>
       </tr>
@@ -202,112 +202,94 @@ The numbers are universal and independent of the pipeline that produced the cand
   </table>
 </div>
 
-<p>Source code is available in the public repository. The universal macOS binary runs natively on both Intel x86_64 based Macs and Apple silicon arm64 systems. The R package quantbayes is available on CRAN and provides the same core model with optional visualisation tools. The release fork of the R package source can be on <a href="https://github.com/DylanLawless/src-quantbayes_package">GitHub</a>. Downloadable dev <a href="https://zenodo.org/records/17919369/files/README.html?download=1">README.html</a> file.
-Download links are hosted by <a href="https://zenodo.org/records/17919369">Zenodo</a>.</p>
-
-<p><strong>Verify checksums</strong></p>
-
-<p><code class="language-plaintext highlighter-rouge">shasum -a 256 quantbayes_v1.0.0_*.tar.gz</code></p>
+<h3 id="the-r-package-is-available-on-cran">The R package is available on CRAN</h3>
+<p>Source: <a href="https://cran.r-project.org/package=quantbayes">cran.r-project quantbayes</a> (for installation see below).
+<img src="https://www.r-pkg.org/badges/version/quantbayes" alt="CRAN status" />
+<img src="https://cranlogs.r-pkg.org/badges/grand-total/quantbayes" alt="CRAN downloads" /></p>
 
 <hr />
 
 <h2 id="installation">Installation</h2>
 
-<p>QuantBayes is distributed as a standalone binary. It runs directly from the extracted directory, with no system installation and no administrator privileges. This model is compatible with macOS, Linux, HPC environments, and shared compute clusters.</p>
+<p>QuantBayes is distributed as a standalone binary and as an R package. The binary runs directly from the extracted directory and requires no system installation or administrator privileges. It is compatible with macOS, Linux, HPC environments, and shared compute clusters.</p>
 
-<p><strong>Download and extract</strong></p>
+<h3 id="macos-and-linux-binary-installation">MacOS and Linux binary installation</h3>
 
-<p><code class="language-plaintext highlighter-rouge">tar -xzf quantbayes_v1.0.0_&lt;platform&gt;.tar.gz</code><br />
+<p>Download verify checksums and extract:</p>
+
+<p><code class="language-plaintext highlighter-rouge">shasum -a 256 quantbayes_v1.0.0_*.tar.gz</code>
+<code class="language-plaintext highlighter-rouge">tar -xzf quantbayes_v1.0.0_&lt;platform&gt;.tar.gz</code><br />
 <code class="language-plaintext highlighter-rouge">cd quantbayes</code></p>
 
-<p>This creates a directory containing:</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>quantbayes        (the binary)
-quantbayes.1      (manual page)
-LICENSE
-README.md
-</code></pre></div></div>
+<!-- Directory contents: -->
+<!-- ``` -->
+<!-- quantbayes -->
+<!-- quantbayes.1 -->
+<!-- LICENSE -->
+<!-- README.md -->
+<!-- ``` -->
 
-<p><strong>Run QuantBayes directly</strong><br />
-<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report</code></p>
+<p>Run directly:</p>
 
-<p>QuantBayes does not need to be copied into system locations.
-You may keep it in any folder where you have execute permissions.</p>
+<p><code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report</code></p>
 
 <p><strong>macOS note</strong></p>
 
-<p>macOS attaches a quarantine flag to downloaded binaries. 
-This behaviour applies to all unsigned scientific software on macOS.
-If you see a security warning the first time you run QuantBayes, remove the flag with:<br />
-<code class="language-plaintext highlighter-rouge">xattr -d com.apple.quarantine quantbayes</code></p>
+<p>Downloaded binaries may be quarantined by macOS. Remove the quarantine flag if prompted:</p>
+
+<p><code class="language-plaintext highlighter-rouge">xattr -d com.apple.quarantine quantbayes</code></p>
 
 <p><strong>Linux and HPC note</strong></p>
 
-<p>Most HPC clusters do not allow sudo. QuantBayes can be placed in your home directory or project space and used as is.
-Cluster administrators may optionally expose it through an environment module, without any special configuration:<br />
-<code class="language-plaintext highlighter-rouge">module load quantbayes</code></p>
+<p>QuantBayes can be used from any directory with execute permissions. Administrators may optionally expose it via an environment module:</p>
 
-<p><strong>Optional: add QuantBayes to your PATH</strong></p>
+<p><code class="language-plaintext highlighter-rouge">module load quantbayes</code></p>
 
-<p>For convenience:<br />
-<code class="language-plaintext highlighter-rouge">mkdir -p $HOME/.local/bin</code><br />
-<code class="language-plaintext highlighter-rouge">cp quantbayes $HOME/.local/bin/</code><br />
-<code class="language-plaintext highlighter-rouge">export PATH="$HOME/.local/bin:$PATH"</code></p>
+<h3 id="r-package-installation">R package installation</h3>
 
-<p>To make this permanent, add the export line to <code class="language-plaintext highlighter-rouge">.bashrc</code> or <code class="language-plaintext highlighter-rouge">.zshrc</code>.</p>
+<p>Install with R or RStudio directly from CRAN. For more information see the 
+ <a href="https://cran.r-project.org/web/packages/quantbayes/vignettes/quantbayes.html">R vignette</a> and 
+ <a href="https://cran.r-project.org/web/packages/quantbayes/refman/quantbayes.html">R reference manual</a> pages.</p>
 
-<p>The manual page can be viewed on most modern macOS and Linux systems:<br />
-<code class="language-plaintext highlighter-rouge">man -l quantbayes.1</code></p>
-
-<p>On systems where man -l is not available (common on HPC clusters):<br />
-<code class="language-plaintext highlighter-rouge">groff -Tutf8 -man quantbayes.1 | less -R</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("quantbayes")
+library(quantbayes)
+</code></pre></div></div>
 
 <hr />
 
 <h2 id="quick-start">Quick start</h2>
 
-<p>Run and include a human readable summary:<br />
-<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report --out sample1</code></p>
+<p>Human readable report:</p>
 
-<p>Minimal run on the example matrix:<br />
-<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt</code></p>
+<p><code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report --out sample1</code></p>
 
-<p>Generate JSON outputs:<br />
-<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --json</code></p>
+<p>Minimal run:</p>
 
-<p>QuantBayes writes:</p>
+<p><code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt</code></p>
 
-<ul>
-  <li>per variant summaries</li>
-  <li>global summaries</li>
-  <li>optional human readable reports</li>
-</ul>
+<p>JSON output:</p>
+
+<p><code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --json</code></p>
+
+<p>QuantBayes produces per variant summaries, global summaries, and optional reports.</p>
 
 <hr />
 
 <h2 id="example-clinical-genetics">Example: clinical genetics</h2>
 
-<p>A patient was evaluated for genetic disease using Whole Genome Sequencing, which produced a ranked set of candidate variants from a standard prioritisation workflow. QuantBayes assessed the independent evidence available for each candidate using the binary evidence matrix derived from the Evidence Standard rules. These rules cover domains such as inheritance consistency when parental data are available and functional evidence supporting the proposed mechanism.</p>
+<p>Whole Genome Sequencing produced a ranked list of candidate variants using a standard prioritisation workflow. QuantBayes evaluated the independent evidence supporting each candidate using a binary evidence matrix derived from a published evidence standard.</p>
 
 <blockquote>
-  <p>For the leading candidate, the posterior evidence sufficiency <strong>\(\theta\)</strong> and its 95 percent credible interval were <strong>0.731 (0.549 to 0.879)</strong>, with a <strong>percentile of 99.88</strong> relative to all evaluated variants in the genome. The global distribution of evidence sufficiency had a mean <strong>\(\theta\)</strong> with a 95 percent credible interval of <strong>0.52 (0.38 to 0.65)</strong>. These values describe how complete the available evidence is, not the probability of pathogenicity.</p>
-
-  <p><strong>Clinical scenario</strong>: autosomal recessive cystic fibrosis.<br />
-<strong>Candidate</strong>: NC_000007.14: g.117559592_117559594delCTT.<br />
-<strong>Gene</strong>: <em>CFTR</em>.<br />
-<strong>QuantBayes \(\theta\) (theta) 95% CrI</strong>: 0.731 (0.549-0.879).<br />
-<strong>Percentile</strong>: 99.88.</p>
-
-  <p>Higher values indicate that most required evidence elements are available.
-Lower values indicate sparse or incomplete support.</p>
+  <p>For the leading candidate, the posterior evidence sufficiency <strong>\(\theta\)</strong> and its 95 percent credible interval were <strong>0.731 (0.549 to 0.879)</strong>, corresponding to the <strong>99.88th percentile</strong> genome wide. These values describe evidence completeness, not pathogenicity.</p>
 </blockquote>
 
 <hr />
 
 <div class="table-responsive">
-  <table>
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th><span style="white-space: nowrap; display:inline-block; min-width:260px;">variant_id</span></th>
+        <th>variant_id</th>
         <th>k</th>
         <th>m</th>
         <th>theta mean</th>
@@ -318,7 +300,7 @@ Lower values indicate sparse or incomplete support.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">7-117559592-CTT–_AR</span></td>
+        <td>7-117559592-CTT–_AR</td>
         <td>18</td>
         <td>24</td>
         <td>0.7308</td>
@@ -327,7 +309,7 @@ Lower values indicate sparse or incomplete support.</p>
         <td>99.875</td>
       </tr>
       <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">6-72183475-CG-N_AR</span></td>
+        <td>6-72183475-CG-N_AR</td>
         <td>18</td>
         <td>24</td>
         <td>0.7308</td>
@@ -336,7 +318,7 @@ Lower values indicate sparse or incomplete support.</p>
         <td>99.875</td>
       </tr>
       <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">1-14682421-G-A_AD</span></td>
+        <td>1-14682421-G-A_AD</td>
         <td>17</td>
         <td>24</td>
         <td>0.6923</td>
@@ -344,227 +326,97 @@ Lower values indicate sparse or incomplete support.</p>
         <td>0.8505</td>
         <td>99.375</td>
       </tr>
-      <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">7-751853912-C-T_AR</span></td>
-        <td>17</td>
-        <td>24</td>
-        <td>0.6923</td>
-        <td>0.5061</td>
-        <td>0.8505</td>
-        <td>99.375</td>
-      </tr>
-      <tr>
-        <td>…</td>
-        <td>…</td>
-        <td>…</td>
-        <td>…</td>
-        <td>…</td>
-        <td>…</td>
-        <td>…</td>
-      </tr>
-    </tbody>
-  </table>
-
-</div>
-<p><em><strong>Table 1. QuantBayes results table</strong>. variant_id is the identifier used in the upstream analysis.
-k is the number of evidence rules supported by data.
-m is the total number of rules evaluated.
-theta mean is the posterior expectation of evidence sufficiency.
-theta lower and theta upper are the bounds of its credible interval.
-percentile shows how the variant ranks relative to all evaluated variants.</em></p>
-
-<hr />
-
-<p><img src="/images/quantbayes/quantbayes_example.png" style="width:100 percent; height:auto;" /></p>
-
-<p><em><strong>Figure 2: Global evidence sufficiency distribution with candidate overlay</strong>. The grey background shows the genome wide mixture of theta. Overlay lines mark the top prioritised candidates. The red point marks the variant with the strongest evidence sufficiency credible interval.</em></p>
-
-<hr />
-
-<h2 id="preparing-an-evidence-matrix">Preparing an evidence matrix</h2>
-
-<p>QuantBayes expects that candidate variants are first identified by upstream tools or service providers such as <a href="https://exomiser.readthedocs.io">Exomiser</a>, <a href="https://varsome.com">VarSome</a>, <a href="https://www.sophiagenetics.com">SOPHiA GENETICS</a>, or standard clinical pipelines. 
-These systems provide analysis results for each variant, but they do not need to disclose internal algorithms or proprietary models. QuantBayes operates on an independent and verifiable evidence checklist, so each candidate can be evaluated in a standardised and reproducible way regardless of how it was generated or prioritised upstream.
-To make results comparable across institutions, the Swiss Genomics Association provides a national-scale</p>
-
-<p>This standard defines how raw annotations map to binary evidence rules. Each rule evaluates one independent domain of support. A short example:</p>
-
-<div class="table-responsive">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag</span></th>
-        <th>raw_value</th>
-        <th>meaning</th>
-        <th>interpreted</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_moi_parent_conflict_AD</span></td>
-        <td>TRUE</td>
-        <td>MOI_conflict</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_moi_parent_conflict_AD</span></td>
-        <td>FALSE</td>
-        <td>no_conflict</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_moi_parent_conflict_AD</span></td>
-        <td>NA</td>
-        <td>not_recorded</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_uniprot_hits_any_feature</span></td>
-        <td>TRUE</td>
-        <td>feature_present</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_uniprot_hits_any_feature</span></td>
-        <td>FALSE</td>
-        <td>no_known_feature</td>
-        <td>NA</td>
-      </tr>
-      <tr>
-        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_uniprot_hits_any_feature</span></td>
-        <td>NA</td>
-        <td>missing_flag</td>
-        <td>0</td>
-      </tr>
     </tbody>
   </table>
 </div>
 
-<p>Applying these mappings creates the binary evidence matrix that QuantBayes reads.</p>
-
-<hr />
-
-<h2 id="matrix-input-example">Matrix input example</h2>
-
-<p>The QuantBayes distribution provides an example input database at <code class="language-plaintext highlighter-rouge">tests/data/test_matrix_01.txt</code>. The first rows are:</p>
-
-<div class="table-responsive">
-  <table class="table table-hover">
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>NA</td>
-        <td>1</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>0</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>1</td>
-        <td>0</td>
-        <td>0</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>1</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-        <td>NA</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<p>Each row is a variant. Each column is an evidence rule. A one indicates support. A zero indicates absence or contradiction. NA indicates information that was not available. QuantBayes converts NA to zero internally to maintain universal behaviour.</p>
+<p><img src="/images/quantbayes/quantbayes_example.png" style="width:100 percent; height:auto;" />
+<strong><em>Figure 2. Global evidence sufficiency distribution with candidate overlay</em></strong>.</p>
 
 <hr />
 
 <h2 id="method-overview">Method overview</h2>
 
-<p>A very simple overview is that QuantBayes models the number of supported evidence items (k) out of (m) using a Beta Binomial update. The posterior
-\(\theta \mid k \sim \mathrm{Beta}(1 + k,\; 1 + m - k)\)
-provides a reproducible measure of evidence sufficiency, expressed through a posterior mean, a credible interval, and a percentile. 
-These values describe how complete and verifiable the available evidence is for each variant. 
-They do not estimate pathogenicity.</p>
+<p>QuantBayes models the number of supported evidence items (k) out of (m) using a Beta Binomial update:</p>
 
-<p><img src="/images/quantbayes/qv_quant.png" style="width:100 percent; height:auto;" /></p>
+\[\theta \mid k \sim \mathrm{Beta}(1 + k,\; 1 + m - k)\]
 
-<p><em><strong>Figure 3. A graphical overview of quantbayes on the Quant Evidence Standard</strong>. The method provides a clear, quantitative measure of how well each variant is supported by the scientific evidence required for Mendelian disease interpretation. Starting from the binary evidence matrix defined by the Qualifying Variant Evidence Standard, Quant ES applies a principled statistical model to measure the completeness of the available evidence. This separates Whole Genome Sequencing outputs from downstream interpretation and delivers a universal, uncertainty-calibrated assessment of evidential credibility.</em></p>
+<p>The posterior mean, credible interval, and percentile provide a reproducible measure of evidence sufficiency. These values quantify completeness and verifiability of evidence and do not estimate disease causality.</p>
 
-<hr />
-
-<h2 id="the-r-package">The R package</h2>
-
-<p>The CRAN package quantbayes implements the same algorithm and adds plotting functions for exploration:</p>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("quantbayes")
-library(quantbayes)
-x &lt;- as.matrix(read.table("matrix.txt"))
-res &lt;- quant_es_core(x)
-</code></pre></div></div>
-
-<p>Plots include global theta distributions, credible intervals, and evidence matrices.</p>
-
-<hr />
-
-<h2 id="validation">Validation</h2>
-
-<p>QuantBayes includes a test dataset and example scripts. Running them confirms that the installation matches the reference outputs to floating point precision.</p>
+<p><img src="/images/quantbayes/qv_quant.png" style="width:100 percent; height:auto;" />
+<strong><em>Figure 3. QuantBayes applied to a standardised evidence model</em></strong>.</p>
 
 <hr />
 
 <h2 id="citation">Citation</h2>
 
-<p>The quantitative omic epidemiology group, et al. “<a href="https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1">A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease</a>” <em>medRxiv</em> preprint (2025).<br />
-<a href="https://doi.org/10.1101/2025.12.02.25341503">DOI</a> |
-<a href="https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1.full.pdf">PDF</a> |
-<a href="https://switzerlandomics.ch/technologies/quantbayes/">Application</a></p>
+<p>If you use QuantBayes please cite the software and the associated manuscript.</p>
+
+<p><strong>Manuscript</strong></p>
+
+<p>Quant Group, et al. <em>A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease</em>. medRxiv (2025). DOI: <a href="https://doi.org/10.64898/2025.12.02.25341503">https://doi.org/10.64898/2025.12.02.25341503</a>.</p>
+
+<pre class="code-copy">
+@article{QuantBayes2025quantgroup,
+  author    = {Quant Group and Saadat, Ali and Lawless, Dylan},
+  title     = {A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease},
+  elocation-id = {2025.12.02.25341503},
+  year      = {2025},
+  doi       = {10.64898/2025.12.02.25341503},
+  publisher = {Cold Spring Harbor Laboratory Press},
+  url       = {https://www.medrxiv.org/content/early/2025/12/13/2025.12.02.25341503},
+  eprint    = {https://www.medrxiv.org/content/early/2025/12/13/2025.12.02.25341503.full.pdf},
+  journal   = {medRxiv}
+}
+</pre>
+
+<p><strong>R package (CRAN)</strong></p>
+
+<p>Lawless D. <em>quantbayes: Bayesian Quantification of Evidence Sufficiency</em>. Comprehensive R Archive Network (2025).
+<a href="https://CRAN.R-project.org/package=quantbayes">https://CRAN.R-project.org/package=quantbayes</a></p>
+
+<pre class="code-copy">
+@article{quantbayes_cran,
+  title        = {quantbayes: Bayesian Quantification of Evidence Sufficiency},
+  author       = {Lawless, Dylan},
+  year         = {2025},
+  note         = {R package version 0.1.0},
+  url          = {https://CRAN.R-project.org/package=quantbayes},
+  doi          = {10.32614/CRAN.package.quantbayes},
+  journal      = {Comprehensive R Archive Network},
+  organization = {Comprehensive R Archive Network}
+}
+</pre>
+
+<p><strong>Software release (Zenodo)</strong></p>
+
+<p>Lawless D. <em>Bayesian Quantification of Evidence Sufficiency quantbayes Implementation</em>. Zenodo (2025). DOI: <a href="https://doi.org/10.5281/zenodo.17919369">https://doi.org/10.5281/zenodo.17919369</a>.</p>
+
+<pre class="code-copy">
+@article{lawless2025_zenodo_quantbayes,
+  author    = {Lawless, Dylan},
+  title     = {Bayesian Quantification of Evidence Sufficiency quantbayes Implementation},
+  month     = dec,
+  year      = {2025},
+  journal   = {Zenodo},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.17919369},
+  url       = {https://doi.org/10.5281/zenodo.17919369}
+}
+</pre>
+
+<hr />
+
+<h2 id="data-repository">Data repository</h2>
+
+<p>We provide the universal macOS binary runs natively on both Intel x86_64 and Apple silicon arm64 systems and the R package source code. Release artefacts and documentation are hosted on <a href="https://zenodo.org/records/17919369&gt;">Zenodo</a>.</p>
 
 <hr />
 
 <h2 id="licence">Licence</h2>
 
-<p>QuantBayes is provided under the MIT Licence. A permissive licence ensures that the statistical framework can be inspected, reproduced, and integrated into clinical and research workflows without restrictions. Open availability supports consistent use across institutions and simplifies independent verification.</p>
+<p>QuantBayes is released under the MIT Licence. This permits inspection, reproduction, and integration into commercial, research, and clinical workflows without restriction.</p>
+
 </div>
       </div>
     </div>

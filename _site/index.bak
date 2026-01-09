@@ -545,6 +545,19 @@ Every variant. Every pipeline. Every institution.
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
+              <a href="/technologies/quantbayes_ori/">QuantBayes original</a>
+            </h2>
+            <p>Gives genomics a shared evidence language.
+Every variant. Every pipeline. Every institution.
+</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 mb-1">
+        <div class="tech tech-summary">
+          <div class="tech-content">
+            <h2 class="tech-title">
               <a href="/technologies/qv_database/">Qualifying Variant database</a>
             </h2>
             <p>
@@ -586,18 +599,6 @@ designed to simplify the discovery ...</p>
               <a href="/technologies/max_maf/">MAFₘₐₓ calculator</a>
             </h2>
             <p>Estimate the maximum minor allele frequency (MAF) your cohort can support. A quick, transparent t...</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-4 mb-1">
-        <div class="tech tech-summary">
-          <div class="tech-content">
-            <h2 class="tech-title">
-              <a href="/technologies/iei_genetics/">IEI genetics database</a>
-            </h2>
-            <p>Streamline genetic diagnosis of IEI
-to quantify both known and uncertain evidence into a single, ...</p>
           </div>
         </div>
       </div>

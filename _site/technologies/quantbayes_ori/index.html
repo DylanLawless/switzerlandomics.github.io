@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>QuantBayes original</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  
+  <meta property="og:title" content="QuantBayes original"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-tech'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="tech tech-single">
+        <h1 class="title">QuantBayes original</h1>
+        <div class="content"><p>Gives genomics a shared evidence language.
+Every variant. Every pipeline. Every institution.</p>
+
+<p>It does not estimate pathogenicity.
+It does not replace your analysis tools. It connects them.</p>
+
+<p>QuantBayes measures how complete and verifiable the evidence is for any variant that your pipeline selects, using a lightning-fast and universal standard that behaves the same everywhere. Laboratories keep their own technology and gain a transparent, reproducible measure of evidence that can move across hospitals, platforms, and countries.</p>
+
+<p>A strongly supported variant might score <strong>0.95 with a 95% credible interval from 0.91 to 0.98</strong>.
+A weaker result might score <strong>0.32 with a wider interval</strong>.
+The numbers are universal and independent of the pipeline that produced the candidate.</p>
+
+<p>This separates variant discovery from evidence assessment and gives genomics a common, auditable evidence scale that leaves existing systems untouched.</p>
+
+<p><img src="/images/quantbayes/qv_bayes_short.png" style="width:100 percent; height:auto;" />
+<strong><em>Figure 1. From siloed workflows to a universal evidence model</em></strong>.</p>
+
+<hr />
+
+<h2 id="download">Download</h2>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>OS</th>
+        <th>File</th>
+        <th>SHA256</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>R_package</td>
+        <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v0.1.0_R.tar.gz?download=1" download="quantbayes_v0.1.0_R.tar.gz">quantbayes_v0.1.0_R.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">dfa919d1848070cf8125d49eb029dbfd49d09558cd84deb7d50c1a6c188f1f63</code></td>
+      </tr>
+      <tr>
+        <td>Linux_x86_64</td>
+        <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_linux_x86_64.tar.gz?download=1" download="quantbayes_v1.0.0_linux_x86_64.tar.gz">quantbayes_v1.0.0_linux_x86_64.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">440c5d92354285a5b7790d19f017205a849ecb76a4fc80804f726d420f06080d</code></td>
+      </tr>
+      <tr>
+        <td>macOS_universal</td>
+        <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_universal.tar.gz?download=1" download="quantbayes_v1.0.0_macos_universal.tar.gz">quantbayes_v1.0.0_macos_universal.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">ab8824f0c29fce57328a3037677dbc20768b5a9d388fda1215362d1d3b99291e</code></td>
+      </tr>
+      <tr>
+        <td>macOS_x86_64</td>
+        <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_x86_64.tar.gz?download=1" download="quantbayes_v1.0.0_macos_x86_64.tar.gz">quantbayes_v1.0.0_macos_x86_64.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">c15d4ac299d4f557941b1a8518e75c44fd026cf9908edf8e85475b9f9e056035</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Source code is available in the public repository. The universal macOS binary runs natively on both Intel x86_64 based Macs and Apple silicon arm64 systems. The R package quantbayes is available on CRAN and provides the same core model with optional visualisation tools. The release fork of the R package source can be on <a href="https://github.com/DylanLawless/src-quantbayes_package">GitHub</a>. Downloadable dev <a href="https://zenodo.org/records/17919369/files/README.html?download=1">README.html</a> file.
+Download links are hosted by <a href="https://zenodo.org/records/17919369">Zenodo</a>.</p>
+
+<p><strong>Verify checksums</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">shasum -a 256 quantbayes_v1.0.0_*.tar.gz</code></p>
+
+<hr />
+
+<h2 id="installation">Installation</h2>
+
+<p>QuantBayes is distributed as a standalone binary. It runs directly from the extracted directory, with no system installation and no administrator privileges. This model is compatible with macOS, Linux, HPC environments, and shared compute clusters.</p>
+
+<p><strong>Download and extract</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">tar -xzf quantbayes_v1.0.0_&lt;platform&gt;.tar.gz</code><br />
+<code class="language-plaintext highlighter-rouge">cd quantbayes</code></p>
+
+<p>This creates a directory containing:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>quantbayes        (the binary)
+quantbayes.1      (manual page)
+LICENSE
+README.md
+</code></pre></div></div>
+
+<p><strong>Run QuantBayes directly</strong><br />
+<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report</code></p>
+
+<p>QuantBayes does not need to be copied into system locations.
+You may keep it in any folder where you have execute permissions.</p>
+
+<p><strong>macOS note</strong></p>
+
+<p>macOS attaches a quarantine flag to downloaded binaries. 
+This behaviour applies to all unsigned scientific software on macOS.
+If you see a security warning the first time you run QuantBayes, remove the flag with:<br />
+<code class="language-plaintext highlighter-rouge">xattr -d com.apple.quarantine quantbayes</code></p>
+
+<p><strong>Linux and HPC note</strong></p>
+
+<p>Most HPC clusters do not allow sudo. QuantBayes can be placed in your home directory or project space and used as is.
+Cluster administrators may optionally expose it through an environment module, without any special configuration:<br />
+<code class="language-plaintext highlighter-rouge">module load quantbayes</code></p>
+
+<p><strong>Optional: add QuantBayes to your PATH</strong></p>
+
+<p>For convenience:<br />
+<code class="language-plaintext highlighter-rouge">mkdir -p $HOME/.local/bin</code><br />
+<code class="language-plaintext highlighter-rouge">cp quantbayes $HOME/.local/bin/</code><br />
+<code class="language-plaintext highlighter-rouge">export PATH="$HOME/.local/bin:$PATH"</code></p>
+
+<p>To make this permanent, add the export line to <code class="language-plaintext highlighter-rouge">.bashrc</code> or <code class="language-plaintext highlighter-rouge">.zshrc</code>.</p>
+
+<p>The manual page can be viewed on most modern macOS and Linux systems:<br />
+<code class="language-plaintext highlighter-rouge">man -l quantbayes.1</code></p>
+
+<p>On systems where man -l is not available (common on HPC clusters):<br />
+<code class="language-plaintext highlighter-rouge">groff -Tutf8 -man quantbayes.1 | less -R</code></p>
+
+<hr />
+
+<h2 id="quick-start">Quick start</h2>
+
+<p>Run and include a human readable summary:<br />
+<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --report --out sample1</code></p>
+
+<p>Minimal run on the example matrix:<br />
+<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt</code></p>
+
+<p>Generate JSON outputs:<br />
+<code class="language-plaintext highlighter-rouge">./quantbayes example_data/test_matrix_01.txt --json</code></p>
+
+<p>QuantBayes writes:</p>
+
+<ul>
+  <li>per variant summaries</li>
+  <li>global summaries</li>
+  <li>optional human readable reports</li>
+</ul>
+
+<hr />
+
+<h2 id="example-clinical-genetics">Example: clinical genetics</h2>
+
+<p>A patient was evaluated for genetic disease using Whole Genome Sequencing, which produced a ranked set of candidate variants from a standard prioritisation workflow. QuantBayes assessed the independent evidence available for each candidate using the binary evidence matrix derived from the Evidence Standard rules. These rules cover domains such as inheritance consistency when parental data are available and functional evidence supporting the proposed mechanism.</p>
+
+<blockquote>
+  <p>For the leading candidate, the posterior evidence sufficiency <strong>\(\theta\)</strong> and its 95 percent credible interval were <strong>0.731 (0.549 to 0.879)</strong>, with a <strong>percentile of 99.88</strong> relative to all evaluated variants in the genome. The global distribution of evidence sufficiency had a mean <strong>\(\theta\)</strong> with a 95 percent credible interval of <strong>0.52 (0.38 to 0.65)</strong>. These values describe how complete the available evidence is, not the probability of pathogenicity.</p>
+
+  <p><strong>Clinical scenario</strong>: autosomal recessive cystic fibrosis.<br />
+<strong>Candidate</strong>: NC_000007.14: g.117559592_117559594delCTT.<br />
+<strong>Gene</strong>: <em>CFTR</em>.<br />
+<strong>QuantBayes \(\theta\) (theta) 95% CrI</strong>: 0.731 (0.549-0.879).<br />
+<strong>Percentile</strong>: 99.88.</p>
+
+  <p>Higher values indicate that most required evidence elements are available.
+Lower values indicate sparse or incomplete support.</p>
+</blockquote>
+
+<hr />
+
+<div class="table-responsive">
+  <table>
+    <thead>
+      <tr>
+        <th><span style="white-space: nowrap; display:inline-block; min-width:260px;">variant_id</span></th>
+        <th>k</th>
+        <th>m</th>
+        <th>theta mean</th>
+        <th>theta lower</th>
+        <th>theta upper</th>
+        <th>percentile</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">7-117559592-CTT–_AR</span></td>
+        <td>18</td>
+        <td>24</td>
+        <td>0.7308</td>
+        <td>0.5487</td>
+        <td>0.8793</td>
+        <td>99.875</td>
+      </tr>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">6-72183475-CG-N_AR</span></td>
+        <td>18</td>
+        <td>24</td>
+        <td>0.7308</td>
+        <td>0.5487</td>
+        <td>0.8793</td>
+        <td>99.875</td>
+      </tr>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">1-14682421-G-A_AD</span></td>
+        <td>17</td>
+        <td>24</td>
+        <td>0.6923</td>
+        <td>0.5061</td>
+        <td>0.8505</td>
+        <td>99.375</td>
+      </tr>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">7-751853912-C-T_AR</span></td>
+        <td>17</td>
+        <td>24</td>
+        <td>0.6923</td>
+        <td>0.5061</td>
+        <td>0.8505</td>
+        <td>99.375</td>
+      </tr>
+      <tr>
+        <td>…</td>
+        <td>…</td>
+        <td>…</td>
+        <td>…</td>
+        <td>…</td>
+        <td>…</td>
+        <td>…</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<p><em><strong>Table 1. QuantBayes results table</strong>. variant_id is the identifier used in the upstream analysis.
+k is the number of evidence rules supported by data.
+m is the total number of rules evaluated.
+theta mean is the posterior expectation of evidence sufficiency.
+theta lower and theta upper are the bounds of its credible interval.
+percentile shows how the variant ranks relative to all evaluated variants.</em></p>
+
+<hr />
+
+<p><img src="/images/quantbayes/quantbayes_example.png" style="width:100 percent; height:auto;" /></p>
+
+<p><em><strong>Figure 2: Global evidence sufficiency distribution with candidate overlay</strong>. The grey background shows the genome wide mixture of theta. Overlay lines mark the top prioritised candidates. The red point marks the variant with the strongest evidence sufficiency credible interval.</em></p>
+
+<hr />
+
+<h2 id="preparing-an-evidence-matrix">Preparing an evidence matrix</h2>
+
+<p>QuantBayes expects that candidate variants are first identified by upstream tools or service providers such as <a href="https://exomiser.readthedocs.io">Exomiser</a>, <a href="https://varsome.com">VarSome</a>, <a href="https://www.sophiagenetics.com">SOPHiA GENETICS</a>, or standard clinical pipelines. 
+These systems provide analysis results for each variant, but they do not need to disclose internal algorithms or proprietary models. QuantBayes operates on an independent and verifiable evidence checklist, so each candidate can be evaluated in a standardised and reproducible way regardless of how it was generated or prioritised upstream.
+To make results comparable across institutions, the Swiss Genomics Association provides a national-scale</p>
+
+<p>This standard defines how raw annotations map to binary evidence rules. Each rule evaluates one independent domain of support. A short example:</p>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag</span></th>
+        <th>raw_value</th>
+        <th>meaning</th>
+        <th>interpreted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_moi_parent_conflict_AD</span></td>
+        <td>TRUE</td>
+        <td>MOI_conflict</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_moi_parent_conflict_AD</span></td>
+        <td>FALSE</td>
+        <td>no_conflict</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_moi_parent_conflict_AD</span></td>
+        <td>NA</td>
+        <td>not_recorded</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_uniprot_hits_any_feature</span></td>
+        <td>TRUE</td>
+        <td>feature_present</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_uniprot_hits_any_feature</span></td>
+        <td>FALSE</td>
+        <td>no_known_feature</td>
+        <td>NA</td>
+      </tr>
+      <tr>
+        <td><span style="white-space: nowrap; display:inline-block; min-width:260px;">flag_uniprot_hits_any_feature</span></td>
+        <td>NA</td>
+        <td>missing_flag</td>
+        <td>0</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Applying these mappings creates the binary evidence matrix that QuantBayes reads.</p>
+
+<hr />
+
+<h2 id="matrix-input-example">Matrix input example</h2>
+
+<p>The QuantBayes distribution provides an example input database at <code class="language-plaintext highlighter-rouge">tests/data/test_matrix_01.txt</code>. The first rows are:</p>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>NA</td>
+        <td>1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>NA</td>
+        <td>NA</td>
+        <td>NA</td>
+        <td>NA</td>
+        <td>NA</td>
+        <td>NA</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>NA</td>
+        <td>NA</td>
+        <td>NA</td>
+        <td>NA</td>
+        <td>NA</td>
+        <td>NA</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Each row is a variant. Each column is an evidence rule. A one indicates support. A zero indicates absence or contradiction. NA indicates information that was not available. QuantBayes converts NA to zero internally to maintain universal behaviour.</p>
+
+<hr />
+
+<h2 id="method-overview">Method overview</h2>
+
+<p>A very simple overview is that QuantBayes models the number of supported evidence items (k) out of (m) using a Beta Binomial update. The posterior
+\(\theta \mid k \sim \mathrm{Beta}(1 + k,\; 1 + m - k)\)
+provides a reproducible measure of evidence sufficiency, expressed through a posterior mean, a credible interval, and a percentile. 
+These values describe how complete and verifiable the available evidence is for each variant. 
+They do not estimate pathogenicity.</p>
+
+<p><img src="/images/quantbayes/qv_quant.png" style="width:100 percent; height:auto;" /></p>
+
+<p><em><strong>Figure 3. A graphical overview of quantbayes on the Quant Evidence Standard</strong>. The method provides a clear, quantitative measure of how well each variant is supported by the scientific evidence required for Mendelian disease interpretation. Starting from the binary evidence matrix defined by the Qualifying Variant Evidence Standard, Quant ES applies a principled statistical model to measure the completeness of the available evidence. This separates Whole Genome Sequencing outputs from downstream interpretation and delivers a universal, uncertainty-calibrated assessment of evidential credibility.</em></p>
+
+<hr />
+
+<h2 id="the-r-package">The R package</h2>
+
+<p>The CRAN package quantbayes implements the same algorithm and adds plotting functions for exploration:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("quantbayes")
+library(quantbayes)
+x &lt;- as.matrix(read.table("matrix.txt"))
+res &lt;- quant_es_core(x)
+</code></pre></div></div>
+
+<p>Plots include global theta distributions, credible intervals, and evidence matrices.</p>
+
+<hr />
+
+<h2 id="validation">Validation</h2>
+
+<p>QuantBayes includes a test dataset and example scripts. Running them confirms that the installation matches the reference outputs to floating point precision.</p>
+
+<hr />
+
+<h2 id="citation">Citation</h2>
+
+<p>The quantitative omic epidemiology group, et al. “<a href="https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1">A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease</a>” <em>medRxiv</em> preprint (2025).<br />
+<a href="https://doi.org/10.1101/2025.12.02.25341503">DOI</a> |
+<a href="https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1.full.pdf">PDF</a> |
+<a href="https://switzerlandomics.ch/technologies/quantbayes/">Application</a></p>
+
+<hr />
+
+<h2 id="licence">Licence</h2>
+
+<p>QuantBayes is provided under the MIT Licence. A permissive licence ensures that the statistical framework can be inspected, reproduced, and integrated into clinical and research workflows without restrictions. Open availability supports consistent use across institutions and simplifies independent verification.</p>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
