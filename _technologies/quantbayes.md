@@ -53,7 +53,7 @@ QuantBayes is distributed as a standalone binary and as an R package. The binary
 
 Download verify checksums and extract:
 
-`shasum -a 256 quantbayes_v1.0.0_*.tar.gz`
+`shasum -a 256 quantbayes_v1.0.0_*.tar.gz`  
 `tar -xzf quantbayes_v1.0.0_<platform>.tar.gz`  
 `cd quantbayes`
 
@@ -210,7 +210,7 @@ Lawless D. *Bayesian Quantification of Evidence Sufficiency quantbayes Implement
 
 ## Data repository
 
-We provide the universal macOS binary runs natively on both Intel x86_64 and Apple silicon arm64 systems and the R package source code. Release artefacts and documentation are hosted on [Zenodo](https://zenodo.org/records/17919369>).
+We provide the universal macOS binary runs natively on both Intel x86_64 and Apple silicon arm64 systems and the R package source code. Release artefacts and documentation are hosted on [Zenodo](https://doi.org/10.5281/zenodo.17919369).
 
 ---
 
