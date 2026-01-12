@@ -8,10 +8,7 @@ weight: 1
 Gives genomics a shared evidence language.  
 Every variant. Every pipeline. Every institution.
 
-
-
-
-
+QuantBayes standardises how evidence strength is expressed, without changing how variants are discovered.
 
 <div class="download-actions">
   <a id="quantbayes-download"
@@ -112,13 +109,10 @@ Every variant. Every pipeline. Every institution.
   </div>
 </div>
 
-
-
-
-
 <br>
 
 QuantBayes does not estimate pathogenicity.  
+
 It does not replace analysis pipelines. It connects them.
 
 QuantBayes measures how complete and verifiable the available evidence is for any variant selected by an upstream workflow. It applies a universal statistical standard that behaves identically across laboratories, platforms, and countries. Existing technologies remain unchanged while gaining a transparent, reproducible evidence scale that can move across institutions.
@@ -129,9 +123,10 @@ A weaker result might score **0.32 with a wider interval**.
 These values are independent of the pipeline that produced the candidate variant.
 This separation of variant discovery from evidence assessment provides a common, auditable evidence language for genomics.
 
+QuantBayes is designed as non-diagnostic infrastructure suitable for regulated environments.
+
 <img src="/images/quantbayes/qv_bayes_short.png" style="width:100 percent; height:auto;">
 ***Figure 1. From siloed workflows to a universal evidence model***.
-
 
 ---
 
