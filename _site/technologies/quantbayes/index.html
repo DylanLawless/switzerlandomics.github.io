@@ -150,6 +150,101 @@
         <div class="content"><p>Gives genomics a shared evidence language.<br />
 Every variant. Every pipeline. Every institution.</p>
 
+<div class="download-actions">
+  <a id="quantbayes-download" class="download-card" href="#downloads" aria-label="Download QuantBayes">
+    <span class="download-icon" aria-hidden="true">↓</span>
+    <span class="download-text">
+      <span class="download-title">Download QuantBayes</span>
+      <span class="download-sub">Detecting platform</span>
+    </span>
+  </a>
+
+  <a class="download-card" href="#cran" aria-label="R package on CRAN">
+    <span class="download-icon" aria-hidden="true">R</span>
+    <span class="download-text">
+      <span class="download-title">R package</span>
+      <span class="download-sub">CRAN installation</span>
+    </span>
+  </a>
+</div>
+
+<div class="download-secondary">
+  <a href="#downloads" class="download-secondary-link">
+    Other platforms
+  </a>
+</div>
+
+<script>
+(function(){
+  const link = document.getElementById('quantbayes-download');
+  const sub  = link.querySelector('.download-sub');
+  const ua   = navigator.userAgent.toLowerCase();
+
+  if(ua.includes('mac')){
+    link.href = 'https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_universal.tar.gz?download=1';
+    sub.textContent = 'macOS universal binary';
+  }
+  else if(ua.includes('linux')){
+    link.href = 'https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_linux_x86_64.tar.gz?download=1';
+    sub.textContent = 'Linux x86_64 binary';
+  }
+  else{
+    link.href = '#downloads';
+    sub.textContent = 'Choose platform';
+  }
+})();
+</script>
+
+<div class="licence-box licence-box-3">
+  <div class="licence-section licence-previous">
+    <div class="licence-title">Previously</div>
+
+    <div class="licence-prices">
+      <div class="price-line">
+        <span class="price-strike">Academic</span>
+      </div>
+      <div class="price-line">
+        <span class="price-strike">CHF 0 / year</span>
+      </div>
+
+      <div class="price-line" style="margin-top:8px;">
+        <span class="price-strike">Small laboratories</span>
+      </div>
+      <div class="price-line">
+        <span class="price-strike">CHF 800 / year</span>
+      </div>
+
+      <div class="price-line" style="margin-top:8px;">
+        <span class="price-strike">Large industry</span>
+      </div>
+      <div class="price-line">
+        <span class="price-strike">CHF 2,000+ / year</span>
+      </div>
+    </div>
+
+    <!-- <div class="licence-caption">Typical licensing tiers</div> -->
+  </div>
+
+  <div class="licence-section licence-current">
+    <div class="licence-title">Now</div>
+    <div class="licence-free">Free</div>
+    <div class="licence-caption">Open licence.</div>
+    <div class="licence-caption">Forever.</div>
+  </div>
+
+  <div class="licence-section licence-why">
+    <div class="licence-title">Why</div>
+    <p class="licence-why-text">
+      QuantBayes adopts a shared evidence standard. Foundational tools must be unrestricted so results can move safely between laboratories, hospitals, and national programmes.
+    </p>
+    <a href="/why-open" class="licence-why-link">
+      Read more
+    </a>
+  </div>
+</div>
+
+<p><br /></p>
+
 <p>QuantBayes does not estimate pathogenicity.<br />
 It does not replace analysis pipelines. It connects them.</p>
 
@@ -202,8 +297,9 @@ This separation of variant discovery from evidence assessment provides a common,
   </table>
 </div>
 
-<h3 id="the-r-package-is-available-on-cran">The R package is available on CRAN</h3>
-<p>Source: <a href="https://cran.r-project.org/package=quantbayes">cran.r-project quantbayes</a> (for installation see below).
+<h3 id="cran">R package installation</h3>
+
+<p>Source: <a href="https://cran.r-project.org/package=quantbayes">cran.r-project quantbayes</a> (for installation see below).<br />
 <img src="https://www.r-pkg.org/badges/version/quantbayes" alt="CRAN status" />
 <img src="https://cranlogs.r-pkg.org/badges/grand-total/quantbayes" alt="CRAN downloads" /></p>
 

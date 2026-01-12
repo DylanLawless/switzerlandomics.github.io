@@ -202,3 +202,280 @@ pre.code-copy code {
   font-size: 0.9rem;
 }
 
+
+
+
+
+/* ─────────────────────────────────────────────
+   primary action cards
+   reusable across all product pages
+   ───────────────────────────────────────────── */
+
+/* global action colours */
+:root{
+  --action-bg: #e5261f;        /* primary */
+  --action-hover: #a01b16;     /* primary dark */
+}
+
+/* action card */
+.action-card{
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-radius: 14px;
+
+  background-color: var(--action-bg);
+  color: #ffffff;
+  text-decoration: none;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.15),
+    0 4px 12px rgba(0,0,0,0.25);
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.action-card:hover{
+  background-color: var(--action-hover);
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.25),
+    inset 0 -1px 0 rgba(0,0,0,0.2),
+    0 8px 20px rgba(0,0,0,0.35);
+}
+
+/* icon */
+.action-icon{
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+
+  background: rgba(255,255,255,0.22);
+  color: #ffffff;
+
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* text block */
+.action-text{
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.action-title{
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.action-sub{
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* multiple action cards */
+.action-actions{
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px){
+  .action-actions{
+    flex-direction: column;
+  }
+}
+
+/* secondary inline links */
+.action-secondary{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.action-secondary-link{
+  color: $steel;
+  text-decoration: none;
+}
+
+.action-secondary-link:hover{
+  color: $primary;
+  text-decoration: underline;
+}
+
+.action-sep{
+  color: $steel;
+  opacity: 0.6;
+}
+
+.download-card{
+  @extend .action-card;
+}
+
+.download-icon{
+  @extend .action-icon;
+}
+
+.download-text{
+  @extend .action-text;
+}
+
+.download-title{
+  @extend .action-title;
+}
+
+.download-sub{
+  @extend .action-sub;
+}
+
+.download-actions{
+  @extend .action-actions;
+}
+
+.download-secondary{
+  @extend .action-secondary;
+}
+
+.download-secondary-link{
+  @extend .action-secondary-link;
+}
+
+.download-sep{
+  @extend .action-sep;
+}
+
+
+
+// Open source free licence box using explicit columns
+/* ─────────────────────────────────────────────
+   licence box
+   clean, unified, scale-relative typography
+   ───────────────────────────────────────────── */
+
+.licence-box{
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 8px;
+
+  background: $white-offset;
+  border: 1px solid lighten($steel, 25%);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 20px;
+
+  font-size: 0.75rem; /* ~75% of body text */
+}
+
+@media (max-width: 768px){
+  .licence-box{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* column wrappers */
+.licence-col-1,
+.licence-col-2,
+.licence-col-3{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* titles */
+.licence-title{
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: $black;
+}
+
+/* captions */
+.licence-caption{
+  font-size: 0.7rem;
+  color: $steel;
+}
+
+/* ─── previous pricing column ─── */
+
+.licence-prices{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-line{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: inherit;
+  font-weight: 400;
+  color: $steel;
+}
+
+/* robust strike-through */
+.price-strike{
+  font-size: inherit;
+  font-weight: 400;
+  color: $steel;
+
+  text-decoration-line: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-style: solid;
+  text-decoration-color: rgba($steel, 0.6);
+  text-decoration-skip-ink: none;
+}
+
+.licence-box .price-strike{
+  text-decoration-line: line-through !important;
+}
+
+/* ─── current licence column ─── */
+
+.licence-col-2{
+  justify-content: center;
+}
+
+.licence-free{
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $primary;
+}
+
+/* ─── why column ─── */
+
+.licence-col-3{
+  color: $black;
+}
+
+.licence-why-text{
+  margin: 0;
+  font-size: inherit;
+  line-height: 1.4;
+}
+
+.licence-why-link{
+  margin-top: 4px;
+  font-size: inherit;
+  color: $steel;
+  text-decoration: none;
+}
+
+.licence-why-link:hover{
+  color: $primary;
+  text-decoration: underline;
+}
+
