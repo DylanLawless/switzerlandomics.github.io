@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>QuantBayes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+
+  
+
+  
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+  
+</head>
+
+<body class="page page-basic">
+
+  <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="tech tech-single">
+        <h1 class="title">QuantBayes</h1>
+        <div class="content">
+          <p>Gives genomics a shared evidence language.<br />
+Every variant. Every pipeline. Every institution.</p>
+
+<p>QuantBayes standardises how evidence strength is expressed, without changing how variants are discovered.</p>
+
+<div class="download-actions">
+  <a id="quantbayes-download" class="download-card" href="#downloads" aria-label="Download QuantBayes">
+    <span class="download-icon" aria-hidden="true">↓</span>
+    <span class="download-text">
+      <span class="download-title">Download QuantBayes</span>
+      <span class="download-sub">Detecting platform</span>
+    </span>
+  </a>
+
+  <a class="download-card" href="#cran" aria-label="R package on CRAN">
+    <span class="download-icon" aria-hidden="true">R</span>
+    <span class="download-text">
+      <span class="download-title">R package</span>
+      <span class="download-sub">CRAN installation</span>
+    </span>
+  </a>
+</div>
+
+<div class="download-secondary">
+  <a href="#downloads" class="download-secondary-link">
+    Other platforms
+  </a>
+</div>
+
+<script>
+(function(){
+  const link = document.getElementById('quantbayes-download');
+  const sub  = link.querySelector('.download-sub');
+  const ua   = navigator.userAgent.toLowerCase();
+
+  if(ua.includes('mac')){
+    link.href = 'https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_universal.tar.gz?download=1';
+    sub.textContent = 'macOS universal binary';
+  }
+  else if(ua.includes('linux')){
+    link.href = 'https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_linux_x86_64.tar.gz?download=1';
+    sub.textContent = 'Linux x86_64 binary';
+  }
+  else{
+    link.href = '#downloads';
+    sub.textContent = 'Choose platform';
+  }
+})();
+</script>
+
+<div class="licence-box licence-box-2">
+
+  <div class="licence-section licence-current">
+    <div class="licence-title">Now</div>
+    <div class="licence-free">Free</div>
+    <div class="licence-caption">Open licence.</div>
+    <div class="licence-caption">Forever.</div>
+  </div>
+
+  <div class="licence-section licence-why">
+    <div class="licence-title">Why</div>
+    <p class="licence-why-text">
+      QuantBayes adopts a shared evidence standard. Foundational tools must be unrestricted so results can move safely between laboratories, hospitals, and national programmes.
+    </p>
+    <a href="/why-open" class="licence-why-link">
+      Read more
+    </a>
+  </div>
+</div>
+
+<p><br /></p>
+
+<p>QuantBayes does not estimate pathogenicity.</p>
+
+<p>It does not replace analysis pipelines. It connects them.</p>
+
+<p>QuantBayes measures how complete and verifiable the available evidence is for any variant selected by an upstream workflow. It applies a universal statistical standard that behaves identically across laboratories, platforms, and countries. Existing technologies remain unchanged while gaining a transparent, reproducible evidence scale that can move across institutions.</p>
+
+<p>A strongly supported variant might score <strong>0.95 with a 95 percent credible interval from 0.91 to 0.98</strong>. 
+A weaker result might score <strong>0.32 with a wider interval</strong>.</p>
+
+<p>These values are independent of the pipeline that produced the candidate variant.
+This separation of variant discovery from evidence assessment provides a common, auditable evidence language for genomics.</p>
+
+<p>QuantBayes is designed as non-diagnostic infrastructure suitable for regulated environments.</p>
+
+<p><img src="/images/quantbayes/qv_bayes_short.png" style="width:100 percent; height:auto;" />
+<strong><em>Figure 1. From siloed workflows to a universal evidence model</em></strong>.</p>
+
+<hr />
+
+<h2 id="downloads">Downloads</h2>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>OS</th>
+        <th>File</th>
+        <th>SHA256</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>R package</td>
+        <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v0.1.0_R.tar.gz?download=1" download="quantbayes_v0.1.0_R.tar.gz">quantbayes_v0.1.0_R.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">dfa919d1848070cf8125d49eb029dbfd49d09558cd84deb7d50c1a6c188f1f63</code></td>
+      </tr>
+      <tr>
+        <td>Linux x86_64</td>
+        <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_linux_x86_64.tar.gz?download=1" download="quantbayes_v1.0.0_linux_x86_64.tar.gz">quantbayes_v1.0.0_linux_x86_64.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">440c5d92354285a5b7790d19f017205a849ecb76a4fc80804f726d420f06080d</code></td>
+      </tr>
+      <tr>
+        <td>macOS universal</td>
+        <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_universal.tar.gz?download=1" download="quantbayes_v1.0.0_macos_universal.tar.gz">quantbayes_v1.0.0_macos_universal.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">ab8824f0c29fce57328a3037677dbc20768b5a9d388fda1215362d1d3b99291e</code></td>
+      </tr>
+      <tr>
+        <td>macOS x86_64</td>
+        <td><a href="https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_x86_64.tar.gz?download=1" download="quantbayes_v1.0.0_macos_x86_64.tar.gz">quantbayes_v1.0.0_macos_x86_64.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">c15d4ac299d4f557941b1a8518e75c44fd026cf9908edf8e85475b9f9e056035</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="cran">R package installation</h3>
+
+<p>Source: <a href="https://cran.r-project.org/package=quantbayes">cran.r-project quantbayes</a> (for installation see below).<br />
+<img src="https://www.r-pkg.org/badges/version/quantbayes" alt="CRAN status" />
+<img src="https://cranlogs.r-pkg.org/badges/grand-total/quantbayes" alt="CRAN downloads" /></p>
+
+<hr />
+
+<h2 id="installation">Installation</h2>
+
+<p>QuantBayes is distributed as a standalone binary and as an R package. The binary runs directly from the extracted directory and requires no system installation or administrator privileges. It is compatible with macOS, Linux, HPC environments, and shared compute clusters.</p>
+
+<h3 id="r-package-installation">R package installation</h3>
+
+<p>Install with R or RStudio directly from CRAN. For more information see the 
+ <a href="https://cran.r-project.org/web/packages/quantbayes/vignettes/quantbayes.html">R vignette</a> and 
+ <a href="https://cran.r-project.org/web/packages/quantbayes/refman/quantbayes.html">R reference manual</a> pages.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("quantbayes")
+library(quantbayes)
+</code></pre></div></div>
+<hr />
+
+<h2 id="example-clinical-genetics">Example: clinical genetics</h2>
+
+<p>Whole Genome Sequencing produced a ranked list of candidate variants using a standard prioritisation workflow. QuantBayes evaluated the independent evidence supporting each candidate using a binary evidence matrix derived from a published evidence standard.</p>
+
+<blockquote>
+  <p>For the leading candidate, the posterior evidence sufficiency <strong>\(\theta\)</strong> and its 95 percent credible interval were <strong>0.731 (0.549 to 0.879)</strong>, corresponding to the <strong>99.88th percentile</strong> genome wide. These values describe evidence completeness, not pathogenicity.</p>
+</blockquote>
+
+<hr />
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>variant_id</th>
+        <th>k</th>
+        <th>m</th>
+        <th>theta mean</th>
+        <th>theta lower</th>
+        <th>theta upper</th>
+        <th>percentile</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>7-117559592-CTT–_AR</td>
+        <td>18</td>
+        <td>24</td>
+        <td>0.7308</td>
+        <td>0.5487</td>
+        <td>0.8793</td>
+        <td>99.875</td>
+      </tr>
+      <tr>
+        <td>6-72183475-CG-N_AR</td>
+        <td>18</td>
+        <td>24</td>
+        <td>0.7308</td>
+        <td>0.5487</td>
+        <td>0.8793</td>
+        <td>99.875</td>
+      </tr>
+      <tr>
+        <td>1-14682421-G-A_AD</td>
+        <td>17</td>
+        <td>24</td>
+        <td>0.6923</td>
+        <td>0.5061</td>
+        <td>0.8505</td>
+        <td>99.375</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p><img src="/images/quantbayes/quantbayes_example.png" style="width:100 percent; height:auto;" />
+<strong><em>Figure 2. Global evidence sufficiency distribution with candidate overlay</em></strong>.</p>
+
+<hr />
+
+<h2 id="method-overview">Method overview</h2>
+
+<p>QuantBayes models the number of supported evidence items (k) out of (m) using a Beta Binomial update:</p>
+
+\[\theta \mid k \sim \mathrm{Beta}(1 + k,\; 1 + m - k)\]
+
+<p>The posterior mean, credible interval, and percentile provide a reproducible measure of evidence sufficiency. These values quantify completeness and verifiability of evidence and do not estimate disease causality.</p>
+
+<p><img src="/images/quantbayes/qv_quant.png" style="width:100 percent; height:auto;" />
+<strong><em>Figure 3. QuantBayes applied to a standardised evidence model</em></strong>.</p>
+
+<hr />
+
+<h2 id="citation">Citation</h2>
+
+<p>If you use QuantBayes please cite the software and the associated manuscript.</p>
+
+<p><strong>Manuscript</strong></p>
+
+<p>Quant Group, et al. <em>A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease</em>. medRxiv (2025). DOI: <a href="https://doi.org/10.64898/2025.12.02.25341503">https://doi.org/10.64898/2025.12.02.25341503</a>.</p>
+
+<pre class="code-copy">
+@article{QuantBayes2025quantgroup,
+  author    = {Quant Group and Saadat, Ali and Lawless, Dylan},
+  title     = {A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease},
+  elocation-id = {2025.12.02.25341503},
+  year      = {2025},
+  doi       = {10.64898/2025.12.02.25341503},
+  publisher = {Cold Spring Harbor Laboratory Press},
+  url       = {https://www.medrxiv.org/content/early/2025/12/13/2025.12.02.25341503},
+  eprint    = {https://www.medrxiv.org/content/early/2025/12/13/2025.12.02.25341503.full.pdf},
+  journal   = {medRxiv}
+}
+</pre>
+
+<p><strong>R package (CRAN)</strong></p>
+
+<p>Lawless D. <em>quantbayes: Bayesian Quantification of Evidence Sufficiency</em>. Comprehensive R Archive Network (2025).
+<a href="https://CRAN.R-project.org/package=quantbayes">https://CRAN.R-project.org/package=quantbayes</a></p>
+
+<pre class="code-copy">
+@article{quantbayes_cran,
+  title        = {quantbayes: Bayesian Quantification of Evidence Sufficiency},
+  author       = {Lawless, Dylan},
+  year         = {2025},
+  note         = {R package version 0.1.0},
+  url          = {https://CRAN.R-project.org/package=quantbayes},
+  doi          = {10.32614/CRAN.package.quantbayes},
+  journal      = {Comprehensive R Archive Network},
+  organization = {Comprehensive R Archive Network}
+}
+</pre>
+
+<p><strong>Software release (Zenodo)</strong></p>
+
+<p>Lawless D. <em>Bayesian Quantification of Evidence Sufficiency quantbayes Implementation</em>. Zenodo (2025). DOI: <a href="https://doi.org/10.5281/zenodo.17919369">https://doi.org/10.5281/zenodo.17919369</a>.</p>
+
+<pre class="code-copy">
+@article{lawless2025_zenodo_quantbayes,
+  author    = {Lawless, Dylan},
+  title     = {Bayesian Quantification of Evidence Sufficiency quantbayes Implementation},
+  month     = dec,
+  year      = {2025},
+  journal   = {Zenodo},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.17919369},
+  url       = {https://doi.org/10.5281/zenodo.17919369}
+}
+</pre>
+
+<hr />
+
+<h2 id="data-repository">Data repository</h2>
+
+<p>We provide the universal macOS binary runs natively on both Intel x86_64 and Apple silicon arm64 systems and the R package source code. Release artefacts and documentation are hosted on <a href="https://doi.org/10.5281/zenodo.17919369">Zenodo</a>.</p>
+
+<hr />
+
+<h2 id="licence">Licence</h2>
+
+<p>QuantBayes is released under the MIT Licence. This permits inspection, reproduction, and integration into commercial, research, and clinical workflows without restriction.</p>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+</body>
+</html>
+
