@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Evidence ratio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  
+  <meta property="og:title" content="Evidence ratio"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-tech'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="tech tech-single">
+        <h1 class="title">Evidence ratio</h1>
+        <div class="content"><p>Provides a standard way to report statistical evidence. 
+Works across clinical and biomedical analyses. 
+Enables results to be compared, stored, and reused across studies.</p>
+
+<p>Evidence Ratio defines how evidence strength is reported, independent of how analyses are performed.</p>
+
+<div class="download-actions">
+  <a class="download-card" href="https://github.com/DylanLawless/src-evidenceratio_package" aria-label="Source code">
+    <span class="download-icon" aria-hidden="true">↗</span>
+    <span class="download-text">
+      <span class="download-title">Source code</span>
+      <span class="download-sub">GitHub repository</span>
+    </span>
+  </a>
+
+<a class="download-card" href="#installation" aria-label="R package installation">
+  <span class="download-icon" aria-hidden="true">R</span>
+  <span class="download-text">
+    <span class="download-title">R package</span>
+    <span class="download-sub">Installation</span>
+  </span>
+</a>
+
+</div>
+
+<!-- <div class="licence-box licence-box-1"> -->
+<!--   <div class="licence-section licence-current"> -->
+<!--     <div class="licence-title">Licence</div> -->
+<!--     <div class="licence-free">Free</div> -->
+<!--     <div class="licence-caption">Open source.</div> -->
+<!--     <div class="licence-caption">MIT licence.</div> -->
+<!--   </div> -->
+<!-- </div> -->
+<!---->
+<!-- <br> -->
+
+<div class="licence-box licence-box-3">
+  <div class="licence-section licence-previous">
+    <div class="licence-title">Previously</div>
+
+    <div class="licence-prices">
+      <div class="price-line">
+        <span class="price-strike">Academic</span>
+      </div>
+      <div class="price-line">
+        <span class="price-strike">CHF 0 / year</span>
+      </div>
+
+      <div class="price-line" style="margin-top:8px;">
+        <span class="price-strike">Small laboratories</span>
+      </div>
+      <div class="price-line">
+        <span class="price-strike">CHF 600 / year</span>
+      </div>
+
+      <div class="price-line" style="margin-top:8px;">
+        <span class="price-strike">Large industry</span>
+      </div>
+      <div class="price-line">
+        <span class="price-strike">CHF 1,000+ / year</span>
+      </div>
+    </div>
+
+    <!-- <div class="licence-caption">Typical licensing tiers</div> -->
+  </div>
+
+  <div class="licence-section licence-current">
+    <div class="licence-title">Now</div>
+    <div class="licence-free">Free</div>
+    <div class="licence-caption">Open licence.</div>
+    <div class="licence-caption">Forever.</div>
+  </div>
+
+  <div class="licence-section licence-why">
+    <div class="licence-title">Why</div>
+    <p class="licence-why-text">
+      Evidence ratio adopts a shared evidence standard. Foundational tools must be unrestricted so results can move safely between laboratories, hospitals, and national programmes.
+    </p>
+    <a href="/why-open" class="licence-why-link">
+      Read more
+    </a>
+  </div>
+</div>
+
+<p><br /></p>
+
+<p>Evidence Ratio does not change how analyses are run. 
+It standardises how their evidence is reported.</p>
+
+<p><img src="/images/evidenceratio/evidenceratio_logo_red_hex.png" class="evidenceratio-hero" alt="Evidence Ratio logo" /></p>
+
+<hr />
+
+<h2 id="installation">Installation</h2>
+
+<p>Until the package is available on CRAN, you can install the development version directly from GitHub.</p>
+
+<p>Option 1: install from GitHub</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"devtools"</span><span class="p">)</span><span class="w">
+</span><span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"DylanLawless/src-evidenceratio_package"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Option 2: install from a local clone</p>
+
+<p>If you have cloned the repository locally:</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"devtools"</span><span class="p">)</span><span class="w">
+</span><span class="n">devtools</span><span class="o">::</span><span class="n">install</span><span class="p">(</span><span class="s2">"path/to/evidenceratio_package"</span><span class="p">,</span><span class="w"> </span><span class="n">upgrade</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"never"</span><span class="p">,</span><span class="w"> </span><span class="n">clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Verify installation</p>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">evidenceratio</span><span class="p">)</span><span class="w">
+</span><span class="n">help</span><span class="p">(</span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"evidenceratio"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="what-evidence-ratio-does">What Evidence Ratio does</h2>
+
+<p>Clinical trials and biomedical studies analyse heterogeneous endpoints using appropriate statistical models. These analyses are methodologically sound, but their results are reported in incompatible formats.</p>
+
+<p>Evidence Ratio introduces a single likelihood based evidence scale that accompanies existing effect estimates and uncertainty intervals. This scale behaves consistently across outcomes, models, and studies.</p>
+
+<p>The result is a shared evidence unit that travels cleanly between trials, endpoints, databases, and institutions.</p>
+
+<hr />
+
+<h2 id="what-evidence-ratio-does-not-do">What Evidence Ratio does not do</h2>
+
+<p>Evidence Ratio does not replace statistical models.<br />
+It does not define decision thresholds.<br />
+It does not assess clinical or practical importance.<br />
+It does not perform multiplicity correction.<br />
+It does not replace effect sizes or uncertainty intervals.</p>
+
+<p>Evidence Ratio operates only at the level of reporting.</p>
+
+<hr />
+
+<h2 id="conceptual-role">Conceptual role</h2>
+
+<p>Each statistical result contains three distinct components.</p>
+
+<p>Magnitude is captured by the <em>effect estimate</em>.<br />
+Precision is captured by the <em>uncertainty interval</em>.<br />
+Evidence is captured by a <em>likelihood ratio</em> comparing an explicit effect model with a no effect model.</p>
+
+<p>Evidence Ratio formalises this evidence component and reports it on a common log10 scale. Existing analyses remain unchanged.</p>
+
+<hr />
+
+<h2 id="why-this-streamlines-clinical-trials">Why this streamlines clinical trials</h2>
+
+<p>Clinical trials routinely report multiple endpoints analysed using different models. These results are difficult to compare side by side.
+Evidence Ratio gives every endpoint the same evidence unit. This allows heterogeneous results to be aligned in a single table, forest plot, dashboard, or database.
+This supports multi endpoint trials, platform trials, meta analysis, regulatory review, and secondary data reuse.</p>
+
+<hr />
+
+<h2 id="example-output">Example output</h2>
+
+<p>Each result is reported using the same three quantities.</p>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Effect estimate</th>
+        <th>Uncertainty interval (95 percent)</th>
+        <th>log10 evidence ratio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>−1.18</td>
+        <td>[−1.62, −0.74]</td>
+        <td>12.87</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>The effect and interval remain on their native scale.
+The evidence ratio provides a directly comparable measure of evidence support.</p>
+
+<div class="er-card">
+
+  <div class="er-header">Effect estimate</div>
+
+  <div class="er-scale-wrapper">
+    <div class="er-estimate-center">−1.18</div>
+
+    <div class="er-scale">
+      <span class="er-bound">−1.62</span>
+
+      <div class="er-line">
+        <div class="er-point"></div>
+      </div>
+
+      <span class="er-bound">−0.74</span>
+    </div>
+  </div>
+
+  <div class="er-evidence">
+    <div class="er-evidence-value">12.87</div>
+    <div class="er-evidence-label">log10 evidence ratio</div>
+  </div>
+</div>
+
+<hr />
+
+<h2 id="unified-reporting-across-analyses">Unified reporting across analyses</h2>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Analysis type</th>
+        <th>Effect estimate</th>
+        <th>Uncertainty interval (95 percent)</th>
+        <th>log10 E(x)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>One sample mean test</td>
+        <td>0.42</td>
+        <td>[0.21, 0.63]</td>
+        <td>2.91</td>
+      </tr>
+      <tr>
+        <td>Two sample mean test</td>
+        <td>−1.18</td>
+        <td>[−1.62, −0.74]</td>
+        <td>12.87</td>
+      </tr>
+      <tr>
+        <td>Binary outcome association</td>
+        <td>0.36</td>
+        <td>[−0.22, 0.94]</td>
+        <td>0.44</td>
+      </tr>
+      <tr>
+        <td>Linear regression</td>
+        <td>−0.51</td>
+        <td>[−1.19, 0.17]</td>
+        <td>0.24</td>
+      </tr>
+      <tr>
+        <td>Regression coefficient</td>
+        <td>−5.41</td>
+        <td>[−6.18, −4.63]</td>
+        <td>16.95</td>
+      </tr>
+      <tr>
+        <td>Time to event analysis</td>
+        <td>−0.22</td>
+        <td>[−0.52, 0.08]</td>
+        <td>0.58</td>
+      </tr>
+      <tr>
+        <td>Survival analysis</td>
+        <td>0.88</td>
+        <td>[0.61, 1.15]</td>
+        <td>6.82</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Different outcome types retain their native effect measures while sharing a common evidence scale.</p>
+
+<hr />
+
+<h2 id="method-overview">Method overview</h2>
+
+<p>The evidence ratio is defined as a likelihood ratio comparing an effect model with a no effect model. It is reported on the log10 scale.
+Under the null model, large evidence values are rare. This provides finite sample validity without introducing decision thresholds.
+Further details are provided in the accompanying manuscript.</p>
+
+<hr />
+
+<h2 id="standards-and-implementation">Standards and implementation</h2>
+
+<p>Evidence Ratio is implemented in the <code class="language-plaintext highlighter-rouge">evidenceratio</code> R package.
+It conforms to the Evidence Ratio Reporting Standard (SGA-ERRS-1.0), published by the Swiss Genomics Association.
+<a href="https://www.swissgenomicsassociation.ch/pages/sga_errs/">
+  View the ERRS standard
+</a></p>
+
+<hr />
+
+<style>
+    .er-card {
+      max-width: 520px;
+      margin: 2rem auto;
+      padding: 1.6rem 1.8rem;
+      border: 1px solid #e1e1eb;
+      border-radius: 10px;
+      background: #ffffff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #2f2f41;
+    }
+
+    .er-header {
+      font-size: 0.9rem;
+      color: #6a6a7a;
+      margin-bottom: 1.1rem;
+    }
+
+    .er-scale-wrapper {
+      position: relative;
+      margin-bottom: 0.9rem;
+    }
+
+    .er-estimate-center {
+      position: absolute;
+      top: -1.4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.05rem;
+      font-weight: 600;
+      background: #ffffff;
+      padding: 0 0.4rem;
+      line-height: 1;
+    }
+
+    .er-scale {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .er-line {
+      position: relative;
+      height: 4px;
+      background: #d8d8e5;
+      border-radius: 2px;
+    }
+
+    .er-point {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      background: #2f2f41;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .er-bound {
+      font-size: 0.85rem;
+      color: #6a6a7a;
+      white-space: nowrap;
+    }
+
+    .er-evidence {
+      margin-top: 1.4rem;
+      text-align: right;
+    }
+
+    .er-evidence-value {
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    .er-evidence-label {
+      font-size: 0.8rem;
+      color: #6a6a7a;
+    }
+
+    @media (max-width: 480px) {
+      .er-evidence {
+        text-align: left;
+      }
+    }
+  </style>
+
+<style>
+.evidenceratio-hero {
+  width: 40%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .evidenceratio-hero {
+    width: 50%;
+  }
+}
+</style>
+
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
