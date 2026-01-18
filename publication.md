@@ -41,7 +41,8 @@ intro_image_hide_on_mobile: false
 [Preprint](https://doi.org/10.1101/2025.03.17.25324111) | 
 [DOI](https://doi.org/10.1002/gepi.70025) |
 [PDF](https://onlinelibrary.wiley.com/doi/epdf/10.1002/gepi.70025) | 
-[Repository](https://github.com/DylanLawless/archipelago)  
+[Repository](https://github.com/DylanLawless/archipelago) |
+[Application](https://switzerlandomics.ch/technologies/archipelago/)
 
 ## Currently under review
 
