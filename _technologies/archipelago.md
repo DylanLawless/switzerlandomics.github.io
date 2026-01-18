@@ -90,12 +90,6 @@ Variant set association tests are powerful but lack intrinsic genomic coordinate
 
 ---
 
-Agreed. The previous revision over-explained and shifted into teaching mode. Here is a **clean, reduced, on-brand replacement** that matches the Switzerland Omics voice and keeps the idea self-evident.
-
-Drop this in verbatim.
-
----
-
 ## When Archipelago is most useful
 
 Archipelago is useful whenever variant collapse is used and an association signal is present.
