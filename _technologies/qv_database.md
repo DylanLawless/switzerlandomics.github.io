@@ -1,5 +1,5 @@
 ---
-title: "Qualifying Variant database"
+title: "Qualifying variant database"
 date: 2025-01-01T00:00:01+10:00
 weight: 1
 ---

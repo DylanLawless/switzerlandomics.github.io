@@ -8,8 +8,13 @@ intro_image_hide_on_mobile: true
 show_call_box: false
 ---
 
-# Quantified genomics
-## We build the algorithms and data systems that enable rigorous genomic interpretation at scale. Our tools power clinical confidence, pharmacogenomic inference, and genome-scale engineering in real-world settings.
+<!-- # Quantified genomics -->
+<!-- ## We build the algorithms and data systems that enable rigorous genomic interpretation at scale. Our tools power clinical confidence, pharmacogenomic inference, and genome-scale engineering in real-world settings. -->
+
+
+# Genomic infrastructure
+## We build algorithms and data systems that make genomic interpretation measurable, auditable, and reusable across clinical, research, and industrial settings.
+
 
 <style>
 :root {
