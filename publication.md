@@ -12,24 +12,31 @@ intro_image_hide_on_mobile: false
 
 ## Flagship technologies
 
-* **QuantBayes**: The quantitative omic epidemiology group, et al. "[A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease](https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1)" *medRxiv* preprint (2025).\\
+* **QuantBayes**: 
+[A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease](https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1). Quant Group, Ali Saadat, Shweta Pipaliya, Dylan Lawless. *medRxiv* preprint (2025). DOI: 10.1101/2025.12.02.25341503 \\
 [DOI](https://doi.org/10.1101/2025.12.02.25341503) |
 [PDF](https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v2.full.pdf) |
 [R package](https://cran.r-project.org/package=quantbayes) | 
 [Application](https://switzerlandomics.ch/technologies/quantbayes/)
 
-* **Quant**: The quantitative omic epidemiology group, et al. "[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5)" *medRxiv* preprint (2025).\\
+* **Quant**: 
+[Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5). Quant Group, Simon Boutry, Ali Saadat, Maarja Soomann, Johannes Trück, D. Sean Froese, Jacques Fellay, Sinisa Savic, Luregn J. Schlapbach, Dylan Lawless. *medRxiv* preprint (2025). DOI: 10.1101/2025.03.25.25324607 \\
 [DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf) | 
 [Video](https://player.vimeo.com/video/1103512246)  
 
-* **QV**: Lawless, Dylan, et al. "[Application of qualifying variants for genomic analysis](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v4)" *In press - Bioinformatics* (2026): preprint (2025).\\
-[DOI](https://doi.org/10.1101/2025.05.09.25324975) | 
+* **QV**: 
+[Application of qualifying variants for genomic analysis](https://doi.org/10.1093/bioinformatics/btaf676).
+Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Simon Boutry, Veronika Stadler, Sabine Österle, Jan Armida, David Haerry, D. Sean Froese, Luregn J. Schlapbach, Jacques Fellay. *Bioinformatics* (2026). DOI: 10.1093/bioinformatics/btaf676 \\
+[DOI](https://doi.org/10.1093/bioinformatics/btaf676) | 
+[Pre-print](https://doi.org/10.1101/2025.05.09.25324975) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.05.09.25324975v3.full.pdf) | 
 [Video](https://player.vimeo.com/video/1083533047) | 
 [Database](https://switzerlandomics.ch/technologies/qv_database/)  
 
-* **PanelAppRex**: The quantitative omic epidemiology group, et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3)" *medRxiv* preprint (2025).\\
+* **PanelAppRex**: 
+[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3).
+Quant Group, Simon Boutry, Ali Saadat, Sinisa Savic, Luregn J. Schlapbach, Jacques Fellay, Dylan Lawless. *medRxiv* preprint (2025). DOI: 10.1101/2025.03.20.25324319 \\
 [Repository](https://github.com/DylanLawless/PanelAppRex) |
 [DOI](https://doi.org/10.1101/2025.03.20.25324319) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3.full.pdf) | 
@@ -37,7 +44,9 @@ intro_image_hide_on_mobile: false
 [Application](https://switzerlandomics.ch/technologies/panelAppRexAi/) | 
 [Dataset](https://doi.org/10.5281/zenodo.15736688)  
 
-* **Archipelago**: Lawless, Dylan, et al. "[Archipelago method for variant set association test statistics](https://www.medrxiv.org/content/10.1101/2025.03.17.25324111v1)" *Genetic Epidemiology* (2026).\\
+* **Archipelago**: 
+[Archipelago method for variant set association test statistics](https://doi.org/10.1002/gepi.70025).
+Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Luregn J. Schlapbach, Jacques Fellay. *Genetic Epidemiology* (2026). DOI: 10.1002/gepi.70025 \\
 [Preprint](https://doi.org/10.1101/2025.03.17.25324111) | 
 [DOI](https://doi.org/10.1002/gepi.70025) |
 [PDF](https://onlinelibrary.wiley.com/doi/epdf/10.1002/gepi.70025) | 

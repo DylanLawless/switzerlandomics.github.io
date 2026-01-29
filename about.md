@@ -15,16 +15,16 @@ We build technically rigorous, precision medicine tools that make omic interpret
 * [2025 Letter to shareholders](/shareholder_letters/2025_letter_to_shareholders)
 
 ## Blog posts
-<!-- * [Blog](/blog) -->
+* [Blog](/blog)
 
-<ul>
-  {% assign posts = site.blog | sort: 'date' | reverse %}
-  {% for post in posts %}
-    <li>
-      <a href="{{ post.url }}">{{ post.title }}</a> — {{ post.date | date: "%Y-%m-%d" }}
-    </li>
-  {% endfor %}
-</ul>
+<!-- <ul> -->
+<!--   {% assign posts = site.blog | sort: 'date' | reverse %} -->
+<!--   {% for post in posts %} -->
+<!--     <li> -->
+<!--       <a href="{{ post.url }}">{{ post.title }}</a> — {{ post.date | date: "%Y-%m-%d" }} -->
+<!--     </li> -->
+<!--   {% endfor %} -->
+<!-- </ul> -->
 
 
 

@@ -1,0 +1,1886 @@
+.
+├── 404.html
+├── CNAME
+├── Gemfile
+├── Gemfile.lock
+├── LICENSE
+├── README.md
+├── _blog
+│   ├── 2025-05-01.md
+│   ├── 2025-05-21-quant.md
+│   ├── 2025-06-15.md
+│   ├── 2025-07-27-bitter-lesson.md
+│   ├── 2025-08-01-quant-posterior.md
+│   ├── 2025-11-27-open-standards.md
+│   ├── 2025-12-14-sga_qem.md
+│   ├── 2026-xx-xx-celebrating-trademark.md
+│   ├── 2026-xx-xx-preventing_war.md
+│   └── 2026-xx-xx-second_clock.md
+├── _config.yml
+├── _data
+│   ├── contact.yml
+│   ├── features.json
+│   ├── menus.yml
+│   ├── seo.yml
+│   └── social.json
+├── _includes
+│   ├── call.html
+│   ├── footer.html
+│   ├── google-analytics.html
+│   ├── hamburger.html
+│   ├── header.html
+│   ├── main-menu-mobile.html
+│   ├── main-menu.html
+│   ├── mathjax.html
+│   ├── qv_acmg_svnindel_criteria_20250225.yaml
+│   ├── social.html
+│   └── sub-footer.html
+├── _layouts
+│   ├── contact.html
+│   ├── default.html
+│   ├── default_no_brand.html
+│   ├── home.html
+│   ├── mathjax.html
+│   ├── page.html
+│   ├── page_no_brand.html
+│   ├── team.html
+│   ├── teams.html
+│   ├── tech.html
+│   └── technologies.html
+├── _release
+│   └── etherial_precision.md
+├── _sass
+│   ├── _bootstrap-variables.scss
+│   ├── bootstrap
+│   │   ├── _accordion.scss
+│   │   ├── _alert.scss
+│   │   ├── _badge.scss
+│   │   ├── _breadcrumb.scss
+│   │   ├── _button-group.scss
+│   │   ├── _buttons.scss
+│   │   ├── _card.scss
+│   │   ├── _carousel.scss
+│   │   ├── _close.scss
+│   │   ├── _containers.scss
+│   │   ├── _dropdown.scss
+│   │   ├── _forms.scss
+│   │   ├── _functions.scss
+│   │   ├── _grid.scss
+│   │   ├── _helpers.scss
+│   │   ├── _images.scss
+│   │   ├── _list-group.scss
+│   │   ├── _maps.scss
+│   │   ├── _mixins.scss
+│   │   ├── _modal.scss
+│   │   ├── _nav.scss
+│   │   ├── _navbar.scss
+│   │   ├── _offcanvas.scss
+│   │   ├── _pagination.scss
+│   │   ├── _placeholders.scss
+│   │   ├── _popover.scss
+│   │   ├── _progress.scss
+│   │   ├── _reboot.scss
+│   │   ├── _root.scss
+│   │   ├── _spinners.scss
+│   │   ├── _tables.scss
+│   │   ├── _toasts.scss
+│   │   ├── _tooltip.scss
+│   │   ├── _transitions.scss
+│   │   ├── _type.scss
+│   │   ├── _utilities.scss
+│   │   ├── _variables-dark.scss
+│   │   ├── _variables.scss
+│   │   ├── bootstrap-grid.scss
+│   │   ├── bootstrap-reboot.scss
+│   │   ├── bootstrap-utilities.scss
+│   │   ├── bootstrap.scss
+│   │   ├── forms
+│   │   │   ├── _floating-labels.scss
+│   │   │   ├── _form-check.scss
+│   │   │   ├── _form-control.scss
+│   │   │   ├── _form-range.scss
+│   │   │   ├── _form-select.scss
+│   │   │   ├── _form-text.scss
+│   │   │   ├── _input-group.scss
+│   │   │   ├── _labels.scss
+│   │   │   └── _validation.scss
+│   │   ├── helpers
+│   │   │   ├── _clearfix.scss
+│   │   │   ├── _color-bg.scss
+│   │   │   ├── _colored-links.scss
+│   │   │   ├── _focus-ring.scss
+│   │   │   ├── _icon-link.scss
+│   │   │   ├── _position.scss
+│   │   │   ├── _ratio.scss
+│   │   │   ├── _stacks.scss
+│   │   │   ├── _stretched-link.scss
+│   │   │   ├── _text-truncation.scss
+│   │   │   ├── _visually-hidden.scss
+│   │   │   └── _vr.scss
+│   │   ├── mixins
+│   │   │   ├── _alert.scss
+│   │   │   ├── _backdrop.scss
+│   │   │   ├── _banner.scss
+│   │   │   ├── _border-radius.scss
+│   │   │   ├── _box-shadow.scss
+│   │   │   ├── _breakpoints.scss
+│   │   │   ├── _buttons.scss
+│   │   │   ├── _caret.scss
+│   │   │   ├── _clearfix.scss
+│   │   │   ├── _color-mode.scss
+│   │   │   ├── _color-scheme.scss
+│   │   │   ├── _container.scss
+│   │   │   ├── _deprecate.scss
+│   │   │   ├── _forms.scss
+│   │   │   ├── _gradients.scss
+│   │   │   ├── _grid.scss
+│   │   │   ├── _image.scss
+│   │   │   ├── _list-group.scss
+│   │   │   ├── _lists.scss
+│   │   │   ├── _pagination.scss
+│   │   │   ├── _reset-text.scss
+│   │   │   ├── _resize.scss
+│   │   │   ├── _table-variants.scss
+│   │   │   ├── _text-truncate.scss
+│   │   │   ├── _transition.scss
+│   │   │   ├── _utilities.scss
+│   │   │   └── _visually-hidden.scss
+│   │   ├── tests
+│   │   │   ├── jasmine.js
+│   │   │   ├── mixins
+│   │   │   │   ├── _color-modes.test.scss
+│   │   │   │   ├── _media-query-color-mode-full.test.scss
+│   │   │   │   └── _utilities.test.scss
+│   │   │   ├── sass-true
+│   │   │   │   ├── register.js
+│   │   │   │   └── runner.js
+│   │   │   └── utilities
+│   │   │       └── _api.test.scss
+│   │   ├── utilities
+│   │   │   └── _api.scss
+│   │   └── vendor
+│   │       └── _rfs.scss
+│   ├── components
+│   │   ├── _buttons.scss
+│   │   ├── _call.scss
+│   │   ├── _content.scss
+│   │   ├── _feature.scss
+│   │   ├── _fonts.scss
+│   │   ├── _footer.scss
+│   │   ├── _hamburger.scss
+│   │   ├── _header.scss
+│   │   ├── _intro-image.scss
+│   │   ├── _intro.scss
+│   │   ├── _logo.scss
+│   │   ├── _main-menu-mobile.scss
+│   │   ├── _main-menu.scss
+│   │   ├── _page.scss
+│   │   ├── _social.scss
+│   │   ├── _strip.scss
+│   │   ├── _sub-footer.scss
+│   │   ├── _title.scss
+│   │   └── _type.scss
+│   ├── custom
+│   ├── libraries
+│   │   └── hamburgers
+│   │       ├── _base.scss
+│   │       ├── hamburgers.scss
+│   │       └── types
+│   │           ├── _3dx-r.scss
+│   │           ├── _3dx.scss
+│   │           ├── _3dxy-r.scss
+│   │           ├── _3dxy.scss
+│   │           ├── _3dy-r.scss
+│   │           ├── _3dy.scss
+│   │           ├── _arrow-r.scss
+│   │           ├── _arrow.scss
+│   │           ├── _arrowalt-r.scss
+│   │           ├── _arrowalt.scss
+│   │           ├── _arrowturn-r.scss
+│   │           ├── _arrowturn.scss
+│   │           ├── _boring.scss
+│   │           ├── _collapse-r.scss
+│   │           ├── _collapse.scss
+│   │           ├── _elastic-r.scss
+│   │           ├── _elastic.scss
+│   │           ├── _emphatic-r.scss
+│   │           ├── _emphatic.scss
+│   │           ├── _minus.scss
+│   │           ├── _slider-r.scss
+│   │           ├── _slider.scss
+│   │           ├── _spin-r.scss
+│   │           ├── _spin.scss
+│   │           ├── _spring-r.scss
+│   │           ├── _spring.scss
+│   │           ├── _squeeze.scss
+│   │           ├── _stand-r.scss
+│   │           ├── _stand.scss
+│   │           ├── _vortex-r.scss
+│   │           └── _vortex.scss
+│   └── pages
+│       ├── _page-home.scss
+│       ├── _page-teams.scss
+│       └── _page-tech.scss
+├── _site
+│   ├── 404
+│   │   └── index.html
+│   ├── CNAME
+│   ├── about
+│   │   └── index.html
+│   ├── about_content
+│   │   └── index.html
+│   ├── assets
+│   │   ├── css
+│   │   │   ├── custom.css
+│   │   │   ├── style.css
+│   │   │   └── style.css.map
+│   │   ├── fonts
+│   │   │   └── playfair-display.woff2
+│   │   ├── js
+│   │   │   ├── mathjax-script-type.js
+│   │   │   └── scripts.js
+│   │   ├── panel_ai
+│   │   │   ├── get_panel_data_tables.sh
+│   │   │   ├── landing_page.html
+│   │   │   ├── landing_page_files
+│   │   │   │   ├── crosstalk-1.2.1
+│   │   │   │   │   ├── css
+│   │   │   │   │   │   └── crosstalk.min.css
+│   │   │   │   │   ├── js
+│   │   │   │   │   │   ├── crosstalk.js
+│   │   │   │   │   │   ├── crosstalk.js.map
+│   │   │   │   │   │   ├── crosstalk.min.js
+│   │   │   │   │   │   └── crosstalk.min.js.map
+│   │   │   │   │   └── scss
+│   │   │   │   │       └── crosstalk.scss
+│   │   │   │   ├── datatables-binding-0.33
+│   │   │   │   │   └── datatables.js
+│   │   │   │   ├── datatables-css-0.0.0
+│   │   │   │   │   └── datatables-crosstalk.css
+│   │   │   │   ├── dt-core-1.13.6
+│   │   │   │   │   ├── css
+│   │   │   │   │   │   ├── jquery.dataTables.extra.css
+│   │   │   │   │   │   └── jquery.dataTables.min.css
+│   │   │   │   │   └── js
+│   │   │   │   │       └── jquery.dataTables.min.js
+│   │   │   │   ├── htmltools-fill-0.5.8.1
+│   │   │   │   │   └── fill.css
+│   │   │   │   ├── htmlwidgets-1.6.4
+│   │   │   │   │   └── htmlwidgets.js
+│   │   │   │   └── jquery-3.6.0
+│   │   │   │       ├── jquery-3.6.0.js
+│   │   │   │       ├── jquery-3.6.0.min.js
+│   │   │   │       └── jquery-3.6.0.min.map
+│   │   │   ├── panel_ai_tables.R
+│   │   │   ├── panel_ai_tables_v2.R
+│   │   │   ├── panel_ai_tables_v2_test.R
+│   │   │   └── panel_data_html
+│   │   │       ├── common_lib
+│   │   │       │   ├── crosstalk-1.2.1
+│   │   │       │   │   ├── css
+│   │   │       │   │   │   └── crosstalk.min.css
+│   │   │       │   │   ├── js
+│   │   │       │   │   │   ├── crosstalk.js
+│   │   │       │   │   │   ├── crosstalk.js.map
+│   │   │       │   │   │   ├── crosstalk.min.js
+│   │   │       │   │   │   └── crosstalk.min.js.map
+│   │   │       │   │   └── scss
+│   │   │       │   │       └── crosstalk.scss
+│   │   │       │   ├── datatables-binding-0.33
+│   │   │       │   │   └── datatables.js
+│   │   │       │   ├── datatables-css-0.0.0
+│   │   │       │   │   └── datatables-crosstalk.css
+│   │   │       │   ├── dt-core-1.13.6
+│   │   │       │   │   ├── css
+│   │   │       │   │   │   ├── jquery.dataTables.extra.css
+│   │   │       │   │   │   └── jquery.dataTables.min.css
+│   │   │       │   │   └── js
+│   │   │       │   │       └── jquery.dataTables.min.js
+│   │   │       │   ├── dt-ext-buttons-1.13.6
+│   │   │       │   │   ├── css
+│   │   │       │   │   │   └── buttons.dataTables.min.css
+│   │   │       │   │   └── js
+│   │   │       │   │       ├── buttons.colVis.min.js
+│   │   │       │   │       ├── buttons.html5.min.js
+│   │   │       │   │       ├── buttons.print.min.js
+│   │   │       │   │       └── dataTables.buttons.min.js
+│   │   │       │   ├── htmltools-fill-0.5.8.1
+│   │   │       │   │   └── fill.css
+│   │   │       │   ├── htmlwidgets-1.6.4
+│   │   │       │   │   └── htmlwidgets.js
+│   │   │       │   ├── jquery-3.6.0
+│   │   │       │   │   ├── jquery-3.6.0.js
+│   │   │       │   │   ├── jquery-3.6.0.min.js
+│   │   │       │   │   └── jquery-3.6.0.min.map
+│   │   │       │   ├── jszip-1.13.6
+│   │   │       │   │   └── jszip.min.js
+│   │   │       │   └── pdfmake-1.13.6
+│   │   │       │       ├── pdfmake.js
+│   │   │       │       └── vfs_fonts.js
+│   │   │       ├── lib
+│   │   │       │   ├── core-js-2.5.3
+│   │   │       │   │   ├── LICENSE
+│   │   │       │   │   ├── package.json
+│   │   │       │   │   └── shim.min.js
+│   │   │       │   ├── htmltools-fill-0.5.8.1
+│   │   │       │   │   └── fill.css
+│   │   │       │   ├── htmlwidgets-1.6.4
+│   │   │       │   │   └── htmlwidgets.js
+│   │   │       │   ├── react-18.2.0
+│   │   │       │   │   ├── AUTHORS
+│   │   │       │   │   ├── LICENSE.txt
+│   │   │       │   │   ├── react-dom.min.js
+│   │   │       │   │   └── react.min.js
+│   │   │       │   ├── reactable-0.4.4
+│   │   │       │   │   ├── reactable.css
+│   │   │       │   │   ├── reactable.js
+│   │   │       │   │   ├── reactable.js.map
+│   │   │       │   │   ├── reactable.server.js
+│   │   │       │   │   ├── reactable.server.js.LICENSE.txt
+│   │   │       │   │   ├── reactable.server.js.map
+│   │   │       │   │   └── reactable.yaml
+│   │   │       │   ├── reactable-binding-0.4.4
+│   │   │       │   │   └── reactable.js
+│   │   │       │   └── reactwidget-2.0.0
+│   │   │       │       └── react-tools.js
+│   │   │       ├── panel_1.html
+│   │   │       ├── panel_101.html
+│   │   │       ├── panel_105.html
+│   │   │       ├── panel_106.html
+│   │   │       ├── panel_1075.html
+│   │   │       ├── panel_1076.html
+│   │   │       ├── panel_109.html
+│   │   │       ├── panel_11.html
+│   │   │       ├── panel_110.html
+│   │   │       ├── panel_1108.html
+│   │   │       ├── panel_1109.html
+│   │   │       ├── panel_111.html
+│   │   │       ├── panel_112.html
+│   │   │       ├── panel_114.html
+│   │   │       ├── panel_1141.html
+│   │   │       ├── panel_115.html
+│   │   │       ├── panel_117.html
+│   │   │       ├── panel_1174.html
+│   │   │       ├── panel_119.html
+│   │   │       ├── panel_1207.html
+│   │   │       ├── panel_1208.html
+│   │   │       ├── panel_1209.html
+│   │   │       ├── panel_1210.html
+│   │   │       ├── panel_1211.html
+│   │   │       ├── panel_1212.html
+│   │   │       ├── panel_1213.html
+│   │   │       ├── panel_1214.html
+│   │   │       ├── panel_1215.html
+│   │   │       ├── panel_1216.html
+│   │   │       ├── panel_1217.html
+│   │   │       ├── panel_122.html
+│   │   │       ├── panel_1220.html
+│   │   │       ├── panel_1221.html
+│   │   │       ├── panel_1222.html
+│   │   │       ├── panel_1223.html
+│   │   │       ├── panel_1225.html
+│   │   │       ├── panel_1226.html
+│   │   │       ├── panel_123.html
+│   │   │       ├── panel_126.html
+│   │   │       ├── panel_128.html
+│   │   │       ├── panel_13.html
+│   │   │       ├── panel_130.html
+│   │   │       ├── panel_1308.html
+│   │   │       ├── panel_1309.html
+│   │   │       ├── panel_131.html
+│   │   │       ├── panel_1310.html
+│   │   │       ├── panel_1311.html
+│   │   │       ├── panel_1312.html
+│   │   │       ├── panel_1313.html
+│   │   │       ├── panel_1314.html
+│   │   │       ├── panel_1315.html
+│   │   │       ├── panel_1316.html
+│   │   │       ├── panel_1317.html
+│   │   │       ├── panel_1318.html
+│   │   │       ├── panel_1319.html
+│   │   │       ├── panel_132.html
+│   │   │       ├── panel_1320.html
+│   │   │       ├── panel_1321.html
+│   │   │       ├── panel_1322.html
+│   │   │       ├── panel_1323.html
+│   │   │       ├── panel_1324.html
+│   │   │       ├── panel_1325.html
+│   │   │       ├── panel_1326.html
+│   │   │       ├── panel_1327.html
+│   │   │       ├── panel_1328.html
+│   │   │       ├── panel_1329.html
+│   │   │       ├── panel_133.html
+│   │   │       ├── panel_1330.html
+│   │   │       ├── panel_1331.html
+│   │   │       ├── panel_1332.html
+│   │   │       ├── panel_1333.html
+│   │   │       ├── panel_1334.html
+│   │   │       ├── panel_1335.html
+│   │   │       ├── panel_1336.html
+│   │   │       ├── panel_1337.html
+│   │   │       ├── panel_1338.html
+│   │   │       ├── panel_134.html
+│   │   │       ├── panel_1340.html
+│   │   │       ├── panel_1341.html
+│   │   │       ├── panel_1342.html
+│   │   │       ├── panel_1343.html
+│   │   │       ├── panel_1344.html
+│   │   │       ├── panel_1345.html
+│   │   │       ├── panel_1346.html
+│   │   │       ├── panel_1347.html
+│   │   │       ├── panel_1348.html
+│   │   │       ├── panel_1349.html
+│   │   │       ├── panel_1350.html
+│   │   │       ├── panel_1351.html
+│   │   │       ├── panel_1352.html
+│   │   │       ├── panel_1353.html
+│   │   │       ├── panel_1354.html
+│   │   │       ├── panel_1356.html
+│   │   │       ├── panel_1357.html
+│   │   │       ├── panel_1358.html
+│   │   │       ├── panel_1359.html
+│   │   │       ├── panel_136.html
+│   │   │       ├── panel_1360.html
+│   │   │       ├── panel_1361.html
+│   │   │       ├── panel_1362.html
+│   │   │       ├── panel_1363.html
+│   │   │       ├── panel_1364.html
+│   │   │       ├── panel_1365.html
+│   │   │       ├── panel_1366.html
+│   │   │       ├── panel_1367.html
+│   │   │       ├── panel_1368.html
+│   │   │       ├── panel_1369.html
+│   │   │       ├── panel_1370.html
+│   │   │       ├── panel_1371.html
+│   │   │       ├── panel_1372.html
+│   │   │       ├── panel_1373.html
+│   │   │       ├── panel_1374.html
+│   │   │       ├── panel_1375.html
+│   │   │       ├── panel_1376.html
+│   │   │       ├── panel_1377.html
+│   │   │       ├── panel_1378.html
+│   │   │       ├── panel_1379.html
+│   │   │       ├── panel_1380.html
+│   │   │       ├── panel_1381.html
+│   │   │       ├── panel_1382.html
+│   │   │       ├── panel_1383.html
+│   │   │       ├── panel_1384.html
+│   │   │       ├── panel_1385.html
+│   │   │       ├── panel_1386.html
+│   │   │       ├── panel_1387.html
+│   │   │       ├── panel_1388.html
+│   │   │       ├── panel_1389.html
+│   │   │       ├── panel_139.html
+│   │   │       ├── panel_1390.html
+│   │   │       ├── panel_1391.html
+│   │   │       ├── panel_1392.html
+│   │   │       ├── panel_1393.html
+│   │   │       ├── panel_1394.html
+│   │   │       ├── panel_1395.html
+│   │   │       ├── panel_1396.html
+│   │   │       ├── panel_1397.html
+│   │   │       ├── panel_1398.html
+│   │   │       ├── panel_1399.html
+│   │   │       ├── panel_1400.html
+│   │   │       ├── panel_1401.html
+│   │   │       ├── panel_1402.html
+│   │   │       ├── panel_1403.html
+│   │   │       ├── panel_1404.html
+│   │   │       ├── panel_1405.html
+│   │   │       ├── panel_1406.html
+│   │   │       ├── panel_143.html
+│   │   │       ├── panel_144.html
+│   │   │       ├── panel_145.html
+│   │   │       ├── panel_147.html
+│   │   │       ├── panel_1471.html
+│   │   │       ├── panel_149.html
+│   │   │       ├── panel_150.html
+│   │   │       ├── panel_1504.html
+│   │   │       ├── panel_1505.html
+│   │   │       ├── panel_1506.html
+│   │   │       ├── panel_152.html
+│   │   │       ├── panel_1537.html
+│   │   │       ├── panel_154.html
+│   │   │       ├── panel_155.html
+│   │   │       ├── panel_156.html
+│   │   │       ├── panel_157.html
+│   │   │       ├── panel_1570.html
+│   │   │       ├── panel_1571.html
+│   │   │       ├── panel_158.html
+│   │   │       ├── panel_159.html
+│   │   │       ├── panel_162.html
+│   │   │       ├── panel_165.html
+│   │   │       ├── panel_166.html
+│   │   │       ├── panel_167.html
+│   │   │       ├── panel_168.html
+│   │   │       ├── panel_17.html
+│   │   │       ├── panel_171.html
+│   │   │       ├── panel_173.html
+│   │   │       ├── panel_174.html
+│   │   │       ├── panel_175.html
+│   │   │       ├── panel_176.html
+│   │   │       ├── panel_178.html
+│   │   │       ├── panel_179.html
+│   │   │       ├── panel_18.html
+│   │   │       ├── panel_180.html
+│   │   │       ├── panel_183.html
+│   │   │       ├── panel_185.html
+│   │   │       ├── panel_186.html
+│   │   │       ├── panel_189.html
+│   │   │       ├── panel_19.html
+│   │   │       ├── panel_192.html
+│   │   │       ├── panel_193.html
+│   │   │       ├── panel_196.html
+│   │   │       ├── panel_197.html
+│   │   │       ├── panel_199.html
+│   │   │       ├── panel_20.html
+│   │   │       ├── panel_200.html
+│   │   │       ├── panel_201.html
+│   │   │       ├── panel_207.html
+│   │   │       ├── panel_208.html
+│   │   │       ├── panel_209.html
+│   │   │       ├── panel_210.html
+│   │   │       ├── panel_211.html
+│   │   │       ├── panel_212.html
+│   │   │       ├── panel_213.html
+│   │   │       ├── panel_214.html
+│   │   │       ├── panel_215.html
+│   │   │       ├── panel_217.html
+│   │   │       ├── panel_219.html
+│   │   │       ├── panel_221.html
+│   │   │       ├── panel_222.html
+│   │   │       ├── panel_224.html
+│   │   │       ├── panel_225.html
+│   │   │       ├── panel_227.html
+│   │   │       ├── panel_228.html
+│   │   │       ├── panel_229.html
+│   │   │       ├── panel_23.html
+│   │   │       ├── panel_230.html
+│   │   │       ├── panel_232.html
+│   │   │       ├── panel_234.html
+│   │   │       ├── panel_235.html
+│   │   │       ├── panel_236.html
+│   │   │       ├── panel_238.html
+│   │   │       ├── panel_239.html
+│   │   │       ├── panel_24.html
+│   │   │       ├── panel_243.html
+│   │   │       ├── panel_244.html
+│   │   │       ├── panel_245.html
+│   │   │       ├── panel_246.html
+│   │   │       ├── panel_247.html
+│   │   │       ├── panel_248.html
+│   │   │       ├── panel_249.html
+│   │   │       ├── panel_25.html
+│   │   │       ├── panel_250.html
+│   │   │       ├── panel_251.html
+│   │   │       ├── panel_253.html
+│   │   │       ├── panel_254.html
+│   │   │       ├── panel_255.html
+│   │   │       ├── panel_258.html
+│   │   │       ├── panel_259.html
+│   │   │       ├── panel_26.html
+│   │   │       ├── panel_260.html
+│   │   │       ├── panel_262.html
+│   │   │       ├── panel_263.html
+│   │   │       ├── panel_265.html
+│   │   │       ├── panel_267.html
+│   │   │       ├── panel_269.html
+│   │   │       ├── panel_271.html
+│   │   │       ├── panel_273.html
+│   │   │       ├── panel_277.html
+│   │   │       ├── panel_282.html
+│   │   │       ├── panel_283.html
+│   │   │       ├── panel_285.html
+│   │   │       ├── panel_286.html
+│   │   │       ├── panel_288.html
+│   │   │       ├── panel_290.html
+│   │   │       ├── panel_292.html
+│   │   │       ├── panel_293.html
+│   │   │       ├── panel_294.html
+│   │   │       ├── panel_296.html
+│   │   │       ├── panel_3.html
+│   │   │       ├── panel_30.html
+│   │   │       ├── panel_302.html
+│   │   │       ├── panel_305.html
+│   │   │       ├── panel_307.html
+│   │   │       ├── panel_308.html
+│   │   │       ├── panel_309.html
+│   │   │       ├── panel_31.html
+│   │   │       ├── panel_310.html
+│   │   │       ├── panel_311.html
+│   │   │       ├── panel_312.html
+│   │   │       ├── panel_314.html
+│   │   │       ├── panel_315.html
+│   │   │       ├── panel_318.html
+│   │   │       ├── panel_33.html
+│   │   │       ├── panel_34.html
+│   │   │       ├── panel_36.html
+│   │   │       ├── panel_38.html
+│   │   │       ├── panel_384.html
+│   │   │       ├── panel_385.html
+│   │   │       ├── panel_386.html
+│   │   │       ├── panel_39.html
+│   │   │       ├── panel_391.html
+│   │   │       ├── panel_394.html
+│   │   │       ├── panel_398.html
+│   │   │       ├── panel_399.html
+│   │   │       ├── panel_402.html
+│   │   │       ├── panel_407.html
+│   │   │       ├── panel_412.html
+│   │   │       ├── panel_42.html
+│   │   │       ├── panel_421.html
+│   │   │       ├── panel_45.html
+│   │   │       ├── panel_465.html
+│   │   │       ├── panel_466.html
+│   │   │       ├── panel_467.html
+│   │   │       ├── panel_47.html
+│   │   │       ├── panel_472.html
+│   │   │       ├── panel_474.html
+│   │   │       ├── panel_476.html
+│   │   │       ├── panel_477.html
+│   │   │       ├── panel_478.html
+│   │   │       ├── panel_479.html
+│   │   │       ├── panel_48.html
+│   │   │       ├── panel_480.html
+│   │   │       ├── panel_482.html
+│   │   │       ├── panel_483.html
+│   │   │       ├── panel_484.html
+│   │   │       ├── panel_486.html
+│   │   │       ├── panel_487.html
+│   │   │       ├── panel_488.html
+│   │   │       ├── panel_49.html
+│   │   │       ├── panel_490.html
+│   │   │       ├── panel_491.html
+│   │   │       ├── panel_496.html
+│   │   │       ├── panel_5.html
+│   │   │       ├── panel_50.html
+│   │   │       ├── panel_502.html
+│   │   │       ├── panel_503.html
+│   │   │       ├── panel_504.html
+│   │   │       ├── panel_506.html
+│   │   │       ├── panel_507.html
+│   │   │       ├── panel_508.html
+│   │   │       ├── panel_509.html
+│   │   │       ├── panel_510.html
+│   │   │       ├── panel_511.html
+│   │   │       ├── panel_512.html
+│   │   │       ├── panel_513.html
+│   │   │       ├── panel_514.html
+│   │   │       ├── panel_515.html
+│   │   │       ├── panel_516.html
+│   │   │       ├── panel_517.html
+│   │   │       ├── panel_518.html
+│   │   │       ├── panel_519.html
+│   │   │       ├── panel_521.html
+│   │   │       ├── panel_522.html
+│   │   │       ├── panel_523.html
+│   │   │       ├── panel_524.html
+│   │   │       ├── panel_525.html
+│   │   │       ├── panel_526.html
+│   │   │       ├── panel_527.html
+│   │   │       ├── panel_528.html
+│   │   │       ├── panel_529.html
+│   │   │       ├── panel_53.html
+│   │   │       ├── panel_530.html
+│   │   │       ├── panel_531.html
+│   │   │       ├── panel_532.html
+│   │   │       ├── panel_533.html
+│   │   │       ├── panel_534.html
+│   │   │       ├── panel_535.html
+│   │   │       ├── panel_536.html
+│   │   │       ├── panel_537.html
+│   │   │       ├── panel_538.html
+│   │   │       ├── panel_539.html
+│   │   │       ├── panel_540.html
+│   │   │       ├── panel_541.html
+│   │   │       ├── panel_542.html
+│   │   │       ├── panel_543.html
+│   │   │       ├── panel_544.html
+│   │   │       ├── panel_545.html
+│   │   │       ├── panel_546.html
+│   │   │       ├── panel_548.html
+│   │   │       ├── panel_549.html
+│   │   │       ├── panel_55.html
+│   │   │       ├── panel_550.html
+│   │   │       ├── panel_551.html
+│   │   │       ├── panel_552.html
+│   │   │       ├── panel_553.html
+│   │   │       ├── panel_554.html
+│   │   │       ├── panel_555.html
+│   │   │       ├── panel_556.html
+│   │   │       ├── panel_557.html
+│   │   │       ├── panel_558.html
+│   │   │       ├── panel_559.html
+│   │   │       ├── panel_560.html
+│   │   │       ├── panel_562.html
+│   │   │       ├── panel_563.html
+│   │   │       ├── panel_564.html
+│   │   │       ├── panel_565.html
+│   │   │       ├── panel_566.html
+│   │   │       ├── panel_567.html
+│   │   │       ├── panel_568.html
+│   │   │       ├── panel_579.html
+│   │   │       ├── panel_59.html
+│   │   │       ├── panel_6.html
+│   │   │       ├── panel_60.html
+│   │   │       ├── panel_600.html
+│   │   │       ├── panel_61.html
+│   │   │       ├── panel_62.html
+│   │   │       ├── panel_63.html
+│   │   │       ├── panel_635.html
+│   │   │       ├── panel_64.html
+│   │   │       ├── panel_648.html
+│   │   │       ├── panel_649.html
+│   │   │       ├── panel_65.html
+│   │   │       ├── panel_650.html
+│   │   │       ├── panel_652.html
+│   │   │       ├── panel_653.html
+│   │   │       ├── panel_657.html
+│   │   │       ├── panel_658.html
+│   │   │       ├── panel_66.html
+│   │   │       ├── panel_678.html
+│   │   │       ├── panel_7.html
+│   │   │       ├── panel_700.html
+│   │   │       ├── panel_720.html
+│   │   │       ├── panel_722.html
+│   │   │       ├── panel_724.html
+│   │   │       ├── panel_725.html
+│   │   │       ├── panel_726.html
+│   │   │       ├── panel_728.html
+│   │   │       ├── panel_734.html
+│   │   │       ├── panel_736.html
+│   │   │       ├── panel_745.html
+│   │   │       ├── panel_749.html
+│   │   │       ├── panel_75.html
+│   │   │       ├── panel_76.html
+│   │   │       ├── panel_77.html
+│   │   │       ├── panel_772.html
+│   │   │       ├── panel_774.html
+│   │   │       ├── panel_78.html
+│   │   │       ├── panel_79.html
+│   │   │       ├── panel_8.html
+│   │   │       ├── panel_81.html
+│   │   │       ├── panel_83.html
+│   │   │       ├── panel_841.html
+│   │   │       ├── panel_842.html
+│   │   │       ├── panel_843.html
+│   │   │       ├── panel_846.html
+│   │   │       ├── panel_847.html
+│   │   │       ├── panel_85.html
+│   │   │       ├── panel_86.html
+│   │   │       ├── panel_87.html
+│   │   │       ├── panel_9.html
+│   │   │       ├── panel_90.html
+│   │   │       ├── panel_902.html
+│   │   │       ├── panel_903.html
+│   │   │       ├── panel_91.html
+│   │   │       ├── panel_92.html
+│   │   │       ├── panel_921.html
+│   │   │       ├── panel_928.html
+│   │   │       ├── panel_929.html
+│   │   │       ├── panel_930.html
+│   │   │       ├── panel_931.html
+│   │   │       ├── panel_932.html
+│   │   │       ├── panel_933.html
+│   │   │       ├── panel_934.html
+│   │   │       ├── panel_94.html
+│   │   │       ├── panel_943.html
+│   │   │       ├── panel_945.html
+│   │   │       ├── panel_96.html
+│   │   │       ├── panel_97.html
+│   │   │       ├── panel_98.html
+│   │   │       └── panel_99.html
+│   │   ├── qv_database
+│   │   │   ├── generate_qv_database.sh
+│   │   │   ├── qv_acmg_sf_v3_3_20250828.yaml
+│   │   │   ├── qv_acmg_sf_v3_3_20250828_json.yaml
+│   │   │   ├── qv_acmg_sf_v3_3_prompt.txt
+│   │   │   ├── qv_acmg_svnindel_criteria_20250225.yaml
+│   │   │   ├── qv_variant_interpretation.yaml
+│   │   │   └── qv_variant_interpretation_prompt.txt
+│   │   ├── qv_submission
+│   │   │   └── index.html
+│   │   ├── release
+│   │   │   ├── quantbayes
+│   │   │   │   ├── quantbayes_release_table.md
+│   │   │   │   ├── quantbayes_v1.0.0_linux_x86_64.tar.gz
+│   │   │   │   ├── quantbayes_v1.0.0_linux_x86_64.tar.gz.sha256
+│   │   │   │   ├── quantbayes_v1.0.0_macos_universal.tar.gz
+│   │   │   │   ├── quantbayes_v1.0.0_macos_universal.tar.gz.sha256
+│   │   │   │   ├── quantbayes_v1.0.0_macos_x86_64.tar.gz
+│   │   │   │   └── quantbayes_v1.0.0_macos_x86_64.tar.gz.sha256
+│   │   │   └── release_1.pdf
+│   │   └── submission_mailing_list
+│   │       └── index.html
+│   ├── blog
+│   │   ├── 2025-05-01
+│   │   │   └── index.html
+│   │   ├── 2025-05-21-quant
+│   │   │   └── index.html
+│   │   ├── 2025-06-15
+│   │   │   └── index.html
+│   │   ├── 2025-07-27-bitter-lesson
+│   │   │   └── index.html
+│   │   ├── 2025-08-01-quant-posterior
+│   │   │   └── index.html
+│   │   ├── 2025-11-27-open-standards
+│   │   │   └── index.html
+│   │   ├── 2025-12-14-sga-qem
+│   │   │   └── index.html
+│   │   ├── 2026-xx-xx-celebrating-trademark.md
+│   │   ├── 2026-xx-xx-preventing_war.md
+│   │   ├── 2026-xx-xx-second_clock.md
+│   │   └── index.html
+│   ├── builtatlightspeed.json
+│   ├── ceopage
+│   │   └── index.html
+│   ├── contact
+│   │   └── index.html
+│   ├── demo.html
+│   ├── fleyer_quantbayes
+│   │   └── index.html
+│   ├── images
+│   │   ├── 2025_E_L_Laurent_etherial_precision
+│   │   │   └── 1EBA3CDE-7455-49FD-8686-017F290965E3_wide.jpeg
+│   │   ├── android-chrome-192x192.png
+│   │   ├── android-chrome-512x512.png
+│   │   ├── apple-touch-icon.png
+│   │   ├── archipelago
+│   │   │   ├── archipelago_logo_hex.png
+│   │   │   ├── archipelago_plot_ukbb_subset.png
+│   │   │   └── logo_and_illustration.jpeg
+│   │   ├── bsmg_recommendation_screenshot.png
+│   │   ├── evidenceratio
+│   │   │   ├── evidenceratio_logo_red.png
+│   │   │   └── evidenceratio_logo_red_hex.png
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon.ico
+│   │   ├── features
+│   │   │   ├── noun_3d\ modeling_1885342.svg
+│   │   │   ├── noun_The\ Process_1885341.svg
+│   │   │   └── noun_branding_1885335.svg
+│   │   ├── freepik_vectorjuice
+│   │   │   ├── 404-error-abstract-concept-illustration_335657-2243.jpg
+│   │   │   ├── artificial-intelligence-abstract-concept-illustration-ai-machine-learning-artificial-intelligence-evolution-high-tech-cutting-edge-technology-cognitive-robotics_335657-483.jpg
+│   │   │   ├── audience-segmentation-abstract-concept-illustration_335657-1854.jpg
+│   │   │   ├── brain-with-digital-circuit-programmer-with-laptop-machine-learning-artificial-intelligence-digital-brain-artificial-thinking-process-concept-vector-isolated-illustration_335657-2246.jpg
+│   │   │   ├── cardiology-clinic-hospital-department-healthy-heart-cardiovascular-prevention-healthcare-industry-idea-design-element-electrocardiogram-ekg-vector-isolated-concept-metaphor-illustration_335657-1516.jpg
+│   │   │   ├── collaborative-robotics-abstract-concept-illustration_335657-2115.jpg
+│   │   │   ├── data-analyst-oversees-governs-income-expenses-with-magnifier-financial-management-system-finance-software-it-management-tool-concept_335657-1891.jpg
+│   │   │   ├── distance-working-abstract-concept-vector-illustration-distance-office-working-from-home-remote-job-possibility-communication-technology-online-team-meeting-digital-nomad-abstract-metaphor_335657-2923.jpg
+│   │   │   ├── ecological-strategy-development-natural-resources-access-ecologists-cartoon-characters_335657-3249.jpg
+│   │   │   ├── gene-therapy-abstract-concept-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease_335657-566.jpg
+│   │   │   ├── gene-therapy-abstract-concept-vector-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease-abstract-metaphor_335657-1613-2.jpg
+│   │   │   ├── gene-therapy-abstract-concept-vector-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease-abstract-metaphor_335657-1613.jpg
+│   │   │   ├── interesting-chemistry-facts-online-searching-self-education-exam-preparing-internet-surfing-man-woman-characters-browsing-scientific-website_335657-3273.jpg
+│   │   │   ├── job-interview-process-hiring-new-employees-hr-specialist-cartoon-character-talking-new-candidatee-recruitment-employment-headhunting-concept-illustration_335657-2034.jpg
+│   │   │   ├── online-business-development-gradual-growth-positive-tendency-gain-indicator-statistics-chart-diagram-female-analyst-cartoon-character_335657-2548.jpg
+│   │   │   ├── online-school-platform-abstract-concept-illustration-homeschooling-online-education-platform-digital-classes-virtual-courses-lms-school_335657-3486.jpg
+│   │   │   ├── psychotherapy-abstract-concept-vector-illustration-non-pharmacological-intervention-verbal-counseling-psychotherapy-service-behavioral-cognitive-therapy-private-session-abstract-metaphor_335657-4092.jpg
+│   │   │   ├── scientists-lab-working-with-huge-dna-chain-glass-bulb-gene-therapy-gene-transfer-functioning-gene-concept-white-background-bright-vibrant-violet-isolated-illustration_335657-485.jpg
+│   │   │   └── statistical-data-research-company-performance-indicators-return-investment-percentage-ratio-indexes-fluctuation-significative-change_335657-2552.jpg
+│   │   ├── genomic_vault
+│   │   │   ├── genomic_vault_1.png
+│   │   │   ├── genomic_vault_1_light.png
+│   │   │   ├── genomic_vault_2.png
+│   │   │   ├── genomic_vault_3.png
+│   │   │   └── genomic_vault_4.png
+│   │   ├── illustrations
+│   │   │   ├── pointing.svg
+│   │   │   └── reading.svg
+│   │   ├── logo
+│   │   │   ├── SwissPedHealth_Pipeline_Devs.png
+│   │   │   ├── SwissPedHealth_Pipeline_Devs_mint.png
+│   │   │   ├── SwissPedHealth_Pipeline_Devs_mint_noname\ copy.png
+│   │   │   ├── SwissPedHealth_Pipeline_Devs_mint_noname.png
+│   │   │   ├── SwissPedHealth_Pipeline_Devs_pink.png
+│   │   │   ├── SwissPedHealth_Pipeline_Devs_wide_1.png
+│   │   │   ├── SwissPedHealth_Pipeline_Devs_wide_1_pink.png
+│   │   │   ├── SwissPedHealth_Pipeline_Devs_wide_2.png
+│   │   │   ├── logo-mobile.svg
+│   │   │   ├── logo_v1.graphml
+│   │   │   ├── logo_v1.png
+│   │   │   ├── logo_v1.svg
+│   │   │   ├── logo_v2.graphml
+│   │   │   ├── logo_v2.png
+│   │   │   ├── logo_v2.svg
+│   │   │   ├── logo_v2_hires.png
+│   │   │   ├── logo_v3.graphml
+│   │   │   ├── logo_v3.svg
+│   │   │   └── logo_x.svg
+│   │   ├── pipedev_logo_1.png
+│   │   ├── pipedev_longer.png
+│   │   ├── pitch_deck
+│   │   │   ├── pitch_deck_01
+│   │   │   │   ├── Slide1.png
+│   │   │   │   ├── Slide10.png
+│   │   │   │   ├── Slide2.png
+│   │   │   │   ├── Slide3.png
+│   │   │   │   ├── Slide4.png
+│   │   │   │   ├── Slide5.png
+│   │   │   │   ├── Slide6.png
+│   │   │   │   ├── Slide7.png
+│   │   │   │   ├── Slide8.png
+│   │   │   │   └── Slide9.png
+│   │   │   └── pitch_deck_02
+│   │   │       ├── Slide1.png
+│   │   │       ├── Slide10.png
+│   │   │       ├── Slide11.png
+│   │   │       ├── Slide12.png
+│   │   │       ├── Slide13.png
+│   │   │       ├── Slide14.png
+│   │   │       ├── Slide15.png
+│   │   │       ├── Slide16.png
+│   │   │       ├── Slide17.png
+│   │   │       ├── Slide18.png
+│   │   │       ├── Slide19.png
+│   │   │       ├── Slide2.png
+│   │   │       ├── Slide20.png
+│   │   │       ├── Slide21.png
+│   │   │       ├── Slide22.png
+│   │   │       ├── Slide23.png
+│   │   │       ├── Slide24.png
+│   │   │       ├── Slide25.png
+│   │   │       ├── Slide26.png
+│   │   │       ├── Slide27.png
+│   │   │       ├── Slide28.png
+│   │   │       ├── Slide29.png
+│   │   │       ├── Slide3.png
+│   │   │       ├── Slide30.png
+│   │   │       ├── Slide31.png
+│   │   │       ├── Slide32.png
+│   │   │       ├── Slide4.png
+│   │   │       ├── Slide5.png
+│   │   │       ├── Slide6.png
+│   │   │       ├── Slide7.png
+│   │   │       ├── Slide8.png
+│   │   │       └── Slide9.png
+│   │   ├── quantbayes
+│   │   │   ├── QuantBayes_logo_dark.pdf
+│   │   │   ├── QuantBayes_logo_light.pdf
+│   │   │   ├── QuantBayes_logo_light.png
+│   │   │   ├── quantbayes_example.png
+│   │   │   ├── qv_bayes_full.pdf
+│   │   │   ├── qv_bayes_full.png
+│   │   │   ├── qv_bayes_short.pdf
+│   │   │   ├── qv_bayes_short.png
+│   │   │   └── qv_quant.png
+│   │   ├── site.webmanifest
+│   │   ├── social
+│   │   │   ├── discord.svg
+│   │   │   ├── email.svg
+│   │   │   ├── facebook.svg
+│   │   │   ├── github.svg
+│   │   │   ├── instagram.svg
+│   │   │   └── twitter.svg
+│   │   ├── swisspedhealth_pipedev.png
+│   │   ├── team
+│   │   │   ├── DSCF3023_small_1mb.jpg
+│   │   │   ├── cristian-newman-94319-unsplash.jpg
+│   │   │   ├── joseph-gonzalez-399972-unsplash.jpg
+│   │   │   ├── michael-dam-258165-unsplash.jpg
+│   │   │   ├── nonsap-visuals-kMJp7620W6U-unsplash.jpg
+│   │   │   ├── original
+│   │   │   │   ├── cristian-newman-94319-unsplash.jpg
+│   │   │   │   ├── joseph-gonzalez-399972-unsplash.jpg
+│   │   │   │   ├── michael-dam-258165-unsplash.jpg
+│   │   │   │   ├── nonsap-visuals-kMJp7620W6U-unsplash.jpg
+│   │   │   │   ├── peter-van-eijk-711986-unsplash.jpg
+│   │   │   │   ├── sage-kirk-485982-unsplash.jpg
+│   │   │   │   ├── sung-wang-g4DgCF90EM4-unsplash.jpg
+│   │   │   │   └── vince-fleming-613817-unsplash.jpg
+│   │   │   ├── peter-van-eijk-711986-unsplash.jpg
+│   │   │   ├── profile_dylan_2026.jpg
+│   │   │   ├── sage-kirk-485982-unsplash.jpg
+│   │   │   ├── sung-wang-g4DgCF90EM4-unsplash.jpg
+│   │   │   └── vince-fleming-613817-unsplash.jpg
+│   │   ├── technologies
+│   │   │   ├── quant_icons.png
+│   │   │   ├── quant_logo_three_step.png
+│   │   │   ├── quant_logo_three_step.svg
+│   │   │   ├── quant_logo_three_step_v2.png
+│   │   │   ├── quant_logo_three_step_v3.png
+│   │   │   └── var_risk_est_iei_genetics.png
+│   │   └── var_risk_est
+│   │       └── animate
+│   │           ├── geno_pheno_scan_animated.gif
+│   │           ├── quant_anim0.gif
+│   │           ├── quant_anim1.gif
+│   │           ├── quant_anim2.gif
+│   │           ├── quant_anim3.gif
+│   │           └── quant_anim4.gif
+│   ├── index.bak
+│   ├── index.html
+│   ├── index.md_bak
+│   ├── index.md_vaulttransition
+│   ├── jek.sh
+│   ├── kill_serve.sh
+│   ├── netlify.toml
+│   ├── pages
+│   │   ├── fleyer_quantbayes
+│   │   │   └── index.html
+│   │   └── qv_builder
+│   │       └── index.html
+│   ├── partnerships
+│   │   └── index.html
+│   ├── pitch
+│   │   └── index.html
+│   ├── pitch_genomic_vault
+│   │   └── index.html
+│   ├── publications
+│   │   └── index.html
+│   ├── qv_es_table
+│   │   └── index.html
+│   ├── release
+│   │   └── etherial-precision
+│   │       └── index.html
+│   ├── releases
+│   │   └── index.html
+│   ├── shareholder_letters
+│   │   └── 2025_letter_to_shareholders
+│   │       └── index.html
+│   ├── stack
+│   │   └── index.html
+│   ├── standard_qem
+│   │   └── index.html
+│   ├── storage.md
+│   ├── team
+│   │   ├── bill-mcdonald.md
+│   │   ├── dylan-lawless
+│   │   │   └── index.html
+│   │   └── index.html
+│   ├── technologies
+│   │   ├── agent.md
+│   │   ├── archipelago
+│   │   │   └── index.html
+│   │   ├── dante.md
+│   │   ├── evidence_ratio
+│   │   │   └── index.html
+│   │   ├── genomic_vault
+│   │   │   └── index.html
+│   │   ├── guru.md
+│   │   ├── iei_genetics
+│   │   │   └── index.html
+│   │   ├── index.html
+│   │   ├── max_maf
+│   │   │   └── index.html
+│   │   ├── panelAppRexAi
+│   │   │   └── index.html
+│   │   ├── panelAppRexAi_shinyapp.md
+│   │   ├── quant
+│   │   │   └── index.html
+│   │   ├── quantbayes
+│   │   │   └── index.html
+│   │   ├── qv_database
+│   │   │   └── index.html
+│   │   ├── statistical_genomics.md
+│   │   └── wgs.md
+│   └── why-open
+│       └── index.html
+├── _team
+│   ├── bill-mcdonald.md
+│   └── dylan-lawless.md
+├── _technologies
+│   ├── agent.md
+│   ├── archipelago.md
+│   ├── dante.md
+│   ├── evidence_ratio.md
+│   ├── genomic_vault.md
+│   ├── guru.md
+│   ├── iei_genetics.md
+│   ├── max_maf.md
+│   ├── panelAppRexAi.md
+│   ├── panelAppRexAi_shinyapp.md
+│   ├── quant.md
+│   ├── quantbayes.md
+│   ├── qv_database.md
+│   ├── statistical_genomics.md
+│   └── wgs.md
+├── about.md
+├── about_content.md
+├── assets
+│   ├── css
+│   │   ├── custom.css
+│   │   └── style.scss
+│   ├── fonts
+│   │   └── playfair-display.woff2
+│   ├── js
+│   │   ├── mathjax-script-type.js
+│   │   └── scripts.js
+│   ├── panel_ai
+│   │   ├── get_panel_data_tables.sh
+│   │   ├── landing_page.html
+│   │   ├── landing_page_files
+│   │   │   ├── crosstalk-1.2.1
+│   │   │   │   ├── css
+│   │   │   │   │   └── crosstalk.min.css
+│   │   │   │   ├── js
+│   │   │   │   │   ├── crosstalk.js
+│   │   │   │   │   ├── crosstalk.js.map
+│   │   │   │   │   ├── crosstalk.min.js
+│   │   │   │   │   └── crosstalk.min.js.map
+│   │   │   │   └── scss
+│   │   │   │       └── crosstalk.scss
+│   │   │   ├── datatables-binding-0.33
+│   │   │   │   └── datatables.js
+│   │   │   ├── datatables-css-0.0.0
+│   │   │   │   └── datatables-crosstalk.css
+│   │   │   ├── dt-core-1.13.6
+│   │   │   │   ├── css
+│   │   │   │   │   ├── jquery.dataTables.extra.css
+│   │   │   │   │   └── jquery.dataTables.min.css
+│   │   │   │   └── js
+│   │   │   │       └── jquery.dataTables.min.js
+│   │   │   ├── htmltools-fill-0.5.8.1
+│   │   │   │   └── fill.css
+│   │   │   ├── htmlwidgets-1.6.4
+│   │   │   │   └── htmlwidgets.js
+│   │   │   └── jquery-3.6.0
+│   │   │       ├── jquery-3.6.0.js
+│   │   │       ├── jquery-3.6.0.min.js
+│   │   │       └── jquery-3.6.0.min.map
+│   │   ├── panel_ai_tables.R
+│   │   ├── panel_ai_tables_v2.R
+│   │   ├── panel_ai_tables_v2_test.R
+│   │   └── panel_data_html
+│   │       ├── common_lib
+│   │       │   ├── crosstalk-1.2.1
+│   │       │   │   ├── css
+│   │       │   │   │   └── crosstalk.min.css
+│   │       │   │   ├── js
+│   │       │   │   │   ├── crosstalk.js
+│   │       │   │   │   ├── crosstalk.js.map
+│   │       │   │   │   ├── crosstalk.min.js
+│   │       │   │   │   └── crosstalk.min.js.map
+│   │       │   │   └── scss
+│   │       │   │       └── crosstalk.scss
+│   │       │   ├── datatables-binding-0.33
+│   │       │   │   └── datatables.js
+│   │       │   ├── datatables-css-0.0.0
+│   │       │   │   └── datatables-crosstalk.css
+│   │       │   ├── dt-core-1.13.6
+│   │       │   │   ├── css
+│   │       │   │   │   ├── jquery.dataTables.extra.css
+│   │       │   │   │   └── jquery.dataTables.min.css
+│   │       │   │   └── js
+│   │       │   │       └── jquery.dataTables.min.js
+│   │       │   ├── dt-ext-buttons-1.13.6
+│   │       │   │   ├── css
+│   │       │   │   │   └── buttons.dataTables.min.css
+│   │       │   │   └── js
+│   │       │   │       ├── buttons.colVis.min.js
+│   │       │   │       ├── buttons.html5.min.js
+│   │       │   │       ├── buttons.print.min.js
+│   │       │   │       └── dataTables.buttons.min.js
+│   │       │   ├── htmltools-fill-0.5.8.1
+│   │       │   │   └── fill.css
+│   │       │   ├── htmlwidgets-1.6.4
+│   │       │   │   └── htmlwidgets.js
+│   │       │   ├── jquery-3.6.0
+│   │       │   │   ├── jquery-3.6.0.js
+│   │       │   │   ├── jquery-3.6.0.min.js
+│   │       │   │   └── jquery-3.6.0.min.map
+│   │       │   ├── jszip-1.13.6
+│   │       │   │   └── jszip.min.js
+│   │       │   └── pdfmake-1.13.6
+│   │       │       ├── pdfmake.js
+│   │       │       └── vfs_fonts.js
+│   │       ├── lib
+│   │       │   ├── core-js-2.5.3
+│   │       │   │   ├── LICENSE
+│   │       │   │   ├── package.json
+│   │       │   │   └── shim.min.js
+│   │       │   ├── htmltools-fill-0.5.8.1
+│   │       │   │   └── fill.css
+│   │       │   ├── htmlwidgets-1.6.4
+│   │       │   │   └── htmlwidgets.js
+│   │       │   ├── react-18.2.0
+│   │       │   │   ├── AUTHORS
+│   │       │   │   ├── LICENSE.txt
+│   │       │   │   ├── react-dom.min.js
+│   │       │   │   └── react.min.js
+│   │       │   ├── reactable-0.4.4
+│   │       │   │   ├── reactable.css
+│   │       │   │   ├── reactable.js
+│   │       │   │   ├── reactable.js.map
+│   │       │   │   ├── reactable.server.js
+│   │       │   │   ├── reactable.server.js.LICENSE.txt
+│   │       │   │   ├── reactable.server.js.map
+│   │       │   │   └── reactable.yaml
+│   │       │   ├── reactable-binding-0.4.4
+│   │       │   │   └── reactable.js
+│   │       │   └── reactwidget-2.0.0
+│   │       │       └── react-tools.js
+│   │       ├── panel_1.html
+│   │       ├── panel_101.html
+│   │       ├── panel_105.html
+│   │       ├── panel_106.html
+│   │       ├── panel_1075.html
+│   │       ├── panel_1076.html
+│   │       ├── panel_109.html
+│   │       ├── panel_11.html
+│   │       ├── panel_110.html
+│   │       ├── panel_1108.html
+│   │       ├── panel_1109.html
+│   │       ├── panel_111.html
+│   │       ├── panel_112.html
+│   │       ├── panel_114.html
+│   │       ├── panel_1141.html
+│   │       ├── panel_115.html
+│   │       ├── panel_117.html
+│   │       ├── panel_1174.html
+│   │       ├── panel_119.html
+│   │       ├── panel_1207.html
+│   │       ├── panel_1208.html
+│   │       ├── panel_1209.html
+│   │       ├── panel_1210.html
+│   │       ├── panel_1211.html
+│   │       ├── panel_1212.html
+│   │       ├── panel_1213.html
+│   │       ├── panel_1214.html
+│   │       ├── panel_1215.html
+│   │       ├── panel_1216.html
+│   │       ├── panel_1217.html
+│   │       ├── panel_122.html
+│   │       ├── panel_1220.html
+│   │       ├── panel_1221.html
+│   │       ├── panel_1222.html
+│   │       ├── panel_1223.html
+│   │       ├── panel_1225.html
+│   │       ├── panel_1226.html
+│   │       ├── panel_123.html
+│   │       ├── panel_126.html
+│   │       ├── panel_128.html
+│   │       ├── panel_13.html
+│   │       ├── panel_130.html
+│   │       ├── panel_1308.html
+│   │       ├── panel_1309.html
+│   │       ├── panel_131.html
+│   │       ├── panel_1310.html
+│   │       ├── panel_1311.html
+│   │       ├── panel_1312.html
+│   │       ├── panel_1313.html
+│   │       ├── panel_1314.html
+│   │       ├── panel_1315.html
+│   │       ├── panel_1316.html
+│   │       ├── panel_1317.html
+│   │       ├── panel_1318.html
+│   │       ├── panel_1319.html
+│   │       ├── panel_132.html
+│   │       ├── panel_1320.html
+│   │       ├── panel_1321.html
+│   │       ├── panel_1322.html
+│   │       ├── panel_1323.html
+│   │       ├── panel_1324.html
+│   │       ├── panel_1325.html
+│   │       ├── panel_1326.html
+│   │       ├── panel_1327.html
+│   │       ├── panel_1328.html
+│   │       ├── panel_1329.html
+│   │       ├── panel_133.html
+│   │       ├── panel_1330.html
+│   │       ├── panel_1331.html
+│   │       ├── panel_1332.html
+│   │       ├── panel_1333.html
+│   │       ├── panel_1334.html
+│   │       ├── panel_1335.html
+│   │       ├── panel_1336.html
+│   │       ├── panel_1337.html
+│   │       ├── panel_1338.html
+│   │       ├── panel_134.html
+│   │       ├── panel_1340.html
+│   │       ├── panel_1341.html
+│   │       ├── panel_1342.html
+│   │       ├── panel_1343.html
+│   │       ├── panel_1344.html
+│   │       ├── panel_1345.html
+│   │       ├── panel_1346.html
+│   │       ├── panel_1347.html
+│   │       ├── panel_1348.html
+│   │       ├── panel_1349.html
+│   │       ├── panel_1350.html
+│   │       ├── panel_1351.html
+│   │       ├── panel_1352.html
+│   │       ├── panel_1353.html
+│   │       ├── panel_1354.html
+│   │       ├── panel_1356.html
+│   │       ├── panel_1357.html
+│   │       ├── panel_1358.html
+│   │       ├── panel_1359.html
+│   │       ├── panel_136.html
+│   │       ├── panel_1360.html
+│   │       ├── panel_1361.html
+│   │       ├── panel_1362.html
+│   │       ├── panel_1363.html
+│   │       ├── panel_1364.html
+│   │       ├── panel_1365.html
+│   │       ├── panel_1366.html
+│   │       ├── panel_1367.html
+│   │       ├── panel_1368.html
+│   │       ├── panel_1369.html
+│   │       ├── panel_1370.html
+│   │       ├── panel_1371.html
+│   │       ├── panel_1372.html
+│   │       ├── panel_1373.html
+│   │       ├── panel_1374.html
+│   │       ├── panel_1375.html
+│   │       ├── panel_1376.html
+│   │       ├── panel_1377.html
+│   │       ├── panel_1378.html
+│   │       ├── panel_1379.html
+│   │       ├── panel_1380.html
+│   │       ├── panel_1381.html
+│   │       ├── panel_1382.html
+│   │       ├── panel_1383.html
+│   │       ├── panel_1384.html
+│   │       ├── panel_1385.html
+│   │       ├── panel_1386.html
+│   │       ├── panel_1387.html
+│   │       ├── panel_1388.html
+│   │       ├── panel_1389.html
+│   │       ├── panel_139.html
+│   │       ├── panel_1390.html
+│   │       ├── panel_1391.html
+│   │       ├── panel_1392.html
+│   │       ├── panel_1393.html
+│   │       ├── panel_1394.html
+│   │       ├── panel_1395.html
+│   │       ├── panel_1396.html
+│   │       ├── panel_1397.html
+│   │       ├── panel_1398.html
+│   │       ├── panel_1399.html
+│   │       ├── panel_1400.html
+│   │       ├── panel_1401.html
+│   │       ├── panel_1402.html
+│   │       ├── panel_1403.html
+│   │       ├── panel_1404.html
+│   │       ├── panel_1405.html
+│   │       ├── panel_1406.html
+│   │       ├── panel_143.html
+│   │       ├── panel_144.html
+│   │       ├── panel_145.html
+│   │       ├── panel_147.html
+│   │       ├── panel_1471.html
+│   │       ├── panel_149.html
+│   │       ├── panel_150.html
+│   │       ├── panel_1504.html
+│   │       ├── panel_1505.html
+│   │       ├── panel_1506.html
+│   │       ├── panel_152.html
+│   │       ├── panel_1537.html
+│   │       ├── panel_154.html
+│   │       ├── panel_155.html
+│   │       ├── panel_156.html
+│   │       ├── panel_157.html
+│   │       ├── panel_1570.html
+│   │       ├── panel_1571.html
+│   │       ├── panel_158.html
+│   │       ├── panel_159.html
+│   │       ├── panel_162.html
+│   │       ├── panel_165.html
+│   │       ├── panel_166.html
+│   │       ├── panel_167.html
+│   │       ├── panel_168.html
+│   │       ├── panel_17.html
+│   │       ├── panel_171.html
+│   │       ├── panel_173.html
+│   │       ├── panel_174.html
+│   │       ├── panel_175.html
+│   │       ├── panel_176.html
+│   │       ├── panel_178.html
+│   │       ├── panel_179.html
+│   │       ├── panel_18.html
+│   │       ├── panel_180.html
+│   │       ├── panel_183.html
+│   │       ├── panel_185.html
+│   │       ├── panel_186.html
+│   │       ├── panel_189.html
+│   │       ├── panel_19.html
+│   │       ├── panel_192.html
+│   │       ├── panel_193.html
+│   │       ├── panel_196.html
+│   │       ├── panel_197.html
+│   │       ├── panel_199.html
+│   │       ├── panel_20.html
+│   │       ├── panel_200.html
+│   │       ├── panel_201.html
+│   │       ├── panel_207.html
+│   │       ├── panel_208.html
+│   │       ├── panel_209.html
+│   │       ├── panel_210.html
+│   │       ├── panel_211.html
+│   │       ├── panel_212.html
+│   │       ├── panel_213.html
+│   │       ├── panel_214.html
+│   │       ├── panel_215.html
+│   │       ├── panel_217.html
+│   │       ├── panel_219.html
+│   │       ├── panel_221.html
+│   │       ├── panel_222.html
+│   │       ├── panel_224.html
+│   │       ├── panel_225.html
+│   │       ├── panel_227.html
+│   │       ├── panel_228.html
+│   │       ├── panel_229.html
+│   │       ├── panel_23.html
+│   │       ├── panel_230.html
+│   │       ├── panel_232.html
+│   │       ├── panel_234.html
+│   │       ├── panel_235.html
+│   │       ├── panel_236.html
+│   │       ├── panel_238.html
+│   │       ├── panel_239.html
+│   │       ├── panel_24.html
+│   │       ├── panel_243.html
+│   │       ├── panel_244.html
+│   │       ├── panel_245.html
+│   │       ├── panel_246.html
+│   │       ├── panel_247.html
+│   │       ├── panel_248.html
+│   │       ├── panel_249.html
+│   │       ├── panel_25.html
+│   │       ├── panel_250.html
+│   │       ├── panel_251.html
+│   │       ├── panel_253.html
+│   │       ├── panel_254.html
+│   │       ├── panel_255.html
+│   │       ├── panel_258.html
+│   │       ├── panel_259.html
+│   │       ├── panel_26.html
+│   │       ├── panel_260.html
+│   │       ├── panel_262.html
+│   │       ├── panel_263.html
+│   │       ├── panel_265.html
+│   │       ├── panel_267.html
+│   │       ├── panel_269.html
+│   │       ├── panel_271.html
+│   │       ├── panel_273.html
+│   │       ├── panel_277.html
+│   │       ├── panel_282.html
+│   │       ├── panel_283.html
+│   │       ├── panel_285.html
+│   │       ├── panel_286.html
+│   │       ├── panel_288.html
+│   │       ├── panel_290.html
+│   │       ├── panel_292.html
+│   │       ├── panel_293.html
+│   │       ├── panel_294.html
+│   │       ├── panel_296.html
+│   │       ├── panel_3.html
+│   │       ├── panel_30.html
+│   │       ├── panel_302.html
+│   │       ├── panel_305.html
+│   │       ├── panel_307.html
+│   │       ├── panel_308.html
+│   │       ├── panel_309.html
+│   │       ├── panel_31.html
+│   │       ├── panel_310.html
+│   │       ├── panel_311.html
+│   │       ├── panel_312.html
+│   │       ├── panel_314.html
+│   │       ├── panel_315.html
+│   │       ├── panel_318.html
+│   │       ├── panel_33.html
+│   │       ├── panel_34.html
+│   │       ├── panel_36.html
+│   │       ├── panel_38.html
+│   │       ├── panel_384.html
+│   │       ├── panel_385.html
+│   │       ├── panel_386.html
+│   │       ├── panel_39.html
+│   │       ├── panel_391.html
+│   │       ├── panel_394.html
+│   │       ├── panel_398.html
+│   │       ├── panel_399.html
+│   │       ├── panel_402.html
+│   │       ├── panel_407.html
+│   │       ├── panel_412.html
+│   │       ├── panel_42.html
+│   │       ├── panel_421.html
+│   │       ├── panel_45.html
+│   │       ├── panel_465.html
+│   │       ├── panel_466.html
+│   │       ├── panel_467.html
+│   │       ├── panel_47.html
+│   │       ├── panel_472.html
+│   │       ├── panel_474.html
+│   │       ├── panel_476.html
+│   │       ├── panel_477.html
+│   │       ├── panel_478.html
+│   │       ├── panel_479.html
+│   │       ├── panel_48.html
+│   │       ├── panel_480.html
+│   │       ├── panel_482.html
+│   │       ├── panel_483.html
+│   │       ├── panel_484.html
+│   │       ├── panel_486.html
+│   │       ├── panel_487.html
+│   │       ├── panel_488.html
+│   │       ├── panel_49.html
+│   │       ├── panel_490.html
+│   │       ├── panel_491.html
+│   │       ├── panel_496.html
+│   │       ├── panel_5.html
+│   │       ├── panel_50.html
+│   │       ├── panel_502.html
+│   │       ├── panel_503.html
+│   │       ├── panel_504.html
+│   │       ├── panel_506.html
+│   │       ├── panel_507.html
+│   │       ├── panel_508.html
+│   │       ├── panel_509.html
+│   │       ├── panel_510.html
+│   │       ├── panel_511.html
+│   │       ├── panel_512.html
+│   │       ├── panel_513.html
+│   │       ├── panel_514.html
+│   │       ├── panel_515.html
+│   │       ├── panel_516.html
+│   │       ├── panel_517.html
+│   │       ├── panel_518.html
+│   │       ├── panel_519.html
+│   │       ├── panel_521.html
+│   │       ├── panel_522.html
+│   │       ├── panel_523.html
+│   │       ├── panel_524.html
+│   │       ├── panel_525.html
+│   │       ├── panel_526.html
+│   │       ├── panel_527.html
+│   │       ├── panel_528.html
+│   │       ├── panel_529.html
+│   │       ├── panel_53.html
+│   │       ├── panel_530.html
+│   │       ├── panel_531.html
+│   │       ├── panel_532.html
+│   │       ├── panel_533.html
+│   │       ├── panel_534.html
+│   │       ├── panel_535.html
+│   │       ├── panel_536.html
+│   │       ├── panel_537.html
+│   │       ├── panel_538.html
+│   │       ├── panel_539.html
+│   │       ├── panel_540.html
+│   │       ├── panel_541.html
+│   │       ├── panel_542.html
+│   │       ├── panel_543.html
+│   │       ├── panel_544.html
+│   │       ├── panel_545.html
+│   │       ├── panel_546.html
+│   │       ├── panel_548.html
+│   │       ├── panel_549.html
+│   │       ├── panel_55.html
+│   │       ├── panel_550.html
+│   │       ├── panel_551.html
+│   │       ├── panel_552.html
+│   │       ├── panel_553.html
+│   │       ├── panel_554.html
+│   │       ├── panel_555.html
+│   │       ├── panel_556.html
+│   │       ├── panel_557.html
+│   │       ├── panel_558.html
+│   │       ├── panel_559.html
+│   │       ├── panel_560.html
+│   │       ├── panel_562.html
+│   │       ├── panel_563.html
+│   │       ├── panel_564.html
+│   │       ├── panel_565.html
+│   │       ├── panel_566.html
+│   │       ├── panel_567.html
+│   │       ├── panel_568.html
+│   │       ├── panel_579.html
+│   │       ├── panel_59.html
+│   │       ├── panel_6.html
+│   │       ├── panel_60.html
+│   │       ├── panel_600.html
+│   │       ├── panel_61.html
+│   │       ├── panel_62.html
+│   │       ├── panel_63.html
+│   │       ├── panel_635.html
+│   │       ├── panel_64.html
+│   │       ├── panel_648.html
+│   │       ├── panel_649.html
+│   │       ├── panel_65.html
+│   │       ├── panel_650.html
+│   │       ├── panel_652.html
+│   │       ├── panel_653.html
+│   │       ├── panel_657.html
+│   │       ├── panel_658.html
+│   │       ├── panel_66.html
+│   │       ├── panel_678.html
+│   │       ├── panel_7.html
+│   │       ├── panel_700.html
+│   │       ├── panel_720.html
+│   │       ├── panel_722.html
+│   │       ├── panel_724.html
+│   │       ├── panel_725.html
+│   │       ├── panel_726.html
+│   │       ├── panel_728.html
+│   │       ├── panel_734.html
+│   │       ├── panel_736.html
+│   │       ├── panel_745.html
+│   │       ├── panel_749.html
+│   │       ├── panel_75.html
+│   │       ├── panel_76.html
+│   │       ├── panel_77.html
+│   │       ├── panel_772.html
+│   │       ├── panel_774.html
+│   │       ├── panel_78.html
+│   │       ├── panel_79.html
+│   │       ├── panel_8.html
+│   │       ├── panel_81.html
+│   │       ├── panel_83.html
+│   │       ├── panel_841.html
+│   │       ├── panel_842.html
+│   │       ├── panel_843.html
+│   │       ├── panel_846.html
+│   │       ├── panel_847.html
+│   │       ├── panel_85.html
+│   │       ├── panel_86.html
+│   │       ├── panel_87.html
+│   │       ├── panel_9.html
+│   │       ├── panel_90.html
+│   │       ├── panel_902.html
+│   │       ├── panel_903.html
+│   │       ├── panel_91.html
+│   │       ├── panel_92.html
+│   │       ├── panel_921.html
+│   │       ├── panel_928.html
+│   │       ├── panel_929.html
+│   │       ├── panel_930.html
+│   │       ├── panel_931.html
+│   │       ├── panel_932.html
+│   │       ├── panel_933.html
+│   │       ├── panel_934.html
+│   │       ├── panel_94.html
+│   │       ├── panel_943.html
+│   │       ├── panel_945.html
+│   │       ├── panel_96.html
+│   │       ├── panel_97.html
+│   │       ├── panel_98.html
+│   │       └── panel_99.html
+│   ├── qv_database
+│   │   ├── generate_qv_database.sh
+│   │   ├── qv_acmg_sf_v3_3_20250828.yaml
+│   │   ├── qv_acmg_sf_v3_3_20250828_json.yaml
+│   │   ├── qv_acmg_sf_v3_3_prompt.txt
+│   │   ├── qv_acmg_svnindel_criteria_20250225.yaml
+│   │   ├── qv_variant_interpretation.yaml
+│   │   └── qv_variant_interpretation_prompt.txt
+│   ├── qv_submission.md
+│   ├── release
+│   │   ├── quantbayes
+│   │   │   ├── quantbayes_release_table.md
+│   │   │   ├── quantbayes_v1.0.0_linux_x86_64.tar.gz
+│   │   │   ├── quantbayes_v1.0.0_linux_x86_64.tar.gz.sha256
+│   │   │   ├── quantbayes_v1.0.0_macos_universal.tar.gz
+│   │   │   ├── quantbayes_v1.0.0_macos_universal.tar.gz.sha256
+│   │   │   ├── quantbayes_v1.0.0_macos_x86_64.tar.gz
+│   │   │   └── quantbayes_v1.0.0_macos_x86_64.tar.gz.sha256
+│   │   └── release_1.pdf
+│   └── submission_mailing_list.md
+├── blog.md
+├── builtatlightspeed.json
+├── ceopage.md
+├── contact.md
+├── demo.html
+├── fleyer_quantbayes.md
+├── images
+│   ├── 2025_E_L_Laurent_etherial_precision
+│   │   └── 1EBA3CDE-7455-49FD-8686-017F290965E3_wide.jpeg
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── apple-touch-icon.png
+│   ├── archipelago
+│   │   ├── archipelago_logo_hex.png
+│   │   ├── archipelago_plot_ukbb_subset.png
+│   │   └── logo_and_illustration.jpeg
+│   ├── bsmg_recommendation_screenshot.png
+│   ├── evidenceratio
+│   │   ├── evidenceratio_logo_red.png
+│   │   └── evidenceratio_logo_red_hex.png
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── favicon.ico
+│   ├── features
+│   │   ├── noun_3d\ modeling_1885342.svg
+│   │   ├── noun_The\ Process_1885341.svg
+│   │   └── noun_branding_1885335.svg
+│   ├── freepik_vectorjuice
+│   │   ├── 404-error-abstract-concept-illustration_335657-2243.jpg
+│   │   ├── artificial-intelligence-abstract-concept-illustration-ai-machine-learning-artificial-intelligence-evolution-high-tech-cutting-edge-technology-cognitive-robotics_335657-483.jpg
+│   │   ├── audience-segmentation-abstract-concept-illustration_335657-1854.jpg
+│   │   ├── brain-with-digital-circuit-programmer-with-laptop-machine-learning-artificial-intelligence-digital-brain-artificial-thinking-process-concept-vector-isolated-illustration_335657-2246.jpg
+│   │   ├── cardiology-clinic-hospital-department-healthy-heart-cardiovascular-prevention-healthcare-industry-idea-design-element-electrocardiogram-ekg-vector-isolated-concept-metaphor-illustration_335657-1516.jpg
+│   │   ├── collaborative-robotics-abstract-concept-illustration_335657-2115.jpg
+│   │   ├── data-analyst-oversees-governs-income-expenses-with-magnifier-financial-management-system-finance-software-it-management-tool-concept_335657-1891.jpg
+│   │   ├── distance-working-abstract-concept-vector-illustration-distance-office-working-from-home-remote-job-possibility-communication-technology-online-team-meeting-digital-nomad-abstract-metaphor_335657-2923.jpg
+│   │   ├── ecological-strategy-development-natural-resources-access-ecologists-cartoon-characters_335657-3249.jpg
+│   │   ├── gene-therapy-abstract-concept-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease_335657-566.jpg
+│   │   ├── gene-therapy-abstract-concept-vector-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease-abstract-metaphor_335657-1613-2.jpg
+│   │   ├── gene-therapy-abstract-concept-vector-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease-abstract-metaphor_335657-1613.jpg
+│   │   ├── interesting-chemistry-facts-online-searching-self-education-exam-preparing-internet-surfing-man-woman-characters-browsing-scientific-website_335657-3273.jpg
+│   │   ├── job-interview-process-hiring-new-employees-hr-specialist-cartoon-character-talking-new-candidatee-recruitment-employment-headhunting-concept-illustration_335657-2034.jpg
+│   │   ├── online-business-development-gradual-growth-positive-tendency-gain-indicator-statistics-chart-diagram-female-analyst-cartoon-character_335657-2548.jpg
+│   │   ├── online-school-platform-abstract-concept-illustration-homeschooling-online-education-platform-digital-classes-virtual-courses-lms-school_335657-3486.jpg
+│   │   ├── psychotherapy-abstract-concept-vector-illustration-non-pharmacological-intervention-verbal-counseling-psychotherapy-service-behavioral-cognitive-therapy-private-session-abstract-metaphor_335657-4092.jpg
+│   │   ├── scientists-lab-working-with-huge-dna-chain-glass-bulb-gene-therapy-gene-transfer-functioning-gene-concept-white-background-bright-vibrant-violet-isolated-illustration_335657-485.jpg
+│   │   └── statistical-data-research-company-performance-indicators-return-investment-percentage-ratio-indexes-fluctuation-significative-change_335657-2552.jpg
+│   ├── genomic_vault
+│   │   ├── genomic_vault_1.png
+│   │   ├── genomic_vault_1_light.png
+│   │   ├── genomic_vault_2.png
+│   │   ├── genomic_vault_3.png
+│   │   └── genomic_vault_4.png
+│   ├── illustrations
+│   │   ├── pointing.svg
+│   │   └── reading.svg
+│   ├── logo
+│   │   ├── SwissPedHealth_Pipeline_Devs.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_mint.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_mint_noname\ copy.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_mint_noname.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_pink.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_wide_1.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_wide_1_pink.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_wide_2.png
+│   │   ├── logo-mobile.svg
+│   │   ├── logo_v1.graphml
+│   │   ├── logo_v1.png
+│   │   ├── logo_v1.svg
+│   │   ├── logo_v2.graphml
+│   │   ├── logo_v2.png
+│   │   ├── logo_v2.svg
+│   │   ├── logo_v2_hires.png
+│   │   ├── logo_v3.graphml
+│   │   ├── logo_v3.svg
+│   │   └── logo_x.svg
+│   ├── pipedev_logo_1.png
+│   ├── pipedev_longer.png
+│   ├── pitch_deck
+│   │   ├── pitch_deck_01
+│   │   │   ├── Slide1.png
+│   │   │   ├── Slide10.png
+│   │   │   ├── Slide2.png
+│   │   │   ├── Slide3.png
+│   │   │   ├── Slide4.png
+│   │   │   ├── Slide5.png
+│   │   │   ├── Slide6.png
+│   │   │   ├── Slide7.png
+│   │   │   ├── Slide8.png
+│   │   │   └── Slide9.png
+│   │   └── pitch_deck_02
+│   │       ├── Slide1.png
+│   │       ├── Slide10.png
+│   │       ├── Slide11.png
+│   │       ├── Slide12.png
+│   │       ├── Slide13.png
+│   │       ├── Slide14.png
+│   │       ├── Slide15.png
+│   │       ├── Slide16.png
+│   │       ├── Slide17.png
+│   │       ├── Slide18.png
+│   │       ├── Slide19.png
+│   │       ├── Slide2.png
+│   │       ├── Slide20.png
+│   │       ├── Slide21.png
+│   │       ├── Slide22.png
+│   │       ├── Slide23.png
+│   │       ├── Slide24.png
+│   │       ├── Slide25.png
+│   │       ├── Slide26.png
+│   │       ├── Slide27.png
+│   │       ├── Slide28.png
+│   │       ├── Slide29.png
+│   │       ├── Slide3.png
+│   │       ├── Slide30.png
+│   │       ├── Slide31.png
+│   │       ├── Slide32.png
+│   │       ├── Slide4.png
+│   │       ├── Slide5.png
+│   │       ├── Slide6.png
+│   │       ├── Slide7.png
+│   │       ├── Slide8.png
+│   │       └── Slide9.png
+│   ├── pitchdeck
+│   ├── quantbayes
+│   │   ├── QuantBayes_logo_dark.pdf
+│   │   ├── QuantBayes_logo_light.pdf
+│   │   ├── QuantBayes_logo_light.png
+│   │   ├── quantbayes_example.png
+│   │   ├── qv_bayes_full.pdf
+│   │   ├── qv_bayes_full.png
+│   │   ├── qv_bayes_short.pdf
+│   │   ├── qv_bayes_short.png
+│   │   └── qv_quant.png
+│   ├── site.webmanifest
+│   ├── social
+│   │   ├── discord.svg
+│   │   ├── email.svg
+│   │   ├── facebook.svg
+│   │   ├── github.svg
+│   │   ├── instagram.svg
+│   │   └── twitter.svg
+│   ├── swisspedhealth_pipedev.png
+│   ├── team
+│   │   ├── DSCF3023_small_1mb.jpg
+│   │   ├── cristian-newman-94319-unsplash.jpg
+│   │   ├── joseph-gonzalez-399972-unsplash.jpg
+│   │   ├── michael-dam-258165-unsplash.jpg
+│   │   ├── nonsap-visuals-kMJp7620W6U-unsplash.jpg
+│   │   ├── original
+│   │   │   ├── cristian-newman-94319-unsplash.jpg
+│   │   │   ├── joseph-gonzalez-399972-unsplash.jpg
+│   │   │   ├── michael-dam-258165-unsplash.jpg
+│   │   │   ├── nonsap-visuals-kMJp7620W6U-unsplash.jpg
+│   │   │   ├── peter-van-eijk-711986-unsplash.jpg
+│   │   │   ├── sage-kirk-485982-unsplash.jpg
+│   │   │   ├── sung-wang-g4DgCF90EM4-unsplash.jpg
+│   │   │   └── vince-fleming-613817-unsplash.jpg
+│   │   ├── peter-van-eijk-711986-unsplash.jpg
+│   │   ├── profile_dylan_2026.jpg
+│   │   ├── sage-kirk-485982-unsplash.jpg
+│   │   ├── sung-wang-g4DgCF90EM4-unsplash.jpg
+│   │   └── vince-fleming-613817-unsplash.jpg
+│   ├── technologies
+│   │   ├── quant_icons.png
+│   │   ├── quant_logo_three_step.png
+│   │   ├── quant_logo_three_step.svg
+│   │   ├── quant_logo_three_step_v2.png
+│   │   ├── quant_logo_three_step_v3.png
+│   │   └── var_risk_est_iei_genetics.png
+│   └── var_risk_est
+│       └── animate
+│           ├── geno_pheno_scan_animated.gif
+│           ├── quant_anim0.gif
+│           ├── quant_anim1.gif
+│           ├── quant_anim2.gif
+│           ├── quant_anim3.gif
+│           └── quant_anim4.gif
+├── index.bak
+├── index.md
+├── index.md_bak
+├── index.md_vaulttransition
+├── jek.sh
+├── kill_serve.sh
+├── netlify.toml
+├── pages
+│   ├── fleyer_quantbayes.md
+│   └── qv_builder.md
+├── partnerships.md
+├── pitch.md
+├── pitch_02.md
+├── publication.md
+├── qv_es_table.md
+├── releases.md
+├── shareholder_letters
+│   └── 2025_letter_to_shareholders.md
+├── stack.md
+├── standard_qem.md
+├── storage.md
+├── team.md
+├── technologies.md
+├── temp
+└── why_open.md
+
+206 directories, 1677 files

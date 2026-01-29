@@ -17,9 +17,12 @@ main:
   - name: "About"
     url: "/about/"
     weight: 6
+  - name: "Blog"
+    url: "/blog/"
+    weight: 7
   - name: "Contact"
     url: "/contact/"
-    weight: 7
+    weight: 8
 
 footer:
   - name: "Home"
