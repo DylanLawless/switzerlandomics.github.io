@@ -183,11 +183,10 @@ html {
     }
 
 .intro .hero-scope {
-  font-size: 1rem;
+  // font-size: 1rem;
   color: $steel;
-
-
-  max-width: 20rem;
+  padding-top: 1rem !important;
+  max-width: 30rem;
 }
 
 /* copy friendly code blocks, e.g. BibTeX */

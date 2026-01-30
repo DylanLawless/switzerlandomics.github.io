@@ -387,6 +387,6 @@ show_call_box: false
 </script>
 
 <p class="hero-scope">
-Genomic Vault for individuals.<br>Algorithms systems and databases for professionals.
+Genomic Vault for individuals. Algorithms and databases for professionals.
 </p>
 
