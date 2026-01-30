@@ -15,7 +15,6 @@ show_call_box: false
 # Genomic infrastructure
 ## We build algorithms and data systems that make genomic interpretation measurable, auditable, and reusable across clinical, research, and industrial settings.
 
-
 <style>
 :root {
   /* core vault */
@@ -243,9 +242,9 @@ show_call_box: false
 
 
 
-<div class="submission-message">
-
-</div>
+<!-- <div class="submission-message"> -->
+<!---->
+<!-- </div> -->
 
 <!-- vault overlay -->
 <div class="vault-overlay" aria-hidden="true">
@@ -386,4 +385,8 @@ show_call_box: false
   }, { passive: false });
 })();
 </script>
+
+<p class="hero-scope">
+Genomic Vault for individuals.<br>Algorithms systems and databases for professionals.
+</p>
 
