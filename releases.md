@@ -7,6 +7,14 @@ intro_image_absolute: true
 intro_image_hide_on_mobile: false
 ---
 
+* **QuantBayes R**: R package available on CRAN.\
+[Application](https://switzerlandomics.ch/technologies/quantbayes/) | 
+[CRAN](https://cran.r-project.org/package=quantbayes) | Version: 0.1.0 | 2025-12-18
+
+* **QuantBayes MacOS and Linux**: Software packages on Zenodo.\
+[Application](https://switzerlandomics.ch/technologies/quantbayes/) | 
+[Zenodo](https://doi.org/10.5281/zenodo.17919369) | Version: 0.1.0 | 2025-12-13
+
 * **Quant calc 001**: Base model with structured priors, full statistical framework, and real-world application. (Early access partners)
 
 * **Quant calc 000**: Minimal prototype showcasing core Bayesian engine, public data, and open-source code.\
@@ -33,15 +41,10 @@ intro_image_hide_on_mobile: false
 [Application](https://switzerlandomics.ch/technologies/panelAppRexAi/) | 
 [Dataset](https://doi.org/10.5281/zenodo.15736688)  
 
-
 * **Genetic diagnosis of inborn-errors of immunity (IEI)**: open-source, world-leading database of IEI genetics provided as a subset of PanelAppRex for the community.\
 [Homepage](https://iei-genetics.github.io) | 
 [Database](https://iei-genetics.github.io/assets/iusis_iei_table_2025.html) | 
 [Repository](https://github.com/DylanLawless/iei_genetics)  
-
-
-
-
 
 ## Media
 <ul>

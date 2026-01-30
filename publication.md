@@ -53,17 +53,6 @@ Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Luregn J. Schlapbach, Jacques F
 [Repository](https://github.com/DylanLawless/archipelago) |
 [Application](https://switzerlandomics.ch/technologies/archipelago/)
 
-## Currently under review
-
-* **Perspective**: Hardy-Weinberg a century later and new horizons in clinical genomics. Under review.
-
-* **Review**: A Bayesian reference model for genetic variant interpretation. Pre-print
-
-* **Article**: Quant resolves Mendelian disease uncertainty through genome-wide Bayesian inference. Pre-print
- 
-* **Systematic review**: A systematic review of quantitative Bayesian variant causality. Pre-print
-
-
 <!-- ## Other works -->
 <!---->
 <!-- * Masters, Seth L., et al. "[Familial autoinflammation with neutrophilic dermatosis reveals a regulatory mechanism of pyrin activation](https://www.science.org/doi/abs/10.1126/scitranslmed.aaf1471?casa_token=ipq2OGm4M-QAAAAA:fHlOxMA_v1idvSgFTtU8GYnkplRPXwjQLe4taTfIREKxiEYrmqwttFfzWYNmxnAi2tqvww4LfS1Isn4&casa_token=ooPKruxkWM0AAAAA:byzIDVsA0LFThP1JGXxa0N4TB5JS4EJtA7enMfuPclYVuxu-jYJRSPTgeFOINarkLMKohszFC1-eGGo)" Science translational medicine 8.332 (2016): 332ra45-332ra45.\\ -->
@@ -91,7 +80,39 @@ Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Luregn J. Schlapbach, Jacques F
 <!---->
 <!-- * Credited for newly added gene _CRACR2A_ as cause of disease on the [IUIS inborn errors of immuninity](https://link.springer.com/article/10.1007/s10875-021-00980-1). -->
 
+## Posters
+
+* **2025-10-23**: Quant Group, Simon Boutry, Ali Saadat, Maarja Soomann, Johannes Trück, D. Sean Froese, Jacques Fellay, Sinisa Savic, Luregn J. Schlapbach, Dylan Lawless. *A century-old problem in genetics solved by big data, Bayesian inference, and AI-driven diagnostics in SwissPedHealth*. FZK/CRC annual retreat, Zürich.
+
+* **2025-09-19**: Quant Group, Simon Boutry, Ali Saadat, Maarja Soomann, Johannes Trück, D. Sean Froese, Jacques Fellay, Sinisa Savic, Luregn J. Schlapbach, Dylan Lawless. *Quantifying variant evidence for precise, probabilistic genomics*. Computational Biology Symposium, Lausanne. \\
+[PDF](/assets/pdf/20250918_lawless_quant.pdf)
+
+
+
+## Conference talks
+
+* **2025-09-19**: Dylan Lawless. *Quantifying variant evidence for precise, probabilistic genomics*. Computational Biology Symposium, Lausanne.
+
+* **2025-09-10**: Dylan Lawless. *From multiomic discovery to real-time rapid diagnostics: paediatric sepsis and rare diseases at the children’s hospital*. Basel Computational Biology Conference, Basel. Highlight talk.
+
+* **2023-10-26**: Dylan Lawless. *Uncovering novel genetic factors of paediatric sepsis through new tools for precision genomic medicine*. 12th FKZ/CRC Children’s Research Centre, Zürich. Prize awarded.
+
+
 ## Related
 
 * **SPHN RDF Omic**: van der Horst,  E.; Unni,  D.; Kopmels,  F.; Armida,  J.; Touré,  V.; Franke,  W.; Crameri,  K.; Cirillo,  E.; Österle,  S. "[Bridging Clinical and Genomic Knowledge: An Extension of the SPHN RDF Schema for Seamless Integration and FAIRification of Omics Data.](https://www.preprints.org/manuscript/202312.0373/v1)" *Preprints.org* (2023).\\
 [DOI](https://doi.org/10.20944/preprints202312.0373.fHlOxMA_v1idvSgFTtU8GYnkplRPXwjQLe4taTfIREKxiEYrmqwttFfzWYNmxnAi2tqvww4LfS1Isn4) | [PDF](https://www.preprints.org/frontend/manuscript/6d089babeb3de4497a0bcdd6b1696d04/download_pub)
+
+
+
+<!-- ## Currently under review -->
+<!---->
+<!-- * **Perspective**: Hardy-Weinberg a century later and new horizons in clinical genomics. Under review. -->
+<!---->
+<!-- * **Review**: A Bayesian reference model for genetic variant interpretation. Pre-print -->
+<!---->
+<!-- * **Article**: Quant resolves Mendelian disease uncertainty through genome-wide Bayesian inference. Pre-print -->
+<!---->
+<!-- * **Systematic review**: A systematic review of quantitative Bayesian variant causality. Pre-print -->
+<!---->
+<!---->
