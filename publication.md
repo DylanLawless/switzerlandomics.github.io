@@ -87,8 +87,6 @@ Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Luregn J. Schlapbach, Jacques F
 * **2025-09-19**: Quant Group, Simon Boutry, Ali Saadat, Maarja Soomann, Johannes Trück, D. Sean Froese, Jacques Fellay, Sinisa Savic, Luregn J. Schlapbach, Dylan Lawless. *Quantifying variant evidence for precise, probabilistic genomics*. Computational Biology Symposium, Lausanne. \\
 [PDF](/assets/pdf/20250918_lawless_quant.pdf)
 
-
-
 ## Conference talks
 
 * **2025-09-19**: Dylan Lawless. *Quantifying variant evidence for precise, probabilistic genomics*. Computational Biology Symposium, Lausanne.
