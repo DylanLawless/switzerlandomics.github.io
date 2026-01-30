@@ -1,5 +1,5 @@
 ---
-title: SwitzerlandOmics
+title: Switzerland Omics
 layout: home
 description: Auditable genomic infrastructure for precision medicine, statistical genomics, epidemiology, and bioinformatic interpretation across clinical, research, and industrial settings.
 intro_image: "images/2025_E_L_Laurent_etherial_precision/1EBA3CDE-7455-49FD-8686-017F290965E3_wide.jpeg"
