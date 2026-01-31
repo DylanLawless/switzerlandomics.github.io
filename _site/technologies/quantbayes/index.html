@@ -158,6 +158,8 @@
         <div class="content"><p>Gives genomics a shared evidence language.<br />
 Every variant. Every pipeline. Every institution.</p>
 
+<p>Clinical genomic interpretation relies on heterogeneous evidence checks that vary across institutions and pipelines, preventing evidence from being compared or verified in a reliable way.</p>
+
 <p>QuantBayes standardises how evidence strength is expressed, without changing how variants are discovered.</p>
 
 <div class="download-actions">
@@ -264,13 +266,21 @@ Every variant. Every pipeline. Every institution.</p>
 <p>A strongly supported variant might score <strong>0.95 with a 95 percent credible interval from 0.91 to 0.98</strong>. 
 A weaker result might score <strong>0.32 with a wider interval</strong>.</p>
 
+<p><img src="/images/quantbayes/qem_and_quantbayes_extended.png" alt="Pipeline-independent evidence sufficiency layer enabling verifiable reuse across institutions" style="width:100 percent; height:auto;" /></p>
+
+<p><strong><em>Figure 1. Pipeline-independent evidence sufficiency.
+Evidence completeness is summarised into a single, auditable metric that can be compared and reused across institutions, without exposing pipeline details or intellectual property.</em></strong></p>
+
 <p>These values are independent of the pipeline that produced the candidate variant.
 This separation of variant discovery from evidence assessment provides a common, auditable evidence language for genomics.</p>
 
-<p>QuantBayes is designed as non-diagnostic infrastructure suitable for regulated environments.</p>
+<p>Most genomic interpretation failures are logistical, not statistical.
+QuantBayes is designed as non-diagnostic infrastructure suitable for regulated environments.</p>
 
-<p><img src="/images/quantbayes/qv_bayes_short.png" style="width:100 percent; height:auto;" />
-<strong><em>Figure 1. From siloed workflows to a universal evidence model</em></strong>.</p>
+<p><img src="/images/quantbayes/qv_bayes_short.png" style="width:100 percent; height:auto;" /></p>
+
+<p><strong><em>Figure 2. Making genomic evidence reusable.
+In current workflows, evidence is tightly coupled to analysis pipelines. A universal evidence model separates verifiable support from proprietary logic, enabling consistent comparison and reuse of results.</em></strong></p>
 
 <hr />
 
@@ -439,8 +449,10 @@ library(quantbayes)
   </table>
 </div>
 
-<p><img src="/images/quantbayes/quantbayes_example.png" style="width:100 percent; height:auto;" />
-<strong><em>Figure 2. Global evidence sufficiency distribution with candidate overlay</em></strong>.</p>
+<p><img src="/images/quantbayes/quantbayes_example.png" style="width:100 percent; height:auto;" /></p>
+
+<p><strong><em>Figure 3. Placing candidate variants in genome-wide context.
+The global distribution of evidence sufficiency provides a reference against which individual candidate variants can be interpreted. Overlaying candidates shows not only their estimated support, but how exceptional that support is relative to all evaluated variants, with uncertainty preserved.</em></strong></p>
 
 <hr />
 
@@ -452,8 +464,25 @@ library(quantbayes)
 
 <p>The posterior mean, credible interval, and percentile provide a reproducible measure of evidence sufficiency. These values quantify completeness and verifiability of evidence and do not estimate disease causality.</p>
 
-<p><img src="/images/quantbayes/qv_quant.png" style="width:100 percent; height:auto;" />
-<strong><em>Figure 3. QuantBayes applied to a standardised evidence model</em></strong>.</p>
+<p><img src="/images/quantbayes/qv_bayes_full.png" style="width:100 percent; height:auto;" /></p>
+
+<p><strong><em>Figure 4. Under the hood, verifiable evidence is summarised using a Bayesian model to produce a single, uncertainty-calibrated metric that supports consistent interpretation and reuse across pipelines and institutions.</em></strong></p>
+
+<hr />
+
+<h2 id="evidence-matrix-standards">Evidence matrix standards</h2>
+
+<p>QuantBayes operates on a binary evidence matrix describing whether predefined, verifiable evidence criteria are satisfied for each variant.</p>
+
+<p>For users who do not already maintain such a matrix, the <strong>Qualifying Evidence Matrix (QEM)</strong> standard provides a minimal, interoperable specification for encoding rule-based evidence in a portable and auditable form.</p>
+
+<p>QEM is designed for settings where variant candidates may be produced by proprietary or opaque pipelines, but where the availability of supporting evidence must remain reproducible, independently verifiable, and suitable for reuse across institutions.</p>
+
+<p>The standard is maintained by the Swiss Genomics Association and is available as both PDF and HTML specifications.</p>
+
+<p><a href="https://www.swissgenomicsassociation.ch/pages/sga_qem/" target="_blank" rel="noopener">
+View the Qualifying Evidence Matrix (QEM) standard
+</a></p>
 
 <hr />
 
