@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>What is the BED format?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Explanation of the BED format used to store genomic regions and features" />
+  <meta property="og:title" content="What is the BED format?"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Explanation of the BED format used to store genomic regions and features"/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-learn-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="tech tech-single">
+
+        <h1 class="title">What is the BED format?</h1>
+
+        
+        <p class="lead">Explanation of the BED format used to store genomic regions and features</p>
+        
+
+        <div class="content">
+          <p>BED (Browser Extensible Data) is a text-based file format used to describe genomic regions or features using chromosome coordinates.</p>
+
+<h2 id="why-bed-files-exist">Why BED files exist</h2>
+
+<p>Many genomics analyses identify locations on the genome rather than producing sequences, such as regulatory regions, genes, or sequencing coverage peaks. BED provides a compact and portable way to store and exchange these genomic intervals.</p>
+
+<p>The format is widely supported by genome browsers and analysis tools.</p>
+
+<h2 id="what-a-bed-file-contains">What a BED file contains</h2>
+
+<p>Each line describes one genomic feature using at least three fields: chromosome name, start position, and end position.</p>
+
+<p>Additional optional fields may include feature names, strand direction, display information, or sub-regions such as exon blocks. Files are often described as BED3, BED6, or BED12 depending on how many standard fields are used.</p>
+
+<p>BED coordinates use a 0-based, half-open system, meaning the start position is included while the end position is not. This differs from some other genomic formats and is a common source of confusion.</p>
+
+<h2 id="where-bed-appears-in-pipelines">Where BED appears in pipelines</h2>
+
+<p>Typical workflow:</p>
+
+<p>Sequencing → Alignment → Feature detection or annotation → BED file → Visualisation or interpretation</p>
+
+<p>BED files are commonly used to exchange peak calls, gene regions, or analysis targets.</p>
+
+<h2 id="bed-and-gffgtf">BED and GFF/GTF</h2>
+
+<p>BED and GFF/GTF both describe genomic features, but BED is simpler and often used for region lists or browser tracks, while GFF and GTF include richer annotation structure for genes and transcripts.</p>
+
+<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
+
+<p>Switzerland Omics systems operate on variant and feature data that may originate from genomic regions defined in BED files during evidence extraction and interpretation.</p>
+
+<h2 id="technical-specification">Technical specification</h2>
+
+<p>The canonical BED format specification is maintained within the hts-specs repository used by GA4GH and samtools:</p>
+
+<p>https://github.com/samtools/hts-specs</p>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

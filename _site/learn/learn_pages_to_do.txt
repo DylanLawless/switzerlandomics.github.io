@@ -1,0 +1,269 @@
+Below is a **ranked SEO page plan** optimised for:
+
+1. High search volume in genomics
+2. Direct relevance to your products
+3. Traffic from practitioners solving real problems
+4. Natural funnel into Quant, Vault, QuantBayes, Archipelago, etc.
+
+This is ordered by **SEO acquisition power**, not by product importance.
+
+---
+
+# Tier 1: Core traffic drivers (highest impact)
+
+These topics pull users actively doing genomics work.
+
+## Data formats and core files
+
+These are searched constantly.
+
+1. What is a VCF file? - done
+2. VCF vs gVCF explained - done
+3. What is a BAM file? - done
+4. BAM vs SAM file - done
+5. CRAM vs BAM - done
+6. FASTQ file explained - done
+7. Reference genome explained (GRCh37 vs GRCh38)  - done
+8. What is a variant call?
+9. Variant calling explained
+10. Genome alignment explained
+
+These bring pipeline users, analysts, students, clinicians.
+
+Each page can link naturally to:
+Quant Scan, GuRu, QV database, Vault.
+
+---
+
+## Variant interpretation and annotation
+
+Directly aligned with your products.
+
+11. Variant annotation explained
+12. Variant effect predictor explained (VEP)
+13. What is variant pathogenicity?
+14. ACMG variant classification explained
+15. How variant filtering works
+16. Rare variant filtering explained
+17. Gene panel analysis explained
+18. Trio sequencing explained
+19. Exome vs genome sequencing
+20. Variant prioritisation explained
+
+Funnels users into:
+GuRu, Quant, QV, PanelAppRex.
+
+---
+
+## Sequencing technologies
+
+High global search volume.
+
+21. Whole genome sequencing explained
+22. Whole exome sequencing explained
+23. Short-read vs long-read sequencing
+24. Nanopore sequencing explained
+25. PacBio sequencing explained
+26. 10x Genomics linked reads explained
+27. Shotgun sequencing explained
+28. Sequencing depth and coverage explained
+
+Funnels into:
+WGS pipelines, Vault, Quant Scan.
+
+---
+
+# Tier 2: Analysis and statistical methods (expert traffic)
+
+High-value technical traffic.
+
+## Association and burden methods
+
+Strong match with Archipelago.
+
+29. GWAS explained
+30. Rare variant association testing explained
+31. SKAT and SKAT-O explained
+32. Gene burden testing explained
+33. Variant set association tests explained
+34. PheWAS explained
+35. Manhattan plot explained
+36. QQ plot explained
+
+Funnels into:
+Archipelago, statistical genomics.
+
+---
+
+## Pipeline methods
+
+People search while building pipelines.
+
+37. BWA alignment explained
+38. GATK variant calling explained
+39. bcftools explained
+40. VCFtools explained
+41. PLINK explained
+42. Variant QC explained
+43. Structural variant detection explained
+44. CNV detection explained
+
+Funnels into:
+Your pipeline credibility.
+
+---
+
+# Tier 3: Infrastructure and governance (your differentiation)
+
+These align with your trust infrastructure.
+
+## Custody and data governance
+
+Direct funnel into Genomic Vault.
+
+45. Who owns genome data?
+46. How genome data is stored
+47. Genome data privacy explained
+48. Genome data sharing explained
+49. Clinical genomics governance explained
+
+---
+
+## Evidence and reproducibility
+
+Your core intellectual territory.
+
+50. Evidence sufficiency in genomics
+51. Why labs disagree on variant interpretation
+52. Reproducibility in genomics pipelines
+53. Absence of evidence vs evidence of absence
+54. Why genomic results change over time
+
+Funnels into:
+Quant, QuantBayes, Evidence Ratio.
+
+---
+
+# Tier 4: Advanced and niche (authority building)
+
+These drive expert trust.
+
+55. Bayesian variant interpretation
+56. Hardy-Weinberg equilibrium in practice
+57. Variant penetrance explained
+58. Allele frequency filtering explained
+59. MAF threshold selection
+60. Variant collapsing methods
+61. Pathway burden analysis
+
+Funnels into:
+Quant, MAF calculator.
+
+---
+
+# Product-specific SEO pages
+
+Optimise pages people will search indirectly.
+
+62. Archipelago plot explained
+63. Evidence Ratio explained
+64. QuantBayes explained
+65. Qualifying Variant explained
+66. Evidence matrix explained
+67. Gene panel aggregation explained
+
+---
+
+# Highest ROI implementation plan
+
+If you build only 20 first:
+
+### Immediate traffic
+
+VCF, BAM, FASTQ, variant calling, annotation, ACMG, trio sequencing, WGS, nanopore, GWAS.
+
+### Direct product funnel
+
+Variant filtering, gene panels, evidence sufficiency, reproducibility.
+
+---
+
+# Strategic insight for Switzerland Omics
+
+Most genomics companies optimise for:
+
+"Buy our pipeline."
+
+You can win with:
+
+"Understand genomics correctly."
+
+Then tools follow naturally.
+
+---
+
+
+More formats: `SAM/BAM and related specifications
+
+These documents are maintained by the Large Scale Genomics work stream of the Global Alliance for Genomics & Health (GA4GH). Information on GA4GH procedures and how to get involved is available here. Lists of contributors and acknowledgements can generally be found in each individual specification document.
+
+Specifications:
+
+SAM v1
+SAM tags
+CRAM v2.1
+CRAM v3.x
+CRAM codecs
+BCF v1
+BCF v2.1
+CSI v1
+Tabix
+VCF v4.1
+VCF v4.2
+VCF v4.3
+VCF v4.4
+VCF v4.5
+BED v1
+crypt4gh
+Htsget
+Refget
+Alignment data files
+
+SAMv1.tex is the canonical specification for the SAM (Sequence Alignment/Map) format, BAM (its binary equivalent), and the BAI format for indexing BAM files. SAMtags.tex is a companion specification describing the predefined standard optional fields and tags found in SAM, BAM, and CRAM files. These formats are discussed on the samtools-devel mailing list.
+
+CRAMv3.tex is the canonical specification for the CRAM format, while CRAMv2.1.tex describes its now-obsolete predecessor. CRAMcodecs.tex contains details of the CRAM custom compression codecs. Further details can be found at ENA’s CRAM toolkit page and GA4GH’s CRAM page. CRAM discussions can also be found on the samtools-devel mailing list.
+
+The tabix.tex and CSIv1.tex quick references summarize more recent index formats: the tabix tool indexes generic textual genome position-sorted files, while CSI is htslib’s successor to the BAI index format.
+
+Unaligned sequence data files
+
+We do not define or endorse any dedicated unaligned sequence data format. Instead we recommend storing such data in one of the alignment formats (SAM, BAM, or CRAM) with the unmapped flag set. However for completeness, we list the commonest formats below with external links.
+
+FASTA is an early sequence-only format originally defined by William Pearson’s tool of the same name.
+
+FASTQ was designed as a replacement for FASTA, combining the sequence and quality information in the same file. It has no formal definition and several incompatible variants, but is described in a paper by Cock et al.
+
+Variant calling data files
+
+VCFv4.5.tex is the canonical specification for the Variant Call Format and its textual (VCF) and binary (BCF) encodings, while VCFv4.1.tex, VCFv4.2.tex, VCFv4.3.tex and VCFv4.4.tex describe their predecessors. These formats are discussed on the vcftools-spec mailing list.
+
+BCFv1_qref.tex summarizes the obsolete BCF1 format historically produced by samtools. This format is no longer recommended for use, as it has been superseded by the more widely-implemented BCF2.
+
+BCFv2_qref.tex is a quick reference describing just the layout of data within BCF2 files.
+
+Discrete genomic feature data files
+
+BEDv1.tex is the canonical specification for the GA4GH Browser Extensible Data (BED) format.
+
+File encryption
+
+crypt4gh.tex is the canonical specification of the crypt4gh format which can be used to wrap existing file formats in an encryption layer.
+
+Transfer protocols
+
+Htsget.md describes the hts-get retrieval protocol, which enables parallel streaming access to data sharded across multiple URLs or files.
+
+Refget.md enables access to reference sequences using an identifier derived from the sequence itself.
+
+ samtools
+Samtools organisation for next-generation sequencing developers: htslib C API, htsjdk Java API, file format specifications, and samtools/bcftools source code.`

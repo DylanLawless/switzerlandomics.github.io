@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>What is Tabix indexing?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Explanation of Tabix and CSI indexing used for fast access to genomic data files" />
+  <meta property="og:title" content="What is Tabix indexing?"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Explanation of Tabix and CSI indexing used for fast access to genomic data files"/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-learn-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="tech tech-single">
+
+        <h1 class="title">What is Tabix indexing?</h1>
+
+        
+        <p class="lead">Explanation of Tabix and CSI indexing used for fast access to genomic data files</p>
+        
+
+        <div class="content">
+          <p>Tabix is a tool and index format that allows fast retrieval of genomic regions from large, position-sorted text files such as VCF, BED, or GFF without reading the entire file.</p>
+
+<h2 id="why-tabix-indexing-exists">Why Tabix indexing exists</h2>
+
+<p>Genomic data files often contain millions of records covering whole genomes. Reading an entire file to extract a small region would be slow and inefficient.</p>
+
+<p>Tabix solves this by building an index that records where genomic regions occur within the compressed file, allowing software to jump directly to the requested coordinates.</p>
+
+<h2 id="how-tabix-indexing-works">How Tabix indexing works</h2>
+
+<p>Tabix works on files compressed with BGZF, a block-based extension of gzip that allows random access. After compression, the file is indexed so that genomic regions can be located quickly.</p>
+
+<p>The index stores mappings between genomic coordinates and positions in the compressed file. Tools can then fetch only the required data blocks instead of scanning the entire dataset.</p>
+
+<h2 id="where-tabix-appears-in-pipelines">Where Tabix appears in pipelines</h2>
+
+<p>Typical workflow:</p>
+
+<p>Variant or annotation file → BGZF compression → Tabix indexing → Region queries → Interpretation</p>
+
+<p>Genome browsers and analysis pipelines rely on these indices for interactive access.</p>
+
+<h2 id="tabix-and-csi">Tabix and CSI</h2>
+
+<p>Traditional tabix indices use the TBI format, which has limitations on maximum chromosome length. CSI (Coordinate Sorted Index) is a newer format used in htslib that removes these limits and supports larger references.</p>
+
+<p>Modern tools often prefer CSI indexing for large genomes while remaining compatible with tabix workflows.</p>
+
+<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
+
+<p>Switzerland Omics systems operate on variant and annotation data that are frequently accessed through tabix or CSI indexed files during evidence extraction and interpretation.</p>
+
+<h2 id="technical-specification">Technical specification</h2>
+
+<p>Official specifications for tabix and CSI indexing are maintained in the samtools and hts-specs repositories:</p>
+
+<p>https://github.com/samtools/hts-specs</p>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

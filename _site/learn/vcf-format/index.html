@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>What is a VCF file?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="The Variant Call Format used to store variant sites, alleles, and per-sample genotypes from sequencing" />
+  <meta property="og:title" content="What is a VCF file?"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="The Variant Call Format used to store variant sites, alleles, and per-sample genotypes from sequencing"/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-learn-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="tech tech-single">
+
+        <h1 class="title">What is a VCF file?</h1>
+
+        
+        <p class="lead">The Variant Call Format used to store variant sites, alleles, and per-sample genotypes from sequencing</p>
+        
+
+        <div class="content">
+          <p>A VCF file (Variant Call Format) is a tab-delimited text format that records genomic variant sites, the alleles observed at each site, and (optionally) per-sample genotypes and supporting metrics.</p>
+
+<h2 id="why-vcf-files-exist">Why VCF files exist</h2>
+
+<p>Sequencing reads are aligned to a reference genome, then variant calling identifies positions where one or more samples differ from that reference. VCF is the standard way to publish those variant calls so they can be compared, annotated, interpreted, and exchanged between tools.</p>
+
+<h2 id="minimal-structure-of-a-vcf">Minimal structure of a VCF</h2>
+
+<p>A VCF has two parts:</p>
+
+<ul>
+  <li><strong>Header lines</strong> beginning with <code class="language-plaintext highlighter-rouge">##</code>, which define metadata and the meaning of annotations.</li>
+  <li>A single <strong>column header</strong> line beginning with <code class="language-plaintext highlighter-rouge">#CHROM</code>, followed by one record per site.</li>
+</ul>
+
+<p>Each record has eight required site columns, then optional genotype columns:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CHROM</td>
+      <td>Contig name (chromosome)</td>
+    </tr>
+    <tr>
+      <td>POS</td>
+      <td>1-based position of the first base of <code class="language-plaintext highlighter-rouge">REF</code></td>
+    </tr>
+    <tr>
+      <td>ID</td>
+      <td>Identifier (for example <code class="language-plaintext highlighter-rouge">rs...</code>) or <code class="language-plaintext highlighter-rouge">.</code></td>
+    </tr>
+    <tr>
+      <td>REF</td>
+      <td>Reference allele sequence at this position</td>
+    </tr>
+    <tr>
+      <td>ALT</td>
+      <td>Alternate allele sequence(s), comma-separated</td>
+    </tr>
+    <tr>
+      <td>QUAL</td>
+      <td>Site-level confidence score (caller-defined scale, often Phred-like)</td>
+    </tr>
+    <tr>
+      <td>FILTER</td>
+      <td><code class="language-plaintext highlighter-rouge">PASS</code>, <code class="language-plaintext highlighter-rouge">.</code> (no filters applied), or one or more filter names</td>
+    </tr>
+    <tr>
+      <td>INFO</td>
+      <td>Semicolon-separated site annotations (tag or <code class="language-plaintext highlighter-rouge">tag=value</code>)</td>
+    </tr>
+    <tr>
+      <td>FORMAT</td>
+      <td>Colon-separated keys that define the per-sample fields</td>
+    </tr>
+    <tr>
+      <td>sample columns</td>
+      <td>One column per sample, values matching <code class="language-plaintext highlighter-rouge">FORMAT</code> order</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A “sites-only” VCF may stop at <code class="language-plaintext highlighter-rouge">INFO</code> and omit <code class="language-plaintext highlighter-rouge">FORMAT</code> and sample columns.</p>
+
+<h2 id="example-record-explained">Example record explained</h2>
+
+<p>Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+#CHROM POS ID REF ALT QUAL FILTER INFO    FORMAT  SAMPLE1
+20     10001617 .  C   A   493.77 PASS   DP=38   GT:DP   0/1:38
+
+</code></pre></div></div>
+
+<p>Explanation:</p>
+
+<ul>
+  <li><strong>CHROM=20, POS=10001617</strong>: the site location.</li>
+  <li><strong>ID=.</strong>: no identifier provided.</li>
+  <li><strong>REF=C, ALT=A</strong>: the reference base is C, and an alternate allele A is observed. If there were multiple alternates they would appear as <code class="language-plaintext highlighter-rouge">ALT=A,T</code> and are indexed in that order.</li>
+  <li><strong>QUAL=493.77</strong>: a site confidence value produced by the caller (the scale is caller-defined).</li>
+  <li><strong>FILTER=PASS</strong>: this record passed filters. A value of <code class="language-plaintext highlighter-rouge">.</code> means no filtering was applied.</li>
+  <li><strong>INFO=DP=38</strong>: a site annotation. <code class="language-plaintext highlighter-rouge">INFO/DP</code> commonly represents read depth at the site, but the precise definition is caller-specific.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">FORMAT</code> defines the schema for each sample column:</p>
+
+<ul>
+  <li><strong>FORMAT=GT:DP</strong> means the sample column contains two fields, genotype then depth, separated by <code class="language-plaintext highlighter-rouge">:</code>.</li>
+</ul>
+
+<p>The sample value is:</p>
+
+<ul>
+  <li><strong>GT=0/1</strong>: allele indices. <code class="language-plaintext highlighter-rouge">0</code> means <code class="language-plaintext highlighter-rouge">REF</code>. <code class="language-plaintext highlighter-rouge">1</code> means the first allele in <code class="language-plaintext highlighter-rouge">ALT</code>.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">0/0</code> is homozygous reference.</li>
+      <li><code class="language-plaintext highlighter-rouge">0/1</code> is heterozygous.</li>
+      <li><code class="language-plaintext highlighter-rouge">1/1</code> is homozygous alternate.</li>
+      <li><code class="language-plaintext highlighter-rouge">/</code> indicates unphased genotypes. <code class="language-plaintext highlighter-rouge">|</code> indicates phased genotypes (for example <code class="language-plaintext highlighter-rouge">0|1</code>).</li>
+      <li>Missing values are written as <code class="language-plaintext highlighter-rouge">.</code> (for example <code class="language-plaintext highlighter-rouge">./.</code>).</li>
+    </ul>
+  </li>
+  <li><strong>DP=38</strong>: per-sample depth for this site as defined by the caller. This is separate from <code class="language-plaintext highlighter-rouge">INFO/DP</code>, and may differ in meaning and value depending on the calling method and filters.</li>
+</ul>
+
+<h2 id="representation-details-that-matter">Representation details that matter</h2>
+
+<ul>
+  <li><strong>Indels include an anchoring base</strong>: insertions and deletions are represented with <code class="language-plaintext highlighter-rouge">REF</code> and <code class="language-plaintext highlighter-rouge">ALT</code> strings that include a shared left-side base, so <code class="language-plaintext highlighter-rouge">POS</code> points to that anchor. This is why deletions often appear to be reported at the base before the deleted stretch.</li>
+  <li><strong>Multiallelic sites</strong>: if <code class="language-plaintext highlighter-rouge">ALT</code> has multiple alleles, genotypes use indices beyond 1 (for example <code class="language-plaintext highlighter-rouge">2/2</code> refers to the second listed ALT allele).</li>
+  <li><strong>Header definitions</strong>: the intended meaning of <code class="language-plaintext highlighter-rouge">INFO</code> and <code class="language-plaintext highlighter-rouge">FORMAT</code> tags is declared in header lines such as <code class="language-plaintext highlighter-rouge">##INFO=&lt;ID=DP,...&gt;</code> and <code class="language-plaintext highlighter-rouge">##FORMAT=&lt;ID=GT,...&gt;</code>.</li>
+</ul>
+
+<h2 id="where-vcf-fits-in-pipelines">Where VCF fits in pipelines</h2>
+
+<p>Typical workflow:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Sequencing → Alignment (BAM/CRAM) → Variant calling → VCF → Annotation and interpretation
+
+</code></pre></div></div>
+
+<h2 id="vcf-vs-gvcf">VCF vs gVCF</h2>
+
+<p>A VCF usually records variant sites only. A gVCF is designed for joint genotyping and also represents non-variant regions, typically by emitting reference-confidence information and sometimes compressing non-variant stretches into blocks.</p>
+
+<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
+
+<p>Switzerland Omics systems consume VCF-derived variant and genotype evidence during evidence extraction, probabilistic interpretation, and structured reporting.</p>
+
+<h2 id="technical-specification">Technical specification</h2>
+
+<p>For the authoritative specification, see the VCF definition in the hts-specs repository:
+https://samtools.github.io/hts-specs/</p>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

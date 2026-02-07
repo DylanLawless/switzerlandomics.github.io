@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Human reference genomes quick reference</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Operational overview of human reference genome assemblies used in genomics and clinical pipelines" />
+  <meta property="og:title" content="Human reference genomes quick reference"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Operational overview of human reference genome assemblies used in genomics and clinical pipelines"/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-learn-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="tech tech-single">
+
+        <h1 class="title">Human reference genomes quick reference</h1>
+
+        
+        <p class="lead">Operational overview of human reference genome assemblies used in genomics and clinical pipelines</p>
+        
+
+        <div class="content">
+          <p>A human reference genome defines the coordinate system used to map sequencing reads and report variants. Multiple builds exist, and sequencing, variant, and annotation files must use compatible versions to ensure correct interpretation.</p>
+
+<h2 id="human-reference-genome-assemblies-in-practice">Human reference genome assemblies in practice</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Assembly</th>
+      <th>Release year</th>
+      <th>UCSC name</th>
+      <th>Status</th>
+      <th>Recommended use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GRCh38</td>
+      <td>2013</td>
+      <td>hg38</td>
+      <td>Current standard</td>
+      <td>Default for new work</td>
+    </tr>
+    <tr>
+      <td>T2T-CHM13</td>
+      <td>2022</td>
+      <td>hs1</td>
+      <td>Emerging</td>
+      <td>Research and future pipelines</td>
+    </tr>
+    <tr>
+      <td>GRCh37</td>
+      <td>2009</td>
+      <td>hg19</td>
+      <td>Legacy</td>
+      <td>Legacy datasets</td>
+    </tr>
+    <tr>
+      <td>Human Pangenome Reference</td>
+      <td>2023–</td>
+      <td>—</td>
+      <td>Emerging</td>
+      <td>Population references</td>
+    </tr>
+    <tr>
+      <td>Build 36</td>
+      <td>2006</td>
+      <td>hg18</td>
+      <td>Historical</td>
+      <td>Old archives only</td>
+    </tr>
+    <tr>
+      <td>Build 35</td>
+      <td>2004</td>
+      <td>hg17</td>
+      <td>Historical</td>
+      <td>Rare legacy</td>
+    </tr>
+    <tr>
+      <td>GRCh39</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Postponed</td>
+      <td>Not available</td>
+    </tr>
+  </tbody>
+</table>
+
+<figure style="width:100%; margin:0;">
+  <a href="https://commons.wikimedia.org/wiki/File:Human_genome_assembly_GRCh38_chromosomes_ideogram_NCBI.png">
+ <img src="/images/learn/Human_genome_assembly_GRCh38_chromosomes_ideogram_NCBI.png" alt="Chromosomes ideogram of the human reference genome assembly GRCh38/hg38" style="width:100%; height:auto;" />
+  </a>
+
+</figure>
+
+<p>Chromosomes ideogram of the human reference genome assembly GRCh38/hg38. Public domain source: 
+    <a href="https://commons.wikimedia.org/wiki/File:Human_genome_assembly_GRCh38_chromosomes_ideogram_NCBI.png">Wikimedia Commons</a>.</p>
+
+<h3 id="assembly-naming-differences">Assembly naming differences</h3>
+
+<p>Reference assemblies are released by the Genome Reference Consortium (GRC) and NCBI under names such as GRCh37 and GRCh38. The UCSC Genome Browser distributes the same assemblies under identifiers such as hg19 and hg38.</p>
+
+<p>These usually refer to the same coordinate system, but chromosome naming conventions may differ, for example <code class="language-plaintext highlighter-rouge">chr1</code> in UCSC versus <code class="language-plaintext highlighter-rouge">1</code> in Ensembl or NCBI. Files must use consistent naming to remain compatible.</p>
+
+<p>The sections below provide operational details for each assembly.</p>
+
+<hr />
+
+<h2 id="grch38">GRCh38</h2>
+
+<p>Release year: 2013<br />
+UCSC browser name: hg38<br />
+NCBI assembly accession: GCA_000001405.29<br />
+Status: Current global standard</p>
+
+<p>Use in practice: Default reference for new clinical and research pipelines. Coordinates remain compatible across patch releases such as GRCh38.p14 (2022), which improve sequence representation without changing positions.</p>
+
+<p>Official homepage:<br />
+<a href="https://www.ncbi.nlm.nih.gov/grc/human">https://www.ncbi.nlm.nih.gov/grc/human</a></p>
+
+<hr />
+
+<h2 id="t2t-chm13">T2T-CHM13</h2>
+
+<p>Release year: 2022<br />
+UCSC browser name: hs1<br />
+NCBI assembly accession: GCA_009914755.4<br />
+Status: Emerging reference</p>
+
+<p>Use in practice: First gapless human genome assembly, enabling analysis of centromeres and previously unresolved regions. Increasingly used in research and method development, but not yet the standard coordinate system in clinical pipelines.</p>
+
+<p>Official homepage:<br />
+<a href="https://github.com/marbl/CHM13">https://github.com/marbl/CHM13</a></p>
+
+<hr />
+
+<h2 id="grch37">GRCh37</h2>
+
+<p>Release year: 2009<br />
+UCSC browser name: hg19<br />
+NCBI assembly accession: GCA_000001405.14<br />
+Status: Legacy standard</p>
+
+<p>Use in practice: Still widely encountered in historical sequencing studies and clinical archives. Many variant databases and pipelines still use GRCh37, requiring compatibility when analysing legacy data.</p>
+
+<p>Official homepage:<br />
+<a href="https://www.ncbi.nlm.nih.gov/grc/human">https://www.ncbi.nlm.nih.gov/grc/human</a></p>
+
+<hr />
+
+<h2 id="human-pangenome-reference">Human Pangenome Reference</h2>
+
+<p>Initial releases: 2023 onward<br />
+UCSC browser name: none<br />
+NCBI accession: multiple assemblies<br />
+Status: Emerging paradigm</p>
+
+<p>Use in practice: Represents genomic diversity using multiple complete assemblies and graph-based approaches. Improves variant discovery in diverse populations but does not yet replace linear references in standard production pipelines.</p>
+
+<p>Official homepage:<br />
+<a href="https://humanpangenome.org">https://humanpangenome.org</a></p>
+
+<hr />
+
+<h2 id="build-36-hg18">Build 36 (hg18)</h2>
+
+<p>Release year: 2006<br />
+UCSC browser name: hg18<br />
+Status: Historical</p>
+
+<p>Use in practice: Appears in early GWAS and archived sequencing projects. Rarely used in modern analysis but still encountered in historical datasets.</p>
+
+<p>Reference portal:<br />
+<a href="https://genome.ucsc.edu">https://genome.ucsc.edu</a></p>
+
+<hr />
+
+<h2 id="build-35-hg17">Build 35 (hg17)</h2>
+
+<p>Release year: 2004<br />
+UCSC browser name: hg17<br />
+Status: Historical</p>
+
+<p>Use in practice: Very rare in current workflows but may appear in older archives or early sequencing studies.</p>
+
+<p>Reference portal:<br />
+<a href="https://genome.ucsc.edu">https://genome.ucsc.edu</a></p>
+
+<hr />
+
+<h2 id="grch39-planned">GRCh39 (planned)</h2>
+
+<p>Status: Release postponed indefinitely</p>
+
+<p>Use in practice: No official assembly available. Included here only to prevent confusion when future releases are discussed.</p>
+
+<p>Official homepage:<br />
+<a href="https://www.ncbi.nlm.nih.gov/grc/human">https://www.ncbi.nlm.nih.gov/grc/human</a></p>
+
+<hr />
+
+<h2 id="how-to-interpret-assembly-naming">How to interpret assembly naming</h2>
+
+<p>Assembly versus annotation<br />
+Assemblies define coordinates. Annotation releases such as Ensembl or GENCODE are layered onto assemblies and update independently.</p>
+
+<p>Patch releases<br />
+Versions such as GRCh38.p14 update sequence representation without changing coordinates.</p>
+
+<p>Linear references versus pangenome<br />
+GRCh37 and GRCh38 use a single linear genome. Pangenome resources use multiple genomes or graph representations and are not yet universal replacements.</p>
+
+<p>Naming differences<br />
+Chromosomes may be labelled differently across tools, for example <code class="language-plaintext highlighter-rouge">chr1</code> versus <code class="language-plaintext highlighter-rouge">1</code>. Files must use consistent naming.</p>
+
+<hr />
+
+<h2 id="practical-usage-guidance">Practical usage guidance</h2>
+
+<p>New pipelines<br />
+Use GRCh38 unless compatibility with legacy datasets requires GRCh37.</p>
+
+<p>Legacy datasets<br />
+Analyse data in the original assembly when possible. Migration typically requires coordinate conversion or remapping.</p>
+
+<p>Archival storage<br />
+Alignment files should retain reference assembly information to allow correct reuse.</p>
+
+<p>Migration considerations<br />
+Variant data can often be lifted between builds. Aligned read data typically require remapping for consistency.</p>
+
+<hr />
+
+<h2 id="common-pitfalls-avoided-by-this-reference">Common pitfalls avoided by this reference</h2>
+
+<p>• Mixing hg19 and b37 builds<br />
+• Treating patch releases as new assemblies<br />
+• Renaming contigs instead of remapping<br />
+• Assuming pangenome replaces GRCh38<br />
+• Ignoring coordinate compatibility</p>
+
+<hr />
+
+<h2 id="official-ecosystem-resources">Official ecosystem resources</h2>
+
+<p>Genome Reference Consortium<br />
+<a href="https://www.ncbi.nlm.nih.gov/grc/human">https://www.ncbi.nlm.nih.gov/grc/human</a></p>
+
+<p>NCBI Assembly database<br />
+<a href="https://www.ncbi.nlm.nih.gov/assembly">https://www.ncbi.nlm.nih.gov/assembly</a></p>
+
+<p>UCSC Genome Browser<br />
+<a href="https://genome.ucsc.edu">https://genome.ucsc.edu</a></p>
+
+<p>Ensembl Genome Browser<br />
+<a href="https://www.ensembl.org">https://www.ensembl.org</a></p>
+
+<p>T2T Consortium<br />
+<a href="https://github.com/marbl/CHM13">https://github.com/marbl/CHM13</a></p>
+
+<p>Human Pangenome Reference Consortium<br />
+<a href="https://humanpangenome.org">https://humanpangenome.org</a></p>
+
+<hr />
+
+<p>This page is designed as a stable operational reference and can be updated as new assemblies or ecosystem standards emerge.</p>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

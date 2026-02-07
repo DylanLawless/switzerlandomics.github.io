@@ -34,3 +34,6 @@ footer:
   - name: "Docs"
     url: "https://docs.switzerlandomics.ch"
     weight: 3
+  - name: "Learn"
+    url: "/learn/"
+    weight: 4

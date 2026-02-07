@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>VCF vs gVCF explained</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Understanding the difference between VCF and gVCF formats in variant calling and joint genotyping workflows" />
+  <meta property="og:title" content="VCF vs gVCF explained"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Understanding the difference between VCF and gVCF formats in variant calling and joint genotyping workflows"/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-learn-single'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-8">
+      <div class="tech tech-single">
+
+        <h1 class="title">VCF vs gVCF explained</h1>
+
+        
+        <p class="lead">Understanding the difference between VCF and gVCF formats in variant calling and joint genotyping workflows</p>
+        
+
+        <div class="content">
+          <p>A VCF records positions where variants were detected in a genome, while a gVCF records both variant sites and regions confidently matching the reference genome so that multiple samples can later be analysed together.</p>
+
+<h2 id="why-gvcf-exists">Why gVCF exists</h2>
+
+<p>A standard VCF usually lists only sites where variation was observed. When combining many samples, absence of a record does not tell us whether the site truly matches the reference or was simply not evaluated.</p>
+
+<p>gVCF files solve this by storing confidence that each region is reference, enabling accurate joint genotyping across cohorts without reprocessing raw sequencing data.</p>
+
+<h2 id="structural-difference">Structural difference</h2>
+
+<p>In a typical VCF:</p>
+
+<p>• Records appear mainly at variant sites.<br />
+• Non-variant regions are omitted.</p>
+
+<p>In a gVCF:</p>
+
+<p>• Variant sites appear normally.<br />
+• Non-variant regions are also recorded with confidence scores.<br />
+• Long stretches of reference sequence are grouped into blocks to reduce file size.<br />
+• Symbolic alleles such as <code class="language-plaintext highlighter-rouge">&lt;NON_REF&gt;</code> represent potential unseen variation.</p>
+
+<p>Thus, gVCF captures both observed variation and confidence in reference calls.</p>
+
+<h2 id="reference-confidence-and-blocks">Reference confidence and blocks</h2>
+
+<p>Modern variant callers estimate how confident they are that each site is homozygous reference. Instead of writing a record for every base, neighbouring positions with similar genotype quality are compressed into intervals, called non-variant blocks.</p>
+
+<p>This keeps gVCF files manageable while preserving the information required for later joint analysis.</p>
+
+<p>Not all all-sites VCF files contain this reference confidence. Such files cannot safely replace true gVCFs in joint genotyping workflows.</p>
+
+<h2 id="where-each-format-appears-in-pipelines">Where each format appears in pipelines</h2>
+
+<p>Typical cohort workflow:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Sequencing → Alignment → Variant calling per sample → gVCF → Joint genotyping → Final VCF → Interpretation
+
+</code></pre></div></div>
+
+<p>Researchers or clinicians usually receive a final VCF after cohort genotyping, while gVCFs are intermediate files used to combine many samples consistently.</p>
+
+<h2 id="practical-difference-for-users">Practical difference for users</h2>
+
+<p>You typically encounter:</p>
+
+<p>• gVCF during sample processing or cohort assembly.<br />
+• VCF when analysing final variant results.</p>
+
+<p>A gVCF allows cohorts to grow over time without repeating variant discovery for earlier samples.</p>
+
+<h2 id="adjacent-concept-sites-only-vcf">Adjacent concept: sites-only VCF</h2>
+
+<p>Some VCFs contain site summaries without genotype data. These describe population variation but do not carry individual genotype evidence.</p>
+
+<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
+
+<p>Switzerland Omics systems operate primarily on final VCF outputs produced after joint genotyping, where variant evidence is aggregated and interpreted across samples.</p>
+
+<h2 id="technical-specification">Technical specification</h2>
+
+<p>Formal format definitions for VCF and related standards are maintained in the hts-specs repository:</p>
+
+<p>https://samtools.github.io/hts-specs/</p>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

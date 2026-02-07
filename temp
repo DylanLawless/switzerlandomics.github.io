@@ -11,6 +11,7 @@
 │   ├── 2025-06-15.md
 │   ├── 2025-07-27-bitter-lesson.md
 │   ├── 2025-08-01-quant-posterior.md
+│   ├── 2025-09-19-quant-poster.md
 │   ├── 2025-11-27-open-standards.md
 │   ├── 2025-12-14-sga_qem.md
 │   ├── 2026-xx-xx-celebrating-trademark.md
@@ -40,6 +41,8 @@
 │   ├── default.html
 │   ├── default_no_brand.html
 │   ├── home.html
+│   ├── learn-index.html
+│   ├── learn.html
 │   ├── mathjax.html
 │   ├── page.html
 │   ├── page_no_brand.html
@@ -47,6 +50,20 @@
 │   ├── teams.html
 │   ├── tech.html
 │   └── technologies.html
+├── _learn
+│   ├── bam_and_bai_format.md
+│   ├── bed_format.md
+│   ├── cram_foramt.md
+│   ├── cram_vs_sam_vs_bam.md
+│   ├── csi_format.md
+│   ├── fasta_format.md
+│   ├── fastq_format.md
+│   ├── human_reference_genome.md
+│   ├── reference_genomes_grch37_vs_grch38.md
+│   ├── sam_format.md
+│   ├── tabix_format.md
+│   ├── vcf_format.md
+│   └── vcf_vs_gvcf.md
 ├── _release
 │   └── etherial_precision.md
 ├── _sass
@@ -790,6 +807,8 @@
 │   │   │       ├── panel_97.html
 │   │   │       ├── panel_98.html
 │   │   │       └── panel_99.html
+│   │   ├── pdf
+│   │   │   └── 20250918_lawless_quant.pdf
 │   │   ├── qv_database
 │   │   │   ├── generate_qv_database.sh
 │   │   │   ├── qv_acmg_sf_v3_3_20250828.yaml
@@ -822,6 +841,8 @@
 │   │   ├── 2025-07-27-bitter-lesson
 │   │   │   └── index.html
 │   │   ├── 2025-08-01-quant-posterior
+│   │   │   └── index.html
+│   │   ├── 2025-09-19-quant-poster
 │   │   │   └── index.html
 │   │   ├── 2025-11-27-open-standards
 │   │   │   └── index.html
@@ -889,6 +910,8 @@
 │   │   ├── illustrations
 │   │   │   ├── pointing.svg
 │   │   │   └── reading.svg
+│   │   ├── learn
+│   │   │   └── Human_genome_assembly_GRCh38_chromosomes_ideogram_NCBI.png
 │   │   ├── logo
 │   │   │   ├── SwissPedHealth_Pipeline_Devs.png
 │   │   │   ├── SwissPedHealth_Pipeline_Devs_mint.png
@@ -960,12 +983,13 @@
 │   │   │   ├── QuantBayes_logo_dark.pdf
 │   │   │   ├── QuantBayes_logo_light.pdf
 │   │   │   ├── QuantBayes_logo_light.png
+│   │   │   ├── qem_and_quantbayes_extended.png
 │   │   │   ├── quantbayes_example.png
 │   │   │   ├── qv_bayes_full.pdf
 │   │   │   ├── qv_bayes_full.png
 │   │   │   ├── qv_bayes_short.pdf
 │   │   │   ├── qv_bayes_short.png
-│   │   │   └── qv_quant.png
+│   │   │   └── qv_quant_es.png
 │   │   ├── site.webmanifest
 │   │   ├── social
 │   │   │   ├── discord.svg
@@ -1016,6 +1040,34 @@
 │   ├── index.md_vaulttransition
 │   ├── jek.sh
 │   ├── kill_serve.sh
+│   ├── learn
+│   │   ├── bam-and-bai-format
+│   │   │   └── index.html
+│   │   ├── bed-format
+│   │   │   └── index.html
+│   │   ├── cram-foramt
+│   │   │   └── index.html
+│   │   ├── cram-vs-sam-vs-bam
+│   │   │   └── index.html
+│   │   ├── csi-format
+│   │   │   └── index.html
+│   │   ├── fasta-format
+│   │   │   └── index.html
+│   │   ├── fastq-format
+│   │   │   └── index.html
+│   │   ├── human-reference-genome
+│   │   │   └── index.html
+│   │   ├── index.html
+│   │   ├── reference-genomes-grch37-vs-grch38
+│   │   │   └── index.html
+│   │   ├── sam-format
+│   │   │   └── index.html
+│   │   ├── tabix-format
+│   │   │   └── index.html
+│   │   ├── vcf-format
+│   │   │   └── index.html
+│   │   └── vcf-vs-gvcf
+│   │       └── index.html
 │   ├── netlify.toml
 │   ├── pages
 │   │   ├── fleyer_quantbayes
@@ -1046,6 +1098,12 @@
 │   │   └── index.html
 │   ├── storage.md
 │   ├── team
+│   │   ├── advisor-brand-communication
+│   │   │   └── index.html
+│   │   ├── advisor-scientific
+│   │   │   └── index.html
+│   │   ├── advisor-security-regulatory
+│   │   │   └── index.html
 │   │   ├── bill-mcdonald.md
 │   │   ├── dylan-lawless
 │   │   │   └── index.html
@@ -1076,9 +1134,13 @@
 │   │   │   └── index.html
 │   │   ├── statistical_genomics.md
 │   │   └── wgs.md
+│   ├── temp
 │   └── why-open
 │       └── index.html
 ├── _team
+│   ├── advisor-brand-communication.md
+│   ├── advisor-scientific.md
+│   ├── advisor-security-regulatory.md
 │   ├── bill-mcdonald.md
 │   └── dylan-lawless.md
 ├── _technologies
@@ -1659,6 +1721,8 @@
 │   │       ├── panel_97.html
 │   │       ├── panel_98.html
 │   │       └── panel_99.html
+│   ├── pdf
+│   │   └── 20250918_lawless_quant.pdf
 │   ├── qv_database
 │   │   ├── generate_qv_database.sh
 │   │   ├── qv_acmg_sf_v3_3_20250828.yaml
@@ -1735,6 +1799,8 @@
 │   ├── illustrations
 │   │   ├── pointing.svg
 │   │   └── reading.svg
+│   ├── learn
+│   │   └── Human_genome_assembly_GRCh38_chromosomes_ideogram_NCBI.png
 │   ├── logo
 │   │   ├── SwissPedHealth_Pipeline_Devs.png
 │   │   ├── SwissPedHealth_Pipeline_Devs_mint.png
@@ -1807,12 +1873,13 @@
 │   │   ├── QuantBayes_logo_dark.pdf
 │   │   ├── QuantBayes_logo_light.pdf
 │   │   ├── QuantBayes_logo_light.png
+│   │   ├── qem_and_quantbayes_extended.png
 │   │   ├── quantbayes_example.png
 │   │   ├── qv_bayes_full.pdf
 │   │   ├── qv_bayes_full.png
 │   │   ├── qv_bayes_short.pdf
 │   │   ├── qv_bayes_short.png
-│   │   └── qv_quant.png
+│   │   └── qv_quant_es.png
 │   ├── site.webmanifest
 │   ├── social
 │   │   ├── discord.svg
@@ -1863,6 +1930,7 @@
 ├── index.md_vaulttransition
 ├── jek.sh
 ├── kill_serve.sh
+├── learn.md
 ├── netlify.toml
 ├── pages
 │   ├── fleyer_quantbayes.md
@@ -1883,4 +1951,4 @@
 ├── temp
 └── why_open.md
 
-206 directories, 1677 files
+229 directories, 1722 files

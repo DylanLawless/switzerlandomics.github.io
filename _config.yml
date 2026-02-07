@@ -27,6 +27,9 @@ collections:
   release:
     output: true
     permalink: /release/:name/
+  learn:
+    output: true
+    permalink: /learn/:name/
 
 
 defaults:
