@@ -3,440 +3,314 @@ Then review that plan.
 Then finally write up the new content for the page based on the plan. 
 lastly start the output with a filename with underscore separators to copy paste such as `file_is_called.md`.
 
+---
 
-Here the **design guide must change**, not the page.
-Your layout already renders:
+# learn pages template
 
-• page title
-• description
+Design and writing standard for `/learn/`
 
-Therefore the **content must not repeat them**.
+This document defines the required structure, tone, and level of technical detail for SwitzerlandOmics learn pages.
 
-The guide must explicitly enforce:
+Learn pages are short, authoritative reference entries for working scientists. They must be accurate, readable, and useful in practice.
 
-* No H1 inside learn pages
-* Content starts directly with definition
-* Layout owns the title and description
-
-Below is the **corrected design guide**, with duplication removed and rules made explicit.
+They are not vendor documentation, tutorials, or marketing pages.
 
 ---
+
+## Non-negotiables
+
+### Layout ownership
+
+The `learn` layout renders the page title and description.
+
+Rules:
+
+- Do not include an H1 (`# ...`) inside the page body.
+- Do not repeat the title or description in the first lines.
+- Start immediately with the definition paragraph.
+
+Correct:
 
 ```markdown
-# Switzerland Omics learn pages  
-## Design and writing guide
-
-This document defines how pages under `/learn/` are structured, formatted, and written.
-
-Learn pages provide short, reliable explanations of genomics and bioinformatics topics. They attract readers from search engines, provide rapid orientation, and establish Switzerland Omics as trusted infrastructure knowledge.
-
-These pages are not documentation, tutorials, or product marketing.
-
-Each page answers one question clearly, allows readers to understand where the concept fits, and then allows them to leave or continue into deeper material.
-
-Target reading time: under one minute.
-
----
-
-## Required file structure
-
-All learn pages must live under:
-
-```
-
-/learn/
-
-```
-
-Each topic is a Markdown file:
-
-```
-
-/learn/file_name.md
-
-```
-
-Example:
-
-```
-
-/learn/what-is-a-vcf-file.md
-
-```
-
-URLs resolve as:
-
-```
-
-/learn/what-is-a-vcf-file/
-
+A VCF file is a tab-delimited format that records variant sites and per-sample genotypes.
 ````
-
-File names must be lowercase and hyphen-separated.
-
----
-
-## Required page metadata
-
-Each learn page must start with front matter:
-
-```yaml
----
-title: What is a VCF file?
-layout: learn
-description: Short explanation of the Variant Call Format used in genomics
-weight: 1
-category: data-formats
----
-````
-
-### title
-
-Displayed by layout and used for SEO.
-
-### description
-
-Displayed by layout and used for SEO previews.
-
-### layout
-
-Always:
-
-```
-layout: learn
-```
-
-### weight
-
-Controls ordering on `/learn/` index pages.
-set all weights to 1 since we will control the layout elsewhere. 
-
-### category
-
-Used for automatic grouping as the collection grows.
-
----
-
-## Critical layout rule
-
-The layout already renders:
-
-• Page title
-• Page description
-
-Therefore:
-
-✅ Learn pages **must not repeat the title**
-✅ Learn pages **must not include an H1 heading**
-✅ Content must start directly with explanation text
 
 Incorrect:
 
 ```markdown
 # What is a VCF file?
+A VCF file is...
 ```
 
-Correct:
+### One page, one question
 
-```markdown
-A VCF file stores genetic variants detected from sequencing data...
-```
+Each page answers one search intent clearly.
 
-Title and description belong to layout, not content.
+Good titles:
 
----
+* `What is X?`
+* `X explained`
+* `X vs Y`
 
-## Purpose of learn pages
+Avoid titles that combine topics unless the intent is explicitly comparative.
 
-Each learn page must:
+### Accuracy over completeness
 
-• Answer a common genomics or bioinformatics search query
-• Provide fast orientation, not deep instruction
-• Be technically correct and neutral in tone
-• Build trust through clarity and restraint
-• Allow natural discovery of Switzerland Omics systems
+Include detail that prevents real interpretation errors. Do not copy the full specification.
 
-Readers should leave thinking:
-
-“I understand where this fits.”
+If a detail is important but rare, acknowledge it briefly and link to the authoritative source.
 
 ---
 
-## What learn pages are not
+## Voice and style rules
 
-Learn pages must not be:
+Write like a senior practitioner speaking to another senior practitioner.
 
-• Developer documentation
-• Tutorials or step-by-step guides
-• Academic reviews
-• Marketing pages
-• Product landing pages
-
-Deep technical detail belongs in `/docs/`.
-
-Learn pages exist for comprehension, not mastery.
-
----
-
-## Core writing principles
-
-### Clarity is authority
-
-Short sentences and clear structure signal competence.
-
-### Reveal structure, not claims
-
-Explain how a system fits within workflows.
-
-### Consequence over mechanics
-
-Explain why something matters before explaining details.
-
-### Calm authority
-
-Avoid conversational teaching tone.
-
-### Respect the reader
-
-Assume intelligence and impatience. Remove filler.
-
----
-
-## Page length and density
-
-Target:
-
-• 300 to 500 words
-• Under one minute reading time
-• Minimal tables or examples
-• No deep technical digressions
-
-Long explanations should link to documentation instead.
-
----
-
-## Mandatory page structure
-
-All learn pages must follow this structure.
-
----
-
-### 1. Definition paragraph
-
-The **first paragraph directly answers the search query**.
-
-It should work as a Google featured snippet.
-
-Example:
-
-```
-A VCF file stores genetic variants detected from sequencing data, together with genotype and quality information.
-```
-
-No introduction or storytelling.
-
----
-
-### 2. Why it exists
-
-Two or three sentences explaining purpose or consequence.
-
----
-
-### 3. What it contains or how it works
-
-Minimal internal structure only.
-
----
-
-### 4. Where it fits in pipelines
-
-Show workflow placement.
-
-Example:
-
-```
-Sequencing → Alignment → Variant calling → VCF → Interpretation
-```
-
----
-
-### 5. Adjacent concept
-
-Explain only the closest related concept.
-
-Examples:
-
-• VCF vs gVCF
-• BAM vs CRAM
-
----
-
-### 6. Relation to Switzerland Omics
-
-Provide neutral system placement.
-
-Correct:
-
-“Switzerland Omics systems operate on variant data recorded in VCF files during evidence extraction and interpretation.”
-
-Not promotional.
-
----
-
-### 7. Link to deeper material
-
-End with neutral reference to specifications or documentation.
-
----
-
-## Writing tone guidelines
-
-Correct tone:
-
-• Neutral
-• Calm
-• Direct
-• Technically precise
+* Neutral and direct.
+* Short sentences.
+* No filler, no jokes, no storytelling.
+* No vendor framing.
+* No marketing language.
 
 Avoid:
 
-• Tutorial voice
-• Conversational filler
-• Marketing language
+* “Let’s explore…”
+* “In this article…”
+* “You have been warned…”
+* “Best in class…”
 
-Bad:
+Prefer:
 
-“Let’s explore how VCF works.”
+* “VCF records…”
+* “This matters because…”
+* “Common mistake: …”
+
+---
+
+## Technical detail policy
+
+A learn page is successful if a reader can:
+
+1. Define the concept.
+2. Place it in a workflow.
+3. Interpret a real example correctly.
+4. Avoid the most common mistakes.
+5. Find the specification or deeper reference.
+
+Include:
+
+* The minimal set of definitions needed for correct use.
+* The most common pitfalls.
+* One worked example when interpretation is non-trivial.
+
+Exclude:
+
+* Long dumps of headers, logs, or full spec sections.
+* Tool command lines unless the page is explicitly about a tool.
+* Caller-specific defaults unless labelled as such.
+
+Rule of thumb:
+
+* If omission causes wrong conclusions, include it.
+* If omission only prevents advanced optimisation, link out.
+
+---
+
+## Length and density
+
+Default target: **600 to 1,200 words**.
+
+Shorter is acceptable for simple concepts.
+Longer is acceptable for formats where missing detail causes frequent mistakes.
+
+Use tables and code blocks to reduce reading time, not to add bulk.
+
+---
+
+## Required page front matter
+
+Every page must begin with:
+
+```yaml
+---
+title: ...
+layout: learn
+description: ...
+weight: 1
+category: ...
+---
+```
+
+`title` and `description` are user-facing and must be plain and specific.
+
+---
+
+## Standard page structure
+
+Use the following structure unless the topic type requires a variant (see below).
+
+### 1. Definition
+
+A single paragraph that answers the title question directly.
+It must stand alone as a snippet.
+
+Example:
+
+```markdown
+A BAM file is a binary, indexed representation of aligned sequencing reads, used for fast random access to alignments.
+```
+
+### 2. Why it exists
+
+Two to five sentences explaining the practical purpose.
+
+### 3. Core structure or mechanism
+
+Explain the minimum internal structure needed to interpret the thing correctly.
+
+Use a short table if it reduces effort.
+
+### 4. Example
+
+Include one example when the reader needs to learn how to read real data.
+
+Rules for examples:
+
+* Keep them small.
+* Annotate only what matters.
+* Prefer one example over many.
+
+### 5. Details that matter
+
+Bullet list of the highest-impact details that commonly break pipelines or interpretation.
+
+### 6. Common mistakes
+
+List the mistakes readers actually make.
+Make each mistake concrete.
+
+### 7. Where it fits in pipelines
+
+Provide a one-line workflow arrow.
+
+### 8. Adjacent concept
+
+Explain one close neighbour (example: VCF vs gVCF).
+Keep it short.
+
+### 9. References
+
+Link to one authoritative specification or canonical reference.
+Use proper markdown links if they are going to be included. 
+
+Do not copy the spec.
+
+---
+
+## Topic-specific minimum requirements
+
+### File format pages (VCF, BAM, CRAM, FASTQ)
+
+Must include:
+
+* Minimal file structure.
+* One example record with interpretation.
+* The fields that cause common mistakes.
+* Operational note if compression or indexing is standard.
+* Link to the spec.
+
+Do not include:
+
+* Full header dumps.
+* Tool tutorials.
+
+### Concept pages (phasing, depth, allele frequency)
+
+Must include:
+
+* Definition.
+* One “why it matters” consequence.
+* One concrete example.
+* Common confusion points.
+
+### Pipeline step pages (alignment, variant calling, joint genotyping)
+
+Must include:
+
+* Inputs and outputs.
+* Where it sits in the pipeline.
+* One common failure mode.
+* Links to deeper docs.
+
+---
+
+## Tables and code blocks
+
+Tables must earn their space.
+
+Rules:
+
+* Keep tables narrow.
+* Use tables for field meanings and comparisons.
+* Avoid long, scrolling tables.
+
+Code blocks:
+
+* Use for short examples only.
+* No leading or trailing blank lines inside fences.
+* Prefer one block with comments over multiple blocks.
 
 Good:
 
-“VCF records variant positions detected from sequencing data.”
-
----
-
-## Table and example usage
-
-Tables must reduce cognitive load.
-
-Rules:
-
-• Maximum six rows
-• Essential fields only
-• No dense annotations
-
-Examples illustrate orientation, not syntax teaching.
-
----
-
-## SEO writing rules
-
-Each page targets a clear search query.
-
-Preferred titles:
-
-```
-What is X?
-X explained
-X vs Y explained
+```text
+#CHROM POS REF ALT FORMAT SAMPLE1
+20 10001617 C A GT:DP 0/1:38
 ```
 
-Rules:
+Bad:
 
-• Natural keyword usage
-• No stuffing
-• Clarity over tricks
-
-SEO success follows clarity.
+* Multiple screens of output.
+* Raw header dumps.
 
 ---
 
-## Product integration rule
+## What not to do
 
-Learn pages build trust first.
+Do not:
 
-Product discovery must be structural, not promotional.
+* Clone vendor documentation.
+* Reproduce specifications verbatim.
+* Use tutorial voice or step-by-step walkthroughs.
+* Add a “product section” by default.
+* Add claims about being “best” or “leading”.
 
----
+If you need to mention SwitzerlandOmics:
 
-## Example page skeleton
-
-```markdown
----
-title: What is a VCF file?
-layout: learn
-description: Explanation of the Variant Call Format
-weight: 1
-category: data-formats
----
-
-A VCF file stores genetic variants detected from sequencing data...
-
-## Why VCF files exist
-
-...
-
-## What a VCF contains
-
-...
-
-## Where VCF appears in pipelines
-
-...
-
-## VCF and gVCF
-
-...
-
-## Relation to Switzerland Omics systems
-
-...
-
-## Technical specification
-
-...
-```
+* Keep it structural and optional.
+* One sentence maximum.
+* Only if it helps the reader place the concept in a real workflow.
 
 ---
 
-## Writing checklist before publishing
+## Quality checklist
 
-Confirm:
+Before publishing, confirm:
 
-• No H1 in content
-• Definition appears immediately
-• Page readable in under one minute
-• No tutorial tone
-• No marketing language
-• Workflow placement clear
-• Adjacent concept included
-• Product mention neutral
+* No H1 in the body.
+* First paragraph is a definition and stands alone.
+* A reader can interpret at least one real example.
+* The highest-impact pitfalls are covered.
+* No vendor framing, no marketing language.
+* One authoritative reference is linked.
+* The page reads as calm, precise, and practical.
 
-Final screening question:
+Final test:
 
-Could this be read aloud to a regulator or senior bioinformatician without embarrassment?
+Would a senior bioinformatician accept this as technically correct without wanting to rewrite it?
 
 If not, revise.
 
 ---
-
-## Strategic objective
-
-Most genomics companies say:
-
-“Use our pipeline.”
-
-Switzerland Omics says:
-
-“Understand genomics correctly.”
-
-Trust follows clarity.
-Tools follow trust.
-
-Technically sound. Incredibly simple.
-
-```
-```
 
 Remember to:
 

@@ -151,43 +151,95 @@
         
 
         <div class="content">
-          <p>CRAM is a compressed file format used to store sequencing read alignments, designed to reduce storage size compared with BAM while remaining compatible with existing genomics tools.</p>
+          <p>CRAM is a compressed file format used to store sequencing read alignments, equivalent to BAM but designed to achieve smaller file sizes by storing differences relative to a reference genome instead of storing all read bases directly.</p>
+
+<p>CRAM files are widely used for long-term storage and transfer of aligned sequencing data.</p>
 
 <h2 id="why-cram-files-exist">Why CRAM files exist</h2>
 
-<p>Genome sequencing projects generate extremely large alignment files. BAM files often reach hundreds of gigabytes per genome, making long-term storage and data transfer costly.</p>
+<p>Modern sequencing projects generate extremely large alignment datasets. Whole-genome BAM files commonly reach hundreds of gigabytes per sample, making storage and data transfer costly.</p>
 
-<p>CRAM reduces file size by storing differences relative to a reference genome rather than storing all read bases directly. This allows substantial compression while preserving compatibility with standard analysis workflows.</p>
+<p>CRAM reduces this burden by compressing alignments relative to the reference genome and applying more flexible compression strategies. This significantly reduces storage size while preserving compatibility with most analysis tools.</p>
 
-<h2 id="what-a-cram-file-contains">What a CRAM file contains</h2>
+<p>CRAM therefore allows large cohorts and archives to be stored more efficiently.</p>
 
-<p>A CRAM file stores the same alignment information found in SAM or BAM files, including read positions, mapping quality, pairing information, and optional metadata.</p>
+<h2 id="core-mechanism-of-cram">Core mechanism of CRAM</h2>
 
-<p>Instead of storing full sequences for each read, CRAM records how reads differ from the reference genome. Additional compression methods are then applied to further reduce file size. CRAM can also optionally discard or compress selected data, such as quality scores, when storage efficiency is prioritised.</p>
+<p>A CRAM file contains the same alignment information stored in SAM or BAM:</p>
 
-<h2 id="where-cram-appears-in-pipelines">Where CRAM appears in pipelines</h2>
+<ul>
+  <li>read mapping locations,</li>
+  <li>alignment operations,</li>
+  <li>pairing information,</li>
+  <li>quality values,</li>
+  <li>optional annotations.</li>
+</ul>
+
+<p>Instead of storing full read sequences, CRAM records how reads differ from the reference genome and reconstructs sequences during decoding. Additional compression is applied to different data streams to further reduce file size.</p>
+
+<p>Because reconstruction depends on the reference genome, access to the correct reference sequence is required when reading CRAM files unless reference data is embedded.</p>
+
+<h2 id="example-alignment-record">Example alignment record</h2>
+
+<p>CRAM is binary, so alignments are typically viewed through SAM format:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r001  99  chr1  10001  60  50M  = 10100  149  ACTG...  FFFF...
+</code></pre></div></div>
+
+<p>This record indicates:</p>
+
+<ul>
+  <li>read <code class="language-plaintext highlighter-rouge">r001</code> aligns to chromosome 1 at position 10001,</li>
+  <li>mapping quality indicates alignment confidence,</li>
+  <li>the CIGAR string describes alignment structure,</li>
+  <li>sequence and quality values represent the read.</li>
+</ul>
+
+<p>CRAM stores equivalent information but encodes sequences relative to the reference to reduce size.</p>
+
+<h2 id="details-that-matter">Details that matter</h2>
+
+<ul>
+  <li>Decoding CRAM usually requires access to the exact reference genome used during alignment.</li>
+  <li>Files must be coordinate-sorted before indexing.</li>
+  <li>Region queries require an index file.</li>
+  <li>Some pipelines optionally compress or discard quality scores to save space.</li>
+  <li>Compression efficiency varies depending on read length, coverage, and sequence diversity.</li>
+</ul>
+
+<h2 id="common-mistakes">Common mistakes</h2>
+
+<p>Frequent operational errors include:</p>
+
+<ul>
+  <li>Losing access to the reference genome needed for decoding.</li>
+  <li>Assuming CRAM files are self-contained like BAM.</li>
+  <li>Attempting to index unsorted files.</li>
+  <li>Expecting identical compression ratios across datasets.</li>
+</ul>
+
+<h2 id="where-cram-fits-in-pipelines">Where CRAM fits in pipelines</h2>
 
 <p>Typical workflow:</p>
 
-<p>Sequencing → Read alignment → BAM or CRAM file → Variant calling → Interpretation</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sequencing → Alignment → BAM → CRAM storage → Variant calling → Interpretation
+</code></pre></div></div>
 
-<p>Many pipelines now convert BAM to CRAM for long-term storage after alignment.</p>
+<p>Many workflows generate BAM during alignment and convert to CRAM for storage.</p>
 
 <h2 id="bam-and-cram">BAM and CRAM</h2>
 
-<p>BAM and CRAM store equivalent alignment information.</p>
+<p>BAM stores read sequences directly in compressed binary form.</p>
 
-<p>BAM stores reads directly in compressed binary form. CRAM achieves smaller file sizes by using reference-based compression and more flexible encoding strategies. However, CRAM requires access to the reference genome during decoding.</p>
+<p>CRAM stores differences relative to a reference genome, usually producing smaller files but requiring reference access for decoding.</p>
 
-<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
-
-<p>Switzerland Omics systems operate downstream of alignment, using variant data derived from BAM or CRAM files during evidence extraction and probabilistic interpretation.</p>
+<p>Both formats store equivalent alignment information and are supported by most modern tools.</p>
 
 <h2 id="technical-specification">Technical specification</h2>
 
-<p>The official CRAM specification is maintained by the samtools and hts-specs community:</p>
+<p>The official CRAM specification is maintained in the hts-specs repository:</p>
 
-<p>https://github.com/samtools/hts-specs</p>
+<p><a href="https://github.com/samtools/hts-specs">https://github.com/samtools/hts-specs</a></p>
 
 
         </div>

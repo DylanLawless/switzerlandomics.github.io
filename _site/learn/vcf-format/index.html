@@ -18,12 +18,12 @@
   <link href="/assets/css/style.css" rel="stylesheet">
   <link href="/assets/css/custom.css" rel="stylesheet">
   
-  <meta name="description" content="The Variant Call Format used to store variant sites, alleles, and per-sample genotypes from sequencing" />
+  <meta name="description" content="The Variant Call Format used to store genomic variant sites and per-sample genotypes" />
   <meta property="og:title" content="What is a VCF file?"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
-  <meta property="og:description" content="The Variant Call Format used to store variant sites, alleles, and per-sample genotypes from sequencing"/>
+  <meta property="og:description" content="The Variant Call Format used to store genomic variant sites and per-sample genotypes"/>
   <meta name="twitter:card" content="summary"/>
   
   
@@ -147,26 +147,29 @@
         <h1 class="title">What is a VCF file?</h1>
 
         
-        <p class="lead">The Variant Call Format used to store variant sites, alleles, and per-sample genotypes from sequencing</p>
+        <p class="lead">The Variant Call Format used to store genomic variant sites and per-sample genotypes</p>
         
 
         <div class="content">
-          <p>A VCF file (Variant Call Format) is a tab-delimited text format that records genomic variant sites, the alleles observed at each site, and (optionally) per-sample genotypes and supporting metrics.</p>
+          <p>A VCF file (Variant Call Format) is a tab-delimited text format used to describe genomic variants detected from sequencing data. It records where variants occur, which alleles are observed, and optionally how those variants appear in each sequenced sample.</p>
+
+<p>VCF is the standard format used to exchange variant calls between tools and institutions.</p>
 
 <h2 id="why-vcf-files-exist">Why VCF files exist</h2>
 
-<p>Sequencing reads are aligned to a reference genome, then variant calling identifies positions where one or more samples differ from that reference. VCF is the standard way to publish those variant calls so they can be compared, annotated, interpreted, and exchanged between tools.</p>
+<p>Sequencing reads are aligned to a reference genome, after which variant callers detect positions where one or more samples differ from that reference. VCF provides a common way to store and exchange these results for downstream analysis, annotation, and interpretation.</p>
 
-<h2 id="minimal-structure-of-a-vcf">Minimal structure of a VCF</h2>
+<h2 id="structure-of-a-vcf-file">Structure of a VCF file</h2>
 
-<p>A VCF has two parts:</p>
+<p>A VCF contains:</p>
 
 <ul>
-  <li><strong>Header lines</strong> beginning with <code class="language-plaintext highlighter-rouge">##</code>, which define metadata and the meaning of annotations.</li>
-  <li>A single <strong>column header</strong> line beginning with <code class="language-plaintext highlighter-rouge">#CHROM</code>, followed by one record per site.</li>
+  <li><strong>Header lines</strong> beginning with <code class="language-plaintext highlighter-rouge">##</code>, defining metadata and annotation fields.</li>
+  <li>A column header line beginning with <code class="language-plaintext highlighter-rouge">#CHROM</code>.</li>
+  <li>One line per genomic site.</li>
 </ul>
 
-<p>Each record has eight required site columns, then optional genotype columns:</p>
+<p>Each record contains eight required site columns, followed by optional genotype columns.</p>
 
 <table>
   <thead>
@@ -178,97 +181,134 @@
   <tbody>
     <tr>
       <td>CHROM</td>
-      <td>Contig name (chromosome)</td>
+      <td>Reference sequence name</td>
     </tr>
     <tr>
       <td>POS</td>
-      <td>1-based position of the first base of <code class="language-plaintext highlighter-rouge">REF</code></td>
+      <td>1-based position of the variant</td>
     </tr>
     <tr>
       <td>ID</td>
-      <td>Identifier (for example <code class="language-plaintext highlighter-rouge">rs...</code>) or <code class="language-plaintext highlighter-rouge">.</code></td>
+      <td>Variant identifier or <code class="language-plaintext highlighter-rouge">.</code></td>
     </tr>
     <tr>
       <td>REF</td>
-      <td>Reference allele sequence at this position</td>
+      <td>Reference allele</td>
     </tr>
     <tr>
       <td>ALT</td>
-      <td>Alternate allele sequence(s), comma-separated</td>
+      <td>Alternate allele(s)</td>
     </tr>
     <tr>
       <td>QUAL</td>
-      <td>Site-level confidence score (caller-defined scale, often Phred-like)</td>
+      <td>Site-level confidence score</td>
     </tr>
     <tr>
       <td>FILTER</td>
-      <td><code class="language-plaintext highlighter-rouge">PASS</code>, <code class="language-plaintext highlighter-rouge">.</code> (no filters applied), or one or more filter names</td>
+      <td>Filter result</td>
     </tr>
     <tr>
       <td>INFO</td>
-      <td>Semicolon-separated site annotations (tag or <code class="language-plaintext highlighter-rouge">tag=value</code>)</td>
+      <td>Site annotations</td>
     </tr>
     <tr>
       <td>FORMAT</td>
-      <td>Colon-separated keys that define the per-sample fields</td>
+      <td>Per-sample annotation schema</td>
     </tr>
     <tr>
-      <td>sample columns</td>
-      <td>One column per sample, values matching <code class="language-plaintext highlighter-rouge">FORMAT</code> order</td>
+      <td>Sample columns</td>
+      <td>Per-sample values</td>
     </tr>
   </tbody>
 </table>
 
-<p>A “sites-only” VCF may stop at <code class="language-plaintext highlighter-rouge">INFO</code> and omit <code class="language-plaintext highlighter-rouge">FORMAT</code> and sample columns.</p>
+<p>Some VCFs omit genotype columns and only describe variant sites.</p>
 
 <h2 id="example-record-explained">Example record explained</h2>
 
 <p>Example:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
-#CHROM POS ID REF ALT QUAL FILTER INFO    FORMAT  SAMPLE1
-20     10001617 .  C   A   493.77 PASS   DP=38   GT:DP   0/1:38
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT SAMPLE1
+20 10001617 . C A 493.77 PASS DP=38 GT:DP 0/1:38
 
 </code></pre></div></div>
 
-<p>Explanation:</p>
+<p>Interpretation:</p>
 
 <ul>
-  <li><strong>CHROM=20, POS=10001617</strong>: the site location.</li>
-  <li><strong>ID=.</strong>: no identifier provided.</li>
-  <li><strong>REF=C, ALT=A</strong>: the reference base is C, and an alternate allele A is observed. If there were multiple alternates they would appear as <code class="language-plaintext highlighter-rouge">ALT=A,T</code> and are indexed in that order.</li>
-  <li><strong>QUAL=493.77</strong>: a site confidence value produced by the caller (the scale is caller-defined).</li>
-  <li><strong>FILTER=PASS</strong>: this record passed filters. A value of <code class="language-plaintext highlighter-rouge">.</code> means no filtering was applied.</li>
-  <li><strong>INFO=DP=38</strong>: a site annotation. <code class="language-plaintext highlighter-rouge">INFO/DP</code> commonly represents read depth at the site, but the precise definition is caller-specific.</li>
+  <li>The variant occurs on chromosome 20 at position 10001617.</li>
+  <li>Reference allele is C, alternate allele A.</li>
+  <li>The call passed quality filters.</li>
+  <li>INFO reports site-level depth.</li>
+  <li>FORMAT shows that each sample column contains genotype and depth.</li>
+  <li>The sample genotype <code class="language-plaintext highlighter-rouge">0/1</code> indicates one reference and one alternate allele.</li>
 </ul>
 
-<p><code class="language-plaintext highlighter-rouge">FORMAT</code> defines the schema for each sample column:</p>
+<h2 id="mandatory-columns-in-practice">Mandatory columns in practice</h2>
+
+<p>Understanding these fields prevents most interpretation errors.</p>
+
+<p><strong>CHROM</strong> must match reference genome contigs. Incorrect naming or sorting breaks indexing.</p>
+
+<p><strong>POS</strong> uses 1-based coordinates. Insertions and deletions appear shifted compared with some other formats.</p>
+
+<p><strong>ID</strong> is optional and often missing, but useful for linking databases.</p>
+
+<p><strong>REF</strong> must exactly match the reference genome. Mismatches cause merge and comparison failures.</p>
+
+<p><strong>ALT</strong> lists alternate alleles. Order matters because genotypes reference alleles by index.</p>
+
+<p><strong>QUAL</strong> describes confidence in the site call, not in individual sample genotypes.</p>
+
+<p><strong>FILTER</strong> indicates whether site-level filters were passed.</p>
+
+<p><strong>INFO</strong> stores site-level annotations, defined in the header.</p>
+
+<h2 id="genotype-and-sample-fields">Genotype and sample fields</h2>
+
+<p>Genotype values reference allele indices:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+0 = REF
+1 = first ALT
+2 = second ALT
+
+</code></pre></div></div>
+
+<p>Examples:</p>
 
 <ul>
-  <li><strong>FORMAT=GT:DP</strong> means the sample column contains two fields, genotype then depth, separated by <code class="language-plaintext highlighter-rouge">:</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">0/0</code> homozygous reference</li>
+  <li><code class="language-plaintext highlighter-rouge">0/1</code> heterozygous</li>
+  <li><code class="language-plaintext highlighter-rouge">1/1</code> homozygous alternate</li>
+  <li><code class="language-plaintext highlighter-rouge">./.</code> missing genotype</li>
 </ul>
 
-<p>The sample value is:</p>
+<p>Other common sample annotations include depth and genotype quality.</p>
 
-<ul>
-  <li><strong>GT=0/1</strong>: allele indices. <code class="language-plaintext highlighter-rouge">0</code> means <code class="language-plaintext highlighter-rouge">REF</code>. <code class="language-plaintext highlighter-rouge">1</code> means the first allele in <code class="language-plaintext highlighter-rouge">ALT</code>.
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">0/0</code> is homozygous reference.</li>
-      <li><code class="language-plaintext highlighter-rouge">0/1</code> is heterozygous.</li>
-      <li><code class="language-plaintext highlighter-rouge">1/1</code> is homozygous alternate.</li>
-      <li><code class="language-plaintext highlighter-rouge">/</code> indicates unphased genotypes. <code class="language-plaintext highlighter-rouge">|</code> indicates phased genotypes (for example <code class="language-plaintext highlighter-rouge">0|1</code>).</li>
-      <li>Missing values are written as <code class="language-plaintext highlighter-rouge">.</code> (for example <code class="language-plaintext highlighter-rouge">./.</code>).</li>
-    </ul>
-  </li>
-  <li><strong>DP=38</strong>: per-sample depth for this site as defined by the caller. This is separate from <code class="language-plaintext highlighter-rouge">INFO/DP</code>, and may differ in meaning and value depending on the calling method and filters.</li>
-</ul>
+<p>Site-level and sample-level depth values may differ depending on filtering.</p>
 
 <h2 id="representation-details-that-matter">Representation details that matter</h2>
 
+<p><strong>Indels include an anchoring base</strong>, so deletions often appear one base earlier than expected.</p>
+
+<p><strong>Multiallelic sites</strong> list several alternate alleles in one record.</p>
+
+<p><strong>Phased genotypes</strong> use <code class="language-plaintext highlighter-rouge">|</code> instead of <code class="language-plaintext highlighter-rouge">/</code> to indicate allele ordering.</p>
+
+<p><strong>Symbolic alleles</strong> may represent structural variants.</p>
+
+<h2 id="common-interpretation-mistakes">Common interpretation mistakes</h2>
+
+<p>Common sources of confusion include:</p>
+
 <ul>
-  <li><strong>Indels include an anchoring base</strong>: insertions and deletions are represented with <code class="language-plaintext highlighter-rouge">REF</code> and <code class="language-plaintext highlighter-rouge">ALT</code> strings that include a shared left-side base, so <code class="language-plaintext highlighter-rouge">POS</code> points to that anchor. This is why deletions often appear to be reported at the base before the deleted stretch.</li>
-  <li><strong>Multiallelic sites</strong>: if <code class="language-plaintext highlighter-rouge">ALT</code> has multiple alleles, genotypes use indices beyond 1 (for example <code class="language-plaintext highlighter-rouge">2/2</code> refers to the second listed ALT allele).</li>
-  <li><strong>Header definitions</strong>: the intended meaning of <code class="language-plaintext highlighter-rouge">INFO</code> and <code class="language-plaintext highlighter-rouge">FORMAT</code> tags is declared in header lines such as <code class="language-plaintext highlighter-rouge">##INFO=&lt;ID=DP,...&gt;</code> and <code class="language-plaintext highlighter-rouge">##FORMAT=&lt;ID=GT,...&gt;</code>.</li>
+  <li>Assuming one ALT allele per record.</li>
+  <li>Treating genotype values as bases instead of indices.</li>
+  <li>Confusing site depth with sample depth.</li>
+  <li>Using QUAL as genotype confidence.</li>
+  <li>Forgetting indel anchoring behaviour.</li>
 </ul>
 
 <h2 id="where-vcf-fits-in-pipelines">Where VCF fits in pipelines</h2>
@@ -280,18 +320,24 @@ Sequencing → Alignment (BAM/CRAM) → Variant calling → VCF → Annotation a
 
 </code></pre></div></div>
 
+<p>VCF is therefore the standard output of variant calling.</p>
+
 <h2 id="vcf-vs-gvcf">VCF vs gVCF</h2>
 
-<p>A VCF usually records variant sites only. A gVCF is designed for joint genotyping and also represents non-variant regions, typically by emitting reference-confidence information and sometimes compressing non-variant stretches into blocks.</p>
+<p>A standard VCF lists variant sites.<br />
+A gVCF additionally represents non-variant regions to enable joint genotyping across many samples.</p>
 
-<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
+<h2 id="practical-realities-when-working-with-vcf">Practical realities when working with VCF</h2>
 
-<p>Switzerland Omics systems consume VCF-derived variant and genotype evidence during evidence extraction, probabilistic interpretation, and structured reporting.</p>
+<p>Real VCF files are large and typically compressed using bgzip and indexed with tabix to enable region-based access.</p>
+
+<p>Subsetting, merging, and filtering are usually performed with specialised tools rather than custom scripts, since the format contains many edge cases.</p>
 
 <h2 id="technical-specification">Technical specification</h2>
 
-<p>For the authoritative specification, see the VCF definition in the hts-specs repository:
-https://samtools.github.io/hts-specs/</p>
+<p>The authoritative specification is maintained in the hts-specs repository:</p>
+
+<p>https://samtools.github.io/hts-specs/</p>
 
 
         </div>

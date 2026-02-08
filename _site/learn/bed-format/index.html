@@ -18,12 +18,12 @@
   <link href="/assets/css/style.css" rel="stylesheet">
   <link href="/assets/css/custom.css" rel="stylesheet">
   
-  <meta name="description" content="Explanation of the BED format used to store genomic regions and features" />
+  <meta name="description" content="Explanation of the BED format used to store genomic intervals and annotations" />
   <meta property="og:title" content="What is the BED format?"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
-  <meta property="og:description" content="Explanation of the BED format used to store genomic regions and features"/>
+  <meta property="og:description" content="Explanation of the BED format used to store genomic intervals and annotations"/>
   <meta name="twitter:card" content="summary"/>
   
   
@@ -147,47 +147,135 @@
         <h1 class="title">What is the BED format?</h1>
 
         
-        <p class="lead">Explanation of the BED format used to store genomic regions and features</p>
+        <p class="lead">Explanation of the BED format used to store genomic intervals and annotations</p>
         
 
         <div class="content">
-          <p>BED (Browser Extensible Data) is a text-based file format used to describe genomic regions or features using chromosome coordinates.</p>
+          <p>The BED format (Browser Extensible Data) is a tab-delimited text format used to describe genomic regions using chromosome coordinates, optionally with annotations such as names, strand, or block structures.</p>
+
+<p>BED files store positions and intervals rather than nucleotide sequences, making them efficient for comparing, filtering, and manipulating genomic regions.</p>
 
 <h2 id="why-bed-files-exist">Why BED files exist</h2>
 
-<p>Many genomics analyses identify locations on the genome rather than producing sequences, such as regulatory regions, genes, or sequencing coverage peaks. BED provides a compact and portable way to store and exchange these genomic intervals.</p>
+<p>Many genomics tasks involve working with genomic regions rather than raw sequence data, such as genes, exons, peaks, or variant intervals.</p>
 
-<p>The format is widely supported by genome browsers and analysis tools.</p>
+<p>Representing these regions as coordinates allows tools to compare and manipulate datasets efficiently without repeatedly processing large sequence files.</p>
 
-<h2 id="what-a-bed-file-contains">What a BED file contains</h2>
+<p>BED therefore provides a lightweight and flexible format for exchanging genomic interval data between tools and genome browsers.</p>
 
-<p>Each line describes one genomic feature using at least three fields: chromosome name, start position, and end position.</p>
+<h2 id="core-structure-of-a-bed-file">Core structure of a BED file</h2>
 
-<p>Additional optional fields may include feature names, strand direction, display information, or sub-regions such as exon blocks. Files are often described as BED3, BED6, or BED12 depending on how many standard fields are used.</p>
+<p>A BED file contains one feature per line. Each line describes a genomic interval and optional annotations.</p>
 
-<p>BED coordinates use a 0-based, half-open system, meaning the start position is included while the end position is not. This differs from some other genomic formats and is a common source of confusion.</p>
+<p>The first three columns are required. Up to nine additional columns may follow.</p>
 
-<h2 id="where-bed-appears-in-pipelines">Where BED appears in pipelines</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Column</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>chrom</td>
+      <td>Chromosome or scaffold name</td>
+    </tr>
+    <tr>
+      <td>chromStart</td>
+      <td>Start position of the feature</td>
+    </tr>
+    <tr>
+      <td>chromEnd</td>
+      <td>End position of the feature</td>
+    </tr>
+    <tr>
+      <td>name</td>
+      <td>Feature label (optional)</td>
+    </tr>
+    <tr>
+      <td>score</td>
+      <td>Score between 0 and 1000 (optional)</td>
+    </tr>
+    <tr>
+      <td>strand</td>
+      <td><code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">-</code>, or <code class="language-plaintext highlighter-rouge">.</code> (optional)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Additional optional columns allow visualization and block definitions, often used to represent exon structures.</p>
+
+<p>All lines in a BED file must contain the same number of columns.</p>
+
+<p>Coordinates use a <strong>0-based, half-open system</strong>, meaning the start position is included and the end position is excluded.</p>
+
+<h2 id="example-bed-record">Example BED record</h2>
+
+<p>Example interval:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chr7 127471196 127472363 Pos1 0 +
+</code></pre></div></div>
+
+<p>Interpretation:</p>
+
+<ul>
+  <li>The feature is on chromosome 7.</li>
+  <li>The interval begins at position 127471196.</li>
+  <li>The interval ends just before 127472363.</li>
+  <li>The feature name is Pos1.</li>
+  <li>Strand information indicates the forward strand.</li>
+</ul>
+
+<p>The interval length equals:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chromEnd − chromStart
+</code></pre></div></div>
+
+<h2 id="details-that-matter">Details that matter</h2>
+
+<ul>
+  <li>BED coordinates are <strong>0-based and half-open</strong>, unlike many genome browser displays.</li>
+  <li>All lines must contain the same number of columns.</li>
+  <li>Chromosome names should match the reference genome consistently.</li>
+  <li>Files are usually sorted by chromosome and start coordinate.</li>
+  <li>Tab separation is recommended for compatibility.</li>
+  <li>Optional block fields allow representation of exon structures.</li>
+</ul>
+
+<h2 id="common-mistakes">Common mistakes</h2>
+
+<p>Frequent operational errors include:</p>
+
+<ul>
+  <li>Mixing 0-based BED coordinates with 1-based coordinate systems.</li>
+  <li>Using inconsistent chromosome naming such as mixing <code class="language-plaintext highlighter-rouge">chr1</code> and <code class="language-plaintext highlighter-rouge">1</code>.</li>
+  <li>Providing unsorted BED files to tools that expect sorted input.</li>
+  <li>Using different genome assemblies across files.</li>
+</ul>
+
+<h2 id="where-bed-fits-in-pipelines">Where BED fits in pipelines</h2>
 
 <p>Typical workflow:</p>
 
-<p>Sequencing → Alignment → Feature detection or annotation → BED file → Visualisation or interpretation</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sequencing → Alignment → Variant calling → Feature or interval generation → BED analysis
+</code></pre></div></div>
 
-<p>BED files are commonly used to exchange peak calls, gene regions, or analysis targets.</p>
+<p>BED files are commonly produced during peak calling, annotation, and interval filtering steps.</p>
 
 <h2 id="bed-and-gffgtf">BED and GFF/GTF</h2>
 
-<p>BED and GFF/GTF both describe genomic features, but BED is simpler and often used for region lists or browser tracks, while GFF and GTF include richer annotation structure for genes and transcripts.</p>
+<p>BED stores minimal coordinate and annotation data for efficient interval manipulation.</p>
 
-<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
+<p>GFF and GTF formats store richer gene and feature annotations but are more complex and heavier to process.</p>
 
-<p>Switzerland Omics systems operate on variant and feature data that may originate from genomic regions defined in BED files during evidence extraction and interpretation.</p>
+<p>BED is often preferred for fast interval operations, while GFF/GTF are used for structured annotation data.</p>
 
 <h2 id="technical-specification">Technical specification</h2>
 
-<p>The canonical BED format specification is maintained within the hts-specs repository used by GA4GH and samtools:</p>
+<p>The official BED specification is maintained within the hts-specs repository:</p>
 
-<p>https://github.com/samtools/hts-specs</p>
+<p><a href="https://github.com/samtools/hts-specs">https://github.com/samtools/hts-specs</a></p>
 
 
         </div>

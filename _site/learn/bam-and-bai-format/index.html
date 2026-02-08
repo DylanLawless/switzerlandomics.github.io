@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>What is a BAM file?</title>
+  <title>What are BAM and BAI files?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
   <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
@@ -19,7 +19,7 @@
   <link href="/assets/css/custom.css" rel="stylesheet">
   
   <meta name="description" content="Explanation of BAM alignment files and their BAI index used in genomic analysis" />
-  <meta property="og:title" content="What is a BAM file?"/>
+  <meta property="og:title" content="What are BAM and BAI files?"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
@@ -144,54 +144,102 @@
     <div class="col-12 col-md-8">
       <div class="tech tech-single">
 
-        <h1 class="title">What is a BAM file?</h1>
+        <h1 class="title">What are BAM and BAI files?</h1>
 
         
         <p class="lead">Explanation of BAM alignment files and their BAI index used in genomic analysis</p>
         
 
         <div class="content">
-          <p>A BAM file is the compressed binary form of a SAM file, used to store sequencing read alignments to a reference genome in a space-efficient format that supports fast random access.</p>
+          <p>A BAM file is a compressed binary format used to store sequencing read alignments to a reference genome. A BAI file is the index that allows rapid retrieval of alignments from specific genomic regions within a BAM file.</p>
+
+<p>Together, they form the standard representation of aligned sequencing data used in most genomics pipelines.</p>
 
 <h2 id="why-bam-files-exist">Why BAM files exist</h2>
 
-<p>Alignment files can contain billions of reads, making plain text formats slow to store, transmit, and analyse. BAM reduces file size and allows software to retrieve alignments for specific genomic regions without scanning the entire dataset.</p>
+<p>Alignment output in SAM format is large and slow to process because it is plain text. Whole-genome sequencing can produce billions of reads, making direct storage and analysis inefficient.</p>
 
-<p>This makes routine analysis, visualisation, and variant detection feasible at genome scale.</p>
+<p>BAM stores the same information in compressed binary form, greatly reducing size and enabling fast region-based access when an index is present.</p>
 
-<h2 id="what-a-bam-file-contains">What a BAM file contains</h2>
+<p>This makes genome-scale analysis and interactive visualisation practical.</p>
 
-<p>A BAM file stores the same information as a SAM file, including alignment positions, mapping quality, and alignment operations, but encoded in binary form and compressed in blocks.</p>
+<h2 id="core-structure-of-a-bam-file">Core structure of a BAM file</h2>
 
-<p>Because the file is block-compressed, software can jump directly to specific genomic regions rather than reading the file sequentially. The header information describing reference sequences and processing history is also retained.</p>
+<p>A BAM file contains:</p>
 
-<p>In practice, alignment pipelines typically produce SAM briefly and then convert immediately to BAM for storage and downstream processing.</p>
+<ul>
+  <li>A header describing reference sequences and processing history.</li>
+  <li>Alignment records for sequencing reads mapped to those references.</li>
+  <li>Block-compressed data that allows indexed random access.</li>
+</ul>
 
-<h2 id="where-bam-appears-in-pipelines">Where BAM appears in pipelines</h2>
+<p>Each alignment record corresponds to a read and includes its mapping location, alignment operations, quality values, and status flags.</p>
+
+<p>BAM files are typically coordinate-sorted before indexing so that reads appear in genomic order.</p>
+
+<h2 id="example-alignment-record">Example alignment record</h2>
+
+<p>Because BAM is binary, alignments are commonly viewed through their SAM representation:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+r001  99  chr1  10001  60  50M  = 10100  149  ACTG...  FFFF...
+
+</code></pre></div></div>
+
+<p>Key elements:</p>
+
+<ul>
+  <li>Read <code class="language-plaintext highlighter-rouge">r001</code> maps to chromosome 1 at position 10001.</li>
+  <li>Mapping quality indicates confidence in placement.</li>
+  <li>The CIGAR string describes how the read aligns.</li>
+  <li>Flags encode pairing, orientation, and mapping status.</li>
+</ul>
+
+<p>BAM stores this information in compressed binary form rather than text.</p>
+
+<h2 id="details-that-matter">Details that matter</h2>
+
+<ul>
+  <li>BAM must be coordinate-sorted before indexing.</li>
+  <li>A <code class="language-plaintext highlighter-rouge">.bai</code> index enables rapid access to selected regions.</li>
+  <li>Without an index, tools must scan the entire file.</li>
+  <li>BAM internally uses 0-based coordinates even though SAM displays 1-based positions.</li>
+  <li>Mapping status is determined by alignment flags, not just coordinates.</li>
+</ul>
+
+<h2 id="common-interpretation-mistakes">Common interpretation mistakes</h2>
+
+<p>Frequent operational errors include:</p>
+
+<ul>
+  <li>Attempting region queries without a BAI index.</li>
+  <li>Indexing an unsorted BAM file.</li>
+  <li>Assuming reads with coordinates are always mapped.</li>
+  <li>Confusing internal coordinate systems when comparing formats.</li>
+</ul>
+
+<h2 id="where-bam-fits-in-pipelines">Where BAM fits in pipelines</h2>
 
 <p>Typical workflow:</p>
 
-<p>Sequencing → Read alignment → BAM file → Variant calling → Interpretation</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Sequencing → Alignment → BAM → Variant calling → Interpretation
 
-<p>Most downstream genomics tools operate directly on BAM rather than SAM.</p>
+</code></pre></div></div>
 
-<h2 id="bam-and-bai-indexing">BAM and BAI indexing</h2>
+<p>Most downstream tools operate directly on BAM files.</p>
 
-<p>A BAI file is an index built for a BAM file that allows rapid access to alignments overlapping a chosen genomic region.</p>
+<h2 id="bam-and-cram">BAM and CRAM</h2>
 
-<p>Instead of reading the entire alignment file, analysis software consults the index to locate only the file segments covering the requested coordinates. Genome browsers and analysis tools rely on this index to display data interactively.</p>
+<p>CRAM is a newer alignment format that compresses data more efficiently by storing differences relative to a reference genome.</p>
 
-<p>A BAM file is therefore usually distributed together with a matching <code class="language-plaintext highlighter-rouge">.bai</code> index file.</p>
-
-<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
-
-<p>Switzerland Omics systems operate downstream of alignment and indexing, using variant data derived from BAM files during evidence extraction and probabilistic interpretation.</p>
+<p>BAM remains widely used because it is simple, robust, and broadly supported, while CRAM is increasingly adopted for large-scale storage.</p>
 
 <h2 id="technical-specification">Technical specification</h2>
 
-<p>The official SAM, BAM, and BAI specifications are maintained by the samtools and hts-specs community:</p>
+<p>The official SAM, BAM, and BAI specifications are maintained in the hts-specs repository:</p>
 
-<p>https://github.com/samtools/hts-specs</p>
+<p>https://samtools.github.io/hts-specs/</p>
 
 
         </div>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Founders of dbNSFP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="How dbNSFP became a backbone database for functional annotation of protein-altering variants in modern genomics workflows." />
+  <meta property="og:title" content="Founders of dbNSFP"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="How dbNSFP became a backbone database for functional annotation of protein-altering variants in modern genomics workflows."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href="/"> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">Founders of dbNSFP</h1>
+                <div class="content"><p>How dbNSFP became a backbone database for functional annotation of protein-altering variants in modern genomics workflows.</p>
+
+<p>By the early 2010s, DNA sequencing had become faster and cheaper, but variant interpretation had become the limiting step. Exome and genome studies routinely produced millions of variants, yet researchers still needed to determine which changes were likely to affect protein function or disease risk.</p>
+
+<p>Many prediction tools and annotation resources already existed, but they were fragmented. Each pipeline combined outputs from multiple sources, often recomputing predictions and assembling annotations locally. Different gene models and transcript choices produced inconsistent results across studies. Annotation pipelines became slow, difficult to maintain, and hard to reproduce.</p>
+
+<p>In 2011, Xiaoming Liu and collaborators introduced dbNSFP (database for Non-Synonymous SNPs’ Functional Predictions) to address this bottleneck. Instead of recomputing predictions repeatedly, they generated functional predictions and annotations in advance for all potential nonsynonymous single nucleotide variants (nsSNVs) across known protein-coding genes in the human genome. These results were packaged into a lightweight database that could be downloaded and queried locally inside annotation workflows.</p>
+
+<p>This approach changed how annotation steps were performed. Rather than querying multiple remote resources or running prediction tools repeatedly, pipelines could retrieve functional predictions and annotations in a single local step. As sequencing studies expanded, dbNSFP expanded as well. Later versions incorporated splice-site SNVs, transcript-specific predictions, conservation metrics, population allele frequencies from large sequencing projects, and ensemble methods combining multiple prediction algorithms.</p>
+
+<p>The database also became part of a broader ecosystem developed within Liu’s lab and collaborators. Tools such as WGSA supported scalable genome annotation, dbscSNV extended coverage to splice consensus regions, dbMTS covered microRNA target sites, and ensemble predictors such as MetaRNN combined many annotation signals into unified pathogenicity scores. Together these tools helped narrow the gap between variant discovery and variant interpretation.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Founders / developers</td>
+      <td>Xiaoming Liu and collaborators; later co-developed with Jin Yu</td>
+    </tr>
+    <tr>
+      <td>Institutions</td>
+      <td>Baylor College of Medicine; University of South Florida; later Genos Bioinformatics LLC</td>
+    </tr>
+    <tr>
+      <td>First public release</td>
+      <td>2011</td>
+    </tr>
+    <tr>
+      <td>Licensing model</td>
+      <td>Academic use free; commercial use requires license</td>
+    </tr>
+    <tr>
+      <td>Commercial license cost</td>
+      <td>USD 5,000–10,000 per year depending on use</td>
+    </tr>
+    <tr>
+      <td>Distribution mechanism</td>
+      <td>Downloadable database files and web query services</td>
+    </tr>
+    <tr>
+      <td>Adoption scale</td>
+      <td>Integrated into academic and clinical genomics pipelines worldwide</td>
+    </tr>
+    <tr>
+      <td>Maintenance model</td>
+      <td>Actively maintained via Genos Bioinformatics LLC with regular releases</td>
+    </tr>
+    <tr>
+      <td>Primary use</td>
+      <td>Functional annotation of protein-altering and splice-site variants</td>
+    </tr>
+    <tr>
+      <td>Current status</td>
+      <td>Actively developed, latest releases support updated gene models and new prediction methods</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Adoption spread pragmatically. Annotation tools and pipelines integrated dbNSFP because it simplified workflows and reduced computational overhead. Researchers incorporated it into variant filtering and prioritisation pipelines, and downstream tools increasingly assumed its presence. As clinical genomics matured, dbNSFP became embedded within production interpretation systems, often invisibly to end users.</p>
+
+<p>As sequencing volumes and annotation sources grew, maintaining and updating such infrastructure required sustained effort. In 2024, Xiaoming Liu and Jin Yu founded Genos Bioinformatics LLC to support long-term development and distribution of dbNSFP. A commercial licensing model was introduced for uses where the database supports revenue-generating activity or is deployed within for-profit organisations.</p>
+
+<p>Commercial use is broadly defined. It includes use inside companies, and also situations where dbNSFP contributes to paid clinical or commercial services even within public institutions. In contrast, academic research and training activities remain free to use.</p>
+
+<p>Two license tiers are currently offered. A Research Use License, priced at approximately USD 5,000 per year, allows internal research use within organisations. A Product Development and Research Use License, priced at approximately USD 10,000 per year, additionally permits use in product development environments. License holders receive ongoing database updates during the subscription period, which is important because dbNSFP releases are updated every few months to incorporate new gene definitions, population data, and prediction methods.</p>
+
+<p>Not all components can be redistributed in commercial releases because some upstream prediction tools carry their own licensing restrictions. As a result, certain scores appear only in academic distributions, and users requiring them commercially must obtain licenses directly from original providers.</p>
+
+<p>Legacy versions of dbNSFP remain available, and earlier releases do not require commercial licensing as a courtesy to long-term users. However, newer releases include substantially expanded variant sets due to improved gene models and long-read sequencing data, making updates operationally attractive for many users.</p>
+
+<p>In practice, commercial licensing is handled through a simple application process submitted via an online form, followed by direct communication with the dbNSFP team. This lightweight process reflects the pragmatic, researcher-driven origins of the project.</p>
+
+<p>This transition reflects a broader pattern in genomics infrastructure: tools developed in academic settings often require organisational support once they become embedded in clinical and industrial workflows that depend on reliable updates and support.</p>
+
+<p>Today, dbNSFP functions less as a standalone resource and more as background infrastructure. Annotation pipelines assume its availability, ensemble predictors build on its aggregated data, and clinical platforms rely on it for consistent functional annotation. The earlier bottleneck of fragmented annotation and repeated recomputation has been substantially reduced in modern workflows.</p>
+
+<p>The lasting lesson from dbNSFP is practical rather than technical. Infrastructure succeeds when it removes repeated work, standardises workflows, and becomes simple enough that users stop noticing it. At that point, the tool becomes part of the foundation of the field.</p>
+
+<h2 id="links">Links</h2>
+
+<p>dbNSFP project: https://www.dbnsfp.org<br />
+Genos Bioinformatics LLC: https://genos.us<br />
+Liu Lab: http://www.liulab.science<br />
+Commercial license information: https://www.dbnsfp.org/license<br />
+Original dbNSFP publication (2011): https://doi.org/10.1002/humu.21517</p>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <!-- <h2 class="footer-title">SwitzerlandOmics</h2> -->
+
+		  <!-- requires clearing to update config -->
+		  <!-- bundle exec jekyll clean -->
+		  <!-- bundle exec jekyll serve -->
+		  <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

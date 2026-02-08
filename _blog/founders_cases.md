@@ -1,0 +1,8 @@
+| Tool / Database | Original Origin | Product Type | Commercial Model | Typical Users | Commercialisation Pattern | Current Status |
+|---|---|---|---|---|---|---|
+| HGMD | Academic mutation database (Cardiff University) | Human disease mutation database | Academic free, commercial subscription license | Clinical labs, pharma, genomics companies | Academic mutation collection became licensed clinical reference | Widely used clinical mutation database |
+| COSMIC | Sanger Institute cancer genomics project | Somatic cancer mutation database | Academic free, commercial licensing required | Oncology research, pharma, diagnostics companies | Public cancer resource became commercial oncology reference database | Global cancer mutation reference |
+| Ingenuity Pathway Analysis (IPA) | Academic pathway and literature integration project | Pathway and functional interpretation software | Enterprise subscription licensing | Pharma and biotech research groups | Academic pathway aggregation became commercial interpretation platform | Standard enterprise pathway analysis tool |
+| ANNOVAR | Academic variant annotation software | Variant annotation software | Free academic use, paid commercial license | Research labs, biotech, clinical genomics companies | Academic annotation tool became licensed industry standard | Widely used annotation software |
+| dbNSFP | Academic variant annotation aggregation database | Variant annotation database | Academic free, commercial license | Research and clinical genomics pipelines | Academic infrastructure became licensed annotation backbone | Actively developed and commercially licensed |
+

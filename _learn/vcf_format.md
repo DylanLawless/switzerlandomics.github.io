@@ -1,40 +1,43 @@
 ---
 title: What is a VCF file?
 layout: learn
-description: The Variant Call Format used to store variant sites, alleles, and per-sample genotypes from sequencing
+description: The Variant Call Format used to store genomic variant sites and per-sample genotypes
 weight: 1
 category: data-formats
 ---
 
-A VCF file (Variant Call Format) is a tab-delimited text format that records genomic variant sites, the alleles observed at each site, and (optionally) per-sample genotypes and supporting metrics.
+A VCF file (Variant Call Format) is a tab-delimited text format used to describe genomic variants detected from sequencing data. It records where variants occur, which alleles are observed, and optionally how those variants appear in each sequenced sample.
+
+VCF is the standard format used to exchange variant calls between tools and institutions.
 
 ## Why VCF files exist
 
-Sequencing reads are aligned to a reference genome, then variant calling identifies positions where one or more samples differ from that reference. VCF is the standard way to publish those variant calls so they can be compared, annotated, interpreted, and exchanged between tools.
+Sequencing reads are aligned to a reference genome, after which variant callers detect positions where one or more samples differ from that reference. VCF provides a common way to store and exchange these results for downstream analysis, annotation, and interpretation.
 
-## Minimal structure of a VCF
+## Structure of a VCF file
 
-A VCF has two parts:
+A VCF contains:
 
-- **Header lines** beginning with `##`, which define metadata and the meaning of annotations.
-- A single **column header** line beginning with `#CHROM`, followed by one record per site.
+- **Header lines** beginning with `##`, defining metadata and annotation fields.
+- A column header line beginning with `#CHROM`.
+- One line per genomic site.
 
-Each record has eight required site columns, then optional genotype columns:
+Each record contains eight required site columns, followed by optional genotype columns.
 
 | Column | Meaning |
 |---|---|
-| CHROM | Contig name (chromosome) |
-| POS | 1-based position of the first base of `REF` |
-| ID | Identifier (for example `rs...`) or `.` |
-| REF | Reference allele sequence at this position |
-| ALT | Alternate allele sequence(s), comma-separated |
-| QUAL | Site-level confidence score (caller-defined scale, often Phred-like) |
-| FILTER | `PASS`, `.` (no filters applied), or one or more filter names |
-| INFO | Semicolon-separated site annotations (tag or `tag=value`) |
-| FORMAT | Colon-separated keys that define the per-sample fields |
-| sample columns | One column per sample, values matching `FORMAT` order |
+| CHROM | Reference sequence name |
+| POS | 1-based position of the variant |
+| ID | Variant identifier or `.` |
+| REF | Reference allele |
+| ALT | Alternate allele(s) |
+| QUAL | Site-level confidence score |
+| FILTER | Filter result |
+| INFO | Site annotations |
+| FORMAT | Per-sample annotation schema |
+| Sample columns | Per-sample values |
 
-A “sites-only” VCF may stop at `INFO` and omit `FORMAT` and sample columns.
+Some VCFs omit genotype columns and only describe variant sites.
 
 ## Example record explained
 
@@ -42,39 +45,82 @@ Example:
 
 ```
 
-#CHROM POS ID REF ALT QUAL FILTER INFO    FORMAT  SAMPLE1
-20     10001617 .  C   A   493.77 PASS   DP=38   GT:DP   0/1:38
+#CHROM POS ID REF ALT QUAL FILTER INFO FORMAT SAMPLE1
+20 10001617 . C A 493.77 PASS DP=38 GT:DP 0/1:38
 
 ```
 
-Explanation:
+Interpretation:
 
-- **CHROM=20, POS=10001617**: the site location.
-- **ID=.**: no identifier provided.
-- **REF=C, ALT=A**: the reference base is C, and an alternate allele A is observed. If there were multiple alternates they would appear as `ALT=A,T` and are indexed in that order.
-- **QUAL=493.77**: a site confidence value produced by the caller (the scale is caller-defined).
-- **FILTER=PASS**: this record passed filters. A value of `.` means no filtering was applied.
-- **INFO=DP=38**: a site annotation. `INFO/DP` commonly represents read depth at the site, but the precise definition is caller-specific.
+- The variant occurs on chromosome 20 at position 10001617.
+- Reference allele is C, alternate allele A.
+- The call passed quality filters.
+- INFO reports site-level depth.
+- FORMAT shows that each sample column contains genotype and depth.
+- The sample genotype `0/1` indicates one reference and one alternate allele.
 
-`FORMAT` defines the schema for each sample column:
+## Mandatory columns in practice
 
-- **FORMAT=GT:DP** means the sample column contains two fields, genotype then depth, separated by `:`.
+Understanding these fields prevents most interpretation errors.
 
-The sample value is:
+**CHROM** must match reference genome contigs. Incorrect naming or sorting breaks indexing.
 
-- **GT=0/1**: allele indices. `0` means `REF`. `1` means the first allele in `ALT`.
-  - `0/0` is homozygous reference.
-  - `0/1` is heterozygous.
-  - `1/1` is homozygous alternate.
-  - `/` indicates unphased genotypes. `|` indicates phased genotypes (for example `0|1`).
-  - Missing values are written as `.` (for example `./.`).
-- **DP=38**: per-sample depth for this site as defined by the caller. This is separate from `INFO/DP`, and may differ in meaning and value depending on the calling method and filters.
+**POS** uses 1-based coordinates. Insertions and deletions appear shifted compared with some other formats.
+
+**ID** is optional and often missing, but useful for linking databases.
+
+**REF** must exactly match the reference genome. Mismatches cause merge and comparison failures.
+
+**ALT** lists alternate alleles. Order matters because genotypes reference alleles by index.
+
+**QUAL** describes confidence in the site call, not in individual sample genotypes.
+
+**FILTER** indicates whether site-level filters were passed.
+
+**INFO** stores site-level annotations, defined in the header.
+
+## Genotype and sample fields
+
+Genotype values reference allele indices:
+
+```
+
+0 = REF
+1 = first ALT
+2 = second ALT
+
+```
+
+Examples:
+
+- `0/0` homozygous reference
+- `0/1` heterozygous
+- `1/1` homozygous alternate
+- `./.` missing genotype
+
+Other common sample annotations include depth and genotype quality.
+
+Site-level and sample-level depth values may differ depending on filtering.
 
 ## Representation details that matter
 
-- **Indels include an anchoring base**: insertions and deletions are represented with `REF` and `ALT` strings that include a shared left-side base, so `POS` points to that anchor. This is why deletions often appear to be reported at the base before the deleted stretch.
-- **Multiallelic sites**: if `ALT` has multiple alleles, genotypes use indices beyond 1 (for example `2/2` refers to the second listed ALT allele).
-- **Header definitions**: the intended meaning of `INFO` and `FORMAT` tags is declared in header lines such as `##INFO=<ID=DP,...>` and `##FORMAT=<ID=GT,...>`.
+**Indels include an anchoring base**, so deletions often appear one base earlier than expected.
+
+**Multiallelic sites** list several alternate alleles in one record.
+
+**Phased genotypes** use `|` instead of `/` to indicate allele ordering.
+
+**Symbolic alleles** may represent structural variants.
+
+## Common interpretation mistakes
+
+Common sources of confusion include:
+
+- Assuming one ALT allele per record.
+- Treating genotype values as bases instead of indices.
+- Confusing site depth with sample depth.
+- Using QUAL as genotype confidence.
+- Forgetting indel anchoring behaviour.
 
 ## Where VCF fits in pipelines
 
@@ -86,16 +132,22 @@ Sequencing → Alignment (BAM/CRAM) → Variant calling → VCF → Annotation a
 
 ```
 
+VCF is therefore the standard output of variant calling.
+
 ## VCF vs gVCF
 
-A VCF usually records variant sites only. A gVCF is designed for joint genotyping and also represents non-variant regions, typically by emitting reference-confidence information and sometimes compressing non-variant stretches into blocks.
+A standard VCF lists variant sites.  
+A gVCF additionally represents non-variant regions to enable joint genotyping across many samples.
 
-## Relation to Switzerland Omics systems
+## Practical realities when working with VCF
 
-Switzerland Omics systems consume VCF-derived variant and genotype evidence during evidence extraction, probabilistic interpretation, and structured reporting.
+Real VCF files are large and typically compressed using bgzip and indexed with tabix to enable region-based access.
+
+Subsetting, merging, and filtering are usually performed with specialised tools rather than custom scripts, since the format contains many edge cases.
 
 ## Technical specification
 
-For the authoritative specification, see the VCF definition in the hts-specs repository:
+The authoritative specification is maintained in the hts-specs repository:
+
 https://samtools.github.io/hts-specs/
 

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>CRAM vs SAM vs BAM explained</title>
+  <title>What is a Phred score?</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
   <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
@@ -18,12 +18,12 @@
   <link href="/assets/css/style.css" rel="stylesheet">
   <link href="/assets/css/custom.css" rel="stylesheet">
   
-  <meta name="description" content="Explanation of differences between SAM, BAM, and CRAM alignment formats" />
-  <meta property="og:title" content="CRAM vs SAM vs BAM explained"/>
+  <meta name="description" content="Explanation of Phred quality scores used to quantify sequencing base call accuracy" />
+  <meta property="og:title" content="What is a Phred score?"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
-  <meta property="og:description" content="Explanation of differences between SAM, BAM, and CRAM alignment formats"/>
+  <meta property="og:description" content="Explanation of Phred quality scores used to quantify sequencing base call accuracy"/>
   <meta name="twitter:card" content="summary"/>
   
   
@@ -144,123 +144,158 @@
     <div class="col-12 col-md-8">
       <div class="tech tech-single">
 
-        <h1 class="title">CRAM vs SAM vs BAM explained</h1>
+        <h1 class="title">What is a Phred score?</h1>
 
         
-        <p class="lead">Explanation of differences between SAM, BAM, and CRAM alignment formats</p>
+        <p class="lead">Explanation of Phred quality scores used to quantify sequencing base call accuracy</p>
         
 
         <div class="content">
-          <p>SAM, BAM, and CRAM are formats used to store sequencing reads after alignment to a reference genome. They record where each read maps and how it aligns, but differ in how the data are represented and compressed.</p>
+          <p>A Phred score is a numerical measure of how likely a sequencing base call is to be wrong, expressed on a logarithmic scale and assigned to each nucleotide in sequencing reads.</p>
 
-<p>All three formats contain the same alignment information. The difference is how efficiently that information is stored and accessed.</p>
+<p>These scores are stored alongside sequences in FASTQ files and are used throughout sequencing pipelines to filter, trim, assemble, and call variants.</p>
 
-<h2 id="why-these-formats-exist">Why these formats exist</h2>
+<h2 id="why-phred-scores-exist">Why Phred scores exist</h2>
 
-<p>Sequencing experiments generate billions of reads, and storing aligned reads as plain text quickly becomes impractical at genome scale.</p>
+<p>Sequencing instruments do not directly observe DNA bases. They infer bases from signals that include noise and uncertainty.</p>
 
-<p>SAM was introduced as a readable exchange format. BAM reduced storage and improved performance by using binary compression. CRAM further reduces size by compressing alignments relative to a reference genome.</p>
+<p>Downstream tools therefore need a way to measure confidence at each position. Phred scores allow pipelines to automatically downweight or remove unreliable bases, improving alignment, assembly, and variant detection.</p>
 
-<p>This progression reflects the need to store and analyse increasingly large sequencing datasets.</p>
+<p>Without base-level quality scores, most modern automated analysis pipelines would not function reliably.</p>
 
-<h2 id="core-differences">Core differences</h2>
+<h2 id="core-mechanism">Core mechanism</h2>
 
-<p>The formats differ mainly in representation and storage efficiency.</p>
+<p>A Phred score links base-call quality to the probability of error using:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Q = −10 log10(P)
+
+</code></pre></div></div>
+
+<p>where:</p>
+
+<ul>
+  <li><strong>Q</strong> is the Phred score.</li>
+  <li><strong>P</strong> is the probability the base is incorrect.</li>
+</ul>
+
+<p>The inverse relation is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+P = 10^(−Q/10)
+
+</code></pre></div></div>
+
+<p>Each increase of 10 in score corresponds to a tenfold reduction in error probability.</p>
+
+<p>Typical interpretations:</p>
 
 <table>
   <thead>
     <tr>
-      <th>Format</th>
-      <th>Representation</th>
-      <th>Compression</th>
-      <th>Typical use</th>
+      <th>Phred score</th>
+      <th>Error probability</th>
+      <th>Base accuracy</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>SAM</td>
-      <td>Text</td>
-      <td>None</td>
-      <td>Inspection, debugging</td>
+      <td>10</td>
+      <td>1 in 10</td>
+      <td>90%</td>
     </tr>
     <tr>
-      <td>BAM</td>
-      <td>Binary</td>
-      <td>General compression</td>
-      <td>Standard analysis workflows</td>
+      <td>20</td>
+      <td>1 in 100</td>
+      <td>99%</td>
     </tr>
     <tr>
-      <td>CRAM</td>
-      <td>Binary</td>
-      <td>Reference-based compression</td>
-      <td>Long-term storage and transfer</td>
+      <td>30</td>
+      <td>1 in 1,000</td>
+      <td>99.9%</td>
+    </tr>
+    <tr>
+      <td>40</td>
+      <td>1 in 10,000</td>
+      <td>99.99%</td>
     </tr>
   </tbody>
 </table>
 
-<p>SAM is human-readable but very large.<br />
-BAM stores the same data in compressed binary form and allows fast indexed access.<br />
-CRAM stores alignments relative to the reference genome, typically producing smaller files but requiring reference access during decoding.</p>
+<p>Modern short-read data commonly show scores between 20 and 40, often decreasing toward read ends.</p>
 
-<h2 id="example-alignment-record">Example alignment record</h2>
+<h2 id="example-interpretation-in-fastq">Example interpretation in FASTQ</h2>
 
-<p>All three formats store equivalent alignment records. In practice, BAM and CRAM are often viewed through SAM output:</p>
+<p>FASTQ files store sequences and encoded quality values:</p>
 
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>r001  99  chr1  10001  60  50M  = 10100  149  ACTG...  FFFF...
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@READ_1
+ACGT
++
+IIII
 </code></pre></div></div>
 
-<p>This record shows:</p>
+<p>Here:</p>
 
 <ul>
-  <li>read <code class="language-plaintext highlighter-rouge">r001</code> aligned to chromosome 1,</li>
-  <li>mapping quality,</li>
-  <li>alignment structure via the CIGAR string,</li>
-  <li>read bases and quality scores.</li>
+  <li>Sequence: <code class="language-plaintext highlighter-rouge">ACGT</code></li>
+  <li>Quality string: <code class="language-plaintext highlighter-rouge">IIII</code></li>
+  <li>Each character corresponds to one base.</li>
 </ul>
 
-<p>SAM stores this directly as text, while BAM and CRAM store the same information in compressed binary form.</p>
+<p>In standard PHRED+33 encoding, character <code class="language-plaintext highlighter-rouge">I</code> corresponds to quality score 40, meaning an error probability of about 1 in 10,000 per base.</p>
+
+<p>Thus this read segment is high confidence.</p>
 
 <h2 id="details-that-matter">Details that matter</h2>
 
+<p>Key operational points:</p>
+
 <ul>
-  <li>SAM files are large and rarely used in production workflows.</li>
-  <li>BAM files are typically coordinate-sorted and indexed for region access.</li>
-  <li>CRAM files usually require access to the original reference genome for decoding.</li>
-  <li>BAM and CRAM are interchangeable for most downstream tools.</li>
-  <li>CRAM compression efficiency varies across datasets.</li>
+  <li>Phred scores are logarithmic, not linear.</li>
+  <li>FASTQ stores encoded characters, not numeric scores.</li>
+  <li>Sequence and quality lengths must match.</li>
+  <li>Quality typically decreases toward read ends.</li>
+  <li>Read trimming and filtering rely directly on quality thresholds.</li>
 </ul>
 
 <h2 id="common-mistakes">Common mistakes</h2>
 
-<p>Frequent misunderstandings include:</p>
+<p>Frequent interpretation errors include:</p>
 
 <ul>
-  <li>Thinking the formats contain different data rather than different encodings.</li>
-  <li>Using SAM files for large-scale processing.</li>
-  <li>Assuming CRAM files are self-contained.</li>
-  <li>Forgetting to index BAM or CRAM before region queries.</li>
+  <li>Assuming Q30 means 30% accuracy instead of 99.9%.</li>
+  <li>Averaging quality scores without accounting for logarithmic scaling.</li>
+  <li>Ignoring FASTQ encoding variants when converting files.</li>
+  <li>Assuming quality is uniform across reads.</li>
+  <li>Confusing base quality with mapping quality, which measures alignment confidence rather than base-call confidence.</li>
 </ul>
 
-<h2 id="where-they-fit-in-pipelines">Where they fit in pipelines</h2>
+<h2 id="where-phred-scores-fit-in-pipelines">Where Phred scores fit in pipelines</h2>
 
 <p>Typical workflow:</p>
 
-<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sequencing → FASTQ reads → Alignment → SAM/BAM/CRAM → Variant or feature analysis
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Sequencing → FASTQ with Phred scores → trimming/filtering → alignment → variant analysis
 </code></pre></div></div>
 
-<p>Most pipelines generate BAM directly and may convert to CRAM for storage.</p>
+<p>Quality scores directly influence which bases and reads contribute to downstream results.</p>
 
-<h2 id="alignment-formats-vs-fastq">Alignment formats vs FASTQ</h2>
+<h2 id="adjacent-concept-fastq-quality-encoding">Adjacent concept: FASTQ quality encoding</h2>
 
-<p>FASTQ files store raw sequencing reads before alignment.</p>
+<p>FASTQ files store Phred scores using ASCII characters with a fixed numeric offset. Historical FASTQ variants used different offsets and score systems, which can cause interpretation errors if misidentified.</p>
 
-<p>SAM, BAM, and CRAM store reads after mapping to a reference genome and therefore include genomic position and alignment information.</p>
+<p>Modern pipelines typically standardise data to PHRED+33 encoding.</p>
 
-<h2 id="technical-specification">Technical specification</h2>
+<h2 id="references">References</h2>
 
-<p>Official specifications for SAM, BAM, and CRAM are maintained in the hts-specs repository:</p>
+<p>Ewing B, Hillier L, Wendl MC, Green P. Base-calling of automated sequencer traces using phred. Genome Research (1998). <a href="https://doi.org/10.1101/gr.8.3.175">https://doi.org/10.1101/gr.8.3.175</a></p>
 
-<p><a href="https://github.com/samtools/hts-specs">https://github.com/samtools/hts-specs</a></p>
+<p><a href="http://www.phrap.org/phredphrapconsed.html">http://www.phrap.org/phredphrapconsed.html</a></p>
+
+<h2 id="footnote">Footnote</h2>
+
+<p>Phred (Phil’s Read Editor[1]) is a computer program for base calling, that is to say, identifying a nucleobase sequence from fluorescence “trace” data generated by an automated DNA sequencer that uses electrophoresis and 4-fluorescent dye method.[2][3] When originally developed, Phred produced significantly fewer errors in the data sets examined than other methods, averaging 40–50% fewer errors. Phred quality scores have become widely accepted to characterize the quality of DNA sequences, and can be used to compare the efficacy of different sequencing methods.</p>
+
+<p>[1]  Moody, Glyn (2004). Digital code of life: how bioinformatics is revolutionizing science, medicine, and business. Hoboken, New Jersey: John Wiley &amp; Sons, Inc. ISBN 978-0-471-32788-2.</p>
 
 
         </div>

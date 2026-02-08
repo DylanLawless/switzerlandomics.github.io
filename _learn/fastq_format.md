@@ -6,39 +6,134 @@ weight: 1
 category: data-formats
 ---
 
-FASTQ is a text-based file format used to store sequencing reads together with a quality score for each base, allowing downstream tools to assess confidence in the data.
+FASTQ is a text format used to store sequencing reads together with a quality score for each base, recording both the nucleotide sequence and the confidence of each base call.
+
+It is the standard format produced by modern sequencing instruments and used as input for read alignment and downstream analysis.
 
 ## Why FASTQ files exist
 
-DNA sequencing machines produce reads with varying accuracy across positions. Recording quality information is essential for filtering, alignment, and variant detection.
+Sequencing machines produce large numbers of short reads and estimate the reliability of each base call. Both sequence and quality information are required for correct downstream analysis.
 
-FASTQ combines sequence and quality information in a single portable format widely used in sequencing workflows.
+FASTQ combines these into a single format so tools can filter, trim, and align reads while considering sequencing confidence.
 
-## What a FASTQ file contains
+This makes FASTQ the common exchange format for raw sequencing output.
 
-Each sequencing read is stored in four lines: a read identifier beginning with “@”, the nucleotide sequence, a separator line beginning with “+”, and a quality string encoding confidence values for each base.
+## Core structure of a FASTQ file
 
-The sequence and quality strings must be the same length, allowing tools to evaluate read reliability.
+Each read is stored as a four-part record:
 
-## Where FASTQ appears in pipelines
+| Line | Meaning |
+|---|---|
+| `@` line | Read identifier and optional metadata |
+| Sequence line | Read bases |
+| `+` line | Separator, optionally repeating the identifier |
+| Quality line | Quality characters per base |
+
+After removing line breaks, the sequence and quality strings must have identical length.
+
+Each character in the quality line corresponds to one base in the sequence.
+
+Quality values are encoded as printable ASCII characters that represent numerical quality scores.
+
+## Example FASTQ record
+
+```text
+@READ_001
+ACCTGATCGT
++
+IIHGFEDCBA
+````
+
+Interpretation:
+
+* The identifier describes the read.
+* The second line stores the nucleotide sequence.
+* The `+` line separates sequence and quality.
+* The final line stores one quality character per base.
+
+Each character encodes how confident the sequencer was in that base call.
+
+## Understanding the quality line
+
+Quality scores estimate the probability that a base call is wrong. Higher scores indicate greater confidence.
+
+FASTQ does not store numbers directly. Instead, each score is converted into a printable ASCII character using a fixed offset.
+
+Example conceptually:
+
+| Quality score     | Encoded character                     |
+| ----------------- | ------------------------------------- |
+| Low confidence    | `!` or similar early ASCII symbol     |
+| Medium confidence | letters such as `5` or `A`            |
+| High confidence   | characters later in ASCII such as `I` |
+
+Users normally never decode these manually. Software automatically interprets the encoding.
+
+The key operational rule is simple:
+
+**Number of quality characters must equal number of bases.**
+
+If not, the file is corrupted or truncated.
+
+## FASTQ quality encoding variants
+
+Historically, several incompatible FASTQ encodings were used. Modern pipelines almost always use the Sanger or Illumina standard, but legacy files may still appear.
+
+| Variant                 | ASCII range | Offset | Score type | Score range |
+| ----------------------- | ----------- | ------ | ---------- | ----------- |
+| Sanger standard         | 33–126      | +33    | PHRED      | 0–93        |
+| Solexa / early Illumina | 59–126      | +64    | Solexa     | −5–62       |
+| Illumina 1.3+           | 64–126      | +64    | PHRED      | 0–62        |
+
+In practice:
+
+* Most modern data uses PHRED+33 encoding.
+* Legacy data may use PHRED+64 or Solexa scores.
+* Pipelines usually convert older encodings during import.
+
+If quality values look unusually high or low, encoding mismatch is often the cause.
+
+## Details that matter
+
+* Sequence and quality strings must have identical length.
+* Modern FASTQ files typically store sequence and quality on single lines per read.
+* Files are usually compressed as `.fastq.gz`.
+* Paired-end sequencing produces matching R1 and R2 FASTQ files.
+* Quality scores are required for trimming and filtering steps.
+
+## Common mistakes
+
+Frequent operational errors include:
+
+* Confusing FASTQ with FASTA, which lacks quality scores.
+* Ignoring quality values when filtering reads.
+* Truncating files, creating incomplete records.
+* Producing mismatched sequence and quality lengths.
+* Misinterpreting quality encoding variants.
+
+## Where FASTQ fits in pipelines
 
 Typical workflow:
 
-Sequencing → FASTQ file → Read alignment → Variant calling → Interpretation
+```text
+Sequencing → FASTQ reads → Alignment → BAM/CRAM → Variant analysis
+```
 
-FASTQ files are therefore the primary output of sequencing instruments before alignment occurs.
+FASTQ therefore represents the starting point for most sequencing analysis pipelines.
 
 ## FASTQ and FASTA
 
-FASTQ extends FASTA by adding quality information. FASTA stores sequences only, whereas FASTQ is used for raw sequencing reads where accuracy assessment is required.
+FASTA stores sequences only.
 
-## Relation to Switzerland Omics systems
+FASTQ extends FASTA by adding per-base quality scores, enabling confidence-aware downstream analysis.
 
-Switzerland Omics systems operate downstream of alignment, using variant data derived from sequencing reads originally stored in FASTQ files.
+## Technical specification
 
-## Technical reference
+A detailed description of FASTQ format variants and conventions is provided by Cock et al.[https://doi.org/10.1093/nar/gkp1137](https://doi.org/10.1093/nar/gkp1137).
 
-A widely used description of the FASTQ format is provided by Cock et al. in *Nucleic Acids Research*:
+Citation:
 
-https://doi.org/10.1093/nar/gkp1137
+Peter J. A. Cock, Christopher J. Fields, Naohisa Goto, Michael L. Heuer, Peter M. Rice, The Sanger FASTQ file format for sequences with quality scores, and the Solexa/Illumina FASTQ variants, Nucleic Acids Research, Volume 38, Issue 6, 1 April 2010, Pages 1767–1771, <https://doi.org/10.1093/nar/gkp1137>
+
+
 

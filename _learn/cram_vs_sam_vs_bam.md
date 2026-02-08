@@ -1,52 +1,91 @@
 ---
 title: CRAM vs SAM vs BAM explained
 layout: learn
-description: Explanation of SAM, BAM, and CRAM formats used for aligned sequencing reads
+description: Explanation of differences between SAM, BAM, and CRAM alignment formats
 weight: 1
 category: data-formats
 ---
 
-SAM, BAM, and CRAM are file formats used to store sequencing reads after they have been aligned to a reference genome, recording where each read maps and how well it matches.
+SAM, BAM, and CRAM are formats used to store sequencing reads after alignment to a reference genome. They record where each read maps and how it aligns, but differ in how the data are represented and compressed.
+
+All three formats contain the same alignment information. The difference is how efficiently that information is stored and accessed.
 
 ## Why these formats exist
 
-Modern sequencing produces billions of reads, and storing them as plain text quickly becomes impractical. These formats allow mapped read data to be stored, exchanged, and accessed efficiently during downstream analysis.
+Sequencing experiments generate billions of reads, and storing aligned reads as plain text quickly becomes impractical at genome scale.
 
-They enable tools to inspect reads at specific genome positions without scanning entire datasets.
+SAM was introduced as a readable exchange format. BAM reduced storage and improved performance by using binary compression. CRAM further reduces size by compressing alignments relative to a reference genome.
 
-## What these files contain
+This progression reflects the need to store and analyse increasingly large sequencing datasets.
 
-Each record describes a sequencing read together with its genomic mapping position, alignment information, and quality scores, along with metadata describing samples and sequencing runs.
+## Core differences
 
-All three formats contain the same logical information. The difference lies in how the data are encoded and compressed.
+The formats differ mainly in representation and storage efficiency.
 
-## Where they appear in pipelines
+| Format | Representation | Compression | Typical use |
+|---|---|---|---|
+| SAM | Text | None | Inspection, debugging |
+| BAM | Binary | General compression | Standard analysis workflows |
+| CRAM | Binary | Reference-based compression | Long-term storage and transfer |
+
+SAM is human-readable but very large.  
+BAM stores the same data in compressed binary form and allows fast indexed access.  
+CRAM stores alignments relative to the reference genome, typically producing smaller files but requiring reference access during decoding.
+
+## Example alignment record
+
+All three formats store equivalent alignment records. In practice, BAM and CRAM are often viewed through SAM output:
+
+```text
+r001  99  chr1  10001  60  50M  = 10100  149  ACTG...  FFFF...
+````
+
+This record shows:
+
+* read `r001` aligned to chromosome 1,
+* mapping quality,
+* alignment structure via the CIGAR string,
+* read bases and quality scores.
+
+SAM stores this directly as text, while BAM and CRAM store the same information in compressed binary form.
+
+## Details that matter
+
+* SAM files are large and rarely used in production workflows.
+* BAM files are typically coordinate-sorted and indexed for region access.
+* CRAM files usually require access to the original reference genome for decoding.
+* BAM and CRAM are interchangeable for most downstream tools.
+* CRAM compression efficiency varies across datasets.
+
+## Common mistakes
+
+Frequent misunderstandings include:
+
+* Thinking the formats contain different data rather than different encodings.
+* Using SAM files for large-scale processing.
+* Assuming CRAM files are self-contained.
+* Forgetting to index BAM or CRAM before region queries.
+
+## Where they fit in pipelines
 
 Typical workflow:
 
-Sequencing → FASTQ reads → Alignment to reference → SAM/BAM/CRAM → Variant or feature analysis
+```text
+Sequencing → FASTQ reads → Alignment → SAM/BAM/CRAM → Variant or feature analysis
+```
 
-These formats serve as the primary input for variant calling and many quality control steps.
+Most pipelines generate BAM directly and may convert to CRAM for storage.
 
-## Differences between SAM, BAM, and CRAM
+## Alignment formats vs FASTQ
 
-SAM is a human-readable text format and useful for inspection or debugging but produces very large files.
+FASTQ files store raw sequencing reads before alignment.
 
-BAM is a binary compressed version of SAM and is the standard format for analysis workflows because it balances size and performance.
-
-CRAM achieves stronger compression by storing reads relative to a reference genome, making it common for long-term storage and data sharing.
-
-## FASTQ and alignment formats
-
-FASTQ files store raw sequencing reads before alignment, while SAM, BAM, and CRAM store reads after mapping to a genome.
-
-## Relation to Switzerland Omics systems
-
-Switzerland Omics systems analyse variant and evidence data derived from reads stored in BAM or CRAM files during interpretation workflows.
+SAM, BAM, and CRAM store reads after mapping to a reference genome and therefore include genomic position and alignment information.
 
 ## Technical specification
 
-The official SAM, BAM, and CRAM specifications are maintained within the hts-specs repository:
+Official specifications for SAM, BAM, and CRAM are maintained in the hts-specs repository:
 
-https://github.com/samtools/hts-specs
+[https://github.com/samtools/hts-specs](https://github.com/samtools/hts-specs)
+
 

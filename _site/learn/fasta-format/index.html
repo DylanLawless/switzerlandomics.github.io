@@ -18,12 +18,12 @@
   <link href="/assets/css/style.css" rel="stylesheet">
   <link href="/assets/css/custom.css" rel="stylesheet">
   
-  <meta name="description" content="Explanation of the FASTA sequence format used in genomics" />
+  <meta name="description" content="Explanation of the FASTA format used to store nucleotide and protein sequences" />
   <meta property="og:title" content="What is the FASTA format?"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
-  <meta property="og:description" content="Explanation of the FASTA sequence format used in genomics"/>
+  <meta property="og:description" content="Explanation of the FASTA format used to store nucleotide and protein sequences"/>
   <meta name="twitter:card" content="summary"/>
   
   
@@ -147,47 +147,95 @@
         <h1 class="title">What is the FASTA format?</h1>
 
         
-        <p class="lead">Explanation of the FASTA sequence format used in genomics</p>
+        <p class="lead">Explanation of the FASTA format used to store nucleotide and protein sequences</p>
         
 
         <div class="content">
-          <p>FASTA is a text-based file format used to store biological sequences such as DNA, RNA, or proteins using standard single-letter codes.</p>
+          <p>FASTA is a text format used to store biological sequences, such as DNA, RNA, or protein sequences, using single-letter codes preceded by an identifier line describing each sequence.</p>
+
+<p>It is the standard format used to exchange reference genomes and sequence collections in bioinformatics.</p>
 
 <h2 id="why-fasta-files-exist">Why FASTA files exist</h2>
 
-<p>Researchers need a simple way to store and exchange sequences without additional processing information. FASTA became widely adopted because it is easy to read, generate, and manipulate across tools and institutions.</p>
+<p>Many bioinformatics tasks require access to raw biological sequences, including genome references, gene sets, and protein databases.</p>
 
-<p>It is commonly used for reference genomes, gene sequences, and protein collections.</p>
+<p>FASTA provides a simple, portable way to store and exchange these sequences across tools and databases, allowing software to load sequence data efficiently without requiring specialised binary formats.</p>
 
-<h2 id="what-a-fasta-file-contains">What a FASTA file contains</h2>
+<p>Because the format is simple text, it is easy to inspect and manipulate when necessary.</p>
 
-<p>Each sequence begins with a header line starting with a “&gt;” character followed by an identifier or description.</p>
+<h2 id="core-structure-of-a-fasta-file">Core structure of a FASTA file</h2>
 
-<p>Subsequent lines contain the sequence itself as letters representing nucleotides or amino acids. Files may contain one or many sequences concatenated together.</p>
+<p>A FASTA file contains one or more sequences. Each sequence has:</p>
 
-<p>FASTA stores sequence information only and does not include quality or alignment data.</p>
+<ol>
+  <li>A header line beginning with <code class="language-plaintext highlighter-rouge">&gt;</code>, followed by an identifier and optional description.</li>
+  <li>One or more lines containing the sequence itself.</li>
+</ol>
 
-<h2 id="where-fasta-appears-in-pipelines">Where FASTA appears in pipelines</h2>
+<p>Sequence characters represent nucleotides or amino acids using standard single-letter codes.</p>
+
+<p>Multiple sequences can appear in the same file, producing a multi-FASTA file.</p>
+
+<h2 id="example-fasta-record">Example FASTA record</h2>
+
+<p>Example sequence entry:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt;chr1
+ACCTGATCGTACGATCGATCGATCGATCGATCGATCGTACGTAGCTAGCTAGC
+</code></pre></div></div>
+
+<p>Interpretation:</p>
+
+<ul>
+  <li>The header identifies the sequence as chromosome 1.</li>
+  <li>The following lines contain the sequence itself.</li>
+  <li>Sequence lines may be wrapped across multiple lines for readability.</li>
+</ul>
+
+<p>Programs typically ignore line breaks and treat the sequence as continuous.</p>
+
+<h2 id="details-that-matter">Details that matter</h2>
+
+<ul>
+  <li>Sequence lines may span multiple lines or appear on a single line.</li>
+  <li>Letters are case-insensitive and usually converted to uppercase.</li>
+  <li>Files may contain many sequences in a single file.</li>
+  <li>FASTA stores sequences only and does not include quality information.</li>
+  <li>Files are often compressed or indexed for fast region access when used as genome references.</li>
+  <li>Common extensions include <code class="language-plaintext highlighter-rouge">.fa</code>, <code class="language-plaintext highlighter-rouge">.fasta</code>, and <code class="language-plaintext highlighter-rouge">.fna</code>.</li>
+</ul>
+
+<h2 id="common-mistakes">Common mistakes</h2>
+
+<p>Frequent operational errors include:</p>
+
+<ul>
+  <li>Confusing FASTA with FASTQ files that include quality scores.</li>
+  <li>Breaking sequence lines with unexpected characters or spaces.</li>
+  <li>Mixing nucleotide and protein sequences in the same dataset unintentionally.</li>
+  <li>Removing header lines, making sequences impossible to identify.</li>
+</ul>
+
+<h2 id="where-fasta-fits-in-pipelines">Where FASTA fits in pipelines</h2>
 
 <p>Typical workflow:</p>
 
-<p>Reference or sequence collection → FASTA file → Alignment or analysis → Variant detection → Interpretation</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reference FASTA → Alignment → BAM/CRAM → Variant analysis
+</code></pre></div></div>
 
-<p>FASTA files are often used to store reference genomes before read alignment.</p>
+<p>FASTA files provide the reference sequences used during read alignment and many downstream analyses.</p>
 
 <h2 id="fasta-and-fastq">FASTA and FASTQ</h2>
 
-<p>FASTA stores sequences only, while FASTQ stores sequences together with sequencing quality scores. FASTQ is therefore used for raw sequencing reads, whereas FASTA is commonly used for reference or curated sequences.</p>
+<p>FASTQ extends FASTA by storing sequencing reads together with per-base quality scores.</p>
 
-<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
+<p>FASTA is typically used for reference sequences or curated sequence sets, while FASTQ stores raw sequencing reads directly from sequencing instruments.</p>
 
-<p>Switzerland Omics systems operate downstream of alignment and variant detection, using data derived from sequences that may originally be stored in FASTA format.</p>
+<h2 id="technical-specification">Technical specification</h2>
 
-<h2 id="technical-reference">Technical reference</h2>
+<p>FASTA format documentation is maintained by the NCBI:</p>
 
-<p>FASTA format documentation is maintained by NCBI and related bioinformatics communities:</p>
-
-<p>https://www.ncbi.nlm.nih.gov/BLAST/fasta.shtml</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/BLAST/fasta.shtml">https://www.ncbi.nlm.nih.gov/BLAST/fasta.shtml</a></p>
 
 
         </div>

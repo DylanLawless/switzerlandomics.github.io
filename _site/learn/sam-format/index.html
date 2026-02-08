@@ -18,12 +18,12 @@
   <link href="/assets/css/style.css" rel="stylesheet">
   <link href="/assets/css/custom.css" rel="stylesheet">
   
-  <meta name="description" content="Explanation of the Sequence Alignment/Map format used to store sequencing read alignments" />
+  <meta name="description" content="Explanation of the Sequence Alignment/Map text format used to store sequencing read alignments" />
   <meta property="og:title" content="What is the SAM format?"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content=""/>
   
-  <meta property="og:description" content="Explanation of the Sequence Alignment/Map format used to store sequencing read alignments"/>
+  <meta property="og:description" content="Explanation of the Sequence Alignment/Map text format used to store sequencing read alignments"/>
   <meta name="twitter:card" content="summary"/>
   
   
@@ -147,49 +147,139 @@
         <h1 class="title">What is the SAM format?</h1>
 
         
-        <p class="lead">Explanation of the Sequence Alignment/Map format used to store sequencing read alignments</p>
+        <p class="lead">Explanation of the Sequence Alignment/Map text format used to store sequencing read alignments</p>
         
 
         <div class="content">
-          <p>The SAM format (Sequence Alignment/Map) is a text file format used to store how sequencing reads align to a reference genome, including their position, orientation, and alignment quality.</p>
+          <p>The SAM format (Sequence Alignment/Map) is a tab-delimited text format used to record how sequencing reads align to a reference genome, including their positions, orientation, and alignment characteristics.</p>
+
+<p>SAM provides a standard, human-readable representation of read alignments that can be exchanged between tools and inspected directly when debugging pipelines.</p>
 
 <h2 id="why-sam-files-exist">Why SAM files exist</h2>
 
-<p>After DNA sequencing, millions of short reads must be aligned to a reference genome to determine where each fragment originated. SAM provides a standard way to record these alignments so that downstream tools can analyse coverage, detect variants, and compare results across pipelines.</p>
+<p>After sequencing, reads are aligned to a reference genome to determine where each fragment originated. Alignment tools must then store both placement and alignment details for downstream analysis.</p>
 
-<p>By using a shared format, alignment results become portable between tools and institutions.</p>
+<p>SAM provides a portable and readable format so alignment results can move between tools for variant calling, quality control, and coverage analysis.</p>
 
-<h2 id="what-a-sam-file-contains">What a SAM file contains</h2>
+<p>In practice, SAM is usually converted immediately into its compressed binary equivalent, BAM.</p>
 
-<p>A SAM file has two parts.</p>
+<h2 id="core-structure-of-a-sam-file">Core structure of a SAM file</h2>
 
-<p>The header section describes the reference sequences and processing metadata. It may also record which software and parameters were used.</p>
+<p>A SAM file has two sections.</p>
 
-<p>The alignment section contains one line per read alignment, including the read name, mapping position, mapping quality, and a compact representation of matches, insertions, and deletions known as the CIGAR string.</p>
+<p>Header lines begin with <code class="language-plaintext highlighter-rouge">@</code> and describe reference sequences and processing information such as sorting order and software used.</p>
 
-<p>Optional fields allow aligners to attach additional information without breaking compatibility.</p>
+<p>Alignment lines follow, with one line per read alignment. Each alignment line contains mandatory columns describing mapping location, alignment structure, and read sequence, followed by optional fields that store additional annotations.</p>
 
-<h2 id="where-sam-appears-in-pipelines">Where SAM appears in pipelines</h2>
+<p>Each alignment line contains at least eleven tab-separated fields, including:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>QNAME</td>
+      <td>Read identifier</td>
+    </tr>
+    <tr>
+      <td>FLAG</td>
+      <td>Bitwise mapping flags</td>
+    </tr>
+    <tr>
+      <td>RNAME</td>
+      <td>Reference sequence name</td>
+    </tr>
+    <tr>
+      <td>POS</td>
+      <td>1-based alignment position</td>
+    </tr>
+    <tr>
+      <td>MAPQ</td>
+      <td>Mapping quality</td>
+    </tr>
+    <tr>
+      <td>CIGAR</td>
+      <td>Alignment operations</td>
+    </tr>
+    <tr>
+      <td>SEQ</td>
+      <td>Read sequence</td>
+    </tr>
+    <tr>
+      <td>QUAL</td>
+      <td>Base quality values</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Optional fields allow tools to attach additional information without breaking compatibility.</p>
+
+<h2 id="example-alignment-record">Example alignment record</h2>
+
+<p>Example alignment line:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+r001  99  chr1  10001  60  50M  = 10100  149  ACTG...  FFFF...
+
+</code></pre></div></div>
+
+<p>Interpretation:</p>
+
+<ul>
+  <li>Read <code class="language-plaintext highlighter-rouge">r001</code> aligns to chromosome 1 at position 10001.</li>
+  <li>Mapping quality indicates confidence in placement.</li>
+  <li><code class="language-plaintext highlighter-rouge">50M</code> in the CIGAR string indicates 50 aligned bases.</li>
+  <li>The FLAG value encodes pairing and orientation.</li>
+  <li>Sequence and quality fields store read bases and base quality scores.</li>
+</ul>
+
+<p>Optional fields may follow with additional annotations.</p>
+
+<h2 id="details-that-matter">Details that matter</h2>
+
+<ul>
+  <li>Positions use <strong>1-based coordinates</strong>, unlike some other genomic formats.</li>
+  <li>Whether a read is mapped must be determined from the FLAG field.</li>
+  <li>CIGAR operations describe matches, insertions, deletions, and clipping relative to the reference.</li>
+  <li>A read may appear in multiple records if it maps to several locations or has split alignments.</li>
+  <li>SAM files are large and usually converted to BAM for storage and analysis.</li>
+</ul>
+
+<h2 id="common-interpretation-mistakes">Common interpretation mistakes</h2>
+
+<p>Frequent errors include:</p>
+
+<ul>
+  <li>Treating POS as 0-based coordinates.</li>
+  <li>Ignoring FLAG bits when determining mapping status.</li>
+  <li>Misreading CIGAR strings as simple sequence length.</li>
+  <li>Assuming each read appears only once.</li>
+</ul>
+
+<h2 id="where-sam-fits-in-pipelines">Where SAM fits in pipelines</h2>
 
 <p>Typical workflow:</p>
 
-<p>Sequencing → Read alignment → SAM or BAM file → Variant calling → Interpretation</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+Sequencing → Alignment → SAM → BAM → Variant calling → Interpretation
 
-<p>SAM is usually an intermediate format rather than a final output.</p>
+</code></pre></div></div>
+
+<p>SAM is often an intermediate format used for inspection before compression.</p>
 
 <h2 id="sam-and-bam">SAM and BAM</h2>
 
-<p>BAM is the compressed binary version of SAM.</p>
+<p>BAM is the compressed binary representation of SAM. Both formats store the same alignment information, but BAM is smaller and allows indexed region access.</p>
 
-<p>Both formats store the same information, but BAM is smaller and allows faster indexed access to genomic regions. Most production workflows convert SAM to BAM immediately after alignment.</p>
-
-<h2 id="relation-to-switzerland-omics-systems">Relation to Switzerland Omics systems</h2>
-
-<p>Switzerland Omics systems operate downstream of alignment, using variant data derived from SAM or BAM files during evidence extraction and probabilistic interpretation.</p>
+<p>Most production pipelines store alignments as BAM rather than SAM.</p>
 
 <h2 id="technical-specification">Technical specification</h2>
 
-<p>The official SAM and BAM specifications are maintained by the samtools and hts-specs community:</p>
+<p>The official SAM and BAM specifications are maintained in the hts-specs repository:</p>
 
 <p>https://github.com/samtools/hts-specs</p>
 
