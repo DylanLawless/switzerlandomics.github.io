@@ -31,6 +31,7 @@ $sub-footer-text-color: $white;
 
 // Bootstrap 5.3.2
 
+
 // 1. Include Bootstrap functions first
 @import "bootstrap/functions";
 
@@ -109,6 +110,7 @@ $sub-footer-text-color: $white;
 @import "pages/page-home";
 @import "pages/page-teams";
 @import "pages/page-tech";
+@import "page-infra-maturity";
 
 body {
   font-size: 1rem;

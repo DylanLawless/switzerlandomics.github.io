@@ -52,6 +52,7 @@ If your team needs statistical foundations, not promotional layers, we should ta
 
 ---
 
+{% comment %}
 ## Built with the best tech
 
 We use leading tools to build, deploy, and serve our products:
@@ -95,6 +96,7 @@ We use leading tools to build, deploy, and serve our products:
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Zenodo-gradient-square.svg/1920px-Zenodo-gradient-square.svg.png" alt="Zenodo" width="60" height="60" />
 
 </div>
+{% endcomment %}
 ---
 
 [Get in touch](/contact)
