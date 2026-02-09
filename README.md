@@ -72,8 +72,7 @@ For technical frameworks and probabilistic inference tooling, see our [documenta
 
 ---
 
-## License
+## Copyright
 
-Website source code is released under the [MIT License](LICENSE).
 All content, trademarks, and product names are © Switzerland Omics. All rights reserved.
 
