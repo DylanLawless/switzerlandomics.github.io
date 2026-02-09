@@ -14,9 +14,15 @@
 │   ├── 2025-09-19-quant-poster.md
 │   ├── 2025-11-27-open-standards.md
 │   ├── 2025-12-14-sga_qem.md
+│   ├── 2026-01-18-founders-ANNOVAR.md
+│   ├── 2026-01-25-founders-hgmd.md
+│   ├── 2026-02-01-founders-Phred-Phrap-Consed.md
+│   ├── 2026-02-08-founders-dbnsfp.md
 │   ├── 2026-xx-xx-celebrating-trademark.md
 │   ├── 2026-xx-xx-preventing_war.md
-│   └── 2026-xx-xx-second_clock.md
+│   ├── 2026-xx-xx-second_clock.md
+│   ├── founder_stories_wiriting_guide.md
+│   └── founders_cases.md
 ├── _config.yml
 ├── _data
 │   ├── contact.yml
@@ -59,6 +65,9 @@
 │   ├── fasta_format.md
 │   ├── fastq_format.md
 │   ├── human_reference_genome.md
+│   ├── learn_pages_template.txt
+│   ├── learn_pages_to_do.txt
+│   ├── phred_score.md
 │   ├── reference_genomes_grch37_vs_grch38.md
 │   ├── sam_format.md
 │   ├── tabix_format.md
@@ -848,10 +857,21 @@
 │   │   │   └── index.html
 │   │   ├── 2025-12-14-sga-qem
 │   │   │   └── index.html
+│   │   ├── 2026-01-18-founders-annovar
+│   │   │   └── index.html
+│   │   ├── 2026-01-25-founders-hgmd
+│   │   │   └── index.html
+│   │   ├── 2026-02-01-founders-phred-phrap-consed
+│   │   │   └── index.html
+│   │   ├── 2026-02-08-founders-dbnsfp
+│   │   │   └── index.html
 │   │   ├── 2026-xx-xx-celebrating-trademark.md
 │   │   ├── 2026-xx-xx-preventing_war.md
 │   │   ├── 2026-xx-xx-second_clock.md
-│   │   └── index.html
+│   │   ├── founder_stories_wiriting_guide.md
+│   │   ├── founders_cases.md
+│   │   ├── index.html
+│   │   └── pricing.md
 │   ├── builtatlightspeed.json
 │   ├── ceopage
 │   │   └── index.html
@@ -1058,6 +1078,10 @@
 │   │   ├── human-reference-genome
 │   │   │   └── index.html
 │   │   ├── index.html
+│   │   ├── learn_pages_template.txt
+│   │   ├── learn_pages_to_do.txt
+│   │   ├── phred-score
+│   │   │   └── index.html
 │   │   ├── reference-genomes-grch37-vs-grch38
 │   │   │   └── index.html
 │   │   ├── sam-format
@@ -1938,6 +1962,7 @@
 ├── partnerships.md
 ├── pitch.md
 ├── pitch_02.md
+├── pricing.md
 ├── publication.md
 ├── qv_es_table.md
 ├── releases.md
@@ -1951,4 +1976,4 @@
 ├── temp
 └── why_open.md
 
-229 directories, 1722 files
+234 directories, 1742 files

@@ -84,52 +84,17 @@ Prof Cooper academic page: https://profiles.cardiff.ac.uk/staff/cooperdn
 
 ## References
 
-If HGMD is used in publications, the recommended citation is:
+Recommended citation: Stenson PD, Mort M, Ball EV, Shaw K, Phillips AD, Cooper DN. **The Human Gene Mutation Database (HGMD®): optimizing its use in a clinical diagnostic or research setting.** *Human Genetics*, 2020. https://pubmed.ncbi.nlm.nih.gov/32417917/
 
-Stenson PD, Mort M, Ball EV, Shaw K, Phillips AD, Cooper DN.  
-**The Human Gene Mutation Database (HGMD®): optimizing its use in a clinical diagnostic or research setting.**  
-*Human Genetics*, 2020.  
-https://pubmed.ncbi.nlm.nih.gov/32417917/
+Other articles on HGMD development:
 
-Earlier articles describing HGMD development include:
-
-Cooper DN, Ball EV, Krawczak M.  
-**The Human Gene Mutation Database.**  
-*Trends in Genetics*, 1997; 13:121–122.  
-https://pubmed.ncbi.nlm.nih.gov/9066272/
-
-Krawczak M, Ball EV, Cooper DN.  
-**The Human Gene Mutation Database.**  
-*Nucleic Acids Research*, 1998; 26:285–287.  
-https://pubmed.ncbi.nlm.nih.gov/9399854/
-
-Cooper DN, Stenson PD, Ball EV, Chuzhanova NA.  
-**Human Gene Mutation Database.**  
-*Human Mutation*, 2000; 15:45–51.  
-https://pubmed.ncbi.nlm.nih.gov/10612821/
-
-Stenson PD, Ball EV, Mort M, Phillips AD, Shaw K, Cooper DN.  
-**Human Gene Mutation Database (HGMD): 2003 update.**  
-*Human Mutation*, 2003; 21:577–581.
-
-Stenson PD, Mort M, Ball EV, et al.  
-**The Human Gene Mutation Database: 2008 update.**  
-*Genome Medicine*, 2009; 1:13.  
-https://pubmed.ncbi.nlm.nih.gov/19348700/
-
-Stenson PD, Mort M, Ball EV, et al.  
-**The Human Gene Mutation Database: building a comprehensive mutation repository for clinical and molecular genetics.**  
-*Human Genetics*, 2014; 133:1–9.  
-https://pubmed.ncbi.nlm.nih.gov/24077912/
-
-Stenson PD, Mort M, Ball EV, et al.  
-**The Human Gene Mutation Database: towards a comprehensive repository of inherited mutation data for medical research, genetic diagnosis and next-generation sequencing studies.**  
-*Human Genetics*, 2017; 136:665–677.  
-https://pubmed.ncbi.nlm.nih.gov/28349240/
-
-Foundational background reference:
-
-Cooper DN, Krawczak M.  
-**Human Gene Mutation.**  
-BIOS Scientific Publishers, Oxford, 1993 (revised editions 1994, 1995).
+- 2020 https://pubmed.ncbi.nlm.nih.gov/32417917/
+- 2017 https://pubmed.ncbi.nlm.nih.gov/28349240/
+- 2014 https://pubmed.ncbi.nlm.nih.gov/24077912/
+- 2009 https://pubmed.ncbi.nlm.nih.gov/19348700/
+- 2003 https://pubmed.ncbi.nlm.nih.gov/12754702/
+- 2000 https://pubmed.ncbi.nlm.nih.gov/10612821/
+- 1998 https://pubmed.ncbi.nlm.nih.gov/9399854/
+- 1997 https://pubmed.ncbi.nlm.nih.gov/9066272/
+- 1993 Book: Cooper DN, Krawczak M. **Human Gene Mutation.** BIOS Scientific Publishers, Oxford, 1993 (revised editions 1994, 1995).
 

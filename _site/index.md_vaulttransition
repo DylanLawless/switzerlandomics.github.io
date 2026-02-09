@@ -459,6 +459,273 @@ designed to simplify the discovery ...</p>
 <!-- </div> -->
 <!--  -->
 
+<section class="container pt-6 pb-6 infra-maturity">
+
+  <h2>Infrastructure maturity pipeline</h2>
+  <p>
+    <!-- Systems advance from prototype to deployed infrastructure through staged technical validation and institutional adoption.  -->
+    Systems advance from prototype to deployed infrastructure through staged technical validation and institutional adoption, supporting use across research, clinical programmes, and clinical trials.
+  </p>
+
+  <div class="infra-maturity-grid">
+
+    <!-- Header (desktop only) -->
+    <div class="infra-maturity-row infra-maturity-row-head">
+      <div class="infra-maturity-system">System</div>
+
+      <div class="infra-maturity-stages infra-maturity-stages-head">
+        <div class="infra-maturity-stage-label">Concept</div>
+        <div class="infra-maturity-stage-label">Prototype</div>
+        <div class="infra-maturity-stage-label">Production<br>deployment</div>
+        <div class="infra-maturity-stage-label">Institutional<br>adoption</div>
+        <div class="infra-maturity-stage-label">Infrastructure<br>standard</div>
+      </div>
+    </div>
+
+    <!-- Quant -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+      <strong><a href="/technologies/quant/">Quant</a></strong>
+      </div>
+
+
+      <div class="infra-maturity-stages" aria-label="Quant maturity">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div>
+        <div>Prototype</div>
+        <div>Production</div>
+        <div>Adoption</div>
+        <div>Standard</div>
+      </div>
+    </div>
+
+    <!-- QuantBayes -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+      <strong><a href="/technologies/quantbayes/">QuantBayes</a></strong>
+      </div>
+
+      <div class="infra-maturity-stages" aria-label="QuantBayes maturity">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div>
+        <div>Prototype</div>
+        <div>Production</div>
+        <div>Adoption</div>
+        <div>Standard</div>
+      </div>
+    </div>
+
+    <!-- Genomic Vault -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+      <strong><a href="/technologies/genomic_vault/">Genomic Vault</a></strong>
+      </div>
+
+      <div class="infra-maturity-stages" aria-label="Genomic Vault maturity">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div>
+        <div>Prototype</div>
+        <div>Production</div>
+        <div>Adoption</div>
+        <div>Standard</div>
+      </div>
+    </div>
+
+    <!-- PanelAppRex AI -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+        <strong><a href="/technologies/panelAppRexAi/">PanelAppRex AI</a></strong>
+      </div>
+
+      <div class="infra-maturity-stages" aria-label="PanelAppRex AI maturity">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div>
+        <div>Prototype</div>
+        <div>Production</div>
+        <div>Adoption</div>
+        <div>Standard</div>
+      </div>
+    </div>
+
+    <!-- Qualifying Variant framework -->
+    <div class="infra-maturity-row">
+    <div class="infra-maturity-system">
+      <strong><a href="/technologies/qv_database/">QV framework</a></strong>
+    </div>
+
+      <div class="infra-maturity-stages" aria-label="Qualifying Variant framework maturity">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div>
+        <div>Prototype</div>
+        <div>Production</div>
+        <div>Adoption</div>
+        <div>Standard</div>
+      </div>
+    </div>
+
+  </div>
+
+  <style>
+    .infra-maturity { max-width: 980px; }
+    .infra-maturity-sub { margin-top: 0.6rem; }
+
+    .infra-maturity{
+      --infra-red-1: var(--secondary, #f88379);
+      --infra-red-2: var(--primary, #e5261f);
+      --infra-red-3: var(--primary-dark, #a01b16);
+    }
+
+    .infra-maturity-grid{
+      margin-top: 1.25rem;
+      border-top: 1px solid rgba(0,0,0,0.10);
+      width: 100%;
+    }
+
+    .infra-maturity-row{
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+      align-items: center;
+      width: 100%;
+    }
+
+    .infra-maturity-row-head{
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .infra-maturity-system{
+      font-size: 1.05rem;
+      color: #2f2f41;
+      min-width: 0;
+    }
+
+    .infra-maturity-stages,
+    .infra-maturity-mobile-labels{
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .infra-maturity-stages-head .infra-maturity-stage-label{
+      text-align: center;
+      color: rgba(92,90,90,0.95);
+      line-height: 1.1;
+      white-space: pre-line;
+      word-break: keep-all;
+      overflow-wrap: normal;
+      min-width: 0;
+    }
+
+    .infra-cell{
+      height: 22px;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.08);
+      min-width: 0;
+    }
+
+    .infra-maturity-stages .infra-cell.is-filled{ border-color: rgba(0,0,0,0.18); }
+
+    /* fallback first (Safari safe): uses all 3 reds, maxes out at stage 4 */
+    .infra-maturity-stages .infra-cell.is-filled:nth-child(1){ background: var(--infra-red-1); } /* concept */
+    .infra-maturity-stages .infra-cell.is-filled:nth-child(2){ background: var(--infra-red-2); } /* prototype */
+    .infra-maturity-stages .infra-cell.is-filled:nth-child(3){ background: var(--infra-red-2); } /* production */
+    .infra-maturity-stages .infra-cell.is-filled:nth-child(4){ background: var(--infra-red-3); } /* adoption (max) */
+    .infra-maturity-stages .infra-cell.is-filled:nth-child(5){ background: var(--infra-red-3); } /* standard (same max) */
+
+    /* upgrade when color-mix is supported: smooth ramp, still max at stage 4 */
+    @supports (background: color-mix(in srgb, #000 50%, #fff 50%)){
+      .infra-maturity-stages .infra-cell.is-filled:nth-child(1){
+        background: var(--infra-red-1);
+      }
+      .infra-maturity-stages .infra-cell.is-filled:nth-child(2){
+        background: color-mix(in srgb, var(--infra-red-1) 40%, var(--infra-red-2) 60%);
+      }
+      .infra-maturity-stages .infra-cell.is-filled:nth-child(3){
+        background: color-mix(in srgb, var(--infra-red-2) 70%, var(--infra-red-3) 30%);
+      }
+      .infra-maturity-stages .infra-cell.is-filled:nth-child(4){
+        background: var(--infra-red-3);
+      }
+      .infra-maturity-stages .infra-cell.is-filled:nth-child(5){
+        background: var(--infra-red-3);
+      }
+    }
+
+    .infra-maturity-mobile-labels{ display: none; }
+
+    @media (max-width: 720px){
+      .infra-maturity-row{
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 16px 0;
+      }
+
+      .infra-maturity-row-head{ display: none; }
+
+      .infra-cell{ height: 20px; }
+
+      .infra-maturity-mobile-labels{
+        display: grid;
+        margin-top: 8px;
+      }
+
+      .infra-maturity-mobile-labels div{
+        text-align: center;
+        white-space: nowrap;
+        font-size: clamp(0.58rem, 2.3vw, 0.78rem);
+        line-height: 1.1;
+        color: rgba(92,90,90,0.95);
+        min-width: 0;
+      }
+    }
+  </style>
+
+</section>
+
+
+
+
   </div>
   <div class="footer">
   <div class="container">
