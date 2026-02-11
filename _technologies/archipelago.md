@@ -128,6 +128,10 @@ install.packages("archipelago")
 library(archipelago)
 ````
 
+Source: [cran.r-project archipelago](https://cran.r-project.org/package=archipelago) (for installation see below).  
+![CRAN status](https://www.r-pkg.org/badges/version/archipelago)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/archipelago)
+
 ---
 
 ## Example workflow
@@ -144,6 +148,42 @@ archipelago_plot(vsat_results, variant_results)
 ```
 
 Archipelago returns a publication-ready figure suitable for dense genome-wide studies.
+
+### Demo 
+
+```r
+install.packages("archipelago")
+library(archipelago)
+
+??archipelago()
+
+# example data
+data("vsat_pval", package = "archipelago")
+data("variant_pval", package = "archipelago")
+
+head(vsat_pval)
+# e.g. SKAT-O results
+#   set_ID           P
+# 1      1 0.002039443
+# 2      2 0.003459603
+# 3      3 0.060544051
+
+head(variant_pval)
+# e.g. GWAS results
+#   set_ID     BP         P CHR    SNP
+# 1      1 351696 0.9211610   6 351696
+# 2      2 988282 0.8652950   9 988282
+# 3      3 929171 0.6916336  12 929171
+
+p_basic <- archipelago_plot(
+  df1 = vsat_pval,
+  df2 = variant_pval,
+  output_path = tempfile(),
+  output_raw  = tempfile()
+)
+
+print(p_basic)
+```
 
 ---
 

@@ -270,6 +270,10 @@ Whole-genome sequencing with rare non-coding burden, showing how set-level UTR s
 </span><span class="n">library</span><span class="p">(</span><span class="n">archipelago</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
+<p>Source: <a href="https://cran.r-project.org/package=archipelago">cran.r-project archipelago</a> (for installation see below).<br />
+<img src="https://www.r-pkg.org/badges/version/archipelago" alt="CRAN status" />
+<img src="https://cranlogs.r-pkg.org/badges/grand-total/archipelago" alt="CRAN downloads" /></p>
+
 <hr />
 
 <h2 id="example-workflow">Example workflow</h2>
@@ -287,6 +291,41 @@ Whole-genome sequencing with rare non-coding burden, showing how set-level UTR s
 </span></code></pre></div></div>
 
 <p>Archipelago returns a publication-ready figure suitable for dense genome-wide studies.</p>
+
+<h3 id="demo">Demo</h3>
+
+<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"archipelago"</span><span class="p">)</span><span class="w">
+</span><span class="n">library</span><span class="p">(</span><span class="n">archipelago</span><span class="p">)</span><span class="w">
+
+</span><span class="o">??</span><span class="n">archipelago</span><span class="p">()</span><span class="w">
+
+</span><span class="c1"># example data</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="s2">"vsat_pval"</span><span class="p">,</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"archipelago"</span><span class="p">)</span><span class="w">
+</span><span class="n">data</span><span class="p">(</span><span class="s2">"variant_pval"</span><span class="p">,</span><span class="w"> </span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"archipelago"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">head</span><span class="p">(</span><span class="n">vsat_pval</span><span class="p">)</span><span class="w">
+</span><span class="c1"># e.g. SKAT-O results</span><span class="w">
+</span><span class="c1">#   set_ID           P</span><span class="w">
+</span><span class="c1"># 1      1 0.002039443</span><span class="w">
+</span><span class="c1"># 2      2 0.003459603</span><span class="w">
+</span><span class="c1"># 3      3 0.060544051</span><span class="w">
+
+</span><span class="n">head</span><span class="p">(</span><span class="n">variant_pval</span><span class="p">)</span><span class="w">
+</span><span class="c1"># e.g. GWAS results</span><span class="w">
+</span><span class="c1">#   set_ID     BP         P CHR    SNP</span><span class="w">
+</span><span class="c1"># 1      1 351696 0.9211610   6 351696</span><span class="w">
+</span><span class="c1"># 2      2 988282 0.8652950   9 988282</span><span class="w">
+</span><span class="c1"># 3      3 929171 0.6916336  12 929171</span><span class="w">
+
+</span><span class="n">p_basic</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">archipelago_plot</span><span class="p">(</span><span class="w">
+  </span><span class="n">df1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vsat_pval</span><span class="p">,</span><span class="w">
+  </span><span class="n">df2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">variant_pval</span><span class="p">,</span><span class="w">
+  </span><span class="n">output_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tempfile</span><span class="p">(),</span><span class="w">
+  </span><span class="n">output_raw</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">tempfile</span><span class="p">()</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span><span class="n">print</span><span class="p">(</span><span class="n">p_basic</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
 
 <hr />
 
