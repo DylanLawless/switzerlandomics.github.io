@@ -348,31 +348,6 @@ Genomic Vault provides custody.
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
-              <a href="/technologies/quantbayes/">QuantBayes</a>
-            </h2>
-            <p>Gives genomics a shared evidence language.
-Every variant. Every pipeline. Every institution.
-</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-4 mb-1">
-        <div class="tech tech-summary">
-          <div class="tech-content">
-            <h2 class="tech-title">
-              <a href="/technologies/qv_database/">Qualifying variant database</a>
-            </h2>
-            <p>
-The open standard for variant interpretation, with trusted QV sets to enhance clarity and reprod...</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-4 mb-1">
-        <div class="tech tech-summary">
-          <div class="tech-content">
-            <h2 class="tech-title">
               <a href="/technologies/quant/">Quant</a>
             </h2>
             <p>The missing element in genomic interpretation.
@@ -399,11 +374,34 @@ Archipelago plots are for complex variant association studies.
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
-              <a href="/technologies/panelAppRexAi/">PanelAppRex AI</a>
+              <a href="/technologies/evidence_ratio/">Evidence ratio</a>
+            </h2>
+            <p>Clinical trials and biomedical studies produce results that cannot be compared directly because e...</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 mb-1">
+        <div class="tech tech-summary">
+          <div class="tech-content">
+            <h2 class="tech-title">
+              <a href="/technologies/quantbayes/">QuantBayes</a>
+            </h2>
+            <p>Gives genomics a shared evidence language.
+Every variant. Every pipeline. Every institution.
+</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 mb-1">
+        <div class="tech tech-summary">
+          <div class="tech-content">
+            <h2 class="tech-title">
+              <a href="/technologies/qv_database/">Qualifying variant database</a>
             </h2>
             <p>
-The leading disease-gene database with sophisticated search,
-designed to simplify the discovery ...</p>
+The open standard for variant interpretation, with trusted QV sets to enhance clarity and reprod...</p>
           </div>
         </div>
       </div>

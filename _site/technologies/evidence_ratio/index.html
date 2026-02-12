@@ -155,11 +155,11 @@
     <div class="col-12 col-md-8">
       <div class="tech tech-single">
         <h1 class="title">Evidence ratio</h1>
-        <div class="content"><p>Provides a standard way to report statistical evidence. 
-Works across clinical and biomedical analyses. 
-Enables results to be compared, stored, and reused across studies.</p>
+        <div class="content"><p>Clinical trials and biomedical studies produce results that cannot be compared directly because each endpoint reports evidence differently.</p>
 
-<p>Evidence Ratio defines how evidence strength is reported, independent of how analyses are performed.</p>
+<p>Evidence ratio provides a single, likelihood-based evidence scale that works across analyses without changing existing statistical methods. Results can then be compared, stored, and reused consistently across endpoints, studies, databases, and regulatory review.</p>
+
+<p>This allows trial and observational results to be exchanged, stored, and reused using a single, consistent reporting structure across statistical analyses, clinical databases, regulatory submissions, and interoperability standards such as HL7 FHIR.</p>
 
 <div class="download-actions">
   <a class="download-card" href="https://github.com/DylanLawless/src-evidenceratio_package" aria-label="Source code">
@@ -170,7 +170,7 @@ Enables results to be compared, stored, and reused across studies.</p>
     </span>
   </a>
 
-<a class="download-card" href="#installation" aria-label="R package installation">
+<a class="download-card" href="#cran" aria-label="R package installation">
   <span class="download-icon" aria-hidden="true">R</span>
   <span class="download-text">
     <span class="download-title">R package</span>
@@ -241,58 +241,82 @@ Enables results to be compared, stored, and reused across studies.</p>
 
 <p><br /></p>
 
-<p>Evidence Ratio does not change how analyses are run. 
+<p>Evidence ratio does not change how analyses are run. 
 It standardises how their evidence is reported.</p>
+
+<p>Analyses continue to produce effect estimates and uncertainty intervals. Evidence ratio adds a shared evidence measure that travels cleanly between endpoints and institutions.</p>
 
 <p><img src="/images/evidenceratio/evidenceratio_logo_red_hex.png" class="evidenceratio-hero" alt="Evidence Ratio logo" /></p>
 
 <hr />
 
-<h2 id="installation">Installation</h2>
+<h2 id="cran">R package installation</h2>
 
-<p>Until the package is available on CRAN, you can install the development version directly from GitHub.</p>
+<p>Source: <a href="https://cran.r-project.org/package=evidenceratio">cran.r-project evidenceratio</a> 
+<img src="https://www.r-pkg.org/badges/version/evidenceratio" alt="CRAN status" />
+<img src="https://cranlogs.r-pkg.org/badges/grand-total/evidenceratio" alt="CRAN downloads" /></p>
 
-<p>Option 1: install from GitHub</p>
+<p>Install with R or RStudio directly from CRAN. For more information see the 
+<a href="https://cran.r-project.org/web/packages/evidenceratio/vignettes/evidenceratio-intro.html">R vignette</a> and 
+<a href="https://cran.r-project.org/web/packages/evidenceratio/refman/evidenceratio.html">R reference manual</a> pages.</p>
 
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"devtools"</span><span class="p">)</span><span class="w">
-</span><span class="n">devtools</span><span class="o">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">"DylanLawless/src-evidenceratio_package"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>install.packages("evidenceratio")
+library(evidenceratio)
+help(package = "evidenceratio")
+</code></pre></div></div>
 
-<p>Option 2: install from a local clone</p>
-
-<p>If you have cloned the repository locally:</p>
-
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"devtools"</span><span class="p">)</span><span class="w">
-</span><span class="n">devtools</span><span class="o">::</span><span class="n">install</span><span class="p">(</span><span class="s2">"path/to/evidenceratio_package"</span><span class="p">,</span><span class="w"> </span><span class="n">upgrade</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"never"</span><span class="p">,</span><span class="w"> </span><span class="n">clean</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
-
-<p>Verify installation</p>
-
-<div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">evidenceratio</span><span class="p">)</span><span class="w">
-</span><span class="n">help</span><span class="p">(</span><span class="n">package</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"evidenceratio"</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
+<!-- Alternative 1: install from GitHub -->
+<!---->
+<!-- ```r -->
+<!-- install.packages("devtools") -->
+<!-- devtools::install_github("DylanLawless/src-evidenceratio_package") -->
+<!-- ``` -->
+<!---->
+<!-- A 2: install from a local clone -->
+<!---->
+<!-- If you have cloned the repository locally: -->
+<!---->
+<!-- ```r -->
+<!-- install.packages("devtools") -->
+<!-- devtools::install("path/to/evidenceratio_package", upgrade = "never", clean = TRUE) -->
+<!-- ``` -->
+<!---->
+<!-- Verify installation -->
+<!---->
+<!-- ```r -->
+<!-- library(evidenceratio) -->
+<!-- ``` -->
 
 <hr />
 
-<h2 id="what-evidence-ratio-does">What Evidence Ratio does</h2>
+<h2 id="where-evidence-ratio-fits">Where evidence ratio fits</h2>
 
-<p>Clinical trials and biomedical studies analyse heterogeneous endpoints using appropriate statistical models. These analyses are methodologically sound, but their results are reported in incompatible formats.</p>
+<p>Clinical analyses already produce results using appropriate statistical models. 
+Evidence ratio operates after analysis, translating results into a shared evidence scale.</p>
 
-<p>Evidence Ratio introduces a single likelihood based evidence scale that accompanies existing effect estimates and uncertainty intervals. This scale behaves consistently across outcomes, models, and studies.</p>
+<p>Analysis → effect estimate and interval → Evidence ratio → reusable reporting.</p>
 
-<p>The result is a shared evidence unit that travels cleanly between trials, endpoints, databases, and institutions.</p>
+<p>Discovery and modelling remain unchanged. Reporting becomes consistent.</p>
+
+<!-- ## What Evidence Ratio does -->
+<!---->
+<!-- Clinical trials and biomedical studies analyse heterogeneous endpoints using appropriate statistical models. These analyses are methodologically sound, but their results are reported in incompatible formats. -->
+<!---->
+<!-- Evidence Ratio introduces a single likelihood based evidence scale that accompanies existing effect estimates and uncertainty intervals. This scale behaves consistently across outcomes, models, and studies. -->
+<!---->
+<!-- The result is a shared evidence unit that travels cleanly between trials, endpoints, databases, and institutions. -->
 
 <hr />
 
-<h2 id="what-evidence-ratio-does-not-do">What Evidence Ratio does not do</h2>
+<h2 id="what-evidence-ratio-does-not-do">What evidence ratio does not do</h2>
 
-<p>Evidence Ratio does not replace statistical models.<br />
+<p>Evidence ratio does not replace statistical models.<br />
 It does not define decision thresholds.<br />
 It does not assess clinical or practical importance.<br />
 It does not perform multiplicity correction.<br />
 It does not replace effect sizes or uncertainty intervals.</p>
 
-<p>Evidence Ratio operates only at the level of reporting.</p>
+<p>Evidence ratio operates only at the level of reporting.</p>
 
 <hr />
 
@@ -300,19 +324,27 @@ It does not replace effect sizes or uncertainty intervals.</p>
 
 <p>Each statistical result contains three distinct components.</p>
 
-<p>Magnitude is captured by the <em>effect estimate</em>.<br />
-Precision is captured by the <em>uncertainty interval</em>.<br />
-Evidence is captured by a <em>likelihood ratio</em> comparing an explicit effect model with a no effect model.</p>
+<ul>
+  <li>Magnitude is captured by the <em>effect estimate</em>.</li>
+  <li>Precision is captured by the <em>uncertainty interval</em>.</li>
+  <li>Evidence is captured by a <em>likelihood ratio</em> comparing an explicit effect model with a no effect model.</li>
+</ul>
 
-<p>Evidence Ratio formalises this evidence component and reports it on a common log10 scale. Existing analyses remain unchanged.</p>
+<p>Evidence ratio formalises this evidence component and reports it on a common log10 scale. Existing analyses remain unchanged.</p>
 
 <hr />
 
-<h2 id="why-this-streamlines-clinical-trials">Why this streamlines clinical trials</h2>
+<h2 id="why-this-matters-in-practice">Why this matters in practice</h2>
 
-<p>Clinical trials routinely report multiple endpoints analysed using different models. These results are difficult to compare side by side.
-Evidence Ratio gives every endpoint the same evidence unit. This allows heterogeneous results to be aligned in a single table, forest plot, dashboard, or database.
-This supports multi endpoint trials, platform trials, meta analysis, regulatory review, and secondary data reuse.</p>
+<p>Clinical trials routinely analyse heterogeneous endpoints, making results difficult to compare side by side.</p>
+
+<p>Evidence ratio gives every endpoint the same evidence unit, allowing heterogeneous results to be aligned directly in trial tables, dashboards, and databases.</p>
+
+<p>Regulatory review, platform trials, and meta-analysis can therefore compare evidential support without reinterpretation.</p>
+
+<p>Results can then be stored and reused consistently across clinical databases, trial platforms, hospital systems, and national clinical data infrastructures using a single reporting structure.</p>
+
+<p>This structure can be exchanged across environments such as REDCap, electronic health records, and interoperability standards including HL7 FHIR.</p>
 
 <hr />
 
@@ -369,6 +401,8 @@ The evidence ratio provides a directly comparable measure of evidence support.</
 <hr />
 
 <h2 id="unified-reporting-across-analyses">Unified reporting across analyses</h2>
+
+<p>Clinical studies use many different statistical analyses depending on outcome type, including mean comparisons, regression models, contingency analyses, and survival models. These analyses remain unchanged, but their results can now be reported using a shared evidence scale.</p>
 
 <div class="table-responsive">
   <table class="table table-hover">
@@ -441,10 +475,10 @@ Further details are provided in the accompanying manuscript.</p>
 
 <h2 id="standards-and-implementation">Standards and implementation</h2>
 
-<p>Evidence Ratio is implemented in the <code class="language-plaintext highlighter-rouge">evidenceratio</code> R package.
-It conforms to the Evidence Ratio Reporting Standard (SGA-ERRS-1.0), published by the Swiss Genomics Association.
+<p>Evidence ratio is implemented in the <code class="language-plaintext highlighter-rouge">evidenceratio</code> R package.
+It conforms to the Evidence Ratio Reporting Standard (SGA-ERRS-1.0), published by the Swiss Genomics Association:
 <a href="https://www.swissgenomicsassociation.ch/pages/sga_errs/">
-  View the ERRS standard
+  view the ERRS standard.
 </a></p>
 
 <hr />

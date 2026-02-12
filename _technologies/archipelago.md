@@ -68,6 +68,9 @@ Archipelago connects variant set association tests and single-variant tests (e.g
     <p class="licence-why-text">
       Archipelago is an interpretation layer. Visual standards for large-scale association studies must be reusable across projects, institutions, and publications.
     </p>
+    <a href="/why-open" class="licence-why-link">
+      Read more
+    </a>
   </div>
 </div>
 

@@ -1,16 +1,9 @@
----
-title: "Evidence ratio"
-date: 2026-01-01
-math: mathjax
-weight: 1
----
 
-Clinical trials and biomedical studies produce results that cannot be compared directly because each endpoint reports evidence differently.
+Provides a standard way to report statistical evidence. 
+Works across clinical and biomedical analyses. 
+Enables results to be compared, stored, and reused across studies.
 
-Evidence ratio provides a single, likelihood-based evidence scale that works across analyses without changing existing statistical methods. Results can then be compared, stored, and reused consistently across endpoints, studies, databases, and regulatory review.
-
-This allows trial and observational results to be exchanged, stored, and reused using a single, consistent reporting structure across statistical analyses, clinical databases, regulatory submissions, and interoperability standards such as HL7 FHIR.
-
+Evidence Ratio defines how evidence strength is reported, independent of how analyses are performed.
 
 <div class="download-actions">
   <a class="download-card"
@@ -24,7 +17,7 @@ This allows trial and observational results to be exchanged, stored, and reused 
   </a>
 
 <a class="download-card"
-   href="#cran"
+   href="#installation"
    aria-label="R package installation">
   <span class="download-icon" aria-hidden="true">R</span>
   <span class="download-text">
@@ -96,10 +89,8 @@ This allows trial and observational results to be exchanged, stored, and reused 
 
 <br>
 
-Evidence ratio does not change how analyses are run. 
+Evidence Ratio does not change how analyses are run. 
 It standardises how their evidence is reported.
-
-Analyses continue to produce effect estimates and uncertainty intervals. Evidence ratio adds a shared evidence measure that travels cleanly between endpoints and institutions.
 
 <img src="/images/evidenceratio/evidenceratio_logo_red_hex.png"
      class="evidenceratio-hero"
@@ -107,7 +98,9 @@ Analyses continue to produce effect estimates and uncertainty intervals. Evidenc
 
 ---
 
-<h2 id="cran">R package installation</h2>
+## Installation
+
+<h3 id="cran">R package installation</h3>
 
 Source: [cran.r-project evidenceratio](https://cran.r-project.org/package=evidenceratio) 
 ![CRAN status](https://www.r-pkg.org/badges/version/evidenceratio)
@@ -147,35 +140,25 @@ help(package = "evidenceratio")
 
 ---
 
-## Where evidence ratio fits
+## What Evidence Ratio does
 
-Clinical analyses already produce results using appropriate statistical models. 
-Evidence ratio operates after analysis, translating results into a shared evidence scale.  
+Clinical trials and biomedical studies analyse heterogeneous endpoints using appropriate statistical models. These analyses are methodologically sound, but their results are reported in incompatible formats.
 
-Analysis → effect estimate and interval → Evidence ratio → reusable reporting.  
+Evidence Ratio introduces a single likelihood based evidence scale that accompanies existing effect estimates and uncertainty intervals. This scale behaves consistently across outcomes, models, and studies.
 
-Discovery and modelling remain unchanged. Reporting becomes consistent.
-
-
-<!-- ## What Evidence Ratio does -->
-<!---->
-<!-- Clinical trials and biomedical studies analyse heterogeneous endpoints using appropriate statistical models. These analyses are methodologically sound, but their results are reported in incompatible formats. -->
-<!---->
-<!-- Evidence Ratio introduces a single likelihood based evidence scale that accompanies existing effect estimates and uncertainty intervals. This scale behaves consistently across outcomes, models, and studies. -->
-<!---->
-<!-- The result is a shared evidence unit that travels cleanly between trials, endpoints, databases, and institutions. -->
+The result is a shared evidence unit that travels cleanly between trials, endpoints, databases, and institutions.
 
 ---
 
-## What evidence ratio does not do
+## What Evidence Ratio does not do
 
-Evidence ratio does not replace statistical models.  
+Evidence Ratio does not replace statistical models.  
 It does not define decision thresholds.  
 It does not assess clinical or practical importance.  
 It does not perform multiplicity correction.  
 It does not replace effect sizes or uncertainty intervals.
 
-Evidence ratio operates only at the level of reporting.
+Evidence Ratio operates only at the level of reporting.
 
 ---
 
@@ -183,25 +166,19 @@ Evidence ratio operates only at the level of reporting.
 
 Each statistical result contains three distinct components.
 
-* Magnitude is captured by the _effect estimate_.  
-* Precision is captured by the _uncertainty interval_.  
-* Evidence is captured by a _likelihood ratio_ comparing an explicit effect model with a no effect model.
+Magnitude is captured by the _effect estimate_.  
+Precision is captured by the _uncertainty interval_.  
+Evidence is captured by a _likelihood ratio_ comparing an explicit effect model with a no effect model.
 
-Evidence ratio formalises this evidence component and reports it on a common log10 scale. Existing analyses remain unchanged.
+Evidence Ratio formalises this evidence component and reports it on a common log10 scale. Existing analyses remain unchanged.
 
 ---
 
-## Why this matters in practice
+## Why this streamlines clinical trials
 
-Clinical trials routinely analyse heterogeneous endpoints, making results difficult to compare side by side.
-
-Evidence ratio gives every endpoint the same evidence unit, allowing heterogeneous results to be aligned directly in trial tables, dashboards, and databases.
-
-Regulatory review, platform trials, and meta-analysis can therefore compare evidential support without reinterpretation.
-
-Results can then be stored and reused consistently across clinical databases, trial platforms, hospital systems, and national clinical data infrastructures using a single reporting structure.
-
-This structure can be exchanged across environments such as REDCap, electronic health records, and interoperability standards including HL7 FHIR.
+Clinical trials routinely report multiple endpoints analysed using different models. These results are difficult to compare side by side.
+Evidence Ratio gives every endpoint the same evidence unit. This allows heterogeneous results to be aligned in a single table, forest plot, dashboard, or database.
+This supports multi endpoint trials, platform trials, meta analysis, regulatory review, and secondary data reuse.
 
 ---
 
@@ -247,8 +224,6 @@ The evidence ratio provides a directly comparable measure of evidence support.
 
 ## Unified reporting across analyses
 
-Clinical studies use many different statistical analyses depending on outcome type, including mean comparisons, regression models, contingency analyses, and survival models. These analyses remain unchanged, but their results can now be reported using a shared evidence scale.
-
 <div class="table-responsive" markdown="block">
 | Analysis type | Effect estimate | Uncertainty interval (95 percent) | log10 E(x) |
 | --- | --- | --- | --- |
@@ -277,10 +252,10 @@ Further details are provided in the accompanying manuscript.
 
 ## Standards and implementation
 
-Evidence ratio is implemented in the `evidenceratio` R package.
-It conforms to the Evidence Ratio Reporting Standard (SGA-ERRS-1.0), published by the Swiss Genomics Association:
+Evidence Ratio is implemented in the `evidenceratio` R package.
+It conforms to the Evidence Ratio Reporting Standard (SGA-ERRS-1.0), published by the Swiss Genomics Association.
 <a href="https://www.swissgenomicsassociation.ch/pages/sga_errs/">
-  view the ERRS standard.
+  View the ERRS standard
 </a>
 
 ---
