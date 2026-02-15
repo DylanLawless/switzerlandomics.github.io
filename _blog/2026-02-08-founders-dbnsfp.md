@@ -32,6 +32,8 @@ entities:
     - VCF
 ---
 
+<p>{{ page.date | date: "%Y-%m-%d" }}</p>
+
 How dbNSFP became a backbone database for functional annotation of protein-altering variants in modern genomics workflows.
 
 By the early 2010s, DNA sequencing had become faster and cheaper, but variant interpretation had become the limiting step. Exome and genome studies routinely produced millions of variants, yet researchers still needed to determine which changes were likely to affect protein function or disease risk.

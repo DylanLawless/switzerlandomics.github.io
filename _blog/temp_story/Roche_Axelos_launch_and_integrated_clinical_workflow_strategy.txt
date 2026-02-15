@@ -1,0 +1,34 @@
+**File title:**
+Roche Axelos launch and integrated clinical workflow strategy
+
+**Converted text:**
+
+Interesting slide from the Roche investor call. On the right of course we see the launch configuration of the Axelos NGS platform, packaged very much like an Illumina instrument for the classic NGS research/LDT market.
+
+But to me what's interesting is on the left we see what Roche did to mass spec: integrate a pretty finicky research instrument into a hard core clinical lab sample-to-answer system.
+
+Pretty clear in my opinion that in a few (?) years there will be a near identical photo captioned "First fully integrated IVD platform for clinical NGS" 🤔🤔🤔
+
+Image comparison shown in the slide:
+
+Left side image and caption:
+Instrument labeled **“cobas i601 Mass Spec (2024)”**, shown as a large integrated clinical laboratory instrument.
+
+Caption text states:
+**“First fully integrated IVD platform for clinical mass spectrometry.”**
+Launched in CE markets (including wave 1 menu), with full US launch expected in 2026.
+
+The image shows a large automated clinical laboratory system integrating sample processing and analysis in a unified clinical workflow rather than a standalone research instrument.
+
+Right side image and caption:
+Instrument labeled **“AXELIOS (SBX) (2026)”**, shown as Roche’s upcoming sequencing platform in a modular research configuration resembling current NGS systems.
+
+Caption highlights:
+• World record for fastest DNA sequencing, enabling human WGS in <4 hours.
+• ASHG 2025 update: Bulk RNA sequencing, methylation mapping, multiomics integration, spatial analyses, and growing network of early collaborators.
+
+The right image depicts two modular sequencing units with screens and processing modules, consistent with a research or early clinical deployment format rather than a fully integrated clinical automation system.
+
+Author’s implied point:
+Roche previously converted mass spectrometry from a complex research technology into a fully integrated clinical laboratory workflow system, and may be positioning sequencing to follow the same trajectory toward integrated clinical IVD deployment.
+

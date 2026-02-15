@@ -30,6 +30,8 @@ entities:
   formats:
 ---
 
+<p>{{ page.date | date: "%Y-%m-%d" }}</p>
+
 How Illumina transformed DNA sequencing from specialist research into global genomic infrastructure through platform engineering and commercial scaling.
 
 By the late 1990s, DNA sequencing remained slow and expensive. Sanger sequencing powered early genome projects but was impractical for population-scale studies. Sequencing a human genome required years and massive budgets, limiting genomics to elite research centres.

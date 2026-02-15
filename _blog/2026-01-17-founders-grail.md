@@ -30,6 +30,8 @@ entities:
     - cell-free DNA sequencing
 ---
 
+<p>{{ page.date | date: "%Y-%m-%d" }}</p>
+
 How GRAIL emerged from sequencing research to build multi-cancer early detection tests, scaled through massive clinical studies, and became an independent public company.
 
 Cancer screening historically detects only a few tumour types and usually only after symptoms appear. The operational bottleneck has been the absence of scalable methods to detect many cancers early in otherwise healthy people. Falling sequencing costs created a possibility, but practical methods were missing.

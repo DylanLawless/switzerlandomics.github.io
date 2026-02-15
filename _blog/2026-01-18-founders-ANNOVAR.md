@@ -27,6 +27,8 @@ entities:
     - VCF
 ---
 
+<p>{{ page.date | date: "%Y-%m-%d" }}</p>
+
 How ANNOVAR made variant annotation practical and became infrastructure across genomics research and clinical sequencing workflows.
 
 By the late 2000s, sequencing capacity had outpaced interpretation capacity. Whole exome and whole genome sequencing became routine, and laboratories suddenly faced millions of variants per sample. Generating variants was no longer the limiting step. Determining which variants were biologically or clinically relevant became the practical bottleneck.

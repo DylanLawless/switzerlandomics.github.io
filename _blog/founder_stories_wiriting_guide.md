@@ -98,6 +98,8 @@ title: "Founders of Topic Name"
 description: "Short description of infrastructure and impact"
 -------------------------------------------------------------
 
+<p>{{ page.date | date: "%Y-%m-%d" }}</p> (this is usually the same as the metadata date)
+
 Short description of infrastructure and impact.
 
 Article text begins here.
@@ -293,5 +295,8 @@ If any answer is no, revise.
 A founder page should read like a precise briefing written by someone who understands both the technology and how it actually reached the world.
 
 Clear. Human. Durable.
+
+A neutral framing question you can reuse across stories is:
+How did this move from idea or research into something people were willing to pay for, and what concrete path turned early work into a sustainable commercial product?
 
 

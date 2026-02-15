@@ -34,6 +34,8 @@ entities:
     - phd
 ---
 
+<p>{{ page.date | date: "%Y-%m-%d" }}</p>
+
 How Phred, Phrap, and Consed transformed genome assembly from manual finishing to quality-driven automated workflows during the Human Genome Project.
 
 In the early years of large-scale genome sequencing, machines were already generating data faster than humans could reliably assemble it. Sequencing centres accumulated growing collections of unfinished contigs that required manual inspection and correction before they could be trusted.

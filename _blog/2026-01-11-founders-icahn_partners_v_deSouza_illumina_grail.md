@@ -37,6 +37,8 @@ entities:
     - administrative litigation
 ---
 
+<p>{{ page.date | date: "%Y-%m-%d" }}</p>
+
 How regulatory opposition, activist intervention, and shareholder litigation followed Illumina’s decision to close the GRAIL acquisition under review, and how governance reset and divestiture unfolded.
 
 The Illumina–GRAIL episode is often framed as a failed acquisition, but the starting point deserves nuance. GRAIL itself originated as an Illumina spin-out in 2015–2016, created to pursue blood-based cancer detection using sequencing technology that Illumina had enabled. From a purely strategic perspective, reacquiring a former subsidiary developing a potentially transformative clinical application was not irrational. Absent antitrust constraints, many observers viewed reintegration as a logical long-term platform move.

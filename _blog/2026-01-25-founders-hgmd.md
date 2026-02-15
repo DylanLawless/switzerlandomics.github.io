@@ -27,6 +27,8 @@ entities:
     - HGVS
 ---
 
+<p>{{ page.date | date: "%Y-%m-%d" }}</p>
+
 How the Human Gene Mutation Database (HGMD) became the reference catalogue of published disease-causing gene variants and evolved into a licensed clinical infrastructure resource.
 
 By the early 1990s, molecular genetics was producing increasing numbers of reports describing mutations responsible for inherited disease. Each study documented variants in isolation, scattered across hundreds of journals. Researchers and clinicians attempting to interpret patient variants had to manually search literature to determine whether a mutation had already been observed or linked to disease.
