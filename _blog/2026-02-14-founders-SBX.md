@@ -106,24 +106,20 @@ SBX primary technical publication (bioRxiv, 2025)
 Kokoris M. et al. Sequencing by Expansion (SBX) – a novel, high-throughput single-molecule sequencing technology
 <https://doi.org/10.1101/2025.02.19.639056>
 
-Mark Kokoris, Roche Diagnostics profile
-https://diagnostics.roche.com/global/en/contributors/mark-kokoris.html
+<!-- [Mark Kokoris, Roche Diagnostics profile](https://diagnostics.roche.com/global/en/contributors/mark-kokoris.html) -->
 
-Roche SBX technology overview
-https://sequencing.roche.com/global/en/article-listing/sequencing-platform-technologies.html
+SBX technology overview ([Roche](https://sequencing.roche.com/global/en/article-listing/sequencing-platform-technologies.html))
 
-Nanopore sequencing and SBX background (Roche)
-https://sequencing.roche.com/global/en/article-listing/nanopore-sequencing.html
+Nanopore sequencing and SBX background ([Roche](https://sequencing.roche.com/global/en/article-listing/nanopore-sequencing.html))
 
-Roche investor update on SBX advances and sequencing world record (2025)
-https://www.roche.com/investors/updates/inv-update-2025-10-16
+<!-- Roche investor update on SBX advances and sequencing world record (2025) -->
+<!-- https://www.roche.com/investors/updates/inv-update-2025-10-16 -->
 
-Roche article: Inventing SBX – DNA sequencing breakthrough
-https://www.roche.com/stories/sbx-next-generation-sequencing-technology
+<!-- Roche article: Inventing SBX – DNA sequencing breakthrough -->
+<!-- https://www.roche.com/stories/sbx-next-generation-sequencing-technology -->
 
-Historical Stratos Genomics website (archived)
-https://web.archive.org/web/20150205000000/http://www.stratosgenomics.com/
+Historical Stratos Genomics website ([archived](https://web.archive.org/web/20150205000000/http://www.stratosgenomics.com/))
 
-AVENIO Edge System (Roche NGS automation platform)
-https://sequencing.roche.com/global/en/products/group/avenio-edge-system.html
+<!-- AVENIO Edge System (Roche NGS automation platform) -->
+<!-- https://sequencing.roche.com/global/en/products/group/avenio-edge-system.html -->
 

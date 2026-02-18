@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Variant summary</title>
+
+<style>
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  background: #f6f7f9;
+  color: #222;
+}
+
+header {
+  background: #2f3b52;
+  color: white;
+  padding: 1rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e3e5ea;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.card h2 {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  background: #f2f3f6;
+  border-bottom: 1px solid #e3e5ea;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.table th {
+  color: #555;
+  width: 180px;
+  font-weight: 500;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  background: #e7f0ff;
+  color: #1d4ed8;
+}
+
+.badge-pathogenic {
+  background: #ffe5e5;
+  color: #b91c1c;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.metric {
+  padding: 1rem;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.metric-value {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}
+
+.ci {
+  margin-top: 0.4rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .table th,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table th {
+    background: #fafafa;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Variant report summary</h1>
+</header>
+
+<div class="container">
+
+  <!-- Variant identity -->
+  <div class="card">
+    <h2>Variant</h2>
+    <table class="table">
+      <tr>
+        <th>Gene</th>
+        <td>NFKB1</td>
+      </tr>
+      <tr>
+        <th>HGVS</th>
+        <td>NM_003998.4:c.710C&gt;G (p.Ser237Ter)</td>
+      </tr>
+      <tr>
+        <th>Inheritance</th>
+        <td>Autosomal dominant</td>
+      </tr>
+      <tr>
+        <th>Clinical classification</th>
+        <td><span class="badge badge-pathogenic">Pathogenic</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Quant probabilities -->
+  <div class="card">
+    <h2>Quant inference</h2>
+
+    <div class="grid">
+
+      <div class="metric">
+        <div class="metric-label">
+          Posterior probability, observed variant
+        </div>
+        <div class="metric-value">0.377</div>
+        <div class="ci">95% CrI: 0.003 – 0.551</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-label">
+          Posterior probability, undetected variant
+        </div>
+        <div class="metric-value">0.364</div>
+        <div class="ci">Variant not detected</div>
+      </div>
+
+      <div class="metric">
+        <div class="metric-label">
+          Overall causal diagnosis probability
+        </div>
+        <div class="metric-value">0.511</div>
+        <div class="ci">95% CrI: 0.237 – 0.774</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Interpretation -->
+  <div class="card">
+    <h2>Interpretation</h2>
+    <table class="table">
+      <tr>
+        <th>Observed variant</th>
+        <td>Reported causal variant</td>
+      </tr>
+      <tr>
+        <th>Missing variant</th>
+        <td>Click to run confirmation on NFKB1 c.159+1G>A </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>
+

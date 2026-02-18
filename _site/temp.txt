@@ -1,0 +1,39 @@
+
+## Example output
+
+Each result is reported using the same three quantities.
+
+<div class="table-responsive" markdown="block">
+| Effect estimate | Uncertainty interval (95 percent) | log10 evidence ratio |
+| --- | --- | --- |
+| −1.18 | [−1.62, −0.74] | 12.87 |
+{: .table .table-hover}
+</div>
+
+The effect and interval remain on their native scale.
+The evidence ratio provides a directly comparable measure of evidence support.
+
+<div class="er-card">
+
+  <div class="er-header">Effect estimate</div>
+
+  <div class="er-scale-wrapper">
+    <div class="er-estimate-center">−1.18</div>
+
+    <div class="er-scale">
+      <span class="er-bound">−1.62</span>
+
+      <div class="er-line">
+        <div class="er-point"></div>
+      </div>
+
+      <span class="er-bound">−0.74</span>
+    </div>
+  </div>
+
+  <div class="er-evidence">
+    <div class="er-evidence-value">12.87</div>
+    <div class="er-evidence-label">log10 evidence ratio</div>
+  </div>
+</div>
+

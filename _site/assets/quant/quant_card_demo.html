@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Variant summary</title>
+
+<style>
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  background: transparent;
+  color: #222;
+}
+
+
+
+header {
+  background: #2f3b52;
+  color: white;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.container {
+  padding: 0;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e3e5ea;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.card h2 {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  background: #f2f3f6;
+  border-bottom: 1px solid #e3e5ea;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+.table th {
+  color: #555;
+  width: 220px;
+  font-weight: 500;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  background: #e7f0ff;
+  color: #1d4ed8;
+}
+
+.badge-pathogenic {
+  background: #ffe5e5;
+  color: #b91c1c;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.metric {
+  padding: 0.2rem 0.5rem;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.metric-value-static {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  transition: color 0.3s ease;
+  color: #5b5b5b; /* same as button */
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  transition: color 0.3s ease;
+  color: #e5261f; /* same as button */
+}
+
+.metric-value.success {
+  color: #15803d;
+}
+
+.ci {
+  margin-top: 0.3rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.run-button {
+  background: #e5261f;
+  color: white;
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.run-button:disabled {
+  opacity: 0.99;
+  cursor: default;
+  color: #2f2f41;
+}
+
+.spinner {
+  display: none;
+  margin-left: 8px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #2f3b52;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner.active {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.check {
+  display: none;
+  color: #000000;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.check.active {
+  display: inline;
+}
+
+@media (max-width: 600px) {
+  .table th,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table th {
+    background: #fafafa;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- <header> -->
+  <!-- <h1>Variant report summary</h1> -->
+<!-- </header> -->
+
+<div class="container">
+
+<!-- Variant identity -->
+<div class="card">
+<h2>Variant - traditional report layer</h2>
+<table class="table">
+<tr>
+<th>Gene</th>
+<td>NFKB1</td>
+</tr>
+<tr>
+<th>HGVS</th>
+<td>NM_003998.4:c.710C&gt;G (p.Ser237Ter)</td>
+</tr>
+<tr>
+<th>Inheritance</th>
+<td>Autosomal dominant</td>
+</tr>
+<tr>
+<th>Clinical classification</th>
+<td><span class="badge badge-pathogenic">Pathogenic</span></td>
+</tr>
+</table>
+</div>
+
+<!-- Quant probabilities base -->
+<div class="card">
+<h2>Quant inference</h2>
+
+<div class="grid">
+
+<div class="metric">
+<div class="metric-label">
+Posterior probability, observed variant (detected variants)
+</div>
+<div class="metric-value-static">0.377</div>
+<div class="ci">95% CrI: 0.003 – 0.551</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">
+Posterior probability, undetected alternatives (run confirmation to eliminate)
+</div>
+<div class="metric-value-static">0.364</div>
+<div class="ci">Variant not detected</div>
+</div>
+
+</div>
+
+
+</div>
+<!-- Quant probabilities confidence -->
+<div class="card">
+<h2>Quant confidence</h2>
+
+<div style="padding:1rem; border-top:1px solid #eee;">
+
+<div class="metric-label">
+Overall causal diagnosis probability
+</div>
+
+<div id="probValue" class="metric-value">0.511</div>
+<div id="probCI" class="ci">95% CrI: 0.237 – 0.774</div>
+
+</div>
+
+</div>
+
+<!-- Interpretation -->
+<div class="card">
+<h2>Interpretation</h2>
+
+<table class="table">
+<tr>
+<th>Observed variant</th>
+<td>Reported causal variant</td>
+</tr>
+
+<tr>
+<th>Alternative variants</th>
+<td>
+<!-- Update button -->
+<button id="runBtn" class="run-button pulse">
+  Run confirmation
+  <span id="spinner" class="spinner"></span>
+  <span id="check" class="check">✔ confirmed</span>
+</button>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+const btn = document.getElementById("runBtn");
+const spinner = document.getElementById("spinner");
+const check = document.getElementById("check");
+const probValue = document.getElementById("probValue");
+const probCI = document.getElementById("probCI");
+
+btn.addEventListener("click", () => {
+  btn.disabled = true;
+  spinner.classList.add("active");
+
+  setTimeout(() => {
+    spinner.classList.remove("active");
+    animateProbability(0.511, 1.0, 1500);
+  }, 1200);
+});
+
+function animateProbability(start, end, duration) {
+  const startTime = performance.now();
+
+  function update(time) {
+    const progress = Math.min((time - startTime) / duration, 1);
+    const value = start + (end - start) * progress;
+
+    probValue.textContent = value.toFixed(3);
+
+    const lower = 0.237 + (1 - 0.237) * progress;
+    const upper = 0.774 + (1 - 0.774) * progress;
+
+    probCI.textContent =
+      "95% CrI: " +
+      lower.toFixed(3) +
+      " – " +
+      upper.toFixed(3);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      probValue.textContent = "1.000";
+      probCI.textContent = "95% CrI: 1.000 – 1.000";
+      probValue.classList.add("success");
+      check.classList.add("active");
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+</script>
+
+<!-- Add to your CSS -->
+<style>
+.run-button.pulse {
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+</style>
+
+
+<!-- auto height -->
+<script>
+function sendHeight() {
+  parent.postMessage(
+    { type: "quantHeight", height: document.body.scrollHeight },
+    "*"
+  );
+}
+
+window.addEventListener("load", sendHeight);
+window.addEventListener("resize", sendHeight);
+setTimeout(sendHeight, 500);
+</script>
+
+
+</body>
+</html>

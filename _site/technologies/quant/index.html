@@ -147,67 +147,474 @@
         <div class="content"><p><strong>The missing element in genomic interpretation.</strong><br />
 Database, scan, and state-of-the-art algorithm.</p>
 
-<hr />
+<p>Clinical genomic decisions still depend on categorical labels such as pathogenic or benign. These labels summarise evidence but do not quantify how likely a genome truly explains a disease or functional outcome.</p>
 
-<p>For over a century, we have known how genetic variants should behave. But we have never had a system that measures, with statistical confidence, whether a given genome fits that expectation.</p>
+<p>As a result, conclusions are difficult to compare, defend, or update as evidence changes. Unobserved variants remain invisible, and uncertainty remains implicit.</p>
 
-<p>Traditional approaches stop at labels like <em>pathogenic</em>, <em>benign</em>, or <em>damaging</em>. These are useful shortcuts, but too limited for clinical, pharmacogenomic, or genome engineering.</p>
+<p>Quant provides a probabilistic inference layer that measures how likely any variant, observed or not, explains a functional effect in a genome.</p>
 
-<p>Quant replaces labels with a probabilistic framework. It estimates how likely any variant, observed or not, explains a functional effect.</p>
+<p><img src="/images/technologies/quant_icons.png" alt="Quant" /></p>
+
+<p>For every variant and effect combination, Quant produces:</p>
 
 <blockquote>
-  <p>For every possible variant and effect combination, we get:<br />
-“Overall probability of a correct causal diagnosis due to SNV/INDEL with current evidence: <strong>0.511 (95% CrI: 0.237–0.774)</strong>.”</p>
+  <p>“Overall probability of a correct causal diagnosis due to this SNV/INDEL with current evidence: <strong>0.511 (95 percent CrI: 0.237 to 0.774)</strong>.”</p>
 </blockquote>
+
+<p>This expresses not only what is observed, but how complete and sufficient the available evidence is.</p>
 
 <p>The same structure applies in numerous scenarios including rare disease diagnosis, drug target selection, variant reclassification, and genome design.</p>
 
-<p>Built on Hardy-Weinberg theory, Bayesian inference, and population-scale priors, Quant turns variant interpretation into a reproducible, rigorous system.</p>
+<h2 id="how-quant-fits-existing-workflows">How Quant fits existing workflows</h2>
 
-<hr />
+<p>Genome sequencing and analysis pipelines identify candidate variants. Quant operates after variant discovery, integrating observed and unobserved evidence to compute causal probabilities.</p>
+
+<p><strong>Traditional workflows:</strong><br />
+Genome → variant discovery → interpretation → expert judgement<br />
+Result: <em>Do we trust this result?</em></p>
+
+<p><strong>Improved with Quant:</strong><br />
+Genome → variant discovery → Quant inference → confidence-based decision<br />
+Result: probability and uncertainty are measured and explicit.</p>
+
+<p>Discovery pipelines remain unchanged. Interpretation becomes reproducible and probabilistic.</p>
+
+<style>
+
+.quant-card .container {
+  padding: 0;
+}
+
+.quant-card .table {
+  margin: 0;
+}
+
+.quant-card .card-body > table:first-child {
+  margin-top: 0;
+}
+
+.quant-card .card-body > table:last-child {
+  margin-bottom: 0;
+}
+
+.quant-card .table,
+.quant-card .table tr,
+.quant-card .table th,
+.quant-card .table td {
+  margin: 0;
+  border: none;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e3e5ea;
+  margin-bottom: 1rem;
+  overflow: visible;
+}
+
+.card h2 {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  background: #f2f3f6;
+  border-bottom: 1px solid #e3e5ea;
+}
+
+.card-body {
+  padding: 0.6rem 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.25rem 0;
+  font-size: 0.95rem;
+  vertical-align: middle;
+  border: none;
+}
+
+.table th {
+  color: #555;
+  width: 220px;
+  font-weight: 500;
+  padding-right: 1rem;
+}
+
+.quant-card .table,
+.quant-card .table th,
+.quant-card .table td,
+.quant-card .table tr {
+  border: none !important;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  background: #e7f0ff;
+  color: #1d4ed8;
+}
+
+.badge-pathogenic {
+  background: #ffe5e5;
+  color: #b91c1c;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.metric {
+  padding: 0.2rem 0.5rem;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.metric-value-static {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  color: #5b5b5b;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  transition: color 0.3s ease;
+  color: #e5261f;
+}
+
+.metric-value.success {
+  color: #15803d;
+}
+
+.ci {
+  margin-top: 0.3rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.run-button {
+  background: #e5261f;
+  color: white;
+  padding: 0.45rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.run-button:disabled {
+  opacity: 0.99;
+  cursor: default;
+  color: #2f2f41;
+}
+
+.spinner {
+  display: none;
+  margin-left: 8px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #2f3b52;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner.active {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.check {
+  display: none;
+  color: #000000;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.check.active {
+  display: inline;
+}
+
+@media (max-width: 600px) {
+  .table th,
+  .table td {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 0;
+  }
+}
+</style>
+
+<div class="quant-card">
+<div class="container">
+
+<h3>Traditional workflows</h3>
+<!-- Variant identity -->
+<div class="card">
+<h2>Variant report</h2>
+<div class="card-body">
+<table class="table">
+<tr>
+<th>Gene</th>
+<td>NFKB1</td>
+</tr>
+<tr>
+<th>HGVS</th>
+<td>NM_003998.4:c.710C&gt;G (p.Ser237Ter)</td>
+</tr>
+<tr>
+<th>Inheritance</th>
+<td>Autosomal dominant</td>
+</tr>
+<tr>
+<th>Clinical classification</th>
+<td><span class="badge badge-pathogenic">Pathogenic</span></td>
+</tr>
+<tr>
+<th>Decision status</th>
+<td>
+  <span id="decisionStatus" class="badge badge-warning">
+    Do we trust this result?
+  </span>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<h3>Improved with Quant</h3>
+<!-- Quant probabilities base -->
+<div class="card">
+<h2>Quant inference</h2>
+
+<div class="card-body">
+<div class="grid">
+
+<div class="metric">
+<div class="metric-label">
+Posterior probability, observed variant (detected variants)
+</div>
+<div class="metric-value">0.377</div>
+<div class="ci">95% CrI: 0.003 – 0.551</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">
+Posterior probability, undetected alternatives (run confirmation to eliminate)
+</div>
+<div id="altValue" class="metric-value">0.364</div>
+<div id="altCI" class="ci">Variant not detected</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Quant confidence</h2>
+
+<div class="card-body">
+
+<div class="metric">
+<div class="metric-label">
+Overall causal diagnosis probability
+</div>
+<div id="probValue" class="metric-value">0.511</div>
+<div id="probCI" class="ci">95% CrI: 0.237 – 0.774</div>
+</div>
+
+<hr style="border:none;border-top:1px solid #eee;margin:0.8rem 0;" />
+
+<table class="table">
+<tr>
+<th>Observed variant:</th>
+<td>known candidate</td>
+</tr>
+
+<tr>
+<th>Alternative variants:</th>
+<td>
+<button id="runBtn" class="run-button pulse">
+  Run confirmation
+  <span id="spinner" class="spinner"></span>
+  <span id="check" class="check">✔ complete</span>
+</button>
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const decisionStatus = document.getElementById("decisionStatus");
+const btn = document.getElementById("runBtn");
+const spinner = document.getElementById("spinner");
+const check = document.getElementById("check");
+
+const probValue = document.getElementById("probValue");
+const probCI = document.getElementById("probCI");
+
+const altValue = document.getElementById("altValue");
+const altCI = document.getElementById("altCI");
+
+
+btn.addEventListener("click", () => {
+  // stop pulsing immediately after click
+  btn.classList.remove("pulse");
+
+  btn.disabled = true;
+  spinner.classList.add("active");
+
+  setTimeout(() => {
+    spinner.classList.remove("active");
+
+    animateProbabilityUp(0.511, 1.0, 1500);
+    animateProbabilityDown(0.364, 0.0, 1500);
+
+  }, 500);
+});
+
+function animateProbabilityUp(start, end, duration) {
+  const startTime = performance.now();
+
+  function update(time) {
+    const progress = Math.min((time - startTime) / duration, 1);
+    const value = start + (end - start) * progress;
+
+    probValue.textContent = value.toFixed(3);
+
+    const lower = 0.237 + (1 - 0.237) * progress;
+    const upper = 0.774 + (1 - 0.774) * progress;
+
+    probCI.textContent =
+      "95% CrI: " +
+      lower.toFixed(3) +
+      " – " +
+      upper.toFixed(3);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      probValue.textContent = "1.000";
+      probCI.textContent = "95% CrI: 1.000 – 1.000";
+      probValue.classList.add("success");
+      check.classList.add("active");
+
+      // update decision status
+      decisionStatus.textContent = "Confidence measured";
+      decisionStatus.classList.remove("badge-warning");
+      decisionStatus.classList.add("badge-success");
+
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+
+function animateProbabilityDown(start, end, duration) {
+  const startTime = performance.now();
+
+  function update(time) {
+    const progress = Math.min((time - startTime) / duration, 1);
+    const value = start + (end - start) * progress;
+
+    altValue.textContent = value.toFixed(3);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      altValue.textContent = "0.000";
+      altCI.textContent = "95% CrI: 0.000 – 0.000";
+      altValue.classList.add("success");
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+</script>
+
+<style>
+.run-button.pulse {
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+</style>
+
+<p>Professionals need clarity even in difficult cases. Uncertainty is quantified, clear cases approach certainty, and decisions become measurable rather than subjective.</p>
+
+<h2 id="where-quant-is-used">Where Quant is used</h2>
+
+<p>Quant supports decisions wherever genomic evidence must be interpreted quantitatively, including:</p>
+
+<ul>
+  <li>clinical diagnosis and variant interpretation</li>
+  <li>pharmacogenomics and drug target evaluation</li>
+  <li>variant reclassification as evidence evolves</li>
+  <li>genome engineering and design</li>
+  <li>AI systems trained on genomic evidence</li>
+</ul>
+
+<h2 id="a-complete-inference-system">A complete inference system</h2>
+
+<p>• <strong>Quant DB</strong> provides genome-wide calibrated priors for every variant.<br />
+• <strong>Quant Scan</strong> extracts observed and unobserved evidence from each genome.<br />
+• <strong>Quant Calc</strong> integrates evidence and computes the probability that any variant explains disease, with credible intervals.</p>
+
+<p>Together, these components transform variant interpretation from categorical judgement into quantitative inference.</p>
+
+<p>Built on Hardy-Weinberg theory, Bayesian inference, and population-scale priors, Quant provides a reproducible statistical framework for genomic interpretation.</p>
+
+<h2 id="what-changes-with-quant">What changes with Quant</h2>
+
+<p>Decisions become probabilistic rather than categorical.<br />
+Evidence can be compared across cases and institutions.<br />
+Variant conclusions can be updated as evidence evolves.<br />
+AI systems can learn from calibrated genomic evidence.<br />
+Genome engineering decisions become measurable rather than heuristic.</p>
 
 <div style="padding:56.25% 0 0 0;position:relative;">
   <iframe src="https://player.vimeo.com/video/1103512246?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Qualifying variants"></iframe>
 </div>
 <script src="https://player.vimeo.com/api/player.js"></script>
-
-<hr />
-
-<h2 id="who-its-for">Who it’s for</h2>
-
-<p><strong>Quant is built for universal use by:</strong></p>
-
-<ul>
-  <li>Global biotech companies</li>
-  <li>Major hospital systems</li>
-  <li>Small, focused research teams</li>
-</ul>
-
-<p><strong>Across cutting-edge applications:</strong></p>
-
-<ul>
-  <li>AI models for genomic interpretation</li>
-  <li>Genome editing and design platforms</li>
-  <li>Large-scale population reference datasets</li>
-  <li>Clinical diagnostics and variant pipelines</li>
-  <li>Digital twin platforms for personalised simulation</li>
-</ul>
-
-<h2 id="a-complete-inference-system">A complete inference system</h2>
-
-<ul>
-  <li><strong>Quant DB</strong> provides genome-wide calibrated priors for every variant.</li>
-  <li><strong>Quant Scan</strong> extracts observed and unobserved variant evidence from each genome.</li>
-  <li><strong>Quant Calc</strong> integrates the data and computes the probability that any variant explains the disease, with a credible interval.</li>
-</ul>
-
-<p>The result is a rigorous, interpretable framework for genomic inference across diagnostics, discovery, and design.</p>
-
-<p>Validated in national studies. AI-ready format. Built for clinical labs, research pipelines, and real-world use.</p>
-
-<p><img src="/images/technologies/quant_icons.png" alt="Quant" /></p>
-
-<hr />
 
 <!-- <div class="call"> -->
 <!-- For over a century, genomics lacked a way to quantify whether a variant causes an effect. Quant is the first system to compute genome-wide causal probabilities for every variant-phenotype pair; even including unobserved variants. -->
@@ -231,8 +638,6 @@ Database, scan, and state-of-the-art algorithm.</p>
   </li>
 </ul>
 
-<hr />
-
 <h2 id="releases-and-technical-access">Releases and technical access</h2>
 
 <ul>
@@ -253,60 +658,13 @@ Database, scan, and state-of-the-art algorithm.</p>
   </li>
 </ul>
 
-<hr />
-
 <blockquote>
   <p>For a full list of publications and software releases, visit the<br />
 <a href="/publications">publications page</a><br />
 <a href="/releases">release archive</a></p>
 </blockquote>
 
-<!-- Our flagship tech that -->
-<!-- brings statistical confidence to decision making in genetic diagnosis. -->
-
 <!-- <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1103512246?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Qualifying variants"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script> -->
-
-<!-- <br/> -->
-<!-- <!-1- Quant delivers evidence-based probabilities for clear and confident genetic diagnoses -1-> -->
-
-<!-- Quant is a statistical framework that transforms how we interpret genomic data by assigning calibrated, quantitative confidence to variant classification. -->
-<!-- For over a century, statisticians and geneticists have sought to quantify the probability of genetic disease, but progress was limited by the absence of comprehensive data and a rigorous algorithmic framework. -->
-
-<!-- Unlike traditional approaches that stop at binary calls of "pathogenic" or "benign," Quant measures every interpretation, integrating both observed variants and unobserved possibilities into a rigorous probabilistic model. -->
-<!-- Built on foundations of population genetics, Hardy-Weinberg expectations, and Bayesian inference, it delivers formal genome-wide priors tailored to each inheritance model: autosomal dominant, recessive, and X-linked. -->
-<!-- The system quantifies not only true positives, but also the probability of missed causal variants, enabling fully accountable and transparent conclusions. -->
-
-<!-- <!-1- We provide the **Quant Database** of credible intervals as an exact, quantitative measure of variant interpretation. -1-> -->
-<!-- <!-1- The supporting algorithms, **Quant Scan** for extracting variant evidence and **Quant Calc** for computing disease probabilities, can be applied to new datasets or integrated into existing diagnostic pipelines. -1-> -->
-
-<!-- We provide the <strong>Quant database</strong> of credible intervals as an exact, quantitative measure of variant interpretation. -->
-<!-- The supporting algorithms, <strong>Quant scan</strong> for extracting variant evidence and <strong>Quant calc</strong> for computing disease probabilities, can be applied to new datasets or integrated into existing diagnostic pipelines. -->
-
-<!-- <!-1- <div class="row align-items-center mb-4"> -1-> -->
-<!-- <!-1-   <div class="col-md-auto mb-3 mb-md-0"> -1-> -->
-<!-- <!-1-     <img src="/images/tech/quant_logo_three_step_v2.png" -1-> -->
-<!-- <!-1-          alt="Logo for quant, database, scan, calculate." -1-> -->
-<!-- <!-1-          style="width: 200px; height: auto;" /> -1-> -->
-<!-- <!-1-   </div> -1-> -->
-<!-- <!-1-   <div class="col"> -1-> -->
-<!-- <!-1-     <p> -1-> -->
-<!-- <!-1-       We provide the <strong>Quant database</strong> of credible intervals as an exact, quantitative measure of variant interpretation. -1-> -->
-<!-- <!-1-       The supporting algorithms, <strong>Quant scan</strong> for extracting variant evidence and <strong>Quant calc</strong> for computing disease probabilities, can be applied to new datasets or integrated into existing diagnostic pipelines. -1-> -->
-<!-- <!-1-     </p> -1-> -->
-<!-- <!-1-   </div> -1-> -->
-<!-- <!-1- </div> -1-> -->
-
-<!-- We validated Quant using national cohorts, showing high concordance between predicted and observed case counts. -->
-<!-- The resulting dataset offers a reliable foundation for clinical decisions and large-scale studies alike. -->
-<!-- By structuring variant evidence in a way that can be read by both humans and machines, Quant lays the groundwork for relaible diagnosis and robust learning systems in AI-powered genomics. -->
-
-<!-- <!-1- <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1082804320?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Quant - measuring confidence in genetic diagnoses"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script> -1-> -->
-
-<!-- This video presents the first implementation of the Quant base model, which was used here for diagnosing inborn errors of immunity (IEI). -->
-<!-- Explore the [IEI-genetics database](../iei_genetics) for access to core data. -->
-<!-- The accompanying publication details the technical foundations can be found [here](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v4.full.pdf+html). -->
-
-<p><strong>Technically sound. Incredibly simple. The missing element in genomic interpretation.</strong></p>
 
 </div>
       </div>

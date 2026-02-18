@@ -1,0 +1,407 @@
+<style>
+
+.quant-card .container {
+  padding: 0;
+}
+
+.quant-card .table {
+  margin: 0;
+}
+
+.quant-card .card-body > table:first-child {
+  margin-top: 0;
+}
+
+.quant-card .card-body > table:last-child {
+  margin-bottom: 0;
+}
+
+.quant-card .table,
+.quant-card .table tr,
+.quant-card .table th,
+.quant-card .table td {
+  margin: 0;
+  border: none;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e3e5ea;
+  margin-bottom: 1rem;
+  overflow: visible;
+}
+
+.card h2 {
+  margin: 0;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  background: #f2f3f6;
+  border-bottom: 1px solid #e3e5ea;
+}
+
+.card-body {
+  padding: 0.6rem 1rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 0.25rem 0;
+  font-size: 0.95rem;
+  vertical-align: middle;
+  border: none;
+}
+
+.table th {
+  color: #555;
+  width: 220px;
+  font-weight: 500;
+  padding-right: 1rem;
+}
+
+.quant-card .table,
+.quant-card .table th,
+.quant-card .table td,
+.quant-card .table tr {
+  border: none !important;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  background: #e7f0ff;
+  color: #1d4ed8;
+}
+
+.badge-pathogenic {
+  background: #ffe5e5;
+  color: #b91c1c;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+}
+
+.metric {
+  padding: 0.2rem 0.5rem;
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.metric-value-static {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  color: #5b5b5b;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  transition: color 0.3s ease;
+  color: #e5261f;
+}
+
+.metric-value.success {
+  color: #15803d;
+}
+
+.ci {
+  margin-top: 0.3rem;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.run-button {
+  background: #e5261f;
+  color: white;
+  padding: 0.45rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.run-button:disabled {
+  opacity: 0.99;
+  cursor: default;
+  color: #2f2f41;
+}
+
+.spinner {
+  display: none;
+  margin-left: 8px;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ccc;
+  border-top: 2px solid #2f3b52;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.spinner.active {
+  display: inline-block;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.check {
+  display: none;
+  color: #000000;
+  font-weight: 600;
+  margin-left: 6px;
+}
+
+.check.active {
+  display: inline;
+}
+
+@media (max-width: 600px) {
+  .table th,
+  .table td {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 0;
+  }
+}
+</style>
+
+<div class="quant-card">
+<div class="container">
+
+<h3>Traditional workflows</h3>
+<!-- Variant identity -->
+<div class="card">
+<h2>Variant report</h2>
+<div class="card-body">
+<table class="table">
+<tr>
+<th>Gene</th>
+<td>NFKB1</td>
+</tr>
+<tr>
+<th>HGVS</th>
+<td>NM_003998.4:c.710C&gt;G (p.Ser237Ter)</td>
+</tr>
+<tr>
+<th>Inheritance</th>
+<td>Autosomal dominant</td>
+</tr>
+<tr>
+<th>Clinical classification</th>
+<td><span class="badge badge-pathogenic">Pathogenic</span></td>
+</tr>
+<tr>
+<th>Decision status</th>
+<td>
+  <span id="decisionStatus" class="badge badge-warning">
+    Do we trust this result?
+  </span>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<h3>Improved with Quant</h3>
+<!-- Quant probabilities base -->
+<div class="card">
+<h2>Quant inference</h2>
+
+<div class="card-body">
+<div class="grid">
+
+<div class="metric">
+<div class="metric-label">
+Posterior probability, observed variant (detected variants)
+</div>
+<div class="metric-value">0.377</div>
+<div class="ci">95% CrI: 0.003 – 0.551</div>
+</div>
+
+<div class="metric">
+<div class="metric-label">
+Posterior probability, undetected alternatives (run confirmation to eliminate)
+</div>
+<div id="altValue" class="metric-value">0.364</div>
+<div id="altCI" class="ci">Variant not detected</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="card">
+<h2>Quant confidence</h2>
+
+<div class="card-body">
+
+<div class="metric">
+<div class="metric-label">
+Overall causal diagnosis probability
+</div>
+<div id="probValue" class="metric-value">0.511</div>
+<div id="probCI" class="ci">95% CrI: 0.237 – 0.774</div>
+</div>
+
+<hr style="border:none;border-top:1px solid #eee;margin:0.8rem 0;">
+
+<table class="table">
+<tr>
+<th>Observed variant:</th>
+<td>known candidate</td>
+</tr>
+
+<tr>
+<th>Alternative variants:</th>
+<td>
+<button id="runBtn" class="run-button pulse">
+  Run confirmation
+  <span id="spinner" class="spinner"></span>
+  <span id="check" class="check">✔ complete</span>
+</button>
+</td>
+</tr>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+const decisionStatus = document.getElementById("decisionStatus");
+const btn = document.getElementById("runBtn");
+const spinner = document.getElementById("spinner");
+const check = document.getElementById("check");
+
+const probValue = document.getElementById("probValue");
+const probCI = document.getElementById("probCI");
+
+const altValue = document.getElementById("altValue");
+const altCI = document.getElementById("altCI");
+
+
+btn.addEventListener("click", () => {
+  // stop pulsing immediately after click
+  btn.classList.remove("pulse");
+
+  btn.disabled = true;
+  spinner.classList.add("active");
+
+  setTimeout(() => {
+    spinner.classList.remove("active");
+
+    animateProbabilityUp(0.511, 1.0, 1500);
+    animateProbabilityDown(0.364, 0.0, 1500);
+
+  }, 500);
+});
+
+function animateProbabilityUp(start, end, duration) {
+  const startTime = performance.now();
+
+  function update(time) {
+    const progress = Math.min((time - startTime) / duration, 1);
+    const value = start + (end - start) * progress;
+
+    probValue.textContent = value.toFixed(3);
+
+    const lower = 0.237 + (1 - 0.237) * progress;
+    const upper = 0.774 + (1 - 0.774) * progress;
+
+    probCI.textContent =
+      "95% CrI: " +
+      lower.toFixed(3) +
+      " – " +
+      upper.toFixed(3);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      probValue.textContent = "1.000";
+      probCI.textContent = "95% CrI: 1.000 – 1.000";
+      probValue.classList.add("success");
+      check.classList.add("active");
+
+      // update decision status
+      decisionStatus.textContent = "Confidence measured";
+      decisionStatus.classList.remove("badge-warning");
+      decisionStatus.classList.add("badge-success");
+
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+
+
+function animateProbabilityDown(start, end, duration) {
+  const startTime = performance.now();
+
+  function update(time) {
+    const progress = Math.min((time - startTime) / duration, 1);
+    const value = start + (end - start) * progress;
+
+    altValue.textContent = value.toFixed(3);
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      altValue.textContent = "0.000";
+      altCI.textContent = "95% CrI: 0.000 – 0.000";
+      altValue.classList.add("success");
+    }
+  }
+
+  requestAnimationFrame(update);
+}
+</script>
+
+<style>
+.run-button.pulse {
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+</style>
+
