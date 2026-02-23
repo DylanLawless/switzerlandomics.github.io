@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Thinking counter test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      /* no font-family here so it inherits your site default */
+      background: #ffffff;
+      color: #111111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .thinking-shell {
+      padding: 1rem 1.5rem;
+    }
+
+    .thinking-line {
+      /* inherit normal font size and weight */
+      white-space: nowrap;
+    }
+
+    .thinking-number {
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+      margin: 0 0.25rem;
+      position: relative;
+    }
+
+    .thinking-number::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.18em;
+      height: 2px;
+      background: linear-gradient(90deg, #0ea5e9, #ef4444);
+      opacity: 0.16;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <div class="thinking-shell">
+    <div class="thinking-line">
+      Thinking about
+      <span id="interaction-count" class="thinking-number">4,000,000,000</span>
+      biological interactions
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var prefersReduced =
+        window.matchMedia &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      var el = document.getElementById("interaction-count");
+      if (!el) {
+        return;
+      }
+
+      var baseValue = 4000000000;
+      var baseTime = new Date("2025-01-01T00:00:00Z").getTime();
+
+      var currentValue = 0;
+      var frameId = null;
+
+      function formatValue(v) {
+        try {
+          return v.toLocaleString("en-GB");
+        } catch (e) {
+          return String(v);
+        }
+      }
+
+      function computeTarget() {
+        var nowMs = Date.now();
+        var elapsedSeconds = Math.max(
+          0,
+          Math.floor((nowMs - baseTime) / 1000)
+        );
+        return baseValue + elapsedSeconds;
+      }
+
+      function render(v) {
+        el.textContent = formatValue(v);
+      }
+
+      function animateTo(target) {
+        if (prefersReduced) {
+          currentValue = target;
+          render(currentValue);
+          return;
+        }
+
+        var startValue = currentValue;
+        var delta = target - startValue;
+
+        if (delta <= 0) {
+          return;
+        }
+
+        var startTime = performance.now();
+        var duration = 900;
+
+        function frame(t) {
+          var progress = (t - startTime) / duration;
+          if (progress < 0) progress = 0;
+          if (progress > 1) progress = 1;
+
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var value = Math.round(startValue + delta * eased);
+          currentValue = value;
+          render(value);
+
+          if (progress < 1) {
+            frameId = requestAnimationFrame(frame);
+          }
+        }
+
+        if (frameId !== null) {
+          cancelAnimationFrame(frameId);
+        }
+        frameId = requestAnimationFrame(frame);
+      }
+
+      function scheduleNextTick() {
+        var delay = 1000 + Math.random() * 4000;
+        setTimeout(tick, delay);
+      }
+
+      function tick() {
+        var target = computeTarget();
+        if (target > currentValue) {
+          animateTo(target);
+        }
+        scheduleNextTick();
+      }
+
+      currentValue = computeTarget();
+      render(currentValue);
+      setTimeout(tick, 1200);
+    })();
+  </script>
+</body>
+</html>

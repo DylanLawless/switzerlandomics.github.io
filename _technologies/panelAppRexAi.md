@@ -2,66 +2,547 @@
 title: "PanelAppRex AI"
 date: 2025-01-01T00:00:01+10:00
 weight: 2
+layout: default_panelapprex
 ---
 
-<!-- PanelAppRex AI introduces --> 
-The leading disease-gene database with sophisticated search,
-designed to simplify the discovery of disease. Depend on trusted data
-[^bignote].
 
-<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1099451293?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Qualifying variants"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
-
-**Example search queries**:
-
-- **Complex query**: RAG1 primary immunodeficiency skin disorder paediatric
-- **Phenotypes**: congenital heart defects
-- **Disease names**: thoracic aortic aneurysm
-- **Disease groups**: cardiovascular disorders
-- **Panel names**: familial hypercholesterolaemia
-- **Gene names**: ABL1 COL1A1 COL3A1
-- **GRCh38 location**: 9:130713946-130887675
-- **Gene HGNC id**: HGNC:76
-- **Mode of inheritance**: autosomal dominant
+<p class="panelapprex-hero-hidden">
+The leading disease-gene database with sophisticated search, designed to simplify the discovery of disease.
+</p>
 
 
-<!-- <img src="/images/freepik_vectorjuice/artificial-intelligence-abstract-concept-illustration-ai-machine-learning-artificial-intelligence-evolution-high-tech-cutting-edge-technology-cognitive-robotics_335657-483.jpg" alt="AI panel app" width="200" /> <!-1- Adjust the width as needed -1-> -->
+<!--
+Particle ring control points
 
-<!-- <div class="table-responsive" markdown="block"> -->
+Position
+  Vertical anchor (CSS variable): --parx-anchor-y   (used as fallback only)
+  Horizontal centre (JS): state.cx
+  Vertical centre (JS): state.cy
 
-<!-- <iframe height="1200" width="150%" frameborder="yes" src="/assets/panel_ai/landing_page.html"> </iframe> -->
-<!-- <div class="iframe-wrapper"> -->
-<!--   <iframe height="1200" width="150%" frameborder="yes" src="/assets/panel_ai/landing_page.html"></iframe> -->
-<!-- </div> -->
+Size
+  Base radius (JS): baseR
+  Final radius clamp (JS): state.r
 
-<!-- see js in _layouts/default.html -->
-<!-- <div class="full-width-iframe"> -->
-<!--   <iframe -->
-<!--     id="responsive-iframe" -->
-<!--     src="/assets/panel_ai/landing_page.html" -->
-<!-- > -->
-<!--     <!-1- style="width: 100%; border: none; display: block;" -1-> -->
-<!-- </iframe> -->
+Thickness
+  Ring band width (JS config): cfg.ringWidth
 
+Rotation speed
+  Base angular speed (JS config): cfg.baseSpeed
+  Per-node speed variation (JS config): cfg.speedJitter
 
-<div class="full-width-iframe">
-  <iframe
-    id="responsive-iframe"
-    src="/assets/panel_ai/landing_page.html"
-    style="width: 100%; border: none; display: block;">
-  </iframe>
+Wobble behaviour
+  Radial strength (JS config): cfg.radialJitter
+  Wobble speed (JS step function): t * 0.0012
+  Wobble amplitude multiplier (JS step function): * 6
+-->
+
+<style>
+
+ .panelapprex-hero-hidden {
+    display: none;
+  }
+
+  /* Namespaced particles stage wrapping title and iframe */
+  .parx-stage {
+    position: relative;
+    overflow: visible; /* allow particles to extend beyond the box */
+    border-radius: 18px;
+    margin-top: 1rem;
+    padding: 4rem 1.5rem 3rem;
+
+    /* Fallback vertical anchor in px if title position is not available */
+    --parx-anchor-y: 140px;
+  }
+
+  @media (min-width: 768px) {
+    .parx-stage {
+      margin-top: 1rem;
+      padding: 4.5rem 2.5rem 3.5rem;
+      --parx-anchor-y: 180px;
+    }
+  }
+
+  .parx-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: none;
+    z-index: 0; /* very back */
+  }
+
+  /* Soft translucent veil above particles, below content */
+  .parx-softwash {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .parx-content {
+    position: relative;
+    z-index: 9; /* above particles and soft wash */
+  }
+
+  .parx-title {
+    font-size: 2.1rem;
+    margin: 2rem 0 1.5rem 0;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .parx-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .parx-canvas,
+    .parx-softwash { display: none; }
+  }
+
+  .thinking-shell {
+    position: relative;
+    z-index: 10; /* stay clearly above particles */
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+    text-align: center;
+  }
+
+  .thinking-line {
+    font-size: 0.9rem;
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.6);  /* ← alpha here */
+    box-shadow:
+      0 0 24px rgba(255, 255, 255, 0.95),
+      0 12px 30px rgba(0, 0, 0, 0.04);
+  }
+
+  .thinking-number {
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+    margin: 0 0.25rem;
+    position: relative;
+  }
+
+  .thinking-number::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.18em;
+    height: 2px;
+    background: linear-gradient(90deg, #0ea5e9, #ef4444);
+    opacity: 0.0;
+    border-radius: 999px;
+  }
+</style>
+
+<div class="container pb-6 pt-3 pt-md-4 pb-md-8">
+<!-- <div class="container pb-6 pt-0 pb-md-8"> -->
+  <div class="row justify-content-start">
+    <div class="col-12">
+      <div class="parx-stage" id="parx-stage">
+        <canvas id="parx-ring-net" class="parx-canvas" aria-hidden="true"></canvas>
+        <div class="parx-softwash" aria-hidden="true"></div>
+
+        <div class="parx-content">
+          <h1 class="parx-title">{{ page.title }}</h1>
+
+          <div class="thinking-shell">
+            <div class="thinking-line">
+              Thinking about
+              <span id="interaction-count" class="thinking-number">4,000,000,000</span>
+              biological interactions
+            </div>
+          </div>
+
+          <div class="full-width-iframe">
+
+          <!-- Optional hero text placeholder -->
+
+          <div class="full-width-iframe">
+            <iframe
+              id="responsive-iframe"
+              src="/assets/panel_ai/landing_page_beta.html"
+              style="width: 100%; border: none; display: block; background: transparent;"
+              title="PanelAppRex ai">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<script>
+  (() => {
+    const prefersReduced =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) return;
 
-[^bignote]: 
-With natural language queries, you can search by gene names, phenotypes, and other key data. Our system aggregates and analyses gene panel data from Genomics England’s PanelApp and other trusted sources. This comprehensive resource supports both the NHS National Genomic Test Directory and the virtual gene panels utilised in the 100,000 Genomes Project, providing valuable insights into disease–gene correlations and enhancing variant interpretation. We offer this dataset openly to help clinicians rapidly narrow their search space and make informed diagnoses. 
-While our robust database underpins this tool, we are actively refining the user interface. To aid in our development, we provide open early access, allowing users to explore and utilize our evolving features.\\
-<!-- For further details, visit Genomics England’s PanelApp at <https://panelapp.genomicsengland.co.uk/panels/>. -->
-**Please cite:**
-<!-- Lawless, Dylan, et al. "PanelAppRex aggregates disease gene panels and facilitates sophisticated search". medRxiv 2025.03.20.25324319; doi: <https://doi.org/10.1101/2025.03.20.25324319> - [PDF download](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v1.full.pdf). -->
-Quant Group, et al. "[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3)" *medRxiv* preprint (2025).\\
-[Repository](https://github.com/DylanLawless/PanelAppRex) |
-[DOI](https://doi.org/10.1101/2025.03.20.25324319) | 
-[PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3.full.pdf) | 
-[Video](https://player.vimeo.com/video/1099451293) | 
-[Application](https://switzerlandomics.ch/technologies/panelAppRexAi/) | 
-[Dataset](https://doi.org/10.5281/zenodo.15736688)  
+    const stage = document.getElementById("parx-stage");
+    const canvas = document.getElementById("parx-ring-net");
+    const titleEl = document.querySelector(".parx-title");
+
+    if (!stage || !canvas) return;
+
+    const ctx = canvas.getContext("2d", { alpha: true });
+
+    let w = 0, h = 0, dpr = 1;
+    let raf = 0;
+
+    const cfg = {
+      nodes: 82,
+
+      /* Thickness of the circular band in px.
+         Larger value = thicker ring.
+         Smaller value = thinner, tighter ring. */
+      ringWidth: 50,
+
+      /* Base angular speed of particles.
+         Larger value = faster rotation.
+         Smaller value = slower, calmer motion. */
+      baseSpeed: 0.0006,
+      speedJitter: 0.0016,
+
+      /* Strength of inward/outward breathing motion.
+         Larger value = stronger radial movement.
+         Smaller value = more stable ring. */
+      radialJitter: 0.35,
+      linkDist: 120,
+      linkDistFar: 170,
+      dotR: 1.25,
+      dotRAccent: 2.0,
+      lineWidth: 1,
+      lineAlpha: 0.14,
+      lineAlphaFar: 0.07,
+      dotAlpha: 0.78,
+      accentRate: 0.14,
+      accentTriangleRate: 0.12,
+      triangleSize: 5.5
+    };
+
+
+const rgba = (r, g, b, a) => `rgba(${r},${g},${b},${a})`;
+
+const palette = {
+  // structural network lines
+  // line: (a) => rgba(20, 20, 20, a),          // near-black graphite
+  line: (a) => rgba(180, 180, 180, a),          // near-black graphite
+
+  // base nodes
+  node: (a) => rgba(35, 35, 35, a),          // soft charcoal
+
+  // electric blue signal
+  accent: (a) => rgba(0, 140, 255, a),       // clean electric blue
+
+  // brand red highlight
+  accent2: (a) => rgba(220, 38, 38, a)       // Switzerland Omics red
+};
+
+    const rnd = (a, b) => a + Math.random() * (b - a);
+
+    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+    const state = {
+      t0: performance.now(),
+      cx: 0,
+      cy: 0,
+      r: 0,
+      nodes: []
+    };
+
+    function getFallbackAnchorY() {
+      const cs = getComputedStyle(stage);
+      const raw = cs.getPropertyValue("--parx-anchor-y").trim();
+      const px = parseFloat(raw);
+      if (Number.isFinite(px)) return px;
+      return 160;
+    }
+
+    function resize() {
+      const rect = stage.getBoundingClientRect();
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      w = Math.floor(rect.width);
+      h = Math.floor(rect.height);
+
+      canvas.width = Math.floor(w * dpr);
+      canvas.height = Math.floor(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      /* Default to stage centre then override with title position if available. */
+      let cx = w * 0.5;
+      let cy = getFallbackAnchorY();
+
+      if (titleEl) {
+        const titleRect = titleEl.getBoundingClientRect();
+        const stageRect = stage.getBoundingClientRect();
+
+        const titleCx = titleRect.left + titleRect.width / 2;
+        const titleCy = titleRect.top + titleRect.height / 2;
+
+        /* Convert from viewport coordinates to stage-local coordinates. */
+        cx = titleCx - stageRect.left;
+        cy = titleCy - stageRect.top;
+
+        /* Nudge slightly down so the title sits a little above the ring centre. */
+        cy += titleRect.height * 0.1;
+      }
+
+      /* Clamp to keep centre away from canvas edges. */
+      state.cx = clamp(cx, 40, w - 40);
+      state.cy = clamp(cy, 80, h - 80);
+
+      /* Base ring radius relative to the smaller of width and height. */
+      /* const baseR = Math.min(w, h) * 0.15; */
+      const baseR = w * 0.07;
+
+      /* Ensure the ring fits between top and bottom given the chosen centre. */
+      const margin = 24;
+      const maxRTop = state.cy - margin;
+      const maxRBottom = h - state.cy - margin;
+      const maxRFromCy = Math.max(60, Math.min(maxRTop, maxRBottom));
+
+      state.r = clamp(baseR, 80, maxRFromCy);
+
+      if (state.nodes.length === 0) init();
+    }
+
+    function init() {
+      state.nodes = [];
+      for (let i = 0; i < cfg.nodes; i++) {
+        const a = (i / cfg.nodes) * Math.PI * 2 + rnd(-0.2, 0.2);
+        const band = rnd(-cfg.ringWidth * 0.5, cfg.ringWidth * 0.5);
+        const drift = rnd(-cfg.radialJitter, cfg.radialJitter);
+
+        const isAccent = Math.random() < cfg.accentRate;
+        const isTriangle = isAccent && (Math.random() < cfg.accentTriangleRate);
+
+        state.nodes.push({
+          a,
+          band,
+          drift,
+          dir: Math.random() < 0.5 ? -1 : 1,
+          sp: cfg.baseSpeed + Math.random() * cfg.speedJitter,
+          phase: rnd(0, Math.PI * 2),
+          accent: isAccent,
+          tri: isTriangle,
+          alt: isAccent && !isTriangle && (Math.random() < 0.25)
+        });
+      }
+    }
+
+    function drawTriangle(x, y, size, rotation, fillStyle, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.translate(x, y);
+      ctx.rotate(rotation);
+      ctx.beginPath();
+      ctx.moveTo(0, -size);
+      ctx.lineTo(size * 0.9, size);
+      ctx.lineTo(-size * 0.9, size);
+      ctx.closePath();
+      ctx.fillStyle = fillStyle;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function step(now) {
+      const t = now - state.t0;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const positions = new Array(state.nodes.length);
+
+      for (let i = 0; i < state.nodes.length; i++) {
+        const p = state.nodes[i];
+
+        /* Radial oscillation behaviour:
+           First number (0.0012) controls wobble speed.
+           Multiplier (6) controls wobble amplitude. */
+        const wobble = Math.sin((t * 0.0012) + p.phase) * cfg.radialJitter * 6;
+        const rr = state.r + p.band + p.drift * 10 + wobble;
+
+        p.a += p.sp * p.dir;
+
+        const x = state.cx + Math.cos(p.a) * rr;
+        const y = state.cy + Math.sin(p.a) * rr;
+
+        positions[i] = { x, y, rr };
+      }
+
+      for (let i = 0; i < positions.length; i++) {
+        const a = positions[i];
+        for (let j = i + 1; j < positions.length; j++) {
+          const b = positions[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const d2 = dx * dx + dy * dy;
+
+          const dist = Math.sqrt(d2);
+          const far = dist < cfg.linkDistFar && Math.abs(a.rr - b.rr) < cfg.ringWidth * 0.65;
+          const near = dist < cfg.linkDist && Math.abs(a.rr - b.rr) < cfg.ringWidth * 0.55;
+
+          if (!near && !far) continue;
+
+          const maxD = near ? cfg.linkDist : cfg.linkDistFar;
+          const baseA = near ? cfg.lineAlpha : cfg.lineAlphaFar;
+          const alpha = baseA * (1 - dist / maxD);
+
+          ctx.beginPath();
+          ctx.strokeStyle = palette.line(alpha);
+          ctx.lineWidth = cfg.lineWidth;
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+
+      for (let i = 0; i < positions.length; i++) {
+        const pos = positions[i];
+        const p = state.nodes[i];
+
+        if (p.tri) {
+          drawTriangle(
+            pos.x,
+            pos.y,
+            cfg.triangleSize,
+            p.a + Math.PI * 0.5,
+            palette.accent(0.75),
+            1
+          );
+          continue;
+        }
+
+        const r = p.accent ? cfg.dotRAccent : cfg.dotR;
+        const fill = p.accent
+          ? (p.alt ? palette.accent2(0.65) : palette.accent(0.75))
+          : palette.node(cfg.dotAlpha);
+
+        ctx.beginPath();
+        ctx.fillStyle = fill;
+        ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      raf = requestAnimationFrame(step);
+    }
+
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(stage);
+
+    resize();
+    raf = requestAnimationFrame(step);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        cancelAnimationFrame(raf);
+      } else {
+        state.t0 = performance.now();
+        raf = requestAnimationFrame(step);
+      }
+    });
+  })();
+</script>
+
+<script>
+  (function () {
+    var prefersReduced =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var el = document.getElementById("interaction-count");
+    if (!el) {
+      return;
+    }
+
+    var baseValue = 4000000000; // starting count
+    var baseTime = new Date("2025-01-01T00:00:00Z").getTime(); // anchor time
+
+    var currentValue = 0;
+    var frameId = null;
+
+    function formatValue(v) {
+      try {
+        return v.toLocaleString("en-GB");
+      } catch (e) {
+        return String(v);
+      }
+    }
+
+    function computeTarget() {
+      var nowMs = Date.now();
+      var elapsedSeconds = Math.max(
+        0,
+        Math.floor((nowMs - baseTime) / 1000)
+      );
+      return baseValue + elapsedSeconds;
+    }
+
+    function render(v) {
+      el.textContent = formatValue(v);
+    }
+
+    function animateTo(target) {
+      if (prefersReduced) {
+        currentValue = target;
+        render(currentValue);
+        return;
+      }
+
+      var startValue = currentValue;
+      var delta = target - startValue;
+
+      if (delta <= 0) {
+        return;
+      }
+
+      var startTime = performance.now();
+      var duration = 900;
+
+      function frame(t) {
+        var progress = (t - startTime) / duration;
+        if (progress < 0) progress = 0;
+        if (progress > 1) progress = 1;
+
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var value = Math.round(startValue + delta * eased);
+        currentValue = value;
+        render(value);
+
+        if (progress < 1) {
+          frameId = requestAnimationFrame(frame);
+        }
+      }
+
+      if (frameId !== null) {
+        cancelAnimationFrame(frameId);
+      }
+      frameId = requestAnimationFrame(frame);
+    }
+
+    function scheduleNextTick() {
+      var delay = 1000 + Math.random() * 4000; // 1 to 5 seconds
+      setTimeout(tick, delay);
+    }
+
+    function tick() {
+      var target = computeTarget();
+      if (target > currentValue) {
+        animateTo(target);
+      }
+      scheduleNextTick();
+    }
+
+    currentValue = computeTarget();
+    render(currentValue);
+    setTimeout(tick, 1200);
+  })();
+</script>

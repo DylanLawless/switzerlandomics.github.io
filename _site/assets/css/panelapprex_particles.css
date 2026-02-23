@@ -1,0 +1,49 @@
+.parx-hero {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  min-height: 78vh;
+}
+
+.parx-hero__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.parx-hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.parx-hero__panel {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(101, 109, 135, 0.18);
+  border-radius: 16px;
+  box-shadow: 0 18px 60px rgba(47, 67, 86, 0.10);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 1.1rem 1.1rem;
+}
+
+.parx-hero__title {
+  margin: 0 0 0.35rem 0;
+}
+
+.parx-hero__lead {
+  margin: 0 0 1rem 0;
+  color: rgba(47, 67, 86, 0.78);
+}
+
+.parx-hero__iframe {
+  margin-top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parx-hero__canvas {
+    display: none;
+  }
+}

@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ring network background</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: rgba(47, 67, 86, 0.85);
+      --line: rgba(47, 67, 86, 0.14);
+      --node: rgba(47, 67, 86, 0.78);
+      --accent: rgba(83, 192, 0, 0.85);
+      --accent2: rgba(238, 64, 53, 0.70);
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 80vh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .overlay {
+      position: relative;
+      z-index: 2;
+      width: min(980px, calc(100% - 2rem));
+      padding: 2rem 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 920px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(101,109,135,0.20);
+      border-radius: 16px;
+      box-shadow: 0 18px 60px rgba(47,67,86,0.10);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow: hidden;
+    }
+
+    .card header {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(101,109,135,0.16);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .card header .title {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      color: rgba(47,67,86,0.92);
+    }
+
+    .card header .hint {
+      margin: 0;
+      font-size: 0.85rem;
+      color: rgba(47,67,86,0.62);
+      white-space: nowrap;
+    }
+
+    .search-frame {
+      width: 100%;
+      height: 96px;
+      border: 0;
+      display: block;
+      background: transparent;
+    }
+
+    @media (max-width: 560px) {
+      .card header .hint { display: none; }
+      .search-frame { height: 120px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      canvas { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <canvas id="ring-net" aria-hidden="true"></canvas>
+
+    <div class="overlay">
+      <div class="card">
+        <header>
+          <p class="title">PanelAppRex ai</p>
+          <p class="hint">Search genes, phenotypes, panels, loci</p>
+        </header>
+        <iframe class="search-frame" src="/assets/panel_ai/search_only.html" title="Search"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (() => {
+      const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) return;
+
+      const canvas = document.getElementById("ring-net");
+      const ctx = canvas.getContext("2d", { alpha: true });
+
+      let w = 0, h = 0, dpr = 1;
+      let raf = 0;
+
+      const cfg = {
+        nodes: 82,
+        ringWidth: 110,
+        baseSpeed: 0.0011,
+        speedJitter: 0.0016,
+        radialJitter: 0.35,
+        linkDist: 120,
+        linkDistFar: 170,
+        dotR: 1.25,
+        dotRAccent: 2.0,
+        lineWidth: 1,
+        lineAlpha: 0.14,
+        lineAlphaFar: 0.07,
+        dotAlpha: 0.78,
+        accentRate: 0.16,
+        accentTriangleRate: 0.12,
+        triangleSize: 5.5
+      };
+
+      function rgbaFromCssVar(name, fallback) {
+        const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        return v || fallback;
+      }
+
+      const colours = {
+        line: () => rgbaFromCssVar("--line", "rgba(47,67,86,0.14)"),
+        node: () => rgbaFromCssVar("--node", "rgba(47,67,86,0.78)"),
+        accent: () => rgbaFromCssVar("--accent", "rgba(83,192,0,0.85)"),
+        accent2: () => rgbaFromCssVar("--accent2", "rgba(238,64,53,0.70)")
+      };
+
+      const rnd = (a, b) => a + Math.random() * (b - a);
+
+      const state = {
+        t0: performance.now(),
+        cx: 0,
+        cy: 0,
+        r: 0,
+        nodes: [],
+        mouse: { x: null, y: null, active: false }
+      };
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+        w = Math.floor(rect.width);
+        h = Math.floor(rect.height);
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        state.cx = w * 0.5;
+        state.cy = h * 0.5;
+        state.r = Math.min(w, h) * 0.30;
+
+        if (state.nodes.length === 0) init();
+      }
+
+      function init() {
+        state.nodes = [];
+        for (let i = 0; i < cfg.nodes; i++) {
+          const a = (i / cfg.nodes) * Math.PI * 2 + rnd(-0.2, 0.2);
+          const band = rnd(-cfg.ringWidth * 0.5, cfg.ringWidth * 0.5);
+          const drift = rnd(-cfg.radialJitter, cfg.radialJitter);
+
+          const isAccent = Math.random() < cfg.accentRate;
+          const isTriangle = isAccent && (Math.random() < cfg.accentTriangleRate);
+
+          state.nodes.push({
+            a,
+            band,
+            drift,
+            dir: Math.random() < 0.5 ? -1 : 1,
+            sp: cfg.baseSpeed + Math.random() * cfg.speedJitter,
+            phase: rnd(0, Math.PI * 2),
+            accent: isAccent,
+            tri: isTriangle,
+            alt: isAccent && !isTriangle && (Math.random() < 0.25)
+          });
+        }
+      }
+
+      function drawTriangle(x, y, size, rotation, fillStyle, alpha) {
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.translate(x, y);
+        ctx.rotate(rotation);
+        ctx.beginPath();
+        ctx.moveTo(0, -size);
+        ctx.lineTo(size * 0.9, size);
+        ctx.lineTo(-size * 0.9, size);
+        ctx.closePath();
+        ctx.fillStyle = fillStyle;
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function step(now) {
+        const t = (now - state.t0);
+
+        ctx.clearRect(0, 0, w, h);
+
+        const positions = new Array(state.nodes.length);
+
+        for (let i = 0; i < state.nodes.length; i++) {
+          const p = state.nodes[i];
+
+          const wobble = Math.sin((t * 0.0012) + p.phase) * cfg.radialJitter * 6;
+          const rr = state.r + p.band + p.drift * 10 + wobble;
+
+          let speed = p.sp * p.dir;
+
+          if (state.mouse.active) {
+            const mx = state.mouse.x - state.cx;
+            const my = state.mouse.y - state.cy;
+            const ma = Math.atan2(my, mx);
+            const da = Math.atan2(Math.sin(p.a - ma), Math.cos(p.a - ma));
+            speed += (Math.abs(da) < 0.9 ? 0.0011 : 0.0) * (p.dir);
+          }
+
+          p.a += speed;
+
+          const x = state.cx + Math.cos(p.a) * rr;
+          const y = state.cy + Math.sin(p.a) * rr;
+
+          positions[i] = { x, y, rr };
+        }
+
+        // links
+        for (let i = 0; i < positions.length; i++) {
+          const a = positions[i];
+          for (let j = i + 1; j < positions.length; j++) {
+            const b = positions[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const d2 = dx * dx + dy * dy;
+
+            const dist = Math.sqrt(d2);
+            const far = dist < cfg.linkDistFar && Math.abs(a.rr - b.rr) < cfg.ringWidth * 0.65;
+            const near = dist < cfg.linkDist && Math.abs(a.rr - b.rr) < cfg.ringWidth * 0.55;
+
+            if (!near && !far) continue;
+
+            const maxD = near ? cfg.linkDist : cfg.linkDistFar;
+            const baseA = near ? cfg.lineAlpha : cfg.lineAlphaFar;
+            const alpha = baseA * (1 - dist / maxD);
+
+            ctx.beginPath();
+            ctx.strokeStyle = colours.line();
+            ctx.globalAlpha = alpha;
+            ctx.lineWidth = cfg.lineWidth;
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+        ctx.globalAlpha = 1;
+
+        // nodes
+        for (let i = 0; i < positions.length; i++) {
+          const pos = positions[i];
+          const p = state.nodes[i];
+
+          if (p.tri) {
+            const rot = p.a + Math.PI * 0.5;
+            drawTriangle(pos.x, pos.y, cfg.triangleSize, rot, colours.accent(), 0.75);
+            continue;
+          }
+
+          const r = p.accent ? cfg.dotRAccent : cfg.dotR;
+          const fill = p.accent ? (p.alt ? colours.accent2() : colours.accent()) : colours.node();
+          const alpha = p.accent ? 0.70 : cfg.dotAlpha;
+
+          ctx.beginPath();
+          ctx.fillStyle = fill;
+          ctx.globalAlpha = alpha;
+          ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        raf = requestAnimationFrame(step);
+      }
+
+      function onPointerMove(e) {
+        const rect = canvas.getBoundingClientRect();
+        state.mouse.x = e.clientX - rect.left;
+        state.mouse.y = e.clientY - rect.top;
+        state.mouse.active = true;
+      }
+
+      function onPointerLeave() {
+        state.mouse.active = false;
+      }
+
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("pointerleave", onPointerLeave, { passive: true });
+
+      resize();
+      raf = requestAnimationFrame(step);
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          cancelAnimationFrame(raf);
+        } else {
+          state.t0 = performance.now();
+          raf = requestAnimationFrame(step);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

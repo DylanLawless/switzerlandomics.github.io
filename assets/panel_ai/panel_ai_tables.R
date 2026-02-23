@@ -135,15 +135,80 @@ colnames(df_small)[colnames(df_small) == 'name'] <- 'Panel name'
 # saveWidget(dt_small, "landing_page.html", selfcontained = FALSE)
 
 
+
+# working version on public site.
+# dt_small <- datatable(
+#   df_small,
+#   rownames = TRUE,
+#   escape = FALSE,
+#   options = list(
+#     scrollX = F,
+#     # scrollY = F,  # vertical scroll region
+#     # scrollY = "200px",  # vertical scroll region
+#     scroller = TRUE,    # optional for smoother virtual scrolling
+#     pageLength = 25,
+#     lengthChange = FALSE,
+#     deferRender = TRUE,
+#     autoWidth = FALSE,
+#     columnDefs = list(
+#       list(visible = FALSE, targets = seq(3, ncol(df_small)), searchable = TRUE),
+#       list(width = "20px", targets = 0, orderable = TRUE),
+#       list(width = "140px", targets = 1),
+#       list(width = "50px", targets = 2)
+#     ),
+#     language = list(
+#       search = "",
+#       searchPlaceholder = "Enter natural language query..."
+#     ),
+#     initComplete = JS("
+#       function(settings, json) {
+#         var filter = $('div.dataTables_filter');
+#         filter.css({'width': '100%'});
+#         filter.find('input').css({
+#           'width': '100%',
+#           'border': '1px solid #ccc',
+#           'padding': '8px',
+#           'border-radius': '4px',
+#           'box-shadow': '0 1px 3px rgba(0,0,0,0.2)',
+#           'font-size': '14px',
+#           'font-family': 'system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif'
+#         });
+#         $('table.dataTable').css({
+#           'font-family': 'system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif',
+#           'table-layout': 'fixed'
+#         });
+#         $('<style type=\"text/css\"> table.dataTable a { color: #b71c1c; } table.dataTable a:visited { color: #1a237e; } </style>').appendTo('head');
+#       }
+#     ")
+#   )
+#   
+# ) %>%
+#   formatStyle(
+#     'Gene count',
+#     background = styleColorBar(as.numeric(df_small$`Gene count`), '#43b4eb'),
+#     backgroundSize = '100% 90%',
+#     backgroundRepeat = 'no-repeat',
+#     backgroundPosition = 'center'
+#   )
+# 
+# dt_small
+# saveWidget(dt_small, "landing_page.html", selfcontained = FALSE)
+# 
+
+
+
+
+
+
+
+# adding a transparent background
 dt_small <- datatable(
   df_small,
   rownames = TRUE,
   escape = FALSE,
   options = list(
-    scrollX = F,
-    # scrollY = F,  # vertical scroll region
-    # scrollY = "200px",  # vertical scroll region
-    scroller = TRUE,    # optional for smoother virtual scrolling
+    scrollX = FALSE,
+    scroller = TRUE,
     pageLength = 25,
     lengthChange = FALSE,
     deferRender = TRUE,
@@ -176,10 +241,17 @@ dt_small <- datatable(
           'table-layout': 'fixed'
         });
         $('<style type=\"text/css\"> table.dataTable a { color: #b71c1c; } table.dataTable a:visited { color: #1a237e; } </style>').appendTo('head');
+
+        // Make the widget background transparent so particles can show through
+        $('html, body').css({
+          'background': 'transparent'
+        });
+        $('.dataTables_wrapper').css({
+          'background': 'transparent'
+        });
       }
     ")
   )
-  
 ) %>%
   formatStyle(
     'Gene count',
@@ -189,10 +261,7 @@ dt_small <- datatable(
     backgroundPosition = 'center'
   )
 
-dt_small
 saveWidget(dt_small, "landing_page.html", selfcontained = FALSE)
-
-
 
 
 
