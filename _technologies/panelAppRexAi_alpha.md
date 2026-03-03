@@ -1,6 +1,3 @@
-title: "PanelAppRex AI alphpa"
-date: 2025-01-01T00:00:01+10:00
-weight: 2
 
 <!-- PanelAppRex AI introduces --> 
 The leading disease-gene database with sophisticated search,
@@ -20,25 +17,6 @@ designed to simplify the discovery of disease. Depend on trusted data
 - **GRCh38 location**: 9:130713946-130887675
 - **Gene HGNC id**: HGNC:76
 - **Mode of inheritance**: autosomal dominant
-
-
-<!-- <img src="/images/freepik_vectorjuice/artificial-intelligence-abstract-concept-illustration-ai-machine-learning-artificial-intelligence-evolution-high-tech-cutting-edge-technology-cognitive-robotics_335657-483.jpg" alt="AI panel app" width="200" /> <!-1- Adjust the width as needed -1-> -->
-
-<!-- <div class="table-responsive" markdown="block"> -->
-
-<!-- <iframe height="1200" width="150%" frameborder="yes" src="/assets/panel_ai/landing_page.html"> </iframe> -->
-<!-- <div class="iframe-wrapper"> -->
-<!--   <iframe height="1200" width="150%" frameborder="yes" src="/assets/panel_ai/landing_page.html"></iframe> -->
-<!-- </div> -->
-
-<!-- see js in _layouts/default.html -->
-<!-- <div class="full-width-iframe"> -->
-<!--   <iframe -->
-<!--     id="responsive-iframe" -->
-<!--     src="/assets/panel_ai/landing_page.html" -->
-<!-- > -->
-<!--     <!-1- style="width: 100%; border: none; display: block;" -1-> -->
-<!-- </iframe> -->
 
 
 <div class="full-width-iframe">
