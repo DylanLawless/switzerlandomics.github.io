@@ -1,0 +1,305 @@
+## Internal style checklist for `/learn/` pages
+
+Use this before drafting, while editing, and before publishing.
+
+### 1. Search intent and scope
+
+* Does the page answer **one clear search question**?
+* Would the title match a phrase a practitioner might actually search?
+* Is the page scoped tightly enough to avoid drifting into adjacent topics?
+* Does the page answer the **working question**, not just define the term?
+
+Good:
+
+* What is a VCF file?
+* GRCh37 vs GRCh38 explained
+* What is a Phred score?
+
+Avoid:
+
+* Genomics file formats overview
+* Everything about alignment and variant calling
+
+---
+
+### 2. First paragraph
+
+* Does the first paragraph define the concept directly in one or two sentences?
+* Could the first paragraph stand alone as a search snippet?
+* Would a reader know within five seconds that they are on the right page?
+* Is there no filler, scene-setting, or marketing framing?
+
+Pass test:
+
+* A reader can copy the first paragraph and use it as the answer.
+
+Fail test:
+
+* The opening delays the definition or sounds like an article introduction.
+
+---
+
+### 3. Practical purpose
+
+* Is there a short section explaining **why this exists in practice**?
+* Does it explain the operational need, not the history unless history matters?
+* Does it tell the reader what problem the format, concept, or method solves?
+
+The page should answer:
+
+* Why was this needed?
+* What breaks without it?
+* Why does a pipeline or user care?
+
+---
+
+### 4. Core structure or mechanism
+
+* Does the page explain the minimum internal structure needed for correct interpretation?
+* Is the explanation practical rather than specification-heavy?
+* If a table helps, is it short and genuinely useful?
+* Are only the fields or parts included that readers actually need to interpret correctly?
+
+Include:
+
+* the parts that cause confusion
+* the structure that affects downstream use
+
+Exclude:
+
+* exhaustive field dumps
+* spec-level detail unless essential
+
+---
+
+### 5. Real example
+
+* Is there one small example if interpretation benefits from it?
+* Is the example short enough to scan quickly?
+* Is only the important part annotated?
+* Does the example teach the reader how to read a real record or output?
+
+Use one example when:
+
+* formats have fields
+* notation causes confusion
+* coordinates or encodings matter
+
+Skip only when:
+
+* the concept is simple enough without one
+
+---
+
+### 6. Details that matter
+
+* Does the page include the small number of operational details that prevent real mistakes?
+* Are these details high-impact rather than advanced trivia?
+* Would omitting them cause readers to make wrong assumptions?
+
+Typical examples:
+
+* 0-based vs 1-based coordinates
+* sorted before indexing
+* reference-build compatibility
+* sequence and quality length matching
+* CRAM reference dependency
+
+This section should answer:
+
+* What will quietly break if the reader gets this wrong?
+
+---
+
+### 7. Common mistakes
+
+* Does the page name the mistakes people actually make?
+* Are the mistakes concrete and phrased clearly?
+* Do they reflect real pipeline or interpretation errors, not generic misunderstandings?
+
+Strong examples:
+
+* Treating `POS` as 0-based
+* Assuming missing VCF record means homozygous reference
+* Renaming chromosomes instead of remapping
+* Using unsorted BAM with indexing
+
+Weak examples:
+
+* Misunderstanding the concept
+* Using the format incorrectly
+
+---
+
+### 8. Pipeline placement
+
+* Does the page show where the concept fits in a workflow?
+* Is there a one-line arrow workflow where useful?
+* Would a reader understand what comes before and after?
+
+Example:
+`Sequencing → FASTQ → Alignment → BAM/CRAM → Variant calling → VCF`
+
+This is important because readers often search for a term while trying to place it in a broader pipeline.
+
+---
+
+### 9. Adjacent concept
+
+* Does the page briefly explain one nearby concept that readers commonly confuse with this one?
+* Is the comparison short and practical?
+* Does it reduce the most likely confusion without becoming a second article?
+
+Examples:
+
+* FASTA vs FASTQ
+* VCF vs gVCF
+* BAM vs CRAM
+* assembly vs annotation
+
+---
+
+### 10. Reference and authority
+
+* Does the page end with one canonical or authoritative reference?
+* Is the link the correct level of authority, spec, standards body, or widely accepted source?
+* Is the reference there for deeper reading rather than to replace the page itself?
+
+The page should not depend on the reader opening the spec to understand the basics.
+
+---
+
+### 11. Tone and voice
+
+* Is the tone calm, precise, and direct?
+* Does it sound like a practitioner explaining something clearly?
+* Is there no hype, no teaching-performance voice, and no marketing language?
+* Is the prose low-noise and technically clean?
+
+Avoid:
+
+* “In this article”
+* “Let’s explore”
+* “powerful”
+* “best”
+* “revolutionary”
+* “designed to empower”
+
+Prefer:
+
+* “records”
+* “stores”
+* “defines”
+* “matters because”
+* “common mistake”
+
+---
+
+### 12. Level of detail
+
+* Is the page complete enough for a first-stop technical answer?
+* Does it stop before becoming a full specification or tutorial?
+* Would most technically literate readers leave satisfied after reading it?
+* Is the page useful to both non-experts and experts needing a refresher?
+
+Target standard:
+
+* better than a glossary
+* shorter than documentation
+* more practical than a textbook
+* calmer than a blog post
+
+---
+
+### 13. Formatting and readability
+
+* No H1 in the body
+* Short paragraphs
+* Minimal but useful headings
+* Small tables only when they reduce effort
+* Small code blocks only when they teach interpretation
+* No giant raw outputs
+* No clutter for visual bulk
+
+Ask:
+
+* Can a reader scan this in under a minute and decide whether to read fully?
+
+---
+
+### 14. SEO quality without SEO noise
+
+* Does the page naturally include the terminology users actually search for?
+* Are important synonyms included where they genuinely help?
+* Does the language stay natural and technical rather than keyword-stuffed?
+* Does the description clearly match the title and likely query?
+
+Good SEO here means:
+
+* exact topic match
+* clean definitions
+* related operational terms
+* strong query satisfaction
+
+Not:
+
+* stuffing repeated phrases
+* awkward synonym padding
+
+---
+
+### 15. Brand discipline
+
+* Is the page primarily useful on its own, without product promotion?
+* If Switzerland Omics is mentioned, is it brief and structurally relevant?
+* Does the page build authority by being useful rather than by making claims?
+
+The page should leave the impression:
+
+* this site understands practical genomics
+* this organisation is technically credible
+* the writing is careful and useful
+
+---
+
+### 16. Final quality gate
+
+Before publishing, confirm all of the below:
+
+* the title answers one search intent
+* the first paragraph defines the concept directly
+* the practical purpose is clear
+* the structure or mechanism is explained
+* one real example is included when needed
+* the key operational details are covered
+* common mistakes are concrete
+* pipeline placement is clear
+* one adjacent concept is addressed
+* one authoritative reference is linked
+* no marketing language appears
+* no section feels bloated or underpowered
+
+### Final test
+
+Ask:
+
+**Would a technically literate reader searching this term feel satisfied, better oriented, and less likely to make a mistake after reading this page?**
+
+If not, revise.
+
+## Very short editor version
+
+For quick review, every `/learn/` page must have:
+
+* direct definition
+* practical reason it exists
+* minimum structure needed for correct use
+* one small example where needed
+* key failure modes
+* common mistakes
+* pipeline context
+* one nearby comparison
+* one authoritative reference
+* calm, precise, non-promotional writing
+
+
