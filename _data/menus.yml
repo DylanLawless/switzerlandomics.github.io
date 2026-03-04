@@ -37,3 +37,6 @@ footer:
   - name: "Learn"
     url: "/learn/"
     weight: 4
+  - name: "Legal"
+    url: "/legal/"
+    weight: 5

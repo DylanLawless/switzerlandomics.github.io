@@ -13,7 +13,7 @@ show_call_box: false
 
 # Genomic infrastructure
 
-## We build quantitative genomic infrastructure so biotech companies can produce decision-grade genomics.
+## We build quantitative genomic infrastructure so biotech companies can produce decision-grade results.
 
 <!-- Probabilistic systems and evidence frameworks that make genomic interpretation measurable and auditable. -->
 
@@ -49,7 +49,7 @@ show_call_box: false
   <p class="audience-kicker">For individuals</p>
   <!-- <h3 class="audience-heading">Genomic Vault</h3> -->
   <p class="audience-body">
-    Genomic Vault for storing your DNA data. Built on the same infrastructure trusted by national research and hospitals.
+    Genomic Vault for storing your DNA data. Built on the same infrastructure trusted by research institutions and hospitals.
   </p>
 
   <a href="https://genomicvault.switzerlandomics.ch"
