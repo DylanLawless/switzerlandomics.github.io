@@ -139,7 +139,8 @@
 
 
 
-    <div class="intro">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<div class="intro">
   <div class="container">
     <div class="row justify-content-start">
       <div class="col-12 col-md-7 col-lg-6 order-2 order-md-1">
@@ -540,21 +541,10 @@
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
-              <a href="/technologies/evidence_ratio/">Evidence ratio</a>
+              <a href="/technologies/quant/">Quant</a>
             </h2>
-            <p>Clinical trials and biomedical studies produce results that cannot be compared directly because e...</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-4 mb-1">
-        <div class="tech tech-summary">
-          <div class="tech-content">
-            <h2 class="tech-title">
-              <a href="/technologies/genomic_vault/">Genomic vault</a>
-            </h2>
-            <p>Sequencing produces genome data.
-Genomic Vault provides custody.
+            <p>The missing element in genomic interpretation.
+Database, scan, and state-of-the-art algorithm.
 </p>
           </div>
         </div>
@@ -589,10 +579,9 @@ The open standard for variant interpretation, with trusted QV sets to enhance cl
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
-              <a href="/technologies/quant/">Quant</a>
+              <a href="/technologies/vcfheader/">VCFheader</a>
             </h2>
-            <p>The missing element in genomic interpretation.
-Database, scan, and state-of-the-art algorithm.
+            <p>The fastest way to understand a VCF before reading a single variant.
 </p>
           </div>
         </div>
@@ -602,9 +591,22 @@ Database, scan, and state-of-the-art algorithm.
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
-              <a href="/technologies/vcfheader/">VCFheader</a>
+              <a href="/technologies/panelAppRexAi/">PanelAppRex AI</a>
             </h2>
-            <p>The fastest way to understand a VCF before reading a single variant.
+            <p>
+The leading disease-gene database with sophisticated search, designed to simplify the discovery ...</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 mb-1">
+        <div class="tech tech-summary">
+          <div class="tech-content">
+            <h2 class="tech-title">
+              <a href="/technologies/genomic_vault/">Genomic vault</a>
+            </h2>
+            <p>Sequencing produces genome data.
+Genomic Vault provides custody.
 </p>
           </div>
         </div>

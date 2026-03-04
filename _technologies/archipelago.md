@@ -2,7 +2,7 @@
 title: "Archipelago"
 date: 2026-01-01
 math: mathjax
-weight: 1
+weight: 10
 ---
 
 Manhattan plots are for GWAS. 

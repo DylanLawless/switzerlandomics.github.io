@@ -2,7 +2,7 @@
 title: "QuantBayes"
 date: 2025-01-01T00:00:01+10:00
 math: mathjax
-weight: 1
+weight: 2
 ---
 
 Gives genomics a shared evidence language.  

@@ -4,7 +4,7 @@ date: 2025-10-25T00:00:01+10:00
 layout: page
 intro_image_hide_on_mobile: true
 show_call_box: false
-weight: 2
+weight: 99
 ---
 
 **Estimate the maximum minor allele frequency (MAF) your cohort can support.** A quick, transparent tool for setting MAF thresholds in human WGS cohort analysis.

@@ -1,7 +1,7 @@
 ---
 title: "PanelAppRex AI"
 date: 2025-01-01T00:00:01+10:00
-weight: 2
+weight: 5
 layout: default_panelapprex
 ---
 

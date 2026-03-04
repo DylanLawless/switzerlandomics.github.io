@@ -1,7 +1,7 @@
 ---
 title: "Genomic vault"
 date: 2026-01-01
-weight: 1
+weight: 6
 ---
 
 Sequencing produces genome data.  

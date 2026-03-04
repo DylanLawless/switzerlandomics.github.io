@@ -1,7 +1,7 @@
 ---
 title: "VCFheader"
 date: 2026-03-03
-weight: 1
+weight: 4
 ---
 
 The fastest way to understand a VCF before reading a single variant.
@@ -22,15 +22,15 @@ Structured header parsing and standalone HTML reporting for daily review of pipe
     </span>
   </a>
 
-  <a class="download-card"
-     href="https://github.com/DylanLawless/vcfheader"
-     aria-label="Source code">
-    <span class="download-icon" aria-hidden="true">↗</span>
-    <span class="download-text">
-      <span class="download-title">Source code</span>
-      <span class="download-sub">GitHub repository</span>
-    </span>
-  </a>
+  <!-- <a class="download-card" -->
+  <!--    href="https://github.com/DylanLawless/vcfheader" -->
+  <!--    aria-label="Source code"> -->
+  <!--   <span class="download-icon" aria-hidden="true">↗</span> -->
+  <!--   <span class="download-text"> -->
+  <!--     <span class="download-title">Source code</span> -->
+  <!--     <span class="download-sub">GitHub repository</span> -->
+  <!--   </span> -->
+  <!-- </a> -->
 </div>
 
 

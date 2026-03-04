@@ -2,7 +2,7 @@
 title: "Evidence ratio"
 date: 2026-01-01
 math: mathjax
-weight: 1
+weight: 99
 ---
 
 Clinical trials and biomedical studies produce results that cannot be compared directly because each endpoint reports evidence differently.
