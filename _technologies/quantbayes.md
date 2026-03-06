@@ -347,7 +347,7 @@ Lawless D. *Bayesian Quantification of Evidence Sufficiency quantbayes Implement
 
 ## Data repository
 
-We provide the universal macOS binary runs natively on both Intel x86_64 and Apple silicon arm64 systems and the R package source code. Release artefacts and documentation are hosted on [Zenodo](https://doi.org/10.5281/zenodo.17919369).
+We provide the universal macOS binary which runs natively on both Intel x86_64 and Apple silicon arm64 systems and the R package source code. Release artefacts and documentation are hosted on [Zenodo](https://doi.org/10.5281/zenodo.17919369).
 
 ---
 

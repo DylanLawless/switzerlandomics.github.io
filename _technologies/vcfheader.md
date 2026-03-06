@@ -41,24 +41,25 @@ Structured header parsing and standalone HTML reporting for daily review of pipe
 </div>
 
 <script>
-(function(){
+(function () {
   const link = document.getElementById('vcfheader-download');
-  const sub  = link.querySelector('.download-sub');
-  const ua   = navigator.userAgent.toLowerCase();
+  if (!link) return;
 
-  if(ua.includes('mac')){
-    <!-- link.href = 'https://zenodo.org/records/REPLACE_WITH_RECORD/files/vcfheader_v1.0.0_macos_universal.tar.gz?download=1'; -->
-    link.href = '#Downloads";
-sub.textContent = 'macOS universal binary';
-  }
-  else if(ua.includes('linux')){
-    <!-- link.href = 'https://zenodo.org/records/REPLACE_WITH_RECORD/files/vcfheader_v1.0.0_linux_x86_64.tar.gz?download=1'; -->
-    link.href = '#Downloads";
-    sub.textContent = 'Linux x86_64 binary';
-  }
-  else{
+  const sub = link.querySelector('.download-sub');
+  const ua = navigator.userAgent.toLowerCase();
+
+  if (ua.includes('mac')) {
+    link.href = 'https://zenodo.org/records/18889119/files/vcfheader_v0.1.0_macos_universal.tar.gz?download=1';
+    link.setAttribute('download', 'vcfheader_v0.1.0_macos_universal.tar.gz');
+    if (sub) sub.textContent = 'macOS universal binary';
+  } else if (ua.includes('linux')) {
+    link.href = 'https://zenodo.org/records/18889119/files/vcfheader_v0.1.0_linux_x86_64.tar.gz?download=1';
+    link.setAttribute('download', 'vcfheader_v0.1.0_linux_x86_64.tar.gz');
+    if (sub) sub.textContent = 'Linux x86_64 binary';
+  } else {
     link.href = '#downloads';
-    sub.textContent = 'Choose platform';
+    link.removeAttribute('download');
+    if (sub) sub.textContent = 'Choose platform';
   }
 })();
 </script>
@@ -84,14 +85,20 @@ It structures the metadata and writes a portable HTML report.
 
 ## Downloads
 
-<!-- For updates see assets/release/vcfheader/release_table.md -->
+<!-- DO NOT REMOVE THIS COMMENT PLEASE: For updates see assets/release/vcfheader/release_table.md -->
+<!-- DO NOT REMOVE THIS COMMENT PLEASE: However we link to zenodo to count downloads -->
 
 <div class="table-responsive" markdown="block">
 | OS | File | SHA256 |
 | --- | --- | --- |
-| macOS x86_64 | [vcfheader_v0.1.0_macos_x86_64.tar.gz](/assets/release/vcfheader/vcfheader_v0.1.0_macos_x86_64.tar.gz){:download="vcfheader_v0.1.0_macos_x86_64.tar.gz"} | `d15be1a383ffdb7f30a2bfbcdb8a23c0f752afa776ef022f1d0ccf2e1443b8fe` |
+| Linux x86_64 | [vcfheader_v0.1.0_linux_x86_64.tar.gz](https://zenodo.org/records/18889119/files/vcfheader_v0.1.0_linux_x86_64.tar.gz?download=1){:download="vcfheader_v0.1.0_linux_x86_64.tar.gz"} | `01f5cd3c3f28fce55b9726e9ed0bc0739e84182a2457adc204bb7e985fe41e93` |
+| macOS universal | [vcfheader_v0.1.0_macos_universal.tar.gz](https://zenodo.org/records/18889119/files/vcfheader_v0.1.0_macos_universal.tar.gz?download=1){:download="vcfheader_v0.1.0_macos_universal.tar.gz"} | `81d82e0d90716a6bdb8237073ad55be00501b6db74935f9f6029d303bcfe4c57` |
+| macOS x86_64 | [vcfheader_v0.1.0_macos_x86_64.tar.gz](https://zenodo.org/records/18889119/files/vcfheader_v0.1.0_macos_x86_64.tar.gz?download=1){:download="vcfheader_v0.1.0_macos_x86_64.tar.gz"} | `e51e90a3eda29f9c4daa85b8d7cc83323bf708c23a07382b3be3bd50f39c529b` |
 {: .table .table-hover}
 </div>
+
+
+We recommend the macOS universal binary for all Apple users. It runs natively on both Intel x86_64 and Apple silicon arm64 systems.
 
 <h3 id="cran">R package</h3>
 
@@ -122,13 +129,16 @@ Download, verify checksums, and extract:
 `shasum -a 256 vcfheader_v*.tar.gz`  
 `tar -xzf vcfheader_v*.tar.gz`  
 `cd vcfheader`  
-`./vcfheader --help`
+`./vcfheader --help`  
+(See note below for macOS warning)
 
 Run directly:
 
 `./vcfheader report simple.vcf --out simple_vcfheader.html`
 
 **macOS note**
+
+We provide the universal macOS binary runs natively on both Intel x86_64 and Apple silicon arm64 systems.
 
 Downloaded binaries may be quarantined by macOS. Remove the quarantine flag if prompted:
 
