@@ -154,8 +154,7 @@ In current workflows, evidence is tightly coupled to analysis pipelines. A unive
 {: .table .table-hover}
 </div>
 
-
-<h3 id="cran">R package installation</h3>
+<h3 id="cran">R package</h3>
 
 Source: [cran.r-project quantbayes](https://cran.r-project.org/package=quantbayes) (for installation see below).  
 ![CRAN status](https://www.r-pkg.org/badges/version/quantbayes)

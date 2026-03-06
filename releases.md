@@ -6,6 +6,12 @@ permalink: "/releases/"
 intro_image_absolute: true
 intro_image_hide_on_mobile: false
 ---
+* **VCFheader R**: R package available on CRAN.\
+[Application](https://switzerlandomics.ch/technologies/vcfheader/) | 
+[CRAN](https://cran.r-project.org/package=vcfheader) | Version: 0.1.0 | 2026-03-07
+
+* **VCFheader MacOS and Linux**: Software packages.\
+[Application](https://switzerlandomics.ch/technologies/vcfheader/) | Version: 0.1.0 | 2026-03-07
 
 * **QuantBayes R**: R package available on CRAN.\
 [Application](https://switzerlandomics.ch/technologies/quantbayes/) | 

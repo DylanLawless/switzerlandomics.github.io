@@ -151,63 +151,51 @@
 <p><img src="/images/vcfheader/vcfheader_logo_hero_wide.png" style="width:100%; height:auto; display:block; margin-left:auto; margin-right:auto;" /></p>
 
 <div class="download-actions">
-  <a class="download-card" href="https://cran.r-project.org/package=vcfheader" aria-label="R package on CRAN">
+  <a id="vcfheader-download" class="download-card" href="#downloads" aria-label="Download VCFheader">
+    <span class="download-icon" aria-hidden="true">↓</span>
+    <span class="download-text">
+      <span class="download-title">Download VCFheader</span>
+      <span class="download-sub">Detecting platform</span>
+    </span>
+  </a>
+
+  <a class="download-card" href="#cran" aria-label="R package on CRAN">
     <span class="download-icon" aria-hidden="true">R</span>
     <span class="download-text">
       <span class="download-title">R package</span>
       <span class="download-sub">CRAN installation</span>
     </span>
   </a>
-
-  <!-- <a class="download-card" -->
-  <!--    href="https://github.com/DylanLawless/vcfheader" -->
-  <!--    aria-label="Source code"> -->
-  <!--   <span class="download-icon" aria-hidden="true">↗</span> -->
-  <!--   <span class="download-text"> -->
-  <!--     <span class="download-title">Source code</span> -->
-  <!--     <span class="download-sub">GitHub repository</span> -->
-  <!--   </span> -->
-  <!-- </a> -->
 </div>
 
-<!-- <div class="licence-box licence-box-3"> -->
-<!--   <div class="licence-section licence-previous"> -->
-<!--     <div class="licence-title">Previously</div> -->
-<!---->
-<!--     <div class="licence-prices"> -->
-<!--       <div class="price-line"> -->
-<!--         <span class="price-strike">Header review</span> -->
-<!--       </div> -->
-<!--       <div class="price-line"> -->
-<!--         <span class="price-strike">Manual</span> -->
-<!--       </div> -->
-<!---->
-<!--       <div class="price-line" style="margin-top:8px;"> -->
-<!--         <span class="price-strike">Sharing</span> -->
-<!--       </div> -->
-<!--       <div class="price-line"> -->
-<!--         <span class="price-strike">Ad hoc</span> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!---->
-<!--   <div class="licence-section licence-current"> -->
-<!--     <div class="licence-title">Now</div> -->
-<!--     <div class="licence-free">Free</div> -->
-<!--     <div class="licence-caption">GPL-3 licence.</div> -->
-<!--     <div class="licence-caption">Open source.</div> -->
-<!--   </div> -->
-<!---->
-<!--   <div class="licence-section licence-why"> -->
-<!--     <div class="licence-title">Why</div> -->
-<!--     <p class="licence-why-text"> -->
-<!--       Header inspection tools are most useful when they can be used across research, production, and shared review workflows without access barriers. -->
-<!--     </p> -->
-<!--     <a href="/why-open" class="licence-why-link"> -->
-<!--       Read more -->
-<!--     </a> -->
-<!--   </div> -->
-<!-- </div> -->
+<div class="download-secondary">
+  <a href="#downloads" class="download-secondary-link">
+    Other platforms
+  </a>
+</div>
+
+<script>
+(function(){
+  const link = document.getElementById('vcfheader-download');
+  const sub  = link.querySelector('.download-sub');
+  const ua   = navigator.userAgent.toLowerCase();
+
+  if(ua.includes('mac')){
+    <!-- link.href = 'https://zenodo.org/records/REPLACE_WITH_RECORD/files/vcfheader_v1.0.0_macos_universal.tar.gz?download=1'; -->
+    link.href = '#Downloads";
+sub.textContent = 'macOS universal binary';
+  }
+  else if(ua.includes('linux')){
+    <!-- link.href = 'https://zenodo.org/records/REPLACE_WITH_RECORD/files/vcfheader_v1.0.0_linux_x86_64.tar.gz?download=1'; -->
+    link.href = '#Downloads";
+    sub.textContent = 'Linux x86_64 binary';
+  }
+  else{
+    link.href = '#downloads';
+    sub.textContent = 'Choose platform';
+  }
+})();
+</script>
 
 <p><br /></p>
 
@@ -226,6 +214,38 @@ It structures the metadata and writes a portable HTML report.</p>
 
 <hr />
 
+<h2 id="downloads">Downloads</h2>
+
+<!-- For updates see assets/release/vcfheader/release_table.md -->
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>OS</th>
+        <th>File</th>
+        <th>SHA256</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>macOS x86_64</td>
+        <td><a href="/assets/release/vcfheader/vcfheader_v0.1.0_macos_x86_64.tar.gz" download="vcfheader_v0.1.0_macos_x86_64.tar.gz">vcfheader_v0.1.0_macos_x86_64.tar.gz</a></td>
+        <td><code class="language-plaintext highlighter-rouge">d15be1a383ffdb7f30a2bfbcdb8a23c0f752afa776ef022f1d0ccf2e1443b8fe</code></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="cran">R package</h3>
+
+<p>Release in progress - check back soon
+<!-- Source: [cran.r-project vcfheader](https://cran.r-project.org/package=vcfheader) (for installation see below).   -->
+<!-- ![CRAN status](https://www.r-pkg.org/badges/version/vcfheader) -->
+<!-- ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/vcfheader) --></p>
+
+<hr />
+
 <h2 id="when-vcfheader-is-most-useful">When VCFheader is most useful</h2>
 
 <p>VCFheader is most useful when a new file arrives and the first task is orientation. It helps users confirm the reference genome, inspect INFO and FORMAT definitions, review filters, check sample content, and identify caller-specific metadata before downstream analysis begins.</p>
@@ -236,17 +256,70 @@ It structures the metadata and writes a portable HTML report.</p>
 
 <h2 id="installation">Installation</h2>
 
+<p>VCFheader is distributed as a standalone binary and as an R package. The binary runs directly from the extracted directory and requires no system installation or administrator privileges. It is compatible with macOS, Linux, HPC environments, and shared compute clusters.</p>
+
+<h3 id="macos-and-linux-binary-installation">macOS and Linux binary installation</h3>
+
+<p>Download, verify checksums, and extract:</p>
+
+<p><code class="language-plaintext highlighter-rouge">shasum -a 256 vcfheader_v*.tar.gz</code><br />
+<code class="language-plaintext highlighter-rouge">tar -xzf vcfheader_v*.tar.gz</code><br />
+<code class="language-plaintext highlighter-rouge">cd vcfheader</code><br />
+<code class="language-plaintext highlighter-rouge">./vcfheader --help</code></p>
+
+<p>Run directly:</p>
+
+<p><code class="language-plaintext highlighter-rouge">./vcfheader report simple.vcf --out simple_vcfheader.html</code></p>
+
+<p><strong>macOS note</strong></p>
+
+<p>Downloaded binaries may be quarantined by macOS. Remove the quarantine flag if prompted:</p>
+
+<p><code class="language-plaintext highlighter-rouge">xattr -d com.apple.quarantine vcfheader</code></p>
+
+<p><strong>Linux and HPC note</strong></p>
+
+<p>VCFheader can be used from any directory with execute permissions. Administrators may optionally expose it via an environment module:</p>
+
+<p><code class="language-plaintext highlighter-rouge">module load vcfheader</code></p>
+
+<h3 id="test-file">Test file</h3>
+
+<p>Click here to download a small test VCF file:
+<a href="/assets/release/vcfheader/simple.vcf" download="simple.vcf">simple.vcf</a>
+(Source <a href="https://github.com/samtools/hts-specs">samtools hts-lib</a>)</p>
+
+<h3 id="r-package-installation">R package installation</h3>
+
 <p>Install the released R package from CRAN:</p>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="s2">"vcfheader"</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">vcfheader</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
 
-<p>Source: <a href="https://cran.r-project.org/package=vcfheader">cran.r-project vcfheader</a></p>
+<p>For more information see the package page, reference manual, and vignettes on CRAN.</p>
 
 <hr />
 
-<h2 id="parse-a-vcf-and-write-the-report">Parse a VCF and write the report</h2>
+<h2 id="quick-start">Quick start</h2>
+
+<p>Generate an HTML report from a compressed VCF:</p>
+
+<p><code class="language-plaintext highlighter-rouge">./vcfheader file.vcf.gz --out file_vcfheader.html</code></p>
+
+<p>Generate an HTML report from an uncompressed VCF:</p>
+
+<p><code class="language-plaintext highlighter-rouge">./vcfheader file.vcf --out file_vcfheader.html</code></p>
+
+<p>Minimal run using default output naming:</p>
+
+<p><code class="language-plaintext highlighter-rouge">./vcfheader file.vcf.gz</code></p>
+
+<p>VCFheader reads the header section only and writes a portable HTML report for review and sharing.</p>
+
+<hr />
+
+<h2 id="parse-a-vcf-and-write-the-report-in-r">Parse a VCF and write the report in R</h2>
 
 <div class="language-r highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hdr</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">parse_vcf_header</span><span class="p">(</span><span class="s2">"file.vcf.gz"</span><span class="p">)</span><span class="w">
 </span><span class="n">vcfheader</span><span class="p">(</span><span class="n">hdr</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"file_vcfheader.html"</span><span class="p">)</span><span class="w">
@@ -304,19 +377,6 @@ It structures the metadata and writes a portable HTML report.</p>
   url    = {https://CRAN.R-project.org/package=vcfheader}
 }
 </pre>
-
-<!-- **Source code** -->
-<!---->
-<!-- Lawless D. *vcfheader source repository*. GitHub. -->
-<!---->
-<!-- <pre class="code-copy"> -->
-<!-- @misc{vcfheader_github, -->
-<!--   author = {Lawless, Dylan}, -->
-<!--   title  = {vcfheader}, -->
-<!--   year   = {2026}, -->
-<!--   url    = {https://github.com/DylanLawless/vcfheader} -->
-<!-- } -->
-<!-- </pre> -->
 
 <hr />
 

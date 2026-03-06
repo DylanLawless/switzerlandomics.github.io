@@ -12,8 +12,19 @@ Structured header parsing and standalone HTML reporting for daily review of pipe
      style="width:100%; height:auto; display:block; margin-left:auto; margin-right:auto;">
 
 <div class="download-actions">
+  <a id="vcfheader-download"
+     class="download-card"
+     href="#downloads"
+     aria-label="Download VCFheader">
+    <span class="download-icon" aria-hidden="true">↓</span>
+    <span class="download-text">
+      <span class="download-title">Download VCFheader</span>
+      <span class="download-sub">Detecting platform</span>
+    </span>
+  </a>
+
   <a class="download-card"
-     href="https://cran.r-project.org/package=vcfheader"
+     href="#cran"
      aria-label="R package on CRAN">
     <span class="download-icon" aria-hidden="true">R</span>
     <span class="download-text">
@@ -21,57 +32,36 @@ Structured header parsing and standalone HTML reporting for daily review of pipe
       <span class="download-sub">CRAN installation</span>
     </span>
   </a>
-
-  <!-- <a class="download-card" -->
-  <!--    href="https://github.com/DylanLawless/vcfheader" -->
-  <!--    aria-label="Source code"> -->
-  <!--   <span class="download-icon" aria-hidden="true">↗</span> -->
-  <!--   <span class="download-text"> -->
-  <!--     <span class="download-title">Source code</span> -->
-  <!--     <span class="download-sub">GitHub repository</span> -->
-  <!--   </span> -->
-  <!-- </a> -->
 </div>
 
+<div class="download-secondary">
+  <a href="#downloads" class="download-secondary-link">
+    Other platforms
+  </a>
+</div>
 
-<!-- <div class="licence-box licence-box-3"> -->
-<!--   <div class="licence-section licence-previous"> -->
-<!--     <div class="licence-title">Previously</div> -->
-<!---->
-<!--     <div class="licence-prices"> -->
-<!--       <div class="price-line"> -->
-<!--         <span class="price-strike">Header review</span> -->
-<!--       </div> -->
-<!--       <div class="price-line"> -->
-<!--         <span class="price-strike">Manual</span> -->
-<!--       </div> -->
-<!---->
-<!--       <div class="price-line" style="margin-top:8px;"> -->
-<!--         <span class="price-strike">Sharing</span> -->
-<!--       </div> -->
-<!--       <div class="price-line"> -->
-<!--         <span class="price-strike">Ad hoc</span> -->
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!---->
-<!--   <div class="licence-section licence-current"> -->
-<!--     <div class="licence-title">Now</div> -->
-<!--     <div class="licence-free">Free</div> -->
-<!--     <div class="licence-caption">GPL-3 licence.</div> -->
-<!--     <div class="licence-caption">Open source.</div> -->
-<!--   </div> -->
-<!---->
-<!--   <div class="licence-section licence-why"> -->
-<!--     <div class="licence-title">Why</div> -->
-<!--     <p class="licence-why-text"> -->
-<!--       Header inspection tools are most useful when they can be used across research, production, and shared review workflows without access barriers. -->
-<!--     </p> -->
-<!--     <a href="/why-open" class="licence-why-link"> -->
-<!--       Read more -->
-<!--     </a> -->
-<!--   </div> -->
-<!-- </div> -->
+<script>
+(function(){
+  const link = document.getElementById('vcfheader-download');
+  const sub  = link.querySelector('.download-sub');
+  const ua   = navigator.userAgent.toLowerCase();
+
+  if(ua.includes('mac')){
+    <!-- link.href = 'https://zenodo.org/records/REPLACE_WITH_RECORD/files/vcfheader_v1.0.0_macos_universal.tar.gz?download=1'; -->
+    link.href = '#Downloads";
+sub.textContent = 'macOS universal binary';
+  }
+  else if(ua.includes('linux')){
+    <!-- link.href = 'https://zenodo.org/records/REPLACE_WITH_RECORD/files/vcfheader_v1.0.0_linux_x86_64.tar.gz?download=1'; -->
+    link.href = '#Downloads";
+    sub.textContent = 'Linux x86_64 binary';
+  }
+  else{
+    link.href = '#downloads';
+    sub.textContent = 'Choose platform';
+  }
+})();
+</script>
 
 <br>
 
@@ -92,6 +82,26 @@ It structures the metadata and writes a portable HTML report.
 
 ---
 
+## Downloads
+
+<!-- For updates see assets/release/vcfheader/release_table.md -->
+
+<div class="table-responsive" markdown="block">
+| OS | File | SHA256 |
+| --- | --- | --- |
+| macOS x86_64 | [vcfheader_v0.1.0_macos_x86_64.tar.gz](/assets/release/vcfheader/vcfheader_v0.1.0_macos_x86_64.tar.gz){:download="vcfheader_v0.1.0_macos_x86_64.tar.gz"} | `d15be1a383ffdb7f30a2bfbcdb8a23c0f752afa776ef022f1d0ccf2e1443b8fe` |
+{: .table .table-hover}
+</div>
+
+<h3 id="cran">R package</h3>
+
+Release in progress - check back soon
+<!-- Source: [cran.r-project vcfheader](https://cran.r-project.org/package=vcfheader) (for installation see below).   -->
+<!-- ![CRAN status](https://www.r-pkg.org/badges/version/vcfheader) -->
+<!-- ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/vcfheader) -->
+
+---
+
 ## When VCFheader is most useful
 
 VCFheader is most useful when a new file arrives and the first task is orientation. It helps users confirm the reference genome, inspect INFO and FORMAT definitions, review filters, check sample content, and identify caller-specific metadata before downstream analysis begins.
@@ -102,6 +112,43 @@ It is also useful when outputs need to be tracked across runs, tools, or pipelin
 
 ## Installation
 
+
+VCFheader is distributed as a standalone binary and as an R package. The binary runs directly from the extracted directory and requires no system installation or administrator privileges. It is compatible with macOS, Linux, HPC environments, and shared compute clusters.
+
+### macOS and Linux binary installation
+
+Download, verify checksums, and extract:
+
+`shasum -a 256 vcfheader_v*.tar.gz`  
+`tar -xzf vcfheader_v*.tar.gz`  
+`cd vcfheader`  
+`./vcfheader --help`
+
+Run directly:
+
+`./vcfheader report simple.vcf --out simple_vcfheader.html`
+
+**macOS note**
+
+Downloaded binaries may be quarantined by macOS. Remove the quarantine flag if prompted:
+
+`xattr -d com.apple.quarantine vcfheader`
+
+**Linux and HPC note**
+
+VCFheader can be used from any directory with execute permissions. Administrators may optionally expose it via an environment module:
+
+`module load vcfheader`
+
+
+### Test file
+
+Click here to download a small test VCF file:
+<a href="/assets/release/vcfheader/simple.vcf" download="simple.vcf">simple.vcf</a>
+(Source [samtools hts-lib](https://github.com/samtools/hts-specs))
+
+### R package installation
+
 Install the released R package from CRAN:
 
 ```r
@@ -109,11 +156,29 @@ install.packages("vcfheader")
 library(vcfheader)
 ````
 
-Source: [cran.r-project vcfheader](https://cran.r-project.org/package=vcfheader)
+For more information see the package page, reference manual, and vignettes on CRAN.
 
 ---
 
-## Parse a VCF and write the report
+## Quick start
+
+Generate an HTML report from a compressed VCF:
+
+`./vcfheader file.vcf.gz --out file_vcfheader.html`
+
+Generate an HTML report from an uncompressed VCF:
+
+`./vcfheader file.vcf --out file_vcfheader.html`
+
+Minimal run using default output naming:
+
+`./vcfheader file.vcf.gz`
+
+VCFheader reads the header section only and writes a portable HTML report for review and sharing.
+
+---
+
+## Parse a VCF and write the report in R
 
 ```r
 hdr <- parse_vcf_header("file.vcf.gz")
@@ -175,23 +240,9 @@ Lawless D. *vcfheader: Structured parsing and HTML reporting for VCF headers*. C
 }
 </pre>
 
-<!-- **Source code** -->
-<!---->
-<!-- Lawless D. *vcfheader source repository*. GitHub. -->
-<!---->
-<!-- <pre class="code-copy"> -->
-<!-- @misc{vcfheader_github, -->
-<!--   author = {Lawless, Dylan}, -->
-<!--   title  = {vcfheader}, -->
-<!--   year   = {2026}, -->
-<!--   url    = {https://github.com/DylanLawless/vcfheader} -->
-<!-- } -->
-<!-- </pre> -->
-
 ---
 
 ## Licence
 
 Generated reports are based on VCFheader, a free and open-source tool created by Switzerland Omics. Use of the software and generated reports is permitted, including in commercial settings, under GPL-3. VCF specification references in generated reports may relate to samtools and the broader HTS specifications ecosystem, distributed under the MIT/Expat Licence by Genome Research Ltd. Source: [https://github.com/samtools/samtools](https://github.com/samtools/samtools). Further reading: [https://www.htslib.org/doc/#file-formats](https://www.htslib.org/doc/#file-formats).
-
 
