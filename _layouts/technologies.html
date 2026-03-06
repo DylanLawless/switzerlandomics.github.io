@@ -33,5 +33,21 @@ bodyClass: "page-technologies"
       </div>
     </div>
     {% endfor %}
+
+
+<div class="strip">
+  <div class="container pt-3 pb-0 pb-md-0">
+      <div class="col-12 col-md-8 col-lg-6">
+        {% include newsletter_signup.html
+          id="bd-email-home"
+          label="Subscribe for updates"
+          archive=false
+          meta=false
+          meta="New technology releases and blog posts."
+           centered=false
+        %}
+      </div>
+  </div>
+</div>
   </div>
 </div>

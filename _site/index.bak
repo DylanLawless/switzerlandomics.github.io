@@ -532,6 +532,52 @@
 </div>
 
 <div class="strip">
+  <div class="container pt-6 pb-6 pb-md-3">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <form
+  action="https://buttondown.com/api/emails/embed-subscribe/switzerlandomics"
+  method="post"
+  class="newsletter-form"
+  referrerpolicy="unsafe-url"
+>
+
+  
+  <label for="bd-email-home" class="newsletter-label">
+    Subscribe for updates
+  </label>
+
+
+  <div class="newsletter-row">
+    <input
+      type="email"
+      name="email"
+      id="bd-email-home"
+      class="newsletter-input"
+      placeholder="Enter your email"
+      aria-label="Email address"
+      required
+    />
+    <button type="submit" class="button-link newsletter-submit">
+      Subscribe
+    </button>
+  </div>
+
+  
+    <p class="newsletter-meta">
+      New technology releases and blog posts.
+    </p>
+  
+
+  
+</form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="strip">
   <div class="container pt-6 pb-6 pb-md-10">
     <div class="row justify-content-start">
       
@@ -818,6 +864,9 @@ Genomic Vault provides custody.
   </div>
 
 </section>
+
+
+
 
 
 

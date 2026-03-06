@@ -1,0 +1,42 @@
+<form
+  action="https://buttondown.com/api/emails/embed-subscribe/switzerlandomics"
+  method="post"
+  class="newsletter-form{% if include.compact %} newsletter-form-compact{% endif %}{% if include.centered %} newsletter-form-centered{% endif %}"
+  referrerpolicy="unsafe-url"
+>
+
+  {% if include.label != false %}
+  <label for="{{ include.id | default: 'bd-email' }}" class="newsletter-label">
+    {{ include.label | default: 'Subscribe for updates' }}
+  </label>
+{% endif %}
+
+  <div class="newsletter-row">
+    <input
+      type="email"
+      name="email"
+      id="{{ include.id | default: 'bd-email' }}"
+      class="newsletter-input"
+      placeholder="{{ include.placeholder | default: 'Enter your email' }}"
+      aria-label="Email address"
+      required
+    />
+    <button type="submit" class="button-link newsletter-submit">
+      {{ include.button_text | default: 'Subscribe' }}
+    </button>
+  </div>
+
+  {% if include.meta != false %}
+    <p class="newsletter-meta">
+      {{ include.meta | default: 'New technology releases and blog posts.' }}
+    </p>
+  {% endif %}
+
+  {% if include.archive != false %}
+    <p class="newsletter-archive">
+      <a href="https://buttondown.com/switzerlandomics" target="_blank" rel="noopener noreferrer">
+        Note sure? View the archive first
+      </a>
+    </p>
+  {% endif %}
+</form>
