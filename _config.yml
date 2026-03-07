@@ -1,4 +1,5 @@
-baseurl: '/'
+url: "https://switzerlandomics.ch"
+baseurl: ''
 permalink: pretty
 title: 'SwitzerlandOmics'
 motto: 'Technically sound. Incredibly simple.'

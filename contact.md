@@ -6,12 +6,11 @@ description: Contact
 
 **We are currently focused on building**.
 
-1. Stay in the loop via our mailing list. No spam, ever:\\
-**[Blog and Breakthroughs →](/assets/submission_mailing_list)**
+1. Stay in the loop via our [mailing list](/newsletter_signup). No spam, ever.
 
-2. For anything else, contact us at [admin@switzerlandomics.ch](mailto:admin@switzerlandomics.ch), or reach out directly to the founder, Dylan Lawless: [dylan@switzerlandomics.ch](mailto:dylan@switzerlandomics.ch).
+2. You can also learn more on the [about page](/about).
 
-3. You can also learn more on the [about page](/about).
+3. For anything else, contact us at [admin@switzerlandomics.ch](mailto:admin@switzerlandomics.ch).
 
 <!-- | Day       | Opening Hours   | -->
 <!-- | --------- | --------------- | -->
