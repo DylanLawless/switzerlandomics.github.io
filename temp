@@ -1,0 +1,244 @@
+.
+├── 404.html
+├── CNAME
+├── Gemfile
+├── Gemfile.lock
+├── LICENSE
+├── README.md
+├── _blog
+│   ├── 2025-05-01.md
+│   ├── 2025-05-21-quant.md
+│   ├── 2025-06-15.md
+│   ├── 2025-07-27-bitter-lesson.md
+│   ├── 2025-08-01-quant-posterior.md
+│   ├── 2025-09-19-quant-poster.md
+│   ├── 2025-11-27-open-standards.md
+│   ├── 2025-12-14-sga_qem.md
+│   ├── 2026-01-04-founders-illumina.md
+│   ├── 2026-01-11-founders-icahn_partners_v_deSouza_illumina_grail.md
+│   ├── 2026-01-17-founders-grail.md
+│   ├── 2026-01-18-founders-ANNOVAR.md
+│   ├── 2026-01-25-founders-hgmd.md
+│   ├── 2026-02-01-founders-Phred-Phrap-Consed.md
+│   ├── 2026-02-08-founders-dbnsfp.md
+│   ├── 2026-02-14-founders-SBX.md
+│   ├── 2026-02-15-the_real_industry_bottleneck_after_genome_sequencing.md
+│   ├── 2026-xx-xx-celebrating-trademark.md
+│   ├── 2026-xx-xx-preventing_war.md
+│   ├── 2026-xx-xx-second_clock.md
+│   ├── founder_stories_wiriting_guide.md
+│   ├── founders_cases.md
+│   ├── people_illumina.md
+│   ├── people_roche.md
+│   └── stratos_genomics_sbx.md
+├── _config.yml
+├── _data
+│   ├── contact.yml
+│   ├── features.json
+│   ├── menus.yml
+│   ├── seo.yml
+│   └── social.json
+├── _includes
+│   ├── call.html
+│   ├── footer.html
+│   ├── google-analytics.html
+│   ├── hamburger.html
+│   ├── header.html
+│   ├── infrastructure_maturity.bak
+│   ├── infrastructure_maturity.html
+│   ├── legal-bar.html
+│   ├── main-menu-mobile.html
+│   ├── main-menu.html
+│   ├── mathjax.html
+│   ├── newsletter_signup.html
+│   ├── quant_card.html
+│   ├── quant_card_v0.html
+│   ├── qv_acmg_svnindel_criteria_20250225.yaml
+│   ├── social.html
+│   └── sub-footer.html
+├── _layouts
+│   ├── contact.html
+│   ├── default.html
+│   ├── default_no_brand.html
+│   ├── default_panelapprex.html
+│   ├── home.html
+│   ├── learn-index.html
+│   ├── learn.html
+│   ├── mathjax.html
+│   ├── page.html
+│   ├── page_no_brand.html
+│   ├── team.html
+│   ├── teams.html
+│   ├── tech.html
+│   └── technologies.html
+├── _learn
+│   ├── bam_and_bai_format.md
+│   ├── bed_format.md
+│   ├── cram_foramt.md
+│   ├── cram_vs_sam_vs_bam.md
+│   ├── csi_format.md
+│   ├── fasta_format.md
+│   ├── fastq_format.md
+│   ├── genes_vs_dna_vs_chromosomes_explained.md
+│   ├── how_genetic_inheritance_works.md
+│   ├── human_reference_genome.md
+│   ├── learn_pages_template.txt
+│   ├── learn_pages_to_do.txt
+│   ├── phred_score.md
+│   ├── reference_genomes_grch37_vs_grch38.md
+│   ├── sam_format.md
+│   ├── style_guide.txt
+│   ├── tabix_format.md
+│   ├── vcf_format.md
+│   ├── vcf_vs_gvcf.md
+│   ├── what_is_a_genetics_disease.md
+│   ├── what_is_a_genome.md
+│   └── what_is_dna.md
+├── _release
+│   └── etherial_precision.md
+├── _sass
+│   ├── _bootstrap-variables.scss
+│   ├── bootstrap
+│   ├── components
+│   ├── custom
+│   ├── libraries
+│   └── pages
+├── _site
+│   ├── 404
+│   ├── CNAME
+│   ├── about
+│   ├── assets
+│   ├── blog
+│   ├── builtatlightspeed.json
+│   ├── ceopage
+│   ├── contact
+│   ├── demo.html
+│   ├── fleyer_quantbayes
+│   ├── images
+│   ├── index.html
+│   ├── index.md_bak
+│   ├── index.md_vaulttransition
+│   ├── jek.sh
+│   ├── kill_serve.sh
+│   ├── learn
+│   ├── legal
+│   ├── netlify.toml
+│   ├── pages
+│   ├── partnerships
+│   ├── pitch
+│   ├── pitch_genomic_vault
+│   ├── pricing.md
+│   ├── publications
+│   ├── qv_es_table
+│   ├── release
+│   ├── releases
+│   ├── shareholder_letters
+│   ├── stack
+│   ├── standard_qem
+│   ├── storage.md
+│   ├── team
+│   ├── technologies
+│   └── why-open
+├── _team
+│   ├── advisor-brand-communication.md
+│   ├── advisor-scientific.md
+│   ├── advisor-security-regulatory.md
+│   ├── bill-mcdonald.md
+│   └── dylan-lawless.md
+├── _technologies
+│   ├── agent.md
+│   ├── archipelago.md
+│   ├── dante.md
+│   ├── evidence_ratio.md
+│   ├── genomic_vault.md
+│   ├── guru.md
+│   ├── iei_genetics.md
+│   ├── max_maf.md
+│   ├── panelAppRexAi.md
+│   ├── panelAppRexAi_about.md
+│   ├── panelAppRexAi_alpha.md
+│   ├── panelAppRexAi_shinyapp.md
+│   ├── particles.html
+│   ├── quant.md
+│   ├── quantbayes.md
+│   ├── qv_database.md
+│   ├── statistical_genomics.md
+│   ├── thinking.html
+│   ├── vcfheader.md
+│   └── wgs.md
+├── about.md
+├── assets
+│   ├── css
+│   ├── fonts
+│   ├── js
+│   ├── panel_ai
+│   ├── pdf
+│   ├── quant
+│   ├── qv_database
+│   ├── qv_submission.md
+│   ├── release
+│   └── submission_mailing_list.md
+├── blog.md
+├── builtatlightspeed.json
+├── ceopage.md
+├── contact.md
+├── demo.html
+├── fleyer_quantbayes.md
+├── images
+│   ├── 2025_E_L_Laurent_etherial_precision
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── apple-touch-icon.png
+│   ├── archipelago
+│   ├── bsmg_recommendation_screenshot.png
+│   ├── evidenceratio
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── favicon.ico
+│   ├── features
+│   ├── freepik_vectorjuice
+│   ├── genomic_vault
+│   ├── illustrations
+│   ├── learn
+│   ├── logo
+│   ├── pipedev_logo_1.png
+│   ├── pipedev_longer.png
+│   ├── pitch_deck
+│   ├── pitchdeck
+│   ├── quantbayes
+│   ├── site.webmanifest
+│   ├── social
+│   ├── swisspedhealth_pipedev.png
+│   ├── team
+│   ├── technologies
+│   ├── var_risk_est
+│   └── vcfheader
+├── index.md
+├── index.md_bak
+├── index.md_vaulttransition
+├── jek.sh
+├── kill_serve.sh
+├── learn.md
+├── legal.md
+├── netlify.toml
+├── pages
+│   ├── fleyer_quantbayes.md
+│   └── qv_builder.md
+├── partnerships.md
+├── pitch.md
+├── pitch_02.md
+├── pricing.md
+├── publication.md
+├── qv_es_table.md
+├── releases.md
+├── shareholder_letters
+│   └── 2025_letter_to_shareholders.md
+├── stack.md
+├── standard_qem.md
+├── storage.md
+├── team.md
+├── technologies.md
+├── temp
+└── why_open.md
+
+68 directories, 173 files

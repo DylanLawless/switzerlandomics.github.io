@@ -102,10 +102,9 @@ We recommend the macOS universal binary for all Apple users. It runs natively on
 
 <h3 id="cran">R package</h3>
 
-Release in progress - check back soon
-<!-- Source: [cran.r-project vcfheader](https://cran.r-project.org/package=vcfheader) (for installation see below).   -->
-<!-- ![CRAN status](https://www.r-pkg.org/badges/version/vcfheader) -->
-<!-- ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/vcfheader) -->
+Source: [cran.r-project vcfheader](https://cran.r-project.org/package=vcfheader) (for installation see below).  
+![CRAN status](https://www.r-pkg.org/badges/version/vcfheader)
+![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/vcfheader)
 
 ---
 
