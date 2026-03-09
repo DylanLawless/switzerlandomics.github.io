@@ -35,26 +35,26 @@ Archipelago connects variant set association tests and single-variant tests (e.g
   </a>
 </div>
 
-<div class="licence-box licence-box-3">
-  <div class="licence-section licence-previous">
-    <div class="licence-title">Previously</div>
-
-    <div class="licence-prices">
-      <div class="price-line">
-        <span class="price-strike">Academic</span>
-      </div>
-      <div class="price-line">
-        <span class="price-strike">CHF 0 / year</span>
-      </div>
-
-      <div class="price-line" style="margin-top:8px;">
-        <span class="price-strike">Industry</span>
-      </div>
-      <div class="price-line">
-        <span class="price-strike">Restricted</span>
-      </div>
-    </div>
-  </div>
+<div class="licence-box licence-box-2">
+  <!-- <div class="licence-section licence-previous"> -->
+  <!--   <div class="licence-title">Previously</div> -->
+  <!---->
+  <!--   <div class="licence-prices"> -->
+  <!--     <div class="price-line"> -->
+  <!--       <span class="price-strike">Academic</span> -->
+  <!--     </div> -->
+  <!--     <div class="price-line"> -->
+  <!--       <span class="price-strike">CHF 0 / year</span> -->
+  <!--     </div> -->
+  <!---->
+  <!--     <div class="price-line" style="margin-top:8px;"> -->
+  <!--       <span class="price-strike">Industry</span> -->
+  <!--     </div> -->
+  <!--     <div class="price-line"> -->
+  <!--       <span class="price-strike">Restricted</span> -->
+  <!--     </div> -->
+  <!--   </div> -->
+  <!-- </div> -->
 
   <div class="licence-section licence-current">
     <div class="licence-title">Now</div>

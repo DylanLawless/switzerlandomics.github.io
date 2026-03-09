@@ -105,6 +105,11 @@ We recommend the macOS universal binary for all Apple users. It runs natively on
 Source: [cran.r-project vcfheader](https://cran.r-project.org/package=vcfheader) (for installation see below).  
 ![CRAN status](https://www.r-pkg.org/badges/version/vcfheader)
 ![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/vcfheader)
+### Test VCF file
+
+Click here to download a small test VCF file:
+<a href="/assets/release/vcfheader/simple.vcf" download="simple.vcf">simple.vcf</a>
+(Source [samtools hts-lib](https://github.com/samtools/hts-specs))
 
 ---
 
@@ -116,7 +121,7 @@ It is also useful when outputs need to be tracked across runs, tools, or pipelin
 
 ---
 
-## Installation
+## Command line installation
 
 
 VCFheader is distributed as a standalone binary and as an R package. The binary runs directly from the extracted directory and requires no system installation or administrator privileges. It is compatible with macOS, Linux, HPC environments, and shared compute clusters.
@@ -149,27 +154,7 @@ VCFheader can be used from any directory with execute permissions. Administrator
 
 `module load vcfheader`
 
-
-### Test file
-
-Click here to download a small test VCF file:
-<a href="/assets/release/vcfheader/simple.vcf" download="simple.vcf">simple.vcf</a>
-(Source [samtools hts-lib](https://github.com/samtools/hts-specs))
-
-### R package installation
-
-Install the released R package from CRAN:
-
-```r
-install.packages("vcfheader")
-library(vcfheader)
-````
-
-For more information see the package page, reference manual, and vignettes on CRAN.
-
----
-
-## Quick start
+### Quick start for command line
 
 Generate an HTML report from a compressed VCF:
 
@@ -187,20 +172,38 @@ VCFheader reads the header section only and writes a portable HTML report for re
 
 ---
 
-## Parse a VCF and write the report in R
+## R package installation
 
-```r
-hdr <- parse_vcf_header("file.vcf.gz")
-vcfheader(hdr, file = "file_vcfheader.html")
-```
+Install the released R package from CRAN:
 
-This also works with `.vcf` files.
+`install.packages("vcfheader")`  
+`library(vcfheader)`
+
+For more information see the package page, reference manual, and vignettes on CRAN.
+
+
+### Quick start in R
+
+`hdr <- parse_vcf_header("file.vcf.gz")`  
+`vcfheader(hdr, file = "file_vcfheader.html")`
+
+This works with both `.vcf` and `.vcf.gz` files.
 
 You can also let `vcfheader()` derive the output path from the original input file path:
 
+`hdr <- parse_vcf_header("file.vcf.gz")`  
+`vcfheader(hdr)`
+
+The package ships with small example files for offline use, including `simple.vcf`, `sv44.vcf`, and a prebuilt example report.
+
 ```r
-hdr <- parse_vcf_header("file.vcf.gz")
-vcfheader(hdr)
+simple_vcf <- system.file("extdata", "simple.vcf", package = "vcfheader")
+hdr <- parse_vcf_header(simple_vcf)
+
+vcfheader(
+  hdr,
+  file = "simple_vcfheader.html"
+)
 ```
 
 ---
@@ -213,23 +216,6 @@ Because only the header is read, review is fast and does not depend on loading f
 
 ---
 
-## Example with bundled files
-
-The package ships with small example files for offline use, including `simple.vcf`, `sv44.vcf`, and a prebuilt example report.
-
-```r
-library(vcfheader)
-
-simple_vcf <- system.file("extdata", "simple.vcf", package = "vcfheader")
-hdr <- parse_vcf_header(simple_vcf)
-
-vcfheader(
-  hdr,
-  file = "simple_vcfheader.html"
-)
-```
-
----
 
 ## Citation
 
