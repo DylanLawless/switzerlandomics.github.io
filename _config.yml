@@ -41,11 +41,6 @@ defaults:
       layout: "tech"
   - scope:
       path: ""
-      type: "team"
-    values:
-      layout: "team"
-  - scope:
-      path: ""
       type: "publications"
     values:
       layout: "publication"
@@ -54,6 +49,15 @@ defaults:
       type: "releases"
     values:
       layout: "page"
+  - scope:
+      path: ""
+      type: "team"
+    values:
+      layout: "team"
+  - scope:
+      path: "assets/panel_ai"
+    values:
+      sitemap: false
 
 sass:
   style: compressed # possible values: nested expanded compact compressed

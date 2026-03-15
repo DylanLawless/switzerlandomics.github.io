@@ -54,13 +54,13 @@ show_call_box: false
 
   <a href="https://genomicvault.switzerlandomics.ch"
      class="vault-card vault-link"
-     aria-label="Open Genomic Vault">
+     aria-label="Unlock">
     <span class="toggle" aria-hidden="true">
       <span class="slide">
         <span class="fa fa-circle-o" aria-hidden="true"></span>
       </span>
     </span>
-    <span class="label">Open Genomic Vault</span>
+    <span class="label">Unlock</span>
   </a>
 </div>
 
