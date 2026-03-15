@@ -2,7 +2,7 @@
 title: "When sequencing became infrastructure"
 layout: page
 description: "Genomics is no longer limited by reading DNA. The new challenge is building systems that make genomic information interpretable, representative, and usable for everyone."
-date: 2026-03-15
+date: 2026-03-14
 category: industry-analysis
 
 tags:
