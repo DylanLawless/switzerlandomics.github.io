@@ -1,0 +1,962 @@
+---
+layout: default
+title: "VCFheader browser"
+description: "Parse VCF and VCF.gz headers directly in the browser. No upload, no server, no variant records read."
+permalink: /technologies/vcfheader/browser/
+---
+
+<main class="vcfheader-browser-page" aria-labelledby="vcfheader-browser-title">
+  <section class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+      <div class="col-12">
+        <div class="tech tech-single vcfheader-browser-shell">
+          <div class="vcfh-hero">
+            <div class="vcfh-hero-copy">
+              <p class="vcfh-kicker">VCFheader browser</p>
+              <h1 id="vcfheader-browser-title" class="title">
+The fastest way to understand a VCF before reading a single variant.
+</h1>
+              <p class="vcfh-lead">Drop a VCF, gVCF, VCF.gz, or gVCF.gz file. We don't read your data. Only the header section is detected to build a structured report in your browser.</p>
+              <div class="vcfh-hero-actions">
+                <a class="button-link" href="/technologies/vcfheader/">Command line version</a>
+                <a class="vcfh-secondary-link" href="/assets/release/vcfheader/simple.vcf" download="simple.vcf">Download test VCF</a>
+              </div>
+            </div>
+          </div>
+
+          <div id="vcfh-dropzone" class="vcfh-dropzone" role="button" tabindex="0" aria-label="Choose or drop a VCF file">
+            <input id="vcfh-file-input" class="vcfh-file-input" type="file" accept=".vcf,.gvcf,.gz,.bgz,.vcf.gz,.gvcf.gz,application/gzip,text/plain">
+            <div class="vcfh-drop-icon" aria-hidden="true">↓</div>
+            <div>
+              <h2>Choose file</h2>
+              <p>Drag and drop here, or click to select a local VCF file.</p>
+              <p class="vcfh-small">Compressed files are read in chunks with fflate. The page deliberately stops after the header and does not finalise gzip validation, which avoids errors from trailing bytes after the compressed member.</p>
+            </div>
+          </div>
+
+          <div id="vcfh-status" class="vcfh-status" role="status" aria-live="polite">No file selected.</div>
+
+          <section id="vcfh-report" class="vcfh-report" hidden>
+            <div class="vcfh-toolbar">
+              <div class="vcfh-toolbar-copy">
+                <h2>Report</h2>
+                <p id="vcfh-report-subtitle">Header summary</p>
+              </div>
+              <div class="vcfh-toolbar-actions">
+                <button id="vcfh-print-pdf" class="button-link" type="button">Print or save PDF</button>
+                <button id="vcfh-download-slides" class="button-link" type="button">Download slides</button>
+                <button id="vcfh-reset" class="vcfh-button-secondary" type="button">Reset</button>
+              </div>
+            </div>
+
+            <div id="vcfh-master-controls" class="vcfh-master-controls" hidden>
+              <div>Display large sections</div>
+              <div class="vcfh-segmented" role="group" aria-label="Display large sections">
+                <button type="button" data-master-view="all" class="vcfh-active">Show all</button>
+                <button type="button" data-master-view="10">First 10</button>
+                <button type="button" data-master-view="summary">Summary only</button>
+              </div>
+            </div>
+
+            <div id="vcfh-summary-grid" class="vcfh-summary-grid" data-export-card="summary"></div>
+            <div id="vcfh-cards" class="vcfh-cards"></div>
+          </section>
+
+          <footer class="vcfh-footer-text">
+            Generated with VCFheader, a free and open-source tool created by
+            <a href="https://switzerlandomics.ch">Switzerland Omics</a>.
+            Use of the software and generated reports is permitted, including in commercial settings.
+            Attribution identifying Switzerland Omics as the creator should be retained where reasonably practicable, but does not imply endorsement.
+            Switzerland Omics® is a registered trade mark.
+            Further information:
+            <a href="https://switzerlandomics.ch">https://switzerlandomics.ch</a>.
+            VCF specification references in this report relate to samtools and the broader HTS specifications ecosystem and are distributed under the MIT/Expat Licence by Genome Research Ltd.
+            Source:
+            <a href="https://github.com/samtools/samtools">https://github.com/samtools/samtools</a>.
+            Further reading on HTS and file format specifications:
+            <a href="https://www.htslib.org/doc/#file-formats">https://www.htslib.org/doc/#file-formats</a>.
+          </footer>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<style>
+.vcfheader-browser-page{--vcfh-red:#e5261f;--vcfh-red-dark:#a01b16;--vcfh-black:#2f2f41;--vcfh-steel:#5c5a5a;--vcfh-soft:#f3f2f2;--vcfh-border:#ddd;--vcfh-surface:#fff;--vcfh-shadow:0 18px 42px rgba(47,47,65,.08);}
+.vcfheader-browser-shell{max-width:1180px;}
+.vcfh-hero{display:block;margin-bottom:28px;}
+.vcfh-kicker{margin:0 0 .6rem;color:var(--vcfh-red);font-weight:600;font-size:.95rem;}
+.vcfh-lead{max-width:48rem;color:var(--vcfh-steel);font-size:1.05rem;line-height:1.5;margin:.8rem 0 0;}
+.vcfh-hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:1.25rem;}
+.vcfh-secondary-link{display:inline-flex;align-items:center;color:var(--vcfh-steel);text-decoration:none;font-weight:500;}
+.vcfh-secondary-link:hover{color:var(--vcfh-red);text-decoration:underline;}
+
+.vcfh-dropzone{position:relative;border:2px dashed rgba(229,38,31,.38);background:linear-gradient(180deg,#fff,#fafafa);border-radius:22px;padding:28px;display:flex;gap:18px;align-items:center;cursor:pointer;transition:border-color .15s ease,background .15s ease,transform .15s ease;box-shadow:var(--vcfh-shadow);}
+.vcfh-dropzone:hover,.vcfh-dropzone.vcfh-dragging{border-color:var(--vcfh-red);background:#fff;transform:translateY(-1px);}
+.vcfh-file-input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.vcfh-drop-icon{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--vcfh-red);color:#fff;font-size:26px;font-weight:600;flex:0 0 auto;}
+.vcfh-dropzone h2{font-size:1.25rem;margin:0 0 .25rem;color:var(--vcfh-black);}
+.vcfh-dropzone p{margin:.2rem 0;color:var(--vcfh-steel);line-height:1.45;}
+.vcfh-small{font-size:.85rem;}
+.vcfh-status{margin:16px 0 0;color:var(--vcfh-steel);font-size:.92rem;min-height:1.4rem;white-space:pre-line;}
+.vcfh-status.vcfh-error{color:#a01b16;font-weight:600;}
+.vcfh-report{margin-top:28px;}
+.vcfh-toolbar{display:block;margin-bottom:18px;}
+.vcfh-toolbar-copy{min-width:0;}
+.vcfh-toolbar h2{font-size:1.4rem;margin:0;color:var(--vcfh-black);}
+.vcfh-toolbar p{margin:.25rem 0 0;color:var(--vcfh-steel);overflow-wrap:anywhere;word-break:break-word;}
+.vcfh-toolbar-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-start;margin-top:14px;}
+.vcfh-button-secondary{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;border:1px solid var(--vcfh-border);border-radius:5px;background:#fff;color:var(--vcfh-black);font-size:16px;line-height:1;cursor:pointer;}
+.vcfh-button-secondary:hover{border-color:var(--vcfh-red);color:var(--vcfh-red);}
+.vcfh-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0 22px;}
+.vcfh-metric{background:#fff;border:1px solid var(--vcfh-border);border-radius:16px;padding:16px;box-shadow:0 10px 24px rgba(47,47,65,.05);}
+.vcfh-metric-value{font-size:1.8rem;line-height:1;font-weight:700;color:var(--vcfh-black);}
+.vcfh-metric-label{font-size:.84rem;color:var(--vcfh-steel);margin-top:.45rem;}
+.vcfh-cards{display:grid;gap:18px;}
+.vcfh-card{background:#fff;border:1px solid var(--vcfh-border);border-radius:18px;box-shadow:var(--vcfh-shadow);overflow:hidden;}
+.vcfh-card-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;padding:18px 18px 12px;border-bottom:1px solid rgba(92,90,90,.16);}
+.vcfh-card-title{margin:0;color:var(--vcfh-black);font-size:1.15rem;}
+.vcfh-card-subtitle{margin:.35rem 0 0;color:var(--vcfh-steel);font-size:.9rem;line-height:1.4;}
+.vcfh-master-controls{margin:10px 0 18px;padding:14px 16px;border:1px solid var(--vcfh-border);border-radius:16px;background:#fff;box-shadow:0 10px 24px rgba(47,47,65,.05);display:flex;align-items:center;justify-content:space-between;gap:14px;color:var(--vcfh-steel);font-size:.9rem;}
+.vcfh-master-controls[hidden]{display:none;}
+.vcfh-limit{display:none;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.vcfh-limit.vcfh-show{display:flex;}
+.vcfh-segmented{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.vcfh-segmented button{border:1px solid var(--vcfh-border);background:#fff;color:var(--vcfh-black);border-radius:999px;min-height:34px;padding:0 12px;font:inherit;font-size:.82rem;cursor:pointer;transition:background .15s ease,border-color .15s ease,color .15s ease;}
+.vcfh-segmented button:hover{border-color:rgba(229,38,31,.45);color:var(--vcfh-red);}
+.vcfh-segmented button.vcfh-active{background:rgba(229,38,31,.08);border-color:rgba(229,38,31,.45);color:var(--vcfh-red);}
+.vcfh-card-body{padding:0 18px 18px;}
+.vcfh-table-wrap{width:100%;overflow-x:auto;margin-top:14px;}
+.vcfh-table{width:100%;border-collapse:collapse;table-layout:fixed;background:#fff;}
+.vcfh-table th,.vcfh-table td{border:1px solid var(--vcfh-border);padding:8px 10px;text-align:left;vertical-align:top;font-size:.78rem;line-height:1.35;overflow-wrap:anywhere;word-break:break-word;}
+.vcfh-table th{background:#f7f7f8;color:var(--vcfh-black);font-weight:700;}
+.vcfh-table tr:nth-child(even) td{background:#fbfbfc;}
+.vcfh-muted{color:var(--vcfh-steel);}
+.vcfh-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.vcfh-pill{border:1px solid var(--vcfh-border);background:#fff;border-radius:999px;padding:6px 10px;color:var(--vcfh-black);font-size:.82rem;}
+.vcfh-pre{margin:14px 0 0;background:#f7f7f8;border:1px solid var(--vcfh-border);border-radius:12px;padding:14px;white-space:pre-wrap;word-break:break-word;font-size:.78rem;line-height:1.45;color:var(--vcfh-black);}
+.vcfh-warning-list{margin:14px 0 0;padding-left:1.2rem;color:var(--vcfh-black);}
+.vcfh-empty{margin:14px 0 0;color:var(--vcfh-steel);}
+.vcfh-footer-text{margin-top:28px;padding-top:18px;border-top:1px solid rgba(92,90,90,.22);color:var(--vcfh-steel);font-size:.74rem;line-height:1.45;}
+.vcfh-footer-text a{color:var(--vcfh-steel);text-decoration:underline;text-underline-offset:2px;}
+.vcfh-footer-text a:hover{color:var(--vcfh-red);}
+@media (max-width:900px){.vcfh-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.vcfh-card-head{flex-direction:column}.vcfh-limit{justify-content:flex-start}.vcfh-master-controls{align-items:flex-start;flex-direction:column}}
+@media (max-width:620px){.vcfh-summary-grid{grid-template-columns:1fr}.vcfh-dropzone{align-items:flex-start}.vcfh-drop-icon{width:44px;height:44px;font-size:22px}.vcfh-toolbar-actions .button-link,.vcfh-toolbar-actions .vcfh-button-secondary{width:100%}}
+@media print{.header,.footer,.sub-footer,.vcfh-dropzone,.vcfh-toolbar-actions,.vcfh-master-controls,.vcfh-limit{display:none!important}.vcfheader-browser-page{--vcfh-shadow:none}.vcfh-card{break-inside:avoid;box-shadow:none}.vcfh-card-head{break-after:avoid}}
+</style>
+
+<script>
+(function(){
+  'use strict';
+
+  const LIMIT_THRESHOLD = 10;
+  const DEFAULT_RAW_PREVIEW_LINES = 5;
+  const CHUNK_SIZE = 128 * 1024;
+  const state = { file: null, headerLines: [], header: null, views: new Map(), generatedHtml: '', masterView: 'all' };
+
+  const els = {
+    dropzone: document.getElementById('vcfh-dropzone'),
+    input: document.getElementById('vcfh-file-input'),
+    status: document.getElementById('vcfh-status'),
+    report: document.getElementById('vcfh-report'),
+    subtitle: document.getElementById('vcfh-report-subtitle'),
+    summary: document.getElementById('vcfh-summary-grid'),
+    cards: document.getElementById('vcfh-cards'),
+    printPdf: document.getElementById('vcfh-print-pdf'),
+    downloadSlides: document.getElementById('vcfh-download-slides'),
+    reset: document.getElementById('vcfh-reset'),
+    masterControls: document.getElementById('vcfh-master-controls')
+  };
+
+  const specIndex = {
+    INFO: {
+      AC:['Integer','A','Allele count in genotypes, for each ALT allele, in the same order as listed'],
+      AD:['Integer','R','Total read depth for each allele'],
+      AF:['Float','A','Allele frequency for each ALT allele in the same order as listed'],
+      AN:['Integer','1','Total number of alleles in called genotypes'],
+      DB:['Flag','0','dbSNP membership'],
+      DP:['Integer','1','Combined depth across samples'],
+      END:['Integer','1','Deprecated. Present for backwards compatibility with earlier versions of VCF.'],
+      MQ:['Float','1','RMS mapping quality'],
+      NS:['Integer','1','Number of samples with data'],
+      SOMATIC:['Flag','0','Somatic mutation'],
+      VALIDATED:['Flag','0','Validated by follow-up experiment']
+    },
+    FORMAT: {
+      AD:['Integer','R','Read depth for each allele'],
+      DP:['Integer','1','Read depth'],
+      FT:['String','1','Filter indicating if this genotype was called'],
+      GL:['Float','G','Genotype likelihoods'],
+      GP:['Float','G','Genotype posterior probabilities'],
+      GQ:['Integer','1','Conditional genotype quality'],
+      GT:['String','1','Genotype'],
+      HQ:['Integer','2','Haplotype quality'],
+      PL:['Integer','G','Phred-scaled genotype likelihoods rounded to the closest integer'],
+      PP:['Integer','G','Phred-scaled genotype posterior probabilities rounded to the closest integer'],
+      PS:['Integer','1','Phase set']
+    }
+  };
+
+  function setStatus(text, isError){
+    els.status.textContent = text;
+    els.status.classList.toggle('vcfh-error', Boolean(isError));
+  }
+
+  function htmlEscape(x){
+    return String(x ?? '')
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
+  }
+
+  function basename(name){
+    return String(name || '').split(/[\\/]/).pop();
+  }
+
+  function isGzFile(file){
+    const n = file.name.toLowerCase();
+    return n.endsWith('.gz') || n.endsWith('.bgz') || file.type === 'application/gzip';
+  }
+
+  function formatBytes(bytes){
+    if (!Number.isFinite(bytes)) return 'NA';
+    const units = ['B','KB','MB','GB','TB'];
+    let n = bytes;
+    let i = 0;
+    while (n >= 1024 && i < units.length - 1){ n /= 1024; i++; }
+    return `${n.toFixed(i === 0 ? 0 : 1)} ${units[i]}`;
+  }
+
+  function sourceFileDate(){
+    if (state.file && Number.isFinite(state.file.lastModified) && state.file.lastModified > 0) {
+      return new Date(state.file.lastModified);
+    }
+    return new Date();
+  }
+
+  function reportDateLabel(){
+    return sourceFileDate().toLocaleString();
+  }
+
+  function dateStampForFilename(){
+    return sourceFileDate().toISOString().slice(0, 10);
+  }
+
+  function zipDosDateTime(date){
+    const d = date instanceof Date && Number.isFinite(date.getTime()) ? date : new Date();
+
+    let year = d.getFullYear();
+    let month = d.getMonth() + 1;
+    let day = d.getDate();
+    let hours = d.getHours();
+    let minutes = d.getMinutes();
+    let seconds = d.getSeconds();
+
+    if (year < 1980) {
+      year = 1980;
+      month = 1;
+      day = 1;
+      hours = 0;
+      minutes = 0;
+      seconds = 0;
+    }
+
+    const dosTime = ((hours & 31) << 11) | ((minutes & 63) << 5) | ((Math.floor(seconds / 2)) & 31);
+    const dosDate = (((year - 1980) & 127) << 9) | ((month & 15) << 5) | (day & 31);
+
+    return { dosTime, dosDate };
+  }
+
+  function nextFrame(){
+    return new Promise(resolve => requestAnimationFrame(resolve));
+  }
+
+  function readBlobAsArrayBuffer(blob){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error || new Error('Could not read file chunk'));
+      reader.readAsArrayBuffer(blob);
+    });
+  }
+
+  function collectHeaderFromText(text, carry, out){
+    const combined = carry + text;
+    const parts = combined.split(/\n/);
+    carry = parts.pop() || '';
+    for (let line of parts){
+      if (line.endsWith('\r')) line = line.slice(0, -1);
+      if (!line.startsWith('#')) return { done: true, carry: '', out };
+      out.push(line);
+      if (line.startsWith('#CHROM')) return { done: true, carry: '', out };
+    }
+    return { done: false, carry, out };
+  }
+
+  async function readPlainHeader(file){
+    const decoder = new TextDecoder();
+    let offset = 0;
+    let carry = '';
+    const out = [];
+    while (offset < file.size){
+      const buffer = await readBlobAsArrayBuffer(file.slice(offset, Math.min(offset + CHUNK_SIZE, file.size)));
+      offset += CHUNK_SIZE;
+      const text = decoder.decode(buffer, { stream: true });
+      const res = collectHeaderFromText(text, carry, out);
+      carry = res.carry;
+      if (res.done) return res.out.filter(line => line.startsWith('#'));
+    }
+    const tail = decoder.decode();
+    const res = collectHeaderFromText(tail + carry, '', out);
+    return res.out.filter(line => line.startsWith('#'));
+  }
+
+  async function readGzipHeader(file){
+    return readGzipHeaderWithFflate(file);
+  }
+
+  function loadScript(src){
+    return new Promise((resolve, reject) => {
+      const existing = document.querySelector(`script[src="${src}"]`);
+      if (existing){
+        if (existing.dataset.loaded === 'true') {
+          resolve();
+          return;
+        }
+        existing.addEventListener('load', resolve, { once:true });
+        existing.addEventListener('error', () => reject(new Error(`Could not load ${src}`)), { once:true });
+        return;
+      }
+
+      const s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      s.onload = () => {
+        s.dataset.loaded = 'true';
+        resolve();
+      };
+      s.onerror = () => reject(new Error(`Could not load ${src}`));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function readGzipHeaderWithFflate(file){
+    await loadScript('https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js');
+    if (!window.fflate || !window.fflate.Gunzip) throw new Error('Gzip support is not available in this browser.');
+
+    const decoder = new TextDecoder('utf-8');
+    let carry = '';
+    const out = [];
+    let offset = 0;
+    let stopped = false;
+    let gunzipError = null;
+
+    const gunzip = new window.fflate.Gunzip((chunk, final) => {
+      if (stopped || gunzipError || !chunk) return;
+
+      try {
+        const text = decoder.decode(chunk, { stream: !final });
+        const res = collectHeaderFromText(text, carry, out);
+        carry = res.carry;
+
+        if (res.done){
+          stopped = true;
+        }
+      } catch (err) {
+        gunzipError = err;
+      }
+    });
+
+    while (!stopped && offset < file.size){
+      const buffer = await readBlobAsArrayBuffer(file.slice(offset, Math.min(offset + CHUNK_SIZE, file.size)));
+      offset += CHUNK_SIZE;
+
+      try {
+        gunzip.push(new Uint8Array(buffer), false);
+      } catch (err) {
+        if (stopped && out.length > 0) break;
+        throw err;
+      }
+
+      if (gunzipError){
+        if (stopped && out.length > 0) break;
+        throw gunzipError;
+      }
+
+      await nextFrame();
+    }
+
+    if (!stopped && carry && carry.startsWith('#')) out.push(carry.replace(/\r$/, ''));
+
+    return out.filter(line => line.startsWith('#'));
+  }
+
+  function splitCsvAware(x){
+    if (!x) return [];
+    const res = [];
+    let buf = '';
+    let inQ = false;
+    let esc = false;
+    for (const ch of x){
+      if (esc){ buf += ch; esc = false; continue; }
+      if (ch === '\\'){ buf += ch; esc = true; continue; }
+      if (ch === '"'){ buf += ch; inQ = !inQ; continue; }
+      if (!inQ && ch === ','){ res.push(buf); buf = ''; continue; }
+      buf += ch;
+    }
+    res.push(buf);
+    return res;
+  }
+
+  function unescapeVcfValue(v){
+    let s = String(v ?? '').trim();
+    if (s.startsWith('"') && s.endsWith('"') && s.length >= 2) s = s.slice(1, -1);
+    return s.replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+  }
+
+  function parseStruct(line){
+    const s = line.startsWith('##') ? line.slice(2) : line;
+    const idx = s.indexOf('=<');
+    if (idx < 0) return null;
+    const key = s.slice(0, idx);
+    let rest = s.slice(idx + 2).trim();
+    if (rest.endsWith('>')) rest = rest.slice(0, -1);
+    const fields = {};
+    for (const tok0 of splitCsvAware(rest)){
+      const tok = tok0.trim();
+      if (!tok) continue;
+      const eq = tok.indexOf('=');
+      if (eq >= 0) fields[tok.slice(0, eq)] = unescapeVcfValue(tok.slice(eq + 1));
+      else fields[tok] = true;
+    }
+    return { key, fields };
+  }
+
+  function parseSimple(line){
+    const s = line.startsWith('##') ? line.slice(2) : line;
+    const eq = s.indexOf('=');
+    if (eq < 0) return { key:s, value:'' };
+    return { key:s.slice(0, eq), value:s.slice(eq + 1) };
+  }
+
+  function normaliseInfoFormat(fields, raw){
+    return { ID: fields.ID || 'NA', Number: fields.Number || 'NA', Type: fields.Type || 'NA', Description: fields.Description || 'NA', Source: fields.Source || 'NA', Version: fields.Version || 'NA', raw };
+  }
+
+  function normaliseFilterAlt(fields, raw){
+    return { ID: fields.ID || 'NA', Description: fields.Description || 'NA', raw };
+  }
+
+  function normaliseContig(fields, raw){
+    return { ID: fields.ID || 'NA', length: fields.length || 'NA', assembly: fields.assembly || 'NA', md5: fields.md5 || 'NA', species: fields.species || 'NA', taxonomy: fields.taxonomy || 'NA', URL: fields.URL || 'NA', raw };
+  }
+
+  function parseSamples(chromLine){
+    const fields = chromLine.split('\t');
+    if (fields.length <= 8) return [];
+    if (fields.length === 9) return [];
+    if (fields[8] === 'FORMAT') return fields.slice(9);
+    return fields.slice(8);
+  }
+
+  function parseHeader(file, lines){
+    const hdr = {
+      file:{
+        input: basename(file.name),
+        fileformat:'NA',
+        fileDate:'NA',
+        source:'NA',
+        reference:'NA',
+        phasing:'NA',
+        callerGuess:'NA',
+        localModified: reportDateLabel()
+      },
+      raw:lines.slice(),
+      samples:[],
+      contigs:[],
+      info:[],
+      format:[],
+      filter:[],
+      alt:[],
+      other:[],
+      warnings:[],
+      errors:[]
+    };
+
+    if (!lines.length){ hdr.errors.push('Empty or missing header'); return hdr; }
+
+    const knownSimple = new Set(['fileformat','fileDate','source','reference','phasing']);
+
+    for (const line of lines){
+      if (line.startsWith('#CHROM')){ hdr.samples = parseSamples(line); continue; }
+      if (!line.startsWith('##')) continue;
+
+      if (/^##[^=]+=</.test(line)){
+        const rec = parseStruct(line);
+        if (!rec) continue;
+
+        const key = rec.key;
+        if (key === 'INFO') hdr.info.push(normaliseInfoFormat(rec.fields, line));
+        else if (key === 'FORMAT') hdr.format.push(normaliseInfoFormat(rec.fields, line));
+        else if (key === 'FILTER') hdr.filter.push(normaliseFilterAlt(rec.fields, line));
+        else if (key === 'ALT') hdr.alt.push(normaliseFilterAlt(rec.fields, line));
+        else if (key === 'contig') hdr.contigs.push(normaliseContig(rec.fields, line));
+        else hdr.other.push({ key:`${key}<...>`, value:JSON.stringify(rec.fields), raw:line });
+      } else {
+        const kv = parseSimple(line);
+        if (kv.key === 'fileformat') hdr.file.fileformat = kv.value;
+        else if (kv.key === 'fileDate') hdr.file.fileDate = kv.value;
+        else if (kv.key === 'source') hdr.file.source = kv.value;
+        else if (kv.key === 'reference') hdr.file.reference = kv.value;
+        else if (kv.key === 'phasing') hdr.file.phasing = kv.value;
+        if (!knownSimple.has(kv.key)) hdr.other.push({ key:kv.key, value:kv.value, raw:line });
+      }
+    }
+
+    if (!lines[0].startsWith('##fileformat=')) hdr.errors.push('First header line is not ##fileformat');
+    if (hdr.file.fileformat === 'NA') hdr.errors.push('Missing required ##fileformat');
+    if (!lines.some(l => l.startsWith('#CHROM'))) hdr.errors.push('Missing required #CHROM header line');
+    if (!hdr.samples.length) hdr.warnings.push('No samples detected');
+
+    duplicateWarnings(hdr.info, 'INFO', hdr.warnings);
+    duplicateWarnings(hdr.format, 'FORMAT', hdr.warnings);
+    duplicateWarnings(hdr.filter, 'FILTER', hdr.warnings);
+    duplicateWarnings(hdr.alt, 'ALT', hdr.warnings);
+
+    if (hdr.info.some(r => r.ID === 'CSQ')) hdr.file.callerGuess = 'VEP';
+    if (hdr.info.some(r => r.ID === 'ANN')) hdr.file.callerGuess = 'SnpEff';
+
+    return hdr;
+  }
+
+  function duplicateWarnings(rows, label, warnings){
+    const seen = new Set();
+    const dup = new Set();
+    for (const r of rows){
+      if (!r.ID || r.ID === 'NA') continue;
+      if (seen.has(r.ID)) dup.add(r.ID);
+      seen.add(r.ID);
+    }
+    if (dup.size) warnings.push(`Duplicate ${label} IDs: ${Array.from(dup).sort().join(',')}`);
+  }
+
+  function enrichSpec(kind, row){
+    const hit = specIndex[kind] && specIndex[kind][row.ID];
+    if (!hit) return row;
+    return Object.assign({}, row, { specType:hit[0], specNumber:hit[1], specDescription:hit[2] });
+  }
+
+  function render(hdr){
+    els.report.hidden = false;
+    els.subtitle.textContent = `${hdr.file.input} · ${formatBytes(state.file.size)} · file modified ${hdr.file.localModified}`;
+
+    els.summary.innerHTML = [
+      metric(hdr.raw.length, 'header lines'),
+      metric(hdr.contigs.length, 'contigs'),
+      metric(hdr.info.length, 'INFO fields'),
+      metric(hdr.format.length, 'FORMAT fields'),
+      metric(hdr.filter.length, 'FILTER definitions'),
+      metric(hdr.alt.length, 'ALT definitions'),
+      metric(hdr.samples.length, 'samples'),
+      metric(hdr.other.length, 'other entries')
+    ].join('');
+
+    const cards = [];
+    cards.push(card('file', 'File metadata', 'Basic metadata inferred from simple header lines.', [{label:'Input source', value:hdr.file.input},{label:'Browser file modified', value:hdr.file.localModified},{label:'Fileformat', value:hdr.file.fileformat},{label:'File date', value:hdr.file.fileDate},{label:'Source', value:hdr.file.source},{label:'Reference', value:hdr.file.reference},{label:'Caller guess', value:hdr.file.callerGuess}], 'kv'));
+    cards.push(card('contigs', 'Contigs', `${hdr.contigs.length} contig${hdr.contigs.length === 1 ? '' : 's'} declared.`, hdr.contigs, 'table', ['ID','length','assembly','md5','species','taxonomy','URL']));
+    cards.push(card('filter', 'FILTER definitions', `${hdr.filter.length} filter definition${hdr.filter.length === 1 ? '' : 's'}.`, hdr.filter, 'table', ['ID','Description']));
+    cards.push(card('alt', 'ALT definitions', `${hdr.alt.length} ALT definition${hdr.alt.length === 1 ? '' : 's'}.`, hdr.alt, 'table', ['ID','Description']));
+    cards.push(card('info', 'INFO fields', `${hdr.info.length} INFO field${hdr.info.length === 1 ? '' : 's'}.`, hdr.info.map(r => enrichSpec('INFO', r)), 'table', ['ID','Type','Number','Description']));
+    cards.push(card('format', 'FORMAT fields', `${hdr.format.length} FORMAT field${hdr.format.length === 1 ? '' : 's'}.`, hdr.format.map(r => enrichSpec('FORMAT', r)), 'table', ['ID','Type','Number','Description']));
+    cards.push(card('samples', 'Samples', `${hdr.samples.length} sample${hdr.samples.length === 1 ? '' : 's'} detected from #CHROM.`, hdr.samples.map(s => ({ sample:s })), 'table', ['sample']));
+    cards.push(card('other', 'Other header entries', `${hdr.other.length} additional header entr${hdr.other.length === 1 ? 'y' : 'ies'}.`, hdr.other, 'table', ['key','value','raw']));
+    cards.push(card('quality', 'Warnings and errors', `${hdr.warnings.length} warning${hdr.warnings.length === 1 ? '' : 's'} and ${hdr.errors.length} error${hdr.errors.length === 1 ? '' : 's'}.`, { warnings:hdr.warnings, errors:hdr.errors }, 'messages'));
+    cards.push(card('raw', 'Raw header preview', `First ${Math.min(DEFAULT_RAW_PREVIEW_LINES, hdr.raw.length)} header line${Math.min(DEFAULT_RAW_PREVIEW_LINES, hdr.raw.length) === 1 ? '' : 's'}.`, hdr.raw.slice(0, DEFAULT_RAW_PREVIEW_LINES), 'pre'));
+
+    els.cards.innerHTML = cards.join('');
+    updateMasterControls();
+    bindLimitControls();
+    state.generatedHtml = buildStandaloneReportHtml();
+  }
+
+  function metric(value, label){
+    return `<div class="vcfh-metric"><div class="vcfh-metric-value">${htmlEscape(value)}</div><div class="vcfh-metric-label">${htmlEscape(label)}</div></div>`;
+  }
+
+  function card(id, title, subtitle, data, mode, cols){
+    const count = Array.isArray(data) ? data.length : 0;
+    const selected = count > LIMIT_THRESHOLD ? state.masterView : 'all';
+    const controls = count > LIMIT_THRESHOLD ? `<div class="vcfh-limit vcfh-show"><div class="vcfh-segmented" role="group" aria-label="Display ${htmlEscape(title)}"><button type="button" data-limit-for="${id}" data-limit-value="all" class="${selected === 'all' ? 'vcfh-active' : ''}">All</button><button type="button" data-limit-for="${id}" data-limit-value="10" class="${selected === '10' ? 'vcfh-active' : ''}">First 10</button><button type="button" data-limit-for="${id}" data-limit-value="summary" class="${selected === 'summary' ? 'vcfh-active' : ''}">Summary</button></div></div>` : '';
+    state.views.set(id, { data, mode, cols, count, selected });
+    return `<section class="vcfh-card" id="vcfh-card-${id}" data-export-card="${id}"><div class="vcfh-card-head"><div><h3 class="vcfh-card-title">${htmlEscape(title)}</h3><p class="vcfh-card-subtitle">${htmlEscape(subtitle)}</p></div>${controls}</div><div class="vcfh-card-body" data-card-body="${id}">${renderBody(id)}</div></section>`;
+  }
+
+  function renderBody(id){
+    const view = state.views.get(id);
+    if (!view) return '';
+    if (view.mode === 'kv') return renderKv(view.data);
+    if (view.mode === 'messages') return renderMessages(view.data);
+    if (view.mode === 'pre') return `<pre class="vcfh-pre">${htmlEscape(view.data.join('\n'))}</pre>`;
+    if (view.mode === 'table'){
+      const rows = selectedRows(view);
+      if (view.selected === 'summary') return `<p class="vcfh-empty"><strong>${htmlEscape(view.count)}</strong> item${view.count === 1 ? '' : 's'} in this section.</p>`;
+      return renderTable(rows, view.cols, view.count, view.selected);
+    }
+    return '';
+  }
+
+  function selectedRows(view){
+    if (!Array.isArray(view.data)) return [];
+    if (view.selected === 'all') return view.data;
+    const n = Number(view.selected);
+    if (Number.isFinite(n)) return view.data.slice(0, n);
+    return [];
+  }
+
+  function renderKv(rows){
+    return `<div class="vcfh-table-wrap"><table class="vcfh-table"><tbody>${rows.map(r => `<tr><th>${htmlEscape(r.label)}</th><td>${htmlEscape(r.value)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+
+  function renderMessages(data){
+    const items = [];
+    for (const e of data.errors) items.push(`<li><strong>Error:</strong> ${htmlEscape(e)}</li>`);
+    for (const w of data.warnings) items.push(`<li><strong>Warning:</strong> ${htmlEscape(w)}</li>`);
+    if (!items.length) return `<p class="vcfh-empty">No warnings or errors detected.</p>`;
+    return `<ul class="vcfh-warning-list">${items.join('')}</ul>`;
+  }
+
+  function presentCols(rows, cols){
+    return cols.filter(c => rows.some(r => String(r[c] ?? '').trim() && r[c] !== 'NA'));
+  }
+
+  function renderTable(rows, cols, total, selected){
+    if (!rows.length) return `<p class="vcfh-empty">None</p>`;
+    const shownCols = presentCols(rows, cols);
+    const note = selected !== 'all' && selected !== 'summary' ? `<p class="vcfh-empty">Showing ${rows.length} of ${total}.</p>` : '';
+    const header = shownCols.map(c => `<th>${htmlEscape(c)}</th>`).join('');
+    const body = rows.map(r => `<tr>${shownCols.map(c => `<td>${htmlEscape(r[c] ?? '')}</td>`).join('')}</tr>`).join('');
+    return `${note}<div class="vcfh-table-wrap"><table class="vcfh-table"><thead><tr>${header}</tr></thead><tbody>${body}</tbody></table></div>`;
+  }
+
+  function bindLimitControls(){
+    document.querySelectorAll('button[data-limit-for]').forEach(button => {
+      button.addEventListener('click', () => {
+        const id = button.getAttribute('data-limit-for');
+        const view = state.views.get(id);
+        if (!view) return;
+        view.selected = button.getAttribute('data-limit-value') || 'all';
+        updateCardControls(id);
+        const body = document.querySelector(`[data-card-body="${id}"]`);
+        if (body) body.innerHTML = renderBody(id);
+        state.generatedHtml = buildStandaloneReportHtml();
+      });
+    });
+
+    document.querySelectorAll('button[data-master-view]').forEach(button => {
+      button.addEventListener('click', () => {
+        state.masterView = button.getAttribute('data-master-view') || 'all';
+        applyMasterView();
+      });
+    });
+  }
+
+  function updateCardControls(id){
+    const view = state.views.get(id);
+    if (!view) return;
+    document.querySelectorAll(`button[data-limit-for="${id}"]`).forEach(button => {
+      button.classList.toggle('vcfh-active', button.getAttribute('data-limit-value') === view.selected);
+    });
+  }
+
+  function updateMasterControls(){
+    if (!els.masterControls) return;
+    const hasLargeSections = Array.from(state.views.values()).some(view => Array.isArray(view.data) && view.count > LIMIT_THRESHOLD && view.mode === 'table');
+    els.masterControls.hidden = !hasLargeSections;
+    document.querySelectorAll('button[data-master-view]').forEach(button => {
+      button.classList.toggle('vcfh-active', button.getAttribute('data-master-view') === state.masterView);
+    });
+  }
+
+  function applyMasterView(){
+    state.views.forEach((view, id) => {
+      if (!Array.isArray(view.data) || view.count <= LIMIT_THRESHOLD || view.mode !== 'table') return;
+      view.selected = state.masterView;
+      updateCardControls(id);
+      const body = document.querySelector(`[data-card-body="${id}"]`);
+      if (body) body.innerHTML = renderBody(id);
+    });
+    updateMasterControls();
+    state.generatedHtml = buildStandaloneReportHtml();
+  }
+
+  async function handleFile(file){
+    state.file = file;
+    state.headerLines = [];
+    state.header = null;
+    state.views.clear();
+    els.report.hidden = true;
+    els.summary.innerHTML = '';
+    els.cards.innerHTML = '';
+    setStatus(`Reading ${file.name} · ${formatBytes(file.size)}`);
+
+    try {
+      const lines = isGzFile(file) ? await readGzipHeader(file) : await readPlainHeader(file);
+      if (!lines.length) throw new Error('Empty or missing header');
+      state.headerLines = lines;
+      state.header = parseHeader(file, lines);
+      render(state.header);
+      setStatus(`Read ${lines.length} header lines from ${file.name}.`);
+    } catch (err) {
+      console.error(err);
+      setStatus(`Could not read header\n${file.name} · ${formatBytes(file.size)}\n${err && err.message ? err.message : err}`, true);
+    }
+  }
+
+  function buildStandaloneReportHtml(){
+    const report = els.report.cloneNode(true);
+    report.querySelectorAll('.vcfh-toolbar-actions,.vcfh-master-controls,.vcfh-limit').forEach(n => n.remove());
+
+    const footer = document.querySelector('.vcfh-footer-text');
+    const footerHtml = footer ? footer.outerHTML : '';
+
+    const title = state.header ? `VCFheader report: ${state.header.file.input}` : 'VCFheader report';
+
+    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${htmlEscape(title)}</title><style>${collectReportCss()}</style></head><body><main class="vcfheader-browser-page"><section class="vcfheader-browser-shell"><h1>${htmlEscape(title)}</h1>${report.outerHTML}${footerHtml}</section></main></body></html>`;
+  }
+
+  function collectReportCss(){
+    const styles = Array.from(document.querySelectorAll('style')).map(s => s.textContent || '').join('\n');
+    return styles + '\nbody{padding:24px;background:#fff}.vcfheader-browser-shell{max-width:1180px;margin:0 auto}.vcfh-report{display:block}.vcfh-toolbar{display:block}.vcfh-dropzone{display:none}.vcfh-toolbar-actions,.vcfh-master-controls,.vcfh-limit{display:none!important}';
+  }
+
+  function downloadBlob(blob, filename){
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  function reportStem(){
+    const n = state.file ? state.file.name : 'vcfheader_report';
+    return n.replace(/\.g?vcf\.gz$/i,'').replace(/\.g?vcf$/i,'').replace(/\.gz$/i,'').replace(/[^a-z0-9._-]+/gi,'_');
+  }
+
+  function crc32(bytes){
+    let c = -1;
+    for (let i = 0; i < bytes.length; i++){
+      c = (c >>> 8) ^ crcTable[(c ^ bytes[i]) & 0xff];
+    }
+    return (c ^ -1) >>> 0;
+  }
+
+  const crcTable = (() => {
+    const table = new Uint32Array(256);
+    for (let n = 0; n < 256; n++){
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      table[n] = c >>> 0;
+    }
+    return table;
+  })();
+
+  function u16(n){ return [n & 255, (n >>> 8) & 255]; }
+  function u32(n){ return [n & 255, (n >>> 8) & 255, (n >>> 16) & 255, (n >>> 24) & 255]; }
+
+  async function makeZip(files, modifiedDate){
+    const encoder = new TextEncoder();
+    const chunks = [];
+    const central = [];
+    let offset = 0;
+    const zipTime = zipDosDateTime(modifiedDate);
+
+    for (const file of files){
+      const nameBytes = encoder.encode(file.name);
+      const data = new Uint8Array(await file.blob.arrayBuffer());
+      const crc = crc32(data);
+
+      const local = new Uint8Array([
+        0x50,0x4b,0x03,0x04,
+        ...u16(20),
+        ...u16(0),
+        ...u16(0),
+        ...u16(zipTime.dosTime),
+        ...u16(zipTime.dosDate),
+        ...u32(crc),
+        ...u32(data.length),
+        ...u32(data.length),
+        ...u16(nameBytes.length),
+        ...u16(0)
+      ]);
+
+      chunks.push(local, nameBytes, data);
+      central.push({ nameBytes, crc, size:data.length, offset, dosTime:zipTime.dosTime, dosDate:zipTime.dosDate });
+      offset += local.length + nameBytes.length + data.length;
+    }
+
+    const centralStart = offset;
+
+    for (const c of central){
+      const dir = new Uint8Array([
+        0x50,0x4b,0x01,0x02,
+        ...u16(20),
+        ...u16(20),
+        ...u16(0),
+        ...u16(0),
+        ...u16(c.dosTime),
+        ...u16(c.dosDate),
+        ...u32(c.crc),
+        ...u32(c.size),
+        ...u32(c.size),
+        ...u16(c.nameBytes.length),
+        ...u16(0),
+        ...u16(0),
+        ...u16(0),
+        ...u16(0),
+        ...u32(0),
+        ...u32(c.offset)
+      ]);
+
+      chunks.push(dir, c.nameBytes);
+      offset += dir.length + c.nameBytes.length;
+    }
+
+    const centralSize = offset - centralStart;
+
+    chunks.push(new Uint8Array([
+      0x50,0x4b,0x05,0x06,
+      ...u16(0),
+      ...u16(0),
+      ...u16(central.length),
+      ...u16(central.length),
+      ...u32(centralSize),
+      ...u32(centralStart),
+      ...u16(0)
+    ]));
+
+    return new Blob(chunks, { type:'application/zip' });
+  }
+
+  async function cardToPng(card, index){
+    await loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js');
+    if (!window.html2canvas) throw new Error('Slide export support did not load.');
+
+    const clone = card.cloneNode(true);
+    clone.querySelectorAll('button,select').forEach(n => n.remove());
+    clone.style.width = '1400px';
+    clone.style.maxWidth = '1400px';
+    clone.style.margin = '0';
+    clone.style.boxSizing = 'border-box';
+
+    const wrapper = document.createElement('div');
+    wrapper.style.position = 'fixed';
+    wrapper.style.left = '-10000px';
+    wrapper.style.top = '0';
+    wrapper.style.width = '1400px';
+    wrapper.style.background = '#ffffff';
+    wrapper.appendChild(clone);
+    document.body.appendChild(wrapper);
+    await nextFrame();
+
+    const rect = clone.getBoundingClientRect();
+    const maxPixels = 24000000;
+    const area = Math.max(1, rect.width * rect.height);
+    let scale = Math.max(1.5, Math.min(2.5, window.devicePixelRatio || 2));
+    if (area * scale * scale > maxPixels) scale = Math.max(1, Math.sqrt(maxPixels / area));
+
+    try {
+      const canvas = await window.html2canvas(clone, {
+        backgroundColor: '#ffffff',
+        scale,
+        useCORS: true,
+        logging: false,
+        windowWidth: 1400,
+        width: Math.ceil(rect.width),
+        height: Math.ceil(rect.height)
+      });
+
+      const pngBlob = await new Promise((resolve, reject) => {
+        canvas.toBlob(b => b ? resolve(b) : reject(new Error('Could not create slide image')), 'image/png');
+      });
+
+      const id = card.getAttribute('data-export-card') || `slide_${index}`;
+      return { name:`${String(index).padStart(2,'0')}_${reportStem()}_${dateStampForFilename()}_${id}.png`, blob:pngBlob };
+    } finally {
+      wrapper.remove();
+    }
+  }
+
+  async function downloadSlides(){
+    if (!state.header) return;
+    setStatus('Preparing slide images.');
+
+    const cards = Array.from(document.querySelectorAll('[data-export-card]'));
+    const files = [];
+
+    for (let i = 0; i < cards.length; i++){
+      files.push(await cardToPng(cards[i], i + 1));
+    }
+
+    const sourceDate = sourceFileDate();
+    const zip = await makeZip(files, sourceDate);
+    downloadBlob(zip, `${reportStem()}_${dateStampForFilename()}_vcfheader_slides.zip`);
+    setStatus(`Downloaded ${files.length} slide images. Zip entry dates use the source file modified date: ${reportDateLabel()}.`);
+  }
+
+  els.dropzone.addEventListener('dragover', ev => {
+    ev.preventDefault();
+    els.dropzone.classList.add('vcfh-dragging');
+  });
+
+  els.dropzone.addEventListener('dragleave', () => els.dropzone.classList.remove('vcfh-dragging'));
+
+  els.dropzone.addEventListener('drop', ev => {
+    ev.preventDefault();
+    els.dropzone.classList.remove('vcfh-dragging');
+    const file = ev.dataTransfer.files && ev.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+
+  els.dropzone.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter' || ev.key === ' '){
+      ev.preventDefault();
+      els.input.click();
+    }
+  });
+
+  els.input.addEventListener('change', () => {
+    const file = els.input.files && els.input.files[0];
+    if (file) handleFile(file);
+  });
+
+  els.printPdf.addEventListener('click', () => {
+    if (!state.header) return;
+    window.print();
+  });
+
+  els.downloadSlides.addEventListener('click', () => {
+    downloadSlides().catch(err => setStatus(`Could not create slide images\n${err && err.message ? err.message : err}`, true));
+  });
+
+  els.reset.addEventListener('click', () => {
+    state.file = null;
+    state.header = null;
+    state.headerLines = [];
+    state.views.clear();
+    state.generatedHtml = '';
+    state.masterView = 'all';
+    els.input.value = '';
+    els.report.hidden = true;
+    els.summary.innerHTML = '';
+    els.cards.innerHTML = '';
+    if (els.masterControls) els.masterControls.hidden = true;
+    setStatus('No file selected.');
+  });
+})();
+</script>

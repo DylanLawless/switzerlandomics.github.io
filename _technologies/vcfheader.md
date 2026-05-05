@@ -18,7 +18,7 @@ Structured header parsing and standalone HTML reporting for daily review of pipe
      aria-label="Download VCFheader">
     <span class="download-icon" aria-hidden="true">↓</span>
     <span class="download-text">
-      <span class="download-title">Download VCFheader</span>
+      <span class="download-title">Download</span>
       <span class="download-sub">Detecting platform</span>
     </span>
   </a>
@@ -30,6 +30,16 @@ Structured header parsing and standalone HTML reporting for daily review of pipe
     <span class="download-text">
       <span class="download-title">R package</span>
       <span class="download-sub">CRAN installation</span>
+    </span>
+  </a>
+
+  <a class="download-card"
+     href="/technologies/vcfheader/browser/"
+     aria-label="Open VCFheader browser">
+    <span class="download-icon" aria-hidden="true">↗</span>
+    <span class="download-text">
+      <span class="download-title">Open in browser</span>
+      <span class="download-sub">Local header report</span>
     </span>
   </a>
 </div>
