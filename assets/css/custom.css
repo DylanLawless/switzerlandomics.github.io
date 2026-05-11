@@ -18,3 +18,17 @@
 }
 
 
+/* publications page badges */
+.publication-dimensions,
+.publication-dimensions .__dimensions_badge_embed__,
+.publication-dimensions iframe,
+.publication-dimensions img {
+    display: inline-block !important;
+      vertical-align: middle !important;
+        margin-left: 0.35rem;
+          margin-top: -0.35rem !important;
+            margin-bottom: 0 !important;
+          }
+
+          /* Profile CV page */
+
