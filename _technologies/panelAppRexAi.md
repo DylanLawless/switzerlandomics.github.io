@@ -11,6 +11,7 @@ The leading disease-gene database with sophisticated search, designed to simplif
 </p>
 
 
+
 <!--
 Particle ring control points
 
@@ -104,6 +105,24 @@ Wobble behaviour
     .parx-softwash { display: none; }
   }
 
+.parx-page-link {
+  position: relative;
+  z-index: 10;
+  margin: -0.85rem 0 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.parx-page-link a {
+  color: rgba(47, 47, 65, 0.72);
+  text-decoration: none;
+}
+
+.parx-page-link a:hover {
+  color: #e5261f;
+  text-decoration: underline;
+}
+
   .thinking-shell {
     position: relative;
     z-index: 10; /* stay clearly above particles */
@@ -152,9 +171,16 @@ Wobble behaviour
         <div class="parx-softwash" aria-hidden="true"></div>
 
         <div class="parx-content">
-          <h1 class="parx-title">{{ page.title }}</h1>
+			<h1 class="parx-title">{{ page.title }}</h1>
 
-          <div class="thinking-shell">
+		<div class="parx-page-link">
+		  <a href="{{ '/pages/panelAppRexAi_about/' | relative_url }}">
+		    About PanelAppRex AI
+		  </a>
+		</div>
+
+<div class="thinking-shell">
+
             <div class="thinking-line">
               Thinking about
               <span id="interaction-count" class="thinking-number">4,000,000,000</span>
