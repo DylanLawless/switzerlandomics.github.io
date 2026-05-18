@@ -23,26 +23,12 @@ bodyClass: "page-home"
   </div>
 </div>
 
-<div class="strip">
-  <div class="container pt-6 pb-6 pb-md-3">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-8 col-lg-6">
-        {% include newsletter_signup.html
-          id="bd-email-home"
-          label="Subscribe for updates"
-          archive=false
-          meta=false
-          meta="For major technology releases and blog posts only."
-           centered=false
-        %}
-      </div>
-    </div>
-  </div>
-</div>
+{% include dark_publications_banner_area.html %}
 
 <div class="strip">
   <div class="container pt-6 pb-6 pb-md-10">
     <div class="row justify-content-start">
+  <h2>Technology pipelines</h2>
       {% assign limit = site.home.limit_technologies | default: 6 %}
       {% assign sorted_techs = site.technologies | sort: "weight" %}
       {% for tech in sorted_techs limit: limit %}
@@ -88,7 +74,26 @@ bodyClass: "page-home"
 <!-- </div> -->
 <!-- {% endif %} -->
 
+{% include dark_evidence_banner_area.html %}
+
 {% include infrastructure_maturity.html %}
+
+<div class="strip">
+  <div class="container pt-6 pb-6 pb-md-3">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        {% include newsletter_signup.html
+          id="bd-email-home"
+          label="Subscribe for updates"
+          archive=false
+          meta=false
+          meta="For major technology releases and blog posts only."
+           centered=false
+        %}
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

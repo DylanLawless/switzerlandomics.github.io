@@ -1,7 +1,7 @@
 ---
-title: Publications
+title: Featured publications
 layout: page
-description: Publications
+description: Featured publications
 permalink: "/publications/"
 intro_image_absolute: true
 intro_image_hide_on_mobile: false
@@ -10,8 +10,6 @@ intro_image_hide_on_mobile: false
 <!-- * Empowering precision medicine with GuRu and Heracles for enhanced classification and interpretation of genomic sequence variants. Pre-print 2025. -->
 
 
-## Flagship technologies
-
 * **QuantBayes**: 
 [A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease](https://www.medrxiv.org/content/10.64898/2025.12.02.25341503v1). Quant Group, Ali Saadat, Shweta Pipaliya, Dylan Lawless. *medRxiv* preprint (2025). DOI: 10.1101/2025.12.02.25341503 \\
 [DOI](https://doi.org/10.1101/2025.12.02.25341503) |
@@ -19,13 +17,13 @@ intro_image_hide_on_mobile: false
 [R package](https://cran.r-project.org/package=quantbayes) | 
 [Application](https://switzerlandomics.ch/technologies/quantbayes/)
 
-* **Quant**: 
+* **QuantCalc**: 
 [Quantifying prior probabilities for disease-causing variants reveals the top genetic contributors in inborn errors of immunity](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5). Quant Group, Simon Boutry, Ali Saadat, Maarja Soomann, Johannes Trück, D. Sean Froese, Jacques Fellay, Sinisa Savic, Luregn J. Schlapbach, Dylan Lawless. *medRxiv* preprint (2025). DOI: 10.1101/2025.03.25.25324607 \\
 [DOI](https://doi.org/10.1101/2025.03.25.25324607) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.25.25324607v5.full.pdf) | 
 [Video](https://player.vimeo.com/video/1103512246)  
 
-* **QV**: 
+* **QV database**: 
 [Application of qualifying variants for genomic analysis](https://doi.org/10.1093/bioinformatics/btaf676).
 Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Simon Boutry, Veronika Stadler, Sabine Österle, Jan Armida, David Haerry, D. Sean Froese, Luregn J. Schlapbach, Jacques Fellay. *Bioinformatics* (2026). DOI: 10.1093/bioinformatics/btaf676 \\
 [DOI](https://doi.org/10.1093/bioinformatics/btaf676) | 
