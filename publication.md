@@ -33,13 +33,16 @@ Dylan Lawless, Ali Saadat, Mariam Ait Oumelloul, Simon Boutry, Veronika Stadler,
 [Database](https://switzerlandomics.ch/technologies/qv_database/)  
 
 * **PanelAppRex**: 
-[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3).
-Quant Group, Simon Boutry, Ali Saadat, Sinisa Savic, Luregn J. Schlapbach, Jacques Fellay, Dylan Lawless. *medRxiv* preprint (2025). DOI: 10.1101/2025.03.20.25324319 \\
+[PanelAppRex aggregates disease gene panels and facilitates sophisticated search](https://doi.org/10.1093/bioadv/vbag115)
+Quant Group, Simon Boutry, Ali Saadat, Sinisa Savic, Luregn J. Schlapbach, Jacques Fellay, Dylan Lawless. 
+*Bioinformatics Advances* (2026). DOI: 10.1093/bioadv/vbag115 \\
 [Repository](https://github.com/DylanLawless/PanelAppRex) |
-[DOI](https://doi.org/10.1101/2025.03.20.25324319) | 
+[DOI](https://doi.org/10.1093/bioadv/vbag115) | 
+[medRxiv](https://doi.org/10.1101/2025.03.20.25324319) | 
 [PDF](https://www.medrxiv.org/content/10.1101/2025.03.20.25324319v3.full.pdf) | 
-[Video](https://player.vimeo.com/video/1099451293) | 
+[Video](https://vimeo.com/1193244150) | 
 [Application](https://switzerlandomics.ch/technologies/panelAppRexAi/) | 
+[About](https://switzerlandomics.ch/pages/panelAppRexAi_about/) | 
 [Dataset](https://doi.org/10.5281/zenodo.15736688)  
 
 * **Archipelago**: 
