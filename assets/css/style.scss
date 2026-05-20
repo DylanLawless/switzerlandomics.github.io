@@ -725,6 +725,26 @@ pre.code-copy code {
 // }
 
 
+.hero-actions {
+  margin-top: 0.9rem;
+  margin-bottom: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hero-actions .button {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .page-home{
   /* vault content should sit in the left column like hero-scope */
   .vault-block{
@@ -1047,9 +1067,8 @@ pre.code-copy code {
 }
 
 .dark-background-area__inner {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 5.5rem 1.25rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
   display: grid;
   grid-template-columns: 0.85fr 1fr;
   gap: clamp(2rem, 6vw, 5rem);
@@ -1065,7 +1084,7 @@ pre.code-copy code {
 }
 
 .dark-background-area__content {
-  max-width: 560px;
+  max-width: 30rem;
 }
 
 .dark-background-area__kicker {
@@ -1097,13 +1116,10 @@ pre.code-copy code {
 
 @media (max-width: 768px) {
   .dark-background-area__inner {
-    padding: 4rem 1.25rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
     grid-template-columns: 1fr;
     gap: 2.25rem;
-  }
-
-  .dark-background-area__content {
-    max-width: none;
   }
 
   .dark-background-area--media-stack .dark-background-area__content {
@@ -1129,9 +1145,6 @@ pre.code-copy code {
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
-.dark-background-area__content--wide {
-  max-width: 640px;
-}
 
 .dark-background-area__text-list {
   display: grid;

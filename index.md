@@ -8,37 +8,38 @@ intro_image_hide_on_mobile: true
 show_call_box: false
 ---
 
+# Genomic infrastructure
 
-<!-- ## We build algorithms and data systems that make genomic interpretation measurable, auditable, and reusable across clinical, research, and industrial settings. -->
+<p class="audience-body">
+  Switzerland Omics builds software, evidence databases, and interpretation systems for precision medicine, diagnostics, pharma R&D, and clinical decision support.
+</p>
 
+<div class="hero-actions">
+  <a class="button button-primary" href="{{ '/contact/' | relative_url }}">
+    Licensing
+  </a>
+
+  <a class="button" href="{{ '/technologies/' | relative_url }}">
+    Technologies
+  </a>
+</div>
+
+
+<p class="audience-kicker">DNA sequence to decision-grade evidence</p>
+<p class="audience-body">
+  Our systems preserve the evidence, uncertainty, and provenance behind omics-based conclusions, so results can be trusted, reviewed, reused, and transferred across real-world workflows.
+</p>
+
+<!--
 # Genomic infrastructure
 
 ## We build quantitative genomic infrastructure so biotech companies can produce decision-grade results.
 
-<!-- Probabilistic systems and evidence frameworks that make genomic interpretation measurable and auditable. -->
-
-<!-- vault overlay -->
 <div class="vault-overlay" aria-hidden="true">
   <div class="vault-panel left"></div>
   <div class="vault-panel right"></div>
 </div>
 <div class="vault-seam" aria-hidden="true"></div>
-
-<!-- Vault lock
-
-<a href="https://genomicvault.switzerlandomics.ch"
-   class="vault-card vault-link"
-   aria-label="Open Genomic Vault">
-  <span class="toggle" aria-hidden="true">
-    <span class="slide">
-      <span class="fa fa-circle-o" aria-hidden="true"></span>
-    </span>
-  </span>
-  <span class="label">Genomic Vault</span>
-</a>
--->
-
-
 
 <p class="audience-kicker">For biotech</p>
 <p class="audience-body">
@@ -47,7 +48,6 @@ show_call_box: false
 
 <div class="vault-block">
   <p class="audience-kicker">For individuals</p>
-  <!-- <h3 class="audience-heading">Genomic Vault</h3> -->
   <p class="audience-body">
     Genomic Vault for storing your DNA data. Built on the same infrastructure trusted by research institutions and hospitals.
   </p>
@@ -63,6 +63,4 @@ show_call_box: false
     <span class="label">Unlock</span>
   </a>
 </div>
-
-
-
+-->

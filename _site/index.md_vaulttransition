@@ -326,8 +326,8 @@
   </div>
 </div>
 
-  <section class="dark-background-area dark-background-area--media-stack">
-  <div class="dark-background-area__inner">
+<section class="dark-background-area dark-background-area--media-stack">
+  <div class="container dark-background-area__inner">
     <div class="dark-background-area__media">
       <img
         src="/images/so_publisher_cloud/publisher_logo_cloud.png"
@@ -496,7 +496,7 @@ Genomic Vault provides custody.
 <!--  -->
 
 <section class="dark-background-area dark-background-area--compact">
-  <div class="dark-background-area__inner dark-background-area__inner--text">
+  <div class="container dark-background-area__inner dark-background-area__inner--text">
 
     <div class="dark-background-area__content dark-background-area__content--wide">
       <p class="dark-background-area__kicker">First-principles infrastructure</p>

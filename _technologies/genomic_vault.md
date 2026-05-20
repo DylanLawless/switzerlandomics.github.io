@@ -118,7 +118,7 @@ Genomic Vault operates under Swiss law, including the Federal Act on Data Protec
 
 Detailed information on legal framework, data protection, security controls, regulatory positioning, and SPHN-compliant metadata is provided in the dedicated compliance section.
 
-<a href="/genomic-vault/compliance">View governance and compliance details</a>
+<a href="https://genomicvault.switzerlandomics.ch/legal/compliance">View governance and compliance details</a>
 
 ---
 
