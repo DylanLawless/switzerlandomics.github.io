@@ -28,7 +28,8 @@ bodyClass: "page-technologies"
           <h2 class="tech-title">
             <a href="{{ tech.url | relative_url }}">{{ tech.title }}</a>
           </h2>
-          <p>{{ tech.excerpt | markdownify | strip_html | truncate: 100 }}</p>
+          <!-- <p>{{ tech.excerpt | markdownify | strip_html | truncate: 100 }}</p> -->
+          <p>{{ tech.summary | default: tech.excerpt | markdownify | strip_html | truncate: 100 }}</p>
         </div>
       </div>
     </div>

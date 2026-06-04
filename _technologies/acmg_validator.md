@@ -1,0 +1,1596 @@
+---
+layout: default
+title: "ACMG Validator"
+description: "ACMG criteria calculator and classification validator. Review variant classification evidence, mark criteria and evidence status, modulate criterion strength with justification, check point-based consistency, document caveats, track completeness, and export a structured report. Runs in your browser. No upload."
+summary: "A browser-based ACMG/AMP evidence review and classification validator for structured variant interpretation, caveat checking, multi-variant case review, and report export."
+permalink: /technologies/acmg-validator/
+---
+
+<main class="acmg-app" aria-labelledby="acmg-title">
+  <section class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+      <div class="col-12">
+        <div class="tech tech-single acmg-shell">
+
+          <header class="acmg-hero acmg-no-print">
+            <p class="acmg-kicker">ACMG Validator</p>
+            <h1 id="acmg-title" class="title">Review the evidence, not just the verdict.</h1>
+            <p class="acmg-lead">A structured ACMG/AMP evidence review, caveat-checking and sign-off tool. Mark each criterion, record whether evidence was present, absent after review, or never assessed, modulate strength with justification where appropriate, check point-based consistency, and export a report. Everything runs in your browser. Nothing is uploaded.</p>
+            <div class="acmg-hero-actions">
+              <button id="acmg-example" class="button-link" type="button">Load BRCA1 example</button>
+              <button id="acmg-example-cftr" class="button-link" type="button">Load CFTR example</button>
+              <button id="acmg-example-braf" class="button-link" type="button">Load BRAF scope check</button>
+              <button id="acmg-reset" class="acmg-secondary-link" type="button">Clear all</button>
+            </div>
+          </header>
+
+          <!-- live scoreboard + completeness -->
+          <div class="acmg-scoreboard acmg-no-print" id="acmg-scoreboard" aria-live="polite">
+            <div class="acmg-score-cells">
+              <div class="acmg-score-cell"><span class="acmg-score-val" id="sb-path">0</span><span class="acmg-score-lab">Pathogenic points</span></div>
+              <div class="acmg-score-cell"><span class="acmg-score-val" id="sb-ben">0</span><span class="acmg-score-lab">Benign points</span></div>
+              <div class="acmg-score-cell"><span class="acmg-score-val" id="sb-total">0</span><span class="acmg-score-lab">Total points</span></div>
+              <div class="acmg-score-cell acmg-score-wide"><span class="acmg-score-val" id="sb-derived">—</span><span class="acmg-score-lab">Point-based category</span></div>
+              <div class="acmg-score-cell acmg-score-wide"><div class="acmg-validation-line"><span class="acmg-verdict" id="sb-verdict" data-tone="idle">Incomplete review</span><button class="acmg-validation-help" id="sb-help" type="button" aria-expanded="false" aria-controls="sb-reasons" title="Show why this validation status was assigned" hidden>?</button></div><span class="acmg-score-lab">Validation status</span><div class="acmg-validation-reasons" id="sb-reasons" hidden></div></div>
+            </div>
+            <div class="acmg-completeness">
+              <div class="acmg-comp-bar" id="acmg-comp-bar"></div>
+              <div class="acmg-comp-text" id="acmg-comp-text">No criteria addressed yet.</div>
+            </div>
+          </div>
+
+          <div class="acmg-legend acmg-no-print">
+            <span class="acmg-legend-item"><span class="acmg-legend-dot" data-state="complete">✓</span> Applied — contributes points</span>
+            <span class="acmg-legend-item"><span class="acmg-legend-dot" data-state="noevidence">∅</span> No contribution — reviewed, adds nothing</span>
+            <span class="acmg-legend-item"><span class="acmg-legend-dot" data-state="incomplete">!</span> Incomplete — something missing</span>
+            <span class="acmg-legend-item"><span class="acmg-legend-dot" data-state="conflict">⊘</span> Conflict — needs resolving</span>
+            <span class="acmg-legend-item"><span class="acmg-legend-dot" data-state="untouched">–</span> Not assessed — not yet reviewed</span>
+          </div>
+
+          <div class="acmg-case-tabs acmg-no-print" id="acmg-case-tabs" aria-label="Case variant navigation">
+            <div class="acmg-case-tabs-row" id="acmg-case-tabs-row"></div>
+            <button type="button" class="acmg-case-add" id="acmg-add-variant">Add variant to case</button>
+          </div>
+
+          <div class="acmg-editor acmg-no-print">
+
+            <!-- variant + case context -->
+            <section class="acmg-section">
+              <h2 class="acmg-h2">1 · Variant and case context</h2>
+              <p class="acmg-section-note">Use HGVS notation. Missing transcript or genome build is flagged because interpretation can change with reference sequence and assembly.</p>
+              <div class="acmg-grid">
+                <label class="acmg-field"><span>Gene</span><input data-meta="gene" type="text" placeholder="BRCA1" autocomplete="off"></label>
+                <label class="acmg-field"><span>Transcript</span><input data-meta="transcript" type="text" placeholder="NM_007294.4" autocomplete="off"></label>
+                <label class="acmg-field"><span>cDNA (HGVS c.)</span><input data-meta="hgvs_c" type="text" placeholder="c.68_69del" autocomplete="off"></label>
+                <label class="acmg-field"><span>Protein (HGVS p.)</span><input data-meta="hgvs_p" type="text" placeholder="p.(Glu23ValfsTer17)" autocomplete="off"></label>
+                <label class="acmg-field"><span>Genome build</span>
+                  <select data-meta="build"><option value="">—</option><option>GRCh38</option><option>GRCh37</option><option>T2T-CHM13</option></select>
+                </label>
+                <label class="acmg-field"><span>Genomic coordinate</span><input data-meta="coordinate" type="text" placeholder="chr17:43124027" autocomplete="off"></label>
+                <label class="acmg-field"><span>Variant type</span>
+                  <select data-meta="variant_type"><option value="">—</option><option>SNV</option><option>Small insertion</option><option>Small deletion</option><option>Indel</option><option>In-frame indel</option></select>
+                </label>
+                <label class="acmg-field"><span>Zygosity</span>
+                  <select data-meta="zygosity"><option value="">—</option><option>Heterozygous</option><option>Homozygous</option><option>Hemizygous</option><option>Compound het</option></select>
+                </label>
+                <label class="acmg-field"><span>Disease / condition</span><input data-meta="disease" type="text" placeholder="Hereditary breast and ovarian cancer" autocomplete="off"></label>
+                <label class="acmg-field"><span>Inheritance model</span>
+                  <select data-meta="inheritance"><option value="">—</option><option>AD</option><option>AR</option><option>XLD</option><option>XLR</option><option>Mitochondrial</option><option>Other</option></select>
+                </label>
+                <label class="acmg-field acmg-field-wide"><span>Phenotype summary / HPO</span><input data-meta="phenotype" type="text" placeholder="Free text or HPO terms" autocomplete="off"></label>
+                <label class="acmg-field"><span>Reviewer</span><input data-meta="reviewer" type="text" placeholder="Dr Jane Smith" autocomplete="off"></label>
+                <label class="acmg-field"><span>Institution</span><input data-meta="institution" type="text" placeholder="Example Laboratory" autocomplete="off"></label>
+                <label class="acmg-field"><span>Review date</span><input data-meta="date" type="date"></label>
+                <label class="acmg-field"><span>Guideline basis</span>
+                  <select data-meta="guideline"><option>ACMG/AMP 2015 (Richards et al.)</option><option>ACMG/AMP + Tavtigian point system</option><option>ClinGen-specified rules</option></select>
+                </label>
+              </div>
+            </section>
+
+            <!-- criteria -->
+            <section class="acmg-section">
+              <div class="acmg-section-head">
+                <div>
+                  <h2 class="acmg-h2">2 · Criteria review</h2>
+                  <p class="acmg-section-note">Record the <strong>evidence finding first</strong>, then the <strong>status</strong> — the status auto-fills from the evidence and you can override it. Each criterion also carries a default strength fixed by ACMG/AMP; you may modulate it when justified (e.g. PVS1 per the ClinGen decision tree, PM2 to Supporting), and any deviation is recorded in ClinGen notation (PM2_Supporting). "Rejected, absent after review" is not "Not assessed": use the status pill and the completeness bar to confirm nothing was skipped. Many criteria will not apply to a given variant — use <em>Mark untouched as N/A</em> to record that deliberately.</p>
+                </div>
+                <div class="acmg-crit-tools">
+                  <button type="button" id="acmg-na-rest" class="acmg-mini-btn">Mark untouched as N/A</button>
+                  <div class="acmg-filter" role="group" aria-label="Filter criteria">
+                    <button type="button" data-filter="all" class="acmg-active">All</button>
+                    <button type="button" data-filter="active">Touched only</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="acmg-group">
+                <h3 class="acmg-group-title">Pathogenic evidence</h3>
+                <div class="acmg-crit-list" id="acmg-list-pathogenic"></div>
+              </div>
+
+              <div class="acmg-group">
+                <h3 class="acmg-group-title">Benign evidence</h3>
+                <div class="acmg-crit-list" id="acmg-list-benign"></div>
+              </div>
+            </section>
+
+            <!-- classification + sign-off -->
+            <section class="acmg-section">
+              <h2 class="acmg-h2">3 · Classification and sign-off</h2>
+              <div class="acmg-grid">
+                <label class="acmg-field"><span>Entered classification</span>
+                  <select data-meta="entered_classification">
+                    <option value="">—</option>
+                    <option value="pathogenic">Pathogenic</option>
+                    <option value="likely_pathogenic">Likely pathogenic</option>
+                    <option value="vus">Uncertain significance</option>
+                    <option value="likely_benign">Likely benign</option>
+                    <option value="benign">Benign</option>
+                  </select>
+                </label>
+                <label class="acmg-field acmg-field-wide acmg-checkline"><input type="checkbox" data-meta="signoff"><span>Reviewer sign-off completed — evidence reviewed and recorded as above</span></label>
+              </div>
+            </section>
+
+            <!-- genotype-level review -->
+            <section class="acmg-section" id="acmg-genotype-section">
+              <h2 class="acmg-h2">4 · Genotype-level review</h2>
+              <p class="acmg-section-note">Use this when a case has more than one variant. Variant-level ACMG evidence remains separate; this section records whether the variants were reviewed together, phase, recessive evidence and phenotype fit. Do not sum ACMG scores across variants.</p>
+              <div class="acmg-grid">
+                <label class="acmg-field"><span>Gene reviewed together</span><input data-genotype="gene" type="text" placeholder="CFTR" autocomplete="off"></label>
+                <label class="acmg-field"><span>Disease / condition</span><input data-genotype="disease" type="text" placeholder="Cystic fibrosis" autocomplete="off"></label>
+                <label class="acmg-field"><span>Inheritance model</span>
+                  <select data-genotype="inheritance"><option value="">—</option><option>AD</option><option>AR</option><option>XLD</option><option>XLR</option><option>Mitochondrial</option><option>Other</option></select>
+                </label>
+                <label class="acmg-field"><span>Phase</span>
+                  <select data-genotype="phase"><option value="">—</option><option>Confirmed in trans</option><option>Confirmed in cis</option><option>Inferred in trans</option><option>Phase unknown</option><option>Not assessed</option></select>
+                </label>
+                <label class="acmg-field acmg-field-wide"><span>Variant combination</span><input data-genotype="combination" type="text" placeholder="Variant 1 and Variant 2 reviewed as a possible biallelic genotype" autocomplete="off"></label>
+                <label class="acmg-field acmg-field-wide"><span>Phase evidence</span><input data-genotype="phase_evidence" type="text" placeholder="Parental testing, segregation, read-backed phasing, inferred from family data, or not assessed" autocomplete="off"></label>
+                <label class="acmg-field acmg-field-wide"><span>Genotype-level conclusion</span><input data-genotype="conclusion" type="text" placeholder="Biallelic variants in trans are compatible with the AR disease model" autocomplete="off"></label>
+                <label class="acmg-field acmg-field-wide"><span>Phenotype fit</span><input data-genotype="phenotype_fit" type="text" placeholder="Clinical phenotype supports / does not support the genotype-level interpretation" autocomplete="off"></label>
+                <label class="acmg-field acmg-field-wide"><span>Residual uncertainty</span><input data-genotype="uncertainty" type="text" placeholder="Phase unknown, second allele uncertain, incomplete phenotype, segregation not assessed…" autocomplete="off"></label>
+              </div>
+            </section>
+          </div>
+
+          <!-- report (live, read-only mirror; the only thing that prints) -->
+          <section class="acmg-report" id="acmg-report" aria-label="Structured review report">
+            <div class="acmg-export-cta acmg-no-print">
+              <div class="acmg-export-copy">
+                <h2 class="acmg-h2">Download the report</h2>
+                <p>A structured, shareable record of this review — PDF for sign-off, HTML or JSON for your records.</p>
+              </div>
+              <div class="acmg-export">
+                <button id="acmg-print" class="button-link" type="button">Print / Save PDF</button>
+                <button id="acmg-html" class="button-link" type="button">Download HTML</button>
+                <button id="acmg-json" class="acmg-button-secondary" type="button">JSON</button>
+                <button id="acmg-md" class="acmg-button-secondary" type="button">Markdown</button>
+              </div>
+            </div>
+            <div id="acmg-report-body"></div>
+          </section>
+
+          <!-- SEO / educational explainer (server rendered) -->
+          <section class="acmg-explainer acmg-no-print">
+            <h2 class="acmg-h2">About the ACMG criteria and this validator</h2>
+            <p>The ACMG/AMP framework classifies sequence variants into five categories — pathogenic, likely pathogenic, uncertain significance, likely benign and benign — using weighted evidence criteria such as PVS1, PS1–PS4, PM1–PM6, PP1–PP4 on the pathogenic side and BA1, BS1–BS4, BP1–BP7 on the benign side. Each criterion carries a default strength: very strong, strong, moderate or supporting (BA1 is stand-alone benign).</p>
+            <p>The strength encoded in the code is the default, but it can be modulated on professional judgement, and modern practice does so in structured ways: the ClinGen Sequence Variant Interpretation working group grades PVS1 by null-variant context (PVS1 decision tree), recommends PM2 at supporting strength, and calibrates computational evidence (PP3/BP4) and functional evidence (PS3/BS3) to multiple strength levels. The Tavtigian et al. (2020) point system makes this coherent by scoring the applied strength rather than the code: supporting ±1, moderate ±2, strong ±4, very strong / stand-alone ±8, with categories of pathogenic ≥10, likely pathogenic 6–9, uncertain 0–5, likely benign −1 to −6, benign ≤−7.</p>
+            <p>This tool does not annotate variants and does not replace VarSome, ClinVar, gnomAD or VEP. It records <em>how</em> the evidence those tools provide was reviewed: which criteria apply, at what strength and why, which were checked and found absent, which were never assessed, whether caveats were completed, and whether the entered classification is internally consistent with the selected criteria. The output certifies process completion, not clinical correctness. A "validated" report means the review is internally consistent with the selected criteria and that caveats and sign-off were completed — it is not a clinical approval.</p>
+          </section>
+
+          <section class="acmg-feedback acmg-no-print">
+            <h2 class="acmg-h2">Feedback</h2>
+            <p>Feedback on this page is important to catch errors in logic or to better meet user needs. Please contact us at <a href="mailto:admin@switzerlandomics.ch">admin@switzerlandomics.ch</a> to report.</p>
+          </section>
+
+          <section class="acmg-references acmg-no-print">
+            <h2 class="acmg-h2">References</h2>
+            <ol class="acmg-ref-list">
+              <li>Richards S, et al. (2015). Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology. <em>Genetics in Medicine</em>, 17(5), 405–423. <a href="https://doi.org/10.1038/gim.2015.30">doi:10.1038/gim.2015.30</a></li>
+              <li>Tavtigian SV, Harrison SM, Boucher KM, Biesecker LG. (2020). Fitting a naturally scaled point system to the ACMG/AMP variant classification guidelines. <em>Human Mutation</em>, 41, 1734–1737. <a href="https://doi.org/10.1002/humu.24088">doi:10.1002/humu.24088</a></li>
+              <li>Wilcox EH, et al. (2022). Evaluating the impact of in silico predictors on clinical variant classification. <em>Genetics in Medicine</em>, 24(4), 924–930. <a href="https://doi.org/10.1016/j.gim.2021.11.018">doi:10.1016/j.gim.2021.11.018</a></li>
+              <li>Li MM, et al. (2017). Standards and guidelines for the interpretation and reporting of sequence variants in cancer: a joint consensus recommendation of AMP, ASCO and CAP. <em>The Journal of Molecular Diagnostics</em>, 19(1), 4–23. <a href="https://doi.org/10.1016/j.jmoldx.2016.10.002">doi:10.1016/j.jmoldx.2016.10.002</a></li>
+              <li>Riggs ER, et al. (2020). Technical standards for the interpretation and reporting of constitutional copy-number variants: a joint consensus recommendation of ACMG and ClinGen. <em>Genetics in Medicine</em>, 22(2), 245–257. <a href="https://doi.org/10.1038/s41436-019-0686-8">doi:10.1038/s41436-019-0686-8</a></li>
+              <li>Pedersen BS, et al. (2021). Effective variant filtering and expected candidate variant yield in studies of rare human disease. <em>npj Genomic Medicine</em>, 6(1), 1–8. <a href="https://doi.org/10.1038/s41525-021-00227-3">doi:10.1038/s41525-021-00227-3</a></li>
+              <li>Li Q, Wang K. (2017). InterVar: clinical interpretation of genetic variants by the 2015 ACMG-AMP guidelines. <em>The American Journal of Human Genetics</em>, 100(2), 267–280. <a href="https://doi.org/10.1016/j.ajhg.2017.01.004">doi:10.1016/j.ajhg.2017.01.004</a></li>
+              <li>Xavier A, et al. (2019). TAPES: a tool for assessment and prioritisation in exome studies. <em>PLoS Computational Biology</em>, 15(10), e1007453. <a href="https://doi.org/10.1371/journal.pcbi.1007453">doi:10.1371/journal.pcbi.1007453</a></li>
+            </ol>
+            <p class="acmg-ref-note">Public ACMG implementations such as InterVar and TAPES are listed for reference only; they are not implemented here and no assertion of their quality is made.</p>
+          </section>
+
+          <footer class="acmg-footer-text">
+            Generated with ACMG Validator, a free tool created by
+            <a href="https://switzerlandomics.ch">Switzerland Omics</a>.
+            The validator checks internal consistency and process completion only. It does not assert clinical validity, does not annotate variants, and does not constitute medical advice.
+            Switzerland Omics® is a registered trade mark.
+            Classification logic follows Richards et al. 2015 (ACMG/AMP) and the point system of Tavtigian et al. 2020; strength modulation follows ClinGen SVI recommendations.
+            Further information:
+            <a href="https://switzerlandomics.ch">https://switzerlandomics.ch</a>.
+          </footer>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<style>
+.acmg-app{--acmg-red:#e5261f;--acmg-red-dark:#a01b16;--acmg-black:#2f2f41;--acmg-steel:#5c5a5a;--acmg-soft:#f3f2f2;--acmg-border:#dcdcdc;--acmg-surface:#fff;--acmg-warn:#8a5a00;--acmg-warn-bg:#fbf4e6;--acmg-ok:#2f7d4f;--acmg-ok-bg:#eef7f1;--rs-green:#2f7d4f;--rs-blue:#2c5f8a;--rs-amber:#8a5a00;--rs-red:#e5261f;}
+.acmg-shell{max-width:1100px;}
+.acmg-hero{margin-bottom:22px;}
+.acmg-kicker{margin:0 0 .5rem;color:var(--acmg-red);font-weight:600;font-size:.95rem;}
+.acmg-lead{max-width:52rem;color:var(--acmg-steel);font-size:1.02rem;line-height:1.5;margin:.7rem 0 0;}
+.acmg-hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:1.1rem;}
+.acmg-secondary-link{border:none;background:none;color:var(--acmg-steel);font:inherit;cursor:pointer;text-decoration:none;padding:0;}
+.acmg-secondary-link:hover{color:var(--acmg-red);text-decoration:underline;}
+
+/* multi-variant case tabs */
+.acmg-case-tabs{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:0 0 18px;padding:12px;border:2px solid rgba(229,38,31,.32);border-left:6px solid var(--acmg-red);border-radius:8px;background:linear-gradient(135deg,rgba(229,38,31,.08),rgba(47,47,65,.04));}
+.acmg-case-tabs-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1 1 auto;}
+.acmg-case-tab{border:1px solid rgba(229,38,31,.35);background:#fff;color:var(--acmg-black);font:inherit;font-size:.84rem;font-weight:600;padding:8px 12px;border-radius:6px;cursor:pointer;box-shadow:0 1px 0 rgba(47,47,65,.05);}
+.acmg-case-tab:hover{border-color:var(--acmg-red);color:var(--acmg-red);}
+.acmg-case-tab.acmg-active{background:var(--acmg-red);border-color:var(--acmg-red-dark);color:#fff;}
+.acmg-case-tab[data-tab="genotype"]{background:#fff7e8;border-color:#e0c98f;color:#8a5a00;}
+.acmg-case-tab[data-tab="genotype"].acmg-active{background:#8a5a00;border-color:#6c4600;color:#fff;}
+.acmg-case-tab[data-tab="report"]{background:#eef7f1;border-color:#bfe0cb;color:#2f7d4f;}
+.acmg-case-tab[data-tab="report"].acmg-active{background:#2f7d4f;border-color:#24613d;color:#fff;}
+.acmg-case-add{border:1px solid var(--acmg-black);background:var(--acmg-black);color:#fff;font:inherit;font-size:.84rem;font-weight:600;padding:8px 13px;border-radius:6px;cursor:pointer;}
+.acmg-case-add:hover{background:var(--acmg-red);border-color:var(--acmg-red);}
+
+/* scoreboard + completeness */
+.acmg-scoreboard{border:1px solid var(--acmg-border);border-radius:6px;background:var(--acmg-surface);overflow:hidden;position:sticky;top:0;z-index:5;margin-bottom:16px;}
+.acmg-score-cells{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) repeat(2,minmax(0,1.6fr));}
+.acmg-score-cell{padding:12px 14px;border-left:1px solid var(--acmg-border);display:flex;flex-direction:column;gap:3px;}
+.acmg-score-cell:first-child{border-left:none;}
+.acmg-score-val{font-size:1.55rem;font-weight:700;color:var(--acmg-black);line-height:1;}
+.acmg-score-lab{font-size:.74rem;color:var(--acmg-steel);text-transform:uppercase;letter-spacing:.04em;}
+.acmg-verdict{display:inline-block;font-size:.92rem;font-weight:600;padding:3px 8px;border-radius:4px;width:fit-content;border:1px solid var(--acmg-border);color:var(--acmg-steel);}
+.acmg-verdict[data-tone="ok"]{color:var(--acmg-ok);background:var(--acmg-ok-bg);border-color:#bfe0cb;}
+.acmg-verdict[data-tone="warn"]{color:var(--acmg-warn);background:var(--acmg-warn-bg);border-color:#ead9b0;}
+.acmg-verdict[data-tone="bad"]{color:#fff;background:var(--acmg-red);border-color:var(--acmg-red-dark);}
+.acmg-verdict[data-tone="idle"]{color:var(--acmg-steel);}
+.acmg-validation-line{display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.acmg-validation-help{width:21px;height:21px;border-radius:50%;border:1px solid var(--acmg-border);background:var(--acmg-surface);color:var(--acmg-steel);font:inherit;font-size:.76rem;font-weight:700;line-height:1;cursor:pointer;padding:0;}
+.acmg-validation-help:hover,.acmg-validation-help[aria-expanded="true"]{border-color:var(--acmg-red);color:var(--acmg-red);}
+.acmg-validation-reasons{margin-top:7px;padding:8px 9px;border:1px solid var(--acmg-border);border-radius:5px;background:var(--acmg-soft);color:var(--acmg-steel);font-size:.76rem;line-height:1.35;}
+.acmg-validation-reasons ul{margin:.35rem 0 0;padding-left:1rem;}
+.acmg-validation-reasons li{margin:0 0 .2rem;}
+.acmg-completeness{padding:10px 14px;border-top:1px solid var(--acmg-border);display:flex;flex-direction:column;gap:7px;}
+.acmg-comp-bar{display:flex;height:9px;border-radius:3px;overflow:hidden;background:#eceae6;}
+.acmg-comp-seg{height:100%;}
+.acmg-comp-seg[data-state="complete"]{background:var(--rs-green);}
+.acmg-comp-seg[data-state="noevidence"]{background:var(--rs-blue);}
+.acmg-comp-seg[data-state="incomplete"]{background:#caa23c;}
+.acmg-comp-seg[data-state="conflict"]{background:var(--rs-red);}
+.acmg-comp-text{font-size:.78rem;color:var(--acmg-steel);}
+
+/* legend */
+.acmg-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:0 0 26px;font-size:.76rem;color:var(--acmg-steel);}
+.acmg-legend-item{display:inline-flex;align-items:center;gap:7px;}
+.acmg-legend-dot{width:17px;height:17px;border-radius:3px;display:inline-grid;place-items:center;font-size:10px;font-weight:700;border:1px solid;flex:0 0 auto;}
+.acmg-legend-dot[data-state="complete"]{color:#2f7d4f;background:#eef7f1;border-color:#bfe0cb;}
+.acmg-legend-dot[data-state="noevidence"]{color:#2c5f8a;background:#eef3f8;border-color:#c3d6e6;}
+.acmg-legend-dot[data-state="incomplete"]{color:#8a5a00;background:#fbf4e6;border-color:#e0c98f;}
+.acmg-legend-dot[data-state="conflict"]{color:#a01b16;background:#fdeceb;border-color:#f3c4c1;}
+.acmg-legend-dot[data-state="untouched"]{color:#5c5a5a;background:#fff;border-color:#dcdcdc;}
+
+/* sections */
+.acmg-section{border-top:2px solid var(--acmg-black);padding-top:16px;margin-top:30px;}
+.acmg-section:first-child{margin-top:0;}
+.acmg-h2{font-size:1.12rem;color:var(--acmg-black);margin:0 0 .25rem;}
+.acmg-section-note{color:var(--acmg-steel);font-size:.9rem;line-height:1.45;margin:.2rem 0 1rem;max-width:62rem;}
+.acmg-section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
+.acmg-crit-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.acmg-mini-btn{border:1px solid var(--acmg-border);background:var(--acmg-surface);color:var(--acmg-steel);font:inherit;font-size:.8rem;padding:6px 11px;border-radius:5px;cursor:pointer;}
+.acmg-mini-btn:hover{border-color:var(--acmg-red);color:var(--acmg-red);}
+
+/* form grid */
+.acmg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 14px;}
+.acmg-field{display:flex;flex-direction:column;gap:4px;font-size:.8rem;color:var(--acmg-black);}
+.acmg-field>span{font-weight:600;}
+.acmg-field-wide{grid-column:span 2;}
+.acmg-field input,.acmg-field select{height:38px;padding:0 10px;border:1px solid var(--acmg-border);border-radius:5px;background:var(--acmg-surface);font-size:.9rem;color:var(--acmg-black);outline:none;}
+.acmg-field input:focus,.acmg-field select:focus{border-color:var(--acmg-red);}
+.acmg-checkline{flex-direction:row;align-items:center;gap:10px;align-self:end;height:38px;}
+.acmg-checkline input{width:18px;height:18px;}
+.acmg-checkline span{font-weight:500;}
+
+/* filter */
+.acmg-filter{display:inline-flex;border:1px solid var(--acmg-border);border-radius:5px;overflow:hidden;}
+.acmg-filter button{border:none;background:var(--acmg-surface);color:var(--acmg-steel);font:inherit;font-size:.82rem;padding:6px 12px;cursor:pointer;border-left:1px solid var(--acmg-border);}
+.acmg-filter button:first-child{border-left:none;}
+.acmg-filter button.acmg-active{background:rgba(229,38,31,.08);color:var(--acmg-red);font-weight:600;}
+
+/* criteria */
+.acmg-group{margin-top:18px;}
+.acmg-group-title{font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;color:var(--acmg-steel);margin:0 0 2px;padding-bottom:6px;border-bottom:1px solid var(--acmg-border);}
+.acmg-crit{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 18px;align-items:start;padding:12px 0 12px 12px;border-bottom:1px solid var(--acmg-border);border-left:3px solid var(--acmg-border);}
+.acmg-crit[data-rowstate="complete"]{border-left-color:var(--rs-green);}
+.acmg-crit[data-rowstate="noevidence"]{border-left-color:var(--rs-blue);}
+.acmg-crit[data-rowstate="incomplete"]{border-left-color:var(--rs-amber);}
+.acmg-crit[data-rowstate="conflict"]{border-left-color:var(--rs-red);}
+.acmg-crit[data-rowstate="untouched"]{border-left-color:transparent;}
+.acmg-crit[data-status="not_applicable"]{opacity:.72;}
+.acmg-crit.acmg-hidden{display:none;}
+.acmg-crit-main{min-width:0;}
+.acmg-crit-id{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.acmg-code{font-weight:700;color:var(--acmg-black);font-size:.95rem;letter-spacing:.01em;}
+.acmg-tag{font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;color:var(--acmg-steel);border:1px solid var(--acmg-border);border-radius:3px;padding:1px 5px;}
+.acmg-tag-note{color:var(--acmg-red);border-color:rgba(229,38,31,.4);}
+.acmg-tag-dep{color:var(--acmg-warn);border-color:#ead9b0;}
+.acmg-tag-mod{color:var(--acmg-warn);background:var(--acmg-warn-bg);border-color:#e0c98f;font-weight:600;}
+.acmg-crit-def{font-size:.85rem;color:var(--acmg-steel);line-height:1.4;margin:5px 0 0;}
+.acmg-crit-controls{display:grid;grid-template-columns:repeat(3,minmax(120px,150px));gap:8px;}
+.acmg-crit-statusline{grid-column:1 / -1;margin-bottom:2px;}
+.acmg-rowpill{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:4px;border:1px solid var(--acmg-border);}
+.acmg-rowpill-glyph{font-weight:700;font-size:.82rem;line-height:1;}
+.acmg-rowpill[data-state="complete"]{color:#2f7d4f;background:#eef7f1;border-color:#bfe0cb;}
+.acmg-rowpill[data-state="noevidence"]{color:#2c5f8a;background:#eef3f8;border-color:#c3d6e6;}
+.acmg-rowpill[data-state="incomplete"]{color:#8a5a00;background:#fbf4e6;border-color:#e0c98f;}
+.acmg-rowpill[data-state="conflict"]{color:#a01b16;background:#fdeceb;border-color:#f3c4c1;}
+.acmg-rowpill[data-state="untouched"]{color:#5c5a5a;background:#fff;border-color:#dcdcdc;}
+.acmg-crit-controls label{display:flex;flex-direction:column;gap:3px;font-size:.7rem;color:var(--acmg-steel);text-transform:uppercase;letter-spacing:.03em;}
+.acmg-crit-controls select{height:34px;border:1px solid var(--acmg-border);border-radius:5px;padding:0 8px;font-size:.84rem;color:var(--acmg-black);background:var(--acmg-surface);outline:none;}
+.acmg-crit-controls select:focus{border-color:var(--acmg-red);}
+.acmg-crit-controls select:disabled{color:var(--acmg-steel);background:var(--acmg-soft);cursor:not-allowed;}
+.acmg-crit[data-mod="1"] .acmg-crit-controls select[data-field="strength"]{border-color:#e0c98f;background:var(--acmg-warn-bg);color:var(--acmg-warn);font-weight:600;}
+.acmg-crit-extra{grid-column:1 / -1;}
+.acmg-disclosure{border:none;background:none;color:var(--acmg-steel);font:inherit;font-size:.8rem;cursor:pointer;padding:2px 0;text-decoration:underline;text-underline-offset:2px;}
+.acmg-disclosure:hover{color:var(--acmg-red);}
+.acmg-disclosure[data-flag="1"]::after{content:" • incomplete";color:var(--acmg-warn);text-decoration:none;}
+.acmg-detail{margin-top:10px;padding:12px 14px;background:var(--acmg-soft);border:1px solid var(--acmg-border);border-radius:6px;}
+.acmg-detail[hidden]{display:none;}
+.acmg-caveats{margin:0 0 10px;padding:0;list-style:none;display:grid;gap:6px;}
+.acmg-caveats li{display:flex;gap:8px;align-items:flex-start;font-size:.83rem;color:var(--acmg-black);line-height:1.35;}
+.acmg-caveats input{margin-top:2px;width:16px;height:16px;flex:0 0 auto;}
+.acmg-notes-label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.03em;color:var(--acmg-steel);margin-bottom:4px;}
+.acmg-detail textarea{width:100%;min-height:60px;border:1px solid var(--acmg-border);border-radius:5px;padding:8px 10px;font:inherit;font-size:.86rem;color:var(--acmg-black);background:var(--acmg-surface);resize:vertical;outline:none;}
+.acmg-detail textarea:focus{border-color:var(--acmg-red);}
+
+/* report */
+.acmg-report{margin-top:34px;border-top:2px solid var(--acmg-black);padding-top:16px;}
+.acmg-export-cta{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:16px 18px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;background:var(--acmg-soft);margin-bottom:22px;}
+.acmg-export-copy h2{margin:0;}
+.acmg-export-copy p{margin:.2rem 0 0;color:var(--acmg-steel);font-size:.88rem;max-width:34rem;}
+.acmg-export{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.acmg-button-secondary{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border:1px solid var(--acmg-border);border-radius:5px;background:var(--acmg-surface);color:var(--acmg-black);font-size:15px;line-height:1;cursor:pointer;}
+.acmg-button-secondary:hover{border-color:var(--acmg-red);color:var(--acmg-red);}
+.acmg-rep-stamp{border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;padding:14px 16px;margin:0 0 18px;background:var(--acmg-surface);}
+.acmg-rep-stamp h3{margin:0 0 8px;font-size:1rem;color:var(--acmg-black);}
+.acmg-rep-stamp .acmg-verdict{margin-bottom:4px;}
+.acmg-rep-block{margin:0 0 20px;}
+.acmg-rep-block h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--acmg-steel);margin:0 0 8px;border-bottom:1px solid var(--acmg-border);padding-bottom:5px;}
+.acmg-rep-table{width:100%;border-collapse:collapse;}
+.acmg-rep-table th,.acmg-rep-table td{border:1px solid var(--acmg-border);padding:7px 9px;text-align:left;vertical-align:top;font-size:.82rem;line-height:1.35;}
+.acmg-rep-table th{background:var(--acmg-soft);color:var(--acmg-black);font-weight:600;}
+.acmg-rep-kv td:first-child{width:34%;font-weight:600;color:var(--acmg-black);background:#fafafa;}
+.acmg-rep-list{margin:0;padding-left:1.15rem;}
+.acmg-rep-list li{font-size:.85rem;line-height:1.45;margin-bottom:4px;}
+.acmg-rep-list.bad li{color:var(--acmg-red-dark);}
+.acmg-rep-list.warn li{color:var(--acmg-warn);}
+.acmg-rep-empty{color:var(--acmg-steel);font-size:.85rem;}
+.acmg-explainer{margin-top:34px;border-top:1px solid var(--acmg-border);padding-top:18px;color:var(--acmg-black);}
+.acmg-explainer p{color:var(--acmg-steel);font-size:.92rem;line-height:1.6;max-width:62rem;margin:0 0 .9rem;}
+.acmg-feedback{margin-top:26px;}
+.acmg-feedback p{color:var(--acmg-steel);font-size:.92rem;line-height:1.6;max-width:62rem;margin:.3rem 0 0;}
+.acmg-feedback a{color:var(--acmg-red);text-decoration:none;}
+.acmg-feedback a:hover{text-decoration:underline;}
+.acmg-references{margin-top:26px;}
+.acmg-ref-list{margin:.4rem 0 0;padding-left:1.3rem;}
+.acmg-ref-list li{font-size:.8rem;line-height:1.5;color:var(--acmg-steel);margin-bottom:.6rem;}
+.acmg-ref-list a{color:var(--acmg-steel);text-decoration:underline;text-underline-offset:2px;}
+.acmg-ref-list a:hover{color:var(--acmg-red);}
+.acmg-ref-note{font-size:.78rem;color:var(--acmg-steel);margin:.6rem 0 0;max-width:62rem;}
+.acmg-footer-text{margin-top:28px;padding-top:18px;border-top:1px solid var(--acmg-border);color:var(--acmg-steel);font-size:.74rem;line-height:1.5;}
+.acmg-footer-text a{color:var(--acmg-steel);text-decoration:underline;text-underline-offset:2px;}
+.acmg-footer-text a:hover{color:var(--acmg-red);}
+
+@media (max-width:980px){
+  .acmg-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .acmg-score-cells{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .acmg-score-cell.acmg-score-wide{border-top:1px solid var(--acmg-border);}
+}
+@media (max-width:760px){
+  .acmg-scoreboard{position:static;}
+  .acmg-crit{grid-template-columns:1fr;}
+  .acmg-crit-controls{grid-template-columns:1fr 1fr;}
+  .acmg-export-cta{flex-direction:column;align-items:flex-start;}
+}
+@media (max-width:560px){
+  .acmg-grid{grid-template-columns:1fr;}
+  .acmg-field-wide{grid-column:auto;}
+  .acmg-score-cells{grid-template-columns:1fr 1fr;}
+  .acmg-crit-controls{grid-template-columns:1fr;}
+  .acmg-export .button-link,.acmg-export .acmg-button-secondary{flex:1 1 auto;}
+}
+@media print{
+  .header,.footer,.sub-footer,.acmg-no-print{display:none!important;}
+  .acmg-app{--acmg-shadow:none;}
+  .acmg-report{border-top:none;margin-top:0;padding-top:0;}
+  .acmg-rep-block,.acmg-rep-stamp{break-inside:avoid;}
+  .acmg-rep-table th{background:#f2f2f2!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+
+{% raw %}
+<script>
+(function(){
+  'use strict';
+
+  var POINTS = {
+    pathogenic: { supporting:1, moderate:2, strong:4, very_strong:8 },
+    benign:     { supporting:-1, moderate:-2, strong:-4, standalone:-8 }
+  };
+
+  var STRENGTH_LABEL = {
+    supporting:'Supporting', moderate:'Moderate', strong:'Strong',
+    very_strong:'Very strong', standalone:'Stand-alone'
+  };
+  var STRENGTH_SUFFIX = {
+    supporting:'Supporting', moderate:'Moderate', strong:'Strong',
+    very_strong:'VeryStrong', standalone:'StandAlone'
+  };
+
+  var STATUS_OPTS = [
+    ['not_assessed','Not assessed'],
+    ['accepted','Accepted'],
+    ['rejected','Rejected'],
+    ['not_applicable','Not applicable'],
+    ['needs_second_review','Needs second review']
+  ];
+  var EVIDENCE_OPTS = [
+    ['not_assessed','Not assessed'],
+    ['present','Present'],
+    ['absent_after_review','Absent after review'],
+    ['not_available','Not available'],
+    ['not_applicable','Not applicable'],
+    ['conflicting','Conflicting'],
+    ['insufficient_quality','Insufficient quality'],
+    ['requires_second_review','Requires second review']
+  ];
+  var CLASS_LABEL = {
+    pathogenic:'Pathogenic', likely_pathogenic:'Likely pathogenic',
+    vus:'Uncertain significance', likely_benign:'Likely benign', benign:'Benign'
+  };
+
+  // evidence-status coupling (fill-only-when-blank; evidence is primary)
+  var STATUS_FROM_EVIDENCE = {
+    present:'accepted',
+    absent_after_review:'rejected',
+    not_available:'not_applicable',
+    not_applicable:'not_applicable',
+    conflicting:'needs_second_review',
+    insufficient_quality:'needs_second_review',
+    requires_second_review:'needs_second_review'
+  };
+  var EVIDENCE_FROM_STATUS = {
+    accepted:'present',
+    rejected:'absent_after_review',
+    not_applicable:'not_applicable',
+    needs_second_review:'requires_second_review'
+  };
+
+  // row-state presentation
+  var ROW_GLYPH = { complete:'\u2713', noevidence:'\u2205', incomplete:'!', conflict:'\u2298', untouched:'\u2013' };
+  var ROW_LABEL = { complete:'Applied', noevidence:'No contribution', incomplete:'Incomplete', conflict:'Conflict', untouched:'Not assessed' };
+
+  var PVS1_CAV = [
+    'Variant is a bona fide null (nonsense, frameshift, canonical \u00b11/2 splice, initiation codon, single/multi-exon deletion)',
+    'Loss of function is an established disease mechanism for this gene',
+    'Transcript is biologically and clinically relevant (e.g. MANE Select / clinical transcript)',
+    'NMD considered: variant not in the 3\u2032-most exon or last 50 bp of the penultimate exon (or NMD-escape assessed)',
+    'For splice / large deletion: reading frame and functional-domain impact assessed',
+    'No predicted rescue by alternative start or re-initiation',
+    'Strength graded per the ClinGen PVS1 decision tree where the null context is not full very-strong'
+  ];
+  var PM2_CAV = [
+    'Population database(s) named (e.g. gnomAD v4, 1000 Genomes)',
+    'Ancestry-specific frequencies reviewed, not only global frequency',
+    'Read coverage at the site is adequate in the database',
+    'Frequency threshold appropriate to disease prevalence and penetrance',
+    'Applied at Supporting strength per ClinGen SVI (note if Moderate retained)'
+  ];
+  var PP3_CAV = [
+    'A single calibrated meta-predictor used (e.g. REVEL, BayesDel), not multiple correlated tools',
+    'Calibrated threshold matched to the applied strength (e.g. ClinGen SVI / Pejaver 2022)',
+    'Not double-counting with PM1, PM5 or PS1',
+    'Splice prediction (e.g. SpliceAI) treated separately'
+  ];
+  var BP4_CAV = [
+    'A single calibrated predictor used at the calibrated benign threshold',
+    'Not in conflict with splice prediction',
+    'Not double-counting with other computational criteria'
+  ];
+  var BA1_CAV = [
+    'Allele frequency exceeds the disease-appropriate stand-alone benign threshold in a well-covered population',
+    'Not a recognised low-penetrance or founder exception (ClinGen)',
+    'Filtering allele frequency (FAF) considered with adequate coverage'
+  ];
+
+  // group, code, default strength, definition, requiresNote, caveats[], deprecated
+  var CRITERIA = [
+    ['pathogenic','PVS1','very_strong','Null variant in a gene where loss of function is a known disease mechanism.',false,PVS1_CAV,false],
+    ['pathogenic','PS1','strong','Same amino-acid change as a previously established pathogenic variant, regardless of nucleotide change.',false,null,false],
+    ['pathogenic','PS2','strong','De novo (maternity and paternity confirmed) in a patient with the disease and no family history.',true,null,false],
+    ['pathogenic','PS3','strong','Well-established functional studies show a damaging effect.',true,null,false],
+    ['pathogenic','PS4','strong','Prevalence in affected individuals significantly increased over controls.',false,null,false],
+    ['pathogenic','PM1','moderate','Located in a mutational hot spot or critical, well-established functional domain without benign variation.',false,null,false],
+    ['pathogenic','PM2','moderate','Absent, or at extremely low frequency, in population databases.',false,PM2_CAV,false],
+    ['pathogenic','PM3','moderate','For recessive disorders, detected in trans with a pathogenic variant.',true,null,false],
+    ['pathogenic','PM4','moderate','Protein-length change from in-frame indels or stop-loss in a non-repeat region.',false,null,false],
+    ['pathogenic','PM5','moderate','Novel missense change at a residue where a different pathogenic missense change was seen before.',false,null,false],
+    ['pathogenic','PM6','moderate','Assumed de novo without confirmation of maternity and paternity.',false,null,false],
+    ['pathogenic','PP1','supporting','Co-segregation with disease in multiple affected family members.',true,null,false],
+    ['pathogenic','PP2','supporting','Missense in a gene with a low rate of benign missense and where missense is a common mechanism.',false,null,false],
+    ['pathogenic','PP3','supporting','Computational evidence supports a deleterious effect (use one calibrated predictor at calibrated thresholds).',false,PP3_CAV,false],
+    ['pathogenic','PP4','supporting','Patient phenotype or family history highly specific for a single-gene disease.',true,null,false],
+    ['pathogenic','PP5','supporting','Reputable source reports pathogenic but evidence is unavailable.',false,null,true],
+    ['benign','BA1','standalone','Allele frequency above the disease-appropriate stand-alone benign threshold in a well-covered population.',false,BA1_CAV,false],
+    ['benign','BS1','strong','Allele frequency greater than expected for the disorder.',false,null,false],
+    ['benign','BS2','strong','Observed in a healthy adult where full penetrance is expected at an early age.',false,null,false],
+    ['benign','BS3','strong','Well-established functional studies show no damaging effect.',true,null,false],
+    ['benign','BS4','strong','Lack of segregation in affected family members.',true,null,false],
+    ['benign','BP1','supporting','Missense in a gene where only truncating variants cause disease.',false,null,false],
+    ['benign','BP2','supporting','Observed in trans with a pathogenic variant in a fully penetrant dominant gene, or in cis with a pathogenic variant.',true,null,false],
+    ['benign','BP3','supporting','In-frame indel in a repetitive region without known function.',false,null,false],
+    ['benign','BP4','supporting','Computational evidence supports no impact (use one calibrated predictor at calibrated thresholds).',false,BP4_CAV,false],
+    ['benign','BP5','supporting','Variant found in a case with an alternate molecular basis for disease.',true,null,false],
+    ['benign','BP6','supporting','Reputable source reports benign but evidence is unavailable.',false,null,true],
+    ['benign','BP7','supporting','Synonymous variant with no predicted splice impact and not highly conserved.',false,null,false]
+  ];
+
+  // state
+  var meta = {};
+  var crit = {};
+  var defByCode = {};
+  CRITERIA.forEach(function(c){
+    defByCode[c[1]] = { group:c[0], code:c[1], strength:c[2], def:c[3], requiresNote:c[4], caveats:c[5], deprecated:c[6] };
+    crit[c[1]] = { group:c[0], status:'not_assessed', strength:c[2], evidence:'not_assessed', caveats:[], notes:'' };
+  });
+
+  var lastJson = '';
+  var lastMd = '';
+  var lastReportBody = '';
+  var filterMode = 'all';
+  var activeVariant = 0;
+  var variants = [];
+  var genotype = {};
+
+  function emptyCritState(){
+    var obj = {};
+    CRITERIA.forEach(function(c){
+      obj[c[1]] = { group:c[0], status:'not_assessed', strength:c[2], evidence:'not_assessed', caveats:[], notes:'' };
+    });
+    return obj;
+  }
+  function cloneCritState(src){
+    var obj = {};
+    CRITERIA.forEach(function(c){
+      var code = c[1], s = src && src[code] ? src[code] : {};
+      obj[code] = {
+        group:c[0],
+        status:s.status || 'not_assessed',
+        strength:s.strength || c[2],
+        evidence:s.evidence || 'not_assessed',
+        caveats:(s.caveats || []).slice(),
+        notes:s.notes || ''
+      };
+    });
+    return obj;
+  }
+  function cloneMetaState(src){
+    var obj = {};
+    Object.keys(src || {}).forEach(function(k){ obj[k] = src[k]; });
+    return obj;
+  }
+  function ensureVariants(){
+    if (!variants.length) variants.push({ meta:cloneMetaState(meta), crit:cloneCritState(crit) });
+  }
+  function saveActiveVariant(){
+    ensureVariants();
+    variants[activeVariant] = { meta:cloneMetaState(meta), crit:cloneCritState(crit) };
+  }
+  function loadVariantState(idx){
+    ensureVariants();
+    activeVariant = idx;
+    meta = cloneMetaState(variants[idx].meta);
+    crit = cloneCritState(variants[idx].crit);
+    fillMetaFields();
+    buildLists();
+    applyFilter();
+    renderTabs();
+    recompute();
+  }
+
+  function esc(x){
+    return String(x == null ? '' : x).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function opt(list, sel){
+    return list.map(function(o){ return '<option value="'+o[0]+'"'+(o[0]===sel?' selected':'')+'>'+esc(o[1])+'</option>'; }).join('');
+  }
+  function labelOf(list, val){
+    for (var i=0;i<list.length;i++){ if (list[i][0]===val) return list[i][1]; }
+    return val;
+  }
+
+  function allowedStrengths(d){
+    if (d.code === 'BA1') return ['standalone'];
+    if (d.group === 'pathogenic') return ['supporting','moderate','strong','very_strong'];
+    return ['supporting','moderate','strong'];
+  }
+  function isModified(code){ return crit[code].strength !== defByCode[code].strength; }
+  function notation(code){
+    var d = defByCode[code], s = crit[code];
+    if (s.strength === d.strength) return code;
+    return code + '_' + STRENGTH_SUFFIX[s.strength];
+  }
+  function strengthOptionsHtml(d, sel){
+    return allowedStrengths(d).map(function(k){
+      var pts = POINTS[d.group][k];
+      var lab = STRENGTH_LABEL[k] + ' (' + (pts > 0 ? '+' : '') + pts + ')';
+      lab += (k === d.strength) ? ' \u00b7 default' : ' \u00b7 modified';
+      return '<option value="'+k+'"'+(k===sel?' selected':'')+'>'+esc(lab)+'</option>';
+    }).join('');
+  }
+
+  function caveatComplete(code){
+    var d = defByCode[code]; var s = crit[code];
+    if (!d.caveats) return true;
+    for (var i=0;i<d.caveats.length;i++){ if (!s.caveats[i]) return false; }
+    return true;
+  }
+  function hasNote(code){ var n = crit[code].notes; return !!(n && n.trim()); }
+  function touched(code){
+    var s = crit[code];
+    return s.status !== 'not_assessed' || s.evidence !== 'not_assessed' || hasNote(code);
+  }
+
+  // single source of truth for per-row presentation state
+  function rowStateOf(code){
+    var d = defByCode[code], s = crit[code];
+    if (!touched(code)) return 'untouched';
+    if (s.status === 'accepted'){
+      var missing = (s.evidence === 'not_assessed') ||
+                    (d.caveats && !caveatComplete(code)) ||
+                    (d.requiresNote && !hasNote(code)) ||
+                    (s.strength !== d.strength && !hasNote(code));
+      if (missing) return 'incomplete';
+      if (s.evidence === 'absent_after_review' || s.evidence === 'not_available' ||
+          s.evidence === 'not_applicable' || s.evidence === 'conflicting') return 'conflict';
+      return 'complete';
+    }
+    if (s.status === 'needs_second_review') return 'incomplete';
+    if (s.evidence === 'conflicting') return 'incomplete';
+    if (s.status === 'rejected' || s.status === 'not_applicable') return 'noevidence';
+    if (s.status === 'not_assessed' && s.evidence !== 'not_assessed') return 'incomplete';
+    return 'untouched';
+  }
+
+  function categoryFromScore(total){
+    if (total >= 10) return 'pathogenic';
+    if (total >= 6)  return 'likely_pathogenic';
+    if (total >= 0)  return 'vus';
+    if (total >= -6) return 'likely_benign';
+    return 'benign';
+  }
+
+  function pillHtml(code){
+    var st = rowStateOf(code);
+    return '<span class="acmg-rowpill" data-state="'+st+'"><span class="acmg-rowpill-glyph" aria-hidden="true">'+ROW_GLYPH[st]+'</span>'+ROW_LABEL[st]+'</span>';
+  }
+
+  function critRowHtml(d){
+    var s = crit[d.code];
+    var locked = allowedStrengths(d).length <= 1;
+    var tags = '<span class="acmg-tag">'+esc(STRENGTH_LABEL[d.strength])+' \u00b7 default</span>';
+    tags += '<span class="acmg-tag acmg-tag-mod" data-modtag'+(isModified(d.code)?'':' hidden')+'>strength modified</span>';
+    if (d.requiresNote) tags += '<span class="acmg-tag acmg-tag-note">notes required</span>';
+    if (d.deprecated)   tags += '<span class="acmg-tag acmg-tag-dep">deprecated by ClinGen</span>';
+    var cavHtml = '';
+    if (d.caveats){
+      cavHtml = '<ul class="acmg-caveats">' + d.caveats.map(function(t,i){
+        var chk = s.caveats[i] ? ' checked' : '';
+        return '<li><input type="checkbox" data-cav="'+i+'"'+chk+'><span>'+esc(t)+'</span></li>';
+      }).join('') + '</ul>';
+    }
+    var detail = '<div class="acmg-detail" hidden>'+cavHtml+
+      '<label class="acmg-notes-label">Reviewer notes / evidence sources'+(d.requiresNote?' (required)':'')+'</label>'+
+      '<textarea data-notes placeholder="Databases reviewed, reasoning, source, justification for any strength change\u2026">'+esc(s.notes)+'</textarea></div>';
+
+    return '<div class="acmg-crit" data-code="'+d.code+'" data-group="'+d.group+'" data-status="'+s.status+'" data-rowstate="'+rowStateOf(d.code)+'" data-mod="'+(isModified(d.code)?'1':'0')+'">'+
+      '<div class="acmg-crit-main">'+
+        '<div class="acmg-crit-id"><span class="acmg-code">'+d.code+'</span>'+tags+'</div>'+
+        '<p class="acmg-crit-def">'+esc(d.def)+'</p>'+
+      '</div>'+
+      '<div class="acmg-crit-controls">'+
+        '<div class="acmg-crit-statusline">'+pillHtml(d.code)+'</div>'+
+        '<label>Evidence<select data-field="evidence">'+opt(EVIDENCE_OPTS, s.evidence)+'</select></label>'+
+        '<label>Status<select data-field="status">'+opt(STATUS_OPTS, s.status)+'</select></label>'+
+        '<label>Applied strength<select data-field="strength"'+(locked?' disabled title="BA1 is stand-alone benign and is not modulated"':'')+'>'+strengthOptionsHtml(d, s.strength)+'</select></label>'+
+      '</div>'+
+      '<div class="acmg-crit-extra"><button type="button" class="acmg-disclosure" data-toggle="detail">Caveats &amp; notes</button>'+detail+'</div>'+
+    '</div>';
+  }
+
+  function buildLists(){
+    var p = [], b = [];
+    CRITERIA.forEach(function(c){
+      var d = defByCode[c[1]];
+      (d.group === 'pathogenic' ? p : b).push(critRowHtml(d));
+    });
+    document.getElementById('acmg-list-pathogenic').innerHTML = p.join('');
+    document.getElementById('acmg-list-benign').innerHTML = b.join('');
+  }
+
+  function compute(){
+    var pathPts = 0, benPts = 0, accepted = [];
+    CRITERIA.forEach(function(c){
+      var code = c[1], s = crit[code];
+      if (s.status === 'accepted'){
+        var pv = POINTS[s.group][s.strength] || 0;
+        if (pv >= 0) pathPts += pv; else benPts += pv;
+        accepted.push(code);
+      }
+    });
+    var total = pathPts + benPts;
+    var derived = categoryFromScore(total);
+
+    var conflicts = [], warnings = [], missing = [], modifications = [];
+
+    if (crit.BA1.status === 'accepted' && accepted.some(function(c){ return defByCode[c].group === 'pathogenic'; })){
+      conflicts.push('BA1 is stand-alone benign evidence but pathogenic criteria are also accepted. Resolve before retaining a pathogenic classification.');
+    }
+    if (pathPts >= 4 && benPts <= -4){
+      conflicts.push('Strong pathogenic and strong benign evidence are both present (' + pathPts + ' vs ' + benPts + '). Conflicting evidence should be reconciled.');
+    }
+
+    accepted.forEach(function(code){
+      var d = defByCode[code], s = crit[code], note = hasNote(code);
+      if (s.strength !== d.strength){
+        modifications.push(notation(code) + ' \u2014 applied at ' + STRENGTH_LABEL[s.strength] + ', default ' + STRENGTH_LABEL[d.strength]);
+        if (!note) warnings.push(code + ' applied at a non-default strength (' + STRENGTH_LABEL[s.strength] + ') without a justification note.');
+      }
+      if (s.evidence === 'not_assessed'){
+        warnings.push(code + ' is accepted but no evidence finding was recorded (evidence "Not assessed").');
+      }
+      if (s.evidence === 'absent_after_review' || s.evidence === 'not_available' || s.evidence === 'not_applicable'){
+        conflicts.push(code + ' is accepted but its evidence is recorded as "' + labelOf(EVIDENCE_OPTS, s.evidence) + '". An accepted criterion must be supported by present evidence.');
+      }
+      if (s.evidence === 'conflicting'){
+        conflicts.push(code + ' is accepted while its evidence is marked conflicting.');
+      }
+      if (d.requiresNote && !note){
+        warnings.push(code + ' requires reviewer notes (manual criterion) but none were entered.');
+      }
+      if (d.caveats && !caveatComplete(code)){
+        warnings.push(code + ' caveat checklist is incomplete.');
+      }
+      if (d.deprecated){
+        warnings.push(code + ' is deprecated by the ClinGen SVI and is generally not recommended as evidence.');
+      }
+    });
+
+    var entered = meta.entered_classification || '';
+    var mismatch = false;
+    if (entered && accepted.length && entered !== derived){
+      mismatch = true;
+      warnings.push('Entered classification (' + CLASS_LABEL[entered] + ') differs from the point-based category (' + CLASS_LABEL[derived] + ').');
+    }
+
+    if (accepted.length && derived === 'vus'){
+      var na = function(code){ return crit[code].status === 'not_assessed'; };
+      if (na('PS2') && na('PM6')) missing.push('Confirmed de novo status (PS2 / PM6 not assessed)');
+      if (na('PP1') && na('BS4')) missing.push('Segregation testing (PP1 / BS4 not assessed)');
+      if (na('PS3') && na('BS3')) missing.push('Functional evidence (PS3 / BS3 not assessed)');
+      if (na('PP4')) missing.push('Phenotype-specificity review (PP4 not assessed)');
+      if (na('PM2') && na('BS1') && na('BA1')) missing.push('Updated population-frequency review (PM2 / BS1 / BA1 not assessed)');
+    }
+
+    var verdict, tone;
+    if (!accepted.length && !anyTouched()){ verdict = 'Incomplete review'; tone = 'idle'; }
+    else if (conflicts.length){ verdict = 'Conflict detected'; tone = 'bad'; }
+    else if (mismatch){ verdict = 'Classification mismatch'; tone = 'bad'; }
+    else if (warnings.length){ verdict = 'Review completed with warnings'; tone = 'warn'; }
+    else if (!accepted.length){ verdict = 'Incomplete review'; tone = 'idle'; }
+    else { verdict = 'Internally consistent'; tone = 'ok'; }
+
+    return {
+      pathPts:pathPts, benPts:benPts, total:total, derived:derived,
+      entered:entered, accepted:accepted, conflicts:conflicts,
+      warnings:warnings, missing:missing, modifications:modifications,
+      verdict:verdict, tone:tone, mismatch:mismatch
+    };
+  }
+
+  function anyTouched(){
+    for (var code in crit){ if (touched(code)) return true; }
+    return false;
+  }
+
+  function validationReasonHtml(r){
+    var items = [];
+    if (!r.accepted.length){
+      items.push(anyTouched() ? 'No criteria are currently accepted, so no point-based classification can be validated.' : 'No ACMG criteria have been addressed yet.');
+    }
+    r.conflicts.forEach(function(x){ items.push(x); });
+    r.warnings.forEach(function(x){ items.push(x); });
+    if (r.missing.length){
+      items.push('Potentially useful missing evidence has been identified for this review.');
+    }
+    var seen = {};
+    items = items.filter(function(x){ if (seen[x]) return false; seen[x] = true; return true; });
+    if (!items.length){
+      items.push('The current status reflects an incomplete review or unresolved fields in the active variant.');
+    }
+    return '<strong>Why this status?</strong><ul>' + items.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+  }
+
+  function renderScoreboard(r){
+    document.getElementById('sb-path').textContent = r.pathPts;
+    document.getElementById('sb-ben').textContent = r.benPts;
+    document.getElementById('sb-total').textContent = r.total;
+    document.getElementById('sb-derived').textContent = r.accepted.length ? CLASS_LABEL[r.derived] : '\u2014';
+    var v = document.getElementById('sb-verdict');
+    v.textContent = r.verdict;
+    v.setAttribute('data-tone', r.tone);
+
+    var help = document.getElementById('sb-help');
+    var reasons = document.getElementById('sb-reasons');
+    if (help && reasons){
+      var showHelp = r.verdict !== 'Internally consistent';
+      help.hidden = !showHelp;
+      reasons.innerHTML = showHelp ? validationReasonHtml(r) : '';
+      help.title = showHelp ? reasons.textContent.replace(/\s+/g, ' ').trim() : 'No validation issues detected';
+      if (!showHelp){
+        help.setAttribute('aria-expanded', 'false');
+        reasons.hidden = true;
+      } else {
+        reasons.hidden = help.getAttribute('aria-expanded') !== 'true';
+      }
+    }
+  }
+
+  function renderCompleteness(){
+    var counts = { complete:0, noevidence:0, incomplete:0, conflict:0, untouched:0 }, accepted = 0;
+    CRITERIA.forEach(function(c){ counts[rowStateOf(c[1])]++; if (crit[c[1]].status === 'accepted') accepted++; });
+    var total = CRITERIA.length, addressed = total - counts.untouched, flagged = counts.incomplete + counts.conflict;
+    var order = ['complete','noevidence','incomplete','conflict'];
+    document.getElementById('acmg-comp-bar').innerHTML = order.map(function(st){
+      if (!counts[st]) return '';
+      return '<span class="acmg-comp-seg" data-state="'+st+'" style="width:'+(counts[st]/total*100).toFixed(2)+'%"></span>';
+    }).join('');
+    document.getElementById('acmg-comp-text').textContent = addressed === 0
+      ? ('No criteria addressed yet \u00b7 ' + total + ' to review')
+      : (addressed + ' of ' + total + ' criteria addressed \u00b7 ' + accepted + ' applied \u00b7 ' + flagged + ' need attention');
+  }
+
+  function variantLine(){
+    var g = meta.gene || '', t = meta.transcript || '', c = meta.hgvs_c || '', p = meta.hgvs_p || '';
+    var s = g;
+    if (t) s += (s?' ':'') + t;
+    if (c) s += (s?':':'') + c;
+    if (p) s += ' ' + p;
+    return s || 'Variant not specified';
+  }
+
+  function computeForVariant(v){
+    var oldMeta = meta, oldCrit = crit;
+    meta = cloneMetaState(v.meta);
+    crit = cloneCritState(v.crit);
+    var out = compute();
+    meta = oldMeta;
+    crit = oldCrit;
+    return out;
+  }
+
+  function renderReport(r){
+    saveActiveVariant();
+    var body = document.getElementById('acmg-report-body');
+
+    function kv(rows){
+      return '<table class="acmg-rep-table acmg-rep-kv"><tbody>'+rows.map(function(x){
+        return '<tr><td>'+esc(x[0])+'</td><td>'+esc(x[1]||'\u2014')+'</td></tr>';
+      }).join('')+'</tbody></table>';
+    }
+    function listBlock(title, items, cls){
+      if (!items.length) return '<div class="acmg-rep-block"><h3>'+esc(title)+'</h3><p class="acmg-rep-empty">None.</p></div>';
+      return '<div class="acmg-rep-block"><h3>'+esc(title)+'</h3><ul class="acmg-rep-list '+(cls||'')+'">'+
+        items.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>';
+    }
+    function variantTitle(v, idx){
+      var m = v.meta || {};
+      var label = 'Variant ' + (idx + 1);
+      if (m.gene || m.hgvs_c || m.hgvs_p) label += ': ' + esc(shortVariantLabel(v, idx));
+      return label;
+    }
+    function variantBlocks(v, idx, vr){
+      var oldMeta = meta, oldCrit = crit;
+      meta = cloneMetaState(v.meta);
+      crit = cloneCritState(v.crit);
+
+      var ident = '<div class="acmg-rep-block"><h3>'+variantTitle(v, idx)+' identity</h3>'+kv([
+        ['Gene',meta.gene],['Transcript',meta.transcript],['cDNA',meta.hgvs_c],['Protein',meta.hgvs_p],
+        ['Genome build',meta.build],['Coordinate',meta.coordinate],['Variant type',meta.variant_type],['Zygosity',meta.zygosity]
+      ])+'</div>';
+
+      var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
+      var critTable;
+      if (considered.length){
+        critTable = '<table class="acmg-rep-table"><thead><tr><th>Criterion</th><th>Status</th><th>Applied strength</th><th>Points</th><th>Evidence status</th><th>Notes</th></tr></thead><tbody>'+
+          considered.map(function(code){
+            var d = defByCode[code], s = crit[code];
+            var pts = (s.status==='accepted') ? (POINTS[s.group][s.strength]||0) : 0;
+            var strengthCell = esc(STRENGTH_LABEL[s.strength]) + (s.strength!==d.strength ? ' <span class="acmg-rep-empty">(modified)</span>' : '');
+            return '<tr><td><strong>'+esc(notation(code))+'</strong></td>'+
+              '<td>'+esc(labelOf(STATUS_OPTS,s.status))+'</td>'+
+              '<td>'+strengthCell+'</td>'+
+              '<td>'+(s.status==='accepted'?(pts>0?'+'+pts:pts):'\u2014')+'</td>'+
+              '<td>'+esc(labelOf(EVIDENCE_OPTS,s.evidence))+'</td>'+
+              '<td>'+(s.notes?esc(s.notes):'<span class="acmg-rep-empty">\u2014</span>')+'</td></tr>';
+          }).join('')+'</tbody></table>';
+      } else {
+        critTable = '<p class="acmg-rep-empty">No criteria reviewed yet.</p>';
+      }
+
+      var score = '<div class="acmg-rep-block"><h3>'+variantTitle(v, idx)+' score</h3>'+kv([
+        ['Pathogenic points', String(vr.pathPts)],
+        ['Benign points', String(vr.benPts)],
+        ['Total', String(vr.total)],
+        ['Point-based category', vr.accepted.length?CLASS_LABEL[vr.derived]:'\u2014'],
+        ['Entered classification', vr.entered?CLASS_LABEL[vr.entered]:'\u2014'],
+        ['Consistency', vr.accepted.length?(vr.mismatch?'Mismatch':'Consistent with selected criteria'):'\u2014']
+      ])+'</div>';
+
+      meta = oldMeta;
+      crit = oldCrit;
+
+      return ident +
+        '<div class="acmg-rep-block"><h3>'+variantTitle(v, idx)+' criteria reviewed ('+considered.length+')</h3>'+critTable+'</div>' +
+        score +
+        listBlock(variantTitle(v, idx)+' conflicts', vr.conflicts, 'bad') +
+        listBlock(variantTitle(v, idx)+' warnings', vr.warnings, 'warn') +
+        listBlock(variantTitle(v, idx)+' potentially useful missing evidence', vr.missing);
+    }
+
+    if (variants.length > 1){
+      var results = variants.map(function(v){ return computeForVariant(v); });
+      var allConflicts = [], allWarnings = [], anyMismatch = false;
+      results.forEach(function(vr, i){
+        if (vr.conflicts.length) allConflicts.push('Variant '+(i+1)+': '+vr.conflicts.join(' '));
+        if (vr.warnings.length) allWarnings.push('Variant '+(i+1)+': '+vr.warnings.join(' '));
+        if (vr.mismatch) anyMismatch = true;
+      });
+      if (!genotype.phase) allWarnings.push('Genotype review: phase not recorded.');
+      if (genotype.phase === 'Phase unknown' || genotype.phase === 'Not assessed') allWarnings.push('Genotype review: compound heterozygosity should not be assumed while phase is '+genotype.phase+'.');
+      if (!genotype.conclusion && variants.length > 1) allWarnings.push('Genotype review: genotype-level conclusion not recorded.');
+
+      var tone = allConflicts.length ? 'bad' : (anyMismatch ? 'bad' : (allWarnings.length ? 'warn' : 'ok'));
+      var verdict = allConflicts.length ? 'Conflict detected' : (anyMismatch ? 'Classification mismatch' : (allWarnings.length ? 'Review completed with warnings' : 'Internally consistent'));
+
+      var first = variants[0].meta || {};
+      var stamp = '<div class="acmg-rep-stamp">'+
+        '<h3>Structured ACMG evidence review</h3>'+
+        '<span class="acmg-verdict" data-tone="'+tone+'">'+esc(verdict)+'</span>'+
+        '<div style="font-size:.85rem;color:var(--acmg-steel);margin-top:8px;line-height:1.5">'+
+          variants.length+' variants reviewed in one case report<br>'+
+          'Case: '+esc((first.disease || genotype.disease || '\u2014'))+' \u00b7 Inheritance: '+esc((first.inheritance || genotype.inheritance || '\u2014'))+'<br>'+
+          'Reviewer: '+esc(first.reviewer||'\u2014')+' \u00b7 '+esc(first.institution||'\u2014')+' \u00b7 '+esc(first.date||'\u2014')+'<br>'+
+          'Sign-off: '+(variants.every(function(v){ return !!v.meta.signoff; })?'completed for all variants':'not completed for all variants')+
+        '</div></div>';
+
+      var ctx = '<div class="acmg-rep-block"><h3>Case context</h3>'+kv([
+        ['Disease',first.disease || genotype.disease],
+        ['Inheritance',first.inheritance || genotype.inheritance],
+        ['Phenotype / HPO',first.phenotype],
+        ['Reviewer',first.reviewer],
+        ['Institution',first.institution],
+        ['Review date',first.date],
+        ['Guideline basis',first.guideline]
+      ])+'</div>';
+
+      var genotypeBlock = '<div class="acmg-rep-block"><h3>Genotype-level review</h3>'+kv([
+        ['Gene reviewed together',genotype.gene],
+        ['Disease / condition',genotype.disease],
+        ['Inheritance model',genotype.inheritance],
+        ['Number of variants reviewed',String(variants.length)],
+        ['Phase',genotype.phase],
+        ['Variant combination',genotype.combination],
+        ['Phase evidence',genotype.phase_evidence],
+        ['Genotype-level conclusion',genotype.conclusion],
+        ['Phenotype fit',genotype.phenotype_fit],
+        ['Residual uncertainty',genotype.uncertainty]
+      ])+'</div>';
+
+      var blocks = variants.map(function(v, i){ return variantBlocks(v, i, results[i]); }).join('');
+      var overall = '<div class="acmg-rep-block"><h3>Overall conclusion</h3>'+kv([
+        ['Validation status',verdict],
+        ['Scoring note','Variant-level ACMG scores are kept separate and are not summed across variants.'],
+        ['Genotype note','Pair-level or genotype-level interpretation is recorded separately from variant-level ACMG evidence.']
+      ])+'</div>';
+
+      var limitations = '<div class="acmg-rep-block"><h3>Limitations</h3>'+
+        '<p class="acmg-rep-empty" style="line-height:1.55">This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not annotate variants, does not assert clinical validity, and is not a substitute for expert clinical judgement or a regulated diagnostic report.</p></div>';
+
+      body.innerHTML = stamp + ctx + blocks + genotypeBlock + overall +
+        listBlock('Overall conflicts', allConflicts, 'bad') +
+        listBlock('Overall warnings', allWarnings, 'warn') +
+        limitations;
+      lastReportBody = body.innerHTML;
+      return;
+    }
+
+    var stamp = '<div class="acmg-rep-stamp">'+
+      '<h3>Structured ACMG evidence review</h3>'+
+      '<span class="acmg-verdict" data-tone="'+r.tone+'">'+esc(r.verdict)+'</span>'+
+      '<div style="font-size:.85rem;color:var(--acmg-steel);margin-top:8px;line-height:1.5">'+
+        esc(variantLine())+'<br>'+
+        'Entered classification: '+(r.entered?esc(CLASS_LABEL[r.entered]):'\u2014')+
+        ' \u00b7 Point-based category: '+(r.accepted.length?esc(CLASS_LABEL[r.derived]):'\u2014')+
+        ' ('+r.total+' pts)<br>'+
+        'Reviewer: '+esc(meta.reviewer||'\u2014')+' \u00b7 '+esc(meta.institution||'\u2014')+' \u00b7 '+esc(meta.date||'\u2014')+'<br>'+
+        'Sign-off: '+(meta.signoff?'completed':'not completed')+
+      '</div></div>';
+
+    var ident = '<div class="acmg-rep-block"><h3>Variant identity</h3>'+kv([
+      ['Gene',meta.gene],['Transcript',meta.transcript],['cDNA',meta.hgvs_c],['Protein',meta.hgvs_p],
+      ['Genome build',meta.build],['Coordinate',meta.coordinate],['Variant type',meta.variant_type],['Zygosity',meta.zygosity]
+    ])+'</div>';
+    var ctx = '<div class="acmg-rep-block"><h3>Case context</h3>'+kv([
+      ['Disease',meta.disease],['Inheritance',meta.inheritance],['Phenotype / HPO',meta.phenotype],['Guideline basis',meta.guideline]
+    ])+'</div>';
+
+    var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
+    var critTable;
+    if (considered.length){
+      critTable = '<table class="acmg-rep-table"><thead><tr><th>Criterion</th><th>Status</th><th>Applied strength</th><th>Points</th><th>Evidence status</th><th>Notes</th></tr></thead><tbody>'+
+        considered.map(function(code){
+          var d = defByCode[code], s = crit[code];
+          var pts = (s.status==='accepted') ? (POINTS[s.group][s.strength]||0) : 0;
+          var strengthCell = esc(STRENGTH_LABEL[s.strength]) + (s.strength!==d.strength ? ' <span class="acmg-rep-empty">(modified)</span>' : '');
+          return '<tr><td><strong>'+esc(notation(code))+'</strong></td>'+
+            '<td>'+esc(labelOf(STATUS_OPTS,s.status))+'</td>'+
+            '<td>'+strengthCell+'</td>'+
+            '<td>'+(s.status==='accepted'?(pts>0?'+'+pts:pts):'\u2014')+'</td>'+
+            '<td>'+esc(labelOf(EVIDENCE_OPTS,s.evidence))+'</td>'+
+            '<td>'+(s.notes?esc(s.notes):'<span class="acmg-rep-empty">\u2014</span>')+'</td></tr>';
+        }).join('')+'</tbody></table>';
+    } else {
+      critTable = '<p class="acmg-rep-empty">No criteria reviewed yet.</p>';
+    }
+    var critBlock = '<div class="acmg-rep-block"><h3>Criteria reviewed ('+considered.length+')</h3>'+critTable+'</div>';
+
+    var scoreBlock = '<div class="acmg-rep-block"><h3>Point score</h3>'+kv([
+      ['Pathogenic points', String(r.pathPts)],
+      ['Benign points', String(r.benPts)],
+      ['Total', String(r.total)],
+      ['Point-based category', r.accepted.length?CLASS_LABEL[r.derived]:'\u2014'],
+      ['Entered classification', r.entered?CLASS_LABEL[r.entered]:'\u2014'],
+      ['Consistency', r.accepted.length?(r.mismatch?'Mismatch':'Consistent with selected criteria'):'\u2014']
+    ])+'</div>';
+
+    var limitations = '<div class="acmg-rep-block"><h3>Limitations</h3>'+
+      '<p class="acmg-rep-empty" style="line-height:1.55">This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not annotate the variant, does not assert clinical validity, and is not a substitute for expert clinical judgement or a regulated diagnostic report.</p></div>';
+
+    body.innerHTML = stamp + ident + ctx + critBlock + scoreBlock +
+      listBlock('Strength modifications', r.modifications) +
+      listBlock('Conflicts', r.conflicts, 'bad') +
+      listBlock('Warnings', r.warnings, 'warn') +
+      listBlock('Potentially useful missing evidence', r.missing) +
+      limitations;
+
+    lastReportBody = body.innerHTML;
+  }
+
+  function buildExports(r){
+    saveActiveVariant();
+    if (variants.length > 1){
+      var variantPayload = variants.map(function(v, idx){
+        var oldMeta = meta, oldCrit = crit;
+        meta = cloneMetaState(v.meta);
+        crit = cloneCritState(v.crit);
+        var vr = compute();
+        var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
+        var critObjs = considered.map(function(code){
+          var d = defByCode[code], s = crit[code];
+          return {
+            criterion: code, notation: notation(code), group: d.group,
+            status: s.status, default_strength: d.strength, applied_strength: s.strength,
+            strength_modified: s.strength !== d.strength,
+            points: s.status==='accepted' ? (POINTS[s.group][s.strength]||0) : 0,
+            evidence_status: s.evidence,
+            caveat_status: d.caveats ? (caveatComplete(code)?'completed':'incomplete') : 'not_applicable',
+            row_state: rowStateOf(code),
+            notes: s.notes || ''
+          };
+        });
+        var out = {
+          variant_index: idx + 1,
+          variant:{ gene:meta.gene||'', transcript:meta.transcript||'', hgvs_c:meta.hgvs_c||'', hgvs_p:meta.hgvs_p||'', genome_build:meta.build||'', coordinate:meta.coordinate||'', variant_type:meta.variant_type||'', zygosity:meta.zygosity||'' },
+          case_context:{ disease:meta.disease||'', inheritance:meta.inheritance||'', phenotype:meta.phenotype||'' },
+          criteria: critObjs,
+          validation:{ pathogenic_points:vr.pathPts, benign_points:vr.benPts, total_points:vr.total, point_based_category:vr.accepted.length?vr.derived:null, entered_classification:vr.entered||null, verdict:vr.verdict, conflicts:vr.conflicts, warnings:vr.warnings, missing_evidence:vr.missing }
+        };
+        meta = oldMeta;
+        crit = oldCrit;
+        return out;
+      });
+      var obj = {
+        schema:'switzerlandomics.acmg-validator.case.v1',
+        generated_at:new Date().toISOString(),
+        review:{ reviewer:(variants[0].meta||{}).reviewer||'', institution:(variants[0].meta||{}).institution||'', date:(variants[0].meta||{}).date||'' },
+        case_context:{ disease:(variants[0].meta||{}).disease||genotype.disease||'', inheritance:(variants[0].meta||{}).inheritance||genotype.inheritance||'', phenotype:(variants[0].meta||{}).phenotype||'' },
+        variants:variantPayload,
+        genotype_review:genotype,
+        note:'Variant-level ACMG scores are kept separate and are not summed across variants.'
+      };
+      lastJson = JSON.stringify(obj, null, 2);
+
+      var L = [];
+      L.push('# ACMG Validator case report'); L.push('');
+      L.push('**Variants reviewed:** ' + variants.length);
+      L.push('**Disease:** ' + ((variants[0].meta||{}).disease || genotype.disease || '\u2014'));
+      L.push('**Inheritance:** ' + ((variants[0].meta||{}).inheritance || genotype.inheritance || '\u2014'));
+      L.push('**Reviewer:** ' + ((variants[0].meta||{}).reviewer || '\u2014') + ' \u00b7 ' + ((variants[0].meta||{}).institution || '\u2014') + ' \u00b7 ' + ((variants[0].meta||{}).date || '\u2014'));
+      L.push('');
+      variantPayload.forEach(function(v){
+        L.push('## Variant ' + v.variant_index + ': ' + (v.variant.gene || '') + ' ' + (v.variant.hgvs_c || '') + ' ' + (v.variant.hgvs_p || ''));
+        L.push('');
+        L.push('- Transcript: ' + (v.variant.transcript || '\u2014'));
+        L.push('- Zygosity: ' + (v.variant.zygosity || '\u2014'));
+        L.push('- Total points: ' + v.validation.total_points);
+        L.push('- Point-based category: ' + (v.validation.point_based_category ? CLASS_LABEL[v.validation.point_based_category] : '\u2014'));
+        L.push('- Entered classification: ' + (v.validation.entered_classification ? CLASS_LABEL[v.validation.entered_classification] : '\u2014'));
+        L.push('');
+        L.push('| Criterion | Status | Applied strength | Points | Evidence status | Notes |');
+        L.push('|---|---|---|---|---|---|');
+        if (v.criteria.length){
+          v.criteria.forEach(function(c){
+            L.push('| '+c.notation+' | '+c.status+' | '+c.applied_strength+' | '+c.points+' | '+c.evidence_status+' | '+(c.notes ? c.notes.replace(/\|/g,'\\|').replace(/\n/g,' ') : '\u2014')+' |');
+          });
+        } else {
+          L.push('| \u2014 | \u2014 | \u2014 | \u2014 | \u2014 | No criteria reviewed |');
+        }
+        L.push('');
+      });
+      L.push('## Genotype-level review'); L.push('');
+      L.push('- Gene reviewed together: ' + (genotype.gene || '\u2014'));
+      L.push('- Phase: ' + (genotype.phase || '\u2014'));
+      L.push('- Variant combination: ' + (genotype.combination || '\u2014'));
+      L.push('- Genotype-level conclusion: ' + (genotype.conclusion || '\u2014'));
+      L.push('- Residual uncertainty: ' + (genotype.uncertainty || '\u2014'));
+      L.push('');
+      L.push('Variant-level ACMG scores are kept separate and are not summed across variants.');
+      lastMd = L.join('\n');
+      return;
+    }
+    var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
+    var critObjs = considered.map(function(code){
+      var d = defByCode[code], s = crit[code];
+      return {
+        criterion: code, notation: notation(code), group: d.group,
+        status: s.status, default_strength: d.strength, applied_strength: s.strength,
+        strength_modified: s.strength !== d.strength,
+        points: s.status==='accepted' ? (POINTS[s.group][s.strength]||0) : 0,
+        evidence_status: s.evidence,
+        caveat_status: d.caveats ? (caveatComplete(code)?'completed':'incomplete') : 'not_applicable',
+        row_state: rowStateOf(code),
+        notes: s.notes || ''
+      };
+    });
+    var obj = {
+      schema:'switzerlandomics.acmg-validator.v1',
+      generated_at: new Date().toISOString(),
+      guideline_basis: meta.guideline || '',
+      review:{ reviewer:meta.reviewer||'', institution:meta.institution||'', date:meta.date||'', signoff:!!meta.signoff },
+      variant:{ gene:meta.gene||'', transcript:meta.transcript||'', hgvs_c:meta.hgvs_c||'', hgvs_p:meta.hgvs_p||'', genome_build:meta.build||'', coordinate:meta.coordinate||'', variant_type:meta.variant_type||'', zygosity:meta.zygosity||'' },
+      case_context:{ disease:meta.disease||'', inheritance:meta.inheritance||'', phenotype:meta.phenotype||'' },
+      criteria: critObjs,
+      validation:{
+        pathogenic_points:r.pathPts, benign_points:r.benPts, total_points:r.total,
+        point_based_category:r.accepted.length?r.derived:null,
+        entered_classification:r.entered||null,
+        verdict:r.verdict, strength_modifications:r.modifications,
+        conflicts:r.conflicts, warnings:r.warnings, missing_evidence:r.missing
+      }
+    };
+    lastJson = JSON.stringify(obj, null, 2);
+
+    var L = [];
+    L.push('# ACMG Validator report'); L.push('');
+    L.push('**Variant:** ' + variantLine());
+    L.push('**Reviewer:** ' + (meta.reviewer||'\u2014') + ' \u00b7 ' + (meta.institution||'\u2014') + ' \u00b7 ' + (meta.date||'\u2014'));
+    L.push('**Guideline basis:** ' + (meta.guideline||'\u2014'));
+    L.push('**Sign-off:** ' + (meta.signoff?'completed':'not completed')); L.push('');
+    L.push('## Validation status: ' + r.verdict); L.push('');
+    L.push('- Pathogenic points: ' + r.pathPts);
+    L.push('- Benign points: ' + r.benPts);
+    L.push('- Total: ' + r.total);
+    L.push('- Point-based category: ' + (r.accepted.length?CLASS_LABEL[r.derived]:'\u2014'));
+    L.push('- Entered classification: ' + (r.entered?CLASS_LABEL[r.entered]:'\u2014')); L.push('');
+    L.push('## Criteria reviewed'); L.push('');
+    if (considered.length){
+      L.push('| Criterion | Status | Applied strength | Points | Evidence status | Notes |');
+      L.push('|---|---|---|---|---|---|');
+      considered.forEach(function(code){
+        var d = defByCode[code], s = crit[code];
+        var pts = s.status==='accepted' ? (POINTS[s.group][s.strength]||0) : 0;
+        var str = STRENGTH_LABEL[s.strength] + (s.strength!==d.strength?' (modified)':'');
+        L.push('| '+notation(code)+' | '+labelOf(STATUS_OPTS,s.status)+' | '+str+' | '+(s.status==='accepted'?pts:'\u2014')+' | '+labelOf(EVIDENCE_OPTS,s.evidence)+' | '+(s.notes?s.notes.replace(/\|/g,'\\|').replace(/\n/g,' '):'\u2014')+' |');
+      });
+    } else { L.push('_No criteria reviewed yet._'); }
+    L.push('');
+    function md(title,arr){ L.push('## '+title); L.push(''); if(!arr.length){L.push('_None._');}else{arr.forEach(function(x){L.push('- '+x);});} L.push(''); }
+    md('Strength modifications', r.modifications);
+    md('Conflicts', r.conflicts);
+    md('Warnings', r.warnings);
+    md('Potentially useful missing evidence', r.missing);
+    L.push('## Limitations'); L.push('');
+    L.push('This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not assert clinical validity. Generated with ACMG Validator, Switzerland Omics.');
+    lastMd = L.join('\n');
+  }
+
+  function pageCss(){ var s = document.querySelector('style'); return s ? s.textContent : ''; }
+  function buildReportHtml(){
+    var title = 'ACMG evidence review';
+    if (meta.gene || meta.transcript || meta.hgvs_c) title += ' \u2014 ' + variantLine();
+    var footer = '<footer class="acmg-footer-text">Generated with ACMG Validator, a free tool created by '+
+      '<a href="https://switzerlandomics.ch">Switzerland Omics</a>. The validator checks internal consistency and process completion only; '+
+      'it does not assert clinical validity, does not annotate variants, and does not constitute medical advice. '+
+      'Switzerland Omics\u00ae is a registered trade mark. Classification logic follows Richards et al. 2015 (ACMG/AMP) and Tavtigian et al. 2020.</footer>';
+    var extra = 'body{margin:0;padding:28px;background:#fff;font-family:ui-sans-serif,system-ui,sans-serif;}'+
+      '.acmg-shell{max-width:1000px;margin:0 auto;}'+
+      '.acmg-report{border-top:none!important;margin:0!important;padding:0!important;}';
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+
+      esc(title)+'</title><style>'+pageCss()+'\n'+extra+'</style></head><body><main class="acmg-app"><section class="acmg-shell">'+
+      '<div class="acmg-report">'+lastReportBody+'</div>'+footer+'</section></main></body></html>';
+  }
+
+  function shortVariantLabel(v, idx){
+    var m = (v && v.meta) || {};
+    var label = m.gene || ('Variant ' + (idx + 1));
+    if (m.hgvs_p) label += ' ' + m.hgvs_p;
+    else if (m.hgvs_c) label += ' ' + m.hgvs_c;
+    return label;
+  }
+
+  function renderTabs(){
+    ensureVariants();
+    var row = document.getElementById('acmg-case-tabs-row');
+    if (!row) return;
+    var html = '<button type="button" class="acmg-case-tab" data-tab="case">Case context</button>';
+    variants.forEach(function(v, i){
+      html += '<button type="button" class="acmg-case-tab'+(i===activeVariant?' acmg-active':'')+'" data-variant="'+i+'">Variant '+(i+1)+'<span class="acmg-tab-sub"> · '+esc(shortVariantLabel(v,i))+'</span></button>';
+    });
+    html += '<button type="button" class="acmg-case-tab" data-tab="genotype">Genotype review</button>';
+    html += '<button type="button" class="acmg-case-tab" data-tab="report">Final report</button>';
+    row.innerHTML = html;
+  }
+
+  function fillGenotypeFields(){
+    document.querySelectorAll('[data-genotype]').forEach(function(el){
+      var key = el.getAttribute('data-genotype');
+      el.value = genotype[key] || '';
+    });
+  }
+
+  function recompute(){
+    saveActiveVariant();
+    var r = compute();
+    renderScoreboard(r);
+    renderCompleteness();
+    renderReport(r);
+    buildExports(r);
+    renderTabs();
+  }
+
+  function applyFilter(){
+    document.querySelectorAll('.acmg-crit').forEach(function(row){
+      var code = row.getAttribute('data-code');
+      row.classList.toggle('acmg-hidden', !(filterMode === 'all' || touched(code)));
+    });
+  }
+
+  function refreshRow(code){
+    var row = document.querySelector('.acmg-crit[data-code="'+code+'"]');
+    if (!row) return;
+    var s = crit[code], d = defByCode[code];
+    var modified = s.strength !== d.strength;
+    row.setAttribute('data-status', s.status);
+    row.setAttribute('data-rowstate', rowStateOf(code));
+    row.setAttribute('data-mod', modified ? '1' : '0');
+    var modtag = row.querySelector('[data-modtag]');
+    if (modtag) modtag.hidden = !modified;
+    var pill = row.querySelector('.acmg-rowpill');
+    if (pill){
+      var st = rowStateOf(code);
+      pill.setAttribute('data-state', st);
+      pill.innerHTML = '<span class="acmg-rowpill-glyph" aria-hidden="true">'+ROW_GLYPH[st]+'</span>'+ROW_LABEL[st];
+    }
+    var note = hasNote(code);
+    var disc = row.querySelector('.acmg-disclosure');
+    var incomplete = (d.caveats && !caveatComplete(code)) ||
+      (d.requiresNote && !note) ||
+      (s.status === 'accepted' && modified && !note);
+    if (disc) disc.setAttribute('data-flag', incomplete ? '1' : '0');
+  }
+
+  function syncRowSelects(row, s){
+    var st = row.querySelector('select[data-field="status"]'); if (st) st.value = s.status;
+    var ev = row.querySelector('select[data-field="evidence"]'); if (ev) ev.value = s.evidence;
+    var sg = row.querySelector('select[data-field="strength"]'); if (sg) sg.value = s.strength;
+  }
+
+  function couple(code, field){
+    var s = crit[code];
+    if (field === 'evidence'){
+      if (s.status === 'not_assessed' && s.evidence !== 'not_assessed' && STATUS_FROM_EVIDENCE[s.evidence]) s.status = STATUS_FROM_EVIDENCE[s.evidence];
+    } else if (field === 'status'){
+      if (s.evidence === 'not_assessed' && s.status !== 'not_assessed' && EVIDENCE_FROM_STATUS[s.status]) s.evidence = EVIDENCE_FROM_STATUS[s.status];
+    }
+  }
+
+  // ---- events ----
+  function bindMeta(){
+    document.querySelectorAll('[data-meta]').forEach(function(el){
+      var key = el.getAttribute('data-meta');
+      var ev = (el.tagName === 'SELECT' || el.type === 'checkbox' || el.type === 'date') ? 'change' : 'input';
+      el.addEventListener(ev, function(){
+        meta[key] = (el.type === 'checkbox') ? el.checked : el.value;
+        recompute();
+      });
+    });
+    document.querySelectorAll('[data-genotype]').forEach(function(el){
+      var key = el.getAttribute('data-genotype');
+      var ev = (el.tagName === 'SELECT') ? 'change' : 'input';
+      el.addEventListener(ev, function(){
+        genotype[key] = el.value;
+        recompute();
+      });
+    });
+  }
+
+  var listWrap = document.querySelector('.acmg-editor');
+  listWrap.addEventListener('change', function(e){
+    var t = e.target;
+    var row = t.closest('.acmg-crit'); if (!row) return;
+    var code = row.getAttribute('data-code'); var s = crit[code];
+    if (t.matches('[data-field]')){
+      var field = t.getAttribute('data-field');
+      s[field] = t.value;
+      couple(code, field);
+      syncRowSelects(row, s);
+      refreshRow(code); recompute();
+    } else if (t.matches('[data-cav]')){
+      s.caveats[parseInt(t.getAttribute('data-cav'),10)] = t.checked;
+      refreshRow(code); recompute();
+    }
+  });
+  listWrap.addEventListener('input', function(e){
+    var t = e.target;
+    if (!t.matches('[data-notes]')) return;
+    var row = t.closest('.acmg-crit'); if (!row) return;
+    crit[row.getAttribute('data-code')].notes = t.value;
+    refreshRow(row.getAttribute('data-code')); recompute();
+  });
+  listWrap.addEventListener('click', function(e){
+    var t = e.target;
+    if (t.matches('[data-toggle="detail"]')){
+      var detail = t.parentNode.querySelector('.acmg-detail');
+      if (detail) detail.hidden = !detail.hidden;
+    }
+  });
+
+  document.getElementById('acmg-case-tabs').addEventListener('click', function(e){
+    var t = e.target.closest('button'); if (!t) return;
+    if (t.hasAttribute('data-variant')){
+      saveActiveVariant();
+      loadVariantState(parseInt(t.getAttribute('data-variant'), 10));
+      document.querySelector('.acmg-editor').scrollIntoView({ behavior:'smooth', block:'start' });
+    } else if (t.getAttribute('data-tab') === 'case'){
+      document.querySelector('.acmg-editor').scrollIntoView({ behavior:'smooth', block:'start' });
+      renderTabs();
+    } else if (t.getAttribute('data-tab') === 'genotype'){
+      document.getElementById('acmg-genotype-section').scrollIntoView({ behavior:'smooth', block:'start' });
+      renderTabs();
+      t.classList.add('acmg-active');
+    } else if (t.getAttribute('data-tab') === 'report'){
+      document.getElementById('acmg-report').scrollIntoView({ behavior:'smooth', block:'start' });
+      renderTabs();
+      t.classList.add('acmg-active');
+    }
+  });
+
+  document.getElementById('acmg-add-variant').addEventListener('click', function(){
+    saveActiveVariant();
+    var base = variants[0] ? variants[0].meta : meta;
+    variants.push({
+      meta:{
+        disease:base.disease || '',
+        inheritance:base.inheritance || '',
+        phenotype:base.phenotype || '',
+        reviewer:base.reviewer || '',
+        institution:base.institution || '',
+        date:base.date || new Date().toISOString().slice(0,10),
+        guideline:base.guideline || 'ACMG/AMP + Tavtigian point system'
+      },
+      crit:emptyCritState()
+    });
+    activeVariant = variants.length - 1;
+    loadVariantState(activeVariant);
+  });
+
+  document.querySelectorAll('.acmg-filter button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterMode = btn.getAttribute('data-filter');
+      document.querySelectorAll('.acmg-filter button').forEach(function(b){ b.classList.toggle('acmg-active', b===btn); });
+      applyFilter();
+    });
+  });
+
+  document.getElementById('acmg-na-rest').addEventListener('click', function(){
+    CRITERIA.forEach(function(c){
+      var code = c[1], s = crit[code];
+      if (s.status === 'not_assessed' && s.evidence === 'not_assessed' && !hasNote(code)){
+        s.status = 'not_applicable'; s.evidence = 'not_applicable';
+      }
+    });
+    buildLists(); applyFilter(); recompute();
+  });
+
+  function download(text, filename, type){
+    var blob = new Blob([text], { type:type });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  }
+  function stem(){
+    var g = (meta.gene||'variant').replace(/[^a-z0-9._-]+/gi,'_');
+    var d = meta.date || new Date().toISOString().slice(0,10);
+    return 'acmg_' + g + '_' + d;
+  }
+  document.getElementById('acmg-print').addEventListener('click', function(){ window.print(); });
+  document.getElementById('acmg-html').addEventListener('click', function(){ download(buildReportHtml(), stem()+'.html', 'text/html'); });
+  document.getElementById('acmg-json').addEventListener('click', function(){ download(lastJson, stem()+'.json', 'application/json'); });
+  document.getElementById('acmg-md').addEventListener('click', function(){ download(lastMd, stem()+'.md', 'text/markdown'); });
+
+  function resetAll(){
+    meta = {};
+    crit = emptyCritState();
+    activeVariant = 0;
+    genotype = {};
+    variants = [{ meta:cloneMetaState(meta), crit:cloneCritState(crit) }];
+    document.querySelectorAll('[data-meta]').forEach(function(el){
+      if (el.type === 'checkbox') el.checked = false; else el.value = '';
+    });
+    document.querySelectorAll('[data-genotype]').forEach(function(el){ el.value = ''; });
+    buildLists(); applyFilter(); renderTabs(); recompute();
+  }
+  document.getElementById('acmg-reset').addEventListener('click', resetAll);
+
+  function fillMetaFields(){
+    document.querySelectorAll('[data-meta]').forEach(function(el){
+      var key = el.getAttribute('data-meta');
+      if (el.type === 'checkbox') el.checked = !!meta[key]; else el.value = meta[key] || '';
+    });
+    fillGenotypeFields();
+  }
+
+  function markUntouchedAsNotApplicable(){
+    CRITERIA.forEach(function(c){
+      var code = c[1], s = crit[code];
+      if (s.status === 'not_assessed' && s.evidence === 'not_assessed' && !hasNote(code)){
+        s.status = 'not_applicable'; s.evidence = 'not_applicable';
+      }
+    });
+  }
+
+  function loadBrca1Example(){
+    resetAll();
+    meta = {
+      gene:'BRCA1', transcript:'NM_007294.4', hgvs_c:'c.68_69del', hgvs_p:'p.(Glu23ValfsTer17)',
+      build:'GRCh38', coordinate:'chr17:43124027', variant_type:'Small deletion', zygosity:'Heterozygous',
+      disease:'Hereditary breast and ovarian cancer', inheritance:'AD',
+      phenotype:'Early-onset breast cancer; family history', reviewer:'Dr Jane Smith',
+      institution:'Example Laboratory', date:new Date().toISOString().slice(0,10),
+      guideline:'ACMG/AMP + Tavtigian point system', entered_classification:'pathogenic', signoff:true
+    };
+    crit.PVS1.status='accepted'; crit.PVS1.evidence='present'; crit.PVS1.caveats=[true,true,true,true,true,true,true];
+    crit.PVS1.notes='Frameshift in BRCA1; LoF established mechanism; MANE transcript; not in last exon. Full PVS1 strength per ClinGen decision tree.';
+    crit.PM2.status='accepted'; crit.PM2.strength='supporting'; crit.PM2.evidence='present';
+    crit.PM2.caveats=[true,true,true,true,true]; crit.PM2.notes='Absent from gnomAD v4; ancestry-specific frequencies reviewed. Applied at Supporting per ClinGen SVI (PM2_Supporting).';
+    crit.BA1.status='rejected'; crit.BA1.evidence='absent_after_review';
+    crit.BA1.notes='Population frequency checked in gnomAD v4 and is below the benign threshold.';
+    fillMetaFields();
+    buildLists(); applyFilter(); recompute();
+  }
+
+  function loadCftrExample(){
+    resetAll();
+    meta = {
+      gene:'CFTR', transcript:'NM_000492.4', hgvs_c:'c.1521_1523del', hgvs_p:'p.(Phe508del)',
+      build:'GRCh38', coordinate:'chr7:117559591', variant_type:'In-frame indel', zygosity:'Homozygous',
+      disease:'Cystic fibrosis', inheritance:'AR',
+      phenotype:'Classic cystic fibrosis presentation. Example assumes biallelic CFTR p.Phe508del in a patient with cystic fibrosis; phase, zygosity and phenotype must be confirmed for a real case.',
+      reviewer:'Dr Jane Smith', institution:'Example Laboratory', date:new Date().toISOString().slice(0,10),
+      guideline:'ACMG/AMP + Tavtigian point system', entered_classification:'pathogenic', signoff:true
+    };
+    crit.PS3.status='accepted'; crit.PS3.evidence='present';
+    crit.PS3.notes='Functional evidence supports abnormal CFTR protein processing/function for p.Phe508del. Manual review of assay relevance and quality completed for this worked example.';
+    crit.PS4.status='accepted'; crit.PS4.evidence='present';
+    crit.PS4.notes='Variant is strongly enriched among individuals with cystic fibrosis compared with controls. Case evidence and disease context reviewed for this example.';
+    crit.PM3.status='accepted'; crit.PM3.evidence='present';
+    crit.PM3.notes='Autosomal recessive context. Example assumes the variant is homozygous or confirmed in trans with another pathogenic CFTR allele in an affected patient.';
+    crit.PM4.status='accepted'; crit.PM4.evidence='present';
+    crit.PM4.notes='In-frame deletion causing loss of phenylalanine 508 in a non-repeat, disease-relevant protein region.';
+    crit.PP4.status='accepted'; crit.PP4.evidence='present';
+    crit.PP4.notes='Patient phenotype is recorded as classic cystic fibrosis, a phenotype specific for biallelic CFTR disease in this example.';
+    crit.BA1.status='rejected'; crit.BA1.evidence='absent_after_review';
+    crit.BA1.notes='Population frequency reviewed. The frequency is not above a disease-appropriate stand-alone benign threshold and high carrier frequency is compatible with an autosomal recessive disorder.';
+    crit.BS1.status='rejected'; crit.BS1.evidence='absent_after_review';
+    crit.BS1.notes='Allele frequency reviewed and not considered greater than expected for cystic fibrosis after recessive disease prevalence and carrier frequency are considered.';
+    crit.BP4.status='not_applicable'; crit.BP4.evidence='not_applicable';
+    crit.BP4.notes='No benign computational evidence used; in-silico predictors were not used to support a benign interpretation for this in-frame deletion example.';
+    markUntouchedAsNotApplicable();
+    fillMetaFields();
+    buildLists(); applyFilter(); recompute();
+  }
+
+  function loadBrafScopeCheck(){
+    resetAll();
+    meta = {
+      gene:'BRAF', transcript:'NM_004333.6', hgvs_c:'c.1799T>A', hgvs_p:'p.(Val600Glu)',
+      build:'GRCh38', coordinate:'chr7:140753336', variant_type:'SNV', zygosity:'',
+      disease:'Somatic oncology context: melanoma, thyroid cancer, colorectal cancer and other solid tumours',
+      inheritance:'Other',
+      phenotype:'This pasted example is a somatic cancer variant with AMP/ASCO/CAP-style oncology evidence. Germline ACMG scoring is not performed here without a constitutional disease context, germline zygosity, inheritance model, phenotype and applicable ACMG rule specification.',
+      reviewer:'Dr Jane Smith', institution:'Example Laboratory', date:new Date().toISOString().slice(0,10),
+      guideline:'AMP/ASCO/CAP somatic oncology evidence context; ACMG score not applied', entered_classification:'', signoff:false
+    };
+    crit.PM1.status='not_applicable'; crit.PM1.evidence='not_applicable';
+    crit.PM1.notes='BRAF p.Val600Glu is a well-known somatic oncogenic hotspot, but this provided case is an oncology classification context. Germline PM1 is not applied without a constitutional disease context and ACMG specification.';
+    crit.PP3.status='not_applicable'; crit.PP3.evidence='not_applicable';
+    crit.PP3.caveats=[true,true,true,true];
+    crit.PP3.notes='The pasted annotation reports pathogenic computational evidence, but somatic oncogenicity and therapy evidence should not be converted into germline ACMG PP3 scoring.';
+    crit.PS3.status='not_applicable'; crit.PS3.evidence='not_applicable';
+    crit.PS3.notes='Functional gain-of-function evidence may support somatic oncogenicity, but an ACMG germline PS3 assertion requires the relevant constitutional disease mechanism and reviewed evidence.';
+    crit.PS4.status='not_applicable'; crit.PS4.evidence='not_applicable';
+    crit.PS4.notes='Large tumour sample counts support somatic oncology relevance, not germline case-control enrichment under ACMG/AMP sequence variant interpretation.';
+    crit.BA1.status='rejected'; crit.BA1.evidence='absent_after_review';
+    crit.BA1.notes='Population frequency was reviewed in the pasted annotation and does not support BA1. This does not create a germline pathogenic classification.';
+    fillMetaFields();
+    buildLists(); applyFilter(); recompute();
+  }
+
+  document.getElementById('acmg-example').addEventListener('click', loadBrca1Example);
+  document.getElementById('acmg-example-cftr').addEventListener('click', loadCftrExample);
+  document.getElementById('acmg-example-braf').addEventListener('click', loadBrafScopeCheck);
+
+  function bindValidationHelp(){
+    var help = document.getElementById('sb-help');
+    var reasons = document.getElementById('sb-reasons');
+    if (!help || !reasons) return;
+    help.addEventListener('click', function(){
+      var expanded = help.getAttribute('aria-expanded') === 'true';
+      help.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      reasons.hidden = expanded;
+    });
+  }
+
+  // init
+  bindMeta();
+  bindValidationHelp();
+  buildLists();
+  applyFilter();
+  recompute();
+})();
+</script>
+{% endraw %}
+
+
+
+
+
+
