@@ -140,10 +140,15 @@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-<div class="intro">
-  <div class="container">
-    <div class="row justify-content-start">
-      <div class="col-12 col-md-7 col-lg-6 order-2 order-md-1">
+
+<div class="intro hero-video-section">
+  <div class="container hero-video-container">
+    
+
+    <div class="hero-video-overlay" aria-hidden="true"></div>
+
+    <div class="row justify-content-start hero-video-content">
+      <div class="col-12 col-md-7 col-lg-6">
         <!-- intro_image: "images/freepik_vectorjuice/scientists-lab-working-with-huge-dna-chain-glass-bulb-gene-therapy-gene-transfer-functioning-gene-concept-white-background-bright-vibrant-violet-isolated-illustration_335657-485.jpg" -->
 <!-- # Switzerland Omics -->
 
@@ -197,50 +202,88 @@
 
         
       </div>
-      
-      <div class="col-12 col-md-5 col-lg-6 order-1 order-md-2 position-relative">
-        <img alt="SwitzerlandOmics" class="intro-image intro-image-absolute intro-image-hide-mobile" src="images/2025_E_L_Laurent_etherial_precision/1EBA3CDE-7455-49FD-8686-017F290965E3_wide.jpeg" />
-      </div>
-      
-
     </div>
   </div>
 </div>
 
 <section class="dark-background-area dark-background-area--media-stack">
   <div class="container dark-background-area__inner">
+
     <div class="dark-background-area__media">
-      <img
-        src="/images/so_publisher_cloud/publisher_logo_cloud.png"
-        alt="Scientific publications, collaborators, and research communities connected to Switzerland Omics"
-        class="dark-background-area__image"
-        loading="lazy"
-      />
+      <div class="quant-hist-wrap" aria-hidden="true">
+        <br>
+        <svg id="quant-hist-svg" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:256px;display:block;margin:0 auto;">
+          <line x1="20" y1="10" x2="20" y2="128" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+          <line x1="20" y1="128" x2="188" y2="128" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+          <g id="quant-hist-bars"></g>
+        </svg>
+      </div>
     </div>
 
     <div class="dark-background-area__content">
-      <p class="dark-background-area__kicker">Scientific foundation</p>
-
-      <h2>Built on peer-reviewed omics R&D.</h2>
-
+      <!-- <p class="dark-background-area__kicker">Scientific foundation</p> -->
+      <h2>DNA sequence to decision-grade evidence.</h2>
       <p>
-        Switzerland Omics develops quantitative systems for genomic interpretation across clinical research,
-        epidemiology, precision medicine, and industrial biotechnology.
-      </p>
-
-      <p>
-        Our work is grounded in published methods, national cohort analysis, statistical genetics,
-        and reproducible bioinformatic infrastructure, giving partners a measurable basis for
-        evidence generation and decision-grade interpretation.
-      </p>
-
-      <p>
-        For customers, this means the infrastructure is not only software. It is a scientific framework
-        designed to make genomic evidence auditable, reusable, and ready for regulated environments.
+        Our systems preserve the evidence, uncertainty, and provenance behind omics-based conclusions,
+        so results can be trusted, reviewed, reused, and transferred across real-world workflows.
       </p>
     </div>
+
   </div>
 </section>
+
+<script>
+(function () {
+  var barsGroup = document.getElementById('quant-hist-bars');
+  if (!barsGroup) return;
+
+  var n = 13;
+  var barW = 11;
+  var gap = 3;
+  var maxH = 106;
+  var baseY = 128;
+  var startX = 22;
+  var sigma = 2.6;
+  var mu = (n - 1) / 2;
+  var fill = 'rgba(255,255,255,0.82)';
+
+  var bars = [];
+  for (var i = 0; i < n; i++) {
+    var rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    var x = startX + i * (barW + gap);
+    var h = Math.exp(-0.5 * Math.pow((i - mu) / sigma, 2)) * maxH;
+    rect.setAttribute('x', x);
+    rect.setAttribute('y', baseY - h);
+    rect.setAttribute('width', barW);
+    rect.setAttribute('height', h);
+    rect.setAttribute('fill', fill);
+    rect.setAttribute('rx', '1.5');
+    barsGroup.appendChild(rect);
+    bars.push(rect);
+  }
+
+  var t = 0;
+  var speed = 0.006;
+  var travel = 3.8;
+
+  function gauss(i, m) {
+    return Math.exp(-0.5 * Math.pow((i - m) / sigma, 2));
+  }
+
+  function frame() {
+    t += speed;
+    var muT = mu + Math.sin(t) * travel;
+    for (var i = 0; i < n; i++) {
+      var h = Math.max(2, gauss(i, muT) * maxH);
+      bars[i].setAttribute('y', baseY - h);
+      bars[i].setAttribute('height', h);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
 
 
 <div class="strip">
@@ -376,6 +419,232 @@ Genomic Vault provides custody.
 <!-- </div> -->
 <!--  -->
 
+<section class="dark-background-area dark-background-area--media-stack">
+  <div class="container dark-background-area__inner">
+    <div class="dark-background-area__media">
+      <img
+        src="/images/so_publisher_cloud/publisher_logo_cloud.png"
+        alt="Scientific publications, collaborators, and research communities connected to Switzerland Omics"
+        class="dark-background-area__image"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="dark-background-area__content">
+      <p class="dark-background-area__kicker">Scientific foundation</p>
+
+      <h2>Built on peer-reviewed omics R&D.</h2>
+
+      <p>
+        Switzerland Omics develops quantitative systems for genomic interpretation across clinical research,
+        epidemiology, precision medicine, and industrial biotechnology.
+      </p>
+
+      <p>
+        Our work is grounded in published methods, national cohort analysis, statistical genetics,
+        and reproducible bioinformatic infrastructure, giving partners a measurable basis for
+        evidence generation and decision-grade interpretation.
+      </p>
+
+      <p>
+        For customers, this means the infrastructure is not only software. It is a scientific framework
+        designed to make genomic evidence auditable, reusable, and ready for regulated environments.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="container pt-6 pb-6 infra-maturity">
+  <h2>Infrastructure maturity pipeline</h2>
+  <p>
+    Systems advance from prototype to deployed infrastructure through staged technical validation and institutional adoption, supporting use across research, clinical programmes, and clinical trials.
+  </p>
+  <div class="infra-maturity-grid">
+    <!-- Header (desktop only) -->
+    <div class="infra-maturity-row infra-maturity-row-head">
+      <div class="infra-maturity-system">System</div>
+      <div class="infra-maturity-stages infra-maturity-stages-head" aria-hidden="true">
+        <div class="infra-maturity-stage-label">Concept</div>
+        <div class="infra-maturity-stage-label">Prototype</div>
+        <div class="infra-maturity-stage-label">Production<br>deployment</div>
+        <div class="infra-maturity-stage-label">Institutional<br>adoption</div>
+        <div class="infra-maturity-stage-label">Infrastructure<br>standard</div>
+      </div>
+    </div>
+    <!-- Quant -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+        <strong><a href="/technologies/quant/">Quant</a></strong>
+        <span id="infra-quant-desc" class="visually-hidden">
+          Maturity: concept and prototype complete. Production deployment, institutional adoption, and infrastructure standard not yet reached.
+        </span>
+      </div>
+      <div class="infra-maturity-stages" role="img" aria-label="Quant maturity pipeline" aria-describedby="infra-quant-desc">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled infra-cell--last" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div><div>Prototype</div><div>Production</div><div>Adoption</div><div>Standard</div>
+      </div>
+    </div>
+    <!-- QuantBayes -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+        <strong><a href="/technologies/quantbayes/">QuantBayes</a></strong>
+        <span id="infra-quantbayes-desc" class="visually-hidden">
+          Maturity: concept, prototype, production deployment, and institutional adoption complete. Infrastructure standard not yet reached.
+        </span>
+      </div>
+      <div class="infra-maturity-stages" role="img" aria-label="QuantBayes maturity pipeline" aria-describedby="infra-quantbayes-desc">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled infra-cell--last" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div><div>Prototype</div><div>Production</div><div>Adoption</div><div>Standard</div>
+      </div>
+    </div>
+    <!-- Genomic Vault -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+        <strong><a href="/technologies/genomic_vault/">Genomic Vault</a></strong>
+        <span id="infra-vault-desc" class="visually-hidden">
+          Maturity: concept, prototype, and production deployment complete. Institutional adoption and infrastructure standard not yet reached.
+        </span>
+      </div>
+      <div class="infra-maturity-stages" role="img" aria-label="Genomic Vault maturity pipeline" aria-describedby="infra-vault-desc">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled infra-cell--last" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div><div>Prototype</div><div>Production</div><div>Adoption</div><div>Standard</div>
+      </div>
+    </div>
+    <!-- PanelAppRex AI -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+        <strong><a href="/technologies/panelAppRexAi/">PanelAppRex AI</a></strong>
+        <span id="infra-panelapprex-desc" class="visually-hidden">
+          Maturity: concept and prototype complete. Production deployment, institutional adoption, and infrastructure standard not yet reached.
+        </span>
+      </div>
+      <div class="infra-maturity-stages" role="img" aria-label="PanelAppRex AI maturity pipeline" aria-describedby="infra-panelapprex-desc">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled infra-cell--last" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div><div>Prototype</div><div>Production</div><div>Adoption</div><div>Standard</div>
+      </div>
+    </div>
+    <!-- QV framework -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+        <strong><a href="/technologies/qv_database/">QV framework</a></strong>
+        <span id="infra-qv-desc" class="visually-hidden">
+          Maturity: concept, prototype, production deployment, and institutional adoption complete. Infrastructure standard not yet reached.
+        </span>
+      </div>
+      <div class="infra-maturity-stages" role="img" aria-label="Qualifying Variant framework maturity pipeline" aria-describedby="infra-qv-desc">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled infra-cell--last" aria-hidden="true"></span>
+        <span class="infra-cell" aria-hidden="true"></span>
+      </div>
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div><div>Prototype</div><div>Production</div><div>Adoption</div><div>Standard</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var cells = document.querySelectorAll('.infra-cell--last');
+  if (!cells.length || !('IntersectionObserver' in window)) return;
+
+  var seen = new Set();
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && !seen.has(entry.target)) {
+        seen.add(entry.target);
+        var row = entry.target.closest('.infra-maturity-row');
+        var rowIndex = row ? Array.prototype.indexOf.call(row.parentNode.children, row) : 0;
+        var delay = rowIndex * 100;
+        setTimeout(function () {
+          entry.target.classList.add('infra-cell--animate');
+        }, delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
+
+  cells.forEach(function (cell) { observer.observe(cell); });
+})();
+</script>
+
+
+<div class="strip">
+  <div class="container pt-6 pb-6 pb-md-3">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <form
+  action="https://buttondown.com/api/emails/embed-subscribe/switzerlandomics"
+  method="post"
+  class="newsletter-form"
+  referrerpolicy="unsafe-url"
+>
+
+  
+  <label for="bd-email-home" class="newsletter-label">
+    Subscribe for updates
+  </label>
+
+
+  <div class="newsletter-row">
+    <input
+      type="email"
+      name="email"
+      id="bd-email-home"
+      class="newsletter-input"
+      placeholder="Enter your email"
+      aria-label="Email address"
+      required
+    />
+    <button type="submit" class="button-link newsletter-submit">
+      Subscribe
+    </button>
+  </div>
+
+  
+    <p class="newsletter-meta">
+      For major technology releases and blog posts only.
+    </p>
+  
+
+  
+</form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+
 <section class="dark-background-area dark-background-area--compact">
   <div class="container dark-background-area__inner dark-background-area__inner--text">
 
@@ -436,210 +705,10 @@ Genomic Vault provides custody.
   </div>
 </section>
 
-
-<section class="container pt-6 pb-6 infra-maturity">
-
-  <h2>Infrastructure maturity pipeline</h2>
-  <p>
-    Systems advance from prototype to deployed infrastructure through staged technical validation and institutional adoption, supporting use across research, clinical programmes, and clinical trials.
-  </p>
-
-  <div class="infra-maturity-grid">
-
-    <!-- Header (desktop only) -->
-    <div class="infra-maturity-row infra-maturity-row-head">
-      <div class="infra-maturity-system">System</div>
-
-      <div class="infra-maturity-stages infra-maturity-stages-head" aria-hidden="true">
-        <div class="infra-maturity-stage-label">Concept</div>
-        <div class="infra-maturity-stage-label">Prototype</div>
-        <div class="infra-maturity-stage-label">Production<br>deployment</div>
-        <div class="infra-maturity-stage-label">Institutional<br>adoption</div>
-        <div class="infra-maturity-stage-label">Infrastructure<br>standard</div>
-      </div>
-    </div>
-
-    <!-- Quant -->
-    <div class="infra-maturity-row">
-      <div class="infra-maturity-system">
-        <strong><a href="/technologies/quant/">Quant</a></strong>
-        <span id="infra-quant-desc" class="visually-hidden">
-          Maturity: concept and prototype complete. Production deployment, institutional adoption, and infrastructure standard not yet reached.
-        </span>
-      </div>
-
-      <div class="infra-maturity-stages" role="img" aria-label="Quant maturity pipeline" aria-describedby="infra-quant-desc">
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-      </div>
-
-      <div class="infra-maturity-mobile-labels" aria-hidden="true">
-        <div>Concept</div>
-        <div>Prototype</div>
-        <div>Production</div>
-        <div>Adoption</div>
-        <div>Standard</div>
-      </div>
-    </div>
-
-    <!-- QuantBayes -->
-    <div class="infra-maturity-row">
-      <div class="infra-maturity-system">
-        <strong><a href="/technologies/quantbayes/">QuantBayes</a></strong>
-        <span id="infra-quantbayes-desc" class="visually-hidden">
-          Maturity: concept, prototype, production deployment, and institutional adoption complete. Infrastructure standard not yet reached.
-        </span>
-      </div>
-
-      <div class="infra-maturity-stages" role="img" aria-label="QuantBayes maturity pipeline" aria-describedby="infra-quantbayes-desc">
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-      </div>
-
-      <div class="infra-maturity-mobile-labels" aria-hidden="true">
-        <div>Concept</div>
-        <div>Prototype</div>
-        <div>Production</div>
-        <div>Adoption</div>
-        <div>Standard</div>
-      </div>
-    </div>
-
-    <!-- Genomic Vault -->
-    <div class="infra-maturity-row">
-      <div class="infra-maturity-system">
-        <strong><a href="/technologies/genomic_vault/">Genomic Vault</a></strong>
-        <span id="infra-vault-desc" class="visually-hidden">
-          Maturity: concept, prototype, and production deployment complete. Institutional adoption and infrastructure standard not yet reached.
-        </span>
-      </div>
-
-      <div class="infra-maturity-stages" role="img" aria-label="Genomic Vault maturity pipeline" aria-describedby="infra-vault-desc">
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-      </div>
-
-      <div class="infra-maturity-mobile-labels" aria-hidden="true">
-        <div>Concept</div>
-        <div>Prototype</div>
-        <div>Production</div>
-        <div>Adoption</div>
-        <div>Standard</div>
-      </div>
-    </div>
-
-    <!-- PanelAppRex AI -->
-    <div class="infra-maturity-row">
-      <div class="infra-maturity-system">
-        <strong><a href="/technologies/panelAppRexAi/">PanelAppRex AI</a></strong>
-        <span id="infra-panelapprex-desc" class="visually-hidden">
-          Maturity: concept and prototype complete. Production deployment, institutional adoption, and infrastructure standard not yet reached.
-        </span>
-      </div>
-
-      <div class="infra-maturity-stages" role="img" aria-label="PanelAppRex AI maturity pipeline" aria-describedby="infra-panelapprex-desc">
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-      </div>
-
-      <div class="infra-maturity-mobile-labels" aria-hidden="true">
-        <div>Concept</div>
-        <div>Prototype</div>
-        <div>Production</div>
-        <div>Adoption</div>
-        <div>Standard</div>
-      </div>
-    </div>
-
-    <!-- Qualifying Variant framework -->
-    <div class="infra-maturity-row">
-      <div class="infra-maturity-system">
-        <strong><a href="/technologies/qv_database/">QV framework</a></strong>
-        <span id="infra-qv-desc" class="visually-hidden">
-          Maturity: concept, prototype, production deployment, and institutional adoption complete. Infrastructure standard not yet reached.
-        </span>
-      </div>
-
-      <div class="infra-maturity-stages" role="img" aria-label="Qualifying Variant framework maturity pipeline" aria-describedby="infra-qv-desc">
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell is-filled" aria-hidden="true"></span>
-        <span class="infra-cell" aria-hidden="true"></span>
-      </div>
-
-      <div class="infra-maturity-mobile-labels" aria-hidden="true">
-        <div>Concept</div>
-        <div>Prototype</div>
-        <div>Production</div>
-        <div>Adoption</div>
-        <div>Standard</div>
-      </div>
-    </div>
-
-  </div>
-
-</section>
+<br>
+<br>
 
 
-
-<div class="strip">
-  <div class="container pt-6 pb-6 pb-md-3">
-    <div class="row justify-content-center">
-      <div class="col-12 col-md-8 col-lg-6">
-        <form
-  action="https://buttondown.com/api/emails/embed-subscribe/switzerlandomics"
-  method="post"
-  class="newsletter-form"
-  referrerpolicy="unsafe-url"
->
-
-  
-  <label for="bd-email-home" class="newsletter-label">
-    Subscribe for updates
-  </label>
-
-
-  <div class="newsletter-row">
-    <input
-      type="email"
-      name="email"
-      id="bd-email-home"
-      class="newsletter-input"
-      placeholder="Enter your email"
-      aria-label="Email address"
-      required
-    />
-    <button type="submit" class="button-link newsletter-submit">
-      Subscribe
-    </button>
-  </div>
-
-  
-    <p class="newsletter-meta">
-      For major technology releases and blog posts only.
-    </p>
-  
-
-  
-</form>
-
-      </div>
-    </div>
-  </div>
-</div>
 
 
 

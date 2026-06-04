@@ -117,3 +117,32 @@
     min-width: 0;
   }
 }
+
+/* last-bar grow-in animation */
+
+.infra-cell--last {
+  transform-origin: left center;
+  transform: scaleX(0.18);
+  opacity: 0.45;
+  transition: none;
+}
+
+.infra-cell--animate {
+  animation: infra-grow-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes infra-grow-in {
+  0%   { transform: scaleX(0.18); opacity: 0.45; }
+  60%  { transform: scaleX(1.04); opacity: 1; }
+  100% { transform: scaleX(1);    opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .infra-cell--last {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  .infra-cell--animate {
+    animation: none;
+  }
+}

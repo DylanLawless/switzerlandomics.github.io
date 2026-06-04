@@ -1,0 +1,595 @@
+.
+├── 404.html
+├── CNAME
+├── Gemfile
+├── Gemfile.lock
+├── LICENSE
+├── README.md
+├── _blog
+│   ├── 2025-05-01.md
+│   ├── 2025-05-21-quant.md
+│   ├── 2025-06-15.md
+│   ├── 2025-07-27-bitter-lesson.md
+│   ├── 2025-08-01-quant-posterior.md
+│   ├── 2025-09-19-quant-poster.md
+│   ├── 2025-11-27-open-standards.md
+│   ├── 2025-12-14-sga_qem.md
+│   ├── 2026-01-04-founders-illumina.md
+│   ├── 2026-01-11-founders-icahn_partners_v_deSouza_illumina_grail.md
+│   ├── 2026-01-17-founders-grail.md
+│   ├── 2026-01-18-founders-ANNOVAR.md
+│   ├── 2026-01-25-founders-hgmd.md
+│   ├── 2026-02-01-founders-Phred-Phrap-Consed.md
+│   ├── 2026-02-08-founders-dbnsfp.md
+│   ├── 2026-02-14-founders-SBX.md
+│   ├── 2026-02-15-the_real_industry_bottleneck_after_genome_sequencing.md
+│   ├── 2026-03-14-When_sequencing_became_infrastructure.md
+│   ├── 2026-03-14-founders_sentieon.md
+│   ├── 2026-03-15-Quinary_inference_the_fifth_layer_of_genomics.md
+│   ├── 2026-05-16-roche_complete_overview_2026.md
+│   ├── 2026-05-17-aquisition.md
+│   ├── 2026-05-20-ai_horizontal_layer.md
+│   ├── 2026-xx-xx-celebrating-trademark.md
+│   ├── 2026-xx-xx-preventing_war.md
+│   ├── 2026-xx-xx-second_clock.md
+│   ├── founder_stories_wiriting_guide.md
+│   └── founders_cases.md
+├── _config.yml
+├── _data
+│   ├── contact.yml
+│   ├── features.json
+│   ├── menus.yml
+│   ├── seo.yml
+│   └── social.json
+├── _includes
+│   ├── call.html
+│   ├── dark_evidence_banner_area.html
+│   ├── dark_hero_kicker.html
+│   ├── dark_publications_banner_area.html
+│   ├── footer.html
+│   ├── google-analytics.html
+│   ├── hamburger.html
+│   ├── header.html
+│   ├── infrastructure_maturity.bak
+│   ├── infrastructure_maturity.html
+│   ├── legal-bar.html
+│   ├── main-menu-mobile.html
+│   ├── main-menu.html
+│   ├── mathjax.html
+│   ├── newsletter_signup.html
+│   ├── quant_card.html
+│   ├── quant_card_v0.html
+│   ├── qv_acmg_svnindel_criteria_20250225.yaml
+│   ├── social.html
+│   └── sub-footer.html
+├── _layouts
+│   ├── contact.html
+│   ├── default.html
+│   ├── default_no_brand.html
+│   ├── default_panelapprex.html
+│   ├── home.html
+│   ├── learn-index.html
+│   ├── learn.html
+│   ├── mathjax.html
+│   ├── page.html
+│   ├── page_no_brand.html
+│   ├── team.html
+│   ├── teams.html
+│   ├── tech.html
+│   └── technologies.html
+├── _learn
+│   ├── bam_and_bai_format.md
+│   ├── bed_format.md
+│   ├── cram_foramt.md
+│   ├── cram_vs_sam_vs_bam.md
+│   ├── csi_format.md
+│   ├── fasta_format.md
+│   ├── fastq_format.md
+│   ├── genes_vs_dna_vs_chromosomes_explained.md
+│   ├── how_genetic_inheritance_works.md
+│   ├── human_reference_genome.md
+│   ├── learn_pages_template.txt
+│   ├── learn_pages_to_do.txt
+│   ├── phred_score.md
+│   ├── reference_genomes_grch37_vs_grch38.md
+│   ├── sam_format.md
+│   ├── style_guide.txt
+│   ├── tabix_format.md
+│   ├── vcf_format.md
+│   ├── vcf_vs_gvcf.md
+│   ├── what_is_a_genetics_disease.md
+│   ├── what_is_a_genome.md
+│   └── what_is_dna.md
+├── _release
+│   └── etherial_precision.md
+├── _sass
+│   ├── _bootstrap-variables.scss
+│   ├── bootstrap
+│   │   ├── _accordion.scss
+│   │   ├── _alert.scss
+│   │   ├── _badge.scss
+│   │   ├── _breadcrumb.scss
+│   │   ├── _button-group.scss
+│   │   ├── _buttons.scss
+│   │   ├── _card.scss
+│   │   ├── _carousel.scss
+│   │   ├── _close.scss
+│   │   ├── _containers.scss
+│   │   ├── _dropdown.scss
+│   │   ├── _forms.scss
+│   │   ├── _functions.scss
+│   │   ├── _grid.scss
+│   │   ├── _helpers.scss
+│   │   ├── _images.scss
+│   │   ├── _list-group.scss
+│   │   ├── _maps.scss
+│   │   ├── _mixins.scss
+│   │   ├── _modal.scss
+│   │   ├── _nav.scss
+│   │   ├── _navbar.scss
+│   │   ├── _offcanvas.scss
+│   │   ├── _pagination.scss
+│   │   ├── _placeholders.scss
+│   │   ├── _popover.scss
+│   │   ├── _progress.scss
+│   │   ├── _reboot.scss
+│   │   ├── _root.scss
+│   │   ├── _spinners.scss
+│   │   ├── _tables.scss
+│   │   ├── _toasts.scss
+│   │   ├── _tooltip.scss
+│   │   ├── _transitions.scss
+│   │   ├── _type.scss
+│   │   ├── _utilities.scss
+│   │   ├── _variables-dark.scss
+│   │   ├── _variables.scss
+│   │   ├── bootstrap-grid.scss
+│   │   ├── bootstrap-reboot.scss
+│   │   ├── bootstrap-utilities.scss
+│   │   ├── bootstrap.scss
+│   │   ├── forms
+│   │   ├── helpers
+│   │   ├── mixins
+│   │   ├── tests
+│   │   ├── utilities
+│   │   └── vendor
+│   ├── components
+│   │   ├── _buttons.scss
+│   │   ├── _call.scss
+│   │   ├── _content.scss
+│   │   ├── _feature.scss
+│   │   ├── _fonts.scss
+│   │   ├── _footer.scss
+│   │   ├── _hamburger.scss
+│   │   ├── _header.scss
+│   │   ├── _intro-image.scss
+│   │   ├── _intro.scss
+│   │   ├── _logo.scss
+│   │   ├── _main-menu-mobile.scss
+│   │   ├── _main-menu.scss
+│   │   ├── _page.scss
+│   │   ├── _social.scss
+│   │   ├── _strip.scss
+│   │   ├── _sub-footer.scss
+│   │   ├── _title.scss
+│   │   └── _type.scss
+│   ├── custom
+│   ├── libraries
+│   │   └── hamburgers
+│   └── pages
+│       ├── _page-home.scss
+│       ├── _page-teams.scss
+│       └── _page-tech.scss
+├── _site
+│   ├── 404
+│   │   └── index.html
+│   ├── CNAME
+│   ├── about
+│   │   └── index.html
+│   ├── assets
+│   │   ├── css
+│   │   ├── fonts
+│   │   ├── js
+│   │   ├── panel_ai
+│   │   ├── pdf
+│   │   ├── quant
+│   │   ├── qv_database
+│   │   ├── qv_submission
+│   │   ├── release
+│   │   ├── submission_mailing_list
+│   │   └── videos
+│   ├── blog
+│   │   ├── 2025-05-01
+│   │   ├── 2025-05-21-quant
+│   │   ├── 2025-06-15
+│   │   ├── 2025-07-27-bitter-lesson
+│   │   ├── 2025-08-01-quant-posterior
+│   │   ├── 2025-09-19-quant-poster
+│   │   ├── 2025-11-27-open-standards
+│   │   ├── 2025-12-14-sga-qem
+│   │   ├── 2026-01-04-founders-illumina
+│   │   ├── 2026-01-11-founders-icahn-partners-v-desouza-illumina-grail
+│   │   ├── 2026-01-17-founders-grail
+│   │   ├── 2026-01-18-founders-annovar
+│   │   ├── 2026-01-25-founders-hgmd
+│   │   ├── 2026-02-01-founders-phred-phrap-consed
+│   │   ├── 2026-02-08-founders-dbnsfp
+│   │   ├── 2026-02-14-founders-sbx
+│   │   ├── 2026-02-15-the-real-industry-bottleneck-after-genome-sequencing
+│   │   ├── 2026-03-14-founders_sentieon.md
+│   │   ├── 2026-03-14-when-sequencing-became-infrastructure
+│   │   ├── 2026-03-15-quinary-inference-the-fifth-layer-of-genomics
+│   │   ├── 2026-05-16-roche-complete-overview-2026
+│   │   ├── 2026-05-17-aquisition
+│   │   ├── 2026-05-20-ai-horizontal-layer
+│   │   ├── 2026-xx-xx-celebrating-trademark.md
+│   │   ├── 2026-xx-xx-preventing_war.md
+│   │   ├── 2026-xx-xx-second_clock.md
+│   │   ├── founder_stories_wiriting_guide.md
+│   │   ├── founders_cases.md
+│   │   └── index.html
+│   ├── builtatlightspeed.json
+│   ├── ceopage
+│   │   └── index.html
+│   ├── contact
+│   │   └── index.html
+│   ├── demo.html
+│   ├── fleyer_quantbayes
+│   │   └── index.html
+│   ├── images
+│   │   ├── 2025_E_L_Laurent_etherial_precision
+│   │   ├── android-chrome-192x192.png
+│   │   ├── android-chrome-512x512.png
+│   │   ├── apple-touch-icon.png
+│   │   ├── archipelago
+│   │   ├── bsmg_recommendation_screenshot.png
+│   │   ├── evidenceratio
+│   │   ├── favicon-16x16.png
+│   │   ├── favicon-32x32.png
+│   │   ├── favicon.ico
+│   │   ├── features
+│   │   ├── freepik_vectorjuice
+│   │   ├── genomic_vault
+│   │   ├── illustrations
+│   │   ├── learn
+│   │   ├── logo
+│   │   ├── pipedev_logo_1.png
+│   │   ├── pipedev_longer.png
+│   │   ├── pitch_deck
+│   │   ├── quantbayes
+│   │   ├── site.webmanifest
+│   │   ├── so_publisher_cloud
+│   │   ├── social
+│   │   ├── swisspedhealth_pipedev.png
+│   │   ├── team
+│   │   ├── technologies
+│   │   ├── var_risk_est
+│   │   └── vcfheader
+│   ├── index.html
+│   ├── index.md_bak
+│   ├── index.md_vaulttransition
+│   ├── jek.sh
+│   ├── kill_serve.sh
+│   ├── learn
+│   │   ├── bam-and-bai-format
+│   │   ├── bed-format
+│   │   ├── cram-foramt
+│   │   ├── cram-vs-sam-vs-bam
+│   │   ├── csi-format
+│   │   ├── fasta-format
+│   │   ├── fastq-format
+│   │   ├── genes-vs-dna-vs-chromosomes-explained
+│   │   ├── how-genetic-inheritance-works
+│   │   ├── human-reference-genome
+│   │   ├── index.html
+│   │   ├── learn_pages_template.txt
+│   │   ├── learn_pages_to_do.txt
+│   │   ├── phred-score
+│   │   ├── reference-genomes-grch37-vs-grch38
+│   │   ├── sam-format
+│   │   ├── style_guide.txt
+│   │   ├── tabix-format
+│   │   ├── vcf-format
+│   │   ├── vcf-vs-gvcf
+│   │   ├── what-is-a-genetics-disease
+│   │   ├── what-is-a-genome
+│   │   └── what-is-dna
+│   ├── legal
+│   │   └── index.html
+│   ├── netlify.toml
+│   ├── newsletter_signup
+│   │   └── index.html
+│   ├── pages
+│   │   ├── fleyer_quantbayes
+│   │   ├── panelAppRexAi_about
+│   │   └── qv_builder
+│   ├── partnerships
+│   │   └── index.html
+│   ├── pitch
+│   │   └── index.html
+│   ├── pitch_genomic_vault
+│   │   └── index.html
+│   ├── pricing
+│   │   └── index.html
+│   ├── pricing_table.md
+│   ├── publications
+│   │   └── index.html
+│   ├── qv_es_table
+│   │   └── index.html
+│   ├── release
+│   │   └── etherial-precision
+│   ├── releases
+│   │   └── index.html
+│   ├── robots.txt
+│   ├── shareholder_letters
+│   │   └── 2025_letter_to_shareholders
+│   ├── sitemap.xml
+│   ├── stack
+│   │   └── index.html
+│   ├── standard_qem
+│   │   └── index.html
+│   ├── storage.md
+│   ├── team
+│   │   ├── advisor-brand-communication
+│   │   ├── advisor-scientific
+│   │   ├── advisor-security-regulatory
+│   │   ├── bill-mcdonald.md
+│   │   ├── dylan-lawless
+│   │   └── index.html
+│   ├── technologies
+│   │   ├── agent.md
+│   │   ├── archipelago
+│   │   ├── dante.md
+│   │   ├── evidence_ratio
+│   │   ├── genomic_vault
+│   │   ├── guru.md
+│   │   ├── iei_genetics
+│   │   ├── index.html
+│   │   ├── max_maf
+│   │   ├── panelAppRexAi
+│   │   ├── panelAppRexAi_alpha.md
+│   │   ├── panelAppRexAi_shinyapp.md
+│   │   ├── particles.html
+│   │   ├── quant
+│   │   ├── quantbayes
+│   │   ├── qv_database
+│   │   ├── statistical_genomics.md
+│   │   ├── thinking.html
+│   │   ├── vcfheader
+│   │   └── wgs.md
+│   └── why-open
+│       └── index.html
+├── _team
+│   ├── advisor-brand-communication.md
+│   ├── advisor-scientific.md
+│   ├── advisor-security-regulatory.md
+│   ├── bill-mcdonald.md
+│   └── dylan-lawless.md
+├── _technologies
+│   ├── agent.md
+│   ├── archipelago.md
+│   ├── dante.md
+│   ├── evidence_ratio.md
+│   ├── genomic_vault.md
+│   ├── guru.md
+│   ├── iei_genetics.md
+│   ├── max_maf.md
+│   ├── panelAppRexAi.md
+│   ├── panelAppRexAi_alpha.md
+│   ├── panelAppRexAi_shinyapp.md
+│   ├── particles.html
+│   ├── quant.md
+│   ├── quantbayes.md
+│   ├── qv_database.md
+│   ├── statistical_genomics.md
+│   ├── thinking.html
+│   ├── vcfheader.md
+│   └── wgs.md
+├── about.md
+├── assets
+│   ├── css
+│   │   ├── _page-infra-maturity.scss
+│   │   ├── custom.css
+│   │   ├── panelapprex_particles.css
+│   │   └── style.scss
+│   ├── fonts
+│   │   └── playfair-display.woff2
+│   ├── js
+│   │   ├── mathjax-script-type.js
+│   │   └── scripts.js
+│   ├── panel_ai
+│   │   ├── get_panel_data_tables.sh
+│   │   ├── landing_page.html
+│   │   ├── landing_page_beta.html
+│   │   ├── landing_page_beta_files
+│   │   ├── landing_page_files
+│   │   ├── panel_ai_tables.R
+│   │   ├── panel_ai_tables_v2.R
+│   │   ├── panel_ai_tables_v2_test.R
+│   │   ├── panel_data_html
+│   │   └── panel_data_html_beta
+│   ├── pdf
+│   │   └── 20250918_lawless_quant.pdf
+│   ├── quant
+│   │   └── quant_card_demo.html
+│   ├── qv_database
+│   │   ├── generate_qv_database.sh
+│   │   ├── qv_acmg_sf_v3_3_20250828.yaml
+│   │   ├── qv_acmg_sf_v3_3_20250828_json.yaml
+│   │   ├── qv_acmg_sf_v3_3_prompt.txt
+│   │   ├── qv_acmg_svnindel_criteria_20250225.yaml
+│   │   ├── qv_variant_interpretation.yaml
+│   │   └── qv_variant_interpretation_prompt.txt
+│   ├── qv_submission.md
+│   ├── release
+│   │   ├── quantbayes
+│   │   ├── release_1.pdf
+│   │   └── vcfheader
+│   ├── submission_mailing_list.md
+│   └── videos
+│       └── 20250627_quant_scan_v1_hero_web.mp4
+├── blog.md
+├── builtatlightspeed.json
+├── ceopage.md
+├── contact.md
+├── demo.html
+├── fleyer_quantbayes.md
+├── images
+│   ├── 2025_E_L_Laurent_etherial_precision
+│   │   └── 1EBA3CDE-7455-49FD-8686-017F290965E3_wide.jpeg
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── apple-touch-icon.png
+│   ├── archipelago
+│   │   ├── archipelago_logo_hex.png
+│   │   ├── archipelago_plot_ukbb_subset.png
+│   │   └── logo_and_illustration.jpeg
+│   ├── bsmg_recommendation_screenshot.png
+│   ├── evidenceratio
+│   │   ├── evidenceratio_logo_red.png
+│   │   └── evidenceratio_logo_red_hex.png
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── favicon.ico
+│   ├── features
+│   │   ├── noun_3d\ modeling_1885342.svg
+│   │   ├── noun_The\ Process_1885341.svg
+│   │   └── noun_branding_1885335.svg
+│   ├── freepik_vectorjuice
+│   │   ├── 404-error-abstract-concept-illustration_335657-2243.jpg
+│   │   ├── artificial-intelligence-abstract-concept-illustration-ai-machine-learning-artificial-intelligence-evolution-high-tech-cutting-edge-technology-cognitive-robotics_335657-483.jpg
+│   │   ├── audience-segmentation-abstract-concept-illustration_335657-1854.jpg
+│   │   ├── brain-with-digital-circuit-programmer-with-laptop-machine-learning-artificial-intelligence-digital-brain-artificial-thinking-process-concept-vector-isolated-illustration_335657-2246.jpg
+│   │   ├── cardiology-clinic-hospital-department-healthy-heart-cardiovascular-prevention-healthcare-industry-idea-design-element-electrocardiogram-ekg-vector-isolated-concept-metaphor-illustration_335657-1516.jpg
+│   │   ├── collaborative-robotics-abstract-concept-illustration_335657-2115.jpg
+│   │   ├── data-analyst-oversees-governs-income-expenses-with-magnifier-financial-management-system-finance-software-it-management-tool-concept_335657-1891.jpg
+│   │   ├── distance-working-abstract-concept-vector-illustration-distance-office-working-from-home-remote-job-possibility-communication-technology-online-team-meeting-digital-nomad-abstract-metaphor_335657-2923.jpg
+│   │   ├── ecological-strategy-development-natural-resources-access-ecologists-cartoon-characters_335657-3249.jpg
+│   │   ├── gene-therapy-abstract-concept-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease_335657-566.jpg
+│   │   ├── gene-therapy-abstract-concept-vector-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease-abstract-metaphor_335657-1613-2.jpg
+│   │   ├── gene-therapy-abstract-concept-vector-illustration-genetic-cancer-treatment-genes-transfer-therapy-regenerative-medicine-experimental-approach-oncology-prevent-disease-abstract-metaphor_335657-1613.jpg
+│   │   ├── interesting-chemistry-facts-online-searching-self-education-exam-preparing-internet-surfing-man-woman-characters-browsing-scientific-website_335657-3273.jpg
+│   │   ├── job-interview-process-hiring-new-employees-hr-specialist-cartoon-character-talking-new-candidatee-recruitment-employment-headhunting-concept-illustration_335657-2034.jpg
+│   │   ├── online-business-development-gradual-growth-positive-tendency-gain-indicator-statistics-chart-diagram-female-analyst-cartoon-character_335657-2548.jpg
+│   │   ├── online-school-platform-abstract-concept-illustration-homeschooling-online-education-platform-digital-classes-virtual-courses-lms-school_335657-3486.jpg
+│   │   ├── psychotherapy-abstract-concept-vector-illustration-non-pharmacological-intervention-verbal-counseling-psychotherapy-service-behavioral-cognitive-therapy-private-session-abstract-metaphor_335657-4092.jpg
+│   │   ├── scientists-lab-working-with-huge-dna-chain-glass-bulb-gene-therapy-gene-transfer-functioning-gene-concept-white-background-bright-vibrant-violet-isolated-illustration_335657-485.jpg
+│   │   └── statistical-data-research-company-performance-indicators-return-investment-percentage-ratio-indexes-fluctuation-significative-change_335657-2552.jpg
+│   ├── genomic_vault
+│   │   ├── genomic_vault_1.png
+│   │   ├── genomic_vault_1_light.png
+│   │   ├── genomic_vault_2.png
+│   │   ├── genomic_vault_3.png
+│   │   └── genomic_vault_4.png
+│   ├── illustrations
+│   │   ├── pointing.svg
+│   │   └── reading.svg
+│   ├── learn
+│   │   └── Human_genome_assembly_GRCh38_chromosomes_ideogram_NCBI.png
+│   ├── logo
+│   │   ├── SwissPedHealth_Pipeline_Devs.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_mint.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_mint_noname\ copy.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_mint_noname.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_pink.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_wide_1.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_wide_1_pink.png
+│   │   ├── SwissPedHealth_Pipeline_Devs_wide_2.png
+│   │   ├── logo-mobile.svg
+│   │   ├── logo_v1.graphml
+│   │   ├── logo_v1.png
+│   │   ├── logo_v1.svg
+│   │   ├── logo_v2.graphml
+│   │   ├── logo_v2.png
+│   │   ├── logo_v2.svg
+│   │   ├── logo_v2_hires.png
+│   │   ├── logo_v3.graphml
+│   │   ├── logo_v3.svg
+│   │   └── logo_x.svg
+│   ├── pipedev_logo_1.png
+│   ├── pipedev_longer.png
+│   ├── pitch_deck
+│   │   ├── pitch_deck_01
+│   │   └── pitch_deck_02
+│   ├── pitchdeck
+│   ├── quantbayes
+│   │   ├── QuantBayes_logo_dark.pdf
+│   │   ├── QuantBayes_logo_light.pdf
+│   │   ├── QuantBayes_logo_light.png
+│   │   ├── qem_and_quantbayes_extended.png
+│   │   ├── quantbayes_example.png
+│   │   ├── qv_bayes_full.pdf
+│   │   ├── qv_bayes_full.png
+│   │   ├── qv_bayes_short.pdf
+│   │   ├── qv_bayes_short.png
+│   │   └── qv_quant_es.png
+│   ├── site.webmanifest
+│   ├── so_publisher_cloud
+│   │   ├── publisher_logo_cloud.png
+│   │   └── publisher_logo_cloud.svg
+│   ├── social
+│   │   ├── discord.svg
+│   │   ├── email.svg
+│   │   ├── facebook.svg
+│   │   ├── github.svg
+│   │   ├── instagram.svg
+│   │   └── twitter.svg
+│   ├── swisspedhealth_pipedev.png
+│   ├── team
+│   │   ├── DSCF3023_small_1mb.jpg
+│   │   ├── cristian-newman-94319-unsplash.jpg
+│   │   ├── joseph-gonzalez-399972-unsplash.jpg
+│   │   ├── michael-dam-258165-unsplash.jpg
+│   │   ├── nonsap-visuals-kMJp7620W6U-unsplash.jpg
+│   │   ├── original
+│   │   ├── peter-van-eijk-711986-unsplash.jpg
+│   │   ├── profile_dylan_2026.jpg
+│   │   ├── sage-kirk-485982-unsplash.jpg
+│   │   ├── sung-wang-g4DgCF90EM4-unsplash.jpg
+│   │   └── vince-fleming-613817-unsplash.jpg
+│   ├── technologies
+│   │   ├── quant_icons.png
+│   │   ├── quant_logo_three_step.png
+│   │   ├── quant_logo_three_step.svg
+│   │   ├── quant_logo_three_step_v2.png
+│   │   ├── quant_logo_three_step_v3.png
+│   │   └── var_risk_est_iei_genetics.png
+│   ├── var_risk_est
+│   │   └── animate
+│   └── vcfheader
+│       ├── simple_vcfheader_screenshot1.png
+│       ├── simple_vcfheader_screenshot2.png
+│       └── vcfheader_logo_hero_wide.png
+├── index.md
+├── index.md_bak
+├── index.md_vaulttransition
+├── jek.sh
+├── kill_serve.sh
+├── learn.md
+├── legal.md
+├── netlify.toml
+├── newsletter_signup.md
+├── pages
+│   ├── fleyer_quantbayes.md
+│   ├── panelAppRexAi_about.md
+│   ├── qv_builder.md
+│   └── vcfheader_browser.html
+├── partnerships.md
+├── pitch.md
+├── pitch_02.md
+├── pricing.md
+├── pricing_table.md
+├── publication.md
+├── qv_es_table.md
+├── releases.md
+├── shareholder_letters
+│   └── 2025_letter_to_shareholders.md
+├── stack.md
+├── standard_qem.md
+├── storage.md
+├── team.md
+├── technologies.md
+├── temp
+└── why_open.md
+
+177 directories, 415 files
