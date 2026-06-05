@@ -4,11 +4,16 @@ layout: home
 description: Auditable genomic infrastructure for precision medicine, statistical genomics, epidemiology, and bioinformatic interpretation across clinical, research, and industrial settings.
 intro_image: "images/2025_E_L_Laurent_etherial_precision/1EBA3CDE-7455-49FD-8686-017F290965E3_wide.jpeg"
 intro_video_poster: "images/2025_E_L_Laurent_etherial_precision/1EBA3CDE-7455-49FD-8686-017F290965E3_wide.jpeg"
-intro_video: "assets/videos/20250627_quant_scan_v1_hero_web.mp4"
+intro_image_absolute: true
+intro_image_hide_on_mobile: true
+show_call_box: false
+intro_video: ""
 intro_image_absolute: true
 intro_image_hide_on_mobile: true
 show_call_box: false
 ---
+
+<!-- intro_video: "assets/videos/20250627_quant_scan_v1_hero_web.mp4" -->
 
 # Genomic infrastructure
 

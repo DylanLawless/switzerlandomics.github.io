@@ -1193,6 +1193,73 @@ pre.code-copy code {
   }
 }
 
+
+
+/* static homepage hero image, used when intro_video is not set */
+
+.page-home {
+  .intro-static-image {
+    padding-top: 3rem !important;
+    padding-bottom: 1.5rem !important;
+    margin-bottom: 0 !important;
+    overflow: hidden;
+  }
+
+  .intro-static-image .row {
+    align-items: flex-start;
+  }
+
+  .intro-static-image-col {
+    min-height: 300px;
+    overflow: visible;
+  }
+
+  .intro-static-img {
+    display: block;
+    width: min(620px, 56vw);
+    max-width: none;
+    height: auto;
+    margin-top: -0.5rem;
+    margin-left: -0.5rem;
+  }
+
+  .intro-static-img.intro-image-absolute {
+    position: absolute;
+    top: -0.5rem !important;
+    right: -3.5rem;
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .page-home {
+    .intro-static-img {
+      width: min(560px, 58vw);
+    }
+
+    .intro-static-img.intro-image-absolute {
+      right: -4.5rem;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .page-home {
+    .intro-static-image {
+      padding-top: 3rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+
+    .intro-static-image-col {
+      min-height: 0;
+    }
+
+    .intro-static-img.intro-image-hide-mobile {
+      display: none !important;
+    }
+  }
+}
+
 /* container-width video hero background */
 
 .page-home{

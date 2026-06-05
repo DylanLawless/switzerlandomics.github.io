@@ -5,23 +5,21 @@ bodyClass: "page-home"
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
+{% if page.intro_video %}
 <div class="intro hero-video-section">
   <div class="container hero-video-container">
-    {% if page.intro_video %}
-    <br>
-      <video
-        class="hero-video-bg"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        poster="{{ page.intro_video_poster | relative_url }}"
-        aria-hidden="true"
-      >
-        <source src="{{ page.intro_video | relative_url }}" type="video/mp4">
-      </video>
-    {% endif %}
+    <video
+      class="hero-video-bg"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster="{{ page.intro_video_poster | relative_url }}"
+      aria-hidden="true"
+    >
+      <source src="{{ page.intro_video | relative_url }}" type="video/mp4">
+    </video>
 
     <div class="hero-video-overlay" aria-hidden="true"></div>
 
@@ -35,13 +33,37 @@ bodyClass: "page-home"
     </div>
   </div>
 </div>
+{% else %}
+<div class="intro intro-static-image">
+  <div class="container">
+    <div class="row justify-content-start">
+      <div class="col-12 col-md-7 col-lg-6 order-2 order-md-1">
+        {{ content }}
+        {% if page.show_call_box %}
+          <!-- {% include call.html show_button=true %} -->
+        {% endif %}
+      </div>
+
+      {% if page.intro_image %}
+      <div class="col-12 col-md-5 col-lg-6 order-1 order-md-2 position-relative intro-static-image-col">
+        <img
+          alt="{{ page.title }}"
+          class="intro-image intro-static-img{% if page.intro_image_absolute %} intro-image-absolute{% endif %}{% if page.intro_image_hide_on_mobile %} intro-image-hide-mobile{% endif %}"
+          src="{{ page.intro_image | relative_url }}"
+        />
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}
 
 {% include dark_hero_kicker.html %}
 
 <div class="strip">
   <div class="container pt-6 pb-6 pb-md-10">
     <div class="row justify-content-start">
-  <h2>Technology pipelines</h2>
+      <h2>Technology pipelines</h2>
       {% assign limit = site.home.limit_technologies | default: 6 %}
       {% assign sorted_techs = site.technologies | sort: "weight" %}
       {% for tech in sorted_techs limit: limit %}
@@ -65,28 +87,6 @@ bodyClass: "page-home"
   </div>
 </div>
 
-<!-- {% if site.data.features %} -->
-<!-- <div class="strip strip-grey"> -->
-<!--   <div class="container pt-6 pb-6 pt-md-10 pb-md-10"> -->
-<!--     <div class="row justify-content-center"> -->
-
-<!--       {% for feature in site.data.features %} -->
-<!--       <div class="col-12 col-md-6 col-lg-4 mb-2"> -->
-<!--         <div class="feature"> -->
-<!--           {% if feature.image %} -->
-<!--           <div class="feature-image"><img alt="{{ feature.title }} logo" src="{{ feature.image.url | relative_url }}" width="{{ feature.image.width }}" height="{{ feature.image.height }}" /></div> -->
-<!--           {% endif %} -->
-<!--           <h2 class="feature-title">{{ feature.title }}</h2> -->
-<!--           <div class="feature-content">{{ feature.description }}</div> -->
-<!--         </div> -->
-<!--       </div> -->
-<!--       {% endfor %} -->
-
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
-<!-- {% endif %} -->
-
 {% include dark_publications_banner_area.html %}
 
 {% include infrastructure_maturity.html %}
@@ -101,21 +101,17 @@ bodyClass: "page-home"
           archive=false
           meta=false
           meta="For major technology releases and blog posts only."
-           centered=false
+          centered=false
         %}
       </div>
     </div>
   </div>
 </div>
+
 <br>
 <br>
 
 {% include dark_evidence_banner_area.html %}
+
 <br>
 <br>
-
-
-
-
-
-
