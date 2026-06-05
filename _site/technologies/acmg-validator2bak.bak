@@ -1,31 +1,162 @@
----
-layout: default
-title: "ACMG Validator"
-description: "ACMG criteria calculator and classification validator. Review variant classification evidence, mark criteria and evidence status, modulate criterion strength with justification, check point-based consistency, document caveats, track completeness, and export a structured report. Runs in your browser. No upload."
-summary: "A browser-based ACMG/AMP evidence review and classification validator for structured variant interpretation, caveat checking, multi-variant case review, and report export."
-permalink: /technologies/acmg-validator/
----
+<!DOCTYPE html>
+<html lang="en">
 
-<main class="acmg-app" aria-labelledby="acmg-title">
+<head>
+  <meta charset="utf-8">
+  <title>ACMG Validator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="ACMG criteria calculator and classification validator. Review variant classification evidence, mark criteria and evidence status, modulate criterion strength with justification, check point-based consistency, document caveats, track completeness, and export a structured report. Runs in your browser. No upload." />
+  <meta property="og:title" content="ACMG Validator"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="ACMG criteria calculator and classification validator. Review variant classification evidence, mark criteria and evidence status, modulate criterion strength with justification, check point-based consistency, document caveats, track completeness, and export a structured report. Runs in your browser. No upload."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page '>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <main class="acmg-app" aria-labelledby="acmg-title">
   <section class="container pb-6 pt-6 pt-md-10 pb-md-10">
     <div class="row justify-content-start">
       <div class="col-12">
         <div class="tech tech-single acmg-shell">
 
           <header class="acmg-hero acmg-no-print">
-			  <p class="acmg-kicker">ACMG Validator</p>
-			  <h1 id="acmg-title" class="title">Review the evidence,<br>not just the verdict.</h1>
-			  <p class="acmg-lead">Variant interpretation often ends with a classification. Clinical review needs the record behind it. ACMG Validator helps you check every ACMG/AMP criterion, record evidence, confirm non-applicable criteria, and export a structured report.</p>
-			  <p class="acmg-lead acmg-lead-privacy">Private by design. Nothing leaves your browser.</p>
-			
-			  <div class="acmg-hero-actions acmg-example-actions">
-			    <span class="acmg-example-label">Examples</span>
-			    <button id="acmg-example" class="acmg-example-link" type="button" aria-label="Load BRCA1 c.68_69delAG example">BRCA1 c.68_69delAG</button>
-			    <button id="acmg-example-cftr" class="acmg-example-link" type="button" aria-label="Load CFTR c.1521_1523delCTT example">CFTR c.1521_1523delCTT</button>
-			    <button id="acmg-example-braf" class="acmg-example-link" type="button" aria-label="Load BRAF c.1799T to A example">BRAF c.1799T&gt;A</button>
-			    <button id="acmg-reset" class="acmg-secondary-link acmg-clear-btn" type="button" aria-label="Clear all ACMG Validator inputs">Clear all</button>
-			  </div>
-			</header> 
+            <p class="acmg-kicker">ACMG Validator</p>
+            <h1 id="acmg-title" class="title">Review the evidence, not just the verdict.</h1>
+            <p class="acmg-lead">A browser-based workspace for laboratories and clinicians who need a defensible variant record. Enter the variant, record why each ACMG/AMP criterion was accepted, rejected, or left unassessed, and export a structured report. Manual entry stays simple. JSON import supports multi-variant review. Nothing is uploaded.</p>
+            <div class="acmg-hero-actions acmg-example-actions">
+              <span class="acmg-example-label">Examples</span>
+              <button id="acmg-example" class="acmg-example-link" type="button" aria-label="Load BRCA1 c.68_69delAG example">BRCA1 c.68_69delAG</button>
+              <button id="acmg-example-cftr" class="acmg-example-link" type="button" aria-label="Load CFTR c.1521_1523delCTT example">CFTR c.1521_1523delCTT</button>
+              <button id="acmg-example-braf" class="acmg-example-link" type="button" aria-label="Load BRAF c.1799T to A example">BRAF c.1799T&gt;A</button>
+              <button id="acmg-reset" class="acmg-secondary-link acmg-clear-btn" type="button" aria-label="Clear all ACMG Validator inputs">Clear all</button>
+            </div>
+          </header>
 
           <!-- live scoreboard + completeness -->
           <div class="acmg-scoreboard acmg-no-print" id="acmg-scoreboard" aria-live="polite">
@@ -299,8 +430,7 @@ permalink: /technologies/acmg-validator/
 
           <section class="acmg-resources acmg-no-print">
             <h2 class="acmg-h2">Variant evidence resources</h2>
-            <p>Common resources used during variant review. These links are provided for convenience only. Switzerland Omics does not endorse, control, validate, or guarantee any external database or interpretation. For automated evidence quantification see 
-              <a href="https://switzerlandomics.ch/technologies/quantbayes/" target="_blank" rel="noopener">QuantBayes</a>.</p>
+            <p>Common resources used during variant review. These links are provided for convenience only. Switzerland Omics does not endorse, control, validate, or guarantee any external database or interpretation.</p>
             <div class="acmg-resource-grid">
               <a href="https://www.ncbi.nlm.nih.gov/clinvar/" target="_blank" rel="noopener">ClinVar</a>
               <a href="https://erepo.clinicalgenome.org/" target="_blank" rel="noopener">ClinGen Evidence Repository</a>
@@ -356,21 +486,9 @@ permalink: /technologies/acmg-validator/
 <style>
 .acmg-app{--acmg-red:#e5261f;--acmg-red-dark:#a01b16;--acmg-black:#2f2f41;--acmg-steel:#5c5a5a;--acmg-soft:#f3f2f2;--acmg-border:#dcdcdc;--acmg-surface:#fff;--acmg-warn:#8a5a00;--acmg-warn-bg:#fbf4e6;--acmg-ok:#2f7d4f;--acmg-ok-bg:#eef7f1;--acmg-path-bg:#fdeceb;--acmg-path-border:#f3c4c1;--acmg-path-text:#a01b16;--acmg-ben-bg:#eef7f1;--acmg-ben-border:#bfe0cb;--acmg-ben-text:#24613d;--rs-green:#2f7d4f;--rs-blue:#2c5f8a;--rs-amber:#8a5a00;--rs-red:#e5261f;}
 .acmg-shell{max-width:1100px;}
-.acmg-hero{
-  margin-bottom:30px;
-  padding-bottom:22px;
-  border-bottom:1px solid var(--acmg-border);
-}
-
-.acmg-editor{margin-top:24px;}
+.acmg-hero{margin-bottom:22px;}
 .acmg-kicker{margin:0 0 .5rem;color:var(--acmg-red);font-weight:600;font-size:.95rem;}
 .acmg-lead{max-width:52rem;color:var(--acmg-steel);font-size:1.02rem;line-height:1.5;margin:.7rem 0 0;}
-.acmg-lead-privacy{
-  margin-top:.45rem;
-  font-size:.94rem;
-  font-weight:600;
-  color:var(--acmg-steel);
-}
 .acmg-hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:1.1rem;}
 .acmg-example-actions{gap:8px 10px;align-items:center;}
 .acmg-example-label{color:var(--acmg-steel);font-size:.84rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-right:2px;}
@@ -652,7 +770,7 @@ permalink: /technologies/acmg-validator/
 }
 </style>
 
-{% raw %}
+
 <script>
 (function(){
   'use strict';
@@ -1020,15 +1138,9 @@ permalink: /technologies/acmg-validator/
 
     var entered = meta.entered_classification || '';
     var mismatch = false;
-    if (accepted.length && !entered){
-      warnings.push('Entered classification has not been selected. Select the final classification before treating the review as internally consistent.');
-    }
     if (entered && accepted.length && entered !== derived){
       mismatch = true;
       warnings.push('Entered classification (' + CLASS_LABEL[entered] + ') differs from the point-based category (' + CLASS_LABEL[derived] + ').');
-    }
-    if (accepted.length && !meta.signoff){
-      warnings.push('Reviewer sign-off has not been completed. Complete sign-off before treating the review as internally consistent.');
     }
 
     if (accepted.length && derived === 'vus'){
@@ -1069,7 +1181,7 @@ permalink: /technologies/acmg-validator/
     r.conflicts.forEach(function(x){ items.push(x); });
     r.warnings.forEach(function(x){ items.push(x); });
     if (r.missing.length){
-      r.missing.forEach(function(x){ items.push('Potentially useful missing evidence: ' + x + '.'); });
+      items.push('Potentially useful missing evidence has been identified for this review.');
     }
     var seen = {};
     items = items.filter(function(x){ if (seen[x]) return false; seen[x] = true; return true; });
@@ -3774,7 +3886,6 @@ permalink: /technologies/acmg-validator/
   recompute();
 })();
 </script>
-{% endraw %}
 
 
 
@@ -3784,3 +3895,94 @@ permalink: /technologies/acmg-validator/
 
 
 
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="https://github.com/DylanLawless/switzerlandomics.github.io" target="blank"><img src="/images/social/github.svg" title="Github" alt="Github" /></a>
+  
+    <a href="mailto:admin@switzerlandomics.ch " target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
