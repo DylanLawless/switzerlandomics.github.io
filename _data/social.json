@@ -1,13 +1,27 @@
 [
   {
+      "name": "Email",
+      "link": "mailto:admin@switzerlandomics.ch",
+      "image": "images/social/email.svg"
+  },
+  {
+      "name": "LinkedIn",
+      "link": "https://www.linkedin.com/company/switzerland-omics/",
+      "image": "images/social/linkedin.svg"
+  },
+  {
+      "name": "YouTube",
+      "link": "https://www.youtube.com/@SwitzerlandOmics",
+      "image": "images/social/youtube.svg"
+  },
+  {
+      "name": "Swiss Genomics Association",
+      "link": "https://www.swissgenomicsassociation.ch",
+      "image": "images/social/swissgenomicsassociation.svg"
+  }
+]
+<!---  {
     "name": "Github",
     "link": "https://github.com/DylanLawless/switzerlandomics.github.io",
     "image": "images/social/github.svg"
-  },
-  {
-      "name": "Email",
-      "link": "mailto:admin@switzerlandomics.ch ",
-      "image": "images/social/email.svg"
-  }
-
-]
+  },--->
