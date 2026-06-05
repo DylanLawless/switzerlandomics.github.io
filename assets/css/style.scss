@@ -834,7 +834,6 @@ pre.code-copy code {
   }
 }
 
-
 /* pull the hero image up to align with the top of the left column */
 .page-home{
   @media (min-width: 768px){
@@ -860,6 +859,43 @@ pre.code-copy code {
     }
   }
 }
+
+// static hero image placement
+.page-home{
+  @media (min-width: 768px){
+    .intro:not(.hero-video-section){
+      padding-bottom: 3.25rem !important;
+      overflow: hidden;
+    }
+
+    .intro:not(.hero-video-section) .position-relative{
+      overflow: visible;
+    }
+
+    .intro:not(.hero-video-section) .intro-image{
+      max-width: none !important;
+      width: auto;
+    }
+
+    .intro:not(.hero-video-section) .intro-image-absolute{
+      width: 100% !important;
+      max-width: none !important;
+      height: auto;
+      right: -5.5rem;
+      top: 0 !important;
+    }
+  }
+}
+
+@media (min-width: 992px){
+  .page-home{
+    .intro:not(.hero-video-section) .intro-image-absolute{
+      width: 120% !important;
+      right: -6.5rem;
+    }
+  }
+}
+
 
 .newsletter-form{
   width: 100%;
@@ -1195,70 +1231,6 @@ pre.code-copy code {
 
 
 
-/* static homepage hero image, used when intro_video is not set */
-
-.page-home {
-  .intro-static-image {
-    padding-top: 3rem !important;
-    padding-bottom: 1.5rem !important;
-    margin-bottom: 0 !important;
-    overflow: hidden;
-  }
-
-  .intro-static-image .row {
-    align-items: flex-start;
-  }
-
-  .intro-static-image-col {
-    min-height: 300px;
-    overflow: visible;
-  }
-
-  .intro-static-img {
-    display: block;
-    width: min(620px, 56vw);
-    max-width: none;
-    height: auto;
-    margin-top: -0.5rem;
-    margin-left: -0.5rem;
-  }
-
-  .intro-static-img.intro-image-absolute {
-    position: absolute;
-    top: -0.5rem !important;
-    right: -3.5rem;
-    margin-top: 0 !important;
-  }
-}
-
-@media (max-width: 991.98px) {
-  .page-home {
-    .intro-static-img {
-      width: min(560px, 58vw);
-    }
-
-    .intro-static-img.intro-image-absolute {
-      right: -4.5rem;
-    }
-  }
-}
-
-@media (max-width: 767.98px) {
-  .page-home {
-    .intro-static-image {
-      padding-top: 3rem !important;
-      padding-bottom: 1.5rem !important;
-    }
-
-    .intro-static-image-col {
-      min-height: 0;
-    }
-
-    .intro-static-img.intro-image-hide-mobile {
-      display: none !important;
-    }
-  }
-}
 
 /* container-width video hero background */
 
