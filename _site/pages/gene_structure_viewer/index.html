@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Gene Structure Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Interactive gene structure diagram. Visualise exon–intron architecture for any gene with transcript selector and variant position highlight. Runs in your browser via Ensembl GRCh38." />
+  <meta property="og:title" content="Gene Structure Viewer"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Interactive gene structure diagram. Visualise exon–intron architecture for any gene with transcript selector and variant position highlight. Runs in your browser via Ensembl GRCh38."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page '>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <link rel="stylesheet" href="/assets/gene_structure_viewer/viewer.css">
+
+<main aria-labelledby="gsv-title">
+  <section class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+      <div class="col-12">
+        <div class="tech tech-single gsv-root">
+
+          <!-- ── hero ──────────────────────────────────────────────────── -->
+          <header style="margin-bottom:28px; padding-bottom:22px; border-bottom:1px solid var(--gsv-border)">
+            <p style="margin:0 0 .5rem; color:var(--gsv-red); font-weight:600; font-size:.95rem">Gene Structure Viewer</p>
+            <h1 id="gsv-title" class="title">Exon–intron architecture<br>at a glance.</h1>
+            <p style="max-width:52rem; color:var(--gsv-steel); line-height:1.5; margin:.7rem 0 0">
+              Enter a gene symbol or Ensembl ID. The viewer fetches live transcript data from Ensembl GRCh38 and draws the gene to scale — exons proportional, introns condensed — with an optional variant highlight.
+            </p>
+          </header>
+
+          <!-- ── input form ─────────────────────────────────────────────── -->
+          <div style="margin-bottom:18px">
+
+            <div class="acmg-grid" style="grid-template-columns: 1fr 1fr auto; align-items:end; margin-bottom:10px">
+
+              <label class="acmg-field">
+                <span>Gene symbol or Ensembl ID</span>
+                <input id="gsv-gene-input" type="text"
+                       placeholder="CFTR  ·  BRCA1  ·  ENSG00000001626"
+                       autocomplete="off" spellcheck="false">
+              </label>
+
+              <label class="acmg-field">
+                <span>Variant position</span>
+                <input id="gsv-pos-input" type="text"
+                       placeholder="chr7:117559591"
+                       autocomplete="off" spellcheck="false"
+                       title="Accepted: chr7:117559591  7:117559591  117559591  NC_000007.14:117559591">
+              </label>
+
+              <button id="gsv-load-btn" class="button-link" type="button"
+                      style="white-space:nowrap; margin-bottom:0">Load →</button>
+
+            </div>
+
+            <p style="font-size:.82rem; color:var(--gsv-steel); margin:0 0 10px">
+              Position formats: <code>chr7:117559591</code> &nbsp;·&nbsp; <code>7:117559591</code> &nbsp;·&nbsp; <code>117559591</code> &nbsp;·&nbsp; <code>NC_000007.14:117559591</code>
+            </p>
+
+            <!-- example pill-buttons — same style as ACMG Validator -->
+            <div style="display:flex; flex-wrap:wrap; gap:6px 10px; align-items:center">
+              <span style="color:var(--gsv-steel); font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em">Examples</span>
+              <button class="acmg-example-link gsv-ex" type="button" data-gene="CFTR"  data-pos="chr7:117559591">CFTR · F508del</button>
+              <button class="acmg-example-link gsv-ex" type="button" data-gene="BRCA1" data-pos="chr17:43124028">BRCA1 · c.68_69del</button>
+              <button class="acmg-example-link gsv-ex" type="button" data-gene="BRAF"  data-pos="chr7:140753336">BRAF · V600E</button>
+              <button class="acmg-example-link gsv-ex" type="button" data-gene="TP53"  data-pos="">TP53</button>
+              <button class="acmg-example-link gsv-ex" type="button" data-gene="DMD"   data-pos="">DMD</button>
+            </div>
+
+          </div>
+
+          <!-- ── status ─────────────────────────────────────────────────── -->
+          <div id="gsv-status" class="gsv-status" role="status" aria-live="polite"></div>
+
+          <!-- ── viewer card ────────────────────────────────────────────── -->
+          <div id="gsv-card" class="gsv-card" hidden>
+
+            <div class="gsv-card-head">
+              <div>
+                <p class="gsv-card-gene" id="gsv-card-gene"></p>
+                <p class="gsv-card-loc"  id="gsv-card-loc"></p>
+              </div>
+              <div class="gsv-tx-wrap">
+                <label class="gsv-label" for="gsv-tx-select">Transcript</label>
+                <select id="gsv-tx-select" class="gsv-select"></select>
+              </div>
+            </div>
+
+            <div class="gsv-canvas-wrap">
+              <canvas id="gsv-canvas"></canvas>
+            </div>
+
+            <div class="gsv-legend">
+              <span class="gsv-li"><span class="gsv-sw" style="background:var(--gsv-cds)"></span>Coding exon</span>
+              <span class="gsv-li"><span class="gsv-sw" style="background:var(--gsv-utr)"></span>UTR</span>
+              <span class="gsv-li"><span class="gsv-sw-line"></span>Intron (condensed)</span>
+              <span class="gsv-li"><span class="gsv-sw" style="background:var(--gsv-hl);opacity:.85"></span>Variant position</span>
+            </div>
+
+            <!-- info row: assembly, strand, counts — no duplication of gene name -->
+            <div class="gsv-info-row">
+              <span>Assembly: <strong id="gsv-i-asm">—</strong></span>
+              <span>Strand: <strong id="gsv-i-str">—</strong></span>
+              <span>Transcripts: <strong id="gsv-i-txn">—</strong></span>
+              <span>Exons: <strong id="gsv-i-exn">—</strong></span>
+            </div>
+
+          </div>
+
+          <!-- tooltip — one per page -->
+          <div class="gsv-tooltip" id="gsv-tooltip" role="tooltip"></div>
+
+          <!-- ── embed pattern reference ────────────────────────────────── -->
+<!--           <details style="margin-top:28px; border:1px solid var(--gsv-border); border-left:4px solid var(--gsv-red); border-radius:6px; background:var(--gsv-surf); padding:0"> -->
+<!--             <summary style="cursor:pointer; padding:12px 14px; font-weight:700; color:var(--gsv-black); list-style:none"> -->
+<!--               Embedding the viewer in another page -->
+<!--             </summary> -->
+<!--             <div style="padding:14px; color:var(--gsv-steel); line-height:1.7"> -->
+<!--               <p>Two files from <code>assets/gene_structure_viewer/</code>. For example in <code>_technologies/acmg_validator.md</code>:</p> -->
+<!--               <pre style="background:var(--gsv-soft); border:1px solid var(--gsv-border); border-radius:5px; padding:14px; font-size:.82rem; overflow-x:auto; white-space:pre; margin:10px 0">&lt;!-- CSS once in &lt;head&gt; or top of content --&gt; -->
+<!-- &lt;link rel="stylesheet" href="/assets/gene_structure_viewer/viewer.css"&gt; -->
+<!---->
+<!-- &lt;!-- Minimal scaffold --&gt; -->
+<!-- &lt;div class="gsv-root"&gt; -->
+<!--   &lt;div id="my-status" class="gsv-status" role="status" aria-live="polite"&gt;&lt;/div&gt; -->
+<!--   &lt;div id="my-card" class="gsv-card" hidden&gt; -->
+<!--     &lt;div class="gsv-card-head"&gt; -->
+<!--       &lt;div&gt; -->
+<!--         &lt;p class="gsv-card-gene" id="my-gene"&gt;&lt;/p&gt; -->
+<!--         &lt;p class="gsv-card-loc"  id="my-loc"&gt;&lt;/p&gt; -->
+<!--       &lt;/div&gt; -->
+<!--       &lt;div class="gsv-tx-wrap"&gt; -->
+<!--         &lt;label class="gsv-label" for="my-tx"&gt;Transcript&lt;/label&gt; -->
+<!--         &lt;select id="my-tx" class="gsv-select"&gt;&lt;/select&gt; -->
+<!--       &lt;/div&gt; -->
+<!--     &lt;/div&gt; -->
+<!--     &lt;div class="gsv-canvas-wrap"&gt;&lt;canvas id="my-canvas"&gt;&lt;/canvas&gt;&lt;/div&gt; -->
+<!--     &lt;div class="gsv-legend"&gt; -->
+<!--       &lt;span class="gsv-li"&gt;&lt;span class="gsv-sw" style="background:var(--gsv-cds)"&gt;&lt;/span&gt;Coding exon&lt;/span&gt; -->
+<!--       &lt;span class="gsv-li"&gt;&lt;span class="gsv-sw" style="background:var(--gsv-utr)"&gt;&lt;/span&gt;UTR&lt;/span&gt; -->
+<!--       &lt;span class="gsv-li"&gt;&lt;span class="gsv-sw-line"&gt;&lt;/span&gt;Intron (condensed)&lt;/span&gt; -->
+<!--     &lt;/div&gt; -->
+<!--     &lt;div class="gsv-info-row"&gt; -->
+<!--       Assembly: &lt;strong id="my-asm"&gt;&lt;/strong&gt; &amp;nbsp;&amp;middot;&amp;nbsp; -->
+<!--       Strand: &lt;strong id="my-str"&gt;&lt;/strong&gt; &amp;nbsp;&amp;middot;&amp;nbsp; -->
+<!--       Exons: &lt;strong id="my-exn"&gt;&lt;/strong&gt; -->
+<!--     &lt;/div&gt; -->
+<!--   &lt;/div&gt; -->
+<!--   &lt;div class="gsv-tooltip" id="my-tip" role="tooltip"&gt;&lt;/div&gt; -->
+<!-- &lt;/div&gt; -->
+<!---->
+<!-- &lt;!-- Engine before closing &lt;/body&gt; --&gt; -->
+<!-- &lt;script src="/assets/gene_structure_viewer/viewer.js"&gt;&lt;/script&gt; -->
+<!-- &lt;script&gt; -->
+<!-- var myViewer = new GeneStructureViewer({ -->
+<!--   api:      'https://your-worker.workers.dev', -->
+<!--   card:     document.getElementById('my-card'), -->
+<!--   canvas:   document.getElementById('my-canvas'), -->
+<!--   statusEl: document.getElementById('my-status'), -->
+<!--   txSelect: document.getElementById('my-tx'), -->
+<!--   cardGene: document.getElementById('my-gene'), -->
+<!--   cardLoc:  document.getElementById('my-loc'), -->
+<!--   infoAsm:  document.getElementById('my-asm'), -->
+<!--   infoStr:  document.getElementById('my-str'), -->
+<!--   infoExn:  document.getElementById('my-exn'), -->
+<!--   tooltip:  document.getElementById('my-tip'), -->
+<!-- }); -->
+<!---->
+<!-- // Load on page open: -->
+<!-- myViewer.load('CFTR', 'chr7:117559591'); -->
+<!---->
+<!-- // Or react to the ACMG Validator gene field: -->
+<!-- // document.querySelector('[data-meta="gene"]').addEventListener('input', function () { -->
+<!-- //   myViewer.load(this.value, document.querySelector('[data-meta="coordinate"]').value); -->
+<!-- // }); -->
+<!-- &lt;/script&gt;</pre> -->
+            <!-- </div> -->
+          <!-- </details> -->
+
+          <footer class="gsv-footer">
+            Data: <a href="https://rest.ensembl.org" target="_blank" rel="noopener">Ensembl REST API</a> (GRCh38) via Cloudflare Worker proxy
+            · Introns condensed to 6 % real scale · Click any exon for coordinates
+            · <a href="https://rest.ensembl.org/documentation/info/lookup" target="_blank" rel="noopener">API docs</a>
+          </footer>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="/assets/gene_structure_viewer/viewer.js"></script>
+<script>
+(function () {
+  var API = 'https://ensembl-proxy-worker.cold-leaf-e00d.workers.dev';
+
+  var viewer = new GeneStructureViewer({
+    api:      API,
+    card:     document.getElementById('gsv-card'),
+    canvas:   document.getElementById('gsv-canvas'),
+    statusEl: document.getElementById('gsv-status'),
+    txSelect: document.getElementById('gsv-tx-select'),
+    cardGene: document.getElementById('gsv-card-gene'),
+    cardLoc:  document.getElementById('gsv-card-loc'),
+    infoAsm:  document.getElementById('gsv-i-asm'),
+    infoStr:  document.getElementById('gsv-i-str'),
+    infoTxn:  document.getElementById('gsv-i-txn'),
+    infoExn:  document.getElementById('gsv-i-exn'),
+    tooltip:  document.getElementById('gsv-tooltip'),
+  });
+
+  var elGene = document.getElementById('gsv-gene-input');
+  var elPos  = document.getElementById('gsv-pos-input');
+
+  function doLoad() { viewer.load(elGene.value, elPos.value); }
+
+  document.getElementById('gsv-load-btn').addEventListener('click', doLoad);
+  elGene.addEventListener('keydown', function (e) { if (e.key === 'Enter') doLoad(); });
+  elPos.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      /* if gene already loaded, just update the highlight */
+      viewer.highlight(elPos.value);
+    }
+  });
+
+  document.querySelectorAll('.gsv-ex').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      elGene.value = btn.getAttribute('data-gene') || '';
+      elPos.value  = btn.getAttribute('data-pos')  || '';
+      doLoad();
+    });
+  });
+
+  /* default on load */
+  elGene.value = 'CFTR';
+  elPos.value  = 'chr7:117559591';
+  doLoad();
+}());
+</script>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

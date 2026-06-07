@@ -1,0 +1,167 @@
+/* ============================================================
+   Gene Structure Viewer — viewer.css
+   Light background, navy exons, red highlight, site font sizes.
+   Scope: .gsv-* only. No page-level styles.
+   ============================================================ */
+
+.gsv-root {
+  --gsv-red:     #e5261f;
+  --gsv-red-dk:  #a01b16;
+  --gsv-black:   #2f2f41;
+  --gsv-steel:   #5c5a5a;
+  --gsv-border:  #dcdcdc;
+  --gsv-surf:    #ffffff;
+  --gsv-soft:    #f3f2f2;
+  /* exon colours: navy CDS, lighter navy UTR */
+  --gsv-cds:     #1e3a5f;
+  --gsv-cds-d:   #0d2340;
+  --gsv-utr:     #7b9cbf;
+  --gsv-utr-d:   #3a6491;
+  /* highlight: site red */
+  --gsv-hl:      #e5261f;
+  --gsv-hl-bg:   rgba(229, 38, 31, 0.08);
+}
+
+/* ── card ──────────────────────────────────────────────────────────────── */
+.gsv-card {
+  border: 1px solid var(--gsv-border);
+  border-radius: 6px;
+  background: var(--gsv-surf);
+  padding: 16px 18px 14px;
+}
+.gsv-card[hidden] { display: none; }
+
+/* ── card header ───────────────────────────────────────────────────────── */
+.gsv-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.gsv-card-gene {
+  margin: 0;
+  font-size: 1rem;       /* matches site <p> */
+  font-weight: 700;
+  color: var(--gsv-black);
+  line-height: 1.3;
+}
+
+.gsv-card-loc {
+  margin: .15rem 0 0;
+  font-size: .9rem;      /* close to site body */
+  color: var(--gsv-steel);
+}
+
+.gsv-tx-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.gsv-label {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--gsv-steel);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+/* ── transcript select ─────────────────────────────────────────────────── */
+.gsv-select {
+  height: 38px;
+  padding: 0 8px;
+  border: 1px solid var(--gsv-border);
+  border-radius: 5px;
+  background: var(--gsv-surf);
+  color: var(--gsv-black);
+  font-family: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+  outline: none;
+  min-width: 200px;
+  max-width: 380px;
+}
+.gsv-select:focus { border-color: var(--gsv-red); }
+
+/* ── canvas ────────────────────────────────────────────────────────────── */
+.gsv-canvas-wrap { overflow-x: auto; }
+.gsv-canvas-wrap canvas { display: block; }
+
+/* ── status ────────────────────────────────────────────────────────────── */
+.gsv-status {
+  font-size: .9rem;
+  color: var(--gsv-steel);
+  min-height: 20px;
+  margin-bottom: 10px;
+}
+.gsv-status.gsv-error {
+  color: var(--gsv-red-dk);
+  font-weight: 600;
+}
+
+/* ── legend ────────────────────────────────────────────────────────────── */
+.gsv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem 1rem;
+  margin-top: 10px;
+  font-size: .85rem;     /* close to site body */
+  color: var(--gsv-steel);
+  align-items: center;
+}
+.gsv-li   { display: flex; align-items: center; gap: 6px; }
+.gsv-sw   { width: 14px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.gsv-sw-line { width: 20px; height: 2px; background: var(--gsv-steel); opacity: .4; flex-shrink: 0; }
+
+/* ── info row ──────────────────────────────────────────────────────────── */
+.gsv-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem 1.25rem;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--gsv-border);
+  font-size: .85rem;
+  color: var(--gsv-steel);
+}
+
+/* ── tooltip ───────────────────────────────────────────────────────────── */
+.gsv-tooltip {
+  position: fixed;
+  background: var(--gsv-surf);
+  border: 1px solid var(--gsv-border);
+  border-radius: 6px;
+  padding: 9px 13px;
+  font-size: .85rem;
+  color: var(--gsv-black);
+  pointer-events: none;
+  display: none;
+  z-index: 9999;
+  line-height: 1.6;
+  box-shadow: 0 4px 18px rgba(0,0,0,.10);
+  max-width: 280px;
+  font-family: inherit;
+}
+.gsv-tooltip strong { color: var(--gsv-red); display: block; }
+
+/* ── footer ────────────────────────────────────────────────────────────── */
+.gsv-footer {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gsv-border);
+  font-size: .82rem;
+  color: var(--gsv-steel);
+  line-height: 1.6;
+}
+.gsv-footer a { color: var(--gsv-steel); text-decoration: underline; text-underline-offset: 2px; }
+.gsv-footer a:hover { color: var(--gsv-red); }
+
+/* ── responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .gsv-card-head { flex-direction: column; }
+  .gsv-select    { min-width: 0; width: 100%; max-width: none; }
+}

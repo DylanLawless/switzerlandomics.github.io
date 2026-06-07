@@ -3,7 +3,7 @@ layout: default
 title: "ACMG Validator"
 description: "ACMG criteria calculator and classification validator. Review variant classification evidence, mark criteria and evidence status, modulate criterion strength with justification, check point-based consistency, document caveats, track completeness, and export a structured report. Runs in your browser. No upload."
 summary: "A browser-based ACMG/AMP evidence review and classification validator for structured variant interpretation, caveat checking, multi-variant case review, and report export."
-permalink: /technologies/acmg-validator/
+permalink: /technologies/acmg-validator-bak/
 ---
 
 <main class="acmg-app" aria-labelledby="acmg-title">
@@ -12,13 +12,9 @@ permalink: /technologies/acmg-validator/
       <div class="col-12">
         <div class="tech tech-single acmg-shell">
 
-        <header class="acmg-hero acmg-no-print">
-          <div class="acmg-hero-meta">
-            <p class="acmg-kicker">ACMG Validator</p>
-            <p class="acmg-release-tag">v1.0.0</p>
-          </div>
-          <h1 id="acmg-title" class="title">Review the evidence,<br>not just the verdict.</h1>
-
+          <header class="acmg-hero acmg-no-print">
+			  <p class="acmg-kicker">ACMG Validator</p>
+			  <h1 id="acmg-title" class="title">Review the evidence,<br>not just the verdict.</h1>
 			  <p class="acmg-lead">Variant interpretation often ends with a classification. Clinical review needs the record behind it. ACMG Validator helps you check every ACMG/AMP criterion, record evidence, confirm non-applicable criteria, and export a structured report.</p>
 			  <p class="acmg-lead acmg-lead-privacy">Private by design. Nothing leaves your browser.</p>
 			
@@ -57,12 +53,7 @@ permalink: /technologies/acmg-validator/
 
           <div class="acmg-entry-label acmg-no-print">Manual entry</div>
           <div class="acmg-case-tabs acmg-no-print" id="acmg-case-tabs" aria-label="Case variant navigation">
-            <div class="acmg-case-tabs-row" id="acmg-case-tabs-row">
-              <button type="button" class="acmg-case-tab" data-tab="case">Case context</button>
-              <button type="button" class="acmg-case-tab" data-tab="genotype">Genotype review</button>
-              <button type="button" class="acmg-case-tab" data-tab="report">Final report</button>
-              <button type="button" class="acmg-case-tab acmg-active" data-variant="0">Variant 1</button>
-            </div>
+            <div class="acmg-case-tabs-row" id="acmg-case-tabs-row"></div>
             <button type="button" class="acmg-case-add" id="acmg-add-variant">Add variant to case</button>
           </div>
           <details class="acmg-json-import acmg-no-print" id="acmg-json-import-panel">
@@ -84,69 +75,11 @@ permalink: /technologies/acmg-validator/
             </div>
           </details>
 
-          <details class="acmg-genebe-import acmg-no-print" id="acmg-genebe-panel">
-            <summary>Search evidence sources</summary>
-            <p class="acmg-section-note">Optional external evidence lookup for a single genomic variant. Imported evidence criteria are marked for second review by default.</p>
-            <form id="acmg-genebe-form" class="acmg-genebe-form">
-              <div class="acmg-grid">
-                <label class="acmg-field"><span>Chromosome</span><input id="acmg-genebe-chr" type="text" placeholder="7" autocomplete="off"></label>
-                <label class="acmg-field"><span>Position</span><input id="acmg-genebe-pos" type="text" placeholder="140753336" autocomplete="off"></label>
-                <label class="acmg-field"><span>Reference allele</span><input id="acmg-genebe-ref" type="text" placeholder="A" autocomplete="off"></label>
-                <label class="acmg-field"><span>Alternate allele</span><input id="acmg-genebe-alt" type="text" placeholder="T" autocomplete="off"></label>
-                <label class="acmg-field"><span>Genome build</span>
-                  <select id="acmg-genebe-genome"><option value="hg38" selected>hg38</option><option value="hg19">hg19</option></select>
-                </label>
-                <label class="acmg-field acmg-field-wide"><span>Import ACMG criteria as</span>
-                  <select id="acmg-genebe-import-mode"><option value="review" selected>Needs second review, no points yet</option><option value="accepted">Accepted, gives ACMG Validator points</option></select>
-                </label>
-              </div>
-              <div class="acmg-hero-actions acmg-example-actions acmg-genebe-examples">
-                <span class="acmg-example-label">Examples</span>
-                <button type="button" class="acmg-example-link" id="acmg-genebe-example-brca1">BRCA1 c.68_69delAG</button>
-                <button type="button" class="acmg-example-link" id="acmg-genebe-example-cftr">CFTR c.1521_1523delCTT</button>
-                <button type="button" class="acmg-example-link" id="acmg-genebe-example-braf">BRAF c.1799T&gt;A</button>
-                <button type="button" class="acmg-secondary-link acmg-clear-btn" id="acmg-genebe-clear">Clear all</button>
-              </div>
-              <div class="acmg-genebe-actions">
-                <button type="button" class="acmg-mini-btn" id="acmg-genebe-use-context">Use active variant context</button>
-                <button type="submit" class="acmg-mini-btn acmg-genebe-primary">Search and import evidence</button>
-              </div>
-            </form>
-            <div id="acmg-genebe-status" class="acmg-genebe-status" role="status" aria-live="polite">No evidence lookup run yet.</div>
-            <pre id="acmg-genebe-summary" class="acmg-genebe-summary" hidden></pre>
-            <div class="acmg-genebe-resources">
-              <h2 class="acmg-h2">Variant evidence resources</h2>
-              <p>Common resources used during variant review. These links are provided for convenience only. Switzerland Omics does not endorse, control, validate, or guarantee any external database or interpretation. For automated evidence quantification see 
-                <a href="https://switzerlandomics.ch/technologies/quantbayes/" target="_blank" rel="noopener">QuantBayes</a>.</p>
-              <div class="acmg-resource-grid">
-                <a href="https://www.ncbi.nlm.nih.gov/clinvar/" target="_blank" rel="noopener">ClinVar</a>
-                <a href="https://erepo.clinicalgenome.org/" target="_blank" rel="noopener">ClinGen Evidence Repository</a>
-                <a href="https://cspec.genome.network/cspec/ui/svi/" target="_blank" rel="noopener">ClinGen Criteria Specifications</a>
-                <a href="https://gnomad.broadinstitute.org/" target="_blank" rel="noopener">gnomAD</a>
-                <a href="https://genebe.net/" target="_blank" rel="noopener">GeneBe</a>
-                <a href="https://varsome.com/" target="_blank" rel="noopener">VarSome</a>
-                <a href="https://www.omim.org/" target="_blank" rel="noopener">OMIM</a>
-                <a href="https://www.ncbi.nlm.nih.gov/snp/" target="_blank" rel="noopener">dbSNP</a>
-                <a href="https://genome.ucsc.edu/" target="_blank" rel="noopener">UCSC Genome Browser</a>
-                <a href="https://www.ensembl.org/Tools/VEP" target="_blank" rel="noopener">Ensembl VEP</a>
-                <a href="https://spliceailookup.broadinstitute.org/" target="_blank" rel="noopener">SpliceAI Lookup</a>
-                <a href="https://mutalyzer.nl/" target="_blank" rel="noopener">Mutalyzer</a>
-                <a href="https://databases.lovd.nl/shared/genes" target="_blank" rel="noopener">LOVD</a>
-                <a href="https://panelapp.genomicsengland.co.uk/" target="_blank" rel="noopener">PanelApp</a>
-                <a href="https://cancer.sanger.ac.uk/cosmic" target="_blank" rel="noopener">COSMIC</a>
-                <a href="https://www.oncokb.org/" target="_blank" rel="noopener">OncoKB</a>
-              </div>
-            </div>
-          </details>
-
           <div class="acmg-editor acmg-no-print">
 
             <!-- variant + case context -->
             <section class="acmg-section">
               <h2 class="acmg-h2">1 · Variant and case context</h2>
-              <div class="acmg-inline-variant-tabs" id="acmg-inline-variant-tabs" aria-label="Active variant navigation">
-                <button type="button" class="acmg-case-tab acmg-active" data-variant="0">Variant 1</button>
-              </div>
               <p class="acmg-section-note">Use HGVS notation. Missing transcript or genome build is flagged because interpretation can change with reference sequence and assembly.</p>
               <div class="acmg-grid">
                 <label class="acmg-field"><span>Gene</span><input data-meta="gene" type="text" placeholder="BRCA1" autocomplete="off"></label>
@@ -157,23 +90,8 @@ permalink: /technologies/acmg-validator/
                   <select data-meta="build"><option value="">—</option><option>GRCh38</option><option>GRCh37</option><option>T2T-CHM13</option></select>
                 </label>
                 <label class="acmg-field"><span>Genomic coordinate</span><input data-meta="coordinate" type="text" placeholder="chr17:43124027" autocomplete="off"></label>
-                <label class="acmg-field"><span>Reference allele</span><input data-meta="ref" type="text" placeholder="A" autocomplete="off"></label>
-                <label class="acmg-field"><span>Alternate allele</span><input data-meta="alt" type="text" placeholder="T" autocomplete="off"></label>
                 <label class="acmg-field"><span>Variant type</span>
-                  <select data-meta="variant_type">
-					<option value="">—</option>
-					<option>SNV</option>
-					<option>MNV</option>
-					<option>Small insertion</option>
-					<option>Small deletion</option>
-					<option>Small indel</option>
-					<option>Repeat expansion / contraction</option>
-					<option>Copy-number variant</option>
-					<option>Structural variant</option>
-					<option>Mitochondrial variant</option>
-					<option>Non-coding regulatory variant</option>
-					<option>Other / complex</option>
-				</select>
+                  <select data-meta="variant_type"><option value="">—</option><option>SNV</option><option>Small insertion</option><option>Small deletion</option><option>Indel</option><option>In-frame indel</option></select>
                 </label>
                 <label class="acmg-field"><span>Zygosity</span>
                   <select data-meta="zygosity"><option value="">—</option><option>Heterozygous</option><option>Homozygous</option><option>Hemizygous</option><option>Compound het</option></select>
@@ -355,9 +273,27 @@ permalink: /technologies/acmg-validator/
               </div>
             </section>
 
+            <!-- classification + sign-off -->
+            <section class="acmg-section">
+              <h2 class="acmg-h2">4 · Classification and sign-off</h2>
+              <div class="acmg-grid">
+                <label class="acmg-field"><span>Entered classification</span>
+                  <select data-meta="entered_classification">
+                    <option value="">—</option>
+                    <option value="pathogenic">Pathogenic</option>
+                    <option value="likely_pathogenic">Likely pathogenic</option>
+                    <option value="vus">Uncertain significance</option>
+                    <option value="likely_benign">Likely benign</option>
+                    <option value="benign">Benign</option>
+                  </select>
+                </label>
+                <label class="acmg-field acmg-field-wide acmg-checkline"><input type="checkbox" data-meta="signoff"><span>Reviewer sign-off completed — evidence reviewed and recorded as above</span></label>
+              </div>
+            </section>
+
             <!-- genotype-level review -->
             <section class="acmg-section" id="acmg-genotype-section">
-              <h2 class="acmg-h2">4 · Genotype-level review</h2>
+              <h2 class="acmg-h2">5 · Genotype-level review</h2>
               <p class="acmg-section-note">Use this when a case has more than one variant. Variant-level ACMG evidence remains separate; this section records whether the variants were reviewed together, phase, recessive evidence and phenotype fit. Do not sum ACMG scores across variants.</p>
               <div class="acmg-grid">
                 <label class="acmg-field"><span>Gene reviewed together</span><input data-genotype="gene" type="text" placeholder="CFTR" autocomplete="off"></label>
@@ -375,29 +311,10 @@ permalink: /technologies/acmg-validator/
                 <label class="acmg-field acmg-field-wide"><span>Residual uncertainty</span><input data-genotype="uncertainty" type="text" placeholder="Phase unknown, second allele uncertain, incomplete phenotype, segregation not assessed…" autocomplete="off"></label>
               </div>
             </section>
-            <!-- classification + sign-off -->
-            <section class="acmg-section acmg-signoff-section" id="acmg-signoff-section">
-              <h2 class="acmg-h2">5 · Classification and sign-off</h2>
-              <div class="acmg-grid">
-                <label class="acmg-field"><span>Entered classification</span>
-                  <select data-meta="entered_classification">
-                    <option value="">—</option>
-                    <option value="pathogenic">Pathogenic</option>
-                    <option value="likely_pathogenic">Likely pathogenic</option>
-                    <option value="vus">Uncertain significance</option>
-                    <option value="likely_benign">Likely benign</option>
-                    <option value="benign">Benign</option>
-                  </select>
-                </label>
-                <label class="acmg-field acmg-field-wide acmg-checkline"><input type="checkbox" data-meta="signoff"><span>Reviewer sign-off completed — evidence reviewed and recorded as above</span></label>
-              </div>
-            </section>
-
           </div>
 
           <!-- report (live, read-only mirror; the only thing that prints) -->
           <section class="acmg-report" id="acmg-report" aria-label="Structured review report">
-            <div id="acmg-report-body"></div>
             <div class="acmg-export-cta acmg-no-print">
               <div class="acmg-export-copy">
                 <h2 class="acmg-h2">Download the report</h2>
@@ -410,13 +327,14 @@ permalink: /technologies/acmg-validator/
                 <button id="acmg-md" class="acmg-button-secondary" type="button">Markdown</button>
               </div>
             </div>
+            <div id="acmg-report-body"></div>
           </section>
 
           <!-- SEO / educational explainer (server rendered) -->
           <details class="acmg-explainer acmg-no-print">
             <summary>About the ACMG criteria and this validator</summary>
             <div class="acmg-explainer-body">
-              <p>The ACMG/AMP framework classifies sequence variants into five categories of pathogenic, likely pathogenic, uncertain significance, likely benign and benign. It has weighted evidence criteria such as PVS1, PS1–PS4, PM1–PM6, PP1–PP4 on the pathogenic side and BA1, BS1–BS4, BP1–BP7 on the benign side. Each criterion carries a default strength: very strong, strong, moderate or supporting (BA1 is stand-alone benign).</p>
+              <p>The ACMG/AMP framework classifies sequence variants into five categories — pathogenic, likely pathogenic, uncertain significance, likely benign and benign — using weighted evidence criteria such as PVS1, PS1–PS4, PM1–PM6, PP1–PP4 on the pathogenic side and BA1, BS1–BS4, BP1–BP7 on the benign side. Each criterion carries a default strength: very strong, strong, moderate or supporting (BA1 is stand-alone benign).</p>
               <p>The strength encoded in the code is the default, but it can be modulated on professional judgement, and modern practice does so in structured ways: the ClinGen Sequence Variant Interpretation working group grades PVS1 by null-variant context (PVS1 decision tree), recommends PM2 at supporting strength, and calibrates computational evidence (PP3/BP4) and functional evidence (PS3/BS3) to multiple strength levels. The Tavtigian et al. (2020) point system makes this coherent by scoring the applied strength rather than the code: supporting ±1, moderate ±2, strong ±4, very strong / stand-alone ±8, with categories of pathogenic ≥10, likely pathogenic 6–9, uncertain 0–5, likely benign −1 to −6, benign ≤−7.</p>
               <p>This tool does not annotate variants and does not replace VarSome, ClinVar, gnomAD or VEP. It records <em>how</em> the evidence those tools provide was reviewed: which criteria apply, at what strength and why, which were checked and found absent, which were never assessed, whether caveats were completed, and whether the entered classification is internally consistent with the selected criteria. The output certifies process completion, not clinical correctness. A "validated" report means the review is internally consistent with the selected criteria and that caveats and sign-off were completed — it is not a clinical approval.</p>
             </div>
@@ -425,6 +343,30 @@ permalink: /technologies/acmg-validator/
           <section class="acmg-feedback acmg-no-print">
             <h2 class="acmg-h2">Feedback</h2>
             <p>Feedback on this page is important to catch errors in logic or to better meet user needs. Please contact us at <a href="mailto:admin@switzerlandomics.ch">admin@switzerlandomics.ch</a> to report.</p>
+          </section>
+
+          <section class="acmg-resources acmg-no-print">
+            <h2 class="acmg-h2">Variant evidence resources</h2>
+            <p>Common resources used during variant review. These links are provided for convenience only. Switzerland Omics does not endorse, control, validate, or guarantee any external database or interpretation. For automated evidence quantification see 
+              <a href="https://switzerlandomics.ch/technologies/quantbayes/" target="_blank" rel="noopener">QuantBayes</a>.</p>
+            <div class="acmg-resource-grid">
+              <a href="https://www.ncbi.nlm.nih.gov/clinvar/" target="_blank" rel="noopener">ClinVar</a>
+              <a href="https://erepo.clinicalgenome.org/" target="_blank" rel="noopener">ClinGen Evidence Repository</a>
+              <a href="https://cspec.genome.network/cspec/ui/svi/" target="_blank" rel="noopener">ClinGen Criteria Specifications</a>
+              <a href="https://gnomad.broadinstitute.org/" target="_blank" rel="noopener">gnomAD</a>
+              <a href="https://genebe.net/" target="_blank" rel="noopener">GeneBe</a>
+              <a href="https://varsome.com/" target="_blank" rel="noopener">VarSome</a>
+              <a href="https://www.omim.org/" target="_blank" rel="noopener">OMIM</a>
+              <a href="https://www.ncbi.nlm.nih.gov/snp/" target="_blank" rel="noopener">dbSNP</a>
+              <a href="https://genome.ucsc.edu/" target="_blank" rel="noopener">UCSC Genome Browser</a>
+              <a href="https://www.ensembl.org/Tools/VEP" target="_blank" rel="noopener">Ensembl VEP</a>
+              <a href="https://spliceailookup.broadinstitute.org/" target="_blank" rel="noopener">SpliceAI Lookup</a>
+              <a href="https://mutalyzer.nl/" target="_blank" rel="noopener">Mutalyzer</a>
+              <a href="https://databases.lovd.nl/shared/genes" target="_blank" rel="noopener">LOVD</a>
+              <a href="https://panelapp.genomicsengland.co.uk/" target="_blank" rel="noopener">PanelApp</a>
+              <a href="https://cancer.sanger.ac.uk/cosmic" target="_blank" rel="noopener">COSMIC</a>
+              <a href="https://www.oncokb.org/" target="_blank" rel="noopener">OncoKB</a>
+            </div>
           </section>
 
           <section class="acmg-references acmg-no-print">
@@ -444,7 +386,7 @@ permalink: /technologies/acmg-validator/
           </section>
 
           <footer class="acmg-footer-text">
-            Generated with ACMG Validator, a tool from
+            Generated with ACMG Validator, a free tool created by
             <a href="https://switzerlandomics.ch">Switzerland Omics</a>.
             The validator checks internal consistency and process completion only. It does not assert clinical validity, does not annotate variants, and does not constitute medical advice.
             Switzerland Omics® is a registered trade mark.
@@ -477,27 +419,6 @@ permalink: /technologies/acmg-validator/
   font-weight:600;
   color:var(--acmg-steel);
 }
-
-.acmg-hero-meta{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-}
-
-.acmg-hero-meta .acmg-kicker,
-.acmg-hero-meta .acmg-release-tag{
-  margin:0 0 .5rem;
-}
-
-.acmg-release-tag{
-  color:var(--acmg-steel);
-  font-size:.82rem;
-  font-weight:700;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-}
-
 .acmg-hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:1.1rem;}
 .acmg-example-actions{gap:8px 10px;align-items:center;}
 .acmg-example-label{color:var(--acmg-steel);font-size:.84rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-right:2px;}
@@ -532,34 +453,16 @@ permalink: /technologies/acmg-validator/
 .acmg-json-downloads .acmg-mini-btn{background:#fff;}
 
 
-
-/* GeneBe evidence lookup */
-.acmg-genebe-import{margin-top:14px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-black);border-radius:6px;background:#fff;padding:0;}
-.acmg-genebe-import summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--acmg-black);list-style:none;}
-.acmg-genebe-import summary::-webkit-details-marker{display:none;}
-.acmg-genebe-import summary::after{content:"+";float:right;color:var(--acmg-red);font-weight:700;}
-.acmg-genebe-import[open] summary{border-bottom:1px solid var(--acmg-border);}
-.acmg-genebe-import[open] summary::after{content:"−";}
-.acmg-genebe-import>.acmg-section-note,.acmg-genebe-form,.acmg-genebe-status,.acmg-genebe-summary,.acmg-genebe-resources{margin-left:14px;margin-right:14px;}
-.acmg-genebe-form{margin-top:10px;margin-bottom:10px;}
-.acmg-genebe-examples{margin-top:12px;}
-.acmg-genebe-resources{margin-top:18px;margin-bottom:14px;padding-top:14px;border-top:1px solid var(--acmg-border);}
-.acmg-genebe-resources p{color:var(--acmg-steel);font-size:.9rem;line-height:1.45;margin:.2rem 0 1rem;max-width:62rem;}
-.acmg-genebe-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px;}
-.acmg-genebe-primary{border-color:var(--acmg-red-dark);background:var(--acmg-red);color:#fff;font-weight:600;}
-.acmg-genebe-primary:hover{border-color:var(--acmg-red-dark);background:var(--acmg-red-dark);color:#fff;}
-.acmg-genebe-status{margin-top:0;margin-bottom:12px;color:var(--acmg-steel);font-size:.86rem;min-height:1.2rem;}
-.acmg-genebe-status.acmg-genebe-error{color:var(--acmg-red-dark);font-weight:600;}
-.acmg-genebe-status.acmg-genebe-success{display:flex;align-items:center;gap:7px;color:var(--acmg-ok);font-weight:600;}
-.acmg-genebe-status .acmg-legend-dot{flex:0 0 auto;}
-.acmg-genebe-summary{margin-top:0;margin-bottom:14px;padding:10px;border:1px solid var(--acmg-border);border-radius:5px;background:var(--acmg-soft);color:var(--acmg-black);font-size:.78rem;line-height:1.35;white-space:pre-wrap;overflow:auto;max-height:240px;}
-
 /* multi-variant case tabs */
 .acmg-case-tabs{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:0 0 18px;padding:12px;border:2px solid rgba(229,38,31,.32);border-left:6px solid var(--acmg-red);border-radius:8px;background:linear-gradient(135deg,rgba(229,38,31,.08),rgba(47,47,65,.04));}
 .acmg-case-tabs-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1 1 auto;}
 .acmg-case-tab{border:1px solid rgba(229,38,31,.35);background:#fff;color:var(--acmg-black);font:inherit;font-size:.84rem;font-weight:600;padding:8px 12px;border-radius:6px;cursor:pointer;box-shadow:0 1px 0 rgba(47,47,65,.05);}
 .acmg-case-tab:hover{border-color:var(--acmg-red);color:var(--acmg-red);}
 .acmg-case-tab.acmg-active{background:var(--acmg-red);border-color:var(--acmg-red-dark);color:#fff;}
+.acmg-case-tab[data-tab="genotype"]{background:#fff7e8;border-color:#e0c98f;color:#8a5a00;}
+.acmg-case-tab[data-tab="genotype"].acmg-active{background:#8a5a00;border-color:#6c4600;color:#fff;}
+.acmg-case-tab[data-tab="report"]{background:#eef7f1;border-color:#bfe0cb;color:#2f7d4f;}
+.acmg-case-tab[data-tab="report"].acmg-active{background:#2f7d4f;border-color:#24613d;color:#fff;}
 .acmg-case-add{border:1px solid var(--acmg-black);background:var(--acmg-black);color:#fff;font:inherit;font-size:.84rem;font-weight:600;padding:8px 13px;border-radius:6px;cursor:pointer;}
 .acmg-case-add:hover{background:var(--acmg-red);border-color:var(--acmg-red);}
 
@@ -637,13 +540,7 @@ permalink: /technologies/acmg-validator/
 /* sections */
 .acmg-section{border-top:2px solid var(--acmg-black);padding-top:16px;margin-top:30px;}
 .acmg-section:first-child{margin-top:0;}
-.acmg-signoff-section{border-top-color:var(--acmg-ok);background:linear-gradient(180deg,rgba(47,125,79,.07),rgba(255,255,255,0));padding:16px 14px 4px;border-radius:6px;}
-.acmg-signoff-section .acmg-h2{color:var(--acmg-ok);}
-.acmg-signoff-section .acmg-checkline span{font-weight:700;}
 .acmg-h2{font-size:1.12rem;color:var(--acmg-black);margin:0 0 .25rem;}
-.acmg-inline-variant-tabs{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 10px;}
-.acmg-inline-variant-tabs .acmg-case-tab{font-size:.78rem;padding:6px 10px;}
-.acmg-active-variant-indicator{display:inline-flex;align-items:center;margin-left:8px;border:1px solid rgba(229,38,31,.35);border-radius:999px;background:#fff;color:var(--acmg-red);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 7px;vertical-align:middle;}
 .acmg-section-note{color:var(--acmg-steel);font-size:.9rem;line-height:1.45;margin:.2rem 0 1rem;max-width:62rem;}
 .acmg-gsv-section .gsv-root{max-width:100%;}
 .acmg-gsv-status{font-size:.86rem;color:var(--acmg-steel);margin:.15rem 0 10px;}
@@ -766,7 +663,7 @@ permalink: /technologies/acmg-validator/
 
 /* report */
 .acmg-report{margin-top:34px;border-top:2px solid var(--acmg-black);padding-top:16px;}
-.acmg-export-cta{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:16px 18px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;background:var(--acmg-soft);margin:22px 0;}
+.acmg-export-cta{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:16px 18px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;background:var(--acmg-soft);margin-bottom:22px;}
 .acmg-export-copy h2{margin:0;}
 .acmg-export-copy p{margin:.2rem 0 0;color:var(--acmg-steel);font-size:.88rem;max-width:34rem;}
 .acmg-export{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
@@ -775,49 +672,17 @@ permalink: /technologies/acmg-validator/
 .acmg-rep-stamp{border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;padding:14px 16px;margin:0 0 18px;background:var(--acmg-surface);}
 .acmg-rep-stamp h3{margin:0 0 8px;font-size:1rem;color:var(--acmg-black);}
 .acmg-rep-stamp .acmg-verdict{margin-bottom:4px;}
-.acmg-rep-scoreboard{border:1px solid var(--acmg-border);border-radius:6px;background:var(--acmg-surface);overflow:hidden;margin:0 0 18px;}
-.acmg-rep-score-cells{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) repeat(2,minmax(0,1.6fr));}
-.acmg-rep-score-cell{padding:12px 14px;border-left:1px solid var(--acmg-border);display:flex;flex-direction:column;gap:3px;}
-.acmg-rep-score-cell:first-child{border-left:none;}
-.acmg-rep-score-val{font-size:1.42rem;font-weight:700;color:var(--acmg-black);line-height:1;}
-.acmg-rep-score-lab{font-size:.72rem;color:var(--acmg-steel);text-transform:uppercase;letter-spacing:.04em;}
-.acmg-rep-score-completeness{padding:10px 14px;border-top:1px solid var(--acmg-border);font-size:.78rem;color:var(--acmg-steel);}
-.acmg-rep-score-completeness .acmg-rep-comp-pills{margin-top:7px;}
 .acmg-rep-block{margin:0 0 20px;}
 .acmg-rep-block h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--acmg-steel);margin:0 0 8px;border-bottom:1px solid var(--acmg-border);padding-bottom:5px;}
 .acmg-rep-table{width:100%;border-collapse:collapse;}
 .acmg-rep-table th,.acmg-rep-table td{border:1px solid var(--acmg-border);padding:7px 9px;text-align:left;vertical-align:top;font-size:.82rem;line-height:1.35;}
 .acmg-rep-table th{background:var(--acmg-soft);color:var(--acmg-black);font-weight:600;}
-.acmg-rep-criteria-table{table-layout:fixed;}
-.acmg-rep-criteria-table th:nth-child(1),.acmg-rep-criteria-table td:nth-child(1),
-.acmg-rep-criteria-table th:nth-child(2),.acmg-rep-criteria-table td:nth-child(2),
-.acmg-rep-criteria-table th:nth-child(3),.acmg-rep-criteria-table td:nth-child(3),
-.acmg-rep-criteria-table th:nth-child(4),.acmg-rep-criteria-table td:nth-child(4),
-.acmg-rep-criteria-table th:nth-child(5),.acmg-rep-criteria-table td:nth-child(5){width:12%;}
-.acmg-rep-criteria-table th:nth-child(6),.acmg-rep-criteria-table td:nth-child(6){width:40%;}
-.acmg-rep-criteria-table td{overflow-wrap:anywhere;}
 .acmg-rep-kv td:first-child{width:34%;font-weight:600;color:var(--acmg-black);background:#fafafa;}
 .acmg-rep-list{margin:0;padding-left:1.15rem;}
 .acmg-rep-list li{font-size:.85rem;line-height:1.45;margin-bottom:4px;}
 .acmg-rep-list.bad li{color:var(--acmg-red-dark);}
 .acmg-rep-list.warn li{color:var(--acmg-warn);}
 .acmg-rep-empty{color:var(--acmg-steel);font-size:.85rem;}
-.acmg-rep-gsv-img{display:block;width:100%;max-width:920px;height:auto;border:1px solid var(--acmg-border);border-radius:6px;background:#fff;margin-top:8px;}
-.acmg-rep-gsv-meta{margin-bottom:8px;}
-.acmg-rep-gsv-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:8px;color:var(--acmg-steel);font-size:.76rem;}
-.acmg-rep-gsv-li{display:inline-flex;align-items:center;gap:6px;}
-.acmg-rep-gsv-sw{display:inline-block;width:16px;height:10px;border:1px solid var(--acmg-border);border-radius:2px;}
-.acmg-rep-gsv-cds{background:var(--gsv-cds,#2f2f41);}
-.acmg-rep-gsv-utr{background:var(--gsv-utr,#b8c4d1);}
-.acmg-rep-gsv-hl{background:var(--gsv-hl,#e5261f);opacity:.85;}
-.acmg-rep-gsv-line{display:inline-block;width:20px;height:0;border-top:2px solid var(--acmg-steel);}
-.acmg-rep-block{border-left:3px solid transparent;padding-left:10px;}
-.acmg-rep-block h3{color:var(--acmg-black);}
-.acmg-rep-block:nth-of-type(odd){border-left-color:rgba(229,38,31,.18);}
-.acmg-rep-block:nth-of-type(even){border-left-color:rgba(47,47,65,.14);}
-.acmg-rep-scoreboard{border-top:4px solid var(--acmg-red);}
-.acmg-rep-table th{border-top:2px solid rgba(229,38,31,.22);}
-.acmg-rep-criteria-table td:first-child strong{color:var(--acmg-red-dark);}
 .acmg-explainer{margin-top:34px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;background:#fff;color:var(--acmg-black);padding:0;}
 .acmg-explainer summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--acmg-black);list-style:none;}
 .acmg-explainer summary::-webkit-details-marker{display:none;}
@@ -851,7 +716,6 @@ permalink: /technologies/acmg-validator/
 @media (max-width:980px){
   .acmg-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .acmg-score-cells{grid-template-columns:repeat(3,minmax(0,1fr));}
-  .acmg-rep-score-cells{grid-template-columns:repeat(3,minmax(0,1fr));}
   .acmg-score-cell.acmg-score-wide{border-top:1px solid var(--acmg-border);}
 }
 @media (max-width:760px){
@@ -866,7 +730,6 @@ permalink: /technologies/acmg-validator/
   .acmg-grid{grid-template-columns:1fr;}
   .acmg-field-wide{grid-column:auto;}
   .acmg-score-cells{grid-template-columns:1fr 1fr;}
-  .acmg-rep-score-cells{grid-template-columns:1fr 1fr;}
   .acmg-crit-controls{grid-template-columns:1fr;}
   .acmg-export .button-link,.acmg-export .acmg-button-secondary{flex:1 1 auto;}
 }
@@ -878,680 +741,6 @@ permalink: /technologies/acmg-validator/
   .acmg-rep-table th{background:#f2f2f2!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 }
 </style>
-
-<script>
-(function (root) {
-  'use strict';
-
-  var defaultProxyBaseUrl = 'https://genebe-proxy.cold-leaf-e00d.workers.dev/';
-
-  var CRITERIA = [
-    ['pathogenic', 'PVS1', 'very_strong'],
-    ['pathogenic', 'PS1', 'strong'],
-    ['pathogenic', 'PS2', 'strong'],
-    ['pathogenic', 'PS3', 'strong'],
-    ['pathogenic', 'PS4', 'strong'],
-    ['pathogenic', 'PM1', 'moderate'],
-    ['pathogenic', 'PM2', 'moderate'],
-    ['pathogenic', 'PM3', 'moderate'],
-    ['pathogenic', 'PM4', 'moderate'],
-    ['pathogenic', 'PM5', 'moderate'],
-    ['pathogenic', 'PM6', 'moderate'],
-    ['pathogenic', 'PP1', 'supporting'],
-    ['pathogenic', 'PP2', 'supporting'],
-    ['pathogenic', 'PP3', 'supporting'],
-    ['pathogenic', 'PP4', 'supporting'],
-    ['pathogenic', 'PP5', 'supporting'],
-    ['benign', 'BA1', 'standalone'],
-    ['benign', 'BS1', 'strong'],
-    ['benign', 'BS2', 'strong'],
-    ['benign', 'BS3', 'strong'],
-    ['benign', 'BS4', 'strong'],
-    ['benign', 'BP1', 'supporting'],
-    ['benign', 'BP2', 'supporting'],
-    ['benign', 'BP3', 'supporting'],
-    ['benign', 'BP4', 'supporting'],
-    ['benign', 'BP5', 'supporting'],
-    ['benign', 'BP6', 'supporting'],
-    ['benign', 'BP7', 'supporting']
-  ];
-
-  var POINTS = {
-    pathogenic: {
-      supporting: 1,
-      moderate: 2,
-      strong: 4,
-      very_strong: 8
-    },
-    benign: {
-      supporting: -1,
-      moderate: -2,
-      strong: -4,
-      standalone: -8
-    }
-  };
-
-  var STRENGTH_SUFFIX = {
-    supporting: 'Supporting',
-    moderate: 'Moderate',
-    strong: 'Strong',
-    very_strong: 'VeryStrong',
-    standalone: 'StandAlone'
-  };
-
-  var KNOWN_CRITERIA = {};
-  CRITERIA.forEach(function (row) {
-    KNOWN_CRITERIA[row[1]] = {
-      group: row[0],
-      code: row[1],
-      default_strength: row[2]
-    };
-  });
-
-  function cleanChr(x) {
-    return String(x || '').trim().replace(/^chr/i, '');
-  }
-
-  function cleanAllele(x) {
-    return String(x || '').trim().toUpperCase();
-  }
-
-  function isPresent(x) {
-    return x !== undefined && x !== null && x !== '';
-  }
-
-  function firstDefined() {
-    for (var i = 0; i < arguments.length; i++) {
-      if (isPresent(arguments[i])) return arguments[i];
-    }
-    return '';
-  }
-
-  function firstDefinedNullable() {
-    for (var i = 0; i < arguments.length; i++) {
-      if (isPresent(arguments[i])) return arguments[i];
-    }
-    return null;
-  }
-
-  function buildUrl(baseUrl, params) {
-    var query = Object.keys(params)
-      .map(function (key) {
-        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-      })
-      .join('&');
-
-    return String(baseUrl || defaultProxyBaseUrl) + '?' + query;
-  }
-
-  function genomeToValidatorBuild(genome) {
-    if (genome === 'hg38') return 'GRCh38';
-    if (genome === 'hg19') return 'GRCh37';
-    return '';
-  }
-
-  function validatorBuildToGenome(build) {
-    if (build === 'GRCh38') return 'hg38';
-    if (build === 'GRCh37') return 'hg19';
-    return 'hg38';
-  }
-
-  function inferVariantType(ref, alt) {
-    ref = String(ref || '');
-    alt = String(alt || '');
-
-    if (!ref && !alt) return '';
-    if (ref.length === 1 && alt.length === 1) return 'SNV';
-    if (ref.length > alt.length && alt.length === 0) return 'Small deletion';
-    if (ref.length > alt.length) return 'Small deletion';
-    if (alt.length > ref.length) return 'Small insertion';
-    if (ref.length === alt.length && ref.length > 1) return 'Indel';
-
-    return 'Indel';
-  }
-
-  function normaliseClassification(x) {
-    var s = String(x || '').toLowerCase();
-
-    if (s === 'pathogenic') return 'pathogenic';
-    if (s === 'likely_pathogenic' || s === 'likely pathogenic') return 'likely_pathogenic';
-    if (s === 'uncertain_significance' || s === 'uncertain significance' || s === 'vus') return 'vus';
-    if (s === 'likely_benign' || s === 'likely benign') return 'likely_benign';
-    if (s === 'benign') return 'benign';
-
-    return '';
-  }
-
-  function splitCriteria(x) {
-    if (!x) return [];
-    if (Array.isArray(x)) return x.map(String).filter(Boolean);
-
-    return String(x)
-      .split(',')
-      .map(function (s) { return s.trim(); })
-      .filter(Boolean);
-  }
-
-  function normaliseStrengthName(x) {
-    var s = String(x || '').toLowerCase().replace(/[\s-]+/g, '_');
-
-    if (s === 'supporting') return 'supporting';
-    if (s === 'moderate') return 'moderate';
-    if (s === 'strong') return 'strong';
-    if (s === 'verystrong' || s === 'very_strong') return 'very_strong';
-    if (s === 'standalone' || s === 'stand_alone') return 'standalone';
-
-    return '';
-  }
-
-  function parseCriterionToken(token) {
-    var raw = String(token || '').trim();
-    var match = raw.match(/^(PVS1|PS[1-4]|PM[1-6]|PP[1-5]|BA1|BS[1-4]|BP[1-7])(?:[_-]?(Supporting|Moderate|Strong|VeryStrong|Very_Strong|StandAlone|Standalone|Stand_Alone))?$/i);
-
-    if (!match) return null;
-
-    var code = match[1].toUpperCase();
-    var strength = normaliseStrengthName(match[2] || '');
-
-    if (!KNOWN_CRITERIA[code]) return null;
-
-    return {
-      raw: raw,
-      code: code,
-      suggested_strength: strength,
-      source_notation: raw
-    };
-  }
-
-  function getBestConsequence(v) {
-    var consequences = Array.isArray(v.consequences) ? v.consequences : [];
-
-    var maneRefSeq = consequences.find(function (c) {
-      return c.mane_select && /^NM_/.test(String(c.transcript || c.feature || ''));
-    });
-
-    var maneAny = consequences.find(function (c) {
-      return c.mane_select || c.mane_plus;
-    });
-
-    var canonical = consequences.find(function (c) {
-      return c.canonical === true;
-    });
-
-    var proteinCoding = consequences.find(function (c) {
-      return c.protein_coding === true;
-    });
-
-    return maneRefSeq || maneAny || canonical || proteinCoding || consequences[0] || {};
-  }
-
-  function getGeneBeAcmgRecord(v, best) {
-    var records = Array.isArray(v.acmg_by_gene) ? v.acmg_by_gene : [];
-    if (!records.length) return null;
-
-    var bestGene = firstDefined(best.gene_symbol, v.gene_symbol);
-    var bestHgnc = firstDefined(best.gene_hgnc_id, v.hgnc_id);
-    var bestTranscript = firstDefined(best.transcript, best.feature, v.transcript);
-
-    var exact = records.find(function (r) {
-      return (
-        String(r.gene_symbol || '') === String(bestGene || '') &&
-        String(r.transcript || '') === String(bestTranscript || '')
-      );
-    });
-
-    var byGene = records.find(function (r) {
-      return String(r.gene_symbol || '') === String(bestGene || '');
-    });
-
-    var byHgnc = records.find(function (r) {
-      return String(r.hgnc_id || '') === String(bestHgnc || '');
-    });
-
-    return exact || byGene || byHgnc || records[0];
-  }
-
-  function getSuggestedCriteria(v, geneAcmg) {
-    var all = [];
-
-    splitCriteria(v.acmg_criteria).forEach(function (x) {
-      all.push({ token: x, source: 'GeneBe variant acmg_criteria' });
-    });
-
-    if (geneAcmg && geneAcmg.criteria) {
-      splitCriteria(geneAcmg.criteria).forEach(function (x) {
-        all.push({ token: x, source: 'GeneBe selected acmg_by_gene.criteria' });
-      });
-    }
-
-    var byCode = {};
-
-    all.forEach(function (item) {
-      var parsed = parseCriterionToken(item.token);
-      if (!parsed) return;
-
-      if (!byCode[parsed.code]) {
-        byCode[parsed.code] = {
-          code: parsed.code,
-          suggested_strength: parsed.suggested_strength,
-          source_tokens: [],
-          sources: []
-        };
-      }
-
-      if (parsed.suggested_strength) {
-        byCode[parsed.code].suggested_strength = parsed.suggested_strength;
-      }
-
-      byCode[parsed.code].source_tokens.push(item.token);
-      byCode[parsed.code].sources.push(item.source);
-    });
-
-    return byCode;
-  }
-
-  function criterionNotation(code, defaultStrength, appliedStrength) {
-    if (!appliedStrength || appliedStrength === defaultStrength) return code;
-    return code + '_' + STRENGTH_SUFFIX[appliedStrength];
-  }
-
-  function criterionPoints(group, status, strength) {
-    if (status !== 'accepted') return 0;
-    return POINTS[group] && POINTS[group][strength] ? POINTS[group][strength] : 0;
-  }
-
-  function rowStateFor(status) {
-    if (status === 'accepted') return 'complete';
-    if (status === 'rejected' || status === 'not_applicable') return 'noevidence';
-    if (status === 'needs_second_review') return 'incomplete';
-    return 'untouched';
-  }
-
-  function compactEvidence(v, queryParams) {
-    var best = getBestConsequence(v);
-    var geneAcmg = getGeneBeAcmgRecord(v, best);
-
-    return {
-      source: 'GeneBe public API via Switzerland Omics proxy',
-      query: {
-        chr: queryParams.chr,
-        pos: queryParams.pos,
-        ref: queryParams.ref,
-        alt: queryParams.alt,
-        genome: queryParams.genome
-      },
-      selected_transcript_or_consequence: best,
-      selected_acmg_by_gene: geneAcmg,
-      variant_identity: {
-        chr: firstDefinedNullable(v.chr, queryParams.chr),
-        pos: firstDefinedNullable(v.pos, queryParams.pos),
-        ref: firstDefinedNullable(v.ref, queryParams.ref),
-        alt: firstDefinedNullable(v.alt, queryParams.alt),
-        gene_symbol: firstDefinedNullable(v.gene_symbol, best.gene_symbol, geneAcmg && geneAcmg.gene_symbol),
-        hgnc_id: firstDefinedNullable(v.hgnc_id, best.gene_hgnc_id, geneAcmg && geneAcmg.hgnc_id),
-        transcript: firstDefinedNullable(v.transcript, best.transcript, best.feature, geneAcmg && geneAcmg.transcript),
-        hgvs_c: firstDefinedNullable(v.hgvs_c, best.hgvs_c, geneAcmg && geneAcmg.hgvs_c),
-        hgvs_p: firstDefinedNullable(v.hgvs_p, best.hgvs_p, geneAcmg && geneAcmg.hgvs_p),
-        consequence_terms: firstDefinedNullable(v.effect, best.consequences, geneAcmg && geneAcmg.effects)
-      },
-      genebe_acmg: {
-        acmg_score: firstDefinedNullable(v.acmg_score, geneAcmg && geneAcmg.score),
-        acmg_classification: firstDefinedNullable(v.acmg_classification, geneAcmg && geneAcmg.verdict),
-        acmg_criteria: firstDefinedNullable(v.acmg_criteria, geneAcmg && geneAcmg.criteria),
-        acmg_by_gene: Array.isArray(v.acmg_by_gene) ? v.acmg_by_gene : []
-      },
-      population: {
-        frequency_reference_population: firstDefinedNullable(v.frequency_reference_population),
-        allele_count_reference_population: firstDefinedNullable(v.allele_count_reference_population),
-        hom_count_reference_population: firstDefinedNullable(v.hom_count_reference_population),
-        gnomad_exomes_af: firstDefinedNullable(v.gnomad_exomes_af),
-        gnomad_genomes_af: firstDefinedNullable(v.gnomad_genomes_af),
-        gnomad_exomes_ac: firstDefinedNullable(v.gnomad_exomes_ac),
-        gnomad_genomes_ac: firstDefinedNullable(v.gnomad_genomes_ac),
-        gnomad_exomes_an: firstDefinedNullable(v.gnomad_exomes_an),
-        gnomad_genomes_an: firstDefinedNullable(v.gnomad_genomes_an),
-        gnomad_exomes_homalt: firstDefinedNullable(v.gnomad_exomes_homalt),
-        gnomad_genomes_homalt: firstDefinedNullable(v.gnomad_genomes_homalt)
-      },
-      computational: {
-        computational_prediction_selected: firstDefinedNullable(v.computational_prediction_selected),
-        computational_score_selected: firstDefinedNullable(v.computational_score_selected),
-        computational_source_selected: firstDefinedNullable(v.computational_source_selected),
-        splice_prediction_selected: firstDefinedNullable(v.splice_prediction_selected),
-        splice_score_selected: firstDefinedNullable(v.splice_score_selected),
-        splice_source_selected: firstDefinedNullable(v.splice_source_selected),
-        revel_score: firstDefinedNullable(v.revel_score),
-        revel_prediction: firstDefinedNullable(v.revel_prediction),
-        alphamissense_score: firstDefinedNullable(v.alphamissense_score),
-        alphamissense_prediction: firstDefinedNullable(v.alphamissense_prediction),
-        cadd_raw_score: firstDefinedNullable(v.cadd_raw_score),
-        cadd_phred: firstDefinedNullable(v.cadd_phred),
-        bayesdelnoaf_score: firstDefinedNullable(v.bayesdelnoaf_score),
-        bayesdelnoaf_prediction: firstDefinedNullable(v.bayesdelnoaf_prediction),
-        phylop100way_score: firstDefinedNullable(v.phylop100way_score),
-        phylop100way_prediction: firstDefinedNullable(v.phylop100way_prediction),
-        spliceai_max_score: firstDefinedNullable(v.spliceai_max_score),
-        spliceai_max_prediction: firstDefinedNullable(v.spliceai_max_prediction)
-      },
-      clinvar: {
-        disease: firstDefinedNullable(v.clinvar_disease),
-        classification: firstDefinedNullable(v.clinvar_classification),
-        review_status: firstDefinedNullable(v.clinvar_review_status),
-        submissions_summary: firstDefinedNullable(v.clinvar_submissions_summary)
-      },
-      consequences_count: Array.isArray(v.consequences) ? v.consequences.length : 0
-    };
-  }
-
-  function buildCriterionRows(v, importMode) {
-    var best = getBestConsequence(v);
-    var geneAcmg = getGeneBeAcmgRecord(v, best);
-    var suggestedByCode = getSuggestedCriteria(v, geneAcmg);
-
-    return CRITERIA.map(function (c) {
-      var group = c[0];
-      var code = c[1];
-      var defaultStrength = c[2];
-      var suggestion = suggestedByCode[code] || null;
-
-      var status = 'not_assessed';
-      var evidenceStatus = 'not_assessed';
-      var caveatStatus = 'not_assessed';
-      var appliedStrength = defaultStrength;
-      var notes = '';
-
-      if (suggestion) {
-        var accepted = importMode === 'accepted';
-
-        status = accepted ? 'accepted' : 'needs_second_review';
-        evidenceStatus = accepted ? 'present' : 'requires_second_review';
-        caveatStatus = accepted ? 'not_applicable' : 'not_assessed';
-
-        if (suggestion.suggested_strength) {
-          appliedStrength = suggestion.suggested_strength;
-        }
-
-        notes =
-          'GeneBe suggested ' + code + ' as ACMG evidence. ' +
-          'Source token(s): ' + suggestion.source_tokens.join(', ') + '. ' +
-          'GeneBe classification: ' + String(firstDefined(v.acmg_classification, geneAcmg && geneAcmg.verdict, 'not provided')) + '. ' +
-          'GeneBe score: ' + String(firstDefined(v.acmg_score, geneAcmg && geneAcmg.score, 'not provided')) + '. ' +
-          'Imported from GeneBe for ACMG Validator pre-review.';
-      }
-
-      var notation = criterionNotation(code, defaultStrength, appliedStrength);
-
-      return {
-        criterion: code,
-        notation: notation,
-        group: group,
-        status: status,
-        default_strength: defaultStrength,
-        applied_strength: appliedStrength,
-        strength_modified: appliedStrength !== defaultStrength,
-        points: criterionPoints(group, status, appliedStrength),
-        evidence_status: evidenceStatus,
-        caveat_status: caveatStatus,
-        row_state: rowStateFor(status),
-        notes: notes
-      };
-    });
-  }
-
-  function buildVariantObject(payload, queryParams, importMode) {
-    var v = payload && payload.variants && payload.variants[0] ? payload.variants[0] : {};
-    var best = getBestConsequence(v);
-    var geneAcmg = getGeneBeAcmgRecord(v, best);
-    var evidence = compactEvidence(v, queryParams);
-    var criteria = buildCriterionRows(v, importMode);
-
-    var gene = firstDefined(v.gene_symbol, best.gene_symbol, geneAcmg && geneAcmg.gene_symbol, '');
-    var transcript = firstDefined(v.transcript, best.transcript, best.feature, geneAcmg && geneAcmg.transcript, '');
-    var hgvsC = firstDefined(v.hgvs_c, best.hgvs_c, geneAcmg && geneAcmg.hgvs_c, '');
-    var hgvsP = firstDefined(v.hgvs_p, best.hgvs_p, geneAcmg && geneAcmg.hgvs_p, '');
-
-    var chr = firstDefined(v.chr, queryParams.chr, '');
-    var pos = firstDefined(v.pos, queryParams.pos, '');
-    var ref = firstDefined(v.ref, queryParams.ref, '');
-    var alt = firstDefined(v.alt, queryParams.alt, '');
-    var coordinate = chr && pos ? 'chr' + chr + ':' + pos + ':' + ref + '>' + alt : '';
-
-    var disease = firstDefined(v.clinvar_disease, '');
-    var inheritance = firstDefined(geneAcmg && geneAcmg.inheritance_mode, '');
-
-    var pathogenicPoints = 0;
-    var benignPoints = 0;
-
-    criteria.forEach(function (row) {
-      if (row.points > 0) pathogenicPoints += row.points;
-      if (row.points < 0) benignPoints += row.points;
-    });
-
-    return {
-      schema: 'switzerlandomics.acmg-validator.v1',
-      generated_at: new Date().toISOString(),
-      guideline_basis: 'ACMG/AMP + Tavtigian point system',
-      review: {
-        reviewer: '',
-        institution: '',
-        date: new Date().toISOString().slice(0, 10),
-        signoff: false
-      },
-      variant: {
-        gene: gene,
-        transcript: transcript,
-        hgvs_c: hgvsC,
-        hgvs_p: hgvsP,
-        genome_build: genomeToValidatorBuild(queryParams.genome),
-        coordinate: coordinate,
-        ref: ref,
-        alt: alt,
-        variant_type: inferVariantType(ref, alt),
-        zygosity: ''
-      },
-      case_context: {
-        disease: disease,
-        inheritance: inheritance,
-        phenotype: firstDefined(v.phenotype_combined, '')
-      },
-      criteria: criteria,
-      validation: {
-        pathogenic_points: pathogenicPoints,
-        benign_points: benignPoints,
-        total_points: pathogenicPoints + benignPoints,
-        point_based_category: '',
-        entered_classification: importMode === 'accepted'
-          ? normaliseClassification(firstDefined(v.acmg_classification, geneAcmg && geneAcmg.verdict))
-          : '',
-        verdict: '',
-        conflicts: [],
-        warnings: [],
-        missing_evidence: [],
-        external_genebe_classification: normaliseClassification(firstDefined(v.acmg_classification, geneAcmg && geneAcmg.verdict)),
-        external_genebe_score: firstDefinedNullable(v.acmg_score, geneAcmg && geneAcmg.score),
-        external_genebe_criteria: Object.keys(getSuggestedCriteria(v, geneAcmg)),
-        import_mode: importMode
-      },
-      evidence_summary: {
-        source_basis: 'GeneBe public API result converted into ACMG Validator pre-review JSON.',
-        genebe_summary: evidence
-      },
-      external_evidence: {
-        genebe_summary: evidence,
-        genebe_raw: payload
-      }
-    };
-  }
-
-  function buildValidatorJson(payload, queryParams, importMode, options) {
-    options = options || {};
-    var proxyBaseUrl = options.proxyBaseUrl || defaultProxyBaseUrl;
-    var variantObj = buildVariantObject(payload, queryParams, importMode);
-    var variant = variantObj.variant;
-    var context = variantObj.case_context;
-
-    return {
-      schema: 'switzerlandomics.acmg-validator.case.v1',
-      generated_at: new Date().toISOString(),
-      review: {
-        reviewer: '',
-        institution: '',
-        date: new Date().toISOString().slice(0, 10),
-        signoff: false
-      },
-      case_context: {
-        disease: context.disease || '',
-        inheritance: context.inheritance || '',
-        phenotype: context.phenotype || ''
-      },
-      provenance: {
-        values: {},
-        extra: {
-          external_annotation_source: 'GeneBe public API',
-          external_annotation_request_url: buildUrl(proxyBaseUrl, queryParams),
-          external_annotation_import_mode: importMode,
-          external_annotation_converter: 'assets/genebe_api/genebe_to_acmg_validator.js',
-          external_annotation_converter_schema: 'switzerlandomics.genebe-to-acmg-validator.v1'
-        }
-      },
-      genotype_review: {
-        gene: variant.gene || '',
-        disease: context.disease || '',
-        inheritance: context.inheritance || '',
-        phase: '',
-        combination: '',
-        phase_evidence: '',
-        conclusion: '',
-        phenotype_fit: '',
-        uncertainty: ''
-      },
-      variants: [variantObj]
-    };
-  }
-
-  function buildSummary(payload, validatorObj, params, importMode) {
-    var v = payload && payload.variants && payload.variants[0] ? payload.variants[0] : {};
-    var variantObj = validatorObj.variants[0];
-    var suggested = variantObj.validation.external_genebe_criteria || [];
-    var touched = variantObj.criteria.filter(function (row) {
-      return row.status !== 'not_assessed';
-    });
-
-    return {
-      query: params,
-      import_mode: importMode,
-      variant: variantObj.variant,
-      gene: variantObj.variant.gene,
-      transcript: variantObj.variant.transcript,
-      hgvs_c: variantObj.variant.hgvs_c,
-      hgvs_p: variantObj.variant.hgvs_p,
-      genebe_classification: firstDefinedNullable(v.acmg_classification),
-      genebe_score: firstDefinedNullable(v.acmg_score),
-      genebe_criteria: suggested,
-      criteria_written_to_acmg_validator: touched.map(function (row) {
-        return {
-          criterion: row.criterion,
-          notation: row.notation,
-          status: row.status,
-          evidence_status: row.evidence_status,
-          applied_strength: row.applied_strength,
-          points: row.points
-        };
-      }),
-      raw_variant_count: payload && Array.isArray(payload.variants) ? payload.variants.length : 0,
-      raw_consequence_count: v && Array.isArray(v.consequences) ? v.consequences.length : 0
-    };
-  }
-
-  function fileStem(params) {
-    return [
-      'genebe',
-      params.chr || 'chr',
-      params.pos || 'pos',
-      params.ref || 'ref',
-      params.alt || 'del',
-      params.genome || 'genome'
-    ].join('_').replace(/[^a-z0-9._-]+/gi, '_');
-  }
-
-  async function fetchJson(params, options) {
-    options = options || {};
-    var url = buildUrl(options.proxyBaseUrl || defaultProxyBaseUrl, params);
-    var response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
-    var text = await response.text();
-    var payload;
-
-    try {
-      payload = JSON.parse(text);
-    } catch (err) {
-      var parseError = new Error('GeneBe response was not valid JSON.');
-      parseError.response = response;
-      parseError.text = text;
-      throw parseError;
-    }
-
-    if (!response.ok) {
-      var httpError = new Error('GeneBe request failed with HTTP ' + response.status + '.');
-      httpError.response = response;
-      httpError.payload = payload;
-      throw httpError;
-    }
-
-    return {
-      url: url,
-      response: response,
-      payload: payload,
-      text: text
-    };
-  }
-
-  async function fetchAndConvert(params, importMode, options) {
-    var result = await fetchJson(params, options);
-
-    if (!result.payload.variants || !result.payload.variants.length) {
-      var emptyError = new Error('No GeneBe variant annotation returned.');
-      emptyError.payload = result.payload;
-      emptyError.url = result.url;
-      throw emptyError;
-    }
-
-    var validatorJson = buildValidatorJson(result.payload, params, importMode, options);
-    var summary = buildSummary(result.payload, validatorJson, params, importMode);
-
-    return {
-      url: result.url,
-      response: result.response,
-      payload: result.payload,
-      validatorJson: validatorJson,
-      summary: summary,
-      rawFilename: 'raw_' + fileStem(params) + '.json',
-      validatorFilename: 'acmg_validator_' + fileStem(params) + '.json'
-    };
-  }
-
-  root.SwitzerlandOmicsGeneBe = {
-    defaultProxyBaseUrl: defaultProxyBaseUrl,
-    criteria: CRITERIA.slice(),
-    cleanChr: cleanChr,
-    cleanAllele: cleanAllele,
-    buildUrl: buildUrl,
-    fileStem: fileStem,
-    fetchJson: fetchJson,
-    fetchAndConvert: fetchAndConvert,
-    buildValidatorJson: buildValidatorJson,
-    buildSummary: buildSummary,
-    genomeToValidatorBuild: genomeToValidatorBuild,
-    validatorBuildToGenome: validatorBuildToGenome,
-    inferVariantType: inferVariantType
-  };
-})(window);
-
-</script>
 
 {% raw %}
 <script>
@@ -1681,8 +870,6 @@ permalink: /technologies/acmg-validator/
   ];
 
   // state
-  var ACMG_VALIDATOR_VERSION = 'v1.0.0';
-  var ACMG_VALIDATOR_SOFTWARE = 'ACMG Validator by Switzerland Omics';
   var meta = {};
   var crit = {};
   var defByCode = {};
@@ -2007,18 +1194,18 @@ permalink: /technologies/acmg-validator/
     }
   }
 
-  function criteriaCompletenessSummary(){
+  function renderCompleteness(){
     var counts = { complete:0, noevidence:0, incomplete:0, conflict:0, untouched:0 };
     var accepted = 0;
     var contributing = [];
-
+  
     CRITERIA.forEach(function(c){
       var code = c[1];
       var s = crit[code];
       var st = rowStateOf(code);
-
+  
       counts[st]++;
-
+  
       if (s.status === 'accepted'){
         accepted++;
         contributing.push({
@@ -2029,39 +1216,24 @@ permalink: /technologies/acmg-validator/
         });
       }
     });
-
+  
     var total = CRITERIA.length;
     var addressed = total - counts.untouched;
     var flagged = counts.incomplete + counts.conflict;
-
-    return {
-      counts: counts,
-      accepted: accepted,
-      contributing: contributing,
-      total: total,
-      addressed: addressed,
-      flagged: flagged,
-      text: addressed === 0
-        ? ('No criteria addressed yet \u00b7 ' + total + ' to review')
-        : (addressed + ' of ' + total + ' criteria addressed \u00b7 ' + accepted + ' applied \u00b7 ' + flagged + ' need attention')
-    };
-  }
-
-  function renderCompleteness(){
-    var summary = criteriaCompletenessSummary();
-    var counts = summary.counts;
     var order = ['complete','noevidence','incomplete','conflict'];
-
+  
     document.getElementById('acmg-comp-bar').innerHTML = order.map(function(st){
       if (!counts[st]) return '';
-      return '<span class="acmg-comp-seg" data-state="'+st+'" style="width:'+(counts[st]/summary.total*100).toFixed(2)+'%"></span>';
+      return '<span class="acmg-comp-seg" data-state="'+st+'" style="width:'+(counts[st]/total*100).toFixed(2)+'%"></span>';
     }).join('');
-
-    document.getElementById('acmg-comp-text').textContent = summary.text;
-
+  
+    document.getElementById('acmg-comp-text').textContent = addressed === 0
+      ? ('No criteria addressed yet \u00b7 ' + total + ' to review')
+      : (addressed + ' of ' + total + ' criteria addressed \u00b7 ' + accepted + ' applied \u00b7 ' + flagged + ' need attention');
+  
     var pillBox = document.getElementById('acmg-comp-pills');
     if (pillBox){
-      pillBox.innerHTML = summary.contributing.map(function(x){
+      pillBox.innerHTML = contributing.map(function(x){
         var pts = x.points > 0 ? '+' + x.points : String(x.points);
         return '<span class="acmg-comp-pill" data-group="'+esc(x.group)+'">' +
           esc(x.notation) +
@@ -2206,71 +1378,6 @@ permalink: /technologies/acmg-validator/
       extra.value = Object.keys(provenance.extra || {}).sort().map(function(k){ return k + '\t' + provenance.extra[k]; }).join('\n');
     }
   }
-  function geneStructureReportHtml(){
-    var canvas = document.getElementById('acmg-gsv-canvas');
-    var card = document.getElementById('acmg-gsv-card');
-    if (!canvas || !canvas.width || !canvas.height || (card && card.hidden)) return '';
-    try {
-      var dataUrl = canvas.toDataURL('image/png');
-      if (!dataUrl || dataUrl === 'data:,') return '';
-      function gsvText(id){
-        var el = document.getElementById(id);
-        return el ? el.textContent.trim() : '';
-      }
-      var gene = gsvText('acmg-gsv-card-gene');
-      var loc = gsvText('acmg-gsv-card-loc');
-      var tx = document.getElementById('acmg-gsv-tx-select');
-      var txLabel = tx && tx.selectedOptions && tx.selectedOptions.length ? tx.selectedOptions[0].textContent.trim() : '';
-      var asm = gsvText('acmg-gsv-i-asm');
-      var strand = gsvText('acmg-gsv-i-str');
-      var txn = gsvText('acmg-gsv-i-txn');
-      var exn = gsvText('acmg-gsv-i-exn');
-      return '<div class="acmg-rep-block acmg-rep-gsv-block"><h3>Gene structure view</h3>'+
-        '<table class="acmg-rep-table acmg-rep-kv acmg-rep-gsv-meta"><tbody>'+
-          '<tr><td>Gene</td><td>'+esc(gene || meta.gene || '\u2014')+'</td></tr>'+
-          '<tr><td>Genomic location</td><td>'+esc(loc || meta.coordinate || '\u2014')+'</td></tr>'+
-          '<tr><td>Transcript used</td><td>'+esc(txLabel || meta.transcript || '\u2014')+'</td></tr>'+
-          '<tr><td>Assembly</td><td>'+esc(asm || meta.build || '\u2014')+'</td></tr>'+
-          '<tr><td>Strand</td><td>'+esc(strand || '\u2014')+'</td></tr>'+
-          '<tr><td>Transcripts</td><td>'+esc(txn || '\u2014')+'</td></tr>'+
-          '<tr><td>Exons</td><td>'+esc(exn || '\u2014')+'</td></tr>'+
-        '</tbody></table>'+
-        '<img class="acmg-rep-gsv-img" src="'+dataUrl+'" alt="Gene structure view for the active variant">'+
-        '<div class="acmg-rep-gsv-legend" aria-label="Gene structure legend">'+
-          '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-cds"></span>Coding exon</span>'+
-          '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-utr"></span>UTR</span>'+
-          '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-line"></span>Intron (condensed)</span>'+
-          '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-hl"></span>Variant position</span>'+
-        '</div></div>';
-    } catch (err) {
-      return '';
-    }
-  }
-
-  function reportCriteriaPillsHtml(r){
-    if (!r || !r.accepted || !r.accepted.length) return '';
-    return '<div class="acmg-rep-comp-pills">'+r.accepted.map(function(code){
-      var d = defByCode[code], s = crit[code];
-      var pts = s && s.status === 'accepted' ? (POINTS[s.group][s.strength] || 0) : 0;
-      var sign = pts > 0 ? '+' + pts : String(pts);
-      return '<span class="acmg-comp-pill" data-group="'+esc(d.group)+'"><span>'+esc(notation(code))+'</span><span class="acmg-comp-pill-points">'+esc(sign)+'</span></span>';
-    }).join('')+'</div>';
-  }
-
-  function reportScoreboardHtml(r){
-    var summary = criteriaCompletenessSummary();
-    return '<div class="acmg-rep-scoreboard">'+
-      '<div class="acmg-rep-score-cells">'+
-        '<div class="acmg-rep-score-cell"><span class="acmg-rep-score-val">'+esc(r.pathPts)+'</span><span class="acmg-rep-score-lab">Pathogenic points</span></div>'+
-        '<div class="acmg-rep-score-cell"><span class="acmg-rep-score-val">'+esc(r.benPts)+'</span><span class="acmg-rep-score-lab">Benign points</span></div>'+
-        '<div class="acmg-rep-score-cell"><span class="acmg-rep-score-val">'+esc(r.total)+'</span><span class="acmg-rep-score-lab">Total points</span></div>'+
-        '<div class="acmg-rep-score-cell"><span class="acmg-rep-score-val">'+(r.accepted.length ? esc(CLASS_LABEL[r.derived]) : '\u2014')+'</span><span class="acmg-rep-score-lab">Point-based category</span></div>'+
-        '<div class="acmg-rep-score-cell"><span class="acmg-verdict" data-tone="'+esc(r.tone)+'">'+esc(r.verdict)+'</span><span class="acmg-rep-score-lab">Validation status</span></div>'+
-      '</div>'+
-      '<div class="acmg-rep-score-completeness">'+esc(summary.text)+reportCriteriaPillsHtml(r)+'</div>'+
-    '</div>';
-  }
-
   function renderReport(r){
     saveActiveVariant();
     var body = document.getElementById('acmg-report-body');
@@ -2298,13 +1405,13 @@ permalink: /technologies/acmg-validator/
 
       var ident = '<div class="acmg-rep-block"><h3>'+variantTitle(v, idx)+' identity</h3>'+kv([
         ['Gene',meta.gene],['Transcript',meta.transcript],['cDNA',meta.hgvs_c],['Protein',meta.hgvs_p],
-        ['Genome build',meta.build],['Coordinate',meta.coordinate],['Reference allele',meta.ref],['Alternate allele',meta.alt],['Variant type',meta.variant_type],['Zygosity',meta.zygosity]
+        ['Genome build',meta.build],['Coordinate',meta.coordinate],['Variant type',meta.variant_type],['Zygosity',meta.zygosity]
       ])+'</div>';
 
       var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
       var critTable;
       if (considered.length){
-        critTable = '<table class="acmg-rep-table acmg-rep-criteria-table"><thead><tr><th>Criterion</th><th>Status</th><th>Applied strength</th><th>Points</th><th>Evidence status</th><th>Notes</th></tr></thead><tbody>'+
+        critTable = '<table class="acmg-rep-table"><thead><tr><th>Criterion</th><th>Status</th><th>Applied strength</th><th>Points</th><th>Evidence status</th><th>Notes</th></tr></thead><tbody>'+
           considered.map(function(code){
             var d = defByCode[code], s = crit[code];
             var pts = (s.status==='accepted') ? (POINTS[s.group][s.strength]||0) : 0;
@@ -2333,7 +1440,6 @@ permalink: /technologies/acmg-validator/
       crit = oldCrit;
 
       return ident +
-        (idx === activeVariant ? geneStructureReportHtml() : '') +
         '<div class="acmg-rep-block"><h3>'+variantTitle(v, idx)+' criteria reviewed ('+considered.length+')</h3>'+critTable+'</div>' +
         score +
         listBlock(variantTitle(v, idx)+' conflicts', vr.conflicts, 'bad') +
@@ -2362,7 +1468,6 @@ permalink: /technologies/acmg-validator/
         '<span class="acmg-verdict" data-tone="'+tone+'">'+esc(verdict)+'</span>'+
         '<div style="font-size:.85rem;color:var(--acmg-steel);margin-top:8px;line-height:1.5">'+
           variants.length+' variants reviewed in one case report<br>'+
-          'Software: '+esc(ACMG_VALIDATOR_SOFTWARE+' '+ACMG_VALIDATOR_VERSION)+'<br>'+
           'Case: '+esc((first.disease || genotype.disease || '\u2014'))+' \u00b7 Inheritance: '+esc((first.inheritance || genotype.inheritance || '\u2014'))+'<br>'+
           'Reviewer: '+esc(first.reviewer||'\u2014')+' \u00b7 '+esc(first.institution||'\u2014')+' \u00b7 '+esc(first.date||'\u2014')+'<br>'+
           'Sign-off: '+(variants.every(function(v){ return !!v.meta.signoff; })?'completed for all variants':'not completed for all variants')+
@@ -2401,7 +1506,7 @@ permalink: /technologies/acmg-validator/
       var limitations = '<div class="acmg-rep-block"><h3>Limitations</h3>'+
         '<p class="acmg-rep-empty" style="line-height:1.55">This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not annotate variants, does not assert clinical validity, and is not a substitute for expert clinical judgement or a regulated diagnostic report.</p></div>';
 
-      body.innerHTML = stamp + reportScoreboardHtml(r) + ctx + provenanceBlockHtml() + blocks + genotypeBlock + overall +
+      body.innerHTML = stamp + ctx + provenanceBlockHtml() + blocks + genotypeBlock + overall +
         listBlock('Overall conflicts', allConflicts, 'bad') +
         listBlock('Overall warnings', allWarnings, 'warn') +
         limitations;
@@ -2414,7 +1519,6 @@ permalink: /technologies/acmg-validator/
       '<span class="acmg-verdict" data-tone="'+r.tone+'">'+esc(r.verdict)+'</span>'+
       '<div style="font-size:.85rem;color:var(--acmg-steel);margin-top:8px;line-height:1.5">'+
         esc(variantLine())+'<br>'+
-        'Software: '+esc(ACMG_VALIDATOR_SOFTWARE+' '+ACMG_VALIDATOR_VERSION)+'<br>'+
         'Entered classification: '+(r.entered?esc(CLASS_LABEL[r.entered]):'\u2014')+
         ' \u00b7 Point-based category: '+(r.accepted.length?esc(CLASS_LABEL[r.derived]):'\u2014')+
         ' ('+r.total+' pts)<br>'+
@@ -2424,7 +1528,7 @@ permalink: /technologies/acmg-validator/
 
     var ident = '<div class="acmg-rep-block"><h3>Variant identity</h3>'+kv([
       ['Gene',meta.gene],['Transcript',meta.transcript],['cDNA',meta.hgvs_c],['Protein',meta.hgvs_p],
-      ['Genome build',meta.build],['Coordinate',meta.coordinate],['Reference allele',meta.ref],['Alternate allele',meta.alt],['Variant type',meta.variant_type],['Zygosity',meta.zygosity]
+      ['Genome build',meta.build],['Coordinate',meta.coordinate],['Variant type',meta.variant_type],['Zygosity',meta.zygosity]
     ])+'</div>';
     var ctx = '<div class="acmg-rep-block"><h3>Case context</h3>'+kv([
       ['Disease',meta.disease],['Inheritance',meta.inheritance],['Phenotype / HPO',meta.phenotype],['Guideline basis',meta.guideline]
@@ -2433,7 +1537,7 @@ permalink: /technologies/acmg-validator/
     var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
     var critTable;
     if (considered.length){
-      critTable = '<table class="acmg-rep-table acmg-rep-criteria-table"><thead><tr><th>Criterion</th><th>Status</th><th>Applied strength</th><th>Points</th><th>Evidence status</th><th>Notes</th></tr></thead><tbody>'+
+      critTable = '<table class="acmg-rep-table"><thead><tr><th>Criterion</th><th>Status</th><th>Applied strength</th><th>Points</th><th>Evidence status</th><th>Notes</th></tr></thead><tbody>'+
         considered.map(function(code){
           var d = defByCode[code], s = crit[code];
           var pts = (s.status==='accepted') ? (POINTS[s.group][s.strength]||0) : 0;
@@ -2462,7 +1566,7 @@ permalink: /technologies/acmg-validator/
     var limitations = '<div class="acmg-rep-block"><h3>Limitations</h3>'+
       '<p class="acmg-rep-empty" style="line-height:1.55">This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not annotate the variant, does not assert clinical validity, and is not a substitute for expert clinical judgement or a regulated diagnostic report.</p></div>';
 
-    body.innerHTML = stamp + reportScoreboardHtml(r) + ident + geneStructureReportHtml() + ctx + provenanceBlockHtml() + critBlock + scoreBlock +
+    body.innerHTML = stamp + ident + ctx + provenanceBlockHtml() + critBlock + scoreBlock +
       listBlock('Strength modifications', r.modifications) +
       listBlock('Conflicts', r.conflicts, 'bad') +
       listBlock('Warnings', r.warnings, 'warn') +
@@ -2496,7 +1600,7 @@ permalink: /technologies/acmg-validator/
         });
         var out = {
           variant_index: idx + 1,
-          variant:{ gene:meta.gene||'', transcript:meta.transcript||'', hgvs_c:meta.hgvs_c||'', hgvs_p:meta.hgvs_p||'', genome_build:meta.build||'', coordinate:meta.coordinate||'', ref:meta.ref||'', alt:meta.alt||'', variant_type:meta.variant_type||'', zygosity:meta.zygosity||'' },
+          variant:{ gene:meta.gene||'', transcript:meta.transcript||'', hgvs_c:meta.hgvs_c||'', hgvs_p:meta.hgvs_p||'', genome_build:meta.build||'', coordinate:meta.coordinate||'', variant_type:meta.variant_type||'', zygosity:meta.zygosity||'' },
           case_context:{ disease:meta.disease||'', inheritance:meta.inheritance||'', phenotype:meta.phenotype||'' },
           criteria: critObjs,
           validation:{ pathogenic_points:vr.pathPts, benign_points:vr.benPts, total_points:vr.total, point_based_category:vr.accepted.length?vr.derived:null, entered_classification:vr.entered||null, verdict:vr.verdict, conflicts:vr.conflicts, warnings:vr.warnings, missing_evidence:vr.missing }
@@ -2578,7 +1682,7 @@ permalink: /technologies/acmg-validator/
       generated_at: new Date().toISOString(),
       guideline_basis: meta.guideline || '',
       review:{ reviewer:meta.reviewer||'', institution:meta.institution||'', date:meta.date||'', signoff:!!meta.signoff },
-      variant:{ gene:meta.gene||'', transcript:meta.transcript||'', hgvs_c:meta.hgvs_c||'', hgvs_p:meta.hgvs_p||'', genome_build:meta.build||'', coordinate:meta.coordinate||'', ref:meta.ref||'', alt:meta.alt||'', variant_type:meta.variant_type||'', zygosity:meta.zygosity||'' },
+      variant:{ gene:meta.gene||'', transcript:meta.transcript||'', hgvs_c:meta.hgvs_c||'', hgvs_p:meta.hgvs_p||'', genome_build:meta.build||'', coordinate:meta.coordinate||'', variant_type:meta.variant_type||'', zygosity:meta.zygosity||'' },
       case_context:{ disease:meta.disease||'', inheritance:meta.inheritance||'', phenotype:meta.phenotype||'' },
       provenance:provenancePayload(),
       criteria: critObjs,
@@ -2635,15 +1739,13 @@ permalink: /technologies/acmg-validator/
   function buildReportHtml(){
     var title = 'ACMG evidence review';
     if (meta.gene || meta.transcript || meta.hgvs_c) title += ' \u2014 ' + variantLine();
-    var footer = '<footer class="acmg-footer-text">Generated with ACMG Validator, a tool from '+
+    var footer = '<footer class="acmg-footer-text">Generated with ACMG Validator, a free tool created by '+
       '<a href="https://switzerlandomics.ch">Switzerland Omics</a>. The validator checks internal consistency and process completion only; '+
       'it does not assert clinical validity, does not annotate variants, and does not constitute medical advice. '+
       'Switzerland Omics\u00ae is a registered trade mark. Classification logic follows Richards et al. 2015 (ACMG/AMP) and Tavtigian et al. 2020.</footer>';
     var extra = 'body{margin:0;padding:28px;background:#fff;font-family:ui-sans-serif,system-ui,sans-serif;}'+
       '.acmg-shell{max-width:1000px;margin:0 auto;}'+
-      '.acmg-report{border-top:none!important;margin:0!important;padding:0!important;}'+
-      '.acmg-rep-block{break-inside:avoid;}'+
-      '.acmg-rep-scoreboard,.acmg-rep-stamp{break-inside:avoid;}';
+      '.acmg-report{border-top:none!important;margin:0!important;padding:0!important;}';
     return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+
       esc(title)+'</title><style>'+pageCss()+'\n'+extra+'</style></head><body><main class="acmg-app"><section class="acmg-shell">'+
       '<div class="acmg-report">'+lastReportBody+'</div>'+footer+'</section></main></body></html>';
@@ -2657,27 +1759,17 @@ permalink: /technologies/acmg-validator/
     return label;
   }
 
-  function renderVariantButtons(includeLabels){
-    ensureVariants();
-    var html = '';
-    variants.forEach(function(v, i){
-      html += '<button type="button" class="acmg-case-tab'+(i===activeVariant?' acmg-active':'')+'" data-variant="'+i+'">Variant '+(i+1)+(includeLabels ? '<span class="acmg-tab-sub"> · '+esc(shortVariantLabel(v,i))+'</span>' : '')+'</button>';
-    });
-    return html;
-  }
-
   function renderTabs(){
     ensureVariants();
     var row = document.getElementById('acmg-case-tabs-row');
-    var inlineRow = document.getElementById('acmg-inline-variant-tabs');
-    if (row){
-      var html = '<button type="button" class="acmg-case-tab" data-tab="case">Case context</button>';
-      html += '<button type="button" class="acmg-case-tab" data-tab="genotype">Genotype review</button>';
-      html += '<button type="button" class="acmg-case-tab" data-tab="report">Final report</button>';
-      html += renderVariantButtons(true);
-      row.innerHTML = html;
-    }
-    if (inlineRow) inlineRow.innerHTML = renderVariantButtons(false);
+    if (!row) return;
+    var html = '<button type="button" class="acmg-case-tab" data-tab="case">Case context</button>';
+    variants.forEach(function(v, i){
+      html += '<button type="button" class="acmg-case-tab'+(i===activeVariant?' acmg-active':'')+'" data-variant="'+i+'">Variant '+(i+1)+'<span class="acmg-tab-sub"> · '+esc(shortVariantLabel(v,i))+'</span></button>';
+    });
+    html += '<button type="button" class="acmg-case-tab" data-tab="genotype">Genotype review</button>';
+    html += '<button type="button" class="acmg-case-tab" data-tab="report">Final report</button>';
+    row.innerHTML = html;
   }
 
   function fillGenotypeFields(){
@@ -2820,8 +1912,6 @@ permalink: /technologies/acmg-validator/
       hgvs_p:v.hgvs_p || '',
       build:v.genome_build || v.build || '',
       coordinate:v.coordinate || '',
-      ref:v.ref || '',
-      alt:v.alt || '',
       variant_type:v.variant_type || '',
       zygosity:v.zygosity || '',
       disease:c.disease || '',
@@ -3098,17 +2188,6 @@ permalink: /technologies/acmg-validator/
     }
   });
 
-  var inlineVariantTabs = document.getElementById('acmg-inline-variant-tabs');
-  if (inlineVariantTabs){
-    inlineVariantTabs.addEventListener('click', function(e){
-      var t = e.target.closest('button');
-      if (!t || !t.hasAttribute('data-variant')) return;
-      saveActiveVariant();
-      loadVariantState(parseInt(t.getAttribute('data-variant'), 10));
-      scrollToSectionWithScoreboardOffset(document.querySelector('.acmg-editor'));
-    });
-  }
-
   document.getElementById('acmg-add-variant').addEventListener('click', function(){
     ensureVariants();
     if (variants.length >= MAX_CASE_VARIANTS){
@@ -3176,7 +2255,7 @@ permalink: /technologies/acmg-validator/
       genotype_review:{ gene:'', disease:'', inheritance:'', phase:'', combination:'', phase_evidence:'', conclusion:'', phenotype_fit:'', uncertainty:'' },
       variants:[{
         schema:'switzerlandomics.acmg-validator.v1',
-        variant:{ gene:'', transcript:'', hgvs_c:'', hgvs_p:'', genome_build:'GRCh38', coordinate:'', ref:'', alt:'', variant_type:'', zygosity:'' },
+        variant:{ gene:'', transcript:'', hgvs_c:'', hgvs_p:'', genome_build:'GRCh38', coordinate:'', variant_type:'', zygosity:'' },
         case_context:{ disease:'', inheritance:'', phenotype:'' },
         criteria:CRITERIA.map(function(c){
           return {
@@ -3211,19 +2290,8 @@ permalink: /technologies/acmg-validator/
     var d = meta.date || new Date().toISOString().slice(0,10);
     return 'acmg_' + g + '_' + d;
   }
-  function refreshReportForExport(){
-    saveActiveVariant();
-    renderReport(compute());
-  }
-
-  document.getElementById('acmg-print').addEventListener('click', function(){
-    refreshReportForExport();
-    window.print();
-  });
-  document.getElementById('acmg-html').addEventListener('click', function(){
-    refreshReportForExport();
-    download(buildReportHtml(), stem()+'.html', 'text/html');
-  });
+  document.getElementById('acmg-print').addEventListener('click', function(){ window.print(); });
+  document.getElementById('acmg-html').addEventListener('click', function(){ download(buildReportHtml(), stem()+'.html', 'text/html'); });
   document.getElementById('acmg-json').addEventListener('click', function(){ download(lastJson, stem()+'.json', 'application/json'); });
   document.getElementById('acmg-md').addEventListener('click', function(){ download(lastMd, stem()+'.md', 'text/markdown'); });
   var templateBtn = document.getElementById('acmg-download-json-template');
@@ -3238,235 +2306,6 @@ permalink: /technologies/acmg-validator/
       download(JSON.stringify(EXAMPLE_ACMG_JSON, null, 2), 'acmg_validator_three_completed_examples_with_metadata.json', 'application/json');
     });
   }
-
-  function bindGeneBeLookup(){
-    var genebe = window.SwitzerlandOmicsGeneBe;
-    var form = document.getElementById('acmg-genebe-form');
-    var statusBox = document.getElementById('acmg-genebe-status');
-    if (!form) return;
-    if (!genebe){
-      if (statusBox){
-        statusBox.textContent = 'Evidence lookup is unavailable because the conversion helper did not load.';
-        statusBox.classList.add('acmg-genebe-error');
-      }
-      return;
-    }
-
-    statusBox = document.getElementById('acmg-genebe-status');
-    var summaryBox = document.getElementById('acmg-genebe-summary');
-    var exampleBrca1Btn = document.getElementById('acmg-genebe-example-brca1');
-    var exampleCftrBtn = document.getElementById('acmg-genebe-example-cftr');
-    var exampleBrafBtn = document.getElementById('acmg-genebe-example-braf');
-    var clearLookupBtn = document.getElementById('acmg-genebe-clear');
-    var useContextBtn = document.getElementById('acmg-genebe-use-context');
-    var downloadValidatorBtn = document.getElementById('acmg-genebe-download-validator');
-    var downloadRawBtn = document.getElementById('acmg-genebe-download-raw');
-
-    var lastValidatorJson = '';
-    var lastRawJson = '';
-    var lastValidatorFilename = 'acmg_validator_genebe.json';
-    var lastRawFilename = 'genebe_raw.json';
-
-    function field(id){ return document.getElementById(id); }
-    function value(id){ var x = field(id); return x ? String(x.value || '').trim() : ''; }
-    function setValue(id, val){ var x = field(id); if (x) x.value = val === undefined || val === null ? '' : val; }
-
-    function setStatus(message, isError, isSuccess){
-      if (!statusBox) return;
-      statusBox.classList.toggle('acmg-genebe-error', !!isError);
-      statusBox.classList.toggle('acmg-genebe-success', !!isSuccess);
-      if (isSuccess){
-        statusBox.innerHTML = '<span class="acmg-legend-dot" data-state="complete">✓</span><span>' + esc(message) + '</span>';
-      } else {
-        statusBox.textContent = message;
-      }
-    }
-
-    function setDownloadButtons(enabled){
-      if (downloadValidatorBtn) downloadValidatorBtn.disabled = !enabled;
-      if (downloadRawBtn) downloadRawBtn.disabled = !enabled;
-    }
-
-    function parseCoordinate(coordinate){
-      var text = String(coordinate || '').trim();
-      var match = text.match(/^(?:chr)?([^:\s]+)[:\s-]+(\d+)(?::([ACGTNacgtn]+)>([ACGTNacgtn]+)|[:\s]+([ACGTNacgtn]+)[:\s]+([ACGTNacgtn]+))?/);
-      if (!match) return {};
-      return {
-        chr: match[1] || '',
-        pos: match[2] || '',
-        ref: (match[3] || match[5] || '').toUpperCase(),
-        alt: (match[4] || match[6] || '').toUpperCase()
-      };
-    }
-
-    function inferGenome(build){
-      return genebe.validatorBuildToGenome ? genebe.validatorBuildToGenome(build) : (build === 'GRCh37' ? 'hg19' : 'hg38');
-    }
-
-    function currentReviewHasWork(){
-      if (variants.length > 1) return true;
-      var hasMeta = Object.keys(meta || {}).some(function(key){
-        var val = meta[key];
-        return val !== undefined && val !== null && val !== '' && val !== false;
-      });
-      if (hasMeta) return true;
-      var hasCriteria = Object.keys(crit || {}).some(function(code){
-        var row = crit[code] || {};
-        return row.status || row.evidence_status || row.caveat_status || row.notes || Object.keys(row.caveats || {}).length;
-      });
-      if (hasCriteria) return true;
-      return Object.keys(genotype || {}).some(function(key){
-        var val = genotype[key];
-        return val !== undefined && val !== null && val !== '';
-      });
-    }
-
-    function loadLookupExample(example){
-      setValue('acmg-genebe-chr', example.chr || '');
-      setValue('acmg-genebe-pos', example.pos || '');
-      setValue('acmg-genebe-ref', example.ref || '');
-      setValue('acmg-genebe-alt', example.alt || '');
-      setValue('acmg-genebe-genome', example.genome || 'hg38');
-      setStatus(example.message || 'Example loaded. Search to fetch and import evidence.');
-    }
-
-    if (exampleBrca1Btn){
-      exampleBrca1Btn.addEventListener('click', function(){
-        loadLookupExample({
-          chr: '17',
-          pos: '43124028',
-          ref: 'AG',
-          alt: '',
-          genome: 'hg38',
-          message: 'BRCA1 c.68_69delAG example loaded. Search to fetch and import evidence.'
-        });
-      });
-    }
-
-    if (exampleCftrBtn){
-      exampleCftrBtn.addEventListener('click', function(){
-        loadLookupExample({
-          chr: '7',
-          pos: '117559592',
-          ref: 'CTT',
-          alt: '',
-          genome: 'hg38',
-          message: 'CFTR c.1521_1523delCTT example loaded. Search to fetch and import evidence.'
-        });
-      });
-    }
-
-    if (exampleBrafBtn){
-      exampleBrafBtn.addEventListener('click', function(){
-        loadLookupExample({
-          chr: '7',
-          pos: '140753336',
-          ref: 'A',
-          alt: 'T',
-          genome: 'hg38',
-          message: 'BRAF c.1799T>A example loaded. Search to fetch and import evidence.'
-        });
-      });
-    }
-
-    if (clearLookupBtn){
-      clearLookupBtn.addEventListener('click', function(){
-        ['acmg-genebe-chr','acmg-genebe-pos','acmg-genebe-ref','acmg-genebe-alt'].forEach(function(id){ setValue(id, ''); });
-        setValue('acmg-genebe-genome', 'hg38');
-        setValue('acmg-genebe-import-mode', 'review');
-        if (summaryBox){ summaryBox.hidden = true; summaryBox.textContent = ''; }
-        setStatus('Evidence lookup cleared.');
-      });
-    }
-
-    if (useContextBtn){
-      useContextBtn.addEventListener('click', function(){
-        var parsed = parseCoordinate(meta.coordinate);
-        var ref = meta.ref || parsed.ref || '';
-        var alt = meta.alt || parsed.alt || '';
-        setValue('acmg-genebe-chr', parsed.chr);
-        setValue('acmg-genebe-pos', parsed.pos);
-        setValue('acmg-genebe-ref', ref);
-        setValue('acmg-genebe-alt', alt);
-        setValue('acmg-genebe-genome', inferGenome(meta.build));
-        var ready = parsed.chr && parsed.pos && ref;
-        setStatus(ready ? 'Active variant context copied.' : 'Active variant context copied where available. Add chromosome, position and reference allele before lookup.', !ready);
-      });
-    }
-
-    form.addEventListener('submit', async function(event){
-      event.preventDefault();
-
-      var params = {
-        chr: genebe.cleanChr(value('acmg-genebe-chr')),
-        pos: value('acmg-genebe-pos'),
-        ref: genebe.cleanAllele(value('acmg-genebe-ref')),
-        alt: genebe.cleanAllele(value('acmg-genebe-alt')),
-        genome: value('acmg-genebe-genome') || 'hg38'
-      };
-      var importMode = value('acmg-genebe-import-mode') || 'review';
-
-      if (!params.chr || !params.pos || !params.ref){
-        setStatus('Chromosome, position and reference allele are required for evidence lookup. Leave alternate allele blank for simple deletions.', true);
-        return;
-      }
-
-      if (currentReviewHasWork()){
-        var okToOverwrite = window.confirm('Importing external evidence will overwrite the current ACMG Validator work in this page. Continue?');
-        if (!okToOverwrite){
-          setStatus('Import cancelled. Current ACMG Validator work was not changed.');
-          return;
-        }
-      }
-
-      lastValidatorJson = '';
-      lastRawJson = '';
-      lastValidatorFilename = 'acmg_validator_genebe.json';
-      lastRawFilename = 'genebe_raw.json';
-      setDownloadButtons(false);
-      if (summaryBox){ summaryBox.hidden = true; summaryBox.textContent = ''; }
-      setStatus('Querying evidence sources...');
-
-      try {
-        var result = await genebe.fetchAndConvert(params, importMode);
-        lastRawJson = JSON.stringify(result.payload, null, 2);
-        lastValidatorJson = JSON.stringify(result.validatorJson, null, 2);
-        lastValidatorFilename = result.validatorFilename;
-        lastRawFilename = result.rawFilename;
-
-        importAcmgJsonObject(result.validatorJson, 'external evidence lookup');
-        setStatus('Evidence imported. Review all suggested criteria before sign-off.', false, true);
-        if (summaryBox){
-          summaryBox.textContent = JSON.stringify(result.summary, null, 2);
-          summaryBox.hidden = true;
-        }
-        setDownloadButtons(true);
-      } catch (err){
-        setStatus(err && err.message ? err.message : String(err), true);
-        if (summaryBox){
-          summaryBox.textContent = err && err.payload ? JSON.stringify(err.payload, null, 2) : String(err);
-          summaryBox.hidden = false;
-        }
-      }
-    });
-
-    if (downloadValidatorBtn){
-      downloadValidatorBtn.addEventListener('click', function(){
-        if (!lastValidatorJson) return;
-        download(lastValidatorJson, lastValidatorFilename, 'application/json');
-      });
-    }
-
-    if (downloadRawBtn){
-      downloadRawBtn.addEventListener('click', function(){
-        if (!lastRawJson) return;
-        download(lastRawJson, lastRawFilename, 'application/json');
-      });
-    }
-  }
-
-  bindGeneBeLookup();
-
 
   function resetAll(){
     meta = {};
@@ -3529,8 +2368,6 @@ permalink: /technologies/acmg-validator/
           "hgvs_p": "p.(Glu23ValfsTer17)",
           "genome_build": "GRCh38",
           "coordinate": "chr17:43124028-43124029",
-          "ref": "AG",
-          "alt": "",
           "variant_type": "Small deletion",
           "zygosity": "Heterozygous"
         },
@@ -4041,9 +2878,7 @@ permalink: /technologies/acmg-validator/
           "hgvs_c": "c.1521_1523delCTT",
           "hgvs_p": "p.(Phe508del)",
           "genome_build": "GRCh38",
-          "coordinate": "chr7:117559592-117559594",
-          "ref": "CTT",
-          "alt": "",
+          "coordinate": "chr7:117559591-117559593",
           "variant_type": "In-frame indel",
           "zygosity": "Homozygous or compound het"
         },
@@ -4557,8 +3392,6 @@ permalink: /technologies/acmg-validator/
           "hgvs_p": "p.(Val600Glu)",
           "genome_build": "GRCh38",
           "coordinate": "chr7:140753336",
-          "ref": "A",
-          "alt": "T",
           "variant_type": "SNV",
           "zygosity": "Heterozygous"
         },
@@ -5244,5 +4077,4 @@ permalink: /technologies/acmg-validator/
   setMutedStatus('Gene structure viewer will load when a gene is entered.');
 }());
 </script>
-
 

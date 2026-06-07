@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>GeneBe to ACMG Validator JSON</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Convert a GeneBe single-variant lookup into ACMG Validator JSON." />
+  <meta property="og:title" content="GeneBe to ACMG Validator JSON"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Convert a GeneBe single-variant lookup into ACMG Validator JSON."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">GeneBe to ACMG Validator JSON</h1>
+                <div class="content"><div class="container pt-4 pb-6">
+  <h1>GeneBe to ACMG Validator JSON</h1>
+
+  <p>
+    Enter a genomic variant, fetch GeneBe annotation, download the raw GeneBe JSON,
+    and download a converted ACMG Validator JSON file for pre-review import.
+  </p>
+
+  <form id="gb-form" style="display:grid;gap:.75rem;max-width:36rem;">
+    <label>
+      Chromosome
+      <input id="gb-chr" value="7" style="width:100%;">
+    </label>
+
+    <label>
+      Position
+      <input id="gb-pos" value="140753336" style="width:100%;">
+    </label>
+
+    <label>
+      Reference allele
+      <input id="gb-ref" value="A" style="width:100%;">
+    </label>
+
+    <label>
+      Alternate allele
+      <input id="gb-alt" value="T" style="width:100%;">
+    </label>
+
+    <label>
+      Genome build
+      <select id="gb-genome" style="width:100%;">
+        <option value="hg38" selected>hg38</option>
+        <option value="hg19">hg19</option>
+      </select>
+    </label>
+
+    <label>
+      Import GeneBe ACMG criteria as
+      <select id="gb-import-mode" style="width:100%;">
+        <option value="review" selected>Needs second review, no points yet</option>
+        <option value="accepted">Accepted, gives ACMG Validator points</option>
+      </select>
+    </label>
+
+    <button class="button button-primary" type="submit">
+      Fetch and convert GeneBe annotation
+    </button>
+  </form>
+
+  <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem;">
+    <button id="gb-download-validator-json" class="button" type="button" disabled>
+      Download ACMG Validator JSON
+    </button>
+
+    <button id="gb-download-raw-json" class="button" type="button" disabled>
+      Download raw GeneBe JSON
+    </button>
+
+    <button id="gb-copy-validator-json" class="button" type="button" disabled>
+      Copy ACMG Validator JSON
+    </button>
+
+    <button id="gb-copy-raw-json" class="button" type="button" disabled>
+      Copy raw GeneBe JSON
+    </button>
+  </div>
+
+  <h2>Request</h2>
+  <pre id="gb-url" class="code-copy">Not queried yet.</pre>
+
+  <h2>Status</h2>
+  <pre id="gb-status" class="code-copy">Not queried yet.</pre>
+
+  <h2>Import summary</h2>
+  <pre id="gb-summary-output" class="code-copy">No import summary yet.</pre>
+
+  <h2>ACMG Validator upload JSON</h2>
+  <pre id="gb-template-output" class="code-copy">No converted JSON yet.</pre>
+
+  <h2>GeneBe evidence extracted for review</h2>
+  <pre id="gb-evidence-output" class="code-copy">No GeneBe evidence yet.</pre>
+
+  <h2>Full raw GeneBe response</h2>
+  <pre id="gb-raw-output" class="code-copy">No response yet.</pre>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('gb-form');
+  var urlBox = document.getElementById('gb-url');
+  var statusBox = document.getElementById('gb-status');
+  var summaryBox = document.getElementById('gb-summary-output');
+  var templateBox = document.getElementById('gb-template-output');
+  var evidenceBox = document.getElementById('gb-evidence-output');
+  var rawBox = document.getElementById('gb-raw-output');
+
+  var downloadValidatorBtn = document.getElementById('gb-download-validator-json');
+  var downloadRawBtn = document.getElementById('gb-download-raw-json');
+  var copyValidatorBtn = document.getElementById('gb-copy-validator-json');
+  var copyRawBtn = document.getElementById('gb-copy-raw-json');
+
+  var proxyBaseUrl = 'https://genebe-proxy.cold-leaf-e00d.workers.dev/';
+
+  var lastValidatorJson = '';
+  var lastRawJson = '';
+  var lastValidatorFilename = 'acmg_validator_genebe.json';
+  var lastRawFilename = 'genebe_raw.json';
+
+  var CRITERIA = [
+    ['pathogenic', 'PVS1', 'very_strong'],
+    ['pathogenic', 'PS1', 'strong'],
+    ['pathogenic', 'PS2', 'strong'],
+    ['pathogenic', 'PS3', 'strong'],
+    ['pathogenic', 'PS4', 'strong'],
+    ['pathogenic', 'PM1', 'moderate'],
+    ['pathogenic', 'PM2', 'moderate'],
+    ['pathogenic', 'PM3', 'moderate'],
+    ['pathogenic', 'PM4', 'moderate'],
+    ['pathogenic', 'PM5', 'moderate'],
+    ['pathogenic', 'PM6', 'moderate'],
+    ['pathogenic', 'PP1', 'supporting'],
+    ['pathogenic', 'PP2', 'supporting'],
+    ['pathogenic', 'PP3', 'supporting'],
+    ['pathogenic', 'PP4', 'supporting'],
+    ['pathogenic', 'PP5', 'supporting'],
+    ['benign', 'BA1', 'standalone'],
+    ['benign', 'BS1', 'strong'],
+    ['benign', 'BS2', 'strong'],
+    ['benign', 'BS3', 'strong'],
+    ['benign', 'BS4', 'strong'],
+    ['benign', 'BP1', 'supporting'],
+    ['benign', 'BP2', 'supporting'],
+    ['benign', 'BP3', 'supporting'],
+    ['benign', 'BP4', 'supporting'],
+    ['benign', 'BP5', 'supporting'],
+    ['benign', 'BP6', 'supporting'],
+    ['benign', 'BP7', 'supporting']
+  ];
+
+  var POINTS = {
+    pathogenic: {
+      supporting: 1,
+      moderate: 2,
+      strong: 4,
+      very_strong: 8
+    },
+    benign: {
+      supporting: -1,
+      moderate: -2,
+      strong: -4,
+      standalone: -8
+    }
+  };
+
+  var STRENGTH_SUFFIX = {
+    supporting: 'Supporting',
+    moderate: 'Moderate',
+    strong: 'Strong',
+    very_strong: 'VeryStrong',
+    standalone: 'StandAlone'
+  };
+
+  var KNOWN_CRITERIA = {};
+  CRITERIA.forEach(function (row) {
+    KNOWN_CRITERIA[row[1]] = {
+      group: row[0],
+      code: row[1],
+      default_strength: row[2]
+    };
+  });
+
+  function val(id) {
+    return document.getElementById(id).value.trim();
+  }
+
+  function cleanChr(x) {
+    return String(x || '').trim().replace(/^chr/i, '');
+  }
+
+  function cleanAllele(x) {
+    return String(x || '').trim().toUpperCase();
+  }
+
+  function isPresent(x) {
+    return x !== undefined && x !== null && x !== '';
+  }
+
+  function firstDefined() {
+    for (var i = 0; i < arguments.length; i++) {
+      if (isPresent(arguments[i])) return arguments[i];
+    }
+    return '';
+  }
+
+  function firstDefinedNullable() {
+    for (var i = 0; i < arguments.length; i++) {
+      if (isPresent(arguments[i])) return arguments[i];
+    }
+    return null;
+  }
+
+  function buildUrl(baseUrl, params) {
+    var query = Object.keys(params)
+      .map(function (key) {
+        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+      })
+      .join('&');
+
+    return baseUrl + '?' + query;
+  }
+
+  function genomeToValidatorBuild(genome) {
+    if (genome === 'hg38') return 'GRCh38';
+    if (genome === 'hg19') return 'GRCh37';
+    return '';
+  }
+
+  function inferVariantType(ref, alt) {
+    ref = String(ref || '');
+    alt = String(alt || '');
+
+    if (!ref && !alt) return '';
+    if (ref.length === 1 && alt.length === 1) return 'SNV';
+    if (ref.length > alt.length && alt.length === 0) return 'Small deletion';
+    if (ref.length > alt.length) return 'Small deletion';
+    if (alt.length > ref.length) return 'Small insertion';
+    if (ref.length === alt.length && ref.length > 1) return 'Indel';
+
+    return 'Indel';
+  }
+
+  function normaliseClassification(x) {
+    var s = String(x || '').toLowerCase();
+
+    if (s === 'pathogenic') return 'pathogenic';
+    if (s === 'likely_pathogenic' || s === 'likely pathogenic') return 'likely_pathogenic';
+    if (s === 'uncertain_significance' || s === 'uncertain significance' || s === 'vus') return 'vus';
+    if (s === 'likely_benign' || s === 'likely benign') return 'likely_benign';
+    if (s === 'benign') return 'benign';
+
+    return '';
+  }
+
+  function splitCriteria(x) {
+    if (!x) return [];
+    if (Array.isArray(x)) return x.map(String).filter(Boolean);
+
+    return String(x)
+      .split(',')
+      .map(function (s) { return s.trim(); })
+      .filter(Boolean);
+  }
+
+  function normaliseStrengthName(x) {
+    var s = String(x || '').toLowerCase().replace(/[\s-]+/g, '_');
+
+    if (s === 'supporting') return 'supporting';
+    if (s === 'moderate') return 'moderate';
+    if (s === 'strong') return 'strong';
+    if (s === 'verystrong' || s === 'very_strong') return 'very_strong';
+    if (s === 'standalone' || s === 'stand_alone') return 'standalone';
+
+    return '';
+  }
+
+  function parseCriterionToken(token) {
+    var raw = String(token || '').trim();
+    var match = raw.match(/^(PVS1|PS[1-4]|PM[1-6]|PP[1-5]|BA1|BS[1-4]|BP[1-7])(?:[_-]?(Supporting|Moderate|Strong|VeryStrong|Very_Strong|StandAlone|Standalone|Stand_Alone))?$/i);
+
+    if (!match) return null;
+
+    var code = match[1].toUpperCase();
+    var strength = normaliseStrengthName(match[2] || '');
+
+    if (!KNOWN_CRITERIA[code]) return null;
+
+    return {
+      raw: raw,
+      code: code,
+      suggested_strength: strength,
+      source_notation: raw
+    };
+  }
+
+  function getBestConsequence(v) {
+    var consequences = Array.isArray(v.consequences) ? v.consequences : [];
+
+    var maneRefSeq = consequences.find(function (c) {
+      return c.mane_select && /^NM_/.test(String(c.transcript || c.feature || ''));
+    });
+
+    var maneAny = consequences.find(function (c) {
+      return c.mane_select || c.mane_plus;
+    });
+
+    var canonical = consequences.find(function (c) {
+      return c.canonical === true;
+    });
+
+    var proteinCoding = consequences.find(function (c) {
+      return c.protein_coding === true;
+    });
+
+    return maneRefSeq || maneAny || canonical || proteinCoding || consequences[0] || {};
+  }
+
+  function getGeneBeAcmgRecord(v, best) {
+    var records = Array.isArray(v.acmg_by_gene) ? v.acmg_by_gene : [];
+    if (!records.length) return null;
+
+    var bestGene = firstDefined(best.gene_symbol, v.gene_symbol);
+    var bestHgnc = firstDefined(best.gene_hgnc_id, v.hgnc_id);
+    var bestTranscript = firstDefined(best.transcript, best.feature, v.transcript);
+
+    var exact = records.find(function (r) {
+      return (
+        String(r.gene_symbol || '') === String(bestGene || '') &&
+        String(r.transcript || '') === String(bestTranscript || '')
+      );
+    });
+
+    var byGene = records.find(function (r) {
+      return String(r.gene_symbol || '') === String(bestGene || '');
+    });
+
+    var byHgnc = records.find(function (r) {
+      return String(r.hgnc_id || '') === String(bestHgnc || '');
+    });
+
+    return exact || byGene || byHgnc || records[0];
+  }
+
+  function getSuggestedCriteria(v, geneAcmg) {
+    var all = [];
+
+    splitCriteria(v.acmg_criteria).forEach(function (x) {
+      all.push({ token: x, source: 'GeneBe variant acmg_criteria' });
+    });
+
+    if (geneAcmg && geneAcmg.criteria) {
+      splitCriteria(geneAcmg.criteria).forEach(function (x) {
+        all.push({ token: x, source: 'GeneBe selected acmg_by_gene.criteria' });
+      });
+    }
+
+    var byCode = {};
+
+    all.forEach(function (item) {
+      var parsed = parseCriterionToken(item.token);
+      if (!parsed) return;
+
+      if (!byCode[parsed.code]) {
+        byCode[parsed.code] = {
+          code: parsed.code,
+          suggested_strength: parsed.suggested_strength,
+          source_tokens: [],
+          sources: []
+        };
+      }
+
+      if (parsed.suggested_strength) {
+        byCode[parsed.code].suggested_strength = parsed.suggested_strength;
+      }
+
+      byCode[parsed.code].source_tokens.push(item.token);
+      byCode[parsed.code].sources.push(item.source);
+    });
+
+    return byCode;
+  }
+
+  function criterionNotation(code, defaultStrength, appliedStrength) {
+    if (!appliedStrength || appliedStrength === defaultStrength) return code;
+    return code + '_' + STRENGTH_SUFFIX[appliedStrength];
+  }
+
+  function criterionPoints(group, status, strength) {
+    if (status !== 'accepted') return 0;
+    return POINTS[group] && POINTS[group][strength] ? POINTS[group][strength] : 0;
+  }
+
+  function rowStateFor(status) {
+    if (status === 'accepted') return 'complete';
+    if (status === 'rejected' || status === 'not_applicable') return 'noevidence';
+    if (status === 'needs_second_review') return 'incomplete';
+    return 'untouched';
+  }
+
+  function compactEvidence(v, queryParams) {
+    var best = getBestConsequence(v);
+    var geneAcmg = getGeneBeAcmgRecord(v, best);
+
+    return {
+      source: 'GeneBe public API via Switzerland Omics proxy',
+      query: {
+        chr: queryParams.chr,
+        pos: queryParams.pos,
+        ref: queryParams.ref,
+        alt: queryParams.alt,
+        genome: queryParams.genome
+      },
+      selected_transcript_or_consequence: best,
+      selected_acmg_by_gene: geneAcmg,
+      variant_identity: {
+        chr: firstDefinedNullable(v.chr, queryParams.chr),
+        pos: firstDefinedNullable(v.pos, queryParams.pos),
+        ref: firstDefinedNullable(v.ref, queryParams.ref),
+        alt: firstDefinedNullable(v.alt, queryParams.alt),
+        gene_symbol: firstDefinedNullable(v.gene_symbol, best.gene_symbol, geneAcmg && geneAcmg.gene_symbol),
+        hgnc_id: firstDefinedNullable(v.hgnc_id, best.gene_hgnc_id, geneAcmg && geneAcmg.hgnc_id),
+        transcript: firstDefinedNullable(v.transcript, best.transcript, best.feature, geneAcmg && geneAcmg.transcript),
+        hgvs_c: firstDefinedNullable(v.hgvs_c, best.hgvs_c, geneAcmg && geneAcmg.hgvs_c),
+        hgvs_p: firstDefinedNullable(v.hgvs_p, best.hgvs_p, geneAcmg && geneAcmg.hgvs_p),
+        consequence_terms: firstDefinedNullable(v.effect, best.consequences, geneAcmg && geneAcmg.effects)
+      },
+      genebe_acmg: {
+        acmg_score: firstDefinedNullable(v.acmg_score, geneAcmg && geneAcmg.score),
+        acmg_classification: firstDefinedNullable(v.acmg_classification, geneAcmg && geneAcmg.verdict),
+        acmg_criteria: firstDefinedNullable(v.acmg_criteria, geneAcmg && geneAcmg.criteria),
+        acmg_by_gene: Array.isArray(v.acmg_by_gene) ? v.acmg_by_gene : []
+      },
+      population: {
+        frequency_reference_population: firstDefinedNullable(v.frequency_reference_population),
+        allele_count_reference_population: firstDefinedNullable(v.allele_count_reference_population),
+        hom_count_reference_population: firstDefinedNullable(v.hom_count_reference_population),
+        gnomad_exomes_af: firstDefinedNullable(v.gnomad_exomes_af),
+        gnomad_genomes_af: firstDefinedNullable(v.gnomad_genomes_af),
+        gnomad_exomes_ac: firstDefinedNullable(v.gnomad_exomes_ac),
+        gnomad_genomes_ac: firstDefinedNullable(v.gnomad_genomes_ac),
+        gnomad_exomes_an: firstDefinedNullable(v.gnomad_exomes_an),
+        gnomad_genomes_an: firstDefinedNullable(v.gnomad_genomes_an),
+        gnomad_exomes_homalt: firstDefinedNullable(v.gnomad_exomes_homalt),
+        gnomad_genomes_homalt: firstDefinedNullable(v.gnomad_genomes_homalt)
+      },
+      computational: {
+        computational_prediction_selected: firstDefinedNullable(v.computational_prediction_selected),
+        computational_score_selected: firstDefinedNullable(v.computational_score_selected),
+        computational_source_selected: firstDefinedNullable(v.computational_source_selected),
+        splice_prediction_selected: firstDefinedNullable(v.splice_prediction_selected),
+        splice_score_selected: firstDefinedNullable(v.splice_score_selected),
+        splice_source_selected: firstDefinedNullable(v.splice_source_selected),
+        revel_score: firstDefinedNullable(v.revel_score),
+        revel_prediction: firstDefinedNullable(v.revel_prediction),
+        alphamissense_score: firstDefinedNullable(v.alphamissense_score),
+        alphamissense_prediction: firstDefinedNullable(v.alphamissense_prediction),
+        cadd_raw_score: firstDefinedNullable(v.cadd_raw_score),
+        cadd_phred: firstDefinedNullable(v.cadd_phred),
+        bayesdelnoaf_score: firstDefinedNullable(v.bayesdelnoaf_score),
+        bayesdelnoaf_prediction: firstDefinedNullable(v.bayesdelnoaf_prediction),
+        phylop100way_score: firstDefinedNullable(v.phylop100way_score),
+        phylop100way_prediction: firstDefinedNullable(v.phylop100way_prediction),
+        spliceai_max_score: firstDefinedNullable(v.spliceai_max_score),
+        spliceai_max_prediction: firstDefinedNullable(v.spliceai_max_prediction)
+      },
+      clinvar: {
+        disease: firstDefinedNullable(v.clinvar_disease),
+        classification: firstDefinedNullable(v.clinvar_classification),
+        review_status: firstDefinedNullable(v.clinvar_review_status),
+        submissions_summary: firstDefinedNullable(v.clinvar_submissions_summary)
+      },
+      consequences_count: Array.isArray(v.consequences) ? v.consequences.length : 0
+    };
+  }
+
+  function buildCriterionRows(v, importMode) {
+    var best = getBestConsequence(v);
+    var geneAcmg = getGeneBeAcmgRecord(v, best);
+    var suggestedByCode = getSuggestedCriteria(v, geneAcmg);
+
+    return CRITERIA.map(function (c) {
+      var group = c[0];
+      var code = c[1];
+      var defaultStrength = c[2];
+      var suggestion = suggestedByCode[code] || null;
+
+      var status = 'not_assessed';
+      var evidenceStatus = 'not_assessed';
+      var caveatStatus = 'not_assessed';
+      var appliedStrength = defaultStrength;
+      var notes = '';
+
+      if (suggestion) {
+        var accepted = importMode === 'accepted';
+
+        status = accepted ? 'accepted' : 'needs_second_review';
+        evidenceStatus = accepted ? 'present' : 'requires_second_review';
+        caveatStatus = accepted ? 'not_applicable' : 'not_assessed';
+
+        if (suggestion.suggested_strength) {
+          appliedStrength = suggestion.suggested_strength;
+        }
+
+        notes =
+          'GeneBe suggested ' + code + ' as ACMG evidence. ' +
+          'Source token(s): ' + suggestion.source_tokens.join(', ') + '. ' +
+          'GeneBe classification: ' + String(firstDefined(v.acmg_classification, geneAcmg && geneAcmg.verdict, 'not provided')) + '. ' +
+          'GeneBe score: ' + String(firstDefined(v.acmg_score, geneAcmg && geneAcmg.score, 'not provided')) + '. ' +
+          'Imported from GeneBe for ACMG Validator pre-review.';
+      }
+
+      var notation = criterionNotation(code, defaultStrength, appliedStrength);
+
+      return {
+        criterion: code,
+        notation: notation,
+        group: group,
+        status: status,
+        default_strength: defaultStrength,
+        applied_strength: appliedStrength,
+        strength_modified: appliedStrength !== defaultStrength,
+        points: criterionPoints(group, status, appliedStrength),
+        evidence_status: evidenceStatus,
+        caveat_status: caveatStatus,
+        row_state: rowStateFor(status),
+        notes: notes
+      };
+    });
+  }
+
+  function buildVariantObject(payload, queryParams, importMode) {
+    var v = payload && payload.variants && payload.variants[0] ? payload.variants[0] : {};
+    var best = getBestConsequence(v);
+    var geneAcmg = getGeneBeAcmgRecord(v, best);
+    var evidence = compactEvidence(v, queryParams);
+    var criteria = buildCriterionRows(v, importMode);
+
+    var gene = firstDefined(v.gene_symbol, best.gene_symbol, geneAcmg && geneAcmg.gene_symbol, '');
+    var transcript = firstDefined(v.transcript, best.transcript, best.feature, geneAcmg && geneAcmg.transcript, '');
+    var hgvsC = firstDefined(v.hgvs_c, best.hgvs_c, geneAcmg && geneAcmg.hgvs_c, '');
+    var hgvsP = firstDefined(v.hgvs_p, best.hgvs_p, geneAcmg && geneAcmg.hgvs_p, '');
+
+    var chr = firstDefined(v.chr, queryParams.chr, '');
+    var pos = firstDefined(v.pos, queryParams.pos, '');
+    var ref = firstDefined(v.ref, queryParams.ref, '');
+    var alt = firstDefined(v.alt, queryParams.alt, '');
+    var coordinate = chr && pos ? 'chr' + chr + ':' + pos + ':' + ref + '>' + alt : '';
+
+    var disease = firstDefined(v.clinvar_disease, '');
+    var inheritance = firstDefined(geneAcmg && geneAcmg.inheritance_mode, '');
+
+    var pathogenicPoints = 0;
+    var benignPoints = 0;
+
+    criteria.forEach(function (row) {
+      if (row.points > 0) pathogenicPoints += row.points;
+      if (row.points < 0) benignPoints += row.points;
+    });
+
+    return {
+      schema: 'switzerlandomics.acmg-validator.v1',
+      generated_at: new Date().toISOString(),
+      guideline_basis: 'ACMG/AMP + Tavtigian point system',
+      review: {
+        reviewer: '',
+        institution: '',
+        date: new Date().toISOString().slice(0, 10),
+        signoff: false
+      },
+      variant: {
+        gene: gene,
+        transcript: transcript,
+        hgvs_c: hgvsC,
+        hgvs_p: hgvsP,
+        genome_build: genomeToValidatorBuild(queryParams.genome),
+        coordinate: coordinate,
+        variant_type: inferVariantType(ref, alt),
+        zygosity: ''
+      },
+      case_context: {
+        disease: disease,
+        inheritance: inheritance,
+        phenotype: firstDefined(v.phenotype_combined, '')
+      },
+      criteria: criteria,
+      validation: {
+        pathogenic_points: pathogenicPoints,
+        benign_points: benignPoints,
+        total_points: pathogenicPoints + benignPoints,
+        point_based_category: '',
+        entered_classification: importMode === 'accepted'
+          ? normaliseClassification(firstDefined(v.acmg_classification, geneAcmg && geneAcmg.verdict))
+          : '',
+        verdict: '',
+        conflicts: [],
+        warnings: [],
+        missing_evidence: [],
+        external_genebe_classification: normaliseClassification(firstDefined(v.acmg_classification, geneAcmg && geneAcmg.verdict)),
+        external_genebe_score: firstDefinedNullable(v.acmg_score, geneAcmg && geneAcmg.score),
+        external_genebe_criteria: Object.keys(getSuggestedCriteria(v, geneAcmg)),
+        import_mode: importMode
+      },
+      evidence_summary: {
+        source_basis: 'GeneBe public API result converted into ACMG Validator pre-review JSON.',
+        genebe_summary: evidence
+      },
+      external_evidence: {
+        genebe_summary: evidence,
+        genebe_raw: payload
+      }
+    };
+  }
+
+  function buildValidatorJson(payload, queryParams, importMode) {
+    var variantObj = buildVariantObject(payload, queryParams, importMode);
+    var variant = variantObj.variant;
+    var context = variantObj.case_context;
+
+    return {
+      schema: 'switzerlandomics.acmg-validator.case.v1',
+      generated_at: new Date().toISOString(),
+      review: {
+        reviewer: '',
+        institution: '',
+        date: new Date().toISOString().slice(0, 10),
+        signoff: false
+      },
+      case_context: {
+        disease: context.disease || '',
+        inheritance: context.inheritance || '',
+        phenotype: context.phenotype || ''
+      },
+      provenance: {
+        values: {},
+        extra: {
+          external_annotation_source: 'GeneBe public API',
+          external_annotation_request_url: buildUrl(proxyBaseUrl, queryParams),
+          external_annotation_import_mode: importMode,
+          external_annotation_converter: 'genebe_lookup_test.md',
+          external_annotation_converter_schema: 'switzerlandomics.genebe-to-acmg-validator.v1'
+        }
+      },
+      genotype_review: {
+        gene: variant.gene || '',
+        disease: context.disease || '',
+        inheritance: context.inheritance || '',
+        phase: '',
+        combination: '',
+        phase_evidence: '',
+        conclusion: '',
+        phenotype_fit: '',
+        uncertainty: ''
+      },
+      variants: [variantObj]
+    };
+  }
+
+  function buildSummary(payload, validatorObj, params, importMode) {
+    var v = payload && payload.variants && payload.variants[0] ? payload.variants[0] : {};
+    var variantObj = validatorObj.variants[0];
+    var suggested = variantObj.validation.external_genebe_criteria || [];
+    var touched = variantObj.criteria.filter(function (row) {
+      return row.status !== 'not_assessed';
+    });
+
+    return {
+      query: params,
+      import_mode: importMode,
+      variant: variantObj.variant,
+      gene: variantObj.variant.gene,
+      transcript: variantObj.variant.transcript,
+      hgvs_c: variantObj.variant.hgvs_c,
+      hgvs_p: variantObj.variant.hgvs_p,
+      genebe_classification: firstDefinedNullable(v.acmg_classification),
+      genebe_score: firstDefinedNullable(v.acmg_score),
+      genebe_criteria: suggested,
+      criteria_written_to_acmg_validator: touched.map(function (row) {
+        return {
+          criterion: row.criterion,
+          notation: row.notation,
+          status: row.status,
+          evidence_status: row.evidence_status,
+          applied_strength: row.applied_strength,
+          points: row.points
+        };
+      }),
+      raw_variant_count: payload && Array.isArray(payload.variants) ? payload.variants.length : 0,
+      raw_consequence_count: v && Array.isArray(v.consequences) ? v.consequences.length : 0
+    };
+  }
+
+  function download(text, filename, type) {
+    var blob = new Blob([text], { type: type });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(function () {
+      URL.revokeObjectURL(url);
+    }, 1000);
+  }
+
+  function fileStem(params) {
+    return [
+      'genebe',
+      params.chr || 'chr',
+      params.pos || 'pos',
+      params.ref || 'ref',
+      params.alt || 'del',
+      params.genome || 'genome'
+    ].join('_').replace(/[^a-z0-9._-]+/gi, '_');
+  }
+
+  function setButtons(enabled) {
+    downloadValidatorBtn.disabled = !enabled;
+    downloadRawBtn.disabled = !enabled;
+    copyValidatorBtn.disabled = !enabled;
+    copyRawBtn.disabled = !enabled;
+  }
+
+  async function copyText(text, button, originalLabel) {
+    if (!text) return;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      button.textContent = 'Copied';
+      setTimeout(function () {
+        button.textContent = originalLabel;
+      }, 1200);
+    } catch (err) {
+      button.textContent = 'Copy failed';
+      setTimeout(function () {
+        button.textContent = originalLabel;
+      }, 1200);
+    }
+  }
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    var params = {
+      chr: cleanChr(val('gb-chr')),
+      pos: val('gb-pos'),
+      ref: cleanAllele(val('gb-ref')),
+      alt: cleanAllele(val('gb-alt')),
+      genome: val('gb-genome')
+    };
+
+    var importMode = val('gb-import-mode');
+    var url = buildUrl(proxyBaseUrl, params);
+
+    urlBox.textContent = url;
+    statusBox.textContent = 'Querying GeneBe...';
+    summaryBox.textContent = 'No import summary yet.';
+    templateBox.textContent = 'No converted JSON yet.';
+    evidenceBox.textContent = 'No GeneBe evidence yet.';
+    rawBox.textContent = 'No response yet.';
+
+    lastValidatorJson = '';
+    lastRawJson = '';
+    lastValidatorFilename = 'acmg_validator_genebe.json';
+    lastRawFilename = 'genebe_raw.json';
+    setButtons(false);
+
+    try {
+      var response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      var text = await response.text();
+
+      statusBox.textContent =
+        'HTTP ' + response.status + ' ' + response.statusText;
+
+      var payload;
+
+      try {
+        payload = JSON.parse(text);
+      } catch (err) {
+        rawBox.textContent = text;
+        templateBox.textContent = 'Response was not valid JSON.';
+        return;
+      }
+
+      lastRawJson = JSON.stringify(payload, null, 2);
+      rawBox.textContent = lastRawJson;
+
+      if (!response.ok) {
+        templateBox.textContent = 'GeneBe request failed. No ACMG Validator JSON created.';
+        evidenceBox.textContent = JSON.stringify(payload, null, 2);
+        return;
+      }
+
+      if (!payload.variants || !payload.variants.length) {
+        templateBox.textContent = 'No GeneBe variant annotation returned. No ACMG Validator JSON created.';
+        evidenceBox.textContent = JSON.stringify(payload, null, 2);
+        return;
+      }
+
+      var validatorObj = buildValidatorJson(payload, params, importMode);
+      var summaryObj = buildSummary(payload, validatorObj, params, importMode);
+      var evidenceObj = validatorObj.variants[0].external_evidence.genebe_summary;
+
+      lastValidatorJson = JSON.stringify(validatorObj, null, 2);
+      lastValidatorFilename = 'acmg_validator_' + fileStem(params) + '.json';
+      lastRawFilename = 'raw_' + fileStem(params) + '.json';
+
+      summaryBox.textContent = JSON.stringify(summaryObj, null, 2);
+      templateBox.textContent = lastValidatorJson;
+      evidenceBox.textContent = JSON.stringify(evidenceObj, null, 2);
+
+      setButtons(true);
+    } catch (err) {
+      statusBox.textContent = 'Request failed';
+      rawBox.textContent = String(err);
+      templateBox.textContent = 'No ACMG Validator JSON created.';
+    }
+  });
+
+  downloadValidatorBtn.addEventListener('click', function () {
+    if (!lastValidatorJson) return;
+    download(lastValidatorJson, lastValidatorFilename, 'application/json');
+  });
+
+  downloadRawBtn.addEventListener('click', function () {
+    if (!lastRawJson) return;
+    download(lastRawJson, lastRawFilename, 'application/json');
+  });
+
+  copyValidatorBtn.addEventListener('click', function () {
+    copyText(lastValidatorJson, copyValidatorBtn, 'Copy ACMG Validator JSON');
+  });
+
+  copyRawBtn.addEventListener('click', function () {
+    copyText(lastRawJson, copyRawBtn, 'Copy raw GeneBe JSON');
+  });
+})();
+</script>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

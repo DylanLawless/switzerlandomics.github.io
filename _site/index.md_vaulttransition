@@ -425,6 +425,23 @@
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
+              <a href="/technologies/acmg-validator-bak/">ACMG Validator</a>
+            </h2>
+            <p>
+  
+    
+      
+        
+
+</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-4 mb-1">
+        <div class="tech tech-summary">
+          <div class="tech-content">
+            <h2 class="tech-title">
               <a href="/technologies/acmg-validator/">ACMG Validator</a>
             </h2>
             <p>
@@ -484,18 +501,6 @@ Every variant. Every pipeline. Every institution.
             </h2>
             <p>
 The leading disease-gene database with sophisticated search, designed to simplify the discovery ...</p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-4 mb-1">
-        <div class="tech tech-summary">
-          <div class="tech-content">
-            <h2 class="tech-title">
-              <a href="/technologies/qv_database/">Qualifying variant database</a>
-            </h2>
-            <p>
-The open standard for variant interpretation, with trusted QV sets to enhance clarity and reprod...</p>
           </div>
         </div>
       </div>
