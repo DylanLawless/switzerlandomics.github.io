@@ -4,6 +4,7 @@ title: "ACMG Validator"
 description: "ACMG criteria calculator and classification validator. Review variant classification evidence, mark criteria and evidence status, modulate criterion strength with justification, check point-based consistency, document caveats, track completeness, and export a structured report. Runs in your browser. No upload."
 summary: "A browser-based ACMG/AMP evidence review and classification validator for structured variant interpretation, caveat checking, multi-variant case review, and report export."
 permalink: /technologies/acmg-validator/
+weight: 99
 ---
 
 <main class="acmg-app" aria-labelledby="acmg-title">
