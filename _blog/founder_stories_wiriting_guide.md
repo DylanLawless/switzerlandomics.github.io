@@ -273,6 +273,38 @@ Prefer:
 
 Stories should feel inevitable in retrospect.
 
+
+---
+
+## Evidence handling
+
+Writers must preserve uncertainty rather than smoothing it into narrative.
+
+Use direct language for confirmed facts. Qualify company-reported metrics, announced product targets, unresolved legal claims, secondary-source financing details, and inferred strategic motives.
+
+Preferred phrasing:
+
+- Company-reported revenue
+- Announced specifications
+- Shipping was targeted for
+- Pricing was not publicly disclosed
+- The public record does not confirm
+- Secondary sources report, but primary confirmation was not found
+
+Avoid converting uncertain material into fact. Do not use database values, investor profiles, press speculation, or interview memories as primary evidence unless the uncertainty is visible in the article.
+
+---
+
+## Avoid repeated series language
+
+Do not reuse the same adoption phrase across articles. Replace generic statements such as “adoption spread pragmatically” with the specific mechanism:
+
+- laboratories adopted it because outputs matched existing workflows
+- clinical services adopted it because licensing enabled regulated use
+- software spread because it reduced repeated local scripting
+- platforms spread because consumables and support made operations reliable
+- databases persisted because curation turned scattered literature into reusable Infrastructure
+
 ---
 
 ## Quality checklist
