@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Standardised pedigree notation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Illustrated reference for clinical pedigree symbols, relationships, annotations and reporting conventions." />
+  <meta property="og:title" content="Standardised pedigree notation"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Illustrated reference for clinical pedigree symbols, relationships, annotations and reporting conventions."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page '>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <style>
+.pedigree-standards-page{
+  --ps-red:#e5262f;
+  --ps-red-dark:#a01b16;
+  --ps-black:#2f2f41;
+  --ps-white:#ffffff;
+  --ps-soft:#f3f2f2;
+  --ps-steel:#5c5a5a;
+  --ps-border:#dcdcdc;
+  color:var(--ps-black);
+  max-width:1280px;
+  margin:0 auto;
+  padding:clamp(1.25rem,3vw,3.5rem);
+}
+.pedigree-standards-page *{box-sizing:border-box}
+.ps-status{margin-top:1.5rem;padding:1rem 1.1rem;border-left:3px solid var(--ps-red);background:var(--ps-soft);font-size:.88rem;line-height:1.55}
+.ps-back{display:inline-flex;align-items:center;gap:.45rem;margin-top:1.25rem;color:var(--ps-black);text-decoration:none;font-size:.85rem;font-weight:600}
+.ps-back:hover{color:var(--ps-red)}
+.ps-mobile-nav{display:none;margin:0 0 1.5rem}
+.ps-mobile-nav label{display:block;margin-bottom:.4rem;font-size:.75rem;font-weight:700}
+.ps-mobile-nav select{width:100%;padding:.7rem;border:1px solid var(--ps-border);background:var(--ps-white);color:var(--ps-black)}
+.ps-layout{display:grid;grid-template-columns:minmax(190px,240px) minmax(0,1fr);gap:clamp(2rem,4vw,4rem);align-items:start}
+.ps-index{position:sticky;top:1.25rem;border-top:1px solid var(--ps-black)}
+.ps-index ol{margin:0;padding:0;list-style:none}
+.ps-index a{display:block;padding:.65rem 0;border-bottom:1px solid var(--ps-border);color:var(--ps-steel);text-decoration:none;font-size:.78rem;line-height:1.25}
+.ps-index a:hover,.ps-index a:focus{color:var(--ps-red)}
+.ps-content section{scroll-margin-top:1.5rem;padding:0 0 clamp(3rem,5vw,5rem)}
+.ps-section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(180px,280px);gap:2rem;align-items:end;border-top:1px solid var(--ps-black);padding-top:1rem;margin-bottom:1.5rem}
+.ps-section-head h2{margin:0;font-size:clamp(1.5rem,3vw,2.7rem);line-height:1.05;letter-spacing:-.025em}
+.ps-section-head p{margin:0;color:var(--ps-steel);font-size:.85rem;line-height:1.5}
+.ps-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--ps-border);border:1px solid var(--ps-border)}
+.ps-item{background:var(--ps-white);padding:1rem;min-width:0}
+.ps-item-wide{grid-column:1 / -1}
+.ps-figure{display:flex;align-items:center;justify-content:center;min-height:150px;background:var(--ps-soft);padding:.8rem;overflow:auto}
+.ps-figure svg{display:block;max-width:100%;height:auto}
+.ps-item h3{margin:.9rem 0 .35rem;font-size:.92rem}
+.ps-rule{margin:0;color:var(--ps-black);font-size:.8rem;line-height:1.55}
+.ps-meta{display:grid;grid-template-columns:110px minmax(0,1fr);gap:.3rem .8rem;margin:.8rem 0 0;font-size:.72rem;line-height:1.45}
+.ps-meta dt{font-weight:700;color:var(--ps-steel)}
+.ps-meta dd{margin:0}
+.ps-note{margin-top:1rem;padding:.9rem 1rem;background:var(--ps-soft);border-left:3px solid var(--ps-red);font-size:.78rem;line-height:1.55}
+.ps-example{border-top:1px solid var(--ps-border);padding-top:1rem;margin-top:1rem}
+.ps-example:first-child{border-top:0;padding-top:0;margin-top:0}
+.ps-example-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:1.5rem;align-items:start}
+.ps-example-copy h3{margin:0 0 .55rem;font-size:1rem}
+.ps-example-copy p{margin:.25rem 0;color:var(--ps-steel);font-size:.8rem;line-height:1.55}
+.ps-example-copy strong{color:var(--ps-black)}
+.ps-report-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem 1.5rem;margin:0;padding:0;list-style:none}
+.ps-report-list li{padding:.55rem 0;border-bottom:1px solid var(--ps-border);font-size:.8rem;line-height:1.45}
+.ps-ref{padding:1rem 0;border-bottom:1px solid var(--ps-border)}
+.ps-ref p{margin:0;font-size:.82rem;line-height:1.55}
+.ps-ref a{color:var(--ps-red)}
+.ps-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.72rem;background:var(--ps-soft);padding:.12rem .35rem}
+@media (max-width:900px){
+  .ps-layout{grid-template-columns:1fr}
+  .ps-index{display:none}
+  .ps-mobile-nav{display:block}
+  .ps-section-head{grid-template-columns:1fr}
+}
+@media (max-width:680px){
+  .pedigree-standards-page{padding:1rem}
+  .ps-grid{grid-template-columns:1fr}
+  .ps-item-wide{grid-column:auto}
+  .ps-example-grid{grid-template-columns:1fr}
+  .ps-report-list{grid-template-columns:1fr}
+}
+@media print{
+  .ps-index,.ps-mobile-nav,.ps-back{display:none!important}
+  .ps-layout{display:block}
+  .ps-content section{break-before:page}
+  .ps-item,.ps-example{break-inside:avoid}
+}
+</style>
+
+<main class="pedigree-standards-page">
+  <header class="ps-hero">
+    <h1>Standardised pedigree notation</h1>
+    <p>An illustrated catalogue of the symbols, relationships, annotations and reporting conventions used to build and interpret a clinical pedigree.</p>
+    <div class="ps-status">This reference implements the standardised human pedigree nomenclature described by Bennett and colleagues in 1995 and 2008, together with the 2022 focused revision concerning gender, sex and carrier representation. Some interface and layout behaviours are software implementation choices and are identified as such.</div>
+    <a class="ps-back" href="/technologies/pedigree/">← Return to the pedigree builder</a>
+  </header>
+
+  <div class="ps-mobile-nav">
+    <label for="standardsSectionSelect">Jump to a section</label>
+    <select id="standardsSectionSelect">
+      <option value="">Choose a section</option>
+      <option value="#core-symbols">Core symbols</option>
+      <option value="#gender-sex">Gender and sex assigned at birth</option>
+      <option value="#clinical-status">Clinical status and fills</option>
+      <option value="#proband-consultand">Proband and consultand</option>
+      <option value="#relationships">Relationships</option>
+      <option value="#children-sibships">Children and sibships</option>
+      <option value="#twins">Twins and multiple births</option>
+      <option value="#pregnancy">Pregnancy outcomes</option>
+      <option value="#adoption">Adoption</option>
+      <option value="#assisted-reproduction">Assisted reproduction</option>
+      <option value="#annotations">Annotations and identifiers</option>
+      <option value="#reporting">Clinical reporting requirements</option>
+      <option value="#layout-routing">Layout and line routing</option>
+      <option value="#worked-examples">Complete pedigree examples</option>
+      <option value="#references">References</option>
+    </select>
+  </div>
+
+  <div class="ps-layout">
+    <nav class="ps-index" aria-label="Standards sections">
+      <ol>
+        <li><a href="#core-symbols">1. Core symbols</a></li>
+        <li><a href="#gender-sex">2. Gender and sex assigned at birth</a></li>
+        <li><a href="#clinical-status">3. Clinical status and fills</a></li>
+        <li><a href="#proband-consultand">4. Proband and consultand</a></li>
+        <li><a href="#relationships">5. Relationships</a></li>
+        <li><a href="#children-sibships">6. Children and sibships</a></li>
+        <li><a href="#twins">7. Twins and multiple births</a></li>
+        <li><a href="#pregnancy">8. Pregnancy outcomes</a></li>
+        <li><a href="#adoption">9. Adoption</a></li>
+        <li><a href="#assisted-reproduction">10. Assisted reproduction</a></li>
+        <li><a href="#annotations">11. Annotations and identifiers</a></li>
+        <li><a href="#reporting">12. Clinical reporting requirements</a></li>
+        <li><a href="#layout-routing">13. Layout and line routing</a></li>
+        <li><a href="#worked-examples">14. Complete pedigree examples</a></li>
+        <li><a href="#references">15. References</a></li>
+      </ol>
+    </nav>
+
+    <div class="ps-content">
+      <section id="core-symbols">
+        <div class="ps-section-head"><h2>Core symbols</h2><p>The outer shape establishes the individual symbol. Additional marks communicate status, identity and uncertainty.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="core-man"></div><h3>Square</h3><p class="ps-rule">Represents a man or boy.</p><dl class="ps-meta"><dt>Use</dt><dd>Individual whose gender identity is man or boy.</dd><dt>Structure</dt><dd><span class="ps-code">gender: "man"</span></dd></dl></article>
+          <article class="ps-item"><div class="ps-figure" data-example="core-woman"></div><h3>Circle</h3><p class="ps-rule">Represents a woman or girl.</p><dl class="ps-meta"><dt>Use</dt><dd>Individual whose gender identity is woman or girl.</dd><dt>Structure</dt><dd><span class="ps-code">gender: "woman"</span></dd></dl></article>
+          <article class="ps-item"><div class="ps-figure" data-example="core-diamond"></div><h3>Diamond</h3><p class="ps-rule">Represents a non-binary or gender-diverse person, or an individual whose gender is unknown, unspecified or not clinically relevant.</p><dl class="ps-meta"><dt>Qualification</dt><dd>Use annotations where clinically relevant.</dd></dl></article>
+          <article class="ps-item"><div class="ps-figure" data-example="multiple-known"></div><h3>Multiple individuals</h3><p class="ps-rule">A number inside a symbol may represent a known number of individuals of the same status.</p><dl class="ps-meta"><dt>Use</dt><dd>Compresses large, equivalent groups without losing count.</dd></dl></article>
+          <article class="ps-item"><div class="ps-figure" data-example="multiple-unknown"></div><h3>Number unknown</h3><p class="ps-rule">Use “n” when the number of equivalent individuals is unknown or not specified.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="deceased"></div><h3>Deceased individual</h3><p class="ps-rule">A diagonal line through the symbol indicates that the individual is deceased.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="unknown-status"></div><h3>Unknown clinical status</h3><p class="ps-rule">A question mark inside an otherwise unfilled symbol indicates that affected status is unknown. It does not mean unaffected.</p></article>
+        </div>
+      </section>
+
+      <section id="gender-sex">
+        <div class="ps-section-head"><h2>Gender and sex assigned at birth</h2><p>The 2022 focused revision separates the symbol used for gender identity from annotations used for sex assigned at birth.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="gender-basic"></div><h3>Gender identity shapes</h3><p class="ps-rule">Use the square, circle or diamond according to the individual’s gender identity.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="gender-annotations"></div><h3>AMAB, AFAB and UAAB</h3><p class="ps-rule">Record sex assigned at birth beneath the symbol where it is clinically relevant and appropriate to document.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="no-nested-symbols"></div><h3>Do not use nested square-and-circle symbols</h3><p class="ps-rule">The focused revision recommends the symbol corresponding to gender identity, with AMAB, AFAB or UAAB as an annotation where needed.</p><div class="ps-note">A diamond without an annotation indicates that gender and sex are unknown, unspecified or not relevant to the clinical question.</div></article>
+        </div>
+      </section>
+
+      <section id="clinical-status">
+        <div class="ps-section-head"><h2>Clinical status and fills</h2><p>Fill patterns represent conditions or states. Their meaning must be defined in the pedigree legend.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="status-unaffected"></div><h3>Unaffected</h3><p class="ps-rule">An unfilled symbol indicates that the person is unaffected by the condition represented in the legend.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="status-affected"></div><h3>Affected</h3><p class="ps-rule">A fully filled symbol indicates affected status for the defined condition.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="two-condition"></div><h3>Two conditions</h3><p class="ps-rule">Divide the symbol into separately defined regions when two findings must be shown.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="four-condition"></div><h3>Four-condition quadrant fill</h3><p class="ps-rule">Quadrants may encode multiple conditions when each region is clearly mapped in the legend.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="carrier-pattern"></div><h3>Carrier pattern</h3><p class="ps-rule">Use a divided, patterned region for carrier status rather than a central dot.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="affected-carrier"></div><h3>Affected and carrier</h3><p class="ps-rule">Use distinct regions or patterns so that one state does not obscure another.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="presymptomatic"></div><h3>Presymptomatic or asymptomatic carrier</h3><p class="ps-rule">Use a legend-defined patterned region and supporting annotation when an individual carries a dominant-condition variant but has no current manifestations.</p></article>
+        </div>
+        <div class="ps-note"><strong>Legacy convention.</strong> A central dot was historically used for carrier status. The 2022 focused revision recommends divided, patterned fills instead.</div>
+      </section>
+
+      <section id="proband-consultand">
+        <div class="ps-section-head"><h2>Proband and consultand</h2><p>The proband and the consultand may be the same person, but they are not interchangeable concepts.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="proband"></div><h3>Proband</h3><p class="ps-rule">An arrow identifies the affected individual through whom the family came to attention for the condition under study.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="consultand"></div><h3>Consultand</h3><p class="ps-rule">A “P” identifies the person receiving genetic counselling or evaluation when distinct from the proband.</p></article>
+        </div>
+      </section>
+
+      <section id="relationships">
+        <div class="ps-section-head"><h2>Relationships</h2><p>Relationship lines describe family structure. They should remain distinct from biological and adoptive lines of descent.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="relationship-current"></div><h3>Current relationship</h3><p class="ps-rule">A solid horizontal line joins partners.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="relationship-ended"></div><h3>Relationship no longer exists</h3><p class="ps-rule">A slash through the relationship line indicates that the relationship has ended.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="multiple-partners"></div><h3>Multiple partners</h3><p class="ps-rule">Show separate relationship lines where they affect genetic assessment or offspring structure.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="consanguinity"></div><h3>Consanguinity</h3><p class="ps-rule">A double relationship line indicates a consanguineous union. State the degree when it is not obvious from the pedigree.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="no-children"></div><h3>No children</h3><p class="ps-rule">Use a terminal mark and annotate whether this is by choice or for an unknown reason.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="infertility"></div><h3>Infertility</h3><p class="ps-rule">Annotate infertility and its known reason beneath the relationship line.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="single-parent"></div><h3>Single-parent descent</h3><p class="ps-rule">A descent line may begin from one recorded parent when the other biological parent is not represented.</p></article>
+        </div>
+      </section>
+
+      <section id="children-sibships">
+        <div class="ps-section-head"><h2>Children and sibships</h2><p>Descent and sibship lines encode parent-child structure and sibling order.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="sibship-basic"></div><h3>Descent and sibship lines</h3><p class="ps-rule">A vertical descent line connects the parental relationship line to a horizontal sibship line.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="birth-order"></div><h3>Birth order</h3><p class="ps-rule">List siblings from oldest to youngest, left to right.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="half-siblings"></div><h3>Half-siblings</h3><p class="ps-rule">Children from different parental relationships must connect to their corresponding union.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="generation-numbering"></div><h3>Generation and individual identifiers</h3><p class="ps-rule">Use Roman numerals for generations and number individuals from left to right within each generation.</p></article>
+        </div>
+      </section>
+
+      <section id="twins">
+        <div class="ps-section-head"><h2>Twins and multiple births</h2><p>Multiple births branch from a common apex. Zygosity is communicated by an additional connecting line or annotation.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="twins-dz"></div><h3>Dizygotic twins</h3><p class="ps-rule">Two branches originate from the same point without a connecting bar.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="twins-mz"></div><h3>Monozygotic twins</h3><p class="ps-rule">A connecting line between the twin branches indicates monozygosity.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="twins-unknown"></div><h3>Unknown zygosity</h3><p class="ps-rule">Use a question mark where zygosity is unknown.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="triplets"></div><h3>Triplets</h3><p class="ps-rule">Three branches originate from one apex. Add zygosity marks where known.</p></article>
+        </div>
+      </section>
+
+      <section id="pregnancy">
+        <div class="ps-section-head"><h2>Pregnancy outcomes</h2><p>Record gestational age where known and define affected fills in the legend.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="pregnancy-ongoing"></div><h3>Ongoing pregnancy</h3><p class="ps-rule">Use a pregnancy symbol with “P” and gestational age.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="pregnancy-known-sex"></div><h3>Fetal sex known</h3><p class="ps-rule">Annotate AMAB or AFAB and document how fetal sex was determined where relevant.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="sab"></div><h3>Spontaneous abortion</h3><p class="ps-rule">Use the reproductive-loss symbol and annotate gestational age.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="sab-affected"></div><h3>Affected spontaneous abortion</h3><p class="ps-rule">Fill the symbol and define the affected condition in the legend.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="ectopic"></div><h3>Ectopic pregnancy</h3><p class="ps-rule">Use the pregnancy-loss symbol annotated “ECT”.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="top"></div><h3>Termination of pregnancy</h3><p class="ps-rule">Use a pregnancy-loss symbol with a diagonal slash and annotate the indication where known.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="stillbirth"></div><h3>Stillbirth</h3><p class="ps-rule">Use the appropriate individual symbol with a diagonal death mark, “SB” and gestational age.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="gestational-age"></div><h3>Gestational-age annotation</h3><p class="ps-rule">Place the known gestational age beneath the symbol.</p></article>
+        </div>
+      </section>
+
+      <section id="adoption">
+        <div class="ps-section-head"><h2>Adoption</h2><p>Brackets identify adopted individuals. Biological and adoptive relationships remain visually distinct.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="adopted-in"></div><h3>Adopted into family</h3><p class="ps-rule">Use brackets around the individual and a dashed line from adoptive parents.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="adopted-out"></div><h3>Adopted out</h3><p class="ps-rule">Use brackets and preserve the solid biological descent line.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="adoption-lines"></div><h3>Biological and adoptive descent</h3><p class="ps-rule">Solid lines indicate biological descent; dashed lines indicate adoptive descent.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="adopted-relative"></div><h3>Adopted by a relative</h3><p class="ps-rule">Show both the biological and adoptive family structures where clinically relevant.</p></article>
+        </div>
+      </section>
+
+      <section id="assisted-reproduction">
+        <div class="ps-section-head"><h2>Assisted reproduction</h2><p>These are relationship scenarios, not isolated icons. Available donor and gestational-carrier history should be recorded where relevant.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="donor-sperm"></div><h3>Sperm donor</h3><p class="ps-rule">Mark the donor with “D”. Do not draw a partner relationship line between the donor and the person carrying the pregnancy.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="donor-ovum"></div><h3>Ovum donor</h3><p class="ps-rule">Represent the donor contribution separately from the gestational parent and partner relationship.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="embryo-donation"></div><h3>Embryo donation</h3><p class="ps-rule">Show both gamete donors and the gestational parent without implying a partner relationship with the donors.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="gestational-carrier"></div><h3>Gestational carrier</h3><p class="ps-rule">Mark the gestational carrier with “S” and connect the pregnancy to the person carrying it.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="donor-surrogate"></div><h3>Donor who is also the gestational carrier</h3><p class="ps-rule">Use the donor designation and place the pregnancy beneath the person carrying it.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="double-donor"></div><h3>Double-gamete donation</h3><p class="ps-rule">Show both donors and connect the pregnancy to the gestational parent.</p></article>
+        </div>
+      </section>
+
+      <section id="annotations">
+        <div class="ps-section-head"><h2>Annotations and identifiers</h2><p>Keep annotations concise, consistently ordered and proportionate to the clinical purpose.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="annotation-order"></div><h3>Recommended order</h3><p class="ps-rule">Age or birth/death year, evaluation result, then pedigree identifier.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="pedigree-id"></div><h3>Pedigree identifiers</h3><p class="ps-rule">Use identifiers such as I-1, II-3 and III-2 in research, publication and cross-reference contexts.</p></article>
+        </div>
+      </section>
+
+      <section id="reporting">
+        <div class="ps-section-head"><h2>Clinical reporting requirements</h2><p>A clinical pedigree is part of the health record. Record enough context for another clinician to understand how and why it was created.</p></div>
+        <ul class="ps-report-list">
+          <li>Name of the proband or consultand</li>
+          <li>Family names or initials where appropriate</li>
+          <li>Name and title of the person recording the pedigree</li>
+          <li>Historian who supplied the family history</li>
+          <li>Date of intake or update</li>
+          <li>Indication for taking the pedigree</li>
+          <li>Clinically relevant ancestry</li>
+          <li>Legend defining every fill and pattern</li>
+          <li>Known ages, diagnoses and ages at onset</li>
+          <li>Known ages and causes of death</li>
+          <li>Relevant test or evaluation results</li>
+          <li>Confidentiality-conscious identifiers</li>
+        </ul>
+      </section>
+
+      <section id="layout-routing">
+        <div class="ps-section-head"><h2>Layout and line routing</h2><p>The standards define the visual relationships. The application’s coordinate and routing model is an implementation choice designed to preserve them during editing.</p></div>
+        <div class="ps-grid">
+          <article class="ps-item"><div class="ps-figure" data-example="routing-clinical"></div><h3>Clinical routing</h3><p class="ps-rule">Uses horizontal relationship and sibship lines with vertical descent and child branches.</p></article>
+          <article class="ps-item"><div class="ps-figure" data-example="routing-flexible"></div><h3>Flexible routing</h3><p class="ps-rule">Maintains connectivity during free manual movement but may introduce diagonal segments.</p></article>
+          <article class="ps-item ps-item-wide"><div class="ps-figure" data-example="coordinate-model"></div><h3>Coordinate model</h3><p class="ps-rule"><span class="ps-code">_cx</span> stores the automatic horizontal position, <span class="ps-code">_gen</span> the generation, <span class="ps-code">x/y</span> the rendered coordinates, and <span class="ps-code">px/py</span> manually pinned coordinates.</p></article>
+        </div>
+      </section>
+
+      <section id="worked-examples">
+        <div class="ps-section-head"><h2>Complete pedigree examples</h2><p>These worked diagrams combine the atomic rules into recognisable clinical scenarios.</p></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-three-generation"></div><div class="ps-example-copy"><h3>Three-generation rare-disease pedigree</h3><p><strong>Demonstrates:</strong> three generations, proband, affected status and sibling order.</p><p><strong>Conventions:</strong> standard symbols, orthogonal descent, Roman generation numbering.</p><p><strong>Common mistake:</strong> collecting only the parents and siblings of the proband.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-ad"></div><div class="ps-example-copy"><h3>Autosomal dominant family</h3><p><strong>Demonstrates:</strong> affected individuals in successive generations.</p><p><strong>Conventions:</strong> affected fill and vertical transmission.</p><p><strong>Common mistake:</strong> inferring inheritance solely from a small pedigree.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-ar"></div><div class="ps-example-copy"><h3>Autosomal recessive consanguineous family</h3><p><strong>Demonstrates:</strong> unaffected parents, affected siblings and consanguinity.</p><p><strong>Conventions:</strong> double relationship line and carrier patterns.</p><p><strong>Common mistake:</strong> omitting the degree of relationship when it is not visually obvious.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-xlinked"></div><div class="ps-example-copy"><h3>X-linked family</h3><p><strong>Demonstrates:</strong> affected males and a carrier mother.</p><p><strong>Conventions:</strong> patterned carrier region and no male-to-male transmission.</p><p><strong>Common mistake:</strong> using a central carrier dot without a legend.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-cancer"></div><div class="ps-example-copy"><h3>Hereditary cancer pedigree</h3><p><strong>Demonstrates:</strong> multiple affected relatives and age-at-diagnosis annotations.</p><p><strong>Conventions:</strong> condition-defined fill and concise clinical labels.</p><p><strong>Common mistake:</strong> recording cancer type without age at diagnosis.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-prenatal"></div><div class="ps-example-copy"><h3>Prenatal family with pregnancy outcomes</h3><p><strong>Demonstrates:</strong> ongoing pregnancy, spontaneous abortion and gestational age.</p><p><strong>Conventions:</strong> distinct pregnancy-outcome symbols.</p><p><strong>Common mistake:</strong> recording all losses as an undifferentiated “no living child”.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-adoption"></div><div class="ps-example-copy"><h3>Adoption scenario</h3><p><strong>Demonstrates:</strong> biological and adoptive parentage.</p><p><strong>Conventions:</strong> brackets, solid biological descent and dashed adoptive descent.</p><p><strong>Common mistake:</strong> showing only the rearing family when biological history is clinically relevant.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-art"></div><div class="ps-example-copy"><h3>Assisted-reproduction scenario</h3><p><strong>Demonstrates:</strong> donor gamete and gestational parent.</p><p><strong>Conventions:</strong> donor “D”, carrier “S” and no implied partner relationship with donors.</p><p><strong>Common mistake:</strong> conflating genetic contribution, gestation and parenting.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-gender"></div><div class="ps-example-copy"><h3>Gender-inclusive clinical pedigree</h3><p><strong>Demonstrates:</strong> gender-identity symbol with sex-assigned-at-birth annotation.</p><p><strong>Conventions:</strong> square, circle or diamond plus AMAB, AFAB or UAAB where appropriate.</p><p><strong>Common mistake:</strong> using nested square-and-circle symbols.</p></div></div></div>
+        <div class="ps-example"><div class="ps-example-grid"><div class="ps-figure" data-example="example-multifill"></div><div class="ps-example-copy"><h3>Multiple-condition fill and legend</h3><p><strong>Demonstrates:</strong> affected status plus a separate carrier finding.</p><p><strong>Conventions:</strong> divided regions and an explicit legend.</p><p><strong>Common mistake:</strong> using patterns without defining them.</p></div></div></div>
+      </section>
+
+      <section id="references">
+        <div class="ps-section-head"><h2>References</h2><p>The 2022 publication is a focused revision and retains the underlying 2008 recommendations except where specifically revised.</p></div>
+        <div class="ps-ref"><p>Bennett RL, Steinhaus KA, Uhrich SB, et al. Recommendations for standardized human pedigree nomenclature. <em>American Journal of Human Genetics</em>. 1995;56:745–752. <a href="https://doi.org/10.1007/BF01408073">https://doi.org/10.1007/BF01408073</a></p></div>
+        <div class="ps-ref"><p>Bennett RL, French KS, Resta RG, Doyle DL. Standardized Human Pedigree Nomenclature: Update and Assessment of the Recommendations of the National Society of Genetic Counselors. <em>Journal of Genetic Counseling</em>. 2008;17:424–433. <a href="https://doi.org/10.1007/s10897-008-9169-9">https://doi.org/10.1007/s10897-008-9169-9</a></p></div>
+        <div class="ps-ref"><p>Bennett RL, French KS, Resta RG, Austin J. Practice resource-focused revision: Standardized pedigree nomenclature update centered on sex and gender inclusivity. <em>Journal of Genetic Counseling</em>. 2022;31:1238–1248. <a href="https://doi.org/10.1002/jgc4.1621">https://doi.org/10.1002/jgc4.1621</a></p></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script>
+(() => {
+  const C="#2f2f41", M="#5c5a5a", R="#e5262f", S="#f3f2f2";
+  const svg=(inner,w=420,h=160)=>`<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-hidden="true">${defs()}${inner}</svg>`;
+  const defs=()=>`<defs><pattern id="diag" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 6L6 0" stroke="${C}" stroke-width="1"/></pattern><pattern id="vert" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M2.5 0V5" stroke="${C}" stroke-width="1"/></pattern></defs>`;
+  const text=(x,y,s,a="middle",size=10,weight=400)=>`<text x="${x}" y="${y}" text-anchor="${a}" font-family="ui-sans-serif,system-ui,sans-serif" font-size="${size}" font-weight="${weight}" fill="${C}">${s}</text>`;
+  const line=(x1,y1,x2,y2,extra="")=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${C}" stroke-width="1.6" ${extra}/>`;
+  const poly=(pts,extra="")=>`<polyline points="${pts}" fill="none" stroke="${C}" stroke-width="1.6" ${extra}/>`;
+  const shape=(kind,x,y,o={})=>{
+    const h=o.size?o.size/2:18, fill=o.fill||"white", stroke=o.stroke||C;
+    let base="";
+    if(kind==="man")base=`<rect x="${x-h}" y="${y-h}" width="${h*2}" height="${h*2}" fill="${fill}" stroke="${stroke}" stroke-width="1.8"/>`;
+    else if(kind==="woman")base=`<circle cx="${x}" cy="${y}" r="${h}" fill="${fill}" stroke="${stroke}" stroke-width="1.8"/>`;
+    else base=`<polygon points="${x},${y-h-1} ${x+h+1},${y} ${x},${y+h+1} ${x-h-1},${y}" fill="${fill}" stroke="${stroke}" stroke-width="1.8"/>`;
+    if(o.question)base+=text(x,y+4,"?", "middle",15,700);
+    if(o.number)base+=text(x,y+4,o.number,"middle",13,700);
+    if(o.deceased)base+=line(x-h-4,y+h+4,x+h+4,y-h-4);
+    if(o.proband){base+=line(x-h-22,y+h+22,x-h-1,y+h+1)+`<polygon points="${x-h-1},${y+h+1} ${x-h-10},${y+h+1} ${x-h-1},${y+h+10}" fill="${C}"/>`;}
+    if(o.consultand)base+=text(x-h-15,y+h+18,"P","middle",12,700);
+    if(o.brackets)base+=`<path d="M${x-h-8} ${y-h-5}H${x-h-13}V${y+h+5}H${x-h-8}M${x+h+8} ${y-h-5}H${x+h+13}V${y+h+5}H${x+h+8}" fill="none" stroke="${C}" stroke-width="1.5"/>`;
+    return base;
+  };
+  const split=(kind,x,y,mode="half")=>{
+    const h=18, id=`clip-${kind}-${x}-${y}-${mode}`;
+    const clip=kind==="man"?`<clipPath id="${id}"><rect x="${x-h}" y="${y-h}" width="36" height="36"/></clipPath>`:kind==="woman"?`<clipPath id="${id}"><circle cx="${x}" cy="${y}" r="18"/></clipPath>`:`<clipPath id="${id}"><polygon points="${x},${y-19} ${x+19},${y} ${x},${y+19} ${x-19},${y}"/></clipPath>`;
+    let fill="";
+    if(mode==="half")fill=`<rect x="${x-h}" y="${y-h}" width="18" height="36" fill="url(#diag)" clip-path="url(#${id})"/>`;
+    if(mode==="two")fill=`<rect x="${x-h}" y="${y-h}" width="18" height="36" fill="${C}" clip-path="url(#${id})"/><rect x="${x}" y="${y-h}" width="18" height="36" fill="url(#diag)" clip-path="url(#${id})"/>`;
+    if(mode==="four")fill=`<rect x="${x-h}" y="${y-h}" width="18" height="18" fill="${C}" clip-path="url(#${id})"/><rect x="${x}" y="${y-h}" width="18" height="18" fill="url(#diag)" clip-path="url(#${id})"/><rect x="${x-h}" y="${y}" width="18" height="18" fill="url(#vert)" clip-path="url(#${id})"/>`;
+    return `<defs>${clip}</defs>${shape(kind,x,y)}${fill}${shape(kind,x,y,{fill:"none"})}`;
+  };
+  const pregnancy=(x,y,o={})=>{
+    const fill=o.affected?C:"white";
+    let s=`<polygon points="${x},${y-20} ${x+20},${y+18} ${x-20},${y+18}" fill="${fill}" stroke="${C}" stroke-width="1.7"/>`;
+    if(o.slash)s+=line(x-24,y+22,x+24,y-24);
+    if(o.p)s+=text(x,y+5,"P","middle",11,700);
+    if(o.label)s+=text(x,y+38,o.label);
+    return s;
+  };
+  const couple=(x1,x2,y,o={})=>{
+    const a=shape(o.a||"man",x1,y,o.affectedA?{fill:C}:{}),b=shape(o.b||"woman",x2,y,o.affectedB?{fill:C}:{});
+    let l="";
+    if(o.consanguineous){l+=line(x1+18,y-2,x2-18,y-2)+line(x1+18,y+2,x2-18,y+2);}
+    else l+=line(x1+18,y,x2-18,y);
+    if(o.ended)l+=line((x1+x2)/2-5,y+8,(x1+x2)/2+5,y-8);
+    return a+b+l;
+  };
+  const family=(o={})=>{
+    const x1=130,x2=250,y=38, cy=125, xs=o.children||[110,190,270];
+    let s=couple(x1,x2,y,o)+line(190,38,190,82)+line(Math.min(...xs),82,Math.max(...xs),82);
+    xs.forEach((x,i)=>{s+=line(x,82,x,cy-18)+shape((o.kinds||[])[i]||((i%2)?"woman":"man"),x,cy,{fill:(o.affected||[]).includes(i)?C:"white"});});
+    return svg(s,380,160);
+  };
+  const examples={
+    "core-man":()=>svg(shape("man",210,70)+text(210,118,"Man / boy")),
+    "core-woman":()=>svg(shape("woman",210,70)+text(210,118,"Woman / girl")),
+    "core-diamond":()=>svg(shape("diamond",210,70)+text(210,118,"Non-binary, unknown or unspecified")),
+    "multiple-known":()=>svg(shape("man",210,70,{number:"4"})+text(210,118,"Four individuals")),
+    "multiple-unknown":()=>svg(shape("diamond",210,70,{number:"n"})+text(210,118,"Number unknown")),
+    "deceased":()=>svg(shape("woman",210,70,{deceased:true})+text(210,118,"d. 2002")),
+    "unknown-status":()=>svg(shape("man",210,70,{question:true})+text(210,118,"Affected status unknown")),
+    "gender-basic":()=>svg(shape("man",90,58)+shape("woman",210,58)+shape("diamond",330,58)+text(90,108,"Man")+text(210,108,"Woman")+text(330,108,"Non-binary")),
+    "gender-annotations":()=>svg(shape("man",90,55)+shape("woman",210,55)+shape("diamond",330,55)+text(90,100,"AFAB")+text(210,100,"AMAB")+text(330,100,"UAAB")),
+    "no-nested-symbols":()=>svg(shape("man",120,65)+text(120,110,"AFAB")+text(250,55,"Use one outer symbol", "start",11,700)+text(250,78,"and annotate sex assigned", "start",10)+text(250,96,"at birth when relevant.", "start",10)),
+    "status-unaffected":()=>svg(shape("woman",210,70)+text(210,118,"Unaffected")),
+    "status-affected":()=>svg(shape("woman",210,70,{fill:C})+text(210,118,"Affected")),
+    "two-condition":()=>svg(split("woman",210,70,"two")+text(210,120,"Two defined findings")),
+    "four-condition":()=>svg(split("man",210,70,"four")+text(210,120,"Four legend-defined regions")),
+    "carrier-pattern":()=>svg(split("woman",210,70,"half")+text(210,120,"Carrier pattern")),
+    "affected-carrier":()=>svg(split("man",210,70,"two")+text(210,120,"Affected + carrier")),
+    "presymptomatic":()=>svg(split("woman",170,70,"half")+text(240,63,"Presymptomatic carrier", "start",11,700)+text(240,86,"Define condition in legend", "start",10)),
+    "proband":()=>svg(shape("woman",210,70,{fill:C,proband:true})+text(210,125,"Affected proband")),
+    "consultand":()=>svg(shape("man",210,70,{consultand:true})+text(210,125,"Unaffected consultand")),
+    "relationship-current":()=>svg(couple(130,290,70)+text(210,120,"Current relationship")),
+    "relationship-ended":()=>svg(couple(130,290,70,{ended:true})+text(210,120,"Relationship ended")),
+    "multiple-partners":()=>svg(shape("woman",210,70)+shape("man",90,70)+shape("man",330,70)+line(108,70,192,70)+line(228,70,312,70)+text(210,125,"Separate relationships")),
+    "consanguinity":()=>svg(couple(130,290,70,{consanguineous:true})+text(210,120,"First cousins")),
+    "no-children":()=>svg(couple(130,290,45)+line(210,45,210,95)+line(198,95,222,95)+text(210,125,"No children")),
+    "infertility":()=>svg(couple(130,290,45)+line(210,45,210,82)+text(210,110,"Infertility: azoospermia")),
+    "single-parent":()=>svg(shape("woman",210,38)+line(210,56,210,105)+shape("man",210,125)+text(290,90,"One recorded parent","start",10)),
+    "sibship-basic":()=>family(),
+    "birth-order":()=>svg(couple(130,250,35)+line(190,35,190,75)+line(80,75,300,75)+line(80,75,80,112)+line(190,75,190,112)+line(300,75,300,112)+shape("woman",80,130)+shape("man",190,130)+shape("woman",300,130)+text(80,158,"oldest")+text(300,158,"youngest"),420,175),
+    "half-siblings":()=>svg(shape("woman",210,35)+shape("man",80,35)+shape("man",340,35)+line(98,35,192,35)+line(228,35,322,35)+line(145,35,145,85)+line(275,35,275,85)+shape("woman",145,115)+shape("man",275,115)+text(210,150,"Half-siblings")),
+    "generation-numbering":()=>svg(text(25,45,"I","middle",12,700)+text(25,125,"II","middle",12,700)+couple(130,250,35)+line(190,35,190,80)+line(130,80,250,80)+line(130,80,130,107)+line(250,80,250,107)+shape("woman",130,125)+shape("man",250,125)+text(130,158,"II-1")+text(250,158,"II-2"),380,175),
+    "twins-dz":()=>svg(line(210,25,210,65)+line(210,65,145,112)+line(210,65,275,112)+shape("woman",135,130)+shape("man",285,130)),
+    "twins-mz":()=>svg(line(210,25,210,65)+line(210,65,145,112)+line(210,65,275,112)+line(175,91,245,91)+shape("woman",135,130)+shape("woman",285,130)),
+    "twins-unknown":()=>svg(text(210,32,"?", "middle",15,700)+line(210,42,210,65)+line(210,65,145,112)+line(210,65,275,112)+shape("woman",135,130)+shape("man",285,130)),
+    "triplets":()=>svg(line(210,25,210,60)+line(210,60,95,110)+line(210,60,210,110)+line(210,60,325,110)+shape("woman",85,130)+shape("man",210,130)+shape("diamond",335,130)),
+    "pregnancy-ongoing":()=>svg(pregnancy(210,65,{p:true,label:"16 weeks"})),
+    "pregnancy-known-sex":()=>svg(pregnancy(210,55,{p:true})+text(210,105,"AFAB · 16 weeks")),
+    "sab":()=>svg(pregnancy(210,60,{label:"SAB · 8 weeks"})),
+    "sab-affected":()=>svg(pregnancy(210,60,{affected:true,label:"Affected SAB · 8 weeks"})),
+    "ectopic":()=>svg(pregnancy(210,60,{label:"ECT · 8 weeks"})),
+    "top":()=>svg(pregnancy(210,60,{slash:true,label:"TOP · 16 weeks"})),
+    "stillbirth":()=>svg(shape("woman",210,60,{deceased:true})+text(210,108,"SB · 34 weeks")),
+    "gestational-age":()=>svg(pregnancy(210,55,{p:true})+text(210,105,"16 weeks")),
+    "adopted-in":()=>svg(couple(130,290,35)+poly("210,35 210,85 210,110",'stroke-dasharray="5 4"')+shape("woman",210,130,{brackets:true})+text(210,158,"Adopted in"),420,175),
+    "adopted-out":()=>svg(couple(130,290,35)+line(210,35,210,112)+shape("man",210,130,{brackets:true})+text(210,158,"Adopted out"),420,175),
+    "adoption-lines":()=>svg(line(90,45,90,115)+poly("300,45 300,115",'stroke-dasharray="5 4"')+shape("woman",90,135,{brackets:true})+shape("woman",300,135,{brackets:true})+text(90,25,"Biological")+text(300,25,"Adoptive")),
+    "adopted-relative":()=>svg(couple(95,205,35)+line(150,35,150,112)+shape("woman",150,130,{brackets:true})+couple(275,385,35)+poly("330,35 330,82 150,82 150,112",'stroke-dasharray="5 4"'),440,170),
+    "donor-sperm":()=>svg(shape("man",55,35)+text(55,15,"D","middle",12,700)+couple(180,300,35)+line(240,35,240,75)+pregnancy(240,112,{p:true})+poly("73,35 120,35 120,75 240,75",'stroke-dasharray="5 4"'),360,150),
+    "donor-ovum":()=>svg(shape("woman",55,35)+text(55,15,"D","middle",12,700)+couple(180,300,35)+line(240,35,240,75)+pregnancy(240,112,{p:true})+poly("73,35 120,35 120,75 240,75",'stroke-dasharray="5 4"'),360,150),
+    "embryo-donation":()=>svg(shape("man",45,30)+shape("woman",105,30)+text(75,12,"D + D")+couple(225,345,30)+line(285,30,285,72)+pregnancy(285,110,{p:true})+poly("63,30 75,55 123,30 150,72 285,72",'stroke-dasharray="5 4"'),390,150),
+    "gestational-carrier":()=>svg(couple(90,210,30)+shape("woman",330,30)+text(330,12,"S","middle",12,700)+line(330,48,330,80)+pregnancy(330,116,{p:true})+poly("150,30 150,80 330,80",'stroke-dasharray="5 4"'),390,150),
+    "donor-surrogate":()=>svg(couple(90,210,30)+shape("woman",330,30)+text(330,12,"D","middle",12,700)+line(330,48,330,80)+pregnancy(330,116,{p:true})+poly("150,30 150,80 330,80",'stroke-dasharray="5 4"'),390,150),
+    "double-donor":()=>svg(shape("man",45,30)+shape("woman",105,30)+text(75,12,"D + D")+couple(225,345,30)+line(285,30,285,72)+pregnancy(285,110,{p:true})+poly("63,30 75,55 123,30 150,72 285,72",'stroke-dasharray="5 4"'),390,150),
+    "annotation-order":()=>svg(shape("woman",120,55)+text(120,98,"34y")+text(120,113,"Genome sequencing negative")+text(120,128,"II-3")+text(230,55,"Age / birth-death year","start",10,700)+text(230,78,"Evaluation result","start",10,700)+text(230,101,"Pedigree identifier","start",10,700)),
+    "pedigree-id":()=>svg(shape("man",115,55)+shape("woman",305,55)+text(115,102,"I-1")+text(305,102,"I-2")),
+    "routing-clinical":()=>family(),
+    "routing-flexible":()=>svg(couple(110,310,35)+line(210,35,170,90)+line(90,90,280,90)+line(90,90,70,122)+line(280,90,320,122)+shape("woman",60,140)+shape("man",330,140),420,165),
+    "coordinate-model":()=>svg(shape("man",100,40)+shape("woman",300,40)+line(118,40,282,40)+line(200,40,200,90)+line(120,90,300,90)+line(120,90,120,120)+line(300,90,300,120)+shape("woman",120,138)+shape("man",300,138)+text(100,15,"automatic x")+text(300,15,"pinned x")+text(210,108,"junction")),
+    "example-three-generation":()=>svg(couple(120,240,25)+line(180,25,180,60)+line(110,60,250,60)+line(110,60,110,92)+line(250,60,250,92)+shape("woman",110,110)+shape("man",250,110,{fill:C,proband:true})+text(25,30,"I","middle",11,700)+text(25,115,"II","middle",11,700),360,150),
+    "example-ad":()=>svg(couple(120,240,25,{affectedA:true})+line(180,25,180,60)+line(100,60,260,60)+line(100,60,100,92)+line(260,60,260,92)+shape("woman",100,110,{fill:C})+shape("man",260,110)+text(25,30,"I")+text(25,115,"II"),360,150),
+    "example-ar":()=>svg(couple(120,240,25,{consanguineous:true})+line(180,25,180,60)+line(100,60,260,60)+line(100,60,100,92)+line(260,60,260,92)+shape("woman",100,110,{fill:C})+shape("man",260,110,{fill:C}),360,150),
+    "example-xlinked":()=>svg(couple(120,240,25)+split("woman",240,25,"half")+line(180,25,180,60)+line(100,60,260,60)+line(100,60,100,92)+line(260,60,260,92)+shape("man",100,110,{fill:C})+shape("woman",260,110),360,150),
+    "example-cancer":()=>svg(couple(120,240,25,{affectedB:true})+line(180,25,180,60)+line(100,60,260,60)+line(100,60,100,92)+line(260,60,260,92)+shape("woman",100,110,{fill:C})+shape("man",260,110)+text(100,145,"Breast ca, 42y")+text(240,145,"Colon ca, 51y"),360,160),
+    "example-prenatal":()=>svg(couple(120,240,25)+line(180,25,180,60)+line(100,60,260,60)+line(100,60,100,80)+line(180,60,180,80)+line(260,60,260,80)+pregnancy(100,110,{label:"SAB 8w"})+pregnancy(180,110,{p:true,label:"16w"})+shape("woman",260,110),360,160),
+    "example-adoption":()=>svg(couple(80,180,25)+line(130,25,130,92)+shape("woman",130,110,{brackets:true})+couple(250,350,25)+poly("300,25 300,65 130,65 130,92",'stroke-dasharray="5 4"'),380,145),
+    "example-art":()=>svg(shape("man",35,25)+text(35,8,"D")+couple(150,270,25)+line(210,25,210,65)+pregnancy(210,105,{p:true})+poly("53,25 95,25 95,65 210,65",'stroke-dasharray="5 4"'),320,145),
+    "example-gender":()=>svg(shape("man",110,55)+text(110,100,"AFAB")+shape("diamond",300,55)+text(300,100,"UAAB")),
+    "example-multifill":()=>svg(split("woman",120,65,"two")+text(120,115,"Individual")+`<rect x="235" y="42" width="18" height="18" fill="${C}"/>`+text(265,56,"Condition A","start",10)+`<rect x="235" y="78" width="18" height="18" fill="url(#diag)" stroke="${C}"/>`+text(265,92,"Carrier finding B","start",10))
+  };
+  document.querySelectorAll("[data-example]").forEach(el=>{
+    const fn=examples[el.dataset.example];
+    if(fn)el.innerHTML=fn();
+  });
+  const select=document.getElementById("standardsSectionSelect");
+  if(select)select.addEventListener("change",()=>{if(select.value)document.querySelector(select.value)?.scrollIntoView({behavior:"smooth"});});
+})();
+</script>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
