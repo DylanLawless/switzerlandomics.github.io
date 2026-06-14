@@ -1,20 +1,267 @@
-HTTP/2 200 
-server: nginx
-date: Sun, 07 Jun 2026 07:28:14 GMT
-content-type: application/json
-vary: origin,access-control-request-method,access-control-request-headers,accept-encoding
-gb-requests: Requests 1 for ip#81.221.149.23
-x-content-type-options: nosniff
-x-xss-protection: 0
-cache-control: no-cache
-pragma: no-cache
-expires: Sun, 07 Jun 2026 07:28:13 GMT
-strict-transport-security: max-age=31536000 ; includeSubDomains
-x-frame-options: DENY
-cache-control: no-transform
-x-content-type-options: nosniff
-x-frame-options: DENY
-referrer-policy: strict-origin-when-cross-origin
-permissions-policy: camera=(), microphone=(), geolocation=()
+.
+├── 404.html
+├── CNAME
+├── Gemfile
+├── Gemfile.lock
+├── LICENSE
+├── README.md
+├── _blog
+│   ├── 2025-05-01.md
+│   ├── 2025-05-21-quant.md
+│   ├── 2025-06-15.md
+│   ├── 2025-07-27-bitter-lesson.md
+│   ├── 2025-08-01-quant-posterior.md
+│   ├── 2025-09-19-quant-poster.md
+│   ├── 2025-11-27-open-standards.md
+│   ├── 2025-12-14-sga_qem.md
+│   ├── 2026-01-04-founders-illumina.md
+│   ├── 2026-01-11-founders-icahn_partners_v_deSouza_illumina_grail.md
+│   ├── 2026-01-17-founders-grail.md
+│   ├── 2026-01-18-founders-ANNOVAR.md
+│   ├── 2026-01-25-founders-hgmd.md
+│   ├── 2026-02-01-founders-Phred-Phrap-Consed.md
+│   ├── 2026-02-08-founders-dbnsfp.md
+│   ├── 2026-02-14-founders-SBX.md
+│   ├── 2026-02-15-the_real_industry_bottleneck_after_genome_sequencing.md
+│   ├── 2026-03-14-When_sequencing_became_infrastructure.md
+│   ├── 2026-03-14-founders_sentieon.md
+│   ├── 2026-03-15-Quinary_inference_the_fifth_layer_of_genomics.md
+│   ├── 2026-05-16-roche_complete_overview_2026.md
+│   ├── 2026-05-17-aquisition.md
+│   ├── 2026-05-20-ai_horizontal_layer.md
+│   ├── 2026-06-09-founders-element_biosciences.md
+│   ├── 2026-xx-xx-celebrating-trademark.md
+│   ├── 2026-xx-xx-preventing_war.md
+│   ├── 2026-xx-xx-second_clock.md
+│   ├── founder_stories_format_guide.md
+│   ├── founder_stories_wiriting_guide.md
+│   └── founders_cases.md
+├── _config.yml
+├── _data
+│   ├── contact.yml
+│   ├── features.json
+│   ├── menus.yml
+│   ├── seo.yml
+│   └── social.json
+├── _includes
+│   ├── call.html
+│   ├── dark_evidence_banner_area.html
+│   ├── dark_hero_kicker.html
+│   ├── dark_publications_banner_area.html
+│   ├── footer.html
+│   ├── google-analytics.html
+│   ├── hamburger.html
+│   ├── header.html
+│   ├── infrastructure_maturity.bak
+│   ├── infrastructure_maturity.html
+│   ├── legal-bar.html
+│   ├── main-menu-mobile.html
+│   ├── main-menu.html
+│   ├── mathjax.html
+│   ├── newsletter_signup.html
+│   ├── quant_card.html
+│   ├── quant_card_v0.html
+│   ├── qv_acmg_svnindel_criteria_20250225.yaml
+│   ├── social.html
+│   └── sub-footer.html
+├── _layouts
+│   ├── contact.html
+│   ├── default.html
+│   ├── default_no_brand.html
+│   ├── default_panelapprex.html
+│   ├── home.html
+│   ├── learn-index.html
+│   ├── learn.html
+│   ├── mathjax.html
+│   ├── page.html
+│   ├── page_no_brand.html
+│   ├── team.html
+│   ├── teams.html
+│   ├── tech.html
+│   └── technologies.html
+├── _learn
+│   ├── bam_and_bai_format.md
+│   ├── bed_format.md
+│   ├── cram_foramt.md
+│   ├── cram_vs_sam_vs_bam.md
+│   ├── csi_format.md
+│   ├── fasta_format.md
+│   ├── fastq_format.md
+│   ├── genes_vs_dna_vs_chromosomes_explained.md
+│   ├── how_genetic_inheritance_works.md
+│   ├── human_reference_genome.md
+│   ├── learn_pages_template.txt
+│   ├── learn_pages_to_do.txt
+│   ├── phred_score.md
+│   ├── reference_genomes_grch37_vs_grch38.md
+│   ├── sam_format.md
+│   ├── style_guide.txt
+│   ├── tabix_format.md
+│   ├── vcf_format.md
+│   ├── vcf_vs_gvcf.md
+│   ├── what_is_a_genetics_disease.md
+│   ├── what_is_a_genome.md
+│   └── what_is_dna.md
+├── _release
+│   └── etherial_precision.md
+├── _sass
+│   ├── _bootstrap-variables.scss
+│   ├── bootstrap
+│   ├── components
+│   ├── custom
+│   ├── libraries
+│   └── pages
+├── _site
+│   ├── 404
+│   ├── CNAME
+│   ├── about
+│   ├── assets
+│   ├── blog
+│   ├── builtatlightspeed.json
+│   ├── ceopage
+│   ├── contact
+│   ├── demo.html
+│   ├── fleyer_quantbayes
+│   ├── images
+│   ├── index.html
+│   ├── index.md_bak
+│   ├── index.md_vaulttransition
+│   ├── jek.sh
+│   ├── kill_serve.sh
+│   ├── learn
+│   ├── legal
+│   ├── netlify.toml
+│   ├── newsletter_signup
+│   ├── pages
+│   ├── partnerships
+│   ├── pitch
+│   ├── pitch_genomic_vault
+│   ├── pricing
+│   ├── pricing_table.md
+│   ├── publications
+│   ├── qv_es_table
+│   ├── release
+│   ├── releases
+│   ├── robots.txt
+│   ├── shareholder_letters
+│   ├── sitemap.xml
+│   ├── stack
+│   ├── standard_qem
+│   ├── storage.md
+│   ├── team
+│   ├── technologies
+│   ├── temp
+│   └── why-open
+├── _team
+│   ├── advisor-brand-communication.md
+│   ├── advisor-scientific.md
+│   ├── advisor-security-regulatory.md
+│   ├── bill-mcdonald.md
+│   └── dylan-lawless.md
+├── _technologies
+│   ├── acmg_validator.md
+│   ├── agent.md
+│   ├── archipelago.md
+│   ├── dante.md
+│   ├── evidence_ratio.md
+│   ├── genomic_vault.md
+│   ├── guru.md
+│   ├── iei_genetics.md
+│   ├── max_maf.md
+│   ├── panelAppRexAi.md
+│   ├── panelAppRexAi_alpha.md
+│   ├── panelAppRexAi_shinyapp.md
+│   ├── particles.html
+│   ├── pedigree.html
+│   ├── quant.md
+│   ├── quantbayes.md
+│   ├── qv_database.md
+│   ├── statistical_genomics.md
+│   ├── thinking.html
+│   ├── vcfheader.md
+│   └── wgs.md
+├── about.md
+├── assets
+│   ├── css
+│   ├── fonts
+│   ├── gene_structure_viewer
+│   ├── genebe_api
+│   ├── js
+│   ├── panel_ai
+│   ├── pdf
+│   ├── quant
+│   ├── qv_database
+│   ├── qv_submission.md
+│   ├── release
+│   ├── submission_mailing_list.md
+│   └── videos
+├── blog.md
+├── builtatlightspeed.json
+├── ceopage.md
+├── contact.md
+├── demo.html
+├── fleyer_quantbayes.md
+├── images
+│   ├── 2025_E_L_Laurent_etherial_precision
+│   ├── android-chrome-192x192.png
+│   ├── android-chrome-512x512.png
+│   ├── apple-touch-icon.png
+│   ├── archipelago
+│   ├── bsmg_recommendation_screenshot.png
+│   ├── evidenceratio
+│   ├── favicon-16x16.png
+│   ├── favicon-32x32.png
+│   ├── favicon.ico
+│   ├── features
+│   ├── freepik_vectorjuice
+│   ├── genomic_vault
+│   ├── illustrations
+│   ├── learn
+│   ├── logo
+│   ├── pipedev_logo_1.png
+│   ├── pipedev_longer.png
+│   ├── pitch_deck
+│   ├── pitchdeck
+│   ├── quantbayes
+│   ├── site.webmanifest
+│   ├── so_publisher_cloud
+│   ├── social
+│   ├── swisspedhealth_pipedev.png
+│   ├── team
+│   ├── technologies
+│   ├── var_risk_est
+│   └── vcfheader
+├── index.md
+├── index.md_bak
+├── index.md_vaulttransition
+├── jek.sh
+├── kill_serve.sh
+├── learn.md
+├── legal.md
+├── netlify.toml
+├── newsletter_signup.md
+├── pages
+│   ├── fleyer_quantbayes.md
+│   ├── panelAppRexAi_about.md
+│   ├── pedigree-standards.html
+│   ├── qv_builder.md
+│   └── vcfheader_browser.html
+├── partnerships.md
+├── pitch.md
+├── pitch_02.md
+├── pricing.md
+├── pricing_table.md
+├── publication.md
+├── qv_es_table.md
+├── releases.md
+├── shareholder_letters
+│   └── 2025_letter_to_shareholders.md
+├── stack.md
+├── standard_qem.md
+├── storage.md
+├── team.md
+├── technologies.md
+├── temp
+└── why_open.md
 
-{"message":null,"variants":[{"acmg_by_gene":[{"benign_score":0,"criteria":["PM2","PP3"],"effects":["exon_region"],"gene_symbol":"BRAF","hgnc_id":1097,"hgvs_c":"c.","hgvs_p":null,"inheritance_mode":"AD","pathogenic_score":3,"score":3,"transcript":"NM_004333.6","verdict":"Uncertain_significance"}],"acmg_classification":"Uncertain_significance","acmg_criteria":"PM2,PP3","acmg_score":3,"allele_count_reference_population":0,"alphamissense_prediction":null,"alphamissense_score":null,"alt":"A","apogee2_prediction":null,"apogee2_score":null,"bayesdelnoaf_prediction":null,"bayesdelnoaf_score":null,"chr":"7","clinvar_classification":"","clinvar_disease":"","clinvar_review_status":"","clinvar_submissions_summary":"","computational_prediction_selected":null,"computational_score_selected":null,"computational_source_selected":null,"consequences":[{"aa_alt":null,"aa_end":null,"aa_length":807,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9807,"cdna_start":null,"cds_end":null,"cds_length":2424,"cds_start":null,"consequences":["exon_region"],"exon_count":20,"exon_rank":16,"exon_rank_end":null,"feature":"NM_001374258.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":"ENST00000644969.2","mane_select":null,"protein_coding":true,"protein_id":"NP_001361187.1","strand":false,"transcript":"NM_001374258.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":807,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9807,"cdna_start":null,"cds_end":null,"cds_length":2424,"cds_start":null,"consequences":["exon_region"],"exon_count":20,"exon_rank":16,"exon_rank_end":null,"feature":"ENST00000644969.2","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":"NM_001374258.1","mane_select":null,"protein_coding":true,"protein_id":"ENSP00000496776.1","strand":false,"transcript":"ENST00000644969.2","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":766,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":6459,"cdna_start":null,"cds_end":null,"cds_length":2301,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"NM_004333.6","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":"ENST00000646891.2","protein_coding":true,"protein_id":"NP_004324.2","strand":false,"transcript":"NM_004333.6","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":766,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":true,"cdna_end":null,"cdna_length":6459,"cdna_start":null,"cds_end":null,"cds_length":2301,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"ENST00000646891.2","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":"NM_004333.6","protein_coding":true,"protein_id":"ENSP00000493543.1","strand":false,"transcript":"ENST00000646891.2","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":806,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":2561,"cdna_start":null,"cds_end":null,"cds_length":2421,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":16,"exon_rank_end":null,"feature":"ENST00000288602.11","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"ENSP00000288602.7","strand":false,"transcript":"ENST00000288602.11","transcript_support_level":1},{"aa_alt":null,"aa_end":null,"aa_length":809,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":2552,"cdna_start":null,"cds_end":null,"cds_length":2430,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":16,"exon_rank_end":null,"feature":"ENST00000944245.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"ENSP00000614304.1","strand":false,"transcript":"ENST00000944245.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":806,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":6579,"cdna_start":null,"cds_end":null,"cds_length":2421,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":16,"exon_rank_end":null,"feature":"NM_001374244.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001361173.1","strand":false,"transcript":"NM_001374244.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":770,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9696,"cdna_start":null,"cds_end":null,"cds_length":2313,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":15,"exon_rank_end":null,"feature":"NM_001378467.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365396.1","strand":false,"transcript":"NM_001378467.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":769,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":3168,"cdna_start":null,"cds_end":null,"cds_length":2310,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"ENST00000912600.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"ENSP00000582659.1","strand":false,"transcript":"ENST00000912600.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":767,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9687,"cdna_start":null,"cds_end":null,"cds_length":2304,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":15,"exon_rank_end":null,"feature":"NM_001354609.2","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001341538.1","strand":false,"transcript":"NM_001354609.2","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":767,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9578,"cdna_start":null,"cds_end":null,"cds_length":2304,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":15,"exon_rank_end":null,"feature":"ENST00000496384.7","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"ENSP00000419060.2","strand":false,"transcript":"ENST00000496384.7","transcript_support_level":5},{"aa_alt":null,"aa_end":null,"aa_length":758,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9533,"cdna_start":null,"cds_end":null,"cds_length":2277,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"NM_001378468.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365397.1","strand":false,"transcript":"NM_001378468.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":744,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":6393,"cdna_start":null,"cds_end":null,"cds_length":2235,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"NM_001378469.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365398.1","strand":false,"transcript":"NM_001378469.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":744,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":3026,"cdna_start":null,"cds_end":null,"cds_length":2235,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"ENST00000912601.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"ENSP00000582660.1","strand":false,"transcript":"ENST00000912601.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":733,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9585,"cdna_start":null,"cds_end":null,"cds_length":2202,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":14,"exon_rank_end":null,"feature":"NM_001378470.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365399.1","strand":false,"transcript":"NM_001378470.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":732,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":2550,"cdna_start":null,"cds_end":null,"cds_length":2199,"cds_start":null,"consequences":["exon_region"],"exon_count":17,"exon_rank":14,"exon_rank_end":null,"feature":"ENST00000867091.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"ENSP00000537150.1","strand":false,"transcript":"ENST00000867091.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":730,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9576,"cdna_start":null,"cds_end":null,"cds_length":2193,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":14,"exon_rank_end":null,"feature":"NM_001378471.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365400.1","strand":false,"transcript":"NM_001378471.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":715,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9406,"cdna_start":null,"cds_end":null,"cds_length":2148,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":15,"exon_rank_end":null,"feature":"NM_001378472.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365401.1","strand":false,"transcript":"NM_001378472.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":714,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":6178,"cdna_start":null,"cds_end":null,"cds_length":2145,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"NM_001378473.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365402.1","strand":false,"transcript":"NM_001378473.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":711,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":5062,"cdna_start":null,"cds_end":null,"cds_length":2136,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"NM_001378474.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365403.1","strand":false,"transcript":"NM_001378474.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":679,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9423,"cdna_start":null,"cds_end":null,"cds_length":2040,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":14,"exon_rank_end":null,"feature":"NM_001378475.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"NP_001365404.1","strand":false,"transcript":"NM_001378475.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":798,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9653,"cdna_start":null,"cds_end":null,"cds_length":2397,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":16,"exon_rank_end":null,"feature":"XM_017012559.2","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"XP_016868048.1","strand":false,"transcript":"XM_017012559.2","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":755,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9526,"cdna_start":null,"cds_end":null,"cds_length":2268,"cds_start":null,"consequences":["exon_region"],"exon_count":20,"exon_rank":16,"exon_rank_end":null,"feature":"XM_047420766.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"XP_047276722.1","strand":false,"transcript":"XM_047420766.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":714,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":2555,"cdna_start":null,"cds_end":null,"cds_length":2145,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":16,"exon_rank_end":null,"feature":"XM_047420767.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"XP_047276723.1","strand":false,"transcript":"XM_047420767.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":529,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":9145,"cdna_start":null,"cds_end":null,"cds_length":1590,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":14,"exon_rank_end":null,"feature":"XM_047420770.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"XP_047276726.1","strand":false,"transcript":"XM_047420770.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":314,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":986,"cdna_start":null,"cds_end":null,"cds_length":945,"cds_start":null,"consequences":["intron_variant"],"exon_count":6,"exon_rank":null,"exon_rank_end":null,"feature":"ENST00000867092.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":3,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"ENSP00000537151.1","strand":false,"transcript":"ENST00000867092.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":270,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":1403,"cdna_start":null,"cds_end":null,"cds_length":813,"cds_start":null,"consequences":["intron_variant"],"exon_count":5,"exon_rank":null,"exon_rank_end":null,"feature":"ENST00000867090.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":3,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"ENSP00000537149.1","strand":false,"transcript":"ENST00000867090.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":633,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":2243,"cdna_start":null,"cds_end":null,"cds_length":1902,"cds_start":null,"consequences":["intron_variant"],"exon_count":16,"exon_rank":null,"exon_rank_end":null,"feature":"XM_047420768.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":14,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"XP_047276724.1","strand":false,"transcript":"XM_047420768.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":593,"aa_ref":null,"aa_start":null,"biotype":"protein_coding","canonical":false,"cdna_end":null,"cdna_length":2120,"cdna_start":null,"cds_end":null,"cds_length":1782,"cds_start":null,"consequences":["intron_variant"],"exon_count":15,"exon_rank":null,"exon_rank_end":null,"feature":"XM_047420769.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"c.","hgvs_p":null,"intron_rank":13,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":true,"protein_id":"XP_047276725.1","strand":false,"transcript":"XM_047420769.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":1129,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["exon_region"],"exon_count":9,"exon_rank":5,"exon_rank_end":null,"feature":"ENST00000479537.6","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000418033.2","strand":false,"transcript":"ENST00000479537.6","transcript_support_level":5},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":2387,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["exon_region"],"exon_count":19,"exon_rank":16,"exon_rank_end":null,"feature":"ENST00000497784.2","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000420119.2","strand":false,"transcript":"ENST00000497784.2","transcript_support_level":5},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":2574,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"ENST00000642228.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000493678.1","strand":false,"transcript":"ENST00000642228.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"pseudogene","canonical":false,"cdna_end":null,"cdna_length":3889,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["exon_region"],"exon_count":17,"exon_rank":14,"exon_rank_end":null,"feature":"ENST00000644120.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":null,"strand":false,"transcript":"ENST00000644120.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":1639,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["exon_region"],"exon_count":14,"exon_rank":9,"exon_rank_end":null,"feature":"ENST00000644650.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000493783.1","strand":false,"transcript":"ENST00000644650.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"retained_intron","canonical":false,"cdna_end":null,"cdna_length":5217,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["exon_region"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"ENST00000644905.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":null,"strand":false,"transcript":"ENST00000644905.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":2829,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["exon_region"],"exon_count":21,"exon_rank":17,"exon_rank_end":null,"feature":"ENST00000646730.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000494784.1","strand":false,"transcript":"ENST00000646730.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":2387,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["3_prime_UTR_variant"],"exon_count":19,"exon_rank":16,"exon_rank_end":null,"feature":"ENST00000497784.2","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000420119.2","strand":false,"transcript":"ENST00000497784.2","transcript_support_level":5},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":2574,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["3_prime_UTR_variant"],"exon_count":18,"exon_rank":15,"exon_rank_end":null,"feature":"ENST00000642228.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000493678.1","strand":false,"transcript":"ENST00000642228.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":2829,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["3_prime_UTR_variant"],"exon_count":21,"exon_rank":17,"exon_rank_end":null,"feature":"ENST00000646730.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":null,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000494784.1","strand":false,"transcript":"ENST00000646730.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"retained_intron","canonical":false,"cdna_end":null,"cdna_length":2871,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["intron_variant"],"exon_count":15,"exon_rank":null,"exon_rank_end":null,"feature":"ENST00000642875.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":11,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":null,"strand":false,"transcript":"ENST00000642875.1","transcript_support_level":null},{"aa_alt":null,"aa_end":null,"aa_length":null,"aa_ref":null,"aa_start":null,"biotype":"nonsense_mediated_decay","canonical":false,"cdna_end":null,"cdna_length":1217,"cdna_start":null,"cds_end":null,"cds_length":null,"cds_start":null,"consequences":["intron_variant"],"exon_count":10,"exon_rank":null,"exon_rank_end":null,"feature":"ENST00000647434.1","gene_hgnc_id":1097,"gene_symbol":"BRAF","hgvs_c":"n.","hgvs_p":null,"intron_rank":7,"intron_rank_end":null,"mane_plus":null,"mane_select":null,"protein_coding":false,"protein_id":"ENSP00000495132.1","strand":false,"transcript":"ENST00000647434.1","transcript_support_level":null}],"custom_annotations":null,"dbscsnv_ada_prediction":null,"dbscsnv_ada_score":null,"dbsnp":null,"effect":"exon_region","frequency_reference_population":null,"gene_hgnc_id":1097,"gene_symbol":"BRAF","gnomad_exomes_ac":null,"gnomad_exomes_af":null,"gnomad_exomes_homalt":null,"gnomad_genomes_ac":null,"gnomad_genomes_af":null,"gnomad_genomes_homalt":null,"gnomad_mito_heteroplasmic":null,"gnomad_mito_homoplasmic":null,"hom_count_reference_population":0,"mitotip_prediction":null,"mitotip_score":null,"pathogenicity_classification_combined":null,"phenotype_combined":null,"phylop100way_prediction":"Pathogenic","phylop100way_score":7.831,"pos":140753336,"ref":"A","revel_prediction":null,"revel_score":null,"splice_prediction_selected":null,"splice_score_selected":null,"splice_source_selected":null,"spliceai_max_prediction":null,"spliceai_max_score":null,"transcript":"NM_004333.6"}]}
+74 directories, 190 files

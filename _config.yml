@@ -31,9 +31,16 @@ collections:
   learn:
     output: true
     permalink: /learn/:name/
+  legal:
+    output: true
 
 
 defaults:
+  - scope:
+      path: ""
+      type: legal
+    values:
+      layout: page
   - scope:
       path: ""
       type: "technologies"

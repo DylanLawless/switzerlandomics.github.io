@@ -425,10 +425,9 @@
         <div class="tech tech-summary">
           <div class="tech-content">
             <h2 class="tech-title">
-              <a href="/technologies/pedigree/standards/">Standardised pedigree notation</a>
+              <a href="/technologies/pedigree/">Pedigree</a>
             </h2>
             <p>
-
 </p>
           </div>
         </div>
@@ -816,6 +815,10 @@ The open standard for variant interpretation, with trusted QV sets to enhance cl
             
             <li class="">
               <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
             </li>
             
             <li class="">

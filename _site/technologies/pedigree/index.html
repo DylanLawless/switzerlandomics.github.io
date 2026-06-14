@@ -333,17 +333,17 @@
 .rep-warn .sev{width:6px;height:6px;border-radius:50%;margin-top:5px;flex:0 0 auto}
 .signoff-block{border-top:2px solid var(--text-secondary);background:#fff}
 
-.rep-records{display:grid;gap:14px;}
+.rep-records{display:grid;gap:12px;font-size:.75rem;line-height:1.35;}
 .rep-record{border-top:1px solid var(--border-default);padding-top:10px;}
 .rep-record:first-child{border-top:0;padding-top:0;}
-.rep-record-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:8px;}
-.rep-record-title{margin:0;font-weight:600;color:var(--text-primary);}
-.rep-record-meta{color:var(--text-muted);font-size:.82rem;text-align:right;}
+.rep-record-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px;}
+.rep-record-title{margin:0;color:var(--text-primary);font-size:.75rem;line-height:1.35;font-weight:600;}
+.rep-record-meta{color:var(--text-muted);font-size:.6875rem;line-height:1.35;text-align:right;}
 .rep-record-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:20px;row-gap:0;}
-.rep-record-grid .rep-item{display:grid;grid-template-columns:minmax(110px,34%) minmax(0,1fr);gap:10px;padding:5px 0;border-bottom:1px solid var(--border-subtle);}
-.rep-record-grid dt{margin:0;color:var(--text-muted);font-weight:600;}
-.rep-record-grid dd{margin:0;min-width:0;overflow-wrap:anywhere;}
-.rep-record-grid dd.mono{font-family:monospace;}
+.rep-record-grid .rep-item{display:grid;grid-template-columns:minmax(110px,34%) minmax(0,1fr);gap:10px;padding:5px 0;border-bottom:1px solid var(--border-subtle);font-size:.75rem;line-height:1.35;}
+.rep-record-grid dt{margin:0;color:var(--text-muted);font-size:.6875rem;line-height:1.35;font-weight:600;}
+.rep-record-grid dd{margin:0;min-width:0;overflow-wrap:anywhere;font-size:.75rem;line-height:1.35;}
+.rep-record-grid dd.mono{font-family:monospace;font-size:.6875rem;}
 .rep-record-grid .rep-item-wide{grid-column:1 / -1;}
 @media (max-width:760px){
   .rep-record-grid{grid-template-columns:1fr;}
@@ -403,6 +403,55 @@
 .context .cx{display:flex;align-items:center;gap:6px}
 .context .cx strong{color:var(--text-secondary);font-weight:600}
 .context .spacer{flex:1}
+
+.pedigree-legal-notice{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px 24px;
+  padding:12px 0 20px;
+  color:var(--text-muted);
+  font-size:.6875rem;
+  line-height:1.45;
+}
+
+.pedigree-legal-notice p{
+  margin:0;
+  max-width:900px;
+}
+
+.pedigree-legal-links{
+  display:flex;
+  flex:0 0 auto;
+  gap:14px;
+  white-space:nowrap;
+}
+
+.pedigree-legal-links a{
+  color:var(--accent);
+  text-decoration:none;
+}
+
+.pedigree-legal-links a:hover{
+  text-decoration:underline;
+}
+
+@media (max-width:760px){
+  .pedigree-legal-notice{
+    display:block;
+  }
+
+  .pedigree-legal-links{
+    margin-top:7px;
+  }
+}
+
+@media print{
+  .pedigree-legal-notice{
+    display:none!important;
+  }
+}
+
 .pill{padding:2px 9px;border-radius:999px;font-size:.6875rem;font-weight:600;border:1px solid transparent}
 .pill.warn{background:var(--warning-soft);color:var(--warning);border-color:var(--warning-border)}
 .pill.err{background:var(--error-soft);color:var(--error);border-color:var(--error-border)}
@@ -436,42 +485,92 @@
   .rep-block{break-inside:avoid;box-shadow:none}
   .page{max-width:none}
 }
-@media (max-width:1120px){ .main{grid-template-columns:minmax(320px,360px) minmax(0,1fr) 0} .navigator{display:none} }
-@media (max-width:760px){ .main{display:flex;flex-direction:column} .document-col{order:1} .inspector{order:2;border-right:0;border-top:1px solid var(--border-subtle)} .navigator{order:3} .app{display:block;min-height:0} .context{min-height:36px;flex-wrap:wrap} }
 
-
-/* Full-width Jekyll technology application shell */
-.pedigree-page{padding:0;margin:0;max-width:none;}
-.pedigree-page .pedigree-app-frame{width:100%;max-width:none;margin:0;}
-.pedigree-page .app{border-top:1px solid var(--border-strong);}
-.pedigree-page .inspector-flow-head{padding:12px 16px;border-bottom:1px solid var(--border-subtle);}
-.pedigree-page .inspector-flow-head strong{display:block;}
-.pedigree-page .inspector-flow-head span{display:block;color:var(--text-muted);margin-top:2px;}
-.pedigree-page .person-selector{padding:12px 16px;border-bottom:1px solid var(--border-subtle);}
-.pedigree-page .person-selector label{display:block;font-weight:600;margin-bottom:4px;}
-.pedigree-page .person-selector select{width:100%;}
-.pedigree-page .person-empty{padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border-subtle);}
-.pedigree-page .inspector-divider{padding:8px 16px;background:var(--bg-subtle);border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
-@media (min-width:1500px){
-  .pedigree-page .main{grid-template-columns:minmax(380px,22vw) minmax(0,1fr) minmax(240px,15vw);}
-}
-
-
-/* ===== Pedigree application refinements ===== */
+/* Pedigree application shell and responsive layout */
+ /* --pedigree-shell-max:1720px; */
 .pedigree-page{
-  padding:clamp(1.25rem,2.5vw,2.5rem) clamp(1rem,3vw,3.5rem) 0;
-  margin:0;
+  --pedigree-shell-max:1400px;
+  width:100%;
   max-width:none;
+  margin:0;
+  padding:clamp(1.25rem,2.5vw,2.5rem) clamp(1rem,3vw,3.5rem) 0;
 }
-.pedigree-page .pedigree-app-frame{width:100%;max-width:none;margin:0 auto;}
-.pedigree-page .app{margin-top:clamp(.75rem,1.6vw,1.5rem);border-top:1px solid var(--border-strong);}
+
+.pedigree-page .pedigree-app-frame{
+  width:100%;
+  max-width:var(--pedigree-shell-max);
+  margin-right:auto;
+  margin-left:auto;
+}
+
+.pedigree-page .app{
+  margin-top:clamp(.75rem,1.6vw,1.5rem);
+  border-top:1px solid var(--border-strong);
+}
+
+.pedigree-page .inspector-flow-head{
+  padding:12px 16px;
+  border-bottom:1px solid var(--border-subtle);
+}
+
+.pedigree-page .inspector-flow-head strong{
+  display:block;
+}
+
+.pedigree-page .inspector-flow-head span{
+  display:block;
+  color:var(--text-muted);
+  margin-top:2px;
+}
+
+.pedigree-page .person-selector{
+  padding:12px 16px;
+  border-bottom:1px solid var(--border-subtle);
+}
+
+.pedigree-page .person-selector label{
+  display:block;
+  font-weight:600;
+  margin-bottom:4px;
+}
+
+.pedigree-page .person-selector select{
+  width:100%;
+}
+
+.pedigree-page .person-empty{
+  padding:12px 16px;
+  color:var(--text-muted);
+  border-bottom:1px solid var(--border-subtle);
+}
+
+.pedigree-page .inspector-divider{
+  padding:10px 16px;
+  background:var(--pedigree-black)!important;
+  color:var(--pedigree-white)!important;
+  border-color:var(--pedigree-black)!important;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+
 .main{
-  grid-template-columns:minmax(340px,24vw) minmax(0,1fr) minmax(220px,16vw);
+  grid-template-columns:minmax(340px,24%) minmax(0,1fr) minmax(220px,16%);
   grid-template-areas:"inspector document navigator";
 }
-.navigator{grid-area:navigator}
-.document-col{grid-area:document}
-.inspector{grid-area:inspector}
+
+.navigator{
+  grid-area:navigator;
+}
+
+.document-col{
+  grid-area:document;
+}
+
+.inspector{
+  grid-area:inspector;
+}
+
 .figure{
   height:68vh;
   min-height:580px;
@@ -480,7 +579,11 @@
   overflow:hidden;
   transition:height .18s ease;
 }
-.document-col.focus .figure{height:min(86vh,1200px)}
+
+.document-col.focus .figure{
+  height:min(86vh,1200px);
+}
+
 .float-toolbar{
   left:12px;
   top:50%;
@@ -488,75 +591,138 @@
   transform:translateY(-50%);
   flex-direction:column;
 }
-.float-toolbar .sep{width:auto;height:1px;margin:2px 3px}
+
+.float-toolbar .sep{
+  width:auto;
+  height:1px;
+  margin:2px 3px;
+}
+
 .scrim{
   background:rgba(47,47,65,.62);
   backdrop-filter:blur(2px);
 }
+
 .dialog{
   background:#fff;
   opacity:1;
   isolation:isolate;
   border:1px solid var(--border-default);
 }
+
 .isec-head{
   background:var(--pedigree-black);
   color:var(--pedigree-white);
 }
-.inspector-divider{
-  background:var(--pedigree-black)!important;
-  color:var(--pedigree-white)!important;
-}
+
 .isec-head:hover,
-.isec.collapsed .isec-head:hover{background:var(--pedigree-black)}
-.isec-head .sum,
-.isec-head .chev{color:var(--pedigree-white);opacity:.82}
-.inspector-divider{
-  border-color:var(--pedigree-black)!important;
-  padding:10px 16px;
+.isec.collapsed .isec-head:hover{
+  background:var(--pedigree-black);
 }
+
+.isec-head .sum,
+.isec-head .chev{
+  color:var(--pedigree-white);
+  opacity:.82;
+}
+
 .rep-record-title{
   margin:0;
   font:inherit;
   font-weight:600;
   color:var(--text-primary);
 }
+
 .rep-legend{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
   gap:6px 14px;
   break-inside:avoid;
 }
+
 .main.plot-expanded{
   grid-template-columns:minmax(340px,1.35fr) minmax(220px,1fr);
   grid-template-areas:
     "document document"
     "inspector navigator";
 }
+
 .main.plot-expanded .navigator,
 .main.plot-expanded .inspector{
   max-height:44rem;
   border-top:1px solid var(--border-subtle);
 }
-@media (max-width:1120px){
-  .main{grid-template-columns:minmax(320px,360px) minmax(0,1fr) 0;grid-template-areas:"inspector document navigator"}
-  .main.plot-expanded{display:block}
-  .main.plot-expanded .navigator{display:block}
+
+@media (min-width:1500px){
+  .main{
+    grid-template-columns:minmax(380px,22%) minmax(0,1fr) minmax(240px,15%);
+  }
 }
+
+@media (max-width:1280px){
+  .main,
+  .main.plot-expanded{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .document-col{
+    order:1;
+    min-width:0;
+  }
+
+  .navigator{
+    order:2;
+  }
+
+  .inspector{
+    order:3;
+  }
+
+  .main .navigator,
+  .main .inspector,
+  .main.plot-expanded .navigator,
+  .main.plot-expanded .inspector{
+    display:flex;
+    width:100%;
+    min-width:0;
+    max-height:none;
+    border-right:0;
+    border-left:0;
+    border-top:1px solid var(--border-subtle);
+  }
+}
+
 @media (max-width:760px){
-  .pedigree-page{padding:1rem .75rem 0}
-  .main{display:flex;flex-direction:column}
-  .document-col{order:1}
-  .inspector{order:2;border-right:0;border-top:1px solid var(--border-subtle)}
-  .navigator{order:3}
-  .figure{height:68vh;min-height:520px}
+  .pedigree-page{
+    padding:1rem .75rem 0;
+  }
+
+  .figure{
+    height:68vh;
+    min-height:520px;
+  }
+
+  .app{
+    display:block;
+    min-height:0;
+  }
+
+  .context{
+    min-height:36px;
+    flex-wrap:wrap;
+  }
 }
+
 @media print{
-  .rep-block{break-inside:auto}
-  .rep-legend{break-inside:avoid}
+  .rep-block{
+    break-inside:auto;
+  }
+
+  .rep-legend{
+    break-inside:avoid;
+  }
 }
-
-
 </style>
 <main class="pedigree-page" aria-label="Clinical pedigree application">
   <div class="pedigree-app-frame">
@@ -606,6 +772,8 @@
               <button onclick="act('affected')" id="tbAff" title="Toggle affected">Affected</button>
               <button onclick="act('proband')" id="tbPro" title="Set proband">Proband</button>
               <span class="sep"></span>
+              <button onclick="act('display-gender')" id="tbGender" title="Switch displayed sex">Sex: Unknown</button>
+              <span class="sep"></span>
               <button class="danger" onclick="act('delete')" id="tbDel" title="Delete (Del)">Delete</button>
             </div>
             <div class="zoom-cluster">
@@ -632,6 +800,24 @@
     <span class="pill ok" id="cxWarn">No issues</span>
   </footer>
 </div>
+
+<section class="pedigree-legal-notice" aria-label="Pedigree legal information">
+  <p>
+    Pedigree is a research and documentation tool. Project data is processed
+    in your browser and may be retained in local browser storage. Commercial
+    use of generated outputs is permitted. The application, source code and
+    interface may not be copied or redistributed.
+  </p>
+
+  <nav class="pedigree-legal-links" aria-label="Pedigree legal links">
+    <a href="/terms/pedigree/">
+      Terms of use
+    </a>
+    <a href="/legal/privacy/pedigree/">
+      Privacy notice
+    </a>
+  </nav>
+</section>
 
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
@@ -682,6 +868,14 @@ function plinkCodeFromGeneticSex(value){
   if(sex==="female")return "2";
   return "0";
 }
+function setPersonSex(person,value){
+  if(!person)return;
+  const sex=normaliseGeneticSex(value);
+  person.sex=sex;
+  person.geneticSex=sex;
+  person.symbolShapeSource="genetic-sex";
+  if(person.interoperability?.plink)person.interoperability.plink.sex=plinkCodeFromGeneticSex(sex);
+}
 function parentRoleHint(person){
   if(!person)return "unspecified";
   const geneticSex=normaliseGeneticSex(person.geneticSex);
@@ -692,8 +886,6 @@ function parentRoleHint(person){
   if(importedSex==="2")return "maternal";
   if(person.sex==="male")return "paternal";
   if(person.sex==="female")return "maternal";
-  if(person.sexAssignedAtBirth==="AMAB")return "paternal";
-  if(person.sexAssignedAtBirth==="AFAB")return "maternal";
   return "unspecified";
 }
 function inferredParentRoles(a,b){
@@ -765,6 +957,8 @@ function computeGenerations(){
 let LAY={genH:132, slot:92, sym:38, offX:80, offY:70};
 function computeLayout(){
   const gen=computeGenerations();
+  const detailedLabels=ui&&ui.labelPreset!=="none"&&ui.labelPreset!=="minimal";
+  const effectiveSlot=detailedLabels?Math.max(LAY.slot,labelMaxWidth()+12):LAY.slot;
   const placed={}; let cursor=0;
   const roots=P().filter(p=>parentsOf(p.id).length===0).sort((a,b)=>(gen[a.id]-gen[b.id])||(a.id<b.id?-1:1));
   function place(id){
@@ -774,25 +968,34 @@ function computeLayout(){
     if(kids.length){
       const xs=kids.map(k=>model.people[k]._cx); const center=(Math.min(...xs)+Math.max(...xs))/2;
       const pps=unionsOf(id).map(u=>partnerIn(u,id)).filter(p=>p&&!placed[p]);
-      if(pps.length){ px._cx=center-LAY.slot/2;
-        pps.forEach((pp,i)=>{placed[pp]=true;model.people[pp]._cx=center+LAY.slot/2+i*LAY.slot;}); }
+      if(pps.length){ px._cx=center-effectiveSlot/2;
+        pps.forEach((pp,i)=>{placed[pp]=true;model.people[pp]._cx=center+effectiveSlot/2+i*effectiveSlot;}); }
       else px._cx=center;
-    } else { px._cx=cursor*LAY.slot; cursor++;
+    } else { px._cx=cursor*effectiveSlot; cursor++;
       const pps=unionsOf(id).map(u=>partnerIn(u,id)).filter(p=>p&&!placed[p]);
-      pps.forEach(pp=>{placed[pp]=true;model.people[pp]._cx=cursor*LAY.slot;cursor++;}); }
+      pps.forEach(pp=>{placed[pp]=true;model.people[pp]._cx=cursor*effectiveSlot;cursor++;}); }
   }
   roots.forEach(r=>place(r.id));
-  P().forEach(p=>{ if(!placed[p.id]){p._cx=cursor*LAY.slot;cursor++;placed[p.id]=true;} });
+  P().forEach(p=>{ if(!placed[p.id]){p._cx=cursor*effectiveSlot;cursor++;placed[p.id]=true;} });
   const minx=Math.min(0,...P().map(p=>p._cx||0));
   P().forEach(p=>{
-    const ax=(p._cx||0)-minx+LAY.offX, ay=(gen[p.id]||0)*LAY.genH+LAY.offY;
-    p.x = p.pinned && p.px!=null ? p.px : ax;
-    p.y = p.pinned && p.py!=null ? p.py : ay;
+    const ax=(p._cx||0)-minx+LAY.offX;
+    p.x=p.pinned&&p.px!=null?p.px:ax;
     p._gen=gen[p.id]||0;
   });
   // pedigree IDs by generation then x
   const byGen={}; P().forEach(p=>(byGen[p._gen]=byGen[p._gen]||[]).push(p));
-  Object.keys(byGen).forEach(g=>byGen[g].sort((a,b)=>a.x-b.x).forEach((p,i)=>p._autoId=roman(+g+1)+"-"+(i+1)));
+  const generations=Object.keys(byGen).map(Number).sort((a,b)=>a-b);
+  generations.forEach(g=>byGen[g].sort((a,b)=>a.x-b.x).forEach((p,i)=>p._autoId=roman(g+1)+"-"+(i+1)));
+
+  let generationY=LAY.offY;
+  generations.forEach(g=>{
+    const people=byGen[g];
+    people.forEach(p=>{p.y=p.pinned&&p.py!=null?p.py:generationY;});
+    const labelHeight=Math.max(0,...people.map(labelBlockHeight));
+    const requiredGap=LAY.sym+LABEL_BLOCK_TOP+labelHeight+24;
+    generationY+=Math.max(LAY.genH,requiredGap);
+  });
 }
 function roman(n){const m=[[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];let r="";for(const[v,s]of m)while(n>=v){r+=s;n-=v;}return r;}
 const pedId=p=>p.label||p._autoId||"?";
@@ -805,11 +1008,9 @@ function geneticSexShape(p){
   return "unknown";
 }
 function genderShape(p){
-  if(normaliseSymbolShapeSource(p.symbolShapeSource)==="genetic-sex")return geneticSexShape(p);
-  if(p.gender==="man")return "male";
-  if(p.gender==="woman")return "female";
-  if(p.gender==="nonbinary"||p.gender==="unknown")return "unknown";
-  if(!p.gender)return geneticSexShape(p);
+  const sex=normaliseGeneticSex(p?.sex);
+  if(sex==="male")return "male";
+  if(sex==="female")return "female";
   return "unknown";
 }
 function symbolOutline(p,cx,cy,attrs=""){
@@ -969,6 +1170,89 @@ function labelLines(p){
   if(p.geneticsFreeText)out.push(p.geneticsFreeText);
   return out;
 }
+
+const LABEL_MAX_WIDTH_MULTIPLIER=3;
+const LABEL_FONT_SIZE=10;
+const LABEL_ID_FONT_SIZE=11;
+const LABEL_LINE_HEIGHT=14;
+const LABEL_ENTRY_GAP=3;
+const LABEL_BLOCK_TOP=17;
+let labelMeasureContext=null;
+
+function labelMaxWidth(){return LAY.sym*LABEL_MAX_WIDTH_MULTIPLIER;}
+
+function measureLabelText(value,fontSize,fontWeight){
+  const text=String(value||"");
+  if(typeof document!=="undefined"){
+    if(!labelMeasureContext){
+      const canvas=document.createElement("canvas");
+      labelMeasureContext=canvas.getContext("2d");
+    }
+    if(labelMeasureContext){
+      labelMeasureContext.font=`${fontWeight} ${fontSize}px ui-sans-serif,system-ui,sans-serif`;
+      return labelMeasureContext.measureText(text).width;
+    }
+  }
+  return text.length*fontSize*.58;
+}
+
+function wrapLabelEntry(value,fontSize,fontWeight,maxWidth){
+  const text=String(value||"").trim();
+  if(!text)return [];
+  const lines=[];
+  let current="";
+
+  const pushToken=token=>{
+    let part="";
+    for(const character of token){
+      const candidate=part+character;
+      if(part&&measureLabelText(candidate,fontSize,fontWeight)>maxWidth){
+        lines.push(part);
+        part=character;
+      }else part=candidate;
+    }
+    return part;
+  };
+
+  text.split(/\s+/).forEach(word=>{
+    const candidate=current?current+" "+word:word;
+    if(measureLabelText(candidate,fontSize,fontWeight)<=maxWidth){
+      current=candidate;
+      return;
+    }
+    if(current){
+      lines.push(current);
+      current="";
+    }
+    if(measureLabelText(word,fontSize,fontWeight)<=maxWidth)current=word;
+    else current=pushToken(word);
+  });
+  if(current)lines.push(current);
+  return lines;
+}
+
+function labelLayout(p){
+  const maxWidth=labelMaxWidth(),layout=[];
+  labelLines(p).forEach((entry,entryIndex)=>{
+    const fontSize=entryIndex===0?LABEL_ID_FONT_SIZE:LABEL_FONT_SIZE;
+    const fontWeight=entryIndex===0?600:400;
+    wrapLabelEntry(entry,fontSize,fontWeight,maxWidth).forEach((line,lineIndex)=>{
+      layout.push({text:line,fontSize,fontWeight,entryStart:lineIndex===0});
+    });
+  });
+  return layout;
+}
+
+function labelBlockHeight(p){
+  const layout=labelLayout(p);
+  if(!layout.length)return 0;
+  let height=layout[0].fontSize;
+  for(let i=1;i<layout.length;i++){
+    height+=LABEL_LINE_HEIGHT;
+    if(layout[i].entryStart)height+=LABEL_ENTRY_GAP;
+  }
+  return height;
+}
 function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
 
 function boundaryPoint(p, towardX, towardY){
@@ -1064,13 +1348,25 @@ function renderSVG(opts){
          `<polygon points="${arrowPolygon(ax,ay,target.x,target.y)}" fill="var(--sym)"/>`;
     }
     if(p.consultand&&!p.proband)g+=`<text x="${cx-h-15}" y="${cy+h+17}" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="700" fill="var(--sym)">P</text>`;
-    const labelLineHeight=15;
-    labelLines(p).forEach((ln,i)=>{ const fw=i===0?"600":"400",fs=i===0?"11":"10";
-      g+=`<text x="${cx}" y="${cy+h+17+i*labelLineHeight}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="${fs}" font-weight="${fw}" fill="${i===0?'var(--sym)':'#5c5a5a'}">${esc(ln)}</text>`; });
+    const labels=labelLayout(p);
+    let labelY=cy+h+LABEL_BLOCK_TOP;
+    labels.forEach((line,i)=>{
+      if(i>0){
+        labelY+=LABEL_LINE_HEIGHT;
+        if(line.entryStart)labelY+=LABEL_ENTRY_GAP;
+      }
+      g+=`<text x="${cx}" y="${labelY}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="${line.fontSize}" font-weight="${line.fontWeight}" fill="${i===0?'var(--sym)':'#5c5a5a'}">${esc(line.text)}</text>`;
+    });
     g+=`</g>`; nodes+=g;
   });
-  const xs=ps.map(p=>p.x),ys=ps.map(p=>p.y), maxL=Math.max(...ps.map(p=>labelLines(p).length));
-  const bounds={minx:Math.min(...xs)-60,miny:Math.min(...ys)-50,maxx:Math.max(...xs)+60,maxy:Math.max(...ys)+34+maxL*15};
+  const xs=ps.map(p=>p.x),ys=ps.map(p=>p.y);
+  const horizontalMargin=Math.max(60,labelMaxWidth()/2+6);
+  const bounds={
+    minx:Math.min(...xs)-horizontalMargin,
+    miny:Math.min(...ys)-50,
+    maxx:Math.max(...xs)+horizontalMargin,
+    maxy:Math.max(...ps.map(p=>p.y+LAY.sym/2+LABEL_BLOCK_TOP+labelBlockHeight(p)+6))
+  };
   return {inner:edges+twins+nodes,bounds};
 }
 
@@ -1084,8 +1380,16 @@ function render(){
   const has=!!ui.sel;
   const emptyPlotAction=document.getElementById("emptyPlotAction");
   if(emptyPlotAction)emptyPlotAction.hidden=P().length!==0;
-  ["tbParents","tbPartner","tbChild","tbSib","tbTwin","tbAff","tbPro","tbDel"].forEach(id=>document.getElementById(id).disabled=!has);
+  ["tbParents","tbPartner","tbChild","tbSib","tbTwin","tbAff","tbPro","tbGender","tbDel"].forEach(id=>document.getElementById(id).disabled=!has);
   document.getElementById("tbParents").disabled=!has||parentsOf(ui.sel).length>0;
+  const genderButton=document.getElementById("tbGender");
+  if(genderButton){
+    const value=has?displayedGenderValue(model.people[ui.sel]):"unknown";
+    const label=displayedGenderLabel(value);
+    genderButton.textContent="Sex: "+label;
+    genderButton.title="Switch displayed sex. Current: "+label;
+    genderButton.setAttribute("aria-label","Switch displayed sex. Current: "+label);
+  }
   document.getElementById("undoBtn").disabled=!history.length;
   document.getElementById("redoBtn").disabled=!future.length;
 }
@@ -1212,23 +1516,20 @@ function roleLabel(p){
     if(genderShape(p)==="male")return "Son";
     return "Child";
   }
-  return genderShape(p)==="female"?"Woman / girl":genderShape(p)==="male"?"Man / boy":"Individual";
+  return genderShape(p)==="female"?"Female":genderShape(p)==="male"?"Male":"Individual";
 }
 
 /* ===== inspector — collapsible progressive disclosure ===== */
 function setField(key,val){ const p=model.people[ui.sel]; if(!p)return;
   if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
   ui._editTimer=setTimeout(()=>{ui._editing=false;},700);
-  if(key==="geneticSex"){
-    p.geneticSex=normaliseGeneticSex(val);
-    p.sex=p.geneticSex;
-    if(p.interoperability?.plink)p.interoperability.plink.sex=plinkCodeFromGeneticSex(p.geneticSex);
+  if(key==="sex"||key==="geneticSex"){
+    setPersonSex(p,val);
     U().filter(u=>u.a===p.id||u.b===p.id).forEach(fillMissingParentRoles);
   }else if(key==="symbolShapeSource")p.symbolShapeSource=normaliseSymbolShapeSource(val);
   else p[key]=val;
   if(key==="clinicalStatus")p.affected=derivedClinicalLayer(p)==="affected";
   if(key==="symbolDisplayOverride")p.symbolStyle=val;
-  if(key==="sexAssignedAtBirth")U().filter(u=>u.a===p.id||u.b===p.id).forEach(fillMissingParentRoles);
   liveRefresh(); }
 function setUnionParentRole(unionId,endpoint,value){
   const union=model.unions[unionId];
@@ -1278,7 +1579,7 @@ function plinkParentRoleFields(person){
         <option value="maternal" ${role==="maternal"?"selected":""}>Maternal · MAT</option>
       </select></div>`;
   }).join("");
-  return fields+`<div class="help-text">The PLINK role belongs to this parent-child relationship. It is independent of gender identity, symbol shape and clinical status.</div>`;
+  return fields+`<div class="help-text">PLINK PAT and MAT are stored on each parent-child relationship and should be reviewed before export.</div>`;
 }
 
 function isec(k,title,summary,body,state=""){ const col=openSec.has(k)?"":"collapsed";
@@ -1316,22 +1617,13 @@ function inspectorIssueStates(p){
 function renderInspector(){
   const body=document.getElementById("inspBody");
   const m=model.meta;
-  const people=P().slice().sort((a,b)=>(a._gen-b._gen)||(a.x-b.x));
   const selected=ui.sel&&model.people[ui.sel]?model.people[ui.sel]:null;
 
   const allSectionsOpen=inspectorSectionKeys().every(k=>openSec.has(k));
   const inspectorControls=`<div class="insp-head"><button class="expand-all" onclick="expandAll()">${allSectionsOpen?'Collapse all':'Expand all'}</button></div>`;
   const flowHead=`<div class="inspector-flow-head"><strong>Case and individual record</strong><span>Complete the case first, then work through the selected individual.</span></div>`;
   const caseFields=`<div class="field"><label for="caseName">Case</label><input id="caseName" type="text" value="${esc(model.caseName)}" oninput="setCaseName(this.value)" /></div>${fld("Disease / condition","disease",m)}${fld("Referral indication","indication",m)}`;
-  const signoff=`${fld("Reviewer","reviewer",m)}${fld("Institution","institution",m)}${fld("Review date","date",m,"date")}
-    <div class="help-text" style="margin-top:8px">Reviewer details remain editable. They are included automatically when a PDF, SVG, PNG or JSON export is created. Exporting does not lock the case.</div>`;
-
-  const selector=`<div class="person-selector"><label for="activePerson">Active individual</label>
-    <select id="activePerson" onchange="select(this.value||null)">
-      <option value="">Select an individual</option>
-      ${people.map(p=>`<option value="${p.id}" ${selected&&selected.id===p.id?'selected':''}>${esc(pedId(p))} · ${esc(p.name||roleLabel(p))}</option>`).join("")}
-    </select>
-    ${people.length?'':`<button class="bbtn" style="margin-top:10px" onclick="addFounder()">Add the first individual</button>`}</div>`;
+  const signoff=`${fld("Reviewer","reviewer",m)}${fld("Institution","institution",m)}${fld("Review date","date",m,"date")}`;
 
   let personSections='';
   if(selected){
@@ -1339,21 +1631,19 @@ function renderInspector(){
     const issueStates=inspectorIssueStates(p);
     const identity=`${fld("Display name","name",p)}
       <div class="field-row">${fld("Pedigree ID override","label",p)}${fld("Sample ID","sampleId",p)}</div>
-      ${selF("Gender identity","gender",p,[["woman","Woman or girl"],["man","Man or boy"],["nonbinary","Non-binary or gender-diverse"],["unknown","Unknown, unspecified or not relevant"]])}
-      ${selF("Genetic sex / PLINK sex","geneticSex",p,[["male","Male · PLINK 1"],["female","Female · PLINK 2"],["unknown","Unknown · PLINK 0"]])}
-      ${selF("Pedigree symbol source","symbolShapeSource",p,[["gender","Gender identity"],["genetic-sex","Genetic sex / PLINK sex"]])}
-      <div class="help-text">PLINK sex is stored independently of gender identity. A PLINK import uses genetic sex for square, circle or diamond symbols without asserting a gender identity.</div>
+      ${selF("Sex","sex",p,[["male","Male"],["female","Female"],["unknown","Unknown"]])}
       ${selF("Sex assigned at birth annotation","sexAssignedAtBirth",p,[["","Not displayed"],["AFAB","AFAB"],["AMAB","AMAB"],["UAAB","UAAB"]])}
       ${plinkParentRoleFields(p)}
       ${selF("Clinical status","clinicalStatus",p,[["auto","Automatic"],["affected","Affected"],["unaffected","Unaffected"],["unknown","Unknown or uncertain"],["not_assessed","Not assessed"]])}
       ${selF("Symbol display override","symbolDisplayOverride",p,[["auto","Automatic"],["affected","Affected fill"],["unaffected","Unaffected fill"],["uncertain","Unknown status"],["carrier-half","Carrier pattern"],["compound","Compound-heterozygous marker"]])}
-      <div class="help-text">Automatic derives the clinical display from applicable role information. Molecular zygosity and carrier status remain independent. Display overrides change presentation only.</div>
+      <!-- <div class="help-text">Automatic derives the clinical display from applicable role information. Molecular zygosity and carrier status remain independent. Display overrides change presentation only.</div> -->
       ${statusIssues(p).errors.length?`<div class="status-conflict">${esc(statusIssues(p).errors.join(" "))} The underlying data have not been changed.</div>`:""}
       ${statusIssues(p).reviews.length?`<div class="status-review">${esc(statusIssues(p).reviews.join(" "))}</div>`:""}
       <div class="toggle-grid">${tog("Proband","proband",p)}${tog("Consultand","consultand",p)}${tog("Carrier","carrier",p)}${tog("Deceased","deceased",p)}</div>
       <div class="field-row" style="margin-top:11px">${fld("Birth year","birthYear",p)}${p.deceased?fld("Age at death","ageAtDeath",p):""}</div>`;
     const clinical=`${fld("Key phenotype","phenotype",p)}${fld("Age at onset","onset",p)}${fld("Diagnosis","diagnosis",p)}
-      <div class="help-text">Phenotype and diagnosis fields may contain controlled terminology or concise clinical text.</div>`;
+      <!-- <div class="help-text">Phenotype and diagnosis fields may contain controlled terminology or concise clinical text.</div> -->
+    `;
     const genetics=`${selF("Zygosity","zygosity",p,["","Heterozygous","Homozygous","Hemizygous","Compound heterozygous","Heteroplasmic","Homoplasmic","Mosaic","Low-level mosaic","Unknown","Not tested"])}
       ${selF("Inheritance","inheritance",p,["","Maternal","Paternal","De novo","Suspected de novo","Inherited","Biparental","Germline mosaic","Somatic","Unknown origin"])}
       ${selF("Classification","classification",p,["","Pathogenic","Likely pathogenic","Variant of uncertain significance","Likely benign","Benign","Risk allele","Drug response","Association","Not classified"])}
@@ -1377,7 +1667,7 @@ function renderInspector(){
       ${isec("sample","Sample and test",p.sampleId||({tested:"Tested",pending:"Pending",untested:"Not tested"}[p.testStatus]||""),sample)}
       ${isec("prov","Provenance and notes","",prov)}`;
   }else{
-    personSections=`<div class="person-empty">Select an individual above or on the pedigree to edit identity, clinical, genetics, sample and provenance sections.</div>
+    personSections=`<div class="person-empty">Click on an individual.</div>
       ${isec("identity","Identity and status","Select an individual",'<div class="help-text">No active individual.</div>')}
       ${isec("clinical","Clinical","Select an individual",'<div class="help-text">No active individual.</div>')}
       ${isec("genetics","Genetics","Select an individual",'<div class="help-text">No active individual.</div>')}
@@ -1388,7 +1678,7 @@ function renderInspector(){
   body.innerHTML=inspectorControls+flowHead+
     isec("case","Case details",m.disease||m.indication||"",caseFields)+
     isec("signoff","Reviewer and export details",m.reviewer||m.institution||"",signoff)+
-    `<div class="inspector-divider">Individual</div>`+selector+personSections;
+    personSections;
 }
 function clinicalStatusLabel(p){
   const status=clinicalStatusOf(p);
@@ -1410,9 +1700,9 @@ function buildReportLegend(){
   const items=[];
   const add=(key,label,svg)=>{ if(!items.some(x=>x.key===key))items.push({key,label,svg}); };
   const shapes=new Set(P().map(genderShape));
-  if(shapes.has("male"))add("male","Man or boy",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="3" y="3" width="12" height="12" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
-  if(shapes.has("female"))add("female","Woman or girl",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
-  if(shapes.has("unknown"))add("unknown","Non-binary, gender-diverse, unknown or unspecified",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><polygon points="9,2 16,9 9,16 2,9" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
+  if(shapes.has("male"))add("male","Male",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="3" y="3" width="12" height="12" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
+  if(shapes.has("female"))add("female","Female",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
+  if(shapes.has("unknown"))add("unknown","Unknown or unspecified sex",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><polygon points="9,2 16,9 9,16 2,9" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
   if(P().some(p=>clinicalStatusOf(p)==="unaffected"&&resolvedClinicalLayer(p)==="unaffected"))add("unaffected","Unaffected",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
   if(P().some(p=>resolvedClinicalLayer(p)==="affected"))add("affected","Affected",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="#2f2f41" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
   if(P().some(p=>derivedMolecularLayer(p)==="carrier-half"))add("carrier","Carrier, divided patterned fill",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><defs><pattern id="legendCarrier" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 4L4 0" stroke="#2f2f41" stroke-width="1"/></pattern></defs><rect x="3" y="3" width="6" height="12" fill="url(#legendCarrier)"/><rect x="3" y="3" width="12" height="12" fill="none" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
@@ -1454,11 +1744,11 @@ function renderReport(){
   html+=block("Case summary",`<table class="rep-kv"><tbody>${caseRows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>`);
 
   html+=block(`Identity and status (${ps.length})`,table(
-    ["ID","Role","Display name","Gender / symbol","Sex assigned at birth","Status","Birth year","Age at death"],
+    ["ID","Role","Display name","Sex / symbol","Sex assigned at birth","Status","Birth year","Age at death"],
     order.map(p=>{
       const st=[]; if(p.proband)st.push("Proband"); else if(p.consultand)st.push("Consultand"); st.push(clinicalStatusLabel(p));
       if(p.carrier)st.push("Carrier"); if(p.deceased)st.push("Deceased");
-      return [pedId(p),roleLabel(p),p.name,{man:"Man / boy",woman:"Woman / girl",nonbinary:"Non-binary / gender-diverse",unknown:"Unknown / unspecified"}[p.gender]||p.gender,p.sexAssignedAtBirth,st.join(", "),p.birthYear,p.ageAtDeath];
+      return [pedId(p),roleLabel(p),p.name,{male:"Male",female:"Female",unknown:"Unknown"}[genderShape(p)]||"Unknown",p.sexAssignedAtBirth,st.join(", "),p.birthYear,p.ageAtDeath];
     })
   ));
 
@@ -1638,6 +1928,26 @@ function toggleFocus(){ ui.focus=!ui.focus;
   setTimeout(()=>{drawStage();fitView();},200); }
 
 /* ===== build actions ===== */
+const DISPLAYED_GENDER_VALUES=["male","female","unknown"];
+function displayedGenderValue(p){
+  if(!p)return "unknown";
+  const sex=normaliseGeneticSex(p.sex);
+  return sex==="male"||sex==="female"?sex:"unknown";
+}
+function displayedGenderLabel(value){
+  if(value==="male")return "Male";
+  if(value==="female")return "Female";
+  return "Unknown";
+}
+function nextDisplayedGender(value){
+  const index=DISPLAYED_GENDER_VALUES.indexOf(value);
+  return DISPLAYED_GENDER_VALUES[(index+1)%DISPLAYED_GENDER_VALUES.length];
+}
+function setDisplayedGender(p,value){
+  setPersonSex(p,value);
+  U().filter(u=>u.a===p.id||u.b===p.id).forEach(fillMissingParentRoles);
+}
+
 function ensurePartner(id){ let u=unionsOf(id).find(x=>x.a&&x.b); if(u)return u;
   const me=model.people[id], shape=genderShape(me), psex=shape==="male"?"female":shape==="female"?"male":"unknown";
   const pp=newPerson(psex); return model.unions[newUnion(id,pp)]; }
@@ -1655,6 +1965,7 @@ function act(a){ if(!ui.sel)return; const id=ui.sel,p=model.people[id];
     const t=newPerson("unknown",{twinGroup:grp,twinType:p.twinType});u.children.push(t);ui.sel=t;}); }
   else if(a==='affected'){ commit(()=>{p.clinicalStatus=clinicalStatusOf(p)==="affected"?"auto":"affected";p.affected=derivedClinicalLayer(p)==="affected";}); }
   else if(a==='proband'){ commit(()=>{p.proband=!p.proband;p.affected=derivedClinicalLayer(p)==="affected";}); }
+  else if(a==='display-gender'){ commit(()=>{setDisplayedGender(p,nextDisplayedGender(displayedGenderValue(p)));}); }
   else if(a==='delete'){ deleteIndividual(id); }
 }
 function deleteIndividual(id){ commit(()=>{
@@ -1776,19 +2087,32 @@ function printClinicalReport(){
   .sev{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5c5a5a;margin-right:6px}
   .research-footer{margin-top:12mm;padding-top:4mm;border-top:1px solid #5c5a5a;color:#5c5a5a;font-size:7.2pt;line-height:1.45}
   .research-footer strong{color:#2f2f41}
+.research-footer a{
+  text-decoration:underline;
+}
   a{color:inherit;text-decoration:none}
 </style>
 </head>
 <body>
 <header class="print-head">
-  <div><div class="print-title">${esc(caseName)}</div><div class="print-subtitle">Clinical pedigree report</div></div>
+  <div><div class="print-title">${esc(caseName)}</div><div class="print-subtitle">Pedigree report</div></div>
   <div class="print-meta">Institution: ${esc(institution)}<br>Reviewer: ${esc(reviewer)}<br>Review date: ${esc(reviewDate)}</div>
 </header>
 <section class="print-figure" aria-label="Pedigree figure">${figure}</section>
 <main>${report}</main>
 <footer class="research-footer">
-  <strong>Research-use notice.</strong> Generated with Pedigree, a research-use tool created by Switzerland Omics. Use of the software and generated reports is permitted, including in commercial settings. Attribution identifying Switzerland Omics as the creator should be retained where reasonably practicable, but does not imply endorsement. Switzerland Omics® is a registered trade mark. Further information: https://switzerlandomics.ch.
+  <strong>Generated using Pedigree by Switzerland Omics®.</strong>
+  This user-generated report must be independently reviewed before use.
+  Use of this generated output is permitted, including for professional and
+  commercial purposes. No review, verification or endorsement by Switzerland
+  Omics is implied. The Pedigree application, source code and interface may
+  not be copied or redistributed.
+  Terms:
+  <a href="https://switzerlandomics.ch/terms/pedigree/">
+    switzerlandomics.ch/terms/pedigree/
+  </a>
 </footer>
+
 <script>window.addEventListener("load",()=>setTimeout(()=>window.print(),150));<\/script>
 </body>
 </html>`);
@@ -1804,7 +2128,7 @@ function toggleExportOptions(){
 }
 function openExport(){ openDialog("Export",
   `<div class="exp-row"><div class="field"><label>Format</label><select id="expFmt" onchange="toggleExportOptions()">
-      <option value="pdf">Clinical report - Print / PDF</option>
+      <option value="pdf">Pedigree report - Print / PDF</option>
       <option value="svg">Pedigree figure - SVG</option>
       <option value="png">Pedigree figure - PNG</option>
       <option value="json">Native project - JSON</option>
@@ -2338,12 +2662,12 @@ function derivedPlinkFamilyId(value,warnings){
   return clean;
 }
 function plinkSex(p){
+  const sex=normaliseGeneticSex(p.sex);
+  if(sex!=="unknown")return plinkCodeFromGeneticSex(sex);
   const geneticSex=normaliseGeneticSex(p.geneticSex);
   if(geneticSex!=="unknown")return plinkCodeFromGeneticSex(geneticSex);
   const imported=p.interoperability?.plink?.sex;
   if(["0","1","2"].includes(imported))return imported;
-  if(p.sex==="male")return "1";
-  if(p.sex==="female")return "2";
   return "0";
 }
 function plinkPhenotype(p){
@@ -2638,6 +2962,7 @@ function migrateModel(){
     Object.assign(p,defaults,existing);
     p.geneticSex=normaliseGeneticSex(p.geneticSex);
     p.symbolShapeSource=normaliseSymbolShapeSource(p.symbolShapeSource);
+    if(normaliseGeneticSex(p.sex)==="unknown"&&p.geneticSex!=="unknown")p.sex=p.geneticSex;
     p.externalIds=Object.assign({plinkIid:"",fhirIdentifier:""},existingExternal);
     p.terminology=Object.assign({phenotype:[],diagnosis:[],gene:[],variant:[]},existingTerminology);
     p.interoperability=Object.assign({},existingInterop);
@@ -2683,13 +3008,6 @@ init();
 
 
 
-
-
-
-
-
-
-
   </div>
   <div class="footer">
   <div class="container">
@@ -2710,6 +3028,10 @@ init();
             
             <li class="">
               <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
             </li>
             
             <li class="">
