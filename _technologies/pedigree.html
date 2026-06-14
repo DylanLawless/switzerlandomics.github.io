@@ -446,8 +446,8 @@ bodyClass: "page-tech page-pedigree"
     <button class="hbtn" id="redoBtn" onclick="redo()" title="Redo (Ctrl+Shift+Z)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14l5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h1"/></svg>Redo</button>
     <button class="hbtn" onclick="openTemplates()">New from template</button>
-    <button class="hbtn" onclick="document.getElementById('jsonImport').click()">Import JSON</button>
-    <input id="jsonImport" type="file" accept=".json,application/json" hidden onchange="importProjectFile(this.files[0]);this.value=''" />
+    <button class="hbtn" onclick="document.getElementById('dataImport').click()">Import</button>
+    <input id="dataImport" type="file" accept=".json,.fam,.ped,application/json,application/fhir+json,text/plain" hidden onchange="importProjectFile(this.files[0]);this.value=''" />
     <button class="hbtn primary" onclick="openExport()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Export</button>
   </header>
@@ -502,12 +502,18 @@ bodyClass: "page-tech page-pedigree"
 
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
+const PEDIGREE_SCHEMA_VERSION=7;
+const NATIVE_FORMAT="pedigree-native/v7";
+const FHIR_R4_VERSION="4.0.1";
+const INTEROP_BASE="https://switzerlandomics.ch/fhir";
+const INTEROP_EXT=INTEROP_BASE+"/StructureDefinition/";
+const INTEROP_CODES=INTEROP_BASE+"/CodeSystem/pedigree";
 let uid=1; const nid=p=>p+(uid++);
-let model, view, ui, history=[], future=[], saveTimer=null, saveEl=null;
+let model, view, ui, history=[], future=[], saveTimer=null, saveEl=null, pendingPlinkImport=null;
 
-function blankModel(t){ return {caseName:"Case PD-0001", template:t||"rare",
-  meta:{disease:"",indication:"",reviewer:"",institution:"",date:"",lastExportedAt:"",lastExportFormat:""},
-  people:{}, unions:{}}; }
+function blankModel(t){ return {schemaVersion:PEDIGREE_SCHEMA_VERSION,caseName:"Case PD-0001", template:t||"rare",
+  meta:{disease:"",indication:"",reviewer:"",institution:"",date:"",lastExportedAt:"",lastExportFormat:"",importWarnings:[]},
+  interoperability:{plinkFamilyId:"",lastImportedFormat:"",lastImportedAt:""},people:{}, unions:{}}; }
 
 const P=()=>Object.values(model.people);
 const U=()=>Object.values(model.unions);
@@ -517,9 +523,73 @@ const parentUnionOf=id=>U().find(u=>u.children.includes(id));
 const parentsOf=id=>{const u=parentUnionOf(id);return u?[u.a,u.b].filter(Boolean):[];};
 const childrenOf=id=>{const o=[];unionsOf(id).forEach(u=>u.children.forEach(c=>o.push(c)));return o;};
 
+const PLINK_PARENT_ROLES=new Set(["paternal","maternal","unspecified"]);
+const GENETIC_SEX_VALUES=new Set(["male","female","unknown"]);
+const SYMBOL_SHAPE_SOURCES=new Set(["gender","genetic-sex"]);
+function normaliseParentRole(value){
+  const role=String(value||"unspecified").toLowerCase();
+  return PLINK_PARENT_ROLES.has(role)?role:"unspecified";
+}
+function normaliseGeneticSex(value){
+  const sex=String(value||"unknown").toLowerCase();
+  return GENETIC_SEX_VALUES.has(sex)?sex:"unknown";
+}
+function normaliseSymbolShapeSource(value){
+  const source=String(value||"gender");
+  return SYMBOL_SHAPE_SOURCES.has(source)?source:"gender";
+}
+function geneticSexFromPlinkCode(code){
+  if(String(code)==="1")return "male";
+  if(String(code)==="2")return "female";
+  return "unknown";
+}
+function plinkCodeFromGeneticSex(value){
+  const sex=normaliseGeneticSex(value);
+  if(sex==="male")return "1";
+  if(sex==="female")return "2";
+  return "0";
+}
+function parentRoleHint(person){
+  if(!person)return "unspecified";
+  const hasGeneticSex=Object.prototype.hasOwnProperty.call(person,"geneticSex");
+  const geneticSex=normaliseGeneticSex(person.geneticSex);
+  if(geneticSex==="male")return "paternal";
+  if(geneticSex==="female")return "maternal";
+  const importedSex=person.interoperability?.plink?.sex;
+  if(importedSex==="1")return "paternal";
+  if(importedSex==="2")return "maternal";
+  if(!hasGeneticSex&&person.sex==="male")return "paternal";
+  if(!hasGeneticSex&&person.sex==="female")return "maternal";
+  return "unspecified";
+}
+function inferredParentRoles(a,b){
+  const ra=parentRoleHint(model.people[a]),rb=parentRoleHint(model.people[b]);
+  if(ra!=="unspecified"&&rb!=="unspecified"&&ra!==rb)return {a:ra,b:rb};
+  return {a:ra,b:rb};
+}
+function mergeParentRoles(a,b,provided){
+  const inferred=inferredParentRoles(a,b),source=provided&&typeof provided==="object"?provided:{};
+  return {
+    a:Object.prototype.hasOwnProperty.call(source,"a")?normaliseParentRole(source.a):inferred.a,
+    b:Object.prototype.hasOwnProperty.call(source,"b")?normaliseParentRole(source.b):inferred.b
+  };
+}
+function fillMissingParentRoles(union){
+  if(!union)return;
+  const current=union.parentRoles&&typeof union.parentRoles==="object"?union.parentRoles:{};
+  const inferred=inferredParentRoles(union.a,union.b);
+  union.parentRoles={
+    a:normaliseParentRole(current.a)==="unspecified"?inferred.a:normaliseParentRole(current.a),
+    b:normaliseParentRole(current.b)==="unspecified"?inferred.b:normaliseParentRole(current.b)
+  };
+}
+
 function newPerson(sex,extra={}){ const id=nid("p");
-  const legacySex=sex||"unknown", defaultGender=legacySex==="male"?"man":legacySex==="female"?"woman":"unknown";
-  model.people[id]=Object.assign({id,sex:legacySex,gender:defaultGender,sexAssignedAtBirth:"",name:"",label:null,birthOrder:null,
+  const legacySex=normaliseGeneticSex(sex),defaultGender=legacySex==="male"?"man":legacySex==="female"?"woman":"unknown";
+  const defaultGeneticSex=Object.prototype.hasOwnProperty.call(extra,"geneticSex")?normaliseGeneticSex(extra.geneticSex):legacySex;
+  const defaultShapeSource=Object.prototype.hasOwnProperty.call(extra,"symbolShapeSource")?normaliseSymbolShapeSource(extra.symbolShapeSource):"gender";
+  model.people[id]=Object.assign({id,stableId:id,externalIds:{plinkIid:"",fhirIdentifier:""},terminology:{phenotype:[],diagnosis:[],gene:[],variant:[]},
+    interoperability:{},sex:legacySex,geneticSex:defaultGeneticSex,gender:defaultGender,symbolShapeSource:defaultShapeSource,sexAssignedAtBirth:"",name:"",label:null,birthOrder:null,
     clinicalStatus:"auto",affected:false,deceased:false,proband:false,consultand:false,carrier:false,symbolDisplayOverride:"auto",symbolStyle:"auto",vitalStatus:"living",
     birthYear:"",ageAtDeath:"",phenotype:"",diagnosis:"",onset:"",
     gene:"",variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",
@@ -527,11 +597,15 @@ function newPerson(sex,extra={}){ const id=nid("p");
     zygosity:"",inheritance:"",classification:"",geneticsFreeText:"",
     sampleId:"",testStatus:"",notes:"",twinGroup:null,twinType:null,source:"clinician",
     pinned:false,px:null,py:null},extra);
+  model.people[id].geneticSex=normaliseGeneticSex(model.people[id].geneticSex);
+  model.people[id].symbolShapeSource=normaliseSymbolShapeSource(model.people[id].symbolShapeSource);
   if(extra.clinicalStatus==null&&extra.affected===true)model.people[id].clinicalStatus="affected";
   model.people[id].affected=derivedClinicalLayer(model.people[id])==="affected";
   return id; }
-function newUnion(a,b,extra={}){ const id=nid("u");
-  model.unions[id]=Object.assign({id,a,b,children:[],consanguineous:false,relationshipStatus:"current",consanguinityDegree:"",noChildren:false,infertility:false,infertilityReason:""},extra); return id; }
+function newUnion(a,b,extra={}){ const id=nid("u"),providedRoles=extra.parentRoles;
+  model.unions[id]=Object.assign({id,stableId:id,a,b,children:[],parentRoles:mergeParentRoles(a,b,providedRoles),consanguineous:false,relationshipStatus:"current",consanguinityDegree:"",noChildren:false,infertility:false,infertilityReason:""},extra);
+  model.unions[id].parentRoles=mergeParentRoles(a,b,providedRoles);
+  return id; }
 
 /* ===== undo ===== */
 const snapshot=()=>JSON.stringify({model,uid,view,sel:ui.sel});
@@ -590,14 +664,18 @@ function roman(n){const m=[[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];let r="";
 const pedId=p=>p.label||p._autoId||"?";
 
 /* ===== SVG render (symbols per pedigree notation) ===== */
+function geneticSexShape(p){
+  const sex=normaliseGeneticSex(p.geneticSex||p.sex);
+  if(sex==="male")return "male";
+  if(sex==="female")return "female";
+  return "unknown";
+}
 function genderShape(p){
+  if(normaliseSymbolShapeSource(p.symbolShapeSource)==="genetic-sex")return geneticSexShape(p);
   if(p.gender==="man")return "male";
   if(p.gender==="woman")return "female";
   if(p.gender==="nonbinary"||p.gender==="unknown")return "unknown";
-  if(!p.gender){
-    if(p.sex==="male")return "male";
-    if(p.sex==="female")return "female";
-  }
+  if(!p.gender)return geneticSexShape(p);
   return "unknown";
 }
 function symbolOutline(p,cx,cy,attrs=""){
@@ -1007,10 +1085,25 @@ function roleLabel(p){
 function setField(key,val){ const p=model.people[ui.sel]; if(!p)return;
   if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
   ui._editTimer=setTimeout(()=>{ui._editing=false;},700);
-  p[key]=val;
+  if(key==="geneticSex"){
+    p.geneticSex=normaliseGeneticSex(val);
+    p.sex=p.geneticSex;
+    if(p.interoperability?.plink)p.interoperability.plink.sex=plinkCodeFromGeneticSex(p.geneticSex);
+    U().filter(u=>u.a===p.id||u.b===p.id).forEach(fillMissingParentRoles);
+  }else if(key==="symbolShapeSource")p.symbolShapeSource=normaliseSymbolShapeSource(val);
+  else p[key]=val;
   if(key==="clinicalStatus")p.affected=derivedClinicalLayer(p)==="affected";
   if(key==="symbolDisplayOverride")p.symbolStyle=val;
   liveRefresh(); }
+function setUnionParentRole(unionId,endpoint,value){
+  const union=model.unions[unionId];
+  if(!union||!["a","b"].includes(endpoint))return;
+  if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
+  ui._editTimer=setTimeout(()=>{ui._editing=false;},700);
+  union.parentRoles=Object.assign({a:"unspecified",b:"unspecified"},union.parentRoles||{});
+  union.parentRoles[endpoint]=normaliseParentRole(value);
+  liveRefresh();
+}
 function setMeta(key,val){ if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
   ui._editTimer=setTimeout(()=>{ui._editing=false;},700); model.meta[key]=val; liveRefresh(); }
 function setCaseName(val){
@@ -1037,6 +1130,21 @@ function selF(label,key,p,opts){ const v=p[key]??"";
   return `<div class="field"><label>${label}</label><select onchange="${p===model.meta?'setMeta':'setField'}('${key}',this.value)">
     ${opts.map(o=>{const val=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;return `<option value="${esc(val)}" ${v===val?'selected':''}>${esc(t)}</option>`;}).join("")}</select></div>`; }
 function tog(label,key,p){ return `<button class="tog" aria-pressed="${!!p[key]}" onclick="toggleField('${key}')"><span class="dot"></span>${label}</button>`; }
+function plinkParentRoleFields(person){
+  const unions=unionsOf(person.id).filter(u=>Array.isArray(u.children)&&u.children.length);
+  if(!unions.length)return "";
+  const fields=unions.map((u,index)=>{
+    const endpoint=u.a===person.id?"a":"b",role=normaliseParentRole(u.parentRoles?.[endpoint]);
+    const childLabels=u.children.map(id=>model.people[id]).filter(Boolean).map(p=>pedId(p)).join(", ");
+    return `<div class="field"><label>PLINK parental role${unions.length>1?` ${index+1}`:""}${childLabels?` · children ${esc(childLabels)}`:""}</label>
+      <select onchange="setUnionParentRole('${u.id}','${endpoint}',this.value)">
+        <option value="unspecified" ${role==="unspecified"?"selected":""}>Unspecified</option>
+        <option value="paternal" ${role==="paternal"?"selected":""}>Paternal · PAT</option>
+        <option value="maternal" ${role==="maternal"?"selected":""}>Maternal · MAT</option>
+      </select></div>`;
+  }).join("");
+  return fields+`<div class="help-text">The PLINK role belongs to this parent-child relationship. It is independent of gender identity, symbol shape and clinical status.</div>`;
+}
 
 function isec(k,title,summary,body,state=""){ const col=openSec.has(k)?"":"collapsed";
   const marker=state?`<span class="isec-state ${state}" role="img" aria-label="${state==="error"?"Conflict":"Review needed"}" title="${state==="error"?"Conflict":"Review needed"}"></span>`:"";
@@ -1096,8 +1204,12 @@ function renderInspector(){
     const issueStates=inspectorIssueStates(p);
     const identity=`${fld("Display name","name",p)}
       <div class="field-row">${fld("Pedigree ID override","label",p)}${fld("Sample ID","sampleId",p)}</div>
-      ${selF("Gender identity / pedigree symbol","gender",p,[["woman","Woman or girl · circle"],["man","Man or boy · square"],["nonbinary","Non-binary or gender-diverse · diamond"],["unknown","Unknown, unspecified or not relevant · diamond"]])}
+      ${selF("Gender identity","gender",p,[["woman","Woman or girl"],["man","Man or boy"],["nonbinary","Non-binary or gender-diverse"],["unknown","Unknown, unspecified or not relevant"]])}
+      ${selF("Genetic sex / PLINK sex","geneticSex",p,[["male","Male · PLINK 1"],["female","Female · PLINK 2"],["unknown","Unknown · PLINK 0"]])}
+      ${selF("Pedigree symbol source","symbolShapeSource",p,[["gender","Gender identity"],["genetic-sex","Genetic sex / PLINK sex"]])}
+      <div class="help-text">PLINK sex is stored independently of gender identity. A PLINK import uses genetic sex for square, circle or diamond symbols without asserting a gender identity.</div>
       ${selF("Sex assigned at birth annotation","sexAssignedAtBirth",p,[["","Not displayed"],["AFAB","AFAB"],["AMAB","AMAB"],["UAAB","UAAB"]])}
+      ${plinkParentRoleFields(p)}
       ${selF("Clinical status","clinicalStatus",p,[["auto","Automatic"],["affected","Affected"],["unaffected","Unaffected"],["unknown","Unknown or uncertain"],["not_assessed","Not assessed"]])}
       ${selF("Symbol display override","symbolDisplayOverride",p,[["auto","Automatic"],["affected","Affected fill"],["unaffected","Unaffected fill"],["uncertain","Unknown status"],["carrier-half","Carrier pattern"],["compound","Compound-heterozygous marker"]])}
       <div class="help-text">Automatic derives the clinical display from applicable role information. Molecular zygosity and carrier status remain independent. Display overrides change presentation only.</div>
@@ -1207,11 +1319,14 @@ function renderReport(){
   html+=block("Case summary",`<table class="rep-kv"><tbody>${caseRows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>`);
 
   html+=block(`Identity and status (${ps.length})`,table(
-    ["ID","Role","Display name","Gender / symbol","Sex assigned at birth","Status","Birth year","Age at death"],
+    ["ID","Role","Display name","Gender identity","Genetic sex","Symbol source","Sex assigned at birth","Status","Birth year","Age at death"],
     order.map(p=>{
       const st=[]; if(p.proband)st.push("Proband"); else if(p.consultand)st.push("Consultand"); st.push(clinicalStatusLabel(p));
       if(p.carrier)st.push("Carrier"); if(p.deceased)st.push("Deceased");
-      return [pedId(p),roleLabel(p),p.name,{man:"Man / boy",woman:"Woman / girl",nonbinary:"Non-binary / gender-diverse",unknown:"Unknown / unspecified"}[p.gender]||p.gender,p.sexAssignedAtBirth,st.join(", "),p.birthYear,p.ageAtDeath];
+      const genderLabel={man:"Man / boy",woman:"Woman / girl",nonbinary:"Non-binary / gender-diverse",unknown:"Unknown / unspecified"}[p.gender]||p.gender;
+      const geneticSexLabel={male:"Male",female:"Female",unknown:"Unknown"}[normaliseGeneticSex(p.geneticSex)];
+      const symbolSourceLabel=normaliseSymbolShapeSource(p.symbolShapeSource)==="genetic-sex"?"Genetic sex":"Gender identity";
+      return [pedId(p),roleLabel(p),p.name,genderLabel,geneticSexLabel,symbolSourceLabel,p.sexAssignedAtBirth,st.join(", "),p.birthYear,p.ageAtDeath];
     })
   ));
 
@@ -1527,31 +1642,41 @@ function printClinicalReport(){
   printWindow.document.close();
 }
 
-function togglePngScale(){
+function toggleExportOptions(){
   const fmt=document.getElementById("expFmt")?.value;
-  const row=document.getElementById("pngScaleField");
-  if(row)row.style.display=fmt==="png"?"block":"none";
+  const png=document.getElementById("pngScaleField");
+  const plink=document.getElementById("plinkModeField");
+  if(png)png.style.display=fmt==="png"?"block":"none";
+  if(plink)plink.style.display=(fmt==="fam"||fmt==="ped")?"block":"none";
 }
 function openExport(){ openDialog("Export",
-  `<div class="exp-row"><div class="field"><label>Format</label><select id="expFmt" onchange="togglePngScale()">
-      <option value="pdf">Clinical report — Print / PDF</option>
-      <option value="svg">Pedigree figure — SVG</option>
-      <option value="png">Pedigree figure — PNG</option>
-      <option value="json">Native project — JSON</option>
+  `<div class="exp-row"><div class="field"><label>Format</label><select id="expFmt" onchange="toggleExportOptions()">
+      <option value="pdf">Clinical report - Print / PDF</option>
+      <option value="svg">Pedigree figure - SVG</option>
+      <option value="png">Pedigree figure - PNG</option>
+      <option value="json">Native project - JSON</option>
+      <option value="fhir">FHIR R4 family-history bundle - JSON</option>
+      <option value="fam">PLINK family file - FAM</option>
+      <option value="ped">PLINK pedigree file - PED</option>
     </select></div>
     <div class="field" id="pngScaleField" style="display:none"><label>PNG quality</label><select id="expScale">
-      <option value="4" selected>High quality — 4×</option>
-      <option value="6">Very high quality — 6×</option>
-      <option value="8">Maximum quality — 8×</option>
+      <option value="4" selected>High quality - 4x</option>
+      <option value="6">Very high quality - 6x</option>
+      <option value="8">Maximum quality - 8x</option>
+    </select></div>
+    <div class="field" id="plinkModeField" style="display:none"><label>PLINK conversion</label><select id="plinkMode">
+      <option value="strict" selected>Strict - stop on ambiguous parent roles</option>
+      <option value="permissive">Permissive - use missing parent values with warnings</option>
     </select></div></div>
-    <div class="help-text">PDF opens a standalone clinical report without the website header or footer and adds a professional report footer. SVG and PNG export the clean pedigree figure. JSON exports a complete reloadable project. Reviewer details are recorded at export without locking the case.</div>`,
+    <div class="help-text">Native JSON preserves the complete project. FHIR exports a FHIR R4 collection Bundle with Patient, FamilyMemberHistory, pedigree relationship resources and a full-fidelity native attachment. FAM and PED use relationship-level parental roles for PAT and MAT and the separate genetic-sex field for SEX. Generated FIDs use hyphens rather than spaces, underscores or tildes. A PED without imported marker calls contains the same six pedigree columns as FAM.</div>`,
   `<button class="hbtn" onclick="closeDialog()">Cancel</button><button class="hbtn primary" onclick="doExportDialog()">Export</button>`);
 }
 function doExportDialog(){
   const fmt=document.getElementById("expFmt").value;
   const scale=fmt==="png"?+(document.getElementById("expScale")?.value||4):undefined;
+  const plinkMode=document.getElementById("plinkMode")?.value||"strict";
   closeDialog();
-  exportType(fmt,scale);
+  exportType(fmt,scale,{plinkMode});
 }
 function recordExport(fmt){
   model.meta.lastExportedAt=new Date().toISOString();
@@ -1559,68 +1684,782 @@ function recordExport(fmt){
   renderReport();
   markDirty();
 }
-function exportType(fmt,scale){
-  if(ui.sel){ui.sel=null;render();}
-  recordExport(fmt);
-  if(fmt==="json"){
-    download(model.caseName.replace(/\s+/g,"_")+".pedigree.json",
-      JSON.stringify({format:"pedigree-native/v4",exported:new Date().toISOString(),uid,layout:LAY,view,labelPreset:ui.labelPreset,routingMode:ui.routingMode,model},null,2),
-      "application/json");
+function cleanFileStem(value){
+  return String(value||"pedigree").trim().replace(/[^A-Za-z0-9._-]+/g,"_").replace(/^_+|_+$/g,"")||"pedigree";
+}
+function nativeProjectPayload(){
+  return {format:NATIVE_FORMAT,schemaVersion:PEDIGREE_SCHEMA_VERSION,exported:new Date().toISOString(),uid,layout:LAY,view,
+    labelPreset:ui.labelPreset,routingMode:ui.routingMode,model};
+}
+function graphValidation(targetModel=model){
+  const errors=[],warnings=[],people=targetModel&&targetModel.people||{},unions=targetModel&&targetModel.unions||{};
+  const personIds=new Set(Object.keys(people));
+  Object.entries(people).forEach(([key,p])=>{
+    if(!p||typeof p!=="object")errors.push(`Person ${key} is not an object.`);
+    else{
+      if(p.id!=null&&String(p.id)!==key)errors.push(`Person key ${key} does not match its id.`);
+      if(p.geneticSex!=null&&!GENETIC_SEX_VALUES.has(String(p.geneticSex)))errors.push(`Person ${key} has invalid genetic-sex semantics.`);
+      if(p.symbolShapeSource!=null&&!SYMBOL_SHAPE_SOURCES.has(String(p.symbolShapeSource)))errors.push(`Person ${key} has an invalid symbol-shape source.`);
+    }
+  });
+  const parentCount={};
+  Object.entries(unions).forEach(([key,u])=>{
+    if(!u||typeof u!=="object"){errors.push(`Union ${key} is not an object.`);return;}
+    if(u.id!=null&&String(u.id)!==key)errors.push(`Union key ${key} does not match its id.`);
+    if(u.a&& !personIds.has(String(u.a)))errors.push(`Union ${key} references missing partner ${u.a}.`);
+    if(u.b&& !personIds.has(String(u.b)))errors.push(`Union ${key} references missing partner ${u.b}.`);
+    if(u.a&&u.b&&u.a===u.b)errors.push(`Union ${key} contains the same person twice.`);
+    if(!Array.isArray(u.children)){errors.push(`Union ${key} has no valid children array.`);return;}
+    if(u.parentRoles!=null&&typeof u.parentRoles!=="object")errors.push(`Union ${key} has invalid parent-role semantics.`);
+    const roleA=normaliseParentRole(u.parentRoles?.a),roleB=normaliseParentRole(u.parentRoles?.b);
+    if(u.a&&u.b&&roleA!=="unspecified"&&roleA===roleB)warnings.push(`Union ${key} assigns both parents the ${roleA} PLINK role.`);
+    const seen=new Set();
+    u.children.forEach(c=>{
+      if(!personIds.has(String(c)))errors.push(`Union ${key} references missing child ${c}.`);
+      if(seen.has(c))errors.push(`Union ${key} repeats child ${c}.`);
+      seen.add(c); parentCount[c]=(parentCount[c]||0)+1;
+      if(c===u.a||c===u.b)errors.push(`Union ${key} makes ${c} both parent and child.`);
+    });
+  });
+  Object.entries(parentCount).forEach(([id,count])=>{if(count>1)errors.push(`Person ${id} occurs in more than one parental union.`);});
+  const adjacency={}; personIds.forEach(id=>adjacency[id]=[]);
+  Object.values(unions).forEach(u=>{
+    if(!u||!Array.isArray(u.children))return;
+    [u.a,u.b].filter(Boolean).forEach(parent=>u.children.forEach(child=>{
+      if(adjacency[parent]&&personIds.has(String(child)))adjacency[parent].push(String(child));
+    }));
+  });
+  const state={};
+  function visit(id){
+    if(state[id]===1)return true;
+    if(state[id]===2)return false;
+    state[id]=1;
+    for(const child of adjacency[id]||[])if(visit(child))return true;
+    state[id]=2; return false;
+  }
+  for(const id of personIds)if(visit(id)){errors.push("The pedigree contains a parent-child cycle.");break;}
+  if(!Object.keys(people).length)warnings.push("The pedigree contains no people.");
+  return {errors,warnings};
+}
+function validateNativeProject(parsed){
+  const payload=parsed&&parsed.model?parsed:{model:parsed};
+  if(!payload||!payload.model||typeof payload.model!=="object")throw new Error("The file does not contain a pedigree model.");
+  if(!payload.model.people||typeof payload.model.people!=="object"||Array.isArray(payload.model.people))throw new Error("The pedigree people collection is invalid.");
+  if(!payload.model.unions||typeof payload.model.unions!=="object"||Array.isArray(payload.model.unions))throw new Error("The pedigree union collection is invalid.");
+  Object.entries(payload.model.people).forEach(([key,person])=>{if(person&&person.id==null)person.id=key;});
+  Object.entries(payload.model.unions).forEach(([key,union])=>{if(union&&union.id==null)union.id=key;if(union&&!Array.isArray(union.children))union.children=[];});
+  const validation=graphValidation(payload.model);
+  if(validation.errors.length)throw new Error(validation.errors.join(" "));
+  return payload;
+}
+function nextUidForModel(targetModel){
+  const ids=Object.keys(targetModel.people||{}).concat(Object.keys(targetModel.unions||{}));
+  return Math.max(1,...ids.map(x=>+(String(x).match(/\d+/)||[0])[0]))+1;
+}
+function restoreStateSnapshot(serialised){
+  const state=JSON.parse(serialised);model=state.model;uid=state.uid;view=state.view;ui.sel=state.sel;
+  computeLayout();render();
+}
+function applyImportedProject(parsed,sourceFormat){
+  const payload=validateNativeProject(parsed);
+  history.push(snapshot()); future=[];
+  model=payload.model;
+  migrateModel();
+  uid=Number.isFinite(payload.uid)?payload.uid:nextUidForModel(model);
+  if(payload.layout)LAY=Object.assign(LAY,payload.layout);
+  if(payload.view)view=Object.assign(view,payload.view);
+  ui.sel=null;
+  ui.labelPreset=payload.labelPreset||"clinical";
+  ui.routingMode=payload.routingMode||"clinical";
+  model.interoperability.lastImportedFormat=sourceFormat||payload.format||"native-json";
+  model.interoperability.lastImportedAt=new Date().toISOString();
+  const labelControl=document.getElementById("labelPreset"); if(labelControl)labelControl.value=ui.labelPreset;
+  const routingControl=document.getElementById("routingMode"); if(routingControl)routingControl.value=ui.routingMode;
+  const caseControl=document.getElementById("caseName"); if(caseControl)caseControl.value=model.caseName||"Imported pedigree";
+  computeLayout(); render(); setTimeout(fitView,20); markDirty();
+}
+function utf8ToBase64(value){
+  const bytes=new TextEncoder().encode(String(value)); let binary="";
+  for(let i=0;i<bytes.length;i+=0x8000)binary+=String.fromCharCode(...bytes.subarray(i,i+0x8000));
+  return btoa(binary);
+}
+function base64ToUtf8(value){
+  const binary=atob(String(value).replace(/\s+/g,"")),bytes=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+function fhirId(value,prefix="r"){
+  const clean=String(value||"").replace(/[^A-Za-z0-9.-]/g,"-").replace(/^-+|-+$/g,"").slice(0,58);
+  return (prefix+"-"+(clean||"record")).slice(0,64);
+}
+function randomUuid(){
+  if(globalThis.crypto&&typeof globalThis.crypto.randomUUID==="function")return globalThis.crypto.randomUUID();
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==="x"?r:(r&3|8);return v.toString(16);});
+}
+function fhirExtension(name,valueKey,value){
+  if(value==null||value==="")return null;
+  const out={url:INTEROP_EXT+name}; out[valueKey]=value; return out;
+}
+function compactExtensions(items){return items.filter(Boolean);}
+function fhirSex(p){
+  if(p.sexAssignedAtBirth==="AMAB")return "male";
+  if(p.sexAssignedAtBirth==="AFAB")return "female";
+  if(p.sexAssignedAtBirth==="UAAB")return "other";
+  return "unknown";
+}
+function fhirDateTime(value){
+  if(!value)return undefined;
+  const raw=String(value).trim();
+  const parsed=/^\d{4}-\d{2}-\d{2}$/.test(raw)?new Date(raw+"T00:00:00Z"):new Date(raw);
+  return Number.isNaN(parsed.getTime())?undefined:parsed.toISOString();
+}
+function relationshipFromProband(probandId,relativeId){
+  if(probandId===relativeId)return {text:"Self"};
+  const directParents=parentsOf(probandId),relativeParents=parentsOf(relativeId);
+  if(directParents.includes(relativeId))return {coding:[{system:"http://terminology.hl7.org/CodeSystem/v3-RoleCode",code:"PRN"}],text:"Parent"};
+  if(relativeParents.includes(probandId))return {coding:[{system:"http://terminology.hl7.org/CodeSystem/v3-RoleCode",code:"CHLD"}],text:"Child"};
+  if(directParents.length&&relativeParents.some(id=>directParents.includes(id)))return {coding:[{system:"http://terminology.hl7.org/CodeSystem/v3-RoleCode",code:"SIB"}],text:"Sibling"};
+  if(unionsOf(probandId).some(u=>partnerIn(u,probandId)===relativeId))return {text:"Partner"};
+  const queue=[{id:probandId,d:0}],seen=new Set([probandId]);
+  while(queue.length){
+    const cur=queue.shift();
+    const neighbours=new Set([...parentsOf(cur.id),...childrenOf(cur.id),...unionsOf(cur.id).map(u=>partnerIn(u,cur.id)).filter(Boolean)]);
+    for(const n of neighbours){
+      if(n===relativeId)return {text:`Relative, graph distance ${cur.d+1}`};
+      if(!seen.has(n)){seen.add(n);queue.push({id:n,d:cur.d+1});}
+    }
+  }
+  return {text:"Relative, relationship not represented in the exchange projection"};
+}
+function conditionItemsForFamilyMember(p){
+  const items=[];
+  if(p.diagnosis)items.push({code:{text:p.diagnosis},onsetString:p.onset||undefined,contributedToDeath:p.deceased||undefined});
+  if(p.phenotype&&p.phenotype!==p.diagnosis)items.push({code:{text:p.phenotype},onsetString:p.onset||undefined});
+  return items.map(item=>Object.fromEntries(Object.entries(item).filter(([,v])=>v!==undefined)));
+}
+function buildFhirBundle(){
+  const validation=graphValidation();
+  if(validation.errors.length)throw new Error(validation.errors.join(" "));
+  const probands=P().filter(p=>p.proband);
+  if(probands.length!==1)throw new Error(`FHIR export requires exactly one proband. Found ${probands.length}.`);
+  const proband=probands[0],entries=[],urnByKey={};
+  function add(key,resource){
+    if(urnByKey[key])throw new Error(`FHIR logical entry key ${key} is duplicated.`);
+    const fullUrl="urn:uuid:"+randomUuid(); urnByKey[key]=fullUrl; entries.push({fullUrl,resource}); return fullUrl;
+  }
+  const patient={resourceType:"Patient",id:fhirId(proband.stableId||proband.id,"patient"),active:true,
+    identifier:[{system:INTEROP_BASE+"/identifier/person",value:String(proband.stableId||proband.id)}],
+    name:proband.name?[{text:proband.name}]:undefined,
+    gender:fhirSex(proband),
+    birthDate:/^\d{4}(-\d{2}(-\d{2})?)?$/.test(String(proband.birthYear||""))?String(proband.birthYear):undefined,
+    deceasedBoolean:proband.deceased||undefined,
+    extension:compactExtensions([
+      fhirExtension("native-person-id","valueString",proband.id),fhirExtension("pedigree-id","valueString",pedId(proband)),
+      fhirExtension("gender-identity","valueString",proband.gender),fhirExtension("genetic-sex","valueCode",normaliseGeneticSex(proband.geneticSex)),
+      fhirExtension("symbol-shape-source","valueCode",normaliseSymbolShapeSource(proband.symbolShapeSource)),
+      fhirExtension("sex-assigned-at-birth","valueCode",proband.sexAssignedAtBirth),
+      fhirExtension("clinical-status","valueCode",clinicalStatusOf(proband)),fhirExtension("consultand","valueBoolean",!!proband.consultand),
+      fhirExtension("carrier","valueBoolean",!!proband.carrier),fhirExtension("native-person-payload","valueBase64Binary",utf8ToBase64(JSON.stringify(proband)))
+    ])};
+  Object.keys(patient).forEach(k=>patient[k]===undefined&&delete patient[k]);
+  const patientUrn=add("patient",patient);
+  const device={resourceType:"Device",id:"switzerlandomics-pedigree",status:"active",deviceName:[{name:"Switzerland Omics Pedigree",type:"user-friendly-name"}],
+    version:[{value:NATIVE_FORMAT}]};
+  const deviceUrn=add("device",device);
+  let practitionerUrn=null,organisationUrn=null;
+  if(model.meta.reviewer){
+    const practitioner={resourceType:"Practitioner",id:fhirId(model.meta.reviewer,"reviewer"),active:true,name:[{text:model.meta.reviewer}]};
+    practitionerUrn=add("practitioner",practitioner);
+  }
+  if(model.meta.institution){
+    const organisation={resourceType:"Organization",id:fhirId(model.meta.institution,"organisation"),active:true,name:model.meta.institution};
+    organisationUrn=add("organisation",organisation);
+  }
+
+  const resultRefs=[],specimenRefs=[];
+  if(proband.diagnosis){
+    const condition={resourceType:"Condition",id:fhirId(proband.id,"condition"),subject:{reference:patientUrn},code:{text:proband.diagnosis},
+      clinicalStatus:{coding:[{system:"http://terminology.hl7.org/CodeSystem/condition-clinical",code:"active"}]},onsetString:proband.onset||undefined};
+    Object.keys(condition).forEach(k=>condition[k]===undefined&&delete condition[k]); add("condition",condition);
+  }
+  if(proband.phenotype){
+    const obs={resourceType:"Observation",id:fhirId(proband.id,"phenotype"),status:"final",code:{text:"Phenotypic finding"},subject:{reference:patientUrn},valueString:proband.phenotype,
+      extension:compactExtensions([fhirExtension("age-at-onset","valueString",proband.onset)])};
+    Object.keys(obs).forEach(k=>obs[k]===undefined&&delete obs[k]); resultRefs.push({reference:add("phenotype",obs)});
+  }
+  if(hasGenetics(proband)){
+    const components=[];
+    [["Gene",proband.gene],["Variant type",proband.variantType],["Genome assembly",proband.assembly],["Chromosome",proband.chromosome],
+      ["Genomic start",proband.genomicStart],["Genomic end",proband.genomicEnd],["Reference allele",proband.ref],["Alternate allele",proband.alt],
+      ["Transcript",proband.transcript],["Genomic HGVS",proband.genomicHgvs],["Coding HGVS",proband.codingHgvs],["RNA HGVS",proband.rnaHgvs],
+      ["Protein HGVS",proband.proteinHgvs],["Zygosity",proband.zygosity],["Inheritance",proband.inheritance],["Classification",proband.classification]
+    ].forEach(([label,value])=>{if(value)components.push({code:{text:label},valueString:String(value)});});
+    const obs={resourceType:"Observation",id:fhirId(proband.id,"genomic"),status:"final",code:{text:"Genomic finding"},subject:{reference:patientUrn},
+      valueString:bestGeneticLabel(proband)||proband.geneticsFreeText||"Genomic finding recorded",component:components.length?components:undefined,
+      extension:compactExtensions([fhirExtension("native-molecular-payload","valueBase64Binary",utf8ToBase64(JSON.stringify({gene:proband.gene,variantType:proband.variantType,chromosome:proband.chromosome,genomicStart:proband.genomicStart,genomicEnd:proband.genomicEnd,ref:proband.ref,alt:proband.alt,genomicHgvs:proband.genomicHgvs,codingHgvs:proband.codingHgvs,rnaHgvs:proband.rnaHgvs,proteinHgvs:proband.proteinHgvs,assembly:proband.assembly,transcript:proband.transcript,zygosity:proband.zygosity,inheritance:proband.inheritance,classification:proband.classification,geneticsFreeText:proband.geneticsFreeText})))])};
+    resultRefs.push({reference:add("genomic",obs)});
+  }
+  if(proband.sampleId){
+    const specimen={resourceType:"Specimen",id:fhirId(proband.sampleId,"specimen"),identifier:[{system:INTEROP_BASE+"/identifier/specimen",value:proband.sampleId}],status:proband.testStatus==="unavailable"?"unavailable":"available",subject:{reference:patientUrn}};
+    specimenRefs.push({reference:add("specimen",specimen)});
+  }
+
+  P().filter(p=>p.id!==proband.id).forEach(p=>{
+    const relationship=relationshipFromProband(proband.id,p.id);
+    const related={resourceType:"RelatedPerson",id:fhirId(p.stableId||p.id,"related"),active:true,patient:{reference:patientUrn},relationship:[relationship],
+      identifier:[{system:INTEROP_BASE+"/identifier/person",value:String(p.stableId||p.id)}],name:p.name?[{text:p.name}]:undefined,
+      gender:fhirSex(p),birthDate:/^\d{4}(-\d{2}(-\d{2})?)?$/.test(String(p.birthYear||""))?String(p.birthYear):undefined,
+      extension:compactExtensions([fhirExtension("native-person-id","valueString",p.id),fhirExtension("pedigree-id","valueString",pedId(p)),
+        fhirExtension("gender-identity","valueString",p.gender),fhirExtension("genetic-sex","valueCode",normaliseGeneticSex(p.geneticSex)),
+        fhirExtension("symbol-shape-source","valueCode",normaliseSymbolShapeSource(p.symbolShapeSource)),
+        fhirExtension("sex-assigned-at-birth","valueCode",p.sexAssignedAtBirth),
+        fhirExtension("clinical-status","valueCode",clinicalStatusOf(p)),fhirExtension("proband","valueBoolean",!!p.proband),
+        fhirExtension("consultand","valueBoolean",!!p.consultand),fhirExtension("carrier","valueBoolean",!!p.carrier),
+        fhirExtension("native-person-payload","valueBase64Binary",utf8ToBase64(JSON.stringify(p)))])};
+    Object.keys(related).forEach(k=>related[k]===undefined&&delete related[k]); add("related-"+p.id,related);
+    const familyConditions=conditionItemsForFamilyMember(p),familyStatus=familyConditions.length||clinicalStatusOf(p)==="unaffected"||clinicalStatusOf(p)==="affected"?"completed":"health-unknown";
+    const fmh={resourceType:"FamilyMemberHistory",id:fhirId(p.stableId||p.id,"family"),status:familyStatus,patient:{reference:patientUrn},
+      name:p.name||pedId(p),relationship,sex:fhirSex(p),bornString:p.birthYear?String(p.birthYear):undefined,deceasedBoolean:p.deceased||undefined,
+      condition:familyConditions,note:[p.notes,p.geneticsFreeText,hasGenetics(p)?bestGeneticLabel(p):""].filter(Boolean).map(t=>({text:t})),
+      extension:compactExtensions([fhirExtension("native-person-id","valueString",p.id),fhirExtension("pedigree-id","valueString",pedId(p)),
+        fhirExtension("genetic-sex","valueCode",normaliseGeneticSex(p.geneticSex)),
+        fhirExtension("symbol-shape-source","valueCode",normaliseSymbolShapeSource(p.symbolShapeSource)),
+        fhirExtension("clinical-status","valueCode",clinicalStatusOf(p)),fhirExtension("carrier","valueBoolean",!!p.carrier),
+        fhirExtension("sample-id","valueString",p.sampleId),fhirExtension("native-person-payload","valueBase64Binary",utf8ToBase64(JSON.stringify(p)))])};
+    if(!fmh.condition.length)delete fmh.condition; if(!fmh.note.length)delete fmh.note;
+    Object.keys(fmh).forEach(k=>fmh[k]===undefined&&delete fmh[k]); add("family-"+p.id,fmh);
+  });
+
+  U().forEach(u=>{
+    const basic={resourceType:"Basic",id:fhirId(u.stableId||u.id,"union"),code:{coding:[{system:INTEROP_CODES,code:"pedigree-union",display:"Pedigree union"}],text:"Pedigree union"},
+      subject:{reference:patientUrn},extension:compactExtensions([
+        fhirExtension("native-union-id","valueString",u.id),fhirExtension("partner-a","valueString",u.a),fhirExtension("partner-b","valueString",u.b),
+        fhirExtension("parent-role-a","valueCode",normaliseParentRole(u.parentRoles?.a)),fhirExtension("parent-role-b","valueCode",normaliseParentRole(u.parentRoles?.b)),
+        ...u.children.map(c=>fhirExtension("child","valueString",c)),fhirExtension("consanguineous","valueBoolean",!!u.consanguineous),
+        fhirExtension("relationship-status","valueCode",u.relationshipStatus),fhirExtension("consanguinity-degree","valueString",u.consanguinityDegree),
+        fhirExtension("no-children","valueBoolean",!!u.noChildren),fhirExtension("infertility","valueBoolean",!!u.infertility),
+        fhirExtension("infertility-reason","valueString",u.infertilityReason),fhirExtension("native-union-payload","valueBase64Binary",utf8ToBase64(JSON.stringify(u)))
+      ])};
+    add("union-"+u.id,basic);
+  });
+
+  const nativePayload=nativeProjectPayload();
+  const binary={resourceType:"Binary",id:fhirId(model.caseName,"native"),contentType:"application/vnd.switzerlandomics.pedigree+json",data:utf8ToBase64(JSON.stringify(nativePayload))};
+  const binaryUrn=add("native-binary",binary);
+  const documentReference={resourceType:"DocumentReference",id:fhirId(model.caseName,"document"),status:"current",type:{coding:[{system:INTEROP_CODES,code:"clinical-pedigree",display:"Clinical pedigree"}],text:"Clinical pedigree"},subject:{reference:patientUrn},date:new Date().toISOString(),
+    author:[practitionerUrn?{reference:practitionerUrn}:{reference:deviceUrn}],custodian:organisationUrn?{reference:organisationUrn}:undefined,
+    description:model.meta.indication||model.meta.disease||"Clinical pedigree exchange package",content:[{attachment:{contentType:binary.contentType,url:binaryUrn,title:cleanFileStem(model.caseName)+".pedigree.json"}}]};
+  Object.keys(documentReference).forEach(k=>documentReference[k]===undefined&&delete documentReference[k]);
+  const documentUrn=add("document",documentReference);
+  const report={resourceType:"DiagnosticReport",id:fhirId(model.caseName,"report"),status:"final",code:{coding:[{system:INTEROP_CODES,code:"pedigree-report",display:"Clinical pedigree report"}],text:"Clinical pedigree report"},subject:{reference:patientUrn},
+    effectiveDateTime:fhirDateTime(model.meta.date)||new Date().toISOString(),performer:[practitionerUrn?{reference:practitionerUrn}:organisationUrn?{reference:organisationUrn}:{reference:deviceUrn}],result:resultRefs,specimen:specimenRefs,
+    conclusion:[model.meta.disease,model.meta.indication].filter(Boolean).join(". ")||"Pedigree recorded"};
+  if(!report.result.length)delete report.result;if(!report.specimen.length)delete report.specimen;
+  const reportUrn=add("report",report);
+  const provenanceAgents=[{type:{text:"Software assembler"},who:{reference:deviceUrn}}];
+  if(practitionerUrn)provenanceAgents.push({type:{text:"Reviewer"},who:{reference:practitionerUrn},onBehalfOf:organisationUrn?{reference:organisationUrn}:undefined});
+  provenanceAgents.forEach(agent=>Object.keys(agent).forEach(k=>agent[k]===undefined&&delete agent[k]));
+  const provenance={resourceType:"Provenance",id:fhirId(model.caseName,"provenance"),target:[{reference:patientUrn},{reference:documentUrn},{reference:reportUrn}],recorded:new Date().toISOString(),agent:provenanceAgents,
+    entity:[{role:"source",what:{reference:binaryUrn}}]};
+  add("provenance",provenance);
+
+  const bundle={resourceType:"Bundle",id:fhirId(model.caseName,"bundle"),meta:{tag:[{system:INTEROP_CODES,code:"pedigree-family-history",display:"Pedigree family-history exchange"},{system:INTEROP_CODES,code:"fhir-version",display:FHIR_R4_VERSION}]},
+    identifier:{system:INTEROP_BASE+"/identifier/case",value:model.caseName||"pedigree"},type:"collection",timestamp:new Date().toISOString(),entry:entries};
+  validateFhirBundle(bundle); return bundle;
+}
+function validateFhirBundle(bundle,options={}){
+  const errors=[];
+  if(!bundle||bundle.resourceType!=="Bundle")errors.push("FHIR exchange payload is not a Bundle.");
+  if(options.requireCollection!==false&&bundle.type!=="collection")errors.push("FHIR Bundle type must be collection.");
+  if(!Array.isArray(bundle.entry)||!bundle.entry.length)errors.push("FHIR Bundle has no entries.");
+  const urls=new Set(),resourceIds=new Set(),resources=[];
+  (bundle.entry||[]).forEach((entry,i)=>{
+    if(!entry.fullUrl)errors.push(`FHIR entry ${i+1} has no fullUrl.`);
+    else if(urls.has(entry.fullUrl))errors.push(`FHIR fullUrl ${entry.fullUrl} is duplicated.`); else urls.add(entry.fullUrl);
+    if(!entry.resource||!entry.resource.resourceType)errors.push(`FHIR entry ${i+1} has no resourceType.`);
+    else{
+      resources.push(entry.resource);
+      if(entry.resource.id){const key=entry.resource.resourceType+"/"+entry.resource.id;if(resourceIds.has(key))errors.push(`FHIR resource id ${key} is duplicated.`);else resourceIds.add(key);}
+    }
+  });
+  if(resources.filter(r=>r.resourceType==="Patient").length!==1)errors.push("FHIR Bundle must contain exactly one Patient.");
+  function inspect(value){
+    if(!value||typeof value!=="object")return;
+    if(typeof value.reference==="string"&&value.reference.startsWith("urn:uuid:")&&!urls.has(value.reference))errors.push(`FHIR reference ${value.reference} does not resolve inside the Bundle.`);
+    Object.values(value).forEach(inspect);
+  }
+  resources.forEach(inspect);
+  if(errors.length)throw new Error(errors.join(" "));
+  return true;
+}
+function getFhirExtensions(resource,name){return (resource&&resource.extension||[]).filter(e=>e.url===INTEROP_EXT+name);}
+function getFhirExtensionValue(resource,name){
+  const ext=getFhirExtensions(resource,name)[0]; if(!ext)return undefined;
+  const key=Object.keys(ext).find(k=>k.startsWith("value")); return key?ext[key]:undefined;
+}
+function humanName(resource){
+  const name=resource&&resource.name&&resource.name[0]; if(!name)return "";
+  return name.text||[...(name.given||[]),name.family].filter(Boolean).join(" ");
+}
+function codeableText(concept){
+  if(!concept)return "";
+  if(concept.text)return concept.text;
+  const coding=(concept.coding||[]).find(c=>c.display||c.code);
+  return coding?(coding.display||coding.code||""):"";
+}
+function fhirObservationValue(observation){
+  if(observation.valueString!=null)return String(observation.valueString);
+  if(observation.valueCodeableConcept)return codeableText(observation.valueCodeableConcept);
+  if(observation.valueQuantity?.value!=null)return [observation.valueQuantity.value,observation.valueQuantity.unit||observation.valueQuantity.code].filter(Boolean).join(" ");
+  if(observation.valueBoolean!=null)return observation.valueBoolean?"true":"false";
+  if(observation.valueInteger!=null||observation.valueDecimal!=null)return String(observation.valueInteger??observation.valueDecimal);
+  return "";
+}
+function fhirFamilyBirth(resource){
+  return resource.bornDate||resource.bornString||resource.bornPeriod?.start||resource.birthDate||"";
+}
+function fhirFamilyDeceased(resource){
+  return !!(resource.deceasedBoolean||resource.deceasedDate||resource.deceasedDateTime||resource.deceasedAge||resource.deceasedRange||resource.deceasedString);
+}
+function fhirFamilyAgeAtDeath(resource){
+  if(resource.deceasedAge?.value!=null)return [resource.deceasedAge.value,resource.deceasedAge.unit||resource.deceasedAge.code].filter(Boolean).join(" ");
+  return resource.deceasedString||"";
+}
+function fhirRelationship(resource){
+  if(resource.resourceType==="RelatedPerson")return resource.relationship?.[0]||{text:"Relative"};
+  return resource.relationship||{text:"Relative"};
+}
+function fhirAdminGenderFields(code){
+  if(code==="male")return {sex:"male",geneticSex:"unknown",gender:"unknown",symbolShapeSource:"gender",sexAssignedAtBirth:""};
+  if(code==="female")return {sex:"female",geneticSex:"unknown",gender:"unknown",symbolShapeSource:"gender",sexAssignedAtBirth:""};
+  return {sex:"unknown",geneticSex:"unknown",gender:"unknown",symbolShapeSource:"gender",sexAssignedAtBirth:""};
+}
+function importFhirBundle(bundle){
+  validateFhirBundle(bundle,{requireCollection:false});
+  const resources=bundle.entry.map(e=>e.resource),binary=resources.find(r=>r.resourceType==="Binary"&&r.contentType==="application/vnd.switzerlandomics.pedigree+json"&&r.data);
+  if(binary){
+    const native=JSON.parse(base64ToUtf8(binary.data));
+    applyImportedProject(native,"fhir-r4-exact");
     return;
   }
-  if(fmt==="pdf"){printClinicalReport();return;}
-  const svg=buildExportSVG();
-  if(fmt==="svg"){download(model.caseName.replace(/\s+/g,"_")+".svg",svg,"image/svg+xml");return;}
-  scale=Math.max(4,scale||4);
-  const img=new Image(), blob=new Blob([svg],{type:"image/svg+xml"}), url=URL.createObjectURL(blob);
-  img.onload=()=>{
-    const c=document.createElement("canvas");
-    c.width=Math.max(1,Math.round(img.width*scale));
-    c.height=Math.max(1,Math.round(img.height*scale));
-    const ctx=c.getContext("2d");
-    ctx.imageSmoothingEnabled=true;
-    ctx.imageSmoothingQuality="high";
-    ctx.fillStyle="#fff";
-    ctx.fillRect(0,0,c.width,c.height);
-    ctx.drawImage(img,0,0,c.width,c.height);
-    c.toBlob(b=>{
-      if(!b){alert("PNG render failed. SVG export remains available.");URL.revokeObjectURL(url);return;}
-      const objectUrl=URL.createObjectURL(b), a=document.createElement("a");
-      a.href=objectUrl;
-      a.download=model.caseName.replace(/\s+/g,"_")+".png";
-      a.click();
-      setTimeout(()=>URL.revokeObjectURL(objectUrl),1000);
-      URL.revokeObjectURL(url);
-    },"image/png",1);
-  };
-  img.onerror=()=>{alert("PNG render failed. SVG export remains available.");URL.revokeObjectURL(url);};
-  img.src=url;
+  const patients=resources.filter(r=>r.resourceType==="Patient");
+  if(patients.length!==1)throw new Error(`FHIR import requires exactly one Patient. Found ${patients.length}.`);
+  const patient=patients[0],previous=snapshot(),previousFuture=[...future];
+  try{
+  history.push(previous);future=[];model=blankModel("fhir");uid=1;
+  const patientNativeId=getFhirExtensionValue(patient,"native-person-id")||patient.identifier?.[0]?.value||patient.id||"patient";
+  const pg=fhirAdminGenderFields(patient.gender);
+  const patientDeceased=fhirFamilyDeceased(patient);
+  const probandId=newPerson(pg.sex,{...pg,stableId:patient.identifier?.[0]?.value||patientNativeId,name:humanName(patient),
+    birthYear:patient.birthDate||"",deceased:patientDeceased,vitalStatus:patientDeceased?"deceased":"living",proband:true,
+    gender:getFhirExtensionValue(patient,"gender-identity")||"unknown",
+    geneticSex:normaliseGeneticSex(getFhirExtensionValue(patient,"genetic-sex")||pg.geneticSex),
+    symbolShapeSource:normaliseSymbolShapeSource(getFhirExtensionValue(patient,"symbol-shape-source")||pg.symbolShapeSource),
+    sexAssignedAtBirth:getFhirExtensionValue(patient,"sex-assigned-at-birth")||"",
+    clinicalStatus:getFhirExtensionValue(patient,"clinical-status")||"auto",consultand:!!getFhirExtensionValue(patient,"consultand"),carrier:!!getFhirExtensionValue(patient,"carrier"),source:"record",
+    externalIds:{plinkIid:"",fhirIdentifier:patient.id||""}});
+  const nativeToLocal=new Map([[String(patientNativeId),probandId]]),relativeByNative=new Map(),importWarnings=[];
+  function relativeNativeId(resource){
+    return String(getFhirExtensionValue(resource,"native-person-id")||resource.identifier?.[0]?.value||resource.id||randomUuid());
+  }
+  function nativePersonPayload(resource){
+    const encoded=getFhirExtensionValue(resource,"native-person-payload");
+    if(!encoded)return {};
+    try{const payload=JSON.parse(base64ToUtf8(encoded));delete payload.id;return payload;}catch(e){importWarnings.push(`Could not decode native person payload for ${resource.id||"a relative"}.`);return {};}
+  }
+  function importRelative(resource){
+    const nativeId=relativeNativeId(resource),payload=nativePersonPayload(resource),isHistory=resource.resourceType==="FamilyMemberHistory";
+    const relation=fhirRelationship(resource),conditions=isHistory?(resource.condition||[]).map(c=>codeableText(c.code)).filter(Boolean):[];
+    const admin=fhirAdminGenderFields(isHistory?resource.sex:resource.gender),deceased=isHistory?fhirFamilyDeceased(resource):!!payload.deceased;
+    const values=Object.assign({},payload,admin,{
+      stableId:resource.identifier?.[0]?.value||resource.id||nativeId,
+      name:(isHistory?resource.name:humanName(resource))||payload.name||"",
+      birthYear:fhirFamilyBirth(resource)||payload.birthYear||"",
+      ageAtDeath:fhirFamilyAgeAtDeath(resource)||payload.ageAtDeath||"",
+      deceased,vitalStatus:deceased?"deceased":"living",
+      gender:getFhirExtensionValue(resource,"gender-identity")||payload.gender||"unknown",
+      geneticSex:normaliseGeneticSex(getFhirExtensionValue(resource,"genetic-sex")||payload.geneticSex||admin.geneticSex),
+      symbolShapeSource:normaliseSymbolShapeSource(getFhirExtensionValue(resource,"symbol-shape-source")||payload.symbolShapeSource||admin.symbolShapeSource),
+      sexAssignedAtBirth:getFhirExtensionValue(resource,"sex-assigned-at-birth")||payload.sexAssignedAtBirth||"",
+      clinicalStatus:getFhirExtensionValue(resource,"clinical-status")||payload.clinicalStatus||(conditions.length?"affected":"unknown"),
+      phenotype:payload.phenotype||conditions[0]||"",diagnosis:payload.diagnosis||conditions[0]||"",
+      onset:payload.onset||(isHistory?resource.condition?.map(c=>c.onsetString||c.onsetAge?.value).find(Boolean):"")||"",
+      carrier:!!getFhirExtensionValue(resource,"carrier")||!!payload.carrier,
+      sampleId:getFhirExtensionValue(resource,"sample-id")||payload.sampleId||"",source:"record",
+      externalIds:Object.assign({fhirIdentifier:resource.id||"",plinkIid:""},payload.externalIds||{})
+    });
+    let localId=nativeToLocal.get(nativeId);
+    if(localId&&localId!==probandId){
+      const person=model.people[localId];
+      ["name","birthYear","ageAtDeath","phenotype","diagnosis","onset","sampleId"].forEach(key=>{if(!person[key]&&values[key])person[key]=values[key];});
+      if(person.clinicalStatus==="unknown"&&values.clinicalStatus)person.clinicalStatus=values.clinicalStatus;
+      person.deceased=person.deceased||values.deceased;person.vitalStatus=person.deceased?"deceased":person.vitalStatus;
+    }else if(!localId){
+      localId=newPerson(admin.sex,values);nativeToLocal.set(nativeId,localId);
+    }
+    if(localId!==probandId&&!relativeByNative.has(nativeId))relativeByNative.set(nativeId,{resource,relationship:relation,localId});
+    else if(localId!==probandId&&isHistory)relativeByNative.set(nativeId,{resource,relationship:relation,localId});
+  }
+  resources.filter(r=>r.resourceType==="FamilyMemberHistory").forEach(importRelative);
+  resources.filter(r=>r.resourceType==="RelatedPerson").forEach(importRelative);
+  const unionResources=resources.filter(r=>r.resourceType==="Basic"&&(r.code?.coding||[]).some(c=>c.system===INTEROP_CODES&&c.code==="pedigree-union"));
+  if(unionResources.length){
+    unionResources.forEach(r=>{
+      const a=nativeToLocal.get(String(getFhirExtensionValue(r,"partner-a")||""))||null;
+      const b=nativeToLocal.get(String(getFhirExtensionValue(r,"partner-b")||""))||null;
+      const children=getFhirExtensions(r,"child").map(e=>nativeToLocal.get(String(e.valueString))).filter(Boolean);
+      if(!a&&!b)return;
+      const roleA=getFhirExtensionValue(r,"parent-role-a"),roleB=getFhirExtensionValue(r,"parent-role-b");
+      const unionExtra={children,consanguineous:!!getFhirExtensionValue(r,"consanguineous"),relationshipStatus:getFhirExtensionValue(r,"relationship-status")||"current",
+        consanguinityDegree:getFhirExtensionValue(r,"consanguinity-degree")||"",noChildren:!!getFhirExtensionValue(r,"no-children"),infertility:!!getFhirExtensionValue(r,"infertility"),infertilityReason:getFhirExtensionValue(r,"infertility-reason")||""};
+      if(roleA||roleB)unionExtra.parentRoles={a:normaliseParentRole(roleA),b:normaliseParentRole(roleB)};
+      const unionId=newUnion(a,b,unionExtra);
+      model.unions[unionId].stableId=getFhirExtensionValue(r,"native-union-id")||unionId;
+    });
+  }else{
+    const parents=[],siblings=[],partners=[],children=[];
+    relativeByNative.forEach(({relationship,localId})=>{
+      const codes=(relationship?.coding||[]).map(c=>c.code),text=codeableText(relationship).toLowerCase();
+      if(codes.some(code=>["FTH","MTH","PRN"].includes(code))||text.includes("parent")||text==="father"||text==="mother"){
+        const role=codes.includes("FTH")||text==="father"?"paternal":codes.includes("MTH")||text==="mother"?"maternal":"unspecified";
+        parents.push({localId,role});
+      }
+      else if(codes.some(code=>["BRO","SIS","SIB"].includes(code))||text.includes("sibling")||text==="brother"||text==="sister")siblings.push(localId);
+      else if(codes.includes("SPS")||text.includes("partner")||text.includes("spouse"))partners.push(localId);
+      else if(codes.some(code=>["SON","DAU","CHLD"].includes(code))||text==="child"||text==="son"||text==="daughter")children.push(localId);
+    });
+    let parentUnion=null;
+    if(parents.length){
+      const paternal=parents.find(p=>p.role==="paternal"),maternal=parents.find(p=>p.role==="maternal");
+      const remaining=parents.filter(p=>p!==paternal&&p!==maternal);
+      const first=paternal||remaining.shift()||null,second=maternal||remaining.shift()||null;
+      parentUnion=newUnion(first?.localId||null,second?.localId||null,{parentRoles:{a:first?.role||"unspecified",b:second?.role||"unspecified"}});
+      model.unions[parentUnion].children.push(probandId,...siblings);
+      if(remaining.length)importWarnings.push(`${remaining.length} additional parent relationship${remaining.length===1?"":"s"} could not be assigned to the single parental union model.`);
+    }
+    else if(siblings.length){
+      const placeholder=newPerson("unknown",{name:"Unspecified parent",clinicalStatus:"not_assessed",source:"inferred",notes:"Created to represent sibling topology from FamilyMemberHistory."});
+      parentUnion=newUnion(placeholder,null);model.unions[parentUnion].children.push(probandId,...siblings);
+    }
+    partners.forEach(partner=>newUnion(probandId,partner));
+    if(children.length){
+      let union=unionsOf(probandId).find(u=>partnerIn(u,probandId));
+      if(partners.length>1)importWarnings.push("Child relationships were attached to the first available proband partnership because FamilyMemberHistory did not identify the other parent.");
+      if(!union){const placeholder=newPerson("unknown",{name:"Unspecified co-parent",clinicalStatus:"not_assessed",source:"inferred",notes:"Created to represent child topology from FamilyMemberHistory."});union=model.unions[newUnion(probandId,placeholder)];}
+      union.children.push(...children);
+    }
+  }
+  const organisation=resources.find(r=>r.resourceType==="Organization"),practitioner=resources.find(r=>r.resourceType==="Practitioner");
+  if(organisation?.name)model.meta.institution=organisation.name;
+  if(practitioner)model.meta.reviewer=humanName(practitioner);
+  const conditions=resources.filter(r=>r.resourceType==="Condition"&&r.subject?.reference);
+  if(conditions[0])model.people[probandId].diagnosis=codeableText(conditions[0].code);
+  resources.filter(r=>r.resourceType==="Observation").forEach(obs=>{
+    const code=codeableText(obs.code).toLowerCase(),observationValue=fhirObservationValue(obs);
+    if(code.includes("phenotyp"))model.people[probandId].phenotype=observationValue;
+    if(code.includes("genomic")){
+      const componentMap={};(obs.component||[]).forEach(c=>componentMap[codeableText(c.code)]=fhirObservationValue(c));
+      Object.assign(model.people[probandId],{gene:componentMap["Gene"]||"",variantType:componentMap["Variant type"]||"",assembly:componentMap["Genome assembly"]||"GRCh38",
+        chromosome:componentMap["Chromosome"]||"",genomicStart:componentMap["Genomic start"]||"",genomicEnd:componentMap["Genomic end"]||"",ref:componentMap["Reference allele"]||"",alt:componentMap["Alternate allele"]||"",
+        transcript:componentMap["Transcript"]||"",genomicHgvs:componentMap["Genomic HGVS"]||"",codingHgvs:componentMap["Coding HGVS"]||"",rnaHgvs:componentMap["RNA HGVS"]||"",proteinHgvs:componentMap["Protein HGVS"]||"",
+        zygosity:componentMap["Zygosity"]||"",inheritance:componentMap["Inheritance"]||"",classification:componentMap["Classification"]||"",geneticsFreeText:observationValue});
+    }
+  });
+  const diagnosticReport=resources.find(r=>r.resourceType==="DiagnosticReport"),documentReference=resources.find(r=>r.resourceType==="DocumentReference");
+  if(diagnosticReport?.effectiveDateTime)model.meta.date=String(diagnosticReport.effectiveDateTime).slice(0,10);
+  if(documentReference?.description)model.meta.indication=documentReference.description;
+  model.caseName=bundle.identifier?.value||"Imported FHIR pedigree";
+  model.meta.importWarnings=importWarnings;
+  model.interoperability.lastImportedFormat="fhir-r4-projection";model.interoperability.lastImportedAt=new Date().toISOString();
+  const importedValidation=graphValidation();if(importedValidation.errors.length)throw new Error(importedValidation.errors.join(" "));
+  migrateModel();ui.sel=probandId;const caseControl=document.getElementById("caseName");if(caseControl)caseControl.value=model.caseName;
+  computeLayout();render();setTimeout(fitView,20);markDirty();
+  if(importWarnings.length)alert("FHIR import completed with warnings:\n\n"+importWarnings.join("\n"));
+  }catch(err){
+    if(history[history.length-1]===previous)history.pop();future=previousFuture;restoreStateSnapshot(previous);throw err;
+  }
+}
+function addUniqueWarning(warnings,message){
+  if(message&&!warnings.includes(message))warnings.push(message);
+}
+function plinkToken(value,label,strict,warnings,options={}){
+  const raw=String(value==null?"":value).trim(),allowZero=!!options.allowZero;
+  if(raw&&(allowZero||raw!=="0")&&!/\s/.test(raw)){
+    if(raw.includes("_"))addUniqueWarning(warnings,`${label} contains an underscore. PLINK report identifiers may become ambiguous because FID and IID are joined with an underscore.`);
+    return raw;
+  }
+  if(strict)throw new Error(`${label} must be ${allowZero?"present":"non-zero"} and contain no whitespace.`);
+  const clean=raw.replace(/\s+/g,"-").replace(/^-+|-+$/g,"").replace(/^0$/,allowZero?"0":"")||"missing";
+  addUniqueWarning(warnings,`${label} was normalised to ${clean}.`);
+  return clean;
+}
+function derivedPlinkFamilyId(value,warnings){
+  const raw=String(value||"family").trim()||"family";
+  const clean=raw.replace(/[_\s]+/g,"-").replace(/[^A-Za-z0-9.\-]+/g,"-").replace(/-+/g,"-").replace(/^-+|-+$/g,"")||"family";
+  if(clean!==raw)addUniqueWarning(warnings,`Family identifier was derived as ${clean} from the case name.`);
+  return clean;
+}
+function plinkSex(p){
+  const hasGeneticSex=Object.prototype.hasOwnProperty.call(p,"geneticSex");
+  const geneticSex=normaliseGeneticSex(p.geneticSex);
+  if(geneticSex!=="unknown")return plinkCodeFromGeneticSex(geneticSex);
+  const imported=p.interoperability?.plink?.sex;
+  if(["0","1","2"].includes(imported))return imported;
+  if(!hasGeneticSex&&p.sex==="male")return "1";
+  if(!hasGeneticSex&&p.sex==="female")return "2";
+  return "0";
+}
+function plinkPhenotype(p){
+  const status=clinicalStatusOf(p);
+  if(status==="affected")return "2";
+  if(status==="unaffected")return "1";
+  const imported=p.interoperability?.plink?.phenotype;
+  if(imported!=null&&!["1","2"].includes(String(imported)))return String(imported);
+  return "-9";
+}
+function plinkIid(p,strict,warnings){
+  const candidate=p.externalIds?.plinkIid||p.sampleId||p.label||p.stableId||p.id;
+  return plinkToken(candidate,`Individual identifier for ${pedId(p)}`,strict,warnings);
+}
+function inferPedGenotypeEncoding(extraColumns){
+  if(!extraColumns.length)return "none";
+  if(extraColumns.every(token=>token==="0"||String(token).length===2)&&extraColumns.some(token=>String(token).length===2))return "compound";
+  if(extraColumns.length%2===0)return "allele-pairs";
+  return "invalid";
+}
+function plinkParentIdsForUnion(union,iidByPerson,strict,warnings,child){
+  const roles=Object.assign({a:"unspecified",b:"unspecified"},union.parentRoles||{});
+  let pat="0",mat="0";
+  const unresolved=[];
+  [["a",union.a],["b",union.b]].forEach(([endpoint,parentId])=>{
+    if(!parentId)return;
+    const role=normaliseParentRole(roles[endpoint]),iid=iidByPerson.get(parentId);
+    if(!iid)return;
+    if(role==="paternal"){
+      if(pat!=="0"){
+        const message=`${pedId(child)} has more than one paternal parent assignment.`;
+        if(strict)throw new Error(message);
+        addUniqueWarning(warnings,message+" The additional assignment was omitted.");
+      }else pat=iid;
+    }else if(role==="maternal"){
+      if(mat!=="0"){
+        const message=`${pedId(child)} has more than one maternal parent assignment.`;
+        if(strict)throw new Error(message);
+        addUniqueWarning(warnings,message+" The additional assignment was omitted.");
+      }else mat=iid;
+    }else unresolved.push(parentId);
+  });
+  if(unresolved.length){
+    const labels=unresolved.map(id=>model.people[id]).filter(Boolean).map(p=>pedId(p)).join(", ");
+    const message=`${pedId(child)} has ${unresolved.length} parent relationship${unresolved.length===1?"":"s"} without an explicit paternal or maternal role${labels?`: ${labels}`:""}.`;
+    if(strict)throw new Error(message);
+    addUniqueWarning(warnings,message+" Those PLINK parent identifiers were written as 0.");
+  }
+  return {pat,mat};
+}
+function plinkExportOrder(){
+  const generations=computeGenerations();
+  return P().slice().sort((a,b)=>(generations[a.id]-generations[b.id])||((a.x||0)-(b.x||0))||String(a.id).localeCompare(String(b.id)));
+}
+function buildPlinkText(format,mode){
+  const strict=mode!=="permissive",validation=graphValidation();
+  if(validation.errors.length)throw new Error(validation.errors.join(" "));
+  const warnings=[...validation.warnings],explicitFid=model.interoperability?.plinkFamilyId||"";
+  let fid;
+  if(explicitFid)fid=plinkToken(explicitFid,"Family identifier",strict,warnings,{allowZero:true});
+  else fid=derivedPlinkFamilyId(model.caseName||"family",warnings);
+
+  const people=plinkExportOrder(),iidByPerson=new Map(),personByIid=new Map();
+  people.forEach(p=>{
+    const iid=plinkIid(p,strict,warnings);
+    if(personByIid.has(iid))throw new Error(`PLINK individual identifier ${iid} is duplicated.`);
+    iidByPerson.set(p.id,iid);personByIid.set(iid,p);
+  });
+
+  let preserveGenotypes=format==="ped",genotypeWidth=0,genotypeEncoding="none";
+  if(preserveGenotypes){
+    const stored=people.map(p=>{
+      const extra=[...(p.interoperability?.plink?.extraColumns||[])];
+      return {extra,encoding:p.interoperability?.plink?.genotypeEncoding||inferPedGenotypeEncoding(extra)};
+    });
+    const nonempty=stored.filter(x=>x.extra.length);
+    if(nonempty.length){
+      genotypeWidth=nonempty[0].extra.length;
+      genotypeEncoding=nonempty[0].encoding;
+      const inconsistent=stored.some(x=>x.extra.length!==genotypeWidth)||nonempty.some(x=>x.encoding!==genotypeEncoding||x.encoding==="invalid");
+      if(inconsistent){
+        if(strict)throw new Error("PED genotype columns are incomplete, inconsistent or use mixed encodings.");
+        addUniqueWarning(warnings,"PED genotype columns were omitted because they were incomplete, inconsistent or used mixed encodings.");
+        preserveGenotypes=false;
+      }else addUniqueWarning(warnings,`PED genotype columns were preserved as imported using ${genotypeEncoding==="compound"?"compound genotype":"allele-pair"} encoding. Marker meaning still depends on the matching MAP file.`);
+    }else{
+      preserveGenotypes=false;
+      addUniqueWarning(warnings,"The PED export contains the six pedigree columns only because no marker genotypes are stored. A matching MAP file is still required by workflows that load PED with --file.");
+    }
+  }
+
+  const rows=[];
+  people.forEach(p=>{
+    const parentUnions=U().filter(u=>u.children.includes(p.id));
+    if(parentUnions.length>1)throw new Error(`${pedId(p)} has more than one parental union.`);
+    let pat="0",mat="0";
+    if(parentUnions[0]){
+      const resolved=plinkParentIdsForUnion(parentUnions[0],iidByPerson,strict,warnings,p);
+      pat=resolved.pat;mat=resolved.mat;
+    }
+    const base=[fid,iidByPerson.get(p.id),pat,mat,plinkSex(p),plinkPhenotype(p)];
+    if(format==="ped"&&preserveGenotypes)base.push(...p.interoperability.plink.extraColumns);
+    rows.push(base.join(" "));
+  });
+  return {text:rows.join("\n")+"\n",warnings,genotypeWidth,genotypeEncoding};
+}
+function parsePlinkText(text,fileName){
+  const lines=String(text).split(/\r?\n/),records=[],errors=[];
+  lines.forEach((line,index)=>{
+    const trimmed=line.trim();if(!trimmed||trimmed.startsWith("#"))return;
+    const col=trimmed.split(/\s+/);
+    if(col.length<6){errors.push(`Line ${index+1} has ${col.length} columns; at least 6 are required.`);return;}
+    const [fid,iid,pat,mat,sex,phenotype,...extraColumns]=col;
+    if(!fid||!iid||iid==="0")errors.push(`Line ${index+1} has an invalid FID or IID.`);
+    if(!["0","1","2"].includes(sex))errors.push(`Line ${index+1} has unsupported sex code ${sex}.`);
+    const genotypeEncoding=inferPedGenotypeEncoding(extraColumns);
+    if(genotypeEncoding==="invalid")errors.push(`Line ${index+1} has an invalid PED genotype column count or encoding.`);
+    records.push({fid,iid,pat,mat,sex,phenotype,extraColumns,genotypeEncoding,line:index+1});
+  });
+  if(!records.length)errors.push("The PLINK file contains no records.");
+  const seen=new Set();
+  records.forEach(r=>{
+    const key=r.fid+"\u0000"+r.iid;
+    if(seen.has(key))errors.push(`FID ${r.fid} contains duplicate IID ${r.iid}.`);
+    seen.add(key);
+  });
+  const hasGenotypes=records.some(r=>r.extraColumns.length);
+  if(/\.fam$/i.test(String(fileName||""))&&hasGenotypes)errors.push("A FAM file must contain exactly six columns per record.");
+  if(hasGenotypes){
+    const width=records.find(r=>r.extraColumns.length)?.extraColumns.length||0;
+    const encoding=records.find(r=>r.extraColumns.length)?.genotypeEncoding||"none";
+    records.forEach(r=>{
+      if(r.extraColumns.length!==width)errors.push(`Line ${r.line} has ${r.extraColumns.length} PED genotype columns; ${width} were expected.`);
+      if(r.extraColumns.length&&r.genotypeEncoding!==encoding)errors.push(`Line ${r.line} uses ${r.genotypeEncoding} genotype encoding; ${encoding} was expected.`);
+    });
+  }
+  if(errors.length)throw new Error([...new Set(errors)].join(" "));
+  return {records,fileName,hasGenotypes,genotypeWidth:hasGenotypes?records[0].extraColumns.length:0,
+    genotypeEncoding:hasGenotypes?records[0].genotypeEncoding:"none"};
+}
+function choosePlinkFamily(parsed){
+  const fids=[...new Set(parsed.records.map(r=>r.fid))];
+  if(fids.length===1){importPlinkFamily(parsed,fids[0]);return;}
+  pendingPlinkImport={parsed,fids};
+  const options=fids.map((fid,i)=>`<option value="${i}">${esc(fid)} (${parsed.records.filter(r=>r.fid===fid).length} people)</option>`).join("");
+  openDialog("Choose PLINK family",`<div class="field"><label>Family</label><select id="plinkFamilyChoice">${options}</select></div><div class="help-text">PLINK families are imported separately and are never merged silently.</div>`,
+    `<button class="hbtn" onclick="pendingPlinkImport=null;closeDialog()">Cancel</button><button class="hbtn primary" onclick="confirmPlinkFamilyImport()">Import</button>`);
+}
+function confirmPlinkFamilyImport(){
+  if(!pendingPlinkImport)return;
+  const index=+(document.getElementById("plinkFamilyChoice")?.value||0),item=pendingPlinkImport,fid=item.fids[index];
+  pendingPlinkImport=null;closeDialog();importPlinkFamily(item.parsed,fid);
+}
+function importPlinkFamily(parsed,fid){
+  const previous=snapshot(),previousFuture=[...future];
+  try{
+    const records=parsed.records.filter(r=>r.fid===fid),warnings=[],nonBinaryPhenotypes=records.filter(r=>!["0","-9","1","2"].includes(r.phenotype));
+    if(nonBinaryPhenotypes.length)warnings.push(`${nonBinaryPhenotypes.length} quantitative or non-binary phenotype value${nonBinaryPhenotypes.length===1?" was":"s were"} retained in interoperability metadata but mapped to Not assessed in the clinical pedigree.`);
+    history.push(previous);future=[];model=blankModel("plink");uid=1;model.caseName=fid;model.interoperability.plinkFamilyId=fid;
+    const localByIid=new Map();
+    function createFromRecord(r){
+      const geneticSex=geneticSexFromPlinkCode(r.sex);
+      const personId=newPerson(geneticSex,{gender:"unknown",geneticSex,symbolShapeSource:"genetic-sex",sexAssignedAtBirth:"",label:r.iid,stableId:r.iid,
+        clinicalStatus:r.phenotype==="2"?"affected":r.phenotype==="1"?"unaffected":"not_assessed",source:"record",
+        externalIds:{plinkIid:r.iid,fhirIdentifier:""},interoperability:{plink:{fid:r.fid,iid:r.iid,pat:r.pat,mat:r.mat,sex:r.sex,phenotype:r.phenotype,
+          extraColumns:[...r.extraColumns],genotypeEncoding:r.genotypeEncoding||"none"}}});
+      localByIid.set(r.iid,personId);return personId;
+    }
+    records.forEach(createFromRecord);
+    function ensureParent(iid,role){
+      if(!iid||iid==="0")return null;
+      if(localByIid.has(iid))return localByIid.get(iid);
+      const geneticSex=role==="pat"?"male":"female",id=newPerson(geneticSex,{gender:"unknown",geneticSex,symbolShapeSource:"genetic-sex",sexAssignedAtBirth:"",label:iid,stableId:iid,
+        clinicalStatus:"not_assessed",source:"inferred",notes:"Parent referenced by PLINK but not present as a record.",externalIds:{plinkIid:iid,fhirIdentifier:""},
+        interoperability:{plink:{fid,iid,pat:"0",mat:"0",sex:role==="pat"?"1":"2",phenotype:"-9",extraColumns:[],genotypeEncoding:"none"}}});
+      localByIid.set(iid,id);warnings.push(`Created placeholder parent ${iid}.`);return id;
+    }
+    const unionsByPair=new Map();
+    records.forEach(r=>{
+      if(r.pat==="0"&&r.mat==="0")return;
+      const a=ensureParent(r.pat,"pat"),b=ensureParent(r.mat,"mat"),key=(r.pat||"0")+"\u0000"+(r.mat||"0");
+      let unionId=unionsByPair.get(key);
+      if(!unionId){
+        unionId=newUnion(a,b,{parentRoles:{a:a?"paternal":"unspecified",b:b?"maternal":"unspecified"}});
+        unionsByPair.set(key,unionId);
+      }
+      model.unions[unionId].children.push(localByIid.get(r.iid));
+    });
+    const validation=graphValidation();if(validation.errors.length)throw new Error(validation.errors.join(" "));
+    records.forEach(r=>{
+      const patRecord=records.find(x=>x.iid===r.pat),matRecord=records.find(x=>x.iid===r.mat);
+      if(patRecord?.sex==="2")addUniqueWarning(warnings,`PAT ${r.pat} is recorded with SEX 2 in the source PLINK file.`);
+      if(matRecord?.sex==="1")addUniqueWarning(warnings,`MAT ${r.mat} is recorded with SEX 1 in the source PLINK file.`);
+    });
+    if(parsed.hasGenotypes)addUniqueWarning(warnings,`PED genotype columns were preserved as opaque ${parsed.genotypeEncoding==="compound"?"compound-genotype":"allele-pair"} tokens and were not converted into clinical variants.`);
+    else if(/\.ped$/i.test(String(parsed.fileName||"")))addUniqueWarning(warnings,"The PED file contained only the six pedigree columns and no genotype calls.");
+    const importedFormat=/\.ped$/i.test(String(parsed.fileName||""))||parsed.hasGenotypes?"plink-ped":"plink-fam";
+    model.meta.importWarnings=warnings;model.interoperability.lastImportedFormat=importedFormat;model.interoperability.lastImportedAt=new Date().toISOString();
+    migrateModel();ui.sel=P().find(p=>clinicalStatusOf(p)==="affected")?.id||P()[0]?.id||null;const caseControl=document.getElementById("caseName");if(caseControl)caseControl.value=model.caseName;
+    computeLayout();render();setTimeout(fitView,20);markDirty();
+    if(warnings.length)alert("PLINK import completed with warnings:\n\n"+warnings.join("\n"));
+  }catch(err){
+    if(history[history.length-1]===previous)history.pop();future=previousFuture;restoreStateSnapshot(previous);
+    alert("Import failed: "+(err&&err.message?err.message:"The PLINK family could not be imported."));
+  }
+}
+function exportType(fmt,scale,options={}){
+  if(ui.sel){ui.sel=null;render();}
+  const stem=cleanFileStem(model.caseName);
+  try{
+    if(fmt==="json"){
+      recordExport(fmt);download(stem+".pedigree.json",JSON.stringify(nativeProjectPayload(),null,2),"application/json");return;
+    }
+    if(fmt==="fhir"){
+      const bundle=buildFhirBundle();recordExport(fmt);download(stem+".fhir.json",JSON.stringify(bundle,null,2),"application/fhir+json");return;
+    }
+    if(fmt==="fam"||fmt==="ped"){
+      const result=buildPlinkText(fmt,options.plinkMode||"strict");recordExport(fmt);download(stem+"."+fmt,result.text,"text/plain");
+      if(result.warnings.length)alert("PLINK export completed with warnings:\n\n"+result.warnings.join("\n"));return;
+    }
+    recordExport(fmt);
+    if(fmt==="pdf"){printClinicalReport();return;}
+    const svg=buildExportSVG();
+    if(fmt==="svg"){download(stem+".svg",svg,"image/svg+xml");return;}
+    scale=Math.max(4,scale||4);
+    const img=new Image(),blob=new Blob([svg],{type:"image/svg+xml"}),url=URL.createObjectURL(blob);
+    img.onload=()=>{
+      const c=document.createElement("canvas");c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));
+      const ctx=c.getContext("2d");ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";ctx.fillStyle="#fff";ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(img,0,0,c.width,c.height);
+      c.toBlob(b=>{if(!b){alert("PNG render failed. SVG export remains available.");URL.revokeObjectURL(url);return;}
+        const objectUrl=URL.createObjectURL(b),a=document.createElement("a");a.href=objectUrl;a.download=stem+".png";a.click();setTimeout(()=>URL.revokeObjectURL(objectUrl),1000);URL.revokeObjectURL(url);},"image/png",1);
+    };
+    img.onerror=()=>{alert("PNG render failed. SVG export remains available.");URL.revokeObjectURL(url);};img.src=url;
+  }catch(err){alert("Export failed: "+(err&&err.message?err.message:"Unable to create the requested format."));}
 }
 function download(name,text,type){
-  const b=new Blob([text],{type}), a=document.createElement("a");
-  a.href=URL.createObjectURL(b);
-  a.download=name;
-  a.click();
+  const b=new Blob([text],{type}),a=document.createElement("a"),url=URL.createObjectURL(b);a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 async function importProjectFile(file){
   if(!file)return;
   try{
-    const parsed=JSON.parse(await file.text());
-    if(!parsed||!parsed.model||!parsed.model.people||!parsed.model.unions)throw new Error("This is not a valid pedigree project.");
-    history.push(snapshot()); future=[];
-    model=parsed.model;
-    migrateModel();
-    uid=Number.isFinite(parsed.uid)?parsed.uid:Math.max(1,...Object.keys(model.people).concat(Object.keys(model.unions)).map(x=>+(x.match(/\d+/)||[0])[0]))+1;
-    if(parsed.layout)LAY=Object.assign(LAY,parsed.layout);
-    if(parsed.view)view=Object.assign(view,parsed.view);
-    ui.sel=null;
-    ui.labelPreset=parsed.labelPreset||"clinical";
-    ui.routingMode=parsed.routingMode||"clinical";
-    document.getElementById("labelPreset").value=ui.labelPreset;
-    document.getElementById("routingMode").value=ui.routingMode;
-    document.getElementById("caseName").value=model.caseName||"Imported pedigree";
-    computeLayout(); render(); setTimeout(fitView,20); markDirty();
-  }catch(err){ alert("Import failed: "+(err&&err.message?err.message:"Invalid JSON file.")); }
+    const text=await file.text(),name=(file.name||"").toLowerCase();
+    if(name.endsWith(".fam")||name.endsWith(".ped")){
+      choosePlinkFamily(parsePlinkText(text,file.name));return;
+    }
+    const firstDataLine=text.split(/\r?\n/).map(line=>line.trim()).find(line=>line&&!line.startsWith("#"));
+    if(firstDataLine&&!firstDataLine.startsWith("{")&&!firstDataLine.startsWith("[")&&firstDataLine.split(/\s+/).length>=6){
+      choosePlinkFamily(parsePlinkText(text,file.name));return;
+    }
+    const parsed=JSON.parse(text);
+    if(parsed&&parsed.resourceType==="Bundle"){importFhirBundle(parsed);return;}
+    applyImportedProject(parsed,"native-json");
+  }catch(err){alert("Import failed: "+(err&&err.message?err.message:"The selected file is invalid."));}
 }
 
 /* ===== dialog ===== */
@@ -1640,20 +2479,43 @@ function setSave(state){ const txt={dirty:"Saving…",saved:"Saved locally",off:
 function tryRestore(){ try{const s=localStorage.getItem("pedigree.v2");if(s){const o=JSON.parse(s);model=o.model;uid=o.uid;view=o.view||view;ui.sel=o.sel||null;return true;}}catch(e){} return false; }
 
 function migrateModel(){
+  model.schemaVersion=PEDIGREE_SCHEMA_VERSION;
+  model.people=model.people||{};model.unions=model.unions||{};
   P().forEach(p=>{
-    const legacySex=p.sex||"unknown";
-    const legacyStyle=p.symbolDisplayOverride||p.symbolStyle||"auto";
-    const defaults={variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",
-      genomicHgvs:"",rnaHgvs:"",geneticsFreeText:"",symbolDisplayOverride:legacyStyle,symbolStyle:legacyStyle,consultand:false,birthOrder:null,
-      clinicalStatus:p.clinicalStatus||(p.affected?"affected":"unaffected"),
-      sex:legacySex,gender:legacySex==="male"?"man":legacySex==="female"?"woman":"unknown",sexAssignedAtBirth:""};
-    Object.assign(p,defaults,p);
+    const existing=Object.assign({},p);
+    const legacySex=normaliseGeneticSex(existing.sex);
+    const importedPlinkSex=existing.interoperability?.plink?.sex;
+    const migratedGeneticSex=Object.prototype.hasOwnProperty.call(existing,"geneticSex")
+      ?normaliseGeneticSex(existing.geneticSex)
+      :importedPlinkSex!=null?geneticSexFromPlinkCode(importedPlinkSex):legacySex;
+    const migratedShapeSource=Object.prototype.hasOwnProperty.call(existing,"symbolShapeSource")
+      ?normaliseSymbolShapeSource(existing.symbolShapeSource)
+      :importedPlinkSex!=null?"genetic-sex":"gender";
+    const legacyStyle=existing.symbolDisplayOverride||existing.symbolStyle||"auto";
+    const defaults={stableId:existing.id,externalIds:{plinkIid:"",fhirIdentifier:""},terminology:{phenotype:[],diagnosis:[],gene:[],variant:[]},interoperability:{},
+      variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",genomicHgvs:"",rnaHgvs:"",geneticsFreeText:"",
+      symbolDisplayOverride:legacyStyle,symbolStyle:legacyStyle,consultand:false,birthOrder:null,
+      clinicalStatus:existing.clinicalStatus||(existing.affected?"affected":"unaffected"),
+      sex:legacySex,geneticSex:migratedGeneticSex,gender:legacySex==="male"?"man":legacySex==="female"?"woman":"unknown",
+      symbolShapeSource:migratedShapeSource,sexAssignedAtBirth:""};
+    const existingExternal=existing.externalIds||{},existingTerminology=existing.terminology||{},existingInterop=existing.interoperability||{};
+    Object.assign(p,defaults,existing);
+    p.geneticSex=normaliseGeneticSex(p.geneticSex);
+    p.symbolShapeSource=normaliseSymbolShapeSource(p.symbolShapeSource);
+    p.externalIds=Object.assign({plinkIid:"",fhirIdentifier:""},existingExternal);
+    p.terminology=Object.assign({phenotype:[],diagnosis:[],gene:[],variant:[]},existingTerminology);
+    p.interoperability=Object.assign({},existingInterop);
     if(p.symbolDisplayOverride==="carrier-dot")p.symbolDisplayOverride="carrier-half";
     p.symbolStyle=p.symbolDisplayOverride;
     p.affected=derivedClinicalLayer(p)==="affected";
   });
-  U().forEach(u=>Object.assign(u,{relationshipStatus:"current",consanguinityDegree:"",noChildren:false,infertility:false,infertilityReason:""},u));
-  model.meta=Object.assign({lastExportedAt:"",lastExportFormat:""},model.meta||{});
+  U().forEach(u=>{
+    const existing=Object.assign({},u),parentRoles=mergeParentRoles(existing.a,existing.b,existing.parentRoles);
+    Object.assign(u,{stableId:existing.id,parentRoles,relationshipStatus:"current",consanguinityDegree:"",noChildren:false,infertility:false,infertilityReason:""},existing);
+    u.parentRoles=parentRoles;
+  });
+  model.meta=Object.assign({disease:"",indication:"",reviewer:"",institution:"",date:"",lastExportedAt:"",lastExportFormat:"",importWarnings:[]},model.meta||{});
+  model.interoperability=Object.assign({plinkFamilyId:"",lastImportedFormat:"",lastImportedAt:""},model.interoperability||{});
 }
 
 /* ===== keyboard ===== */
@@ -1679,12 +2541,5 @@ init();
 </script>
   </div>
 </main>
-
-
-
-
-
-
-
 
 
