@@ -756,7 +756,7 @@ function symbolPath(p,cx,cy){
 
   if(molecular==="carrier-half"||molecular==="compound"){
     out+=`<g clip-path="url(#${clipId})" stroke="var(--sym)" stroke-width="1">`;
-    for(let n=-LAY.sym;n<LAY.sym*2;n+=6)out+=`<line x1="${cx+n}" y1="${cy+h+3}" x2="${cx+n+LAY.sym}" y2="${cy-h-3}"/>`;
+    for(let n=-LAY.sym*2;n<LAY.sym*2;n+=6)out+=`<line x1="${cx+n}" y1="${cy+h+3}" x2="${cx+n+LAY.sym}" y2="${cy-h-3}"/>`;
     out+=`</g>`;
 
     if(molecular==="compound"||affected){
@@ -1691,7 +1691,7 @@ function openExport(){ openDialog("Export",
       <option value="permissive">Permissive - use missing parent values with warnings</option>
     </select></div></div>
     <div class="help-text">Native JSON preserves the complete project. FHIR exports a FHIR R4 collection Bundle with Patient, FamilyMemberHistory, pedigree relationship resources and a full-fidelity native attachment. FAM and PED use the parental roles stored on each union for PAT and MAT, and reduce clinical data to one PLINK phenotype. A PED without imported marker calls contains the same six pedigree columns as FAM.</div>`,
-  `<button class="hbtn" onclick="closeDialog()">Cancel</button><button class="hbtn primary" onclick="doExportDialog()">Export</button>`);
+  `<button class="hbtn" onclick="closeDialog()">Cancel</button><button class="hbtn" onclick="doExportDialog()">Export</button>`);
 }
 function doExportDialog(){
   const fmt=document.getElementById("expFmt").value;
