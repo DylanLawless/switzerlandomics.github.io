@@ -33,12 +33,15 @@ bodyClass: "page-tech page-pedigree"
   --accent:var(--pedigree-primary);
   --accent-hover:var(--pedigree-primary-dark);
   --accent-soft:var(--pedigree-soft);
-  --success:var(--pedigree-black);
-  --success-soft:var(--pedigree-soft);
-  --warning:var(--pedigree-steel);
-  --warning-soft:var(--pedigree-soft);
+  --warning:#8a5a00;
+  --warning-soft:#fbf4e6;
+  --warning-border:#ead9b0;
   --error:var(--pedigree-primary-dark);
-  --error-soft:var(--pedigree-soft);
+  --error-soft:#fdeceb;
+  --error-border:#f3c4c1;
+  --success:#2f7d4f;
+  --success-soft:#eef7f1;
+  --success-border:#bfe0cb;
   --info:var(--pedigree-steel);
   --info-soft:var(--pedigree-soft);
   --neutral:var(--pedigree-steel);
@@ -56,7 +59,7 @@ bodyClass: "page-tech page-pedigree"
 .app{display:grid;grid-template-rows:auto minmax(720px,1fr) auto;min-height:calc(100vh - 8rem);border-top:2px solid var(--acmg-black);border-bottom:1px solid var(--acmg-border);background:var(--acmg-surface);}
 
 /* header */
-.pedigree-appbar{display:flex;align-items:center;gap:14px;padding:0 16px;background:var(--bg-panel);
+.pedigree-appbar{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--bg-panel);
   border-bottom:1px solid var(--border-subtle);}
 .brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.01em}
 .brand .glyph{width:24px;height:24px;flex:0 0 auto}
@@ -86,11 +89,15 @@ bodyClass: "page-tech page-pedigree"
 @media (max-width:1100px){.pedigree-guide-link .guide-long{display:none}}
 
 /* main grid */
-.main{display:grid;grid-template-columns:minmax(220px,16vw) minmax(0,1fr) minmax(340px,24vw);min-height:0;background:var(--bg-app)}
+.main{display:grid;grid-template-columns:minmax(340px,24vw) minmax(0,1fr) minmax(220px,16vw);min-height:0;background:var(--bg-app)}
 .panel{background:var(--bg-panel);min-height:0;display:flex;flex-direction:column;overflow:hidden}
-.navigator{border-right:1px solid var(--border-subtle)}
-.inspector{border-left:1px solid var(--border-subtle)}
-.panel-scroll{overflow:auto;flex:1;min-height:0}
+.navigator{border-right:0;border-left:1px solid var(--border-subtle)}
+.inspector{border-left:0;border-right:1px solid var(--border-subtle);min-width:0;width:100%}
+.panel-scroll{overflow-y:auto;overflow-x:hidden;flex:1;min-height:0;min-width:0}
+.inspector .field,.inspector .field-row>*{min-width:0}
+.empty-plot-action{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.empty-plot-action[hidden]{display:none}
+.empty-plot-action .bbtn{width:auto;pointer-events:auto;padding:10px 16px}
 
 /* navigator */
 .nav-section{border-bottom:1px solid var(--border-subtle)}
@@ -99,6 +106,9 @@ bodyClass: "page-tech page-pedigree"
 .nav-head:hover{background:var(--bg-subtle)}
 .nav-head .count{background:var(--neutral-soft);color:var(--text-secondary);font-size:.625rem;
   padding:1px 7px;border-radius:999px;letter-spacing:0}
+.nav-head .warning-counts{display:inline-flex;align-items:center;gap:4px}
+.nav-head .count.conflict{background:var(--error-soft);color:var(--error);border:1px solid var(--error-border)}
+.nav-head .count.review{background:var(--warning-soft);color:var(--warning);border:1px solid var(--warning-border)}
 .chev{transition:transform .12s;color:var(--text-disabled)}
 .nav-head.collapsed .chev{transform:rotate(-90deg)}
 .nav-body{padding:2px 6px 8px}
@@ -127,7 +137,7 @@ bodyClass: "page-tech page-pedigree"
 .layout-ctl .row .lbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
 
 /* ===== centre: document ===== */
-.document-col{min-height:0;display:flex;flex-direction:column;background:var(--bg-app)}
+.document-col{min-height:0;display:flex;flex-direction:column;background:var(--bg-panel)}
 .doc-toolbar{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--bg-panel);
   border-bottom:1px solid var(--border-subtle)}
 .tier-pill{display:inline-flex;align-items:center;gap:6px;font-size:.6875rem;font-weight:600;
@@ -184,9 +194,9 @@ bodyClass: "page-tech page-pedigree"
 .rep-kv td{padding:5px 9px;font-size:.75rem;border-bottom:1px solid var(--border-subtle)}
 .rep-kv td:first-child{width:34%;color:var(--text-muted);font-weight:600}
 .rep-empty{color:var(--text-muted);font-size:.75rem}
-.rep-legend{display:flex;flex-wrap:wrap;gap:9px 18px;font-size:.6875rem;color:var(--text-secondary)}
-.rep-legend .li{display:inline-flex;align-items:center;gap:7px}
-.rep-legend svg{flex:0 0 auto}
+.rep-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:6px 14px;font-size:.6875rem;color:var(--text-secondary)}
+.rep-legend .li{display:inline-flex;align-items:center;gap:6px;line-height:1.25;min-width:0}
+.rep-legend svg{flex:0 0 auto;width:16px;height:16px}
 .rep-warn{display:flex;gap:8px;padding:6px 0;font-size:.75rem;align-items:flex-start;border-bottom:1px solid var(--border-subtle)}
 .rep-warn:last-child{border-bottom:0}
 .rep-warn .sev{width:6px;height:6px;border-radius:50%;margin-top:5px;flex:0 0 auto}
@@ -223,6 +233,9 @@ bodyClass: "page-tech page-pedigree"
 .isec-head:hover{background:var(--bg-subtle)}
 .isec-head .chev{width:13px;height:13px}
 .isec-head .sum{font-weight:400;color:var(--text-muted);font-size:.6875rem;margin-left:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;text-align:right}
+.isec-state{width:8px;height:8px;border-radius:50%;flex:0 0 auto;margin-left:6px;border:1px solid currentColor}
+.isec-state.error{color:var(--error);background:var(--error-soft)}
+.isec-state.warning{color:var(--warning);background:var(--warning-soft)}
 .isec.collapsed .isec-body{display:none}
 .isec.collapsed .chev{transform:rotate(-90deg)}
 .isec-body{padding:4px 16px 16px}
@@ -242,6 +255,8 @@ bodyClass: "page-tech page-pedigree"
 .tog .dot{width:9px;height:9px;border-radius:50%;border:1.5px solid currentColor;flex:0 0 auto}
 .tog[aria-pressed="true"] .dot{background:var(--accent)}
 .help-text{font-size:.6875rem;color:var(--text-muted);margin-top:4px;line-height:1.4}
+.status-conflict{margin-top:8px;padding:8px 10px;border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--accent-hover);font-size:.6875rem;line-height:1.4}
+.status-review{margin-top:8px;padding:8px 10px;border-left:3px solid var(--warning);background:var(--warning-soft);color:var(--warning);font-size:.6875rem;line-height:1.4}
 .insp-empty{padding:30px 20px;text-align:center;color:var(--text-muted);font-size:.8125rem}
 .bbtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px;border:1px solid var(--accent);
   border-radius:var(--r);background:var(--accent);color:#fff;font-size:.8125rem;font-weight:600;width:100%}
@@ -258,9 +273,9 @@ bodyClass: "page-tech page-pedigree"
 .context .cx strong{color:var(--text-secondary);font-weight:600}
 .context .spacer{flex:1}
 .pill{padding:2px 9px;border-radius:999px;font-size:.6875rem;font-weight:600;border:1px solid transparent}
-.pill.warn{background:var(--warning-soft);color:var(--warning)}
-.pill.err{background:var(--error-soft);color:var(--error)}
-.pill.ok{background:var(--success-soft);color:var(--success)}
+.pill.warn{background:var(--warning-soft);color:var(--warning);border-color:var(--warning-border)}
+.pill.err{background:var(--error-soft);color:var(--error);border-color:var(--error-border)}
+.pill.ok{background:var(--success-soft);color:var(--success);border-color:var(--success-border)}
 
 /* dialog */
 .scrim{position:fixed;inset:0;background:rgba(17,24,39,.35);display:flex;align-items:center;justify-content:center;z-index:50}
@@ -288,8 +303,8 @@ bodyClass: "page-tech page-pedigree"
   .rep-block{break-inside:avoid;box-shadow:none}
   .page{max-width:none}
 }
-@media (max-width:980px){ .main{grid-template-columns:0 minmax(0,1fr) 320px} .navigator{display:none} }
-@media (max-width:760px){ .main{display:block} .inspector{border-left:0;border-top:1px solid var(--border-subtle)} .app{display:block;min-height:0} .context{min-height:36px;flex-wrap:wrap} }
+@media (max-width:1120px){ .main{grid-template-columns:minmax(320px,360px) minmax(0,1fr) 0} .navigator{display:none} }
+@media (max-width:760px){ .main{display:flex;flex-direction:column} .document-col{order:1} .inspector{order:2;border-right:0;border-top:1px solid var(--border-subtle)} .navigator{order:3} .app{display:block;min-height:0} .context{min-height:36px;flex-wrap:wrap} }
 
 
 /* Full-width Jekyll technology application shell */
@@ -305,7 +320,7 @@ bodyClass: "page-tech page-pedigree"
 .pedigree-page .person-empty{padding:12px 16px;color:var(--text-muted);border-bottom:1px solid var(--border-subtle);}
 .pedigree-page .inspector-divider{padding:8px 16px;background:var(--bg-subtle);border-top:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle);font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
 @media (min-width:1500px){
-  .pedigree-page .main{grid-template-columns:minmax(240px,15vw) minmax(0,1fr) minmax(380px,22vw);}
+  .pedigree-page .main{grid-template-columns:minmax(380px,22vw) minmax(0,1fr) minmax(240px,15vw);}
 }
 
 
@@ -318,8 +333,8 @@ bodyClass: "page-tech page-pedigree"
 .pedigree-page .pedigree-app-frame{width:100%;max-width:none;margin:0 auto;}
 .pedigree-page .app{margin-top:clamp(.75rem,1.6vw,1.5rem);border-top:1px solid var(--border-strong);}
 .main{
-  grid-template-columns:minmax(220px,16vw) minmax(0,1fr) minmax(340px,24vw);
-  grid-template-areas:"navigator document inspector";
+  grid-template-columns:minmax(340px,24vw) minmax(0,1fr) minmax(220px,16vw);
+  grid-template-areas:"inspector document navigator";
 }
 .navigator{grid-area:navigator}
 .document-col{grid-area:document}
@@ -375,28 +390,32 @@ bodyClass: "page-tech page-pedigree"
 }
 .rep-legend{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
-  gap:8px 16px;
+  grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
+  gap:6px 14px;
   break-inside:avoid;
 }
 .main.plot-expanded{
-  grid-template-columns:minmax(220px,1fr) minmax(340px,1.35fr);
+  grid-template-columns:minmax(340px,1.35fr) minmax(220px,1fr);
   grid-template-areas:
     "document document"
-    "navigator inspector";
+    "inspector navigator";
 }
 .main.plot-expanded .navigator,
 .main.plot-expanded .inspector{
   max-height:44rem;
   border-top:1px solid var(--border-subtle);
 }
-@media (max-width:980px){
-  .main{grid-template-columns:0 minmax(0,1fr) 320px;grid-template-areas:"navigator document inspector"}
+@media (max-width:1120px){
+  .main{grid-template-columns:minmax(320px,360px) minmax(0,1fr) 0;grid-template-areas:"inspector document navigator"}
   .main.plot-expanded{display:block}
   .main.plot-expanded .navigator{display:block}
 }
 @media (max-width:760px){
   .pedigree-page{padding:1rem .75rem 0}
+  .main{display:flex;flex-direction:column}
+  .document-col{order:1}
+  .inspector{order:2;border-right:0;border-top:1px solid var(--border-subtle)}
+  .navigator{order:3}
   .figure{height:68vh;min-height:520px}
 }
 @media print{
@@ -417,7 +436,6 @@ bodyClass: "page-tech page-pedigree"
         <circle cx="12" cy="19.5" r="2.5" fill="#2f2f41" stroke="#2f2f41"/>
       </svg><span>Pedigree</span>
     </div>
-    <input class="case-name" id="caseName" value="Case PD-0001" aria-label="Case name" />
     <a class="pedigree-guide-link" href="/technologies/pedigree/standards/" target="_blank" rel="noopener" title="Open the illustrated pedigree standards guide in a new tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Pedigree standards</span><span class="guide-long">and symbols</span>
@@ -438,26 +456,13 @@ bodyClass: "page-tech page-pedigree"
     <aside class="panel navigator"><div class="panel-scroll" id="navScroll"></div></aside>
 
     <section class="document-col" id="documentCol">
-      <div class="doc-toolbar">
-        <span class="tier-pill" id="tierPill" data-tier="figure"><span class="dot"></span><span id="tierText">Annotated figure</span></span>
-        <span class="spacer"></span>
-        <select id="labelPreset" onchange="setPreset(this.value)" title="Label detail under each symbol">
-          <option value="none">No labels</option>
-          <option value="minimal">Minimal</option>
-          <option value="clinical" selected>Clinical</option>
-          <option value="clinical-genetic">Clinical genetic</option>
-          <option value="technical">Full technical</option>
-        </select>
-        <select id="routingMode" onchange="setRoutingMode(this.value)" title="Relationship line routing">
-          <option value="clinical" selected>Clinical lines</option>
-          <option value="flexible">Flexible lines</option>
-        </select>
-      </div>
-
       <div class="doc-scroll" id="docScroll">
         <div class="page">
           <div class="figure" id="figure">
             <svg id="stage" xmlns="http://www.w3.org/2000/svg"></svg>
+            <div class="empty-plot-action" id="emptyPlotAction" hidden>
+              <button class="bbtn" onclick="addFounder()">Add the first individual</button>
+            </div>
             <div class="float-toolbar" id="floatToolbar">
               <button onclick="act('parents')" id="tbParents" title="Add parents (P)">＋ Parents</button>
               <button onclick="act('partner')" id="tbPartner" title="Add partner (R)">＋ Partner</button>
@@ -491,7 +496,7 @@ bodyClass: "page-tech page-pedigree"
     <div class="cx">People: <strong id="cxCount">0</strong></div>
     <div class="cx">Zoom: <strong id="cxZoom">100%</strong></div>
     <div class="spacer"></div>
-    <span class="pill ok" id="cxWarn">No warnings</span>
+    <span class="pill ok" id="cxWarn">No issues</span>
   </footer>
 </div>
 
@@ -515,13 +520,16 @@ const childrenOf=id=>{const o=[];unionsOf(id).forEach(u=>u.children.forEach(c=>o
 function newPerson(sex,extra={}){ const id=nid("p");
   const legacySex=sex||"unknown", defaultGender=legacySex==="male"?"man":legacySex==="female"?"woman":"unknown";
   model.people[id]=Object.assign({id,sex:legacySex,gender:defaultGender,sexAssignedAtBirth:"",name:"",label:null,birthOrder:null,
-    affected:false,deceased:false,proband:false,consultand:false,carrier:false,symbolStyle:"auto",vitalStatus:"living",
+    clinicalStatus:"auto",affected:false,deceased:false,proband:false,consultand:false,carrier:false,symbolDisplayOverride:"auto",symbolStyle:"auto",vitalStatus:"living",
     birthYear:"",ageAtDeath:"",phenotype:"",diagnosis:"",onset:"",
     gene:"",variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",
     genomicHgvs:"",codingHgvs:"",rnaHgvs:"",proteinHgvs:"",assembly:"GRCh38",transcript:"",
     zygosity:"",inheritance:"",classification:"",geneticsFreeText:"",
     sampleId:"",testStatus:"",notes:"",twinGroup:null,twinType:null,source:"clinician",
-    pinned:false,px:null,py:null},extra); return id; }
+    pinned:false,px:null,py:null},extra);
+  if(extra.clinicalStatus==null&&extra.affected===true)model.people[id].clinicalStatus="affected";
+  model.people[id].affected=derivedClinicalLayer(model.people[id])==="affected";
+  return id; }
 function newUnion(a,b,extra={}){ const id=nid("u");
   model.unions[id]=Object.assign({id,a,b,children:[],consanguineous:false,relationshipStatus:"current",consanguinityDegree:"",noChildren:false,infertility:false,infertilityReason:""},extra); return id; }
 
@@ -604,37 +612,83 @@ function symbolClipPath(p,cx,cy,id){
   if(genderShape(p)==="female")return `<clipPath id="${id}"><circle cx="${cx}" cy="${cy}" r="${h}"/></clipPath>`;
   const d=h+1; return `<clipPath id="${id}"><polygon points="${cx},${cy-d} ${cx+d},${cy} ${cx},${cy+d} ${cx-d},${cy}"/></clipPath>`;
 }
-function resolvedSymbolStyle(p){
-  if(p.symbolStyle&&p.symbolStyle!=="auto")return p.symbolStyle;
-  if(p.affected)return "affected";
+function clinicalStatusOf(p){
+  if(p.clinicalStatus)return p.clinicalStatus;
+  return p.affected?"affected":"unaffected";
+}
+function derivedClinicalLayer(p){
+  const status=clinicalStatusOf(p);
+  if(status==="affected")return "affected";
+  if(status==="unaffected")return "unaffected";
+  if(status==="unknown")return "unknown";
+  if(status==="not_assessed")return "neutral";
+  if(status==="auto"&&p.proband)return "affected";
+  return "neutral";
+}
+function derivedMolecularLayer(p){
+  const override=p.symbolDisplayOverride||p.symbolStyle||"auto";
+  if(override==="carrier-half")return "carrier-half";
+  if(override==="compound")return "compound";
   if(p.zygosity==="Compound heterozygous")return "compound";
   if(p.carrier)return "carrier-half";
+  return "none";
+}
+function resolvedClinicalLayer(p){
+  const override=p.symbolDisplayOverride||p.symbolStyle||"auto";
+  if(override==="affected")return "affected";
+  if(override==="unaffected")return "unaffected";
+  if(override==="uncertain")return "unknown";
+  return derivedClinicalLayer(p);
+}
+function resolvedSymbolStyle(p){
+  const clinical=resolvedClinicalLayer(p), molecular=derivedMolecularLayer(p);
+  if(clinical==="affected"&&molecular!=="none")return clinical+"+"+molecular;
+  if(clinical==="unknown"&&molecular!=="none")return clinical+"+"+molecular;
+  if(molecular!=="none")return molecular;
+  if(clinical==="affected")return "affected";
+  if(clinical==="unknown")return "uncertain";
   return "unaffected";
 }
+function statusIssues(p){
+  const errors=[], reviews=[];
+  const override=p.symbolDisplayOverride||p.symbolStyle||"auto";
+  const status=clinicalStatusOf(p);
+  if(p.proband&&(status==="unaffected"||status==="not_assessed"))errors.push("Proband role conflicts with the explicit clinical status.");
+  if(p.proband&&status==="unknown")reviews.push("Proband has an explicit unknown clinical status and should be reviewed.");
+  if(override==="affected"&&status==="unaffected")errors.push("Affected fill conflicts with the explicit unaffected clinical status.");
+  if(override==="unaffected"&&status==="affected")errors.push("Unaffected fill conflicts with the explicit affected clinical status.");
+  if(override==="compound"&&p.zygosity&&p.zygosity!=="Compound heterozygous")errors.push("Compound-heterozygous marker conflicts with the recorded zygosity.");
+  if(override==="carrier-half"&&!p.carrier&&!hasGenetics(p))errors.push("Carrier pattern has no recorded carrier or molecular basis.");
+  if(status==="affected"&&!p.phenotype&&!p.diagnosis)reviews.push("Affected status has no recorded phenotype or diagnosis.");
+  if(p.zygosity==="Compound heterozygous"&&!p.gene)reviews.push("Compound heterozygosity is recorded without a gene.");
+  if(p.zygosity==="Compound heterozygous"&&!p.classification)reviews.push("Compound heterozygosity is recorded without a classification.");
+  if(p.zygosity==="Compound heterozygous"&&!p.geneticsFreeText&&!p.codingHgvs&&!p.genomicHgvs&&!p.proteinHgvs)reviews.push("Compound heterozygosity has no constituent-variant or phase information recorded.");
+  if((p.classification==="Pathogenic"||p.classification==="Likely pathogenic")&&!p.zygosity)reviews.push("A pathogenic classification is recorded without zygosity.");
+  return {errors,reviews};
+}
+function symbolDisplayConflict(p){ return statusIssues(p).errors.length>0; }
 function symbolPath(p,cx,cy){
-  const h=LAY.sym/2, style=resolvedSymbolStyle(p), clipId=`clip-${p.id}`;
+  const h=LAY.sym/2, clinical=resolvedClinicalLayer(p), molecular=derivedMolecularLayer(p), clipId=`clip-${p.id}`;
+  const affected=clinical==="affected";
   let out=`<defs>${symbolClipPath(p,cx,cy,clipId)}</defs>`;
-  out+=symbolOutline(p,cx,cy,`fill="white" stroke="var(--sym)" stroke-width="1.8"`);
-  if(style==="affected"){
-    out+=symbolOutline(p,cx,cy,`fill="var(--sym)" stroke="var(--sym)" stroke-width="1.8"`);
-  }else if(style==="carrier-half"){
-    out+=`<g clip-path="url(#${clipId})" stroke="var(--sym)" stroke-width="1">`;
-    for(let n=-LAY.sym;n<LAY.sym;n+=6)out+=`<line x1="${cx-h-2+n}" y1="${cy+h+2}" x2="${cx-h-2+n+LAY.sym}" y2="${cy-h-2}"/>`;
-    out+=`</g>`;
-    out+=`<rect x="${cx}" y="${cy-h-2}" width="${h+3}" height="${LAY.sym+4}" fill="white" clip-path="url(#${clipId})"/>`;
-    out+=symbolOutline(p,cx,cy,`fill="none" stroke="var(--sym)" stroke-width="1.8"`);
-  }else if(style==="compound"){
-    out+=`<rect x="${cx-h-1}" y="${cy-h-1}" width="${h+1}" height="${LAY.sym+2}" fill="var(--sym)" clip-path="url(#${clipId})"/>`;
+  out+=symbolOutline(p,cx,cy,`fill="${affected&&molecular==="none"?"var(--sym)":"white"}" stroke="var(--sym)" stroke-width="1.8"`);
+
+  if(molecular==="carrier-half"||molecular==="compound"){
     out+=`<g clip-path="url(#${clipId})" stroke="var(--sym)" stroke-width="1">`;
     for(let n=-LAY.sym;n<LAY.sym*2;n+=6)out+=`<line x1="${cx+n}" y1="${cy+h+3}" x2="${cx+n+LAY.sym}" y2="${cy-h-3}"/>`;
     out+=`</g>`;
-    out+=symbolOutline(p,cx,cy,`fill="none" stroke="var(--sym)" stroke-width="1.8"`);
-  }else if(style==="uncertain"){
-    out+=`<g clip-path="url(#${clipId})" stroke="var(--sym)" stroke-width="1">`;
-    for(let n=-LAY.sym;n<LAY.sym*2;n+=6)out+=`<line x1="${cx+n}" y1="${cy+h+3}" x2="${cx+n+LAY.sym}" y2="${cy-h-3}"/>`;
-    out+=`</g>`;
-    out+=symbolOutline(p,cx,cy,`fill="none" stroke="var(--sym)" stroke-width="1.8"`);
+
+    if(molecular==="compound"||affected){
+      out+=`<rect x="${cx-h-1}" y="${cy-h-1}" width="${h+1}" height="${LAY.sym+2}" fill="var(--sym)" clip-path="url(#${clipId})"/>`;
+    }else{
+      out+=`<rect x="${cx}" y="${cy-h-2}" width="${h+3}" height="${LAY.sym+4}" fill="white" clip-path="url(#${clipId})"/>`;
+    }
   }
+
+  if(clinical==="unknown"){
+    out+=`<text x="${cx}" y="${cy+6}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="18" font-weight="700" fill="var(--sym)" stroke="white" stroke-width="3" paint-order="stroke">?</text>`;
+  }
+  out+=symbolOutline(p,cx,cy,`fill="none" stroke="var(--sym)" stroke-width="1.8"`);
   return out;
 }
 function hasGenetics(p){ return !!(p.gene||p.variantType||p.chromosome||p.genomicStart||p.ref||p.alt||
@@ -816,6 +870,8 @@ function render(){
   renderReport();
   renderContext();
   const has=!!ui.sel;
+  const emptyPlotAction=document.getElementById("emptyPlotAction");
+  if(emptyPlotAction)emptyPlotAction.hidden=P().length!==0;
   ["tbParents","tbPartner","tbChild","tbSib","tbTwin","tbAff","tbPro","tbDel"].forEach(id=>document.getElementById(id).disabled=!has);
   document.getElementById("tbParents").disabled=!has||parentsOf(ui.sel).length>0;
   document.getElementById("undoBtn").disabled=!history.length;
@@ -836,13 +892,13 @@ function quickViewBox(){
 }
 
 /* ===== navigator ===== */
-let navCollapsed={};
+let navCollapsed={warn:true,layout:true};
 function renderNavigator(){
   const ps=P().slice().sort((a,b)=>(a._gen-b._gen)||(a.x-b.x));
   const warns=computeWarnings();
   const sect=(k,t,c,body)=>{ const col=navCollapsed[k]?"collapsed":"";
     return `<div class="nav-section"><div class="nav-head ${col}" onclick="toggleNav('${k}')">
-      <span>${t}</span><span style="display:flex;align-items:center;gap:8px">${c!=null?`<span class="count">${c}</span>`:""}
+      <span>${t}</span><span style="display:flex;align-items:center;gap:8px">${c!=null?(typeof c==="string"&&c.includes("warning-counts")?c:`<span class="count">${c}</span>`):""}
       <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="nav-body">${body}</div></div>`; };
   const people=ps.map(p=>`<div class="person-row ${ui.sel===p.id?'sel':''}" onclick="select('${p.id}')">
       <span class="mini-sym">${miniSym(p)}</span><span class="pid">${esc(pedId(p))}</span>
@@ -851,15 +907,27 @@ function renderNavigator(){
   const warnHtml=warns.length?warns.map(w=>`<div class="warn-row"><span class="sev ${w.sev}"></span><span>${esc(w.msg)}</span></div>`).join("")
       :`<div class="empty-note">No structural or clinical warnings.</div>`;
   const layout=`<div class="layout-ctl">
-      <label>Preset</label>
+      <label>Layout preset</label>
       <select onchange="applyPreset(this.value)">
-        <option value="standard">Standard three-generation</option>
-        <option value="compact">Compact clinical</option>
-        <option value="extended">Extended family</option>
+        <option value="compact" ${ui.layoutPreset==="compact"?'selected':''}>Compact clinical</option>
+        <option value="standard" ${ui.layoutPreset==="standard"?'selected':''}>Standard space</option>
       </select>
-      <label>Generation spacing — <span id="lsGen">${LAY.genH}</span> px</label>
+      <label for="labelPreset">Symbol labels</label>
+      <select id="labelPreset" onchange="setPreset(this.value)" title="Label detail under each symbol">
+        <option value="none" ${ui.labelPreset==="none"?'selected':''}>No labels</option>
+        <option value="minimal" ${ui.labelPreset==="minimal"?'selected':''}>Minimal</option>
+        <option value="clinical" ${ui.labelPreset==="clinical"?'selected':''}>Clinical</option>
+        <option value="clinical-genetic" ${ui.labelPreset==="clinical-genetic"?'selected':''}>Clinical genetic</option>
+        <option value="technical" ${ui.labelPreset==="technical"?'selected':''}>Full technical</option>
+      </select>
+      <label for="routingMode">Relationship lines</label>
+      <select id="routingMode" onchange="setRoutingMode(this.value)" title="Relationship line routing">
+        <option value="clinical" ${ui.routingMode==="clinical"?'selected':''}>Clinical lines</option>
+        <option value="flexible" ${ui.routingMode==="flexible"?'selected':''}>Flexible lines</option>
+      </select>
+      <label>Generation spacing · <span id="lsGen">${LAY.genH}</span> px</label>
       <input type="range" min="100" max="200" value="${LAY.genH}" oninput="setSpacing('genH',this.value)">
-      <label>Sibling spacing — <span id="lsSib">${LAY.slot}</span> px</label>
+      <label>Sibling spacing · <span id="lsSib">${LAY.slot}</span> px</label>
       <input type="range" min="70" max="140" value="${LAY.slot}" oninput="setSpacing('slot',this.value)">
       <div class="row">
         <button class="lbtn" id="focusBtn" aria-pressed="${ui.focus}" onclick="toggleFocus()">
@@ -873,14 +941,46 @@ function renderNavigator(){
       </div>
       <div class="help-text">Drag a symbol to reposition it. Auto-layout restores automatic placement and refits the pedigree.</div>
     </div>`;
+  const conflictCount=warns.filter(w=>w.sev==="error").length;
+  const reviewCount=warns.filter(w=>w.sev==="warning").length;
+  const warningCounts=(conflictCount||reviewCount)
+    ?`<span class="warning-counts">${conflictCount?`<span class="count conflict" title="${conflictCount} conflict${conflictCount===1?'':'s'}">${conflictCount}</span>`:""}${reviewCount?`<span class="count review" title="${reviewCount} review item${reviewCount===1?'':'s'}">${reviewCount}</span>`:""}</span>`
+    :"";
   document.getElementById("navScroll").innerHTML =
-    sect("people","People",ps.length,people)+sect("warn","Warnings",warns.length||null,warnHtml)+sect("layout","Layout",null,layout);
+    sect("people","People",ps.length,people)+sect("warn","Warnings",warningCounts,warnHtml)+sect("layout","Layout",null,layout);
 }
 function toggleNav(k){navCollapsed[k]=!navCollapsed[k];renderNavigator();}
-function miniSym(p){ const f=p.affected?"#2f2f41":"none";
-  if(genderShape(p)==="male")return `<svg viewBox="0 0 16 16" width="15" height="15"><rect x="2" y="2" width="12" height="12" fill="${f}" stroke="#2f2f41" stroke-width="1.3"/></svg>`;
-  if(genderShape(p)==="female")return `<svg viewBox="0 0 16 16" width="15" height="15"><circle cx="8" cy="8" r="6" fill="${f}" stroke="#2f2f41" stroke-width="1.3"/></svg>`;
-  return `<svg viewBox="0 0 16 16" width="15" height="15"><polygon points="8,1 15,8 8,15 1,8" fill="${f}" stroke="#2f2f41" stroke-width="1.3"/></svg>`; }
+function miniSym(p){
+  const clinical=resolvedClinicalLayer(p), molecular=derivedMolecularLayer(p), affected=clinical==="affected";
+  const clipId=`mini-clip-${p.id}`, shape=genderShape(p);
+  const geometry=shape==="male"
+    ?`<rect x="2" y="2" width="12" height="12"/>`
+    :shape==="female"
+      ?`<circle cx="8" cy="8" r="6"/>`
+      :`<polygon points="8,1 15,8 8,15 1,8"/>`;
+  let out=`<svg viewBox="0 0 16 16" width="15" height="15"><defs><clipPath id="${clipId}">${geometry}</clipPath></defs>`;
+  out+=shape==="male"
+    ?`<rect x="2" y="2" width="12" height="12" fill="${affected&&molecular==="none"?"#2f2f41":"white"}"/>`
+    :shape==="female"
+      ?`<circle cx="8" cy="8" r="6" fill="${affected&&molecular==="none"?"#2f2f41":"white"}"/>`
+      :`<polygon points="8,1 15,8 8,15 1,8" fill="${affected&&molecular==="none"?"#2f2f41":"white"}"/>`;
+
+  if(molecular==="carrier-half"||molecular==="compound"){
+    out+=`<g clip-path="url(#${clipId})" stroke="#2f2f41" stroke-width=".8">`;
+    for(let n=-12;n<24;n+=4)out+=`<line x1="${n}" y1="16" x2="${n+16}" y2="0"/>`;
+    out+=`</g>`;
+    if(molecular==="compound"||affected)out+=`<rect x="1" y="1" width="7" height="14" fill="#2f2f41" clip-path="url(#${clipId})"/>`;
+    else out+=`<rect x="8" y="1" width="8" height="14" fill="white" clip-path="url(#${clipId})"/>`;
+  }
+
+  if(clinical==="unknown")out+=`<text x="8" y="11" text-anchor="middle" font-size="8" font-weight="700" fill="#2f2f41" stroke="white" stroke-width="2" paint-order="stroke">?</text>`;
+  out+=shape==="male"
+    ?`<rect x="2" y="2" width="12" height="12" fill="none" stroke="#2f2f41" stroke-width="1.3"/>`
+    :shape==="female"
+      ?`<circle cx="8" cy="8" r="6" fill="none" stroke="#2f2f41" stroke-width="1.3"/>`
+      :`<polygon points="8,1 15,8 8,15 1,8" fill="none" stroke="#2f2f41" stroke-width="1.3"/>`;
+  return out+`</svg>`;
+}
 function roleLabel(p){
   const pu=parentUnionOf(p.id);
   const ownChildren=childrenOf(p.id);
@@ -907,18 +1007,28 @@ function roleLabel(p){
 function setField(key,val){ const p=model.people[ui.sel]; if(!p)return;
   if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
   ui._editTimer=setTimeout(()=>{ui._editing=false;},700);
-  p[key]=val; liveRefresh(); }
+  p[key]=val;
+  if(key==="clinicalStatus")p.affected=derivedClinicalLayer(p)==="affected";
+  if(key==="symbolDisplayOverride")p.symbolStyle=val;
+  liveRefresh(); }
 function setMeta(key,val){ if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
   ui._editTimer=setTimeout(()=>{ui._editing=false;},700); model.meta[key]=val; liveRefresh(); }
+function setCaseName(val){
+  if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
+  ui._editTimer=setTimeout(()=>{ui._editing=false;},700); model.caseName=val; renderReport(); markDirty();
+}
 function liveRefresh(){ computeLayout(); drawStage(); renderNavigator(); renderReport(); renderContext(); markDirty(); }
 function toggleField(key){ commit(()=>{ const p=model.people[ui.sel];
   if(key==='proband'){p.proband=!p.proband;if(p.proband)p.consultand=false;}
   else if(key==='consultand'){p.consultand=!p.consultand;if(p.consultand)p.proband=false;}
-  else{p[key]=!p[key]; if(key==='deceased')p.vitalStatus=p.deceased?"deceased":"living";} }); }
+  else{p[key]=!p[key]; if(key==='deceased')p.vitalStatus=p.deceased?"deceased":"living";}
+  p.affected=derivedClinicalLayer(p)==="affected";
+}); }
 
 const openSec=new Set(["identity","case"]);
 function toggleSec(k){ openSec.has(k)?openSec.delete(k):openSec.add(k); renderInspector(); }
-function expandAll(){ const keys=ui.sel?["identity","clinical","genetics","sample","prov"]:["case","signoff"];
+function inspectorSectionKeys(){ return ["case","signoff","identity","clinical","genetics","sample","prov"]; }
+function expandAll(){ const keys=inspectorSectionKeys();
   const allOpen=keys.every(k=>openSec.has(k)); keys.forEach(k=>allOpen?openSec.delete(k):openSec.add(k)); renderInspector(); }
 
 function fld(label,key,p,type="text",mono=false){ const v=p[key]??"";
@@ -928,10 +1038,37 @@ function selF(label,key,p,opts){ const v=p[key]??"";
     ${opts.map(o=>{const val=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;return `<option value="${esc(val)}" ${v===val?'selected':''}>${esc(t)}</option>`;}).join("")}</select></div>`; }
 function tog(label,key,p){ return `<button class="tog" aria-pressed="${!!p[key]}" onclick="toggleField('${key}')"><span class="dot"></span>${label}</button>`; }
 
-function isec(k,title,summary,body){ const col=openSec.has(k)?"":"collapsed";
+function isec(k,title,summary,body,state=""){ const col=openSec.has(k)?"":"collapsed";
+  const marker=state?`<span class="isec-state ${state}" role="img" aria-label="${state==="error"?"Conflict":"Review needed"}" title="${state==="error"?"Conflict":"Review needed"}"></span>`:"";
   return `<div class="isec ${col}"><button class="isec-head" onclick="toggleSec('${k}')">
     <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-    <span>${title}</span><span class="sum">${esc(summary||"")}</span></button><div class="isec-body">${body}</div></div>`; }
+    <span>${title}</span><span class="sum">${esc(summary||"")}</span>${marker}</button><div class="isec-body">${body}</div></div>`; }
+
+function inspectorIssueStates(p){
+  const states={identity:"",clinical:"",genetics:"",sample:"",prov:""};
+  const override=p.symbolDisplayOverride||p.symbolStyle||"auto";
+  const status=clinicalStatusOf(p);
+
+  if((p.proband&&(status==="unaffected"||status==="not_assessed"))||
+     (override==="affected"&&status==="unaffected")||
+     (override==="unaffected"&&status==="affected")){
+    states.identity="error";
+  }else if(p.proband&&status==="unknown"){
+    states.identity="warning";
+  }
+
+  if(status==="affected"&&!p.phenotype&&!p.diagnosis)states.clinical="warning";
+
+  if((override==="compound"&&p.zygosity&&p.zygosity!=="Compound heterozygous")||
+     (override==="carrier-half"&&!p.carrier&&!hasGenetics(p))){
+    states.genetics="error";
+  }else if((p.zygosity==="Compound heterozygous"&&(!p.gene||!p.classification||(!p.geneticsFreeText&&!p.codingHgvs&&!p.genomicHgvs&&!p.proteinHgvs)))||
+           ((p.classification==="Pathogenic"||p.classification==="Likely pathogenic")&&!p.zygosity)){
+    states.genetics="warning";
+  }
+
+  return states;
+}
 
 function renderInspector(){
   const body=document.getElementById("inspBody");
@@ -939,8 +1076,10 @@ function renderInspector(){
   const people=P().slice().sort((a,b)=>(a._gen-b._gen)||(a.x-b.x));
   const selected=ui.sel&&model.people[ui.sel]?model.people[ui.sel]:null;
 
+  const allSectionsOpen=inspectorSectionKeys().every(k=>openSec.has(k));
+  const inspectorControls=`<div class="insp-head"><button class="expand-all" onclick="expandAll()">${allSectionsOpen?'Collapse all':'Expand all'}</button></div>`;
   const flowHead=`<div class="inspector-flow-head"><strong>Case and individual record</strong><span>Complete the case first, then work through the selected individual.</span></div>`;
-  const caseFields=`${fld("Disease / condition","disease",m)}${fld("Referral indication","indication",m)}`;
+  const caseFields=`<div class="field"><label for="caseName">Case</label><input id="caseName" type="text" value="${esc(model.caseName)}" oninput="setCaseName(this.value)" /></div>${fld("Disease / condition","disease",m)}${fld("Referral indication","indication",m)}`;
   const signoff=`${fld("Reviewer","reviewer",m)}${fld("Institution","institution",m)}${fld("Review date","date",m,"date")}
     <div class="help-text" style="margin-top:8px">Reviewer details remain editable. They are included automatically when a PDF, SVG, PNG or JSON export is created. Exporting does not lock the case.</div>`;
 
@@ -954,33 +1093,40 @@ function renderInspector(){
   let personSections='';
   if(selected){
     const p=selected;
+    const issueStates=inspectorIssueStates(p);
     const identity=`${fld("Display name","name",p)}
       <div class="field-row">${fld("Pedigree ID override","label",p)}${fld("Sample ID","sampleId",p)}</div>
       ${selF("Gender identity / pedigree symbol","gender",p,[["woman","Woman or girl · circle"],["man","Man or boy · square"],["nonbinary","Non-binary or gender-diverse · diamond"],["unknown","Unknown, unspecified or not relevant · diamond"]])}
       ${selF("Sex assigned at birth annotation","sexAssignedAtBirth",p,[["","Not displayed"],["AFAB","AFAB"],["AMAB","AMAB"],["UAAB","UAAB"]])}
-      ${selF("Symbol appearance","symbolStyle",p,[["auto","Automatic from status / zygosity"],["unaffected","Unaffected / unfilled"],["affected","Affected / solid fill"],["carrier-half","Carrier / divided patterned fill"],["compound","Compound heterozygous / divided marker"],["uncertain","Uncertain status / hatched"]])}
-      <div class="help-text">The symbol represents gender identity. Sex assigned at birth is recorded separately when clinically relevant. Carrier status uses divided fill rather than the historic central dot.</div>
-      <div class="toggle-grid">${tog("Affected","affected",p)}${tog("Proband","proband",p)}${tog("Consultand","consultand",p)}${tog("Carrier","carrier",p)}${tog("Deceased","deceased",p)}</div>
+      ${selF("Clinical status","clinicalStatus",p,[["auto","Automatic"],["affected","Affected"],["unaffected","Unaffected"],["unknown","Unknown or uncertain"],["not_assessed","Not assessed"]])}
+      ${selF("Symbol display override","symbolDisplayOverride",p,[["auto","Automatic"],["affected","Affected fill"],["unaffected","Unaffected fill"],["uncertain","Unknown status"],["carrier-half","Carrier pattern"],["compound","Compound-heterozygous marker"]])}
+      <div class="help-text">Automatic derives the clinical display from applicable role information. Molecular zygosity and carrier status remain independent. Display overrides change presentation only.</div>
+      ${statusIssues(p).errors.length?`<div class="status-conflict">${esc(statusIssues(p).errors.join(" "))} The underlying data have not been changed.</div>`:""}
+      ${statusIssues(p).reviews.length?`<div class="status-review">${esc(statusIssues(p).reviews.join(" "))}</div>`:""}
+      <div class="toggle-grid">${tog("Proband","proband",p)}${tog("Consultand","consultand",p)}${tog("Carrier","carrier",p)}${tog("Deceased","deceased",p)}</div>
       <div class="field-row" style="margin-top:11px">${fld("Birth year","birthYear",p)}${p.deceased?fld("Age at death","ageAtDeath",p):""}</div>`;
     const clinical=`${fld("Key phenotype","phenotype",p)}${fld("Age at onset","onset",p)}${fld("Diagnosis","diagnosis",p)}
       <div class="help-text">Phenotype and diagnosis fields may contain controlled terminology or concise clinical text.</div>`;
-    const genetics=`<div class="field-row">${selF("Genome reference","assembly",p,["GRCh38","GRCh37","T2T-CHM13"])}
-        ${selF("Variant type","variantType",p,["","SNV","MNV","Insertion","Deletion","Indel","Delins","Duplication","Inversion","CNV gain","CNV loss","Structural variant","Translocation","Repeat expansion","Mitochondrial variant","Fusion","Complex rearrangement","Other"])}</div>
-      <div class="field-row">${fld("Chromosome / contig","chromosome",p,"text",true)}${fld("Genomic start","genomicStart",p,"text",true)}${fld("Genomic end","genomicEnd",p,"text",true)}</div>
-      <div class="field-row">${fld("REF","ref",p,"text",true)}${fld("ALT","alt",p,"text",true)}</div>
-      <div class="field-row">${fld("Gene","gene",p)}${fld("Transcript","transcript",p,"text",true)}</div>
-      ${fld("Genomic HGVS (g.)","genomicHgvs",p,"text",true)}${fld("Coding HGVS (c. / n.)","codingHgvs",p,"text",true)}
-      ${fld("RNA HGVS (r.)","rnaHgvs",p,"text",true)}${fld("Protein HGVS (p.)","proteinHgvs",p,"text",true)}
-      ${selF("Zygosity","zygosity",p,["","Heterozygous","Homozygous","Hemizygous","Compound heterozygous","Heteroplasmic","Homoplasmic","Mosaic","Low-level mosaic","Unknown","Not tested"])}
+    const genetics=`${selF("Zygosity","zygosity",p,["","Heterozygous","Homozygous","Hemizygous","Compound heterozygous","Heteroplasmic","Homoplasmic","Mosaic","Low-level mosaic","Unknown","Not tested"])}
       ${selF("Inheritance","inheritance",p,["","Maternal","Paternal","De novo","Suspected de novo","Inherited","Biparental","Germline mosaic","Somatic","Unknown origin"])}
       ${selF("Classification","classification",p,["","Pathogenic","Likely pathogenic","Variant of uncertain significance","Likely benign","Benign","Risk allele","Drug response","Association","Not classified"])}
+      <div class="field-row">${selF("Genome reference","assembly",p,["GRCh38","GRCh37","T2T-CHM13"])}
+        ${selF("Variant type","variantType",p,["","SNV","MNV","Insertion","Deletion","Indel","Delins","Duplication","Inversion","CNV gain","CNV loss","Structural variant","Translocation","Repeat expansion","Mitochondrial variant","Fusion","Complex rearrangement","Other"])}</div>
+      ${fld("Chromosome / contig","chromosome",p,"text",true)}
+      ${fld("Genomic start","genomicStart",p,"text",true)}
+      ${fld("Genomic end","genomicEnd",p,"text",true)}
+      <div class="field-row">${fld("REF","ref",p,"text",true)}${fld("ALT","alt",p,"text",true)}</div>
+      ${fld("Gene","gene",p)}
+      ${fld("Transcript","transcript",p,"text",true)}
+      ${fld("Genomic HGVS (g.)","genomicHgvs",p,"text",true)}${fld("Coding HGVS (c. / n.)","codingHgvs",p,"text",true)}
+      ${fld("RNA HGVS (r.)","rnaHgvs",p,"text",true)}${fld("Protein HGVS (p.)","proteinHgvs",p,"text",true)}
       ${fld("Additional genetics information","geneticsFreeText",p)}`;
     const sample=`${fld("Sample ID","sampleId",p)}${selF("Test status","testStatus",p,[["","Not set"],["tested","Tested"],["pending","Test pending"],["untested","Not tested"],["unavailable","Result unavailable"]])}`;
     const prov=`${selF("Information source","source",p,[["clinician","Clinician-entered"],["patient","Patient-reported"],["record","Medical record"],["inferred","Inferred"]])}${fld("Notes","notes",p)}`;
-    personSections=`<div class="insp-head"><div class="who"><span class="mini-sym">${miniSym(p)}</span><div style="min-width:0"><div class="pid-big">${esc(pedId(p))}</div><div class="title">${esc(p.name||roleLabel(p))}</div></div></div><button class="expand-all" onclick="expandAll()">Expand all</button></div>
-      ${isec("identity","Identity and status",statusSummary(p),identity)}
-      ${isec("clinical","Clinical",p.phenotype||p.diagnosis||"",clinical)}
-      ${isec("genetics","Genetics",bestGeneticLabel(p),genetics)}
+    personSections=`<div class="insp-head"><div class="who"><span class="mini-sym">${miniSym(p)}</span><div style="min-width:0"><div class="pid-big">${esc(pedId(p))}</div><div class="title">${esc(p.name||roleLabel(p))}</div></div></div></div>
+      ${isec("identity","Identity and status",statusSummary(p),identity,issueStates.identity)}
+      ${isec("clinical","Clinical",p.phenotype||p.diagnosis||"",clinical,issueStates.clinical)}
+      ${isec("genetics","Genetics",bestGeneticLabel(p),genetics,issueStates.genetics)}
       ${isec("sample","Sample and test",p.sampleId||({tested:"Tested",pending:"Pending",untested:"Not tested"}[p.testStatus]||""),sample)}
       ${isec("prov","Provenance and notes","",prov)}`;
   }else{
@@ -992,12 +1138,17 @@ function renderInspector(){
       ${isec("prov","Provenance and notes","Select an individual",'<div class="help-text">No active individual.</div>')}`;
   }
 
-  body.innerHTML=flowHead+
+  body.innerHTML=inspectorControls+flowHead+
     isec("case","Case details",m.disease||m.indication||"",caseFields)+
     isec("signoff","Reviewer and export details",m.reviewer||m.institution||"",signoff)+
     `<div class="inspector-divider">Individual</div>`+selector+personSections;
 }
-function statusSummary(p){ const t=[]; if(p.proband)t.push("Proband"); else if(p.consultand)t.push("Consultand"); if(p.affected)t.push("Affected");
+function clinicalStatusLabel(p){
+  const status=clinicalStatusOf(p);
+  if(status==="auto")return derivedClinicalLayer(p)==="affected"?"Automatic · affected via role":"Automatic";
+  return {affected:"Affected",unaffected:"Unaffected",unknown:"Unknown or uncertain",not_assessed:"Not assessed"}[status]||"Automatic";
+}
+function statusSummary(p){ const t=[]; if(p.proband)t.push("Proband"); else if(p.consultand)t.push("Consultand"); t.push(clinicalStatusLabel(p));
   if(p.carrier)t.push("Carrier"); if(p.deceased)t.push("Deceased"); return t.join(" · "); }
 function addFounder(){ commit(()=>{const id=newPerson("unknown");ui.sel=id;openSec.add("identity");}); }
 
@@ -1015,11 +1166,11 @@ function buildReportLegend(){
   if(shapes.has("male"))add("male","Man or boy",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="3" y="3" width="12" height="12" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
   if(shapes.has("female"))add("female","Woman or girl",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
   if(shapes.has("unknown"))add("unknown","Non-binary, gender-diverse, unknown or unspecified",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><polygon points="9,2 16,9 9,16 2,9" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
-  if(P().some(p=>!p.affected&&resolvedSymbolStyle(p)==="unaffected"))add("unaffected","Unaffected",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
-  if(P().some(p=>p.affected||resolvedSymbolStyle(p)==="affected"))add("affected","Affected",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="#2f2f41" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
-  if(P().some(p=>p.carrier||resolvedSymbolStyle(p)==="carrier-half"))add("carrier","Carrier, divided patterned fill",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><defs><pattern id="legendCarrier" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 4L4 0" stroke="#2f2f41" stroke-width="1"/></pattern></defs><rect x="3" y="3" width="6" height="12" fill="url(#legendCarrier)"/><rect x="3" y="3" width="12" height="12" fill="none" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
-  if(P().some(p=>resolvedSymbolStyle(p)==="compound"))add("compound","Compound-heterozygous split marker",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="3" y="3" width="6" height="12" fill="#2f2f41"/><path d="M9 15l6-6M9 11l6-6M11 15l4-4" stroke="#2f2f41" stroke-width="1"/><rect x="3" y="3" width="12" height="12" fill="none" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
-  if(P().some(p=>resolvedSymbolStyle(p)==="uncertain"))add("uncertain","Uncertain clinical status",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="white" stroke="#2f2f41" stroke-width="1.4"/><text x="9" y="12" text-anchor="middle" font-size="9" font-family="Arial" fill="#2f2f41">?</text></svg>`);
+  if(P().some(p=>clinicalStatusOf(p)==="unaffected"&&resolvedClinicalLayer(p)==="unaffected"))add("unaffected","Unaffected",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="white" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
+  if(P().some(p=>resolvedClinicalLayer(p)==="affected"))add("affected","Affected",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="#2f2f41" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
+  if(P().some(p=>derivedMolecularLayer(p)==="carrier-half"))add("carrier","Carrier, divided patterned fill",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><defs><pattern id="legendCarrier" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 4L4 0" stroke="#2f2f41" stroke-width="1"/></pattern></defs><rect x="3" y="3" width="6" height="12" fill="url(#legendCarrier)"/><rect x="3" y="3" width="12" height="12" fill="none" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
+  if(P().some(p=>derivedMolecularLayer(p)==="compound"))add("compound","Compound-heterozygous split marker",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="3" y="3" width="6" height="12" fill="#2f2f41"/><path d="M9 15l6-6M9 11l6-6M11 15l4-4" stroke="#2f2f41" stroke-width="1"/><rect x="3" y="3" width="12" height="12" fill="none" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
+  if(P().some(p=>resolvedClinicalLayer(p)==="unknown"))add("uncertain","Uncertain clinical status",`<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6" fill="white" stroke="#2f2f41" stroke-width="1.4"/><text x="9" y="12" text-anchor="middle" font-size="9" font-family="Arial" fill="#2f2f41">?</text></svg>`);
   if(P().some(p=>p.deceased))add("deceased","Deceased",`<svg width="20" height="18" viewBox="0 0 20 18" aria-hidden="true"><rect x="3" y="3" width="12" height="12" fill="white" stroke="#2f2f41" stroke-width="1.4"/><line x1="1" y1="17" x2="18" y2="1" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
   if(P().some(p=>p.proband))add("proband","Arrow: proband",`<svg width="22" height="18" viewBox="0 0 22 18" aria-hidden="true"><rect x="10" y="3" width="10" height="10" fill="white" stroke="#2f2f41" stroke-width="1.3"/><path d="M2 16L10 12M5 10l5 2-2 5" fill="none" stroke="#2f2f41" stroke-width="1.4"/></svg>`);
   if(P().some(p=>p.consultand))add("consultand","P: consultand",`<svg width="20" height="18" viewBox="0 0 20 18" aria-hidden="true"><circle cx="12" cy="8" r="5" fill="white" stroke="#2f2f41" stroke-width="1.3"/><text x="1" y="17" font-size="9" font-weight="700" font-family="Arial" fill="#2f2f41">P</text></svg>`);
@@ -1027,13 +1178,13 @@ function buildReportLegend(){
   if(P().some(p=>p.twinGroup&&p.twinType==="MZ"))add("mz","Connected twin branches: monozygotic twins",`<svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><path d="M13 2L5 15M13 2l8 13M8 10h10" fill="none" stroke="#2f2f41" stroke-width="1.3"/></svg>`);
   if(P().some(p=>p.twinGroup&&p.twinType!=="MZ"))add("dz","Shared apex: dizygotic or unspecified twins",`<svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><path d="M13 2L5 15M13 2l8 13" fill="none" stroke="#2f2f41" stroke-width="1.3"/></svg>`);
   return `<div class="rep-legend">${items.map(x=>`<span class="li">${x.svg}${esc(x.label)}</span>`).join("")}</div>
-    <p class="rep-empty" style="margin-top:10px">This legend is generated from the symbols and annotations used in this pedigree. <a href="/technologies/pedigree/standards/" target="_blank" rel="noopener">Open the illustrated pedigree standards guide</a></p>`;
+    <p class="rep-empty" style="margin:7px 0 0">Generated from the notation used in this pedigree. <a href="/technologies/pedigree/standards/" target="_blank" rel="noopener">Pedigree standards guide</a></p>`;
 }
 
 function renderReport(){
   const rep=document.getElementById("report"); const ps=P();
-  if(!ps.length){ rep.innerHTML=""; updateTier("figure"); return; }
-  const m=model.meta, tier=reportTier(); updateTier(tier);
+  if(!ps.length){ rep.innerHTML=""; return; }
+  const m=model.meta;
   const order=ps.slice().sort((a,b)=>(a._gen-b._gen)||(a.x-b.x));
   let html="";
   const block=(title,content)=>`<section class="rep-block"><h3>${title}</h3>${content}</section>`;
@@ -1052,12 +1203,13 @@ function renderReport(){
     ["Last exported",m.lastExportedAt?new Date(m.lastExportedAt).toLocaleString():""],
     ["Export format",m.lastExportFormat?String(m.lastExportFormat).toUpperCase():""]
   ].filter(r=>r[1]);
+  html+=block("Legend",buildReportLegend());
   html+=block("Case summary",`<table class="rep-kv"><tbody>${caseRows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>`);
 
   html+=block(`Identity and status (${ps.length})`,table(
     ["ID","Role","Display name","Gender / symbol","Sex assigned at birth","Status","Birth year","Age at death"],
     order.map(p=>{
-      const st=[]; if(p.proband)st.push("Proband"); if(p.affected)st.push("Affected"); else st.push("Unaffected");
+      const st=[]; if(p.proband)st.push("Proband"); else if(p.consultand)st.push("Consultand"); st.push(clinicalStatusLabel(p));
       if(p.carrier)st.push("Carrier"); if(p.deceased)st.push("Deceased");
       return [pedId(p),roleLabel(p),p.name,{man:"Man / boy",woman:"Woman / girl",nonbinary:"Non-binary / gender-diverse",unknown:"Unknown / unspecified"}[p.gender]||p.gender,p.sexAssignedAtBirth,st.join(", "),p.birthYear,p.ageAtDeath];
     })
@@ -1102,8 +1254,6 @@ function renderReport(){
   const provenanceRows=order.filter(p=>p.source||p.notes).map(p=>[pedId(p),p.source,p.notes]);
   if(provenanceRows.length)html+=block("Provenance and notes",table(["ID","Information source","Notes"],provenanceRows));
 
-  html+=block("Legend",buildReportLegend());
-
   const warns=computeWarnings();
   if(warns.length)html+=block("Preflight and warnings",warns.map(w=>`<div class="rep-warn"><span class="sev ${w.sev}"></span><span>${esc(w.msg)}</span></div>`).join(""));
 
@@ -1111,13 +1261,13 @@ function renderReport(){
   document.getElementById("figCapRight").textContent=`${ps.length} individuals`;
 }
 
-function updateTier(t){ const pill=document.getElementById("tierPill");
-  pill.setAttribute("data-tier",t); document.getElementById("tierText").textContent=t==="report"?"Clinical report":"Annotated figure"; }
-
 /* ===== warnings ===== */
 function computeWarnings(){ const w=[];
+  P().forEach(p=>{const issues=statusIssues(p);
+    issues.errors.forEach(msg=>w.push({sev:"error",msg:`${pedId(p)}: ${msg} The underlying data have not been changed.`}));
+    issues.reviews.forEach(msg=>w.push({sev:"warning",msg:`${pedId(p)}: ${msg}`}));
+  });
   P().forEach(p=>{if(isAncestorOfSelf(p.id))w.push({sev:"error",msg:`${pedId(p)} appears in its own ancestry (cycle).`});});
-  P().forEach(p=>{if(p.affected&&!p.phenotype)w.push({sev:"warning",msg:`${pedId(p)} is affected but has no recorded phenotype.`});});
   P().forEach(p=>{if(p.deceased&&!p.ageAtDeath&&!p.birthYear)w.push({sev:"info",msg:`${pedId(p)} is deceased with no age or year recorded.`});});
   P().forEach(p=>{if(p.codingHgvs&&!p.gene)w.push({sev:"warning",msg:`${pedId(p)} has a coding HGVS but no gene symbol.`});});
   P().forEach(p=>{if((p.genomicStart||p.ref||p.alt)&&!p.chromosome)w.push({sev:"warning",msg:`${pedId(p)} has genomic coordinates or alleles but no chromosome / contig.`});});
@@ -1136,9 +1286,9 @@ function renderContext(){
   document.getElementById("cxZoom").textContent=Math.round(view.scale*100)+"%";
   const w=computeWarnings(),err=w.filter(x=>x.sev==="error").length,warn=w.filter(x=>x.sev==="warning").length;
   const el=document.getElementById("cxWarn");
-  if(err){el.className="pill err";el.textContent=`${err} error${err>1?'s':''}, ${warn} warning${warn!==1?'s':''}`;}
-  else if(warn){el.className="pill warn";el.textContent=`${warn} warning${warn>1?'s':''}`;}
-  else{el.className="pill ok";el.textContent="No warnings";}
+  if(err){el.className="pill err";el.textContent="Conflict";el.title=`${err} conflict${err===1?'':'s'}${warn?`, ${warn} review item${warn===1?'':'s'}`:""}`;}
+  else if(warn){el.className="pill warn";el.textContent="Review needed";el.title=`${warn} review item${warn===1?'':'s'}`;}
+  else{el.className="pill ok";el.textContent="No issues";el.title="No conflicts or review warnings";}
 }
 
 /* ===== canvas interaction: select, reposition, pan, zoom ===== */
@@ -1203,11 +1353,35 @@ function fitView(){ const out=renderSVG({clean:true}); if(!out.bounds)return;
   quickViewBox(); document.getElementById("cxZoom").textContent=Math.round(view.scale*100)+"%"; }
 
 /* ===== layout settings ===== */
-function setSpacing(key,val){ LAY[key]=+val;
+function automaticAnchors(){
+  const minx=Math.min(0,...P().map(p=>p._cx||0));
+  return Object.fromEntries(P().map(p=>[p.id,{x:(p._cx||0)-minx+LAY.offX,y:(p._gen||0)*LAY.genH+LAY.offY}]));
+}
+function relayoutWithPinnedOffsets(change){
+  const before=automaticAnchors();
+  change();
+  computeLayout();
+  const after=automaticAnchors();
+  P().forEach(p=>{
+    if(!p.pinned||p.px==null||p.py==null||!before[p.id]||!after[p.id])return;
+    p.px+=after[p.id].x-before[p.id].x;
+    p.py+=after[p.id].y-before[p.id].y;
+  });
+  computeLayout();
+}
+function setSpacing(key,val){
+  relayoutWithPinnedOffsets(()=>{LAY[key]=+val;});
   const el=document.getElementById(key==="genH"?"lsGen":"lsSib"); if(el)el.textContent=val;
-  computeLayout(); drawStage(); }
-function applyPreset(p){ if(p==="compact"){LAY.genH=110;LAY.slot=78;} else if(p==="extended"){LAY.genH=150;LAY.slot=110;} else {LAY.genH=132;LAY.slot=92;}
-  renderNavigator(); computeLayout(); drawStage(); setTimeout(fitView,10); }
+  drawStage(); markDirty();
+}
+function applyPreset(p){
+  ui.layoutPreset=p==="compact"?"compact":"standard";
+  relayoutWithPinnedOffsets(()=>{
+    if(ui.layoutPreset==="compact"){LAY.genH=110;LAY.slot=78;}
+    else {LAY.genH=132;LAY.slot=92;}
+  });
+  renderNavigator(); drawStage(); markDirty(); setTimeout(fitView,10);
+}
 function resetLayout(){ commit(()=>{P().forEach(p=>{p.pinned=false;p.px=null;p.py=null;});}); setTimeout(fitView,10); }
 function setPreset(v){ ui.labelPreset=v; computeLayout(); drawStage(); renderReport(); }
 function setRoutingMode(v){ ui.routingMode=v==="flexible"?"flexible":"clinical"; drawStage(); renderReport(); markDirty(); }
@@ -1232,8 +1406,8 @@ function act(a){ if(!ui.sel)return; const id=ui.sel,p=model.people[id];
     if(!u){const f=newPerson("male"),m=newPerson("female");const un=newUnion(f,m);model.unions[un].children.push(id);u=model.unions[un];}
     let grp=p.twinGroup; if(!grp){grp=nid("tw");p.twinGroup=grp;p.twinType=p.twinType||"DZ";}
     const t=newPerson("unknown",{twinGroup:grp,twinType:p.twinType});u.children.push(t);ui.sel=t;}); }
-  else if(a==='affected'){ commit(()=>{p.affected=!p.affected;}); }
-  else if(a==='proband'){ commit(()=>{p.proband=!p.proband;}); }
+  else if(a==='affected'){ commit(()=>{p.clinicalStatus=clinicalStatusOf(p)==="affected"?"auto":"affected";p.affected=derivedClinicalLayer(p)==="affected";}); }
+  else if(a==='proband'){ commit(()=>{p.proband=!p.proband;p.affected=derivedClinicalLayer(p)==="affected";}); }
   else if(a==='delete'){ deleteIndividual(id); }
 }
 function deleteIndividual(id){ commit(()=>{
@@ -1435,6 +1609,7 @@ async function importProjectFile(file){
     if(!parsed||!parsed.model||!parsed.model.people||!parsed.model.unions)throw new Error("This is not a valid pedigree project.");
     history.push(snapshot()); future=[];
     model=parsed.model;
+    migrateModel();
     uid=Number.isFinite(parsed.uid)?parsed.uid:Math.max(1,...Object.keys(model.people).concat(Object.keys(model.unions)).map(x=>+(x.match(/\d+/)||[0])[0]))+1;
     if(parsed.layout)LAY=Object.assign(LAY,parsed.layout);
     if(parsed.view)view=Object.assign(view,parsed.view);
@@ -1456,7 +1631,7 @@ function openDialog(title,body,foot){ closeDialog();
 function closeDialog(){ const s=document.getElementById("scrim"); if(s)s.remove(); }
 
 /* ===== autosave ===== */
-function markDirty(){ model.caseName=document.getElementById("caseName").value; setSave("dirty");
+function markDirty(){ const caseInput=document.getElementById("caseName"); if(caseInput)model.caseName=caseInput.value; setSave("dirty");
   clearTimeout(saveTimer); saveTimer=setTimeout(()=>{try{localStorage.setItem("pedigree.v2",snapshot());setSave("saved");}catch(e){setSave("off");}},600); }
 function setSave(state){ const txt={dirty:"Saving…",saved:"Saved locally",off:"Local save unavailable"}[state]||state;
   if(!saveEl){saveEl=document.createElement("div");saveEl.className="save-state";saveEl.innerHTML='<span class="save-dot"></span><span class="save-txt"></span>';
@@ -1467,11 +1642,15 @@ function tryRestore(){ try{const s=localStorage.getItem("pedigree.v2");if(s){con
 function migrateModel(){
   P().forEach(p=>{
     const legacySex=p.sex||"unknown";
+    const legacyStyle=p.symbolDisplayOverride||p.symbolStyle||"auto";
     const defaults={variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",
-      genomicHgvs:"",rnaHgvs:"",geneticsFreeText:"",symbolStyle:"auto",consultand:false,birthOrder:null,
+      genomicHgvs:"",rnaHgvs:"",geneticsFreeText:"",symbolDisplayOverride:legacyStyle,symbolStyle:legacyStyle,consultand:false,birthOrder:null,
+      clinicalStatus:p.clinicalStatus||(p.affected?"affected":"unaffected"),
       sex:legacySex,gender:legacySex==="male"?"man":legacySex==="female"?"woman":"unknown",sexAssignedAtBirth:""};
     Object.assign(p,defaults,p);
-    if(p.symbolStyle==="carrier-dot")p.symbolStyle="carrier-half";
+    if(p.symbolDisplayOverride==="carrier-dot")p.symbolDisplayOverride="carrier-half";
+    p.symbolStyle=p.symbolDisplayOverride;
+    p.affected=derivedClinicalLayer(p)==="affected";
   });
   U().forEach(u=>Object.assign(u,{relationshipStatus:"current",consanguinityDegree:"",noChildren:false,infertility:false,infertilityReason:""},u));
   model.meta=Object.assign({lastExportedAt:"",lastExportFormat:""},model.meta||{});
@@ -1491,19 +1670,18 @@ function initKeys(){ document.addEventListener("keydown",e=>{
 
 
 /* ===== boot ===== */
-function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",focus:false}; view={x:0,y:0,scale:1};
+function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",layoutPreset:"standard",focus:false}; view={x:0,y:0,scale:1};
   model=blankModel("rare"); if(!tryRestore())trioTemplate(); migrateModel();
   if(!ui.sel){const first=P().find(p=>p.proband)||P()[0];ui.sel=first?first.id:null;}
-  document.getElementById("caseName").value=model.caseName;
-  document.getElementById("labelPreset").value=ui.labelPreset;
-  document.getElementById("routingMode").value=ui.routingMode;
-  document.getElementById("caseName").addEventListener("input",markDirty);
   initCanvas(); initKeys(); computeLayout(); render(); setTimeout(fitView,40);
   window.addEventListener("resize",()=>{drawStage();quickViewBox();}); }
 init();
 </script>
   </div>
 </main>
+
+
+
 
 
 
