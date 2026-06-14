@@ -489,7 +489,7 @@
 /* Pedigree application shell and responsive layout */
  /* --pedigree-shell-max:1720px; */
 .pedigree-page{
-  --pedigree-shell-max:1400px;
+  --pedigree-shell-max:1500px;
   width:100%;
   max-width:none;
   margin:0;
@@ -769,7 +769,7 @@
               <button onclick="act('sibling')" id="tbSib" title="Add sibling (S)">＋ Sibling</button>
               <button onclick="act('twin')" id="tbTwin" title="Add twin (T)">＋ Twin</button>
               <span class="sep"></span>
-              <button onclick="act('affected')" id="tbAff" title="Toggle affected">Affected</button>
+              <button onclick="act('affected')" id="tbAff" title="Set displayed marker to Affected">Affected</button>
               <button onclick="act('proband')" id="tbPro" title="Set proband">Proband</button>
               <span class="sep"></span>
               <button onclick="act('display-gender')" id="tbGender" title="Switch displayed sex">Sex: Unknown</button>
@@ -954,11 +954,31 @@ function computeGenerations(){
 }
 
 /* ===== layout (deterministic; honours pinned nodes) ===== */
-let LAY={genH:132, slot:92, sym:38, offX:80, offY:70};
+const GENERATION_BASE_GAP=4;
+const GENERATION_LABEL_GAP=6;
+
+const LAYOUT_LIMITS=Object.freeze({
+  genH:Object.freeze({min:40,max:280}),
+  slot:Object.freeze({min:80,max:280})
+});
+const LAYOUT_PRESETS=Object.freeze({
+  compact:Object.freeze({genH:110,slot:88}),
+  standard:Object.freeze({genH:132,slot:128}),
+  spacious:Object.freeze({genH:176,slot:240})
+});
+function clampLayoutValue(key,value){
+  const limits=LAYOUT_LIMITS[key];
+  const fallback=LAYOUT_PRESETS.standard[key];
+  const numeric=Number(value);
+  const safe=Number.isFinite(numeric)?numeric:fallback;
+  return Math.min(limits.max,Math.max(limits.min,safe));
+}
+let LAY={genH:LAYOUT_PRESETS.standard.genH,slot:LAYOUT_PRESETS.standard.slot,sym:38,offX:80,offY:70};
 function computeLayout(){
+  LAY.genH=clampLayoutValue("genH",LAY.genH);
+  LAY.slot=clampLayoutValue("slot",LAY.slot);
   const gen=computeGenerations();
-  const detailedLabels=ui&&ui.labelPreset!=="none"&&ui.labelPreset!=="minimal";
-  const effectiveSlot=detailedLabels?Math.max(LAY.slot,labelMaxWidth()+12):LAY.slot;
+  const effectiveSlot=LAY.slot;
   const placed={}; let cursor=0;
   const roots=P().filter(p=>parentsOf(p.id).length===0).sort((a,b)=>(gen[a.id]-gen[b.id])||(a.id<b.id?-1:1));
   function place(id){
@@ -993,8 +1013,15 @@ function computeLayout(){
     const people=byGen[g];
     people.forEach(p=>{p.y=p.pinned&&p.py!=null?p.py:generationY;});
     const labelHeight=Math.max(0,...people.map(labelBlockHeight));
-    const requiredGap=LAY.sym+LABEL_BLOCK_TOP+labelHeight+24;
-    generationY+=Math.max(LAY.genH,requiredGap);
+
+    const hasLabels=ui&&ui.labelPreset!=="none";
+
+const requiredGap=hasLabels
+  ? LAY.sym+labelHeight+GENERATION_LABEL_GAP
+  : LAY.sym+GENERATION_BASE_GAP;
+
+generationY+=Math.max(LAY.genH,requiredGap);
+
   });
 }
 function roman(n){const m=[[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];let r="";for(const[v,s]of m)while(n>=v){r+=s;n-=v;}return r;}
@@ -1051,6 +1078,7 @@ function resolvedClinicalLayer(p){
   if(override==="affected")return "affected";
   if(override==="unaffected")return "unaffected";
   if(override==="uncertain")return "unknown";
+  if((override==="carrier-half"||override==="compound")&&clinicalStatusOf(p)==="auto")return "neutral";
   return derivedClinicalLayer(p);
 }
 function resolvedSymbolStyle(p){
@@ -1171,7 +1199,8 @@ function labelLines(p){
   return out;
 }
 
-const LABEL_MAX_WIDTH_MULTIPLIER=3;
+const LABEL_MIN_WIDTH_MULTIPLIER=1.5;
+const LABEL_SLOT_GAP=12;
 const LABEL_FONT_SIZE=10;
 const LABEL_ID_FONT_SIZE=11;
 const LABEL_LINE_HEIGHT=14;
@@ -1179,7 +1208,9 @@ const LABEL_ENTRY_GAP=3;
 const LABEL_BLOCK_TOP=17;
 let labelMeasureContext=null;
 
-function labelMaxWidth(){return LAY.sym*LABEL_MAX_WIDTH_MULTIPLIER;}
+function labelMaxWidth(){
+  return Math.max(LAY.sym*LABEL_MIN_WIDTH_MULTIPLIER,LAY.slot-LABEL_SLOT_GAP);
+}
 
 function measureLabelText(value,fontSize,fontWeight){
   const text=String(value||"");
@@ -1382,7 +1413,20 @@ function render(){
   if(emptyPlotAction)emptyPlotAction.hidden=P().length!==0;
   ["tbParents","tbPartner","tbChild","tbSib","tbTwin","tbAff","tbPro","tbGender","tbDel"].forEach(id=>document.getElementById(id).disabled=!has);
   document.getElementById("tbParents").disabled=!has||parentsOf(ui.sel).length>0;
-  const genderButton=document.getElementById("tbGender");
+  const markerButton=document.getElementById("tbAff");
+  if(markerButton){
+    const currentValue=has?displayedMarkerValue(model.people[ui.sel]):"auto";
+    const currentLabel=displayedMarkerLabel(currentValue);
+    const nextLabel=displayedMarkerLabel(nextDisplayedMarker(currentValue));
+  
+    markerButton.textContent=currentLabel;
+    markerButton.title="Current marker: "+currentLabel+". Click to set "+nextLabel;
+    markerButton.setAttribute(
+      "aria-label",
+      "Current marker: "+currentLabel+". Click to set "+nextLabel
+    );
+  }
+const genderButton=document.getElementById("tbGender");
   if(genderButton){
     const value=has?displayedGenderValue(model.people[ui.sel]):"unknown";
     const label=displayedGenderLabel(value);
@@ -1423,10 +1467,12 @@ function renderNavigator(){
   const warnHtml=warns.length?warns.map(w=>`<div class="warn-row"><span class="sev ${w.sev}"></span><span>${esc(w.msg)}</span></div>`).join("")
       :`<div class="empty-note">No structural or clinical warnings.</div>`;
   const layout=`<div class="layout-ctl">
-      <label>Layout preset</label>
-      <select onchange="applyPreset(this.value)">
+      <label for="layoutPreset">Layout preset</label>
+      <select id="layoutPreset" onchange="applyPreset(this.value)">
         <option value="compact" ${ui.layoutPreset==="compact"?'selected':''}>Compact clinical</option>
         <option value="standard" ${ui.layoutPreset==="standard"?'selected':''}>Standard space</option>
+        <option value="spacious" ${ui.layoutPreset==="spacious"?'selected':''}>Spacious review</option>
+        <option value="custom" ${ui.layoutPreset==="custom"?'selected':''} disabled>Custom</option>
       </select>
       <label for="labelPreset">Symbol labels</label>
       <select id="labelPreset" onchange="setPreset(this.value)" title="Label detail under each symbol">
@@ -1442,9 +1488,9 @@ function renderNavigator(){
         <option value="flexible" ${ui.routingMode==="flexible"?'selected':''}>Flexible lines</option>
       </select>
       <label>Generation spacing · <span id="lsGen">${LAY.genH}</span> px</label>
-      <input type="range" min="100" max="200" value="${LAY.genH}" oninput="setSpacing('genH',this.value)">
+      <input type="range" min="${LAYOUT_LIMITS.genH.min}" max="${LAYOUT_LIMITS.genH.max}" step="2" value="${LAY.genH}" oninput="setSpacing('genH',this.value)">
       <label>Sibling spacing · <span id="lsSib">${LAY.slot}</span> px</label>
-      <input type="range" min="70" max="140" value="${LAY.slot}" oninput="setSpacing('slot',this.value)">
+      <input type="range" min="${LAYOUT_LIMITS.slot.min}" max="${LAYOUT_LIMITS.slot.max}" step="4" value="${LAY.slot}" oninput="setSpacing('slot',this.value)">
       <div class="row">
         <button class="lbtn" id="focusBtn" aria-pressed="${ui.focus}" onclick="toggleFocus()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
@@ -1715,7 +1761,7 @@ function buildReportLegend(){
   if(P().some(p=>p.twinGroup&&p.twinType==="MZ"))add("mz","Connected twin branches: monozygotic twins",`<svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><path d="M13 2L5 15M13 2l8 13M8 10h10" fill="none" stroke="#2f2f41" stroke-width="1.3"/></svg>`);
   if(P().some(p=>p.twinGroup&&p.twinType!=="MZ"))add("dz","Shared apex: dizygotic or unspecified twins",`<svg width="26" height="18" viewBox="0 0 26 18" aria-hidden="true"><path d="M13 2L5 15M13 2l8 13" fill="none" stroke="#2f2f41" stroke-width="1.3"/></svg>`);
   return `<div class="rep-legend">${items.map(x=>`<span class="li">${x.svg}${esc(x.label)}</span>`).join("")}</div>
-    <p class="rep-empty" style="margin:7px 0 0">Generated from the notation used in this pedigree. <a href="/technologies/pedigree/standards/" target="_blank" rel="noopener">Pedigree standards guide</a></p>`;
+    <p class="rep-empty" style="margin:7px 0 0">Generated from the notation used in this pedigree. <a href="/technologies/pedigree/standards/" target="_blank" rel="noopener">Pedigree standards guide</a>.</p>`;
 }
 
 function renderReport(){
@@ -1907,15 +1953,23 @@ function relayoutWithPinnedOffsets(change){
   computeLayout();
 }
 function setSpacing(key,val){
-  relayoutWithPinnedOffsets(()=>{LAY[key]=+val;});
-  const el=document.getElementById(key==="genH"?"lsGen":"lsSib"); if(el)el.textContent=val;
+  if(!Object.prototype.hasOwnProperty.call(LAYOUT_LIMITS,key))return;
+  const next=clampLayoutValue(key,val);
+  relayoutWithPinnedOffsets(()=>{LAY[key]=next;});
+  ui.layoutPreset="custom";
+  const presetSelect=document.getElementById("layoutPreset");
+  if(presetSelect)presetSelect.value="custom";
+  const el=document.getElementById(key==="genH"?"lsGen":"lsSib");
+  if(el)el.textContent=next;
   drawStage(); markDirty();
 }
 function applyPreset(p){
-  ui.layoutPreset=p==="compact"?"compact":"standard";
+  const name=Object.prototype.hasOwnProperty.call(LAYOUT_PRESETS,p)?p:"standard";
+  const preset=LAYOUT_PRESETS[name];
+  ui.layoutPreset=name;
   relayoutWithPinnedOffsets(()=>{
-    if(ui.layoutPreset==="compact"){LAY.genH=110;LAY.slot=78;}
-    else {LAY.genH=132;LAY.slot=92;}
+    LAY.genH=preset.genH;
+    LAY.slot=preset.slot;
   });
   renderNavigator(); drawStage(); markDirty(); setTimeout(fitView,10);
 }
@@ -1928,6 +1982,32 @@ function toggleFocus(){ ui.focus=!ui.focus;
   setTimeout(()=>{drawStage();fitView();},200); }
 
 /* ===== build actions ===== */
+const DISPLAYED_MARKER_VALUES=["affected","carrier-half","compound","unaffected"];
+function displayedMarkerValue(p){
+  if(!p)return "unaffected";
+  const value=p.symbolDisplayOverride||p.symbolStyle||"auto";
+  if(DISPLAYED_MARKER_VALUES.includes(value))return value;
+  const molecular=derivedMolecularLayer(p);
+  if(molecular==="compound")return "compound";
+  if(molecular==="carrier-half")return "carrier-half";
+  return derivedClinicalLayer(p)==="affected"?"affected":"unaffected";
+}
+function displayedMarkerLabel(value){
+  if(value==="affected")return "Affected";
+  if(value==="carrier-half")return "Carrier";
+  if(value==="compound")return "Compound het";
+  return "No marker";
+}
+function nextDisplayedMarker(value){
+  const index=DISPLAYED_MARKER_VALUES.indexOf(value);
+  return index<0?DISPLAYED_MARKER_VALUES[0]:DISPLAYED_MARKER_VALUES[(index+1)%DISPLAYED_MARKER_VALUES.length];
+}
+function setDisplayedMarker(p,value){
+  if(!p)return;
+  p.symbolDisplayOverride=value;
+  p.symbolStyle=value;
+}
+
 const DISPLAYED_GENDER_VALUES=["male","female","unknown"];
 function displayedGenderValue(p){
   if(!p)return "unknown";
@@ -1963,7 +2043,7 @@ function act(a){ if(!ui.sel)return; const id=ui.sel,p=model.people[id];
     if(!u){const f=newPerson("male"),m=newPerson("female");const un=newUnion(f,m);model.unions[un].children.push(id);u=model.unions[un];}
     let grp=p.twinGroup; if(!grp){grp=nid("tw");p.twinGroup=grp;p.twinType=p.twinType||"DZ";}
     const t=newPerson("unknown",{twinGroup:grp,twinType:p.twinType});u.children.push(t);ui.sel=t;}); }
-  else if(a==='affected'){ commit(()=>{p.clinicalStatus=clinicalStatusOf(p)==="affected"?"auto":"affected";p.affected=derivedClinicalLayer(p)==="affected";}); }
+  else if(a==='affected'){ commit(()=>{setDisplayedMarker(p,nextDisplayedMarker(displayedMarkerValue(p)));}); }
   else if(a==='proband'){ commit(()=>{p.proband=!p.proband;p.affected=derivedClinicalLayer(p)==="affected";}); }
   else if(a==='display-gender'){ commit(()=>{setDisplayedGender(p,nextDisplayedGender(displayedGenderValue(p)));}); }
   else if(a==='delete'){ deleteIndividual(id); }
@@ -3002,10 +3082,6 @@ init();
 </script>
   </div>
 </main>
-
-
-
-
 
 
   </div>
