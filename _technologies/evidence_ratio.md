@@ -3,6 +3,7 @@ title: "Evidence ratio"
 date: 2026-01-01
 math: mathjax
 weight: 99
+technology_group: genomic-infrastructure
 ---
 
 Clinical trials and biomedical studies produce results that cannot be compared directly because each endpoint reports evidence differently.

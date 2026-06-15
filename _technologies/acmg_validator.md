@@ -5,6 +5,7 @@ description: "ACMG criteria calculator and classification validator. Review vari
 summary: "A browser-based ACMG/AMP evidence review and classification validator for structured variant interpretation, caveat checking, multi-variant case review, and report export."
 permalink: /technologies/acmg-validator/
 weight: 99
+technology_group: structured-genomics
 ---
 
 <main class="acmg-app" aria-labelledby="acmg-title">

@@ -3,6 +3,7 @@ title: "Qualifying variant database"
 date: 2025-01-01T00:00:01+10:00
 layout: page
 weight: 5
+technology_group: structured-genomics
 ---
 
 <!-- Enhancing precision in genomic interpretation through FAIR data, open and reproducible analysis criteria. -->

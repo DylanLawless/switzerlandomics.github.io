@@ -3,6 +3,7 @@ title: "Archipelago"
 date: 2026-01-01
 math: mathjax
 weight: 10
+technology_group: genomic-discovery
 ---
 
 Manhattan plots are for GWAS. 

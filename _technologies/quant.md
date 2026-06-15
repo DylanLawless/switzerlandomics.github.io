@@ -2,6 +2,7 @@
 title: "Quant"
 date: 2025-07-01T00:00:01+10:00
 weight: 1
+technology_group: quinary-inference
 ---
 
 **The missing element in genomic interpretation.**  

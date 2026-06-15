@@ -5,6 +5,7 @@ layout: page
 intro_image_hide_on_mobile: true
 show_call_box: false
 weight: 99
+technology_group: genomic-discovery
 ---
 
 **Estimate the maximum minor allele frequency (MAF) your cohort can support.** A quick, transparent tool for setting MAF thresholds in human WGS cohort analysis.

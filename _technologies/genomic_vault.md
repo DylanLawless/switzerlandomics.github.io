@@ -2,6 +2,7 @@
 title: "Genomic vault"
 date: 2026-01-01
 weight: 6
+technology_group: genomic-infrastructure
 ---
 
 Sequencing produces genome data.  

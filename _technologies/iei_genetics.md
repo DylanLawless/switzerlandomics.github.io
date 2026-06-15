@@ -1,7 +1,8 @@
 ---
 title: "IEI genetics database"
-date: 2025-01-01T00:00:01+10:00
+date: 2025-01-01
 weight: 99
+technology_group: genomic-discovery
 ---
 
 ## Streamline genetic diagnosis of IEI 

@@ -2,6 +2,7 @@
 title: "VCFheader"
 date: 2026-03-03
 weight: 4
+technology_group: structured-genomics
 ---
 
 The fastest way to understand a VCF before reading a single variant.

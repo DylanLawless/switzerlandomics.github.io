@@ -1,13 +1,14 @@
 ---
 title: "PanelAppRex AI"
 date: 2025-01-01T00:00:01+10:00
-weight: 5
 layout: default_panelapprex
+technology_group: genomic-discovery
+weight: 5
 ---
 
 
 <p class="panelapprex-hero-hidden">
-The leading disease-gene database with sophisticated search, designed to simplify the discovery of disease.
+The leading disease-gene panel app database with sophisticated search, designed to simplify the discovery of disease.
 </p>
 
 

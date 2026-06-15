@@ -347,7 +347,7 @@ Every variant. Every pipeline. Every institution.
               <a href="/technologies/panelAppRexAi/">PanelAppRex AI</a>
             </h2>
             <p>
-The leading disease-gene database with sophisticated search, designed to simplify the discovery ...</p>
+The leading disease-gene panel app database with sophisticated search, designed to simplify the ...</p>
           </div>
         </div>
       </div>
@@ -534,6 +534,47 @@ Genomic Vault provides custody.
         <div>Concept</div><div>Prototype</div><div>Production</div><div>Adoption</div><div>Standard</div>
       </div>
     </div>
+
+    <!-- ACMG validator -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+        <strong><a href="/technologies/acmg-validator/">ACMG Validator</a></strong>
+        <span id="infra-qv-desc" class="visually-hidden">
+          Maturity: concept, prototype, production deployment, and institutional adoption complete. Infrastructure standard not yet reached.
+        </span>
+      </div>
+      <div class="infra-maturity-stages" role="img" aria-label="ACMG Validator maturity pipeline" aria-describedby="infra-qv-desc">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled infra-cell--last" aria-hidden="true"></span>
+      </div>
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div><div>Prototype</div><div>Production</div><div>Adoption</div><div>Standard</div>
+      </div>
+    </div>
+
+    <!-- Pedigree -->
+    <div class="infra-maturity-row">
+      <div class="infra-maturity-system">
+        <strong><a href="/technologies/pedigree/">Pedigree</a></strong>
+        <span id="infra-qv-desc" class="visually-hidden">
+          Maturity: concept, prototype, production deployment, and institutional adoption complete. Infrastructure standard not yet reached.
+        </span>
+      </div>
+      <div class="infra-maturity-stages" role="img" aria-label="Pedigree maturity pipeline" aria-describedby="infra-qv-desc">
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled" aria-hidden="true"></span>
+        <span class="infra-cell is-filled infra-cell--last" aria-hidden="true"></span>
+      </div>
+      <div class="infra-maturity-mobile-labels" aria-hidden="true">
+        <div>Concept</div><div>Prototype</div><div>Production</div><div>Adoption</div><div>Standard</div>
+      </div>
+    </div>
+
   </div>
 </section>
 
