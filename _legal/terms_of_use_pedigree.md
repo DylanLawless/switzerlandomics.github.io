@@ -50,6 +50,8 @@ Further information is provided in the [Pedigree privacy notice]({% link _legal/
 
 The Switzerland Omics website may use Google Analytics to collect general information about visits and use of the website.
 
+Pedigree also uses an anonymous Cloudflare Worker counter to record the number of exported results. This counter increments when an export action is completed and is used only to display the public export count. It does not receive project information, imported file contents, generated report contents or user identifiers.
+
 Pedigree records, imported data and generated report contents are not intended to be included in analytics information.
 
 Further information is provided in the [general privacy policy]({% link _legal/policy_privacy_general.md %}) and [cookie policy]({% link _legal/policy_cookie_general.md %}).
