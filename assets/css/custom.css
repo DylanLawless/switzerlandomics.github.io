@@ -213,3 +213,171 @@
     border-radius: 16px;
   }
 }
+
+
+
+/* Pedigree export usage counter and responsive app bar */
+
+.pedigree-appbar {
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.pedigree-appbar > * {
+  flex: 0 0 auto;
+}
+
+.pedigree-appbar .brand {
+  min-width: 0;
+}
+
+.pedigree-appbar .spacer {
+  flex: 1 1 1.5rem;
+  min-width: 1rem;
+}
+
+.pedigree-proof-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  overflow: visible;
+  min-height: 30px;
+  width: auto;
+  max-width: 100%;
+  border: 1px solid var(--success-border, #bfe0cb);
+  border-radius: 8px;
+  background: var(--success-soft, #eef7f1);
+  color: var(--success, #2f7d4f);
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 1px 0 rgba(47, 47, 65, .04);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.pedigree-proof-badge-header {
+  flex: 0 1 auto;
+}
+
+.pedigree-proof-dot {
+  width: 7px;
+  height: 7px;
+  margin-left: .6rem;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 0 3px rgba(47, 125, 79, .12);
+  flex: 0 0 auto;
+}
+
+.pedigree-proof-label {
+  display: inline-flex;
+  align-items: center;
+  padding: .48rem .58rem .48rem .4rem;
+}
+
+.pedigree-proof-separator {
+  align-self: stretch;
+  width: 1px;
+  background: rgba(47, 125, 79, .22);
+}
+
+.pedigree-proof-badge strong {
+  display: inline-flex;
+  align-items: center;
+  min-width: max-content;
+  padding: .48rem .68rem;
+  background: rgba(255, 255, 255, .5);
+  color: var(--pedigree-black, #2f2f41);
+  font-variant-numeric: tabular-nums;
+}
+
+.pedigree-proof-tooltip {
+  position: absolute;
+  top: calc(100% + 7px);
+  right: 0;
+  z-index: 60;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 2rem));
+  padding: .55rem .65rem;
+  border: 1px solid var(--pedigree-border, #dcdcdc);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--pedigree-black, #2f2f41);
+  box-shadow: 0 8px 24px rgba(47, 47, 65, .14);
+  font-size: .72rem;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-2px);
+  transition: opacity .08s ease, transform .08s ease;
+}
+
+.pedigree-proof-badge:hover .pedigree-proof-tooltip,
+.pedigree-proof-badge:focus .pedigree-proof-tooltip,
+.pedigree-proof-badge:focus-within .pedigree-proof-tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .pedigree-appbar {
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .pedigree-appbar .brand {
+    flex: 1 1 auto;
+  }
+
+  .pedigree-appbar .spacer {
+    display: none;
+  }
+
+  .pedigree-guide-link {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .pedigree-appbar .hbtn {
+    flex: 0 1 auto;
+  }
+
+  .pedigree-proof-badge-header {
+    flex: 0 1 auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .pedigree-appbar {
+    padding: 10px;
+  }
+
+  .pedigree-appbar .brand {
+    flex: 1 1 100%;
+  }
+
+  .pedigree-appbar .hbtn {
+    flex: 1 1 calc(50% - 8px);
+    justify-content: center;
+  }
+
+  .pedigree-proof-badge-header {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .pedigree-proof-tooltip {
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, -2px);
+  }
+
+  .pedigree-proof-badge:hover .pedigree-proof-tooltip,
+  .pedigree-proof-badge:focus .pedigree-proof-tooltip,
+  .pedigree-proof-badge:focus-within .pedigree-proof-tooltip {
+    transform: translate(-50%, 0);
+  }
+}

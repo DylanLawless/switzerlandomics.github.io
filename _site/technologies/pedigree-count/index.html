@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Pedigree usage counter test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Internal test page for the Pedigree export usage counter." />
+  <meta property="og:title" content="Pedigree usage counter test"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Internal test page for the Pedigree export usage counter."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page '>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <main class="pedigree-count-page" aria-labelledby="pedigree-count-title">
+  <section class="pedigree-count-shell">
+    <header class="pedigree-count-hero">
+      <p class="pedigree-count-kicker">Pedigree</p>
+      <h1 id="pedigree-count-title">Export counter test</h1>
+      <p>
+        This page tests the Cloudflare Worker and D1 counter before integrating it into the full Pedigree application.
+      </p>
+    </header>
+
+    <section class="pedigree-count-card" aria-live="polite">
+      <div class="pedigree-count-main">
+        <p class="pedigree-count-label">User-facing candidate</p>
+
+        <div
+          class="pedigree-proof-badge"
+          title="Public counter of Pedigree export actions. Project data remains in the browser."
+          aria-label="Public counter of Pedigree export actions. Project data remains in the browser."
+        >
+          <span class="pedigree-proof-dot"></span>
+          <span class="pedigree-proof-label">reports exported</span>
+          <span class="pedigree-proof-separator"></span>
+          <strong data-pedigree-count-total>...</strong>
+        </div>
+
+        <div class="pedigree-social-proof-grid" aria-label="Social proof counter styles">
+          <div
+            class="pedigree-proof-apple"
+            title="Public counter of Pedigree export actions. Project data remains in the browser."
+          >
+            <span class="pedigree-proof-apple-number" data-pedigree-count-total>...</span>
+            <span class="pedigree-proof-apple-label">reports exported</span>
+          </div>
+
+          <div
+            class="pedigree-proof-github"
+            aria-label="GitHub badge style counter"
+            title="Public counter of Pedigree export actions. Project data remains in the browser."
+          >
+            <span class="pedigree-proof-github-label">reports exported</span>
+            <span class="pedigree-proof-github-count" data-pedigree-count-total>...</span>
+          </div>
+
+          <div
+            class="pedigree-proof-pill pedigree-proof-pill-green"
+            title="Public counter of Pedigree export actions. Project data remains in the browser."
+          >
+            <span class="pedigree-proof-dot"></span>
+            <span>Reports exported</span>
+            <strong data-pedigree-count-total>...</strong>
+          </div>
+
+          <div class="pedigree-proof-minimal">
+            <span data-pedigree-count-total>...</span>
+            <small>reports exported</small>
+          </div>
+        </div>
+      </div>
+
+      <button id="pedigree-export-test-button" class="pedigree-count-button" type="button">
+        Export
+      </button>
+    </section>
+
+    <section class="pedigree-metrics-card" aria-label="Development metrics">
+      <div class="pedigree-metric">
+        <span>Today</span>
+        <strong data-pedigree-count-today>...</strong>
+      </div>
+      <div class="pedigree-metric">
+        <span>7 days</span>
+        <strong data-pedigree-count-week>...</strong>
+      </div>
+      <div class="pedigree-metric">
+        <span>This month</span>
+        <strong data-pedigree-count-month>...</strong>
+      </div>
+      <div class="pedigree-metric">
+        <span>This year</span>
+        <strong data-pedigree-count-year>...</strong>
+      </div>
+      <div class="pedigree-metric pedigree-metric-total">
+        <span>Total</span>
+        <strong data-pedigree-count-total>...</strong>
+      </div>
+    </section>
+
+    <section class="pedigree-count-debug">
+      <div class="pedigree-count-debug-head">
+        <h2>Debug report</h2>
+        <button id="pedigree-refresh-debug" class="pedigree-count-secondary" type="button">
+          Refresh debug
+        </button>
+      </div>
+
+      <div class="pedigree-debug-grid">
+        <div class="pedigree-debug-box">
+          <h3>Status</h3>
+          <pre id="pedigree-debug-status">Loading...</pre>
+        </div>
+
+        <div class="pedigree-debug-box">
+          <h3>Worker response</h3>
+          <pre id="pedigree-debug-worker">Loading...</pre>
+        </div>
+      </div>
+
+      <div class="pedigree-debug-box">
+        <h3>Events by day</h3>
+        <table class="pedigree-debug-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody id="pedigree-debug-by-day">
+            <tr>
+              <td colspan="2">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pedigree-debug-box">
+        <h3>Recent events</h3>
+        <table class="pedigree-debug-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Page</th>
+              <th>Event</th>
+              <th>Clicked at</th>
+            </tr>
+          </thead>
+          <tbody id="pedigree-debug-recent">
+            <tr>
+              <td colspan="4">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pedigree-debug-box">
+        <h3>Browser request log</h3>
+        <pre id="pedigree-debug-log"></pre>
+      </div>
+    </section>
+  </section>
+</main>
+
+<style>
+.pedigree-count-page {
+  --pedigree-primary: #e5262f;
+  --pedigree-primary-dark: #a01b16;
+  --pedigree-black: #2f2f41;
+  --pedigree-white: #ffffff;
+  --pedigree-soft: #f3f2f2;
+  --pedigree-steel: #5c5a5a;
+  --pedigree-border: #dcdcdc;
+  --success: #2f7d4f;
+  --success-soft: #eef7f1;
+  --success-border: #bfe0cb;
+
+  padding: clamp(1.25rem, 2.5vw, 2.5rem) clamp(1rem, 3vw, 3.5rem);
+  color: var(--pedigree-black);
+}
+
+.pedigree-count-shell {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.pedigree-count-hero {
+  border-bottom: 1px solid var(--pedigree-border);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.pedigree-count-kicker {
+  margin: 0 0 .4rem;
+  color: var(--pedigree-primary);
+  font-weight: 700;
+}
+
+.pedigree-count-hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: -.04em;
+}
+
+.pedigree-count-hero p {
+  max-width: 42rem;
+  color: var(--pedigree-steel);
+  line-height: 1.5;
+}
+
+.pedigree-count-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--pedigree-border);
+  border-radius: 8px;
+  background: var(--pedigree-white);
+  margin-bottom: 1rem;
+}
+
+.pedigree-count-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.pedigree-count-label {
+  margin: 0 0 .55rem;
+  color: var(--pedigree-steel);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.pedigree-proof-badge {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 36px;
+  border: 1px solid var(--success-border);
+  border-radius: 8px;
+  background: var(--success-soft);
+  color: var(--success);
+  font-size: .82rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 1px 0 rgba(47, 47, 65, .04);
+  white-space: nowrap;
+}
+
+.pedigree-proof-badge .pedigree-proof-dot {
+  margin-left: .7rem;
+}
+
+.pedigree-proof-label {
+  display: inline-flex;
+  align-items: center;
+  padding: .55rem .65rem .55rem .45rem;
+}
+
+.pedigree-proof-separator {
+  align-self: stretch;
+  width: 1px;
+  background: rgba(47, 125, 79, .22);
+}
+
+.pedigree-proof-badge strong {
+  display: inline-flex;
+  align-items: center;
+  min-width: 3.2rem;
+  padding: .55rem .75rem;
+  background: rgba(255, 255, 255, .48);
+  color: var(--pedigree-black);
+  font-variant-numeric: tabular-nums;
+}
+
+.pedigree-social-proof-grid {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .7rem;
+  margin-top: .85rem;
+}
+
+.pedigree-proof-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 34px;
+  border-radius: 999px;
+  padding: .38rem .75rem;
+  font-size: .82rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.pedigree-proof-pill strong {
+  font-variant-numeric: tabular-nums;
+  color: inherit;
+}
+
+.pedigree-proof-pill-green {
+  border: 1px solid var(--success-border);
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.pedigree-proof-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 0 3px rgba(47, 125, 79, .12);
+  flex: 0 0 auto;
+}
+
+.pedigree-proof-github {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  min-height: 32px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: .78rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 1px 0 rgba(27, 31, 36, .04);
+}
+
+.pedigree-proof-github-label {
+  display: inline-flex;
+  align-items: center;
+  padding: .45rem .65rem;
+  background: #f6f8fa;
+  color: #24292f;
+  border-right: 1px solid #d0d7de;
+}
+
+.pedigree-proof-github-count {
+  display: inline-flex;
+  align-items: center;
+  padding: .45rem .65rem;
+  background: #fff;
+  color: #24292f;
+  font-variant-numeric: tabular-nums;
+}
+
+.pedigree-proof-apple {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .45rem;
+  min-height: 38px;
+  border: 1px solid rgba(47, 47, 65, .1);
+  border-radius: 999px;
+  padding: .42rem .82rem;
+  background: linear-gradient(180deg, #fff, #f8f8f8);
+  box-shadow: 0 1px 2px rgba(47, 47, 65, .06), inset 0 1px 0 rgba(255, 255, 255, .9);
+  white-space: nowrap;
+}
+
+.pedigree-proof-apple-number {
+  color: var(--pedigree-black);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pedigree-proof-apple-label {
+  color: var(--pedigree-steel);
+  font-size: .78rem;
+  font-weight: 600;
+}
+
+.pedigree-proof-minimal {
+  display: inline-flex;
+  align-items: baseline;
+  gap: .35rem;
+  color: var(--pedigree-black);
+  white-space: nowrap;
+}
+
+.pedigree-proof-minimal span {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pedigree-proof-minimal small {
+  color: var(--pedigree-steel);
+  font-size: .78rem;
+  font-weight: 600;
+}
+
+.pedigree-count-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--pedigree-primary);
+  background: var(--pedigree-primary);
+  color: #fff;
+  border-radius: 5px;
+  padding: .75rem 1.2rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pedigree-count-button:hover {
+  background: var(--pedigree-primary-dark);
+  border-color: var(--pedigree-primary-dark);
+}
+
+.pedigree-count-button:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+.pedigree-metrics-card {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .65rem;
+  margin-bottom: 1.5rem;
+}
+
+.pedigree-metric {
+  border: 1px solid var(--pedigree-border);
+  border-radius: 8px;
+  background: #fff;
+  padding: .8rem;
+}
+
+.pedigree-metric span {
+  display: block;
+  color: var(--pedigree-steel);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.pedigree-metric strong {
+  display: block;
+  margin-top: .25rem;
+  color: var(--pedigree-black);
+  font-size: 1.35rem;
+  line-height: 1;
+  letter-spacing: -.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pedigree-metric-total {
+  border-color: var(--success-border);
+  background: var(--success-soft);
+}
+
+.pedigree-count-debug {
+  display: grid;
+  gap: 1rem;
+}
+
+.pedigree-count-debug-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.pedigree-count-debug h2,
+.pedigree-count-debug h3 {
+  margin: 0;
+}
+
+.pedigree-count-debug h2 {
+  font-size: 1.2rem;
+}
+
+.pedigree-count-debug h3 {
+  font-size: .85rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--pedigree-steel);
+  margin-bottom: .6rem;
+}
+
+.pedigree-count-secondary {
+  border: 1px solid var(--pedigree-border);
+  background: #fff;
+  color: var(--pedigree-black);
+  border-radius: 5px;
+  padding: .55rem .8rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.pedigree-count-secondary:hover {
+  border-color: var(--pedigree-primary);
+  color: var(--pedigree-primary);
+}
+
+.pedigree-debug-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.pedigree-debug-box {
+  border: 1px solid var(--pedigree-border);
+  border-radius: 8px;
+  background: #fff;
+  padding: 1rem;
+  overflow: auto;
+}
+
+.pedigree-debug-box pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: .82rem;
+  line-height: 1.45;
+  color: var(--pedigree-black);
+}
+
+.pedigree-debug-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .85rem;
+}
+
+.pedigree-debug-table th,
+.pedigree-debug-table td {
+  border: 1px solid var(--pedigree-border);
+  padding: .5rem .6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.pedigree-debug-table th {
+  background: var(--pedigree-soft);
+  font-size: .72rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+  .pedigree-count-card,
+  .pedigree-count-debug-head {
+    display: block;
+  }
+
+  .pedigree-count-button,
+  .pedigree-count-secondary {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .pedigree-proof-badge,
+  .pedigree-proof-pill,
+  .pedigree-proof-github,
+  .pedigree-proof-apple,
+  .pedigree-proof-minimal {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pedigree-social-proof-grid {
+    align-items: flex-start;
+  }
+
+  .pedigree-metrics-card,
+  .pedigree-debug-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+(function () {
+  var API_BASE = "https://pedigree-usage.cold-leaf-e00d.workers.dev";
+
+  var totalEls = Array.prototype.slice.call(
+    document.querySelectorAll("[data-pedigree-count-total]")
+  );
+  var todayEls = Array.prototype.slice.call(
+    document.querySelectorAll("[data-pedigree-count-today]")
+  );
+  var weekEls = Array.prototype.slice.call(
+    document.querySelectorAll("[data-pedigree-count-week]")
+  );
+  var monthEls = Array.prototype.slice.call(
+    document.querySelectorAll("[data-pedigree-count-month]")
+  );
+  var yearEls = Array.prototype.slice.call(
+    document.querySelectorAll("[data-pedigree-count-year]")
+  );
+
+  var buttonEl = document.getElementById("pedigree-export-test-button");
+  var refreshEl = document.getElementById("pedigree-refresh-debug");
+
+  var statusEl = document.getElementById("pedigree-debug-status");
+  var workerEl = document.getElementById("pedigree-debug-worker");
+  var byDayEl = document.getElementById("pedigree-debug-by-day");
+  var recentEl = document.getElementById("pedigree-debug-recent");
+  var logEl = document.getElementById("pedigree-debug-log");
+
+  var requestLog = [];
+
+  function formatCount(value) {
+    return Number(value || 0).toLocaleString();
+  }
+
+  function updateElements(elements, value) {
+    var formatted = formatCount(value);
+
+    elements.forEach(function (element) {
+      element.textContent = formatted;
+    });
+  }
+
+  function updatePublicCounters(data) {
+    updateElements(totalEls, data.total != null ? data.total : data.count);
+    updateElements(todayEls, data.today);
+    updateElements(weekEls, data.week);
+    updateElements(monthEls, data.month);
+    updateElements(yearEls, data.year);
+  }
+
+  function log(message, data) {
+    var entry = {
+      time: new Date().toISOString(),
+      message: message,
+      data: data || null
+    };
+
+    requestLog.unshift(entry);
+    requestLog = requestLog.slice(0, 20);
+
+    logEl.textContent = JSON.stringify(requestLog, null, 2);
+  }
+
+  function setStatus(message, data) {
+    statusEl.textContent = JSON.stringify({
+      message: message,
+      page_url: window.location.href,
+      worker_url: API_BASE,
+      updated_at: new Date().toISOString(),
+      data: data || null
+    }, null, 2);
+  }
+
+  async function fetchJson(path, options) {
+    var startedAt = performance.now();
+    var url = API_BASE + path;
+
+    log("Request started", {
+      url: url,
+      method: options && options.method ? options.method : "GET"
+    });
+
+    var response = await fetch(url, options || {});
+    var text = await response.text();
+
+    var durationMs = Math.round(performance.now() - startedAt);
+    var parsed;
+
+    try {
+      parsed = JSON.parse(text);
+    } catch (error) {
+      parsed = {
+        raw: text
+      };
+    }
+
+    log("Request completed", {
+      url: url,
+      status: response.status,
+      ok: response.ok,
+      duration_ms: durationMs,
+      response: parsed
+    });
+
+    if (!response.ok) {
+      throw new Error("Request failed: " + response.status);
+    }
+
+    return parsed;
+  }
+
+  function renderByDay(rows) {
+    if (!rows || !rows.length) {
+      byDayEl.innerHTML = '<tr><td colspan="2">No rows yet.</td></tr>';
+      return;
+    }
+
+    byDayEl.innerHTML = rows.map(function (row) {
+      return [
+        "<tr>",
+        "<td>" + String(row.date || "") + "</td>",
+        "<td>" + formatCount(row.count) + "</td>",
+        "</tr>"
+      ].join("");
+    }).join("");
+  }
+
+  function renderRecent(rows) {
+    if (!rows || !rows.length) {
+      recentEl.innerHTML = '<tr><td colspan="4">No rows yet.</td></tr>';
+      return;
+    }
+
+    recentEl.innerHTML = rows.map(function (row) {
+      return [
+        "<tr>",
+        "<td>" + String(row.id || "") + "</td>",
+        "<td>" + String(row.page || "") + "</td>",
+        "<td>" + String(row.event || "") + "</td>",
+        "<td>" + String(row.clicked_at || "") + "</td>",
+        "</tr>"
+      ].join("");
+    }).join("");
+  }
+
+  async function loadCount() {
+    var data = await fetchJson("/pedigree/export-count");
+    updateElements(totalEls, data.count);
+    return data;
+  }
+
+  async function loadDebug() {
+    try {
+      setStatus("Loading debug report");
+
+      var data = await fetchJson("/pedigree/export-debug");
+
+      updatePublicCounters(data);
+      workerEl.textContent = JSON.stringify(data, null, 2);
+      renderByDay(data.by_day);
+      renderRecent(data.recent);
+      setStatus("Debug report loaded", {
+        total: data.total,
+        today: data.today,
+        week: data.week,
+        month: data.month,
+        year: data.year,
+        by_day_rows: data.by_day ? data.by_day.length : 0,
+        recent_rows: data.recent ? data.recent.length : 0
+      });
+    } catch (error) {
+      setStatus("Debug report failed", {
+        error: String(error)
+      });
+    }
+  }
+
+  async function recordExportClick() {
+    try {
+      buttonEl.disabled = true;
+      buttonEl.textContent = "Recording...";
+
+      var data = await fetchJson("/pedigree/export-click", {
+        method: "POST"
+      });
+
+      updateElements(totalEls, data.count);
+
+      await loadDebug();
+
+      buttonEl.textContent = "Export";
+      buttonEl.disabled = false;
+    } catch (error) {
+      buttonEl.textContent = "Export";
+      buttonEl.disabled = false;
+
+      setStatus("Export click failed", {
+        error: String(error)
+      });
+    }
+  }
+
+  buttonEl.addEventListener("click", recordExportClick);
+  refreshEl.addEventListener("click", loadDebug);
+
+  loadCount()
+    .then(loadDebug)
+    .catch(function (error) {
+      setStatus("Initial load failed", {
+        error: String(error)
+      });
+    });
+})();
+</script>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

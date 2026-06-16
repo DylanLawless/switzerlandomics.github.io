@@ -617,8 +617,21 @@ technology_group: structured-genomics
     <button class="hbtn" onclick="openTemplates()">New from template</button>
     <button class="hbtn" onclick="document.getElementById('dataImport').click()">Import</button>
     <input id="dataImport" type="file" accept=".json,.fam,.ped,application/json,application/fhir+json,text/plain" hidden onchange="importProjectFile(this.files[0]);this.value=''" />
-    <button class="hbtn primary" onclick="openExport()">
+    <button class="hbtn primary" onclick="openExportTracked()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg>Export</button>
+    <span
+      class="pedigree-proof-badge pedigree-proof-badge-header"
+      tabindex="0"
+      aria-describedby="pedigree-export-counter-help"
+    >
+      <span class="pedigree-proof-dot" aria-hidden="true"></span>
+      <span class="pedigree-proof-label">reports exported</span>
+      <span class="pedigree-proof-separator" aria-hidden="true"></span>
+      <strong data-pedigree-count-total>...</strong>
+      <span class="pedigree-proof-tooltip" id="pedigree-export-counter-help" role="tooltip">
+        Public counter of Pedigree export actions. Project data remains in the browser.
+      </span>
+    </span>
   </header>
 
   <div class="main" id="main">
@@ -1322,7 +1335,7 @@ function quickViewBox(){
 }
 
 /* ===== navigator ===== */
-let navCollapsed={warn:true,layout:true};
+let navCollapsed={warn:true,layout:false};
 function renderNavigator(){
   const ps=P().slice().sort((a,b)=>(a._gen-b._gen)||(a.x-b.x));
   const warns=computeWarnings();
@@ -1371,7 +1384,7 @@ function renderNavigator(){
           Auto-layout
         </button>
       </div>
-      <div class="help-text">Drag a symbol to reposition it. Auto-layout restores automatic placement and refits the pedigree.</div>
+      <!-- <div class="help-text">Drag a symbol to reposition it. Auto-layout restores automatic placement and refits the pedigree.</div> -->
     </div>`;
   const conflictCount=warns.filter(w=>w.sev==="error").length;
   const reviewCount=warns.filter(w=>w.sev==="warning").length;
@@ -1537,7 +1550,9 @@ function renderInspector(){
 
   const allSectionsOpen=inspectorSectionKeys().every(k=>openSec.has(k));
   const inspectorControls=`<div class="insp-head"><button class="expand-all" onclick="expandAll()">${allSectionsOpen?'Collapse all':'Expand all'}</button></div>`;
-  const flowHead=`<div class="inspector-flow-head"><strong>Case and individual record</strong><span>Complete the case first, then work through the selected individual.</span></div>`;
+  const flowHead=`
+    <!-- <div class="inspector-flow-head"><strong>Case and individual record</strong><span>Complete the case first, then work through the selected individual.</span></div> -->
+  `;
   const caseFields=`<div class="field"><label for="caseName">Case</label><input id="caseName" type="text" value="${esc(model.caseName)}" oninput="setCaseName(this.value)" /></div>${fld("Disease / condition","disease",m)}${fld("Referral indication","indication",m)}`;
   const signoff=`${fld("Reviewer","reviewer",m)}${fld("Institution","institution",m)}${fld("Review date","date",m,"date")}`;
 
@@ -2111,6 +2126,45 @@ function recordExport(fmt){
   renderReport();
   markDirty();
 }
+
+const PEDIGREE_EXPORT_COUNTER_API_BASE="https://pedigree-usage.cold-leaf-e00d.workers.dev";
+
+function formatPedigreeExportCount(value){
+  return Number(value||0).toLocaleString();
+}
+
+function updatePedigreeExportCounter(value){
+  const formatted=formatPedigreeExportCount(value);
+  document.querySelectorAll("[data-pedigree-count-total]").forEach(el=>{
+    el.textContent=formatted;
+  });
+}
+
+async function loadPedigreeExportCounter(){
+  try{
+    const response=await fetch(PEDIGREE_EXPORT_COUNTER_API_BASE+"/pedigree/export-count");
+    if(!response.ok)return;
+    const data=await response.json();
+    updatePedigreeExportCounter(data.count);
+  }catch(error){}
+}
+
+async function recordPedigreeExportClick(){
+  try{
+    await fetch(PEDIGREE_EXPORT_COUNTER_API_BASE+"/pedigree/export-click",{method:"POST"});
+  }catch(error){}
+}
+
+function openExportTracked(){
+  recordPedigreeExportClick();
+  openExport();
+}
+
+function openExportTracked(){
+  recordPedigreeExportClick();
+  openExport();
+}
+
 function cleanFileStem(value){
   return String(value||"pedigree").trim().replace(/[^A-Za-z0-9._-]+/g,"_").replace(/^_+|_+$/g,"")||"pedigree";
 }
@@ -2946,10 +3000,11 @@ function initKeys(){ document.addEventListener("keydown",e=>{
 function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",layoutPreset:"standard",focus:false}; view={x:0,y:0,scale:1};
   model=blankModel("rare"); if(!tryRestore())trioTemplate(); migrateModel();
   if(!ui.sel){const first=P().find(p=>p.proband)||P()[0];ui.sel=first?first.id:null;}
-  initCanvas(); initKeys(); computeLayout(); render(); setTimeout(fitView,40);
+  initCanvas(); initKeys(); computeLayout(); render(); setTimeout(fitView,40); loadPedigreeExportCounter();
   window.addEventListener("resize",()=>{drawStage();quickViewBox();}); }
 init();
 </script>
   </div>
 </main>
+
 
