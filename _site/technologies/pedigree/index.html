@@ -748,7 +748,7 @@
         <circle cx="12" cy="19.5" r="2.5" fill="#2f2f41" stroke="#2f2f41"/>
       </svg><span>Pedigree</span>
     </div>
-    <span class="pedigree-release-tag">v1.0.0</span>
+    <span class="pedigree-release-tag">v1.0.1</span>
     <a class="pedigree-guide-link" href="/technologies/pedigree/standards/" target="_blank" rel="noopener" title="Open the illustrated pedigree standards guide in a new tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Pedigree standards</span><span class="guide-long">and symbols</span>
@@ -849,7 +849,7 @@
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
 const PEDIGREE_SCHEMA_VERSION=7;
-const PEDIGREE_APP_VERSION="v1.0.0";
+const PEDIGREE_APP_VERSION="v1.0.1";
 const NATIVE_FORMAT="pedigree-native/v7";
 const FHIR_R4_VERSION="4.0.1";
 const MAX_PERSON_VARIANTS=5;
@@ -1772,7 +1772,7 @@ function toggleField(key){ commit(()=>{ const p=model.people[ui.sel];
   p.affected=derivedClinicalLayer(p)==="affected";
 }); }
 
-const openSec=new Set(["identity","case"]);
+const openSec=new Set();
 function toggleSec(k){ openSec.has(k)?openSec.delete(k):openSec.add(k); renderInspector(); }
 function hasTwinOrMultipleBirthGroups(){ return P().some(person=>person.twinGroup); }
 function inspectorSectionKeys(){
