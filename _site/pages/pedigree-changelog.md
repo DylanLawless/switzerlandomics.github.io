@@ -1,5 +1,9 @@
 # Pedigree changelog
 
+## v1.0.2
+
+- Added two known historical example templates: the Gurgy Neolithic ancient-DNA community pedigree from Rivollat et al., Nature 2023, and the CEPH1463 reference family pedigree. The Gurgy template was reconstructed from the published figure and supplementary data to generate ped/fam and may require further correction.
+
 ## v1.0.1
 
 - Added left-panel controls for twin type and relationship details, including monozygotic twins, consanguinity, ended relationships, no children, infertility and PLINK parental roles.

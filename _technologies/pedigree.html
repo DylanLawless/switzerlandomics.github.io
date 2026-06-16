@@ -7,7 +7,7 @@ permalink: /technologies/pedigree/
 bodyClass: "page-tech page-pedigree"
 weight: 99
 technology_group: structured-genomics
-version: 1.0.1
+version: 1.0.2
 ---
 
 <style>
@@ -619,7 +619,7 @@ version: 1.0.1
         <circle cx="12" cy="19.5" r="2.5" fill="#2f2f41" stroke="#2f2f41"/>
       </svg><span>Pedigree</span>
     </div>
-    <span class="pedigree-release-tag">v1.0.1</span>
+    <span class="pedigree-release-tag">v1.0.2</span>
     <a class="pedigree-guide-link" href="/technologies/pedigree/standards/" target="_blank" rel="noopener" title="Open the illustrated pedigree standards guide in a new tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Pedigree standards</span><span class="guide-long">and symbols</span>
@@ -720,7 +720,7 @@ version: 1.0.1
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
 const PEDIGREE_SCHEMA_VERSION=7;
-const PEDIGREE_APP_VERSION="v1.0.1";
+const PEDIGREE_APP_VERSION="v1.0.2";
 const NATIVE_FORMAT="pedigree-native/v7";
 const FHIR_R4_VERSION="4.0.1";
 const MAX_PERSON_VARIANTS=5;
@@ -1135,10 +1135,6 @@ function symbolPath(p,cx,cy){
 function hasGenetics(p){ return personGeneticVariants(p).length>0; }
 function compactCoordinate(p){ return compactVariantCoordinate(primaryGeneticVariant(p)||legacyGeneticVariantFromPerson(p)); }
 function bestGeneticLabel(p){ return bestGeneticVariantLabel(primaryGeneticVariant(p)); }
-function addUniqueLabelLine(lines,value){
-  const text=String(value||"").trim();
-  if(text&&!lines.includes(text))lines.push(text);
-}
 function labelLines(p){
   const lp=ui.labelPreset, out=[];
   const ad=()=>{ if(p.deceased&&p.ageAtDeath)return "d. "+p.ageAtDeath; if(p.birthYear)return "b. "+p.birthYear; return null; };
@@ -1179,18 +1175,18 @@ function labelLines(p){
   variants.forEach((variant,index)=>{
     const prefix=variants.length>1?`Variant ${index+1}: `:"";
     const label=bestGeneticVariantLabel(variant);
-    if(label)addUniqueLabelLine(out,prefix+label);
-    if(variant.gene&&(!label||!label.includes(variant.gene)))addUniqueLabelLine(out,prefix+variant.gene);
-    if(variant.variantType)addUniqueLabelLine(out,prefix+variant.variantType);
-    const coord=compactVariantCoordinate(variant); if(coord)addUniqueLabelLine(out,prefix+coord);
-    if(variant.genomicHgvs)addUniqueLabelLine(out,prefix+variant.genomicHgvs);
-    if(variant.transcript&&variant.codingHgvs)addUniqueLabelLine(out,prefix+variant.transcript+":"+variant.codingHgvs);
-    else if(variant.gene&&variant.codingHgvs)addUniqueLabelLine(out,prefix+variant.gene+" "+variant.codingHgvs);
-    if(variant.rnaHgvs)addUniqueLabelLine(out,prefix+variant.rnaHgvs);
-    if(variant.proteinHgvs)addUniqueLabelLine(out,prefix+variant.proteinHgvs);
-    const zg=[]; if(variant.zygosity)zg.push(variant.zygosity); if(variant.inheritance)zg.push(variant.inheritance); if(variant.phase)zg.push("phase "+variant.phase); if(zg.length)addUniqueLabelLine(out,prefix+zg.join(", "));
-    if(variant.classification)addUniqueLabelLine(out,prefix+variant.classification);
-    if(variant.geneticsFreeText)addUniqueLabelLine(out,prefix+variant.geneticsFreeText);
+    if(label)out.push((prefix+label));
+    if(variant.gene&&(!label||!label.includes(variant.gene)))out.push(prefix+variant.gene);
+    if(variant.variantType)out.push(prefix+variant.variantType);
+    const coord=compactVariantCoordinate(variant); if(coord)out.push(prefix+coord);
+    if(variant.genomicHgvs)out.push(prefix+variant.genomicHgvs);
+    if(variant.transcript&&variant.codingHgvs)out.push(prefix+variant.transcript+":"+variant.codingHgvs);
+    else if(variant.gene&&variant.codingHgvs)out.push(prefix+variant.gene+" "+variant.codingHgvs);
+    if(variant.rnaHgvs)out.push(prefix+variant.rnaHgvs);
+    if(variant.proteinHgvs)out.push(prefix+variant.proteinHgvs);
+    const zg=[]; if(variant.zygosity)zg.push(variant.zygosity); if(variant.inheritance)zg.push(variant.inheritance); if(variant.phase)zg.push("phase "+variant.phase); if(zg.length)out.push(prefix+zg.join(", "));
+    if(variant.classification)out.push(prefix+variant.classification);
+    if(variant.geneticsFreeText)out.push(prefix+variant.geneticsFreeText);
   });
   return out;
 }
@@ -1670,20 +1666,12 @@ function activeGeneticVariantIndex(person){
   const stored=Number(ui.variantIndexByPerson[person.id]||0);
   return Math.max(0,Math.min(count-1,Number.isFinite(stored)?stored:0));
 }
-function editableGeneticVariants(person){
-  if(!person)return [];
-  const source=Array.isArray(person.variants)&&person.variants.length?person.variants:personGeneticVariants(person);
-  return source.map((variant,index)=>normaliseGeneticVariant(variant,index,person.id));
-}
 function geneticVariantForEditing(person,index){
-  const variants=editableGeneticVariants(person);
-  return variants[index]?variants[index]:emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
+  const variants=Array.isArray(person.variants)?person.variants:[];
+  return variants[index]?normaliseGeneticVariant(variants[index],index,person.id):emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
 }
 function ensureEditableVariant(person,index){
-  if(!Array.isArray(person.variants)||!person.variants.length){
-    const existing=editableGeneticVariants(person).filter(variantHasData);
-    person.variants=existing.length?existing:[];
-  }
+  if(!Array.isArray(person.variants))person.variants=[];
   while(person.variants.length<=index)person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,person.variants.length)}));
   person.variants[index]=normaliseGeneticVariant(person.variants[index],index,person.id);
   return person.variants[index];
@@ -1709,9 +1697,11 @@ function addGeneticVariant(){
   const currentCount=Array.isArray(person.variants)?person.variants.length:personGeneticVariants(person).length;
   if(currentCount>=MAX_PERSON_VARIANTS){alert(`Pedigree supports up to ${MAX_PERSON_VARIANTS} variant inputs per individual in this version.`);return;}
   commit(()=>{
-    if(!Array.isArray(person.variants)||!person.variants.length){
-      const existing=editableGeneticVariants(person).filter(variantHasData);
+    if(!Array.isArray(person.variants)){
+      const existing=personGeneticVariants(person);
       person.variants=existing.length?existing:[emptyGeneticVariant({id:nextGeneticVariantId(person,0)})];
+    }else if(!person.variants.length){
+      person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,0)}));
     }
     person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,person.variants.length)}));
     if(!ui.variantIndexByPerson)ui.variantIndexByPerson={};
@@ -1732,7 +1722,7 @@ function variantSelF(label,index,key,opts){
     ${opts.map(o=>{const val=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;return `<option value="${esc(val)}" ${value===val?'selected':''}>${esc(t)}</option>`;}).join("")}</select></div>`;
 }
 function geneticVariantTabs(person,activeIndex){
-  const raw=editableGeneticVariants(person);
+  const raw=Array.isArray(person.variants)&&person.variants.length?person.variants:personGeneticVariants(person);
   const count=Math.max(1,raw.length);
   const buttons=Array.from({length:count},(_,index)=>{
     const variant=raw[index]?normaliseGeneticVariant(raw[index],index,person.id):emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
@@ -2295,7 +2285,9 @@ const TEMPLATES={
   cancer:{name:"Hereditary cancer",build:cancerTemplate,desc:"Three generations with a BRCA1 variant segregating."},
   cardio:{name:"Cardiogenetics",build:cardioTemplate,desc:"Cardiomyopathy lineage with sudden cardiac death."},
   prenatal:{name:"Prenatal",build:prenatalTemplate,desc:"Consanguineous couple, pregnancy loss and current pregnancy."},
-  queen_victoria_haemophilia_b:{name:"Queen Victoria haemophilia B",build:queenVictoriaHaemophiliaBTemplate,category:"historical",desc:"Royal family historical example of F9-associated X-linked recessive inheritance."}
+  queen_victoria_haemophilia_b:{name:"Queen Victoria haemophilia B",build:queenVictoriaHaemophiliaBTemplate,category:"historical",desc:"Royal family historical example of F9-associated X-linked recessive inheritance."},
+  neolithic_gurgy:{name:"Neolithic community DNA 4500 BC",build:neolithicGurgyTemplate,category:"historical",desc:"Ancient-DNA pedigree from Rivollat et al., Nature 2023, reconstructed from the Gurgy 'les Noisats' Neolithic community."},
+  ceph1463:{name:"CEPH1463 reference family",build:ceph1463Template,category:"historical",desc:"CEPH-Utah CEU family 1463 reference pedigree from ceph1463.ped, used to study genetic transmission and human variation."}
 };
 function tmplName(k){return (TEMPLATES[k]||{}).name||"Custom";}
 function basicTrioTemplate(){ const f=newPerson("male"),m=newPerson("female");const u=newUnion(f,m);
@@ -2338,6 +2330,262 @@ function queenVictoriaHaemophiliaBTemplate(){
   migrateModel();
   model.interoperability.nativeFormat=NATIVE_FORMAT;
   model.interoperability.fhirVersion=FHIR_R4_VERSION;
+}
+
+const NEOLITHIC_GURGY_SAMPLED_FLAG_FAM=`GURGY P_A_top_f 0 0 1 1
+GURGY P_A_top_m 0 0 2 1
+GURGY GLN231A P_A_top_f P_A_top_m 1 2
+GURGY GLN270B P_A_top_f P_A_top_m 1 2
+GURGY GLN320 0 0 1 2
+GURGY P_w_231A 0 0 2 1
+GURGY P_w_270B 0 0 2 1
+GURGY P_w_237A 0 0 2 1
+GURGY GLN322 GLN231A P_w_231A 1 2
+GURGY GLN237A GLN270B P_w_270B 1 2
+GURGY P_A_M2h GLN270B P_w_270B 1 1
+GURGY P_A_M2jk GLN270B P_w_270B 1 1
+GURGY P_w_M2h 0 0 2 1
+GURGY GLN325 GLN237A P_w_237A 2 2
+GURGY GLN265 GLN237A P_w_237A 1 2
+GURGY GLN221B GLN237A P_w_237A 1 2
+GURGY GLN266 GLN237A P_w_237A 1 2
+GURGY P_A_M3f GLN237A P_w_237A 1 1
+GURGY P_A_M3g GLN237A P_w_237A 1 1
+GURGY P_w_M3f 0 0 2 1
+GURGY P_w_M3g 0 0 2 1
+GURGY P_ex253_f 0 0 1 1
+GURGY P_ex253_m 0 0 2 1
+GURGY GLN253 P_ex253_f P_ex253_m 1 2
+GURGY GLN275 P_ex253_f P_ex253_m 1 2
+GURGY GLN220 P_A_M2h P_w_M2h 1 2
+GURGY GLN241 P_A_M2h P_w_M2h 1 2
+GURGY GLN260 P_A_M2h P_w_M2h 1 2
+GURGY GLN319 P_A_M2h P_w_M2h 1 2
+GURGY P_A_M3i P_A_M2h P_w_M2h 1 1
+GURGY GLN225 0 0 2 2
+GURGY P_w_M2jk 0 0 2 1
+GURGY GLN256 P_A_M2jk P_w_M2jk 1 2
+GURGY GLN261 P_A_M2jk P_w_M2jk 1 2
+GURGY GLN216 GLN275 GLN325 1 2
+GURGY GLN276 GLN275 GLN325 1 2
+GURGY P_w_265 0 0 2 1
+GURGY GLN235 GLN265 P_w_265 1 2
+GURGY P_w_266 0 0 2 1
+GURGY GLN268B GLN266 P_w_266 1 2
+GURGY GLN243A GLN266 P_w_266 1 2
+GURGY P_A_M4e GLN266 P_w_266 1 1
+GURGY GLN212 P_A_M3f P_w_M3f 2 2
+GURGY GLN213 P_A_M3f P_w_M3f 2 2
+GURGY GLN224 P_A_M3f P_w_M3f 1 2
+GURGY GLN255 P_A_M3f P_w_M3f 1 2
+GURGY GLN317 P_A_M3f P_w_M3f 1 2
+GURGY P_A_M4_210 P_A_M3f P_w_M3f 1 1
+GURGY GLN263 P_A_M3g P_w_M3g 1 2
+GURGY GLN321 P_A_M3g P_w_M3g 1 2
+GURGY P_A_M4g P_A_M3g P_w_M3g 1 1
+GURGY P_A_M4_209 P_A_M3g P_w_M3g 1 1
+GURGY P_A_M4_257 P_A_M3g P_w_M3g 1 1
+GURGY GLN226 P_A_M3i GLN225 1 2
+GURGY P_w_256 0 0 2 1
+GURGY GLN250 GLN256 P_w_256 1 2
+GURGY P_w_261 0 0 2 1
+GURGY GLN245B GLN261 P_w_261 1 2
+GURGY P_A_M4_285A GLN261 P_w_261 1 1
+GURGY GLN249 0 0 2 2
+GURGY GLN236A 0 0 2 2
+GURGY GLN315 0 0 2 2
+GURGY GLN269 0 0 2 2
+GURGY GLN202 GLN317 GLN315 1 2
+GURGY GLN262 GLN243A GLN236A 2 2
+GURGY P_A_M5_236B GLN243A GLN236A 1 1
+GURGY P_A_M5_214 GLN243A GLN236A 1 1
+GURGY P_w_M4g 0 0 2 1
+GURGY GLN207A P_A_M4g P_w_M4g 1 2
+GURGY GLN279 P_A_M4g P_w_M4g 2 2
+GURGY P_w_M4_209 0 0 2 1
+GURGY GLN209 P_A_M4_209 P_w_M4_209 1 2
+GURGY P_w_M4_257 0 0 2 1
+GURGY GLN257 P_A_M4_257 P_w_M4_257 1 2
+GURGY P_w_319 0 0 2 1
+GURGY P_A_M4h GLN319 P_w_319 1 1
+GURGY P_w_M4h 0 0 2 1
+GURGY GLN232C P_A_M4h P_w_M4h 2 2
+GURGY P_w_M4_210 0 0 2 1
+GURGY GLN210 P_A_M4_210 P_w_M4_210 1 2
+GURGY GLN245A GLN245B GLN249 1 2
+GURGY GLN258 GLN245B GLN249 1 2
+GURGY GLN244 GLN245B GLN249 2 2
+GURGY P_w_M4_285A 0 0 2 1
+GURGY GLN285A P_A_M4_285A P_w_M4_285A 1 2
+GURGY GLN248 0 0 2 2
+GURGY GLN227 P_A_M4e GLN269 1 2
+GURGY GLN267 P_A_M4e GLN269 2 2
+GURGY GLN268A P_A_M4e GLN269 2 2
+GURGY P_w_276 0 0 2 1
+GURGY P_A_M5_276 GLN276 P_w_276 1 1
+GURGY P_w_M5_276 0 0 2 1
+GURGY GLN215A P_A_M5_276 P_w_M5_276 2 2
+GURGY GLN215B P_A_M5_276 P_w_M5_276 2 2
+GURGY P_w_M5_236B 0 0 2 1
+GURGY GLN236B P_A_M5_236B P_w_M5_236B 1 2
+GURGY P_w_M5_214 0 0 2 1
+GURGY GLN214 P_A_M5_214 P_w_M5_214 2 2
+GURGY P_A_M5_223 GLN317 GLN315 1 1
+GURGY P_w_M5_223 0 0 2 1
+GURGY GLN223 P_A_M5_223 P_w_M5_223 2 2
+GURGY P_w_207A 0 0 2 1
+GURGY GLN282 GLN207A P_w_207A 1 2
+GURGY P_A_M6a GLN207A P_w_207A 1 1
+GURGY P_A_M6b GLN207A P_w_207A 1 1
+GURGY GLN285B GLN285A GLN248 1 2
+GURGY P_w_202 0 0 2 1
+GURGY GLN201 GLN202 P_w_202 1 2
+GURGY P_w_M6a 0 0 2 1
+GURGY GLN206 P_A_M6a P_w_M6a 1 2
+GURGY GLN208 P_A_M6a P_w_M6a 2 2
+GURGY P_w_M6b 0 0 2 1
+GURGY GLN204 P_A_M6b P_w_M6b 1 2
+GURGY GLN305 0 0 1 2
+GURGY GLN298 0 0 2 2
+GURGY GLN280 GLN305 GLN298 1 2
+GURGY GLN291 GLN305 GLN298 1 2
+GURGY GLN300 GLN305 GLN298 1 2
+GURGY P_B_M2 GLN305 GLN298 1 1
+GURGY P_w_300 0 0 2 1
+GURGY GLN307 GLN300 P_w_300 2 2
+GURGY GLN277 GLN300 P_w_300 2 2
+GURGY P_w_B_M2 0 0 2 1
+GURGY GLN301 P_B_M2 P_w_B_M2 2 2
+GURGY GLN306 P_B_M2 P_w_B_M2 2 2
+GURGY P_B_M3 P_B_M2 P_w_B_M2 1 1
+GURGY P_w_B_M3 0 0 2 1
+GURGY GLN309 P_B_M3 P_w_B_M3 1 2
+GURGY P_w_291 0 0 2 1
+GURGY P_B_M3b GLN291 P_w_291 1 1
+GURGY P_w_B_M3b 0 0 2 1
+GURGY GLN288 P_B_M3b P_w_B_M3b 2 2
+GURGY P_B_f289B 0 0 1 1
+GURGY GLN289B P_B_f289B GLN288 2 2
+GURGY P_211_f 0 0 1 1
+GURGY P_211_m 0 0 2 1
+GURGY GLN211A P_211_f P_211_m 2 2
+GURGY GLN211B P_211_f P_211_m 1 2
+GURGY P_287_f 0 0 1 1
+GURGY P_287_m 0 0 2 1
+GURGY GLN287 P_287_f P_287_m 1 2
+GURGY GLN310B P_287_f P_287_m 1 2
+GURGY P_w_302 0 0 2 1
+GURGY GLN302 0 0 1 2
+GURGY GLN299 GLN302 P_w_302 1 2
+GURGY GLN207B 0 0 2 2
+GURGY GLN232B 0 0 2 2
+GURGY GLN242 0 0 2 2
+GURGY GLN243B 0 0 2 2
+GURGY GLN246 0 0 2 2
+GURGY GLN284 0 0 2 2
+GURGY GLN294 0 0 2 2
+GURGY GLN313 0 0 2 2
+GURGY GLN326 0 0 2 2
+GURGY GLN229 0 0 1 2
+GURGY GLN308 0 0 1 2
+GURGY GLN311 0 0 1 2`;
+const CEPH1463_PED=`CEPH1463	NA12889	0	0	1	-9
+CEPH1463	NA12890	0	0	2	-9
+CEPH1463	NA12877	NA12889	NA12890	1	-9
+CEPH1463	NA12891	0	0	1	-9
+CEPH1463	NA12892	0	0	2	-9
+CEPH1463	NA12878	NA12891	NA12892	2	-9
+CEPH1463	NA12879	NA12877	NA12878	2	-9
+CEPH1463	NA12880	NA12877	NA12878	2	-9
+CEPH1463	NA12881	NA12877	NA12878	2	-9
+CEPH1463	NA12882	NA12877	NA12878	1	-9
+CEPH1463	NA12883	NA12877	NA12878	1	-9
+CEPH1463	NA12884	NA12877	NA12878	1	-9
+CEPH1463	NA12885	NA12877	NA12878	2	-9
+CEPH1463	NA12886	NA12877	NA12878	1	-9
+CEPH1463	NA12887	NA12877	NA12878	2	-9
+CEPH1463	NA12888	NA12877	NA12878	1	-9
+CEPH1463	NA12893	NA12877	NA12878	1	-9`;
+
+function buildPlinkTemplateFromText(text,fileName,fid,options={}){
+  const parsed=parsePlinkText(text,fileName);
+  const records=parsed.records.filter(r=>r.fid===fid);
+  if(!records.length)throw new Error(`Template PLINK family ${fid} contains no records.`);
+  const warnings=[...(options.warnings||[])],nonBinaryPhenotypes=records.filter(r=>!["0","-9","1","2"].includes(r.phenotype));
+  if(nonBinaryPhenotypes.length)warnings.push(`${nonBinaryPhenotypes.length} quantitative or non-binary phenotype value${nonBinaryPhenotypes.length===1?" was":"s were"} retained in interoperability metadata but mapped to Not assessed in the clinical pedigree.`);
+  model.caseName=options.caseName||fid;
+  model.template=options.template||model.template;
+  model.meta.disease=options.disease||"";
+  model.meta.indication=options.indication||"";
+  model.meta.notes=options.notes||"";
+  model.meta.importWarnings=warnings;
+  model.interoperability.plinkFamilyId=fid;
+  model.interoperability.source=options.source||fileName;
+  const localByIid=new Map();
+  function createFromRecord(r){
+    const geneticSex=geneticSexFromPlinkCode(r.sex),phantomPrefix=options.phantomPrefix||"",isPhantom=phantomPrefix&&r.iid.startsWith(phantomPrefix);
+    const personId=newPerson(geneticSex,{gender:"unknown",geneticSex,symbolShapeSource:"genetic-sex",sexAssignedAtBirth:"",label:r.iid,stableId:r.iid,
+      clinicalStatus:r.phenotype==="2"?"affected":r.phenotype==="1"?"unaffected":"not_assessed",source:isPhantom?"inferred":"record",
+      notes:isPhantom?"Inferred, not-sampled phantom row from the source pedigree file.":"",
+      externalIds:{plinkIid:r.iid,fhirIdentifier:""},interoperability:{plink:{fid:r.fid,iid:r.iid,pat:r.pat,mat:r.mat,sex:r.sex,phenotype:r.phenotype,
+        extraColumns:[...r.extraColumns],genotypeEncoding:r.genotypeEncoding||"none"}}});
+    localByIid.set(r.iid,personId);return personId;
+  }
+  records.forEach(createFromRecord);
+  function ensureParent(iid,role){
+    if(!iid||iid==="0")return null;
+    if(localByIid.has(iid))return localByIid.get(iid);
+    const geneticSex=role==="pat"?"male":"female",id=newPerson(geneticSex,{gender:"unknown",geneticSex,symbolShapeSource:"genetic-sex",sexAssignedAtBirth:"",label:iid,stableId:iid,
+      clinicalStatus:"not_assessed",source:"inferred",notes:"Parent referenced by PLINK but not present as a record.",externalIds:{plinkIid:iid,fhirIdentifier:""},
+      interoperability:{plink:{fid,iid,pat:"0",mat:"0",sex:role==="pat"?"1":"2",phenotype:"-9",extraColumns:[],genotypeEncoding:"none"}}});
+    localByIid.set(iid,id);warnings.push(`Created placeholder parent ${iid}.`);return id;
+  }
+  const unionsByPair=new Map();
+  records.forEach(r=>{
+    if(r.pat==="0"&&r.mat==="0")return;
+    const a=ensureParent(r.pat,"pat"),b=ensureParent(r.mat,"mat"),key=(r.pat||"0")+"\u0000"+(r.mat||"0");
+    let unionId=unionsByPair.get(key);
+    if(!unionId){
+      unionId=newUnion(a,b,{parentRoles:{a:a?"paternal":"unspecified",b:b?"maternal":"unspecified"}});
+      unionsByPair.set(key,unionId);
+    }
+    model.unions[unionId].children.push(localByIid.get(r.iid));
+  });
+  const validation=graphValidation();if(validation.errors.length)throw new Error(validation.errors.join(" "));
+  records.forEach(r=>{
+    const patRecord=records.find(x=>x.iid===r.pat),matRecord=records.find(x=>x.iid===r.mat);
+    if(patRecord?.sex==="2")addUniqueWarning(warnings,`PAT ${r.pat} is recorded with SEX 2 in the source PLINK file.`);
+    if(matRecord?.sex==="1")addUniqueWarning(warnings,`MAT ${r.mat} is recorded with SEX 1 in the source PLINK file.`);
+  });
+  if(parsed.hasGenotypes)addUniqueWarning(warnings,`PED genotype columns were preserved as opaque ${parsed.genotypeEncoding==="compound"?"compound-genotype":"allele-pair"} tokens and were not converted into clinical variants.`);
+  else if(/\.ped$/i.test(String(parsed.fileName||"")))addUniqueWarning(warnings,"The PED file contained only the six pedigree columns and no genotype calls.");
+  model.meta.importWarnings=warnings;
+  model.interoperability.lastImportedFormat=parsed.hasGenotypes?"plink-ped":"plink-fam";
+  model.interoperability.lastImportedAt=new Date().toISOString();
+  migrateModel();
+  ui.sel=P().find(p=>clinicalStatusOf(p)==="affected")?.id||P()[0]?.id||null;
+}
+
+function neolithicGurgyTemplate(){
+  buildPlinkTemplateFromText(NEOLITHIC_GURGY_SAMPLED_FLAG_FAM,"master_rivollat_neolithic_gurgy_pedigree.sampled_flag.fam","GURGY",{
+    caseName:"Neolithic community DNA 4500 BC",
+    template:"neolithic_gurgy",
+    source:"Rivollat et al. Nature 620, 600-606 (2023). https://doi.org/10.1038/s41586-023-06350-8",
+    indication:"Ancient-DNA kinship pedigree reconstructed from the Gurgy 'les Noisats' Neolithic farming community in the Paris Basin, France.",
+    notes:"Source file: master_rivollat_neolithic_gurgy_pedigree.sampled_flag.fam. The phenotype column is a sampled flag, not a disease trait: 2 = sequenced individual, 1 = inferred/not-sampled phantom.",
+    phantomPrefix:"P_",
+    warnings:["Gurgy phenotype values are sampled flags, not biological traits: 2 = sequenced individual, 1 = inferred/not-sampled phantom.","Sequenced Gurgy individuals render as affected because PLINK phenotype 2 maps to affected in the app."]
+  });
+}
+
+function ceph1463Template(){
+  buildPlinkTemplateFromText(CEPH1463_PED,"ceph1463.ped","CEPH1463",{
+    caseName:"CEPH1463 reference family",
+    template:"ceph1463",
+    source:"ceph1463.ped; CEPH-Utah CEU family 1463 reference pedigree.",
+    indication:"Reference pedigree used to study genetic transmission and human variation. The family was not selected for disease.",
+    notes:"Source file: ceph1463.ped. Phenotype values are -9, so individuals are imported as not assessed."
+  });
 }
 function openTemplates(){
   const renderGroup=(title,entries)=>entries.length?`<section class="tmpl-group"><h3 class="tmpl-group-title">${title}</h3><div class="tmpl-grid">${entries.map(([k,t])=>`<button class="tmpl-card" onclick="loadTemplate('${k}')"><div class="tc-name">${t.name}</div><div class="tc-desc">${t.desc}</div></button>`).join("")}</div></section>`:"";
@@ -3179,7 +3427,7 @@ function choosePlinkFamily(parsed){
   pendingPlinkImport={parsed,fids};
   const options=fids.map((fid,i)=>`<option value="${i}">${esc(fid)} (${parsed.records.filter(r=>r.fid===fid).length} people)</option>`).join("");
   openDialog("Choose PLINK family",`<div class="field"><label>Family</label><select id="plinkFamilyChoice">${options}</select></div><div class="help-text">PLINK families are imported separately and are never merged silently.</div>`,
-    `<button class="hbtn" onclick="pendingPlinkImport=null;closeDialog()">Cancel</button><button class="hbtn" onclick="confirmPlinkFamilyImport()">Import</button>`);
+    `<button class="hbtn" onclick="pendingPlinkImport=null;closeDialog()">Cancel</button><button class="hbtn primary" onclick="confirmPlinkFamilyImport()">Import</button>`);
 }
 function confirmPlinkFamilyImport(){
   if(!pendingPlinkImport)return;
