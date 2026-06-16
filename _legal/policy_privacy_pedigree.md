@@ -58,6 +58,8 @@ Exported reports and project files are saved to a location chosen or controlled 
 
 The surrounding Switzerland Omics website may use Google Analytics to measure general visits and page interactions.
 
+Pedigree also uses an anonymous Cloudflare Worker counter to record the number of exported results. This counter increments when an export action is completed and is used only to display the public export count. It does not receive project information, imported file contents, generated report contents or user identifiers.
+
 Pedigree project information, imported file contents and generated report contents are not intended to be included in analytics data.
 
 Users should not place sensitive information in URLs or other website fields that could form part of general web requests.

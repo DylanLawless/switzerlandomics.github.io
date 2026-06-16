@@ -71,6 +71,8 @@ technology_group: structured-genomics
 .case-name:focus{outline:none;border-color:var(--accent);background:var(--bg-subtle)}
 .tmpl-tag{font-size:.6875rem;color:var(--text-muted);background:var(--neutral-soft);padding:2px 8px;
   border-radius:999px;border:1px solid var(--border-subtle)}
+.pedigree-release-tag{font-size:.6875rem;color:var(--text-muted);background:var(--neutral-soft);padding:2px 8px;
+  border-radius:999px;border:1px solid var(--border-subtle);font-weight:600;white-space:nowrap}
 .pedigree-appbar .spacer{flex:1}
 .save-state{font-size:.6875rem;color:var(--text-muted);display:flex;align-items:center;gap:5px}
 .save-dot{width:7px;height:7px;border-radius:50%;background:var(--success)}
@@ -258,6 +260,13 @@ technology_group: structured-genomics
 .help-text{font-size:.6875rem;color:var(--text-muted);margin-top:4px;line-height:1.4}
 .status-conflict{margin-top:8px;padding:8px 10px;border-left:3px solid var(--accent);background:var(--accent-soft);color:var(--accent-hover);font-size:.6875rem;line-height:1.4}
 .status-review{margin-top:8px;padding:8px 10px;border-left:3px solid var(--warning);background:var(--warning-soft);color:var(--warning);font-size:.6875rem;line-height:1.4}
+.pedigree-variant-tabs{display:flex;align-items:flex-start;gap:8px;margin:0 0 12px;flex-wrap:wrap}
+.pedigree-variant-tabs-row{display:flex;align-items:center;gap:4px;flex:1 1 auto;min-width:0;flex-wrap:wrap}
+.pedigree-variant-tab,.pedigree-variant-add{border:1px solid var(--border-default);background:var(--bg-panel);color:var(--text-secondary);border-radius:var(--r);padding:5px 8px;font-size:.6875rem;font-weight:600;line-height:1.2}
+.pedigree-variant-tab:hover,.pedigree-variant-add:hover{border-color:var(--border-strong);color:var(--text-primary)}
+.pedigree-variant-tab.active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.pedigree-variant-add{white-space:nowrap}
+.pedigree-variant-add:disabled{opacity:.45;cursor:default}
 .insp-empty{padding:30px 20px;text-align:center;color:var(--text-muted);font-size:.8125rem}
 .bbtn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px;border:1px solid var(--accent);
   border-radius:var(--r);background:var(--accent);color:#fff;font-size:.8125rem;font-weight:600;width:100%}
@@ -605,6 +614,7 @@ technology_group: structured-genomics
         <circle cx="12" cy="19.5" r="2.5" fill="#2f2f41" stroke="#2f2f41"/>
       </svg><span>Pedigree</span>
     </div>
+    <span class="pedigree-release-tag">v1.0.0</span>
     <a class="pedigree-guide-link" href="/technologies/pedigree/standards/" target="_blank" rel="noopener" title="Open the illustrated pedigree standards guide in a new tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Pedigree standards</span><span class="guide-long">and symbols</span>
@@ -705,8 +715,10 @@ technology_group: structured-genomics
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
 const PEDIGREE_SCHEMA_VERSION=7;
+const PEDIGREE_APP_VERSION="v1.0.0";
 const NATIVE_FORMAT="pedigree-native/v7";
 const FHIR_R4_VERSION="4.0.1";
+const MAX_PERSON_VARIANTS=5;
 const INTEROP_BASE="https://switzerlandomics.ch/fhir";
 const INTEROP_EXT=INTEROP_BASE+"/StructureDefinition/";
 const INTEROP_CODES=INTEROP_BASE+"/CodeSystem/pedigree";
@@ -724,6 +736,101 @@ const partnerIn=(u,id)=>u.a===id?u.b:u.a;
 const parentUnionOf=id=>U().find(u=>u.children.includes(id));
 const parentsOf=id=>{const u=parentUnionOf(id);return u?[u.a,u.b].filter(Boolean):[];};
 const childrenOf=id=>{const o=[];unionsOf(id).forEach(u=>u.children.forEach(c=>o.push(c)));return o;};
+
+const GENETIC_VARIANT_FIELDS=["gene","variantType","chromosome","genomicStart","genomicEnd","ref","alt","genomicHgvs","codingHgvs","rnaHgvs","proteinHgvs","assembly","transcript","zygosity","inheritance","phase","classification","geneticsFreeText"];
+const GENETIC_VARIANT_DEFAULTS=Object.freeze({gene:"",variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",genomicHgvs:"",codingHgvs:"",rnaHgvs:"",proteinHgvs:"",assembly:"GRCh38",transcript:"",zygosity:"",inheritance:"",phase:"",classification:"",geneticsFreeText:""});
+function nextGeneticVariantId(person,index){
+  const base=String(person?.stableId||person?.id||"person").replace(/[^A-Za-z0-9_.-]/g,"-").replace(/^-+|-+$/g,"")||"person";
+  const n=Number.isFinite(Number(index))?Number(index):0;
+  return `${base}-variant-${n+1}`;
+}
+function emptyGeneticVariant(extra={}){ return Object.assign({id:""},GENETIC_VARIANT_DEFAULTS,extra); }
+function normaliseGeneticVariant(value,index=0,personId="person"){
+  const raw=value&&typeof value==="object"?value:{};
+  const out=emptyGeneticVariant({id:raw.id||raw.stableId||`${String(personId||"person")}-variant-${index+1}`});
+  GENETIC_VARIANT_FIELDS.forEach(key=>{if(raw[key]!=null)out[key]=String(raw[key]);});
+  if(!out.assembly)out.assembly="GRCh38";
+  return out;
+}
+function legacyGeneticVariantFromPerson(person){
+  const out={}; GENETIC_VARIANT_FIELDS.forEach(key=>{out[key]=person?.[key]??GENETIC_VARIANT_DEFAULTS[key]??"";}); return out;
+}
+function variantHasData(variant){
+  if(!variant)return false;
+  return GENETIC_VARIANT_FIELDS.some(key=>key!=="assembly"&&String(variant[key]||"").trim()!=="");
+}
+function personGeneticVariants(person){
+  if(!person)return [];
+  const source=Array.isArray(person.variants)?person.variants:Array.isArray(person.genomicFindings)?person.genomicFindings:Array.isArray(person.geneticFindings)?person.geneticFindings:[];
+  const variants=source.map((variant,index)=>normaliseGeneticVariant(variant,index,person.id)).filter(variantHasData);
+  if(variants.length)return variants;
+  const legacy=normaliseGeneticVariant(legacyGeneticVariantFromPerson(person),0,person.id);
+  return variantHasData(legacy)?[legacy]:[];
+}
+function primaryGeneticVariant(person){ return personGeneticVariants(person)[0]||null; }
+function syncPersonPrimaryVariant(person){
+  if(!person)return;
+  const source=Array.isArray(person.variants)?person.variants.map((variant,index)=>normaliseGeneticVariant(variant,index,person.id)):[];
+  const primary=source.find(variantHasData)||source[0]||null;
+  GENETIC_VARIANT_FIELDS.forEach(key=>{person[key]=primary&&primary[key]!=null?primary[key]:GENETIC_VARIANT_DEFAULTS[key];});
+}
+function migratePersonVariants(person,existing){
+  const source=Array.isArray(existing.variants)?existing.variants:Array.isArray(existing.genomicFindings)?existing.genomicFindings:Array.isArray(existing.geneticFindings)?existing.geneticFindings:[];
+  const variants=source.map((variant,index)=>normaliseGeneticVariant(variant,index,existing.id||person.id)).filter(variantHasData);
+  const legacy=normaliseGeneticVariant(legacyGeneticVariantFromPerson(existing),0,existing.id||person.id);
+  if(!variants.length&&variantHasData(legacy))variants.push(legacy);
+  if(variants.length)person.variants=variants;
+  else if(Array.isArray(existing.variants)||Array.isArray(existing.genomicFindings)||Array.isArray(existing.geneticFindings))person.variants=[];
+  syncPersonPrimaryVariant(person);
+}
+function compactVariantCoordinate(variant){
+  if(!variant||(!variant.chromosome&&!variant.genomicStart))return "";
+  let pos=variant.chromosome||"";
+  if(variant.genomicStart)pos+=(pos?":":"")+variant.genomicStart+(variant.genomicEnd&&variant.genomicEnd!==variant.genomicStart?"-"+variant.genomicEnd:"");
+  const alleles=[variant.ref,variant.alt].filter(Boolean);
+  if(alleles.length)pos+=" "+alleles.join(">");
+  return pos;
+}
+function bestGeneticVariantLabel(variant){
+  if(!variant)return "";
+  if(variant.gene&&variant.codingHgvs)return variant.gene+" "+variant.codingHgvs;
+  if(variant.gene&&variant.genomicHgvs)return variant.gene+" "+variant.genomicHgvs;
+  if(variant.gene&&variant.proteinHgvs)return variant.gene+" "+variant.proteinHgvs;
+  if(variant.genomicHgvs)return variant.genomicHgvs;
+  if(compactVariantCoordinate(variant))return compactVariantCoordinate(variant);
+  if(variant.gene)return variant.gene;
+  if(variant.variantType)return variant.variantType;
+  return variant.geneticsFreeText||"";
+}
+function variantDisplayName(variant,index,total){
+  const baseLabel=bestGeneticVariantLabel(variant);
+  const label=variant.gene&&baseLabel&&!baseLabel.includes(variant.gene)?variant.gene+" "+baseLabel:baseLabel;
+  const prefix=total>1?`Variant ${index+1}: `:"";
+  const details=[variant.zygosity,variant.inheritance,variant.phase?`phase ${variant.phase}`:""].filter(Boolean).join(", ");
+  return [label?prefix+label:"",details].filter(Boolean).join(" · ");
+}
+function geneticSummaryText(person){
+  const variants=personGeneticVariants(person);
+  return variants.map((variant,index)=>variantDisplayName(variant,index,variants.length)).filter(Boolean).join("; ");
+}
+function inheritanceOrigin(value){
+  const origin=String(value||"").trim().toLowerCase();
+  if(origin==="maternal")return "maternal";
+  if(origin==="paternal")return "paternal";
+  return "";
+}
+function hasReciprocalCompoundHetOrigin(variant,variants){
+  const origin=inheritanceOrigin(variant.inheritance);
+  if(!origin)return false;
+  const reciprocal=origin==="maternal"?"paternal":"maternal";
+  return variants.some(other=>other!==variant&&other.zygosity==="Compound heterozygous"&&inheritanceOrigin(other.inheritance)===reciprocal);
+}
+function hasCompoundHetPhaseEvidence(variant,variants){
+  const phase=String(variant.phase||"").trim().toLowerCase();
+  if(phase==="cis"||phase==="trans")return true;
+  if(hasReciprocalCompoundHetOrigin(variant,variants))return true;
+  return !!(variant.geneticsFreeText||variant.codingHgvs||variant.genomicHgvs||variant.proteinHgvs);
+}
 
 const PLINK_PARENT_ROLES=new Set(["paternal","maternal","unspecified"]);
 const GENETIC_SEX_VALUES=new Set(["male","female","unknown"]);
@@ -952,7 +1059,7 @@ function derivedMolecularLayer(p){
   const override=p.symbolDisplayOverride||p.symbolStyle||"auto";
   if(override==="carrier-half")return "carrier-half";
   if(override==="compound")return "compound";
-  if(p.zygosity==="Compound heterozygous")return "compound";
+  if(personGeneticVariants(p).some(variant=>variant.zygosity==="Compound heterozygous"))return "compound";
   if(p.carrier)return "carrier-half";
   return "none";
 }
@@ -977,17 +1084,22 @@ function statusIssues(p){
   const errors=[], reviews=[];
   const override=p.symbolDisplayOverride||p.symbolStyle||"auto";
   const status=clinicalStatusOf(p);
+  const variants=personGeneticVariants(p);
+  const hasCompoundHet=variants.some(variant=>variant.zygosity==="Compound heterozygous");
   if(p.proband&&(status==="unaffected"||status==="not_assessed"))errors.push("Proband role conflicts with the explicit clinical status.");
   if(p.proband&&status==="unknown")reviews.push("Proband has an explicit unknown clinical status and should be reviewed.");
   if(override==="affected"&&status==="unaffected")errors.push("Affected fill conflicts with the explicit unaffected clinical status.");
   if(override==="unaffected"&&status==="affected")errors.push("Unaffected fill conflicts with the explicit affected clinical status.");
-  if(override==="compound"&&p.zygosity&&p.zygosity!=="Compound heterozygous")errors.push("Compound-heterozygous marker conflicts with the recorded zygosity.");
+  if(override==="compound"&&variants.some(variant=>variant.zygosity)&&!hasCompoundHet)errors.push("Compound-heterozygous marker conflicts with the recorded zygosity.");
   if(override==="carrier-half"&&!p.carrier&&!hasGenetics(p))errors.push("Carrier pattern has no recorded carrier or molecular basis.");
   if(status==="affected"&&!p.phenotype&&!p.diagnosis)reviews.push("Affected status has no recorded phenotype or diagnosis.");
-  if(p.zygosity==="Compound heterozygous"&&!p.gene)reviews.push("Compound heterozygosity is recorded without a gene.");
-  if(p.zygosity==="Compound heterozygous"&&!p.classification)reviews.push("Compound heterozygosity is recorded without a classification.");
-  if(p.zygosity==="Compound heterozygous"&&!p.geneticsFreeText&&!p.codingHgvs&&!p.genomicHgvs&&!p.proteinHgvs)reviews.push("Compound heterozygosity has no constituent-variant or phase information recorded.");
-  if((p.classification==="Pathogenic"||p.classification==="Likely pathogenic")&&!p.zygosity)reviews.push("A pathogenic classification is recorded without zygosity.");
+  variants.forEach((variant,index)=>{
+    const prefix=variants.length>1?`Variant ${index+1}: `:"";
+    if(variant.zygosity==="Compound heterozygous"&&!variant.gene)reviews.push(prefix+"Compound heterozygosity is recorded without a gene.");
+    if(variant.zygosity==="Compound heterozygous"&&!variant.classification)reviews.push(prefix+"Compound heterozygosity is recorded without a classification.");
+    if(variant.zygosity==="Compound heterozygous"&&!hasCompoundHetPhaseEvidence(variant,variants))reviews.push(prefix+"Compound heterozygosity has no constituent-variant or phase information recorded.");
+    if((variant.classification==="Pathogenic"||variant.classification==="Likely pathogenic")&&!variant.zygosity)reviews.push(prefix+"A pathogenic classification is recorded without zygosity.");
+  });
   return {errors,reviews};
 }
 function symbolDisplayConflict(p){ return statusIssues(p).errors.length>0; }
@@ -1015,26 +1127,9 @@ function symbolPath(p,cx,cy){
   out+=symbolOutline(p,cx,cy,`fill="none" stroke="var(--sym)" stroke-width="1.8"`);
   return out;
 }
-function hasGenetics(p){ return !!(p.gene||p.variantType||p.chromosome||p.genomicStart||p.ref||p.alt||
-  p.genomicHgvs||p.codingHgvs||p.rnaHgvs||p.proteinHgvs||p.transcript||p.zygosity||p.inheritance||p.classification||p.geneticsFreeText); }
-function compactCoordinate(p){
-  if(!p.chromosome&&!p.genomicStart)return "";
-  let pos=p.chromosome||"";
-  if(p.genomicStart)pos+=(pos?":":"")+p.genomicStart+(p.genomicEnd&&p.genomicEnd!==p.genomicStart?"-"+p.genomicEnd:"");
-  const alleles=[p.ref,p.alt].filter(Boolean);
-  if(alleles.length)pos+=" "+alleles.join(">");
-  return pos;
-}
-function bestGeneticLabel(p){
-  if(p.gene&&p.codingHgvs)return p.gene+" "+p.codingHgvs;
-  if(p.gene&&p.genomicHgvs)return p.gene+" "+p.genomicHgvs;
-  if(p.gene&&p.proteinHgvs)return p.gene+" "+p.proteinHgvs;
-  if(p.genomicHgvs)return p.genomicHgvs;
-  if(compactCoordinate(p))return compactCoordinate(p);
-  if(p.gene)return p.gene;
-  if(p.variantType)return p.variantType;
-  return p.geneticsFreeText||"";
-}
+function hasGenetics(p){ return personGeneticVariants(p).length>0; }
+function compactCoordinate(p){ return compactVariantCoordinate(primaryGeneticVariant(p)||legacyGeneticVariantFromPerson(p)); }
+function bestGeneticLabel(p){ return bestGeneticVariantLabel(primaryGeneticVariant(p)); }
 function labelLines(p){
   const lp=ui.labelPreset, out=[];
   const ad=()=>{ if(p.deceased&&p.ageAtDeath)return "d. "+p.ageAtDeath; if(p.birthYear)return "b. "+p.birthYear; return null; };
@@ -1046,8 +1141,8 @@ function labelLines(p){
     if(p.sexAssignedAtBirth)out.push(p.sexAssignedAtBirth);
     if(p.proband)out.push("Proband"); else if(p.consultand)out.push("Consultand");
     const a=ad(); if(a)out.push(a);
-    if(p.phenotype)out.push(p.phenotype.slice(0,34));
-    else if(p.diagnosis)out.push(p.diagnosis.slice(0,34));
+    if(p.phenotype)out.push(p.phenotype);
+    else if(p.diagnosis)out.push(p.diagnosis);
     return out;
   }
   if(lp==="clinical-genetic"){
@@ -1055,11 +1150,13 @@ function labelLines(p){
     if(p.sexAssignedAtBirth)out.push(p.sexAssignedAtBirth);
     if(p.proband)out.push("Proband"); else if(p.consultand)out.push("Consultand");
     const a=ad(); if(a)out.push(a);
-    if(p.phenotype)out.push(p.phenotype.slice(0,30));
-    else if(p.diagnosis)out.push(p.diagnosis.slice(0,30));
-    const g=bestGeneticLabel(p); if(g)out.push(g.slice(0,44));
-    if(p.proteinHgvs&&g!==p.proteinHgvs&&!g.includes(p.proteinHgvs))out.push(p.proteinHgvs);
-    if(p.zygosity)out.push(p.zygosity);
+    if(p.phenotype)out.push(p.phenotype);
+    else if(p.diagnosis)out.push(p.diagnosis);
+    const variants=personGeneticVariants(p);
+    variants.forEach((variant,index)=>{
+      const g=variantDisplayName(variant,index,variants.length);
+      if(g)out.push(g);
+    });
     return out;
   }
   if(p.name)out.push(p.name);
@@ -1069,16 +1166,23 @@ function labelLines(p){
   const a=ad(); if(a)out.push(a);
   if(p.phenotype)out.push(p.phenotype);
   if(p.diagnosis)out.push(p.diagnosis);
-  if(p.variantType)out.push(p.variantType);
-  if(compactCoordinate(p))out.push(compactCoordinate(p));
-  if(p.genomicHgvs)out.push(p.genomicHgvs);
-  if(p.transcript&&p.codingHgvs)out.push(p.transcript+":"+p.codingHgvs);
-  else if(p.gene&&p.codingHgvs)out.push(p.gene+" "+p.codingHgvs);
-  if(p.rnaHgvs)out.push(p.rnaHgvs);
-  if(p.proteinHgvs)out.push(p.proteinHgvs);
-  const zg=[]; if(p.zygosity)zg.push(p.zygosity); if(p.inheritance)zg.push(p.inheritance); if(zg.length)out.push(zg.join(", "));
-  if(p.classification)out.push(p.classification);
-  if(p.geneticsFreeText)out.push(p.geneticsFreeText);
+  const variants=personGeneticVariants(p);
+  variants.forEach((variant,index)=>{
+    const prefix=variants.length>1?`Variant ${index+1}: `:"";
+    const label=bestGeneticVariantLabel(variant);
+    if(label)out.push((prefix+label));
+    if(variant.gene&&(!label||!label.includes(variant.gene)))out.push(prefix+variant.gene);
+    if(variant.variantType)out.push(prefix+variant.variantType);
+    const coord=compactVariantCoordinate(variant); if(coord)out.push(prefix+coord);
+    if(variant.genomicHgvs)out.push(prefix+variant.genomicHgvs);
+    if(variant.transcript&&variant.codingHgvs)out.push(prefix+variant.transcript+":"+variant.codingHgvs);
+    else if(variant.gene&&variant.codingHgvs)out.push(prefix+variant.gene+" "+variant.codingHgvs);
+    if(variant.rnaHgvs)out.push(prefix+variant.rnaHgvs);
+    if(variant.proteinHgvs)out.push(prefix+variant.proteinHgvs);
+    const zg=[]; if(variant.zygosity)zg.push(variant.zygosity); if(variant.inheritance)zg.push(variant.inheritance); if(variant.phase)zg.push("phase "+variant.phase); if(zg.length)out.push(prefix+zg.join(", "));
+    if(variant.classification)out.push(prefix+variant.classification);
+    if(variant.geneticsFreeText)out.push(prefix+variant.geneticsFreeText);
+  });
   return out;
 }
 
@@ -1495,6 +1599,78 @@ function selF(label,key,p,opts){ const v=p[key]??"";
   return `<div class="field"><label>${label}</label><select onchange="${p===model.meta?'setMeta':'setField'}('${key}',this.value)">
     ${opts.map(o=>{const val=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;return `<option value="${esc(val)}" ${v===val?'selected':''}>${esc(t)}</option>`;}).join("")}</select></div>`; }
 function tog(label,key,p){ return `<button class="tog" aria-pressed="${!!p[key]}" onclick="toggleField('${key}')"><span class="dot"></span>${label}</button>`; }
+function activeGeneticVariantIndex(person){
+  if(!ui.variantIndexByPerson)ui.variantIndexByPerson={};
+  const count=Math.max(1,Array.isArray(person.variants)?person.variants.length:personGeneticVariants(person).length);
+  const stored=Number(ui.variantIndexByPerson[person.id]||0);
+  return Math.max(0,Math.min(count-1,Number.isFinite(stored)?stored:0));
+}
+function geneticVariantForEditing(person,index){
+  const variants=Array.isArray(person.variants)?person.variants:[];
+  return variants[index]?normaliseGeneticVariant(variants[index],index,person.id):emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
+}
+function ensureEditableVariant(person,index){
+  if(!Array.isArray(person.variants))person.variants=[];
+  while(person.variants.length<=index)person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,person.variants.length)}));
+  person.variants[index]=normaliseGeneticVariant(person.variants[index],index,person.id);
+  return person.variants[index];
+}
+function selectGeneticVariant(index){
+  const person=model.people[ui.sel]; if(!person)return;
+  if(!ui.variantIndexByPerson)ui.variantIndexByPerson={};
+  ui.variantIndexByPerson[person.id]=Math.max(0,Number(index)||0);
+  renderInspector();
+}
+function setVariantField(index,key,value){
+  const person=model.people[ui.sel]; if(!person||!GENETIC_VARIANT_FIELDS.includes(key))return;
+  if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
+  ui._editTimer=setTimeout(()=>{ui._editing=false;},700);
+  const variant=ensureEditableVariant(person,index);
+  variant[key]=value;
+  if(key==="assembly"&&!variant.assembly)variant.assembly="GRCh38";
+  syncPersonPrimaryVariant(person);
+  liveRefresh();
+}
+function addGeneticVariant(){
+  const person=model.people[ui.sel]; if(!person)return;
+  const currentCount=Array.isArray(person.variants)?person.variants.length:personGeneticVariants(person).length;
+  if(currentCount>=MAX_PERSON_VARIANTS){alert(`Pedigree supports up to ${MAX_PERSON_VARIANTS} variant inputs per individual in this version.`);return;}
+  commit(()=>{
+    if(!Array.isArray(person.variants)){
+      const existing=personGeneticVariants(person);
+      person.variants=existing.length?existing:[emptyGeneticVariant({id:nextGeneticVariantId(person,0)})];
+    }else if(!person.variants.length){
+      person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,0)}));
+    }
+    person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,person.variants.length)}));
+    if(!ui.variantIndexByPerson)ui.variantIndexByPerson={};
+    ui.variantIndexByPerson[person.id]=person.variants.length-1;
+    syncPersonPrimaryVariant(person);
+    openSec.add("genetics");
+  });
+}
+function variantFld(label,index,key,type="text",mono=false){
+  const person=model.people[ui.sel],variant=person?geneticVariantForEditing(person,index):emptyGeneticVariant();
+  const value=variant[key]??GENETIC_VARIANT_DEFAULTS[key]??"";
+  return `<div class="field ${mono?'mono':''}"><label>${label}</label><input type="${type}" value="${esc(value)}" oninput="setVariantField(${index},'${key}',this.value)"/></div>`;
+}
+function variantSelF(label,index,key,opts){
+  const person=model.people[ui.sel],variant=person?geneticVariantForEditing(person,index):emptyGeneticVariant();
+  const value=variant[key]??GENETIC_VARIANT_DEFAULTS[key]??"";
+  return `<div class="field"><label>${label}</label><select onchange="setVariantField(${index},'${key}',this.value)">
+    ${opts.map(o=>{const val=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;return `<option value="${esc(val)}" ${value===val?'selected':''}>${esc(t)}</option>`;}).join("")}</select></div>`;
+}
+function geneticVariantTabs(person,activeIndex){
+  const raw=Array.isArray(person.variants)&&person.variants.length?person.variants:personGeneticVariants(person);
+  const count=Math.max(1,raw.length);
+  const buttons=Array.from({length:count},(_,index)=>{
+    const variant=raw[index]?normaliseGeneticVariant(raw[index],index,person.id):emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
+    const title=bestGeneticVariantLabel(variant)||`Variant ${index+1}`;
+    return `<button type="button" class="pedigree-variant-tab ${index===activeIndex?'active':''}" onclick="selectGeneticVariant(${index})" title="${esc(title)}">Variant ${index+1}</button>`;
+  }).join("");
+  const disabled=count>=MAX_PERSON_VARIANTS?" disabled":"";
+  return `<div class="pedigree-variant-tabs" aria-label="Genetic variant navigation"><div class="pedigree-variant-tabs-row">${buttons}</div><button type="button" class="pedigree-variant-add" onclick="addGeneticVariant()"${disabled}>Add variant</button></div>`;
+}
 function plinkParentRoleFields(person){
   const unions=unionsOf(person.id).filter(u=>Array.isArray(u.children)&&u.children.length);
   if(!unions.length)return "";
@@ -1532,12 +1708,16 @@ function inspectorIssueStates(p){
 
   if(status==="affected"&&!p.phenotype&&!p.diagnosis)states.clinical="warning";
 
-  if((override==="compound"&&p.zygosity&&p.zygosity!=="Compound heterozygous")||
+  const variants=personGeneticVariants(p);
+  const hasCompoundHet=variants.some(variant=>variant.zygosity==="Compound heterozygous");
+  if((override==="compound"&&variants.some(variant=>variant.zygosity)&&!hasCompoundHet)||
      (override==="carrier-half"&&!p.carrier&&!hasGenetics(p))){
     states.genetics="error";
-  }else if((p.zygosity==="Compound heterozygous"&&(!p.gene||!p.classification||(!p.geneticsFreeText&&!p.codingHgvs&&!p.genomicHgvs&&!p.proteinHgvs)))||
-           ((p.classification==="Pathogenic"||p.classification==="Likely pathogenic")&&!p.zygosity)){
-    states.genetics="warning";
+  }else{
+    if(variants.some(variant=>(variant.zygosity==="Compound heterozygous"&&(!variant.gene||!variant.classification||!hasCompoundHetPhaseEvidence(variant,variants)))||
+           ((variant.classification==="Pathogenic"||variant.classification==="Likely pathogenic")&&!variant.zygosity))){
+      states.genetics="warning";
+    }
   }
 
   return states;
@@ -1575,26 +1755,29 @@ function renderInspector(){
     const clinical=`${fld("Key phenotype","phenotype",p)}${fld("Age at onset","onset",p)}${fld("Diagnosis","diagnosis",p)}
       <!-- <div class="help-text">Phenotype and diagnosis fields may contain controlled terminology or concise clinical text.</div> -->
     `;
-    const genetics=`${selF("Zygosity","zygosity",p,["","Heterozygous","Homozygous","Hemizygous","Compound heterozygous","Heteroplasmic","Homoplasmic","Mosaic","Low-level mosaic","Unknown","Not tested"])}
-      ${selF("Inheritance","inheritance",p,["","Maternal","Paternal","De novo","Suspected de novo","Inherited","Biparental","Germline mosaic","Somatic","Unknown origin"])}
-      ${selF("Classification","classification",p,["","Pathogenic","Likely pathogenic","Variant of uncertain significance","Likely benign","Benign","Risk allele","Drug response","Association","Not classified"])}
-      <div class="field-row">${selF("Genome reference","assembly",p,["GRCh38","GRCh37","T2T-CHM13"])}
-        ${selF("Variant type","variantType",p,["","SNV","MNV","Insertion","Deletion","Indel","Delins","Duplication","Inversion","CNV gain","CNV loss","Structural variant","Translocation","Repeat expansion","Mitochondrial variant","Fusion","Complex rearrangement","Other"])}</div>
-      ${fld("Chromosome / contig","chromosome",p,"text",true)}
-      ${fld("Genomic start","genomicStart",p,"text",true)}
-      ${fld("Genomic end","genomicEnd",p,"text",true)}
-      <div class="field-row">${fld("REF","ref",p,"text",true)}${fld("ALT","alt",p,"text",true)}</div>
-      ${fld("Gene","gene",p)}
-      ${fld("Transcript","transcript",p,"text",true)}
-      ${fld("Genomic HGVS (g.)","genomicHgvs",p,"text",true)}${fld("Coding HGVS (c. / n.)","codingHgvs",p,"text",true)}
-      ${fld("RNA HGVS (r.)","rnaHgvs",p,"text",true)}${fld("Protein HGVS (p.)","proteinHgvs",p,"text",true)}
-      ${fld("Additional genetics information","geneticsFreeText",p)}`;
+    const activeVariantIndex=activeGeneticVariantIndex(p);
+    const genetics=`${geneticVariantTabs(p,activeVariantIndex)}
+      ${variantSelF("Zygosity",activeVariantIndex,"zygosity",["","Heterozygous","Homozygous","Hemizygous","Compound heterozygous","Heteroplasmic","Homoplasmic","Mosaic","Low-level mosaic","Unknown","Not tested"])}
+      ${variantSelF("Inheritance",activeVariantIndex,"inheritance",["","Maternal","Paternal","De novo","Suspected de novo","Inherited","Biparental","Germline mosaic","Somatic","Unknown origin"])}
+      ${variantSelF("Phase",activeVariantIndex,"phase",["","Unknown","Cis","Trans","Not assessed"])}
+      ${variantSelF("Classification",activeVariantIndex,"classification",["","Pathogenic","Likely pathogenic","Variant of uncertain significance","Likely benign","Benign","Risk allele","Drug response","Association","Not classified"])}
+      <div class="field-row">${variantSelF("Genome reference",activeVariantIndex,"assembly",["GRCh38","GRCh37","T2T-CHM13"])}
+        ${variantSelF("Variant type",activeVariantIndex,"variantType",["","SNV","MNV","Insertion","Deletion","Indel","Delins","Duplication","Inversion","CNV gain","CNV loss","Structural variant","Translocation","Repeat expansion","Mitochondrial variant","Fusion","Complex rearrangement","Other"])}</div>
+      ${variantFld("Chromosome / contig",activeVariantIndex,"chromosome","text",true)}
+      ${variantFld("Genomic start",activeVariantIndex,"genomicStart","text",true)}
+      ${variantFld("Genomic end",activeVariantIndex,"genomicEnd","text",true)}
+      <div class="field-row">${variantFld("REF",activeVariantIndex,"ref","text",true)}${variantFld("ALT",activeVariantIndex,"alt","text",true)}</div>
+      ${variantFld("Gene",activeVariantIndex,"gene")}
+      ${variantFld("Transcript",activeVariantIndex,"transcript","text",true)}
+      ${variantFld("Genomic HGVS (g.)",activeVariantIndex,"genomicHgvs","text",true)}${variantFld("Coding HGVS (c. / n.)",activeVariantIndex,"codingHgvs","text",true)}
+      ${variantFld("RNA HGVS (r.)",activeVariantIndex,"rnaHgvs","text",true)}${variantFld("Protein HGVS (p.)",activeVariantIndex,"proteinHgvs","text",true)}
+      ${variantFld("Additional genetics information",activeVariantIndex,"geneticsFreeText")}`;
     const sample=`${fld("Sample ID","sampleId",p)}${selF("Test status","testStatus",p,[["","Not set"],["tested","Tested"],["pending","Test pending"],["untested","Not tested"],["unavailable","Result unavailable"]])}`;
     const prov=`${selF("Information source","source",p,[["clinician","Clinician-entered"],["patient","Patient-reported"],["record","Medical record"],["inferred","Inferred"]])}${fld("Notes","notes",p)}`;
     personSections=`<div class="insp-head"><div class="who"><span class="mini-sym">${miniSym(p)}</span><div style="min-width:0"><div class="pid-big">${esc(pedId(p))}</div><div class="title">${esc(p.name||roleLabel(p))}</div></div></div></div>
       ${isec("identity","Identity and status",statusSummary(p),identity,issueStates.identity)}
       ${isec("clinical","Clinical",p.phenotype||p.diagnosis||"",clinical,issueStates.clinical)}
-      ${isec("genetics","Genetics",bestGeneticLabel(p),genetics,issueStates.genetics)}
+      ${isec("genetics","Genetics",geneticSummaryText(p),genetics,issueStates.genetics)}
       ${isec("sample","Sample and test",p.sampleId||({tested:"Tested",pending:"Pending",untested:"Not tested"}[p.testStatus]||""),sample)}
       ${isec("prov","Provenance and notes","",prov)}`;
   }else{
@@ -1666,7 +1849,7 @@ function renderReport(){
   };
 
   const caseRows=[
-    ["Case",model.caseName],["Disease / condition",m.disease],["Referral indication",m.indication],
+    ["Case",model.caseName],["Pedigree version",PEDIGREE_APP_VERSION],["Disease / condition",m.disease],["Referral indication",m.indication],
     ["Reviewer",m.reviewer],["Institution",m.institution],["Review date",m.date],
     ["Last exported",m.lastExportedAt?new Date(m.lastExportedAt).toLocaleString():""],
     ["Export format",m.lastExportFormat?String(m.lastExportFormat).toUpperCase():""]
@@ -1686,30 +1869,34 @@ function renderReport(){
   const clinicalRows=order.filter(p=>p.phenotype||p.onset||p.diagnosis).map(p=>[pedId(p),p.phenotype,p.onset,p.diagnosis]);
   if(clinicalRows.length)html+=block("Clinical information",table(["ID","Key phenotype","Age at onset","Diagnosis"],clinicalRows));
 
-  const findings=order.filter(hasGenetics);
+  const findings=order.flatMap(p=>personGeneticVariants(p).map((variant,index)=>({person:p,variant,index,total:personGeneticVariants(p).length})));
   if(findings.length){
-    const records=findings.map(p=>{
-      const position=p.genomicStart+(p.genomicEnd&&p.genomicEnd!==p.genomicStart?"-"+p.genomicEnd:"");
-      const title=[pedId(p),p.gene,p.codingHgvs].filter(Boolean).join(" · ");
-      const meta=[p.variantType,p.classification].filter(Boolean).join(" · ");
+    const records=findings.map(record=>{
+      const p=record.person,variant=record.variant;
+      const position=variant.genomicStart+(variant.genomicEnd&&variant.genomicEnd!==variant.genomicStart?"-"+variant.genomicEnd:"");
+      const variantLabel=record.total>1?`Variant ${record.index+1}`:"";
+      const title=[pedId(p),variantLabel,variant.gene,variant.codingHgvs].filter(Boolean).join(" · ");
+      const meta=[variant.variantType,variant.classification].filter(Boolean).join(" · ");
       const fields=[
         item("Individual",pedId(p)),
-        item("Variant type",p.variantType),
-        item("Genome reference",p.assembly),
-        item("Chromosome / contig",p.chromosome,{mono:true}),
+        item("Variant",variantLabel),
+        item("Variant type",variant.variantType),
+        item("Genome reference",variant.assembly),
+        item("Chromosome / contig",variant.chromosome,{mono:true}),
         item("Genomic position",position,{mono:true}),
-        item("Reference allele",p.ref,{mono:true}),
-        item("Alternate allele",p.alt,{mono:true}),
-        item("Gene",p.gene),
-        item("Transcript",p.transcript,{mono:true}),
-        item("Genomic HGVS",p.genomicHgvs,{mono:true,wide:true}),
-        item("Coding HGVS",p.codingHgvs,{mono:true,wide:true}),
-        item("RNA HGVS",p.rnaHgvs,{mono:true,wide:true}),
-        item("Protein HGVS",p.proteinHgvs,{mono:true,wide:true}),
-        item("Zygosity",p.zygosity),
-        item("Inheritance",p.inheritance),
-        item("Classification",p.classification),
-        item("Additional information",p.geneticsFreeText,{wide:true})
+        item("Reference allele",variant.ref,{mono:true}),
+        item("Alternate allele",variant.alt,{mono:true}),
+        item("Gene",variant.gene),
+        item("Transcript",variant.transcript,{mono:true}),
+        item("Genomic HGVS",variant.genomicHgvs,{mono:true,wide:true}),
+        item("Coding HGVS",variant.codingHgvs,{mono:true,wide:true}),
+        item("RNA HGVS",variant.rnaHgvs,{mono:true,wide:true}),
+        item("Protein HGVS",variant.proteinHgvs,{mono:true,wide:true}),
+        item("Zygosity",variant.zygosity),
+        item("Inheritance",variant.inheritance),
+        item("Phase",variant.phase),
+        item("Classification",variant.classification),
+        item("Additional information",variant.geneticsFreeText,{wide:true})
       ].join("");
       return `<article class="rep-record"><div class="rep-record-head"><h4 class="rep-record-title">${esc(title||pedId(p))}</h4><div class="rep-record-meta">${esc(meta)}</div></div><dl class="rep-record-grid">${fields}</dl></article>`;
     }).join("");
@@ -1737,11 +1924,14 @@ function computeWarnings(){ const w=[];
   });
   P().forEach(p=>{if(isAncestorOfSelf(p.id))w.push({sev:"error",msg:`${pedId(p)} appears in its own ancestry (cycle).`});});
   P().forEach(p=>{if(p.deceased&&!p.ageAtDeath&&!p.birthYear)w.push({sev:"info",msg:`${pedId(p)} is deceased with no age or year recorded.`});});
-  P().forEach(p=>{if(p.codingHgvs&&!p.gene)w.push({sev:"warning",msg:`${pedId(p)} has a coding HGVS but no gene symbol.`});});
-  P().forEach(p=>{if((p.genomicStart||p.ref||p.alt)&&!p.chromosome)w.push({sev:"warning",msg:`${pedId(p)} has genomic coordinates or alleles but no chromosome / contig.`});});
-  P().forEach(p=>{if((p.ref&&!p.alt)||(!p.ref&&p.alt))w.push({sev:"warning",msg:`${pedId(p)} has an incomplete REF / ALT allele pair.`});});
-  P().forEach(p=>{if(/de novo/i.test(p.inheritance)){const par=parentsOf(p.id).map(x=>model.people[x]);
-    if(!par.length||!par.some(x=>x&&x.testStatus==="tested"))w.push({sev:"warning",msg:`${pedId(p)} marked de novo without recorded parental testing.`});}});
+  P().forEach(p=>{const variants=personGeneticVariants(p);variants.forEach((variant,index)=>{
+    const prefix=variants.length>1?` Variant ${index+1}`:"";
+    if(variant.codingHgvs&&!variant.gene)w.push({sev:"warning",msg:`${pedId(p)}${prefix} has a coding HGVS but no gene symbol.`});
+    if((variant.genomicStart||variant.ref||variant.alt)&&!variant.chromosome)w.push({sev:"warning",msg:`${pedId(p)}${prefix} has genomic coordinates or alleles but no chromosome / contig.`});
+    if((variant.ref&&!variant.alt)||(!variant.ref&&variant.alt))w.push({sev:"warning",msg:`${pedId(p)}${prefix} has an incomplete REF / ALT allele pair.`});
+    if(/de novo/i.test(variant.inheritance)){const par=parentsOf(p.id).map(x=>model.people[x]);
+      if(!par.length||!par.some(x=>x&&x.testStatus==="tested"))w.push({sev:"warning",msg:`${pedId(p)}${prefix} marked de novo without recorded parental testing.`});}
+  });});
   if(P().length&&!P().some(p=>p.proband||p.consultand))w.push({sev:"info",msg:"No proband or consultand marked in this pedigree."});
   return w; }
 function isAncestorOfSelf(id,seen){ seen=seen||new Set();
@@ -1942,15 +2132,18 @@ function deleteIndividual(id){ commit(()=>{
 const QUEEN_VICTORIA_HAEMOPHILIA_B_TEMPLATE={"format":"pedigree-native/v5","schemaVersion":5,"exported":"2026-06-14T00:00:00Z","uid":100,"layout":{"genH":132,"slot":92,"sym":38,"offX":80,"offY":70},"view":{"x":0,"y":0,"scale":1},"labelPreset":"standard","routingMode":"clinical","model":{"schemaVersion":5,"caseName":"Queen Victoria haemophilia B pedigree","template":"custom","meta":{"disease":"Haemophilia B","gene":"F9","variant":"IVS3-3A>G","inheritance":"X-linked recessive","notes":"Consensus historical pedigree. Relationship topology is encoded through native union fields a, b and children, allowing automatic generation assignment."},"interoperability":{"nativeFormat":"pedigree-native/v5","fhirVersion":"4.0.1","source":"historical_consensus"},"people":{"p_qv":{"id":"p_qv","stableId":"p_qv","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Queen Victoria","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1819","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"inferred_obligate","notes":"Unaffected inferred carrier and origin of the documented royal-family lineage.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1901","_gen":0},"p_albert":{"id":"p_albert","stableId":"p_albert","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Albert of Saxe-Coburg and Gotha","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1819","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1861","_gen":0},"p_victoria_pr":{"id":"p_victoria_pr","stableId":"p_victoria_pr","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Victoria, Princess Royal","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1840","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1901","_gen":1},"p_frederick_iii":{"id":"p_frederick_iii","stableId":"p_frederick_iii","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Frederick III, German Emperor","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1831","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1888","_gen":1},"p_edward_vii":{"id":"p_edward_vii","stableId":"p_edward_vii","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Edward VII","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1841","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1910","_gen":1},"p_alice_uk":{"id":"p_alice_uk","stableId":"p_alice_uk","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Alice","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1843","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_from_descendants","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1878","_gen":1},"p_louis_iv":{"id":"p_louis_iv","stableId":"p_louis_iv","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Louis IV, Grand Duke of Hesse","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1837","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1892","_gen":1},"p_alfred":{"id":"p_alfred","stableId":"p_alfred","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alfred, Duke of Edinburgh","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1844","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1900","_gen":1},"p_helena":{"id":"p_helena","stableId":"p_helena","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Helena","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1846","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1923","_gen":1},"p_louise":{"id":"p_louise","stableId":"p_louise","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Louise","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1848","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"No children in this pedigree.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1939","_gen":1},"p_arthur":{"id":"p_arthur","stableId":"p_arthur","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Arthur, Duke of Connaught and Strathearn","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1850","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1942","_gen":1},"p_leopold_albany":{"id":"p_leopold_albany","stableId":"p_leopold_albany","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Leopold, Duke of Albany","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1853","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1884","_gen":1},"p_helena_waldeck":{"id":"p_helena_waldeck","stableId":"p_helena_waldeck","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Helena of Waldeck and Pyrmont","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1861","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1922","_gen":1},"p_beatrice":{"id":"p_beatrice","stableId":"p_beatrice","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Beatrice","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1857","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_from_descendants","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1944","_gen":1},"p_henry_battenberg":{"id":"p_henry_battenberg","stableId":"p_henry_battenberg","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Henry of Battenberg","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1858","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1896","_gen":1},"p_victoria_hesse":{"id":"p_victoria_hesse","stableId":"p_victoria_hesse","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Victoria of Hesse and by Rhine","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1863","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1950","_gen":2},"p_elisabeth_hesse":{"id":"p_elisabeth_hesse","stableId":"p_elisabeth_hesse","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Elisabeth of Hesse and by Rhine","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1864","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":2},"p_irene_hesse":{"id":"p_irene_hesse","stableId":"p_irene_hesse","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Irene of Hesse and by Rhine","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1866","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_from_affected_sons","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1953","_gen":2},"p_henry_prussia":{"id":"p_henry_prussia","stableId":"p_henry_prussia","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Henry of Prussia","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1862","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1929","_gen":2},"p_ernest_louis":{"id":"p_ernest_louis","stableId":"p_ernest_louis","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Ernest Louis, Grand Duke of Hesse","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1868","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1937","_gen":2},"p_friedrich_hesse":{"id":"p_friedrich_hesse","stableId":"p_friedrich_hesse","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Friedrich of Hesse and by Rhine","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1870","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1873","_gen":2},"p_alix":{"id":"p_alix","stableId":"p_alix","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Alix of Hesse, Empress Alexandra Feodorovna","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1872","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"molecularly_confirmed","notes":"Heterozygous F9 IVS3-3A>G carrier confirmed from historical DNA.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":2},"p_nicholas_ii":{"id":"p_nicholas_ii","stableId":"p_nicholas_ii","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Tsar Nicholas II","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1868","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":2},"p_alice_albany":{"id":"p_alice_albany","stableId":"p_alice_albany","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Alice of Albany","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1883","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_daughter_of_affected_male","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1981","_gen":2},"p_alexander_cambridge":{"id":"p_alexander_cambridge","stableId":"p_alexander_cambridge","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alexander Cambridge, Earl of Athlone","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1874","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1957","_gen":2},"p_charles_edward":{"id":"p_charles_edward","stableId":"p_charles_edward","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Charles Edward, Duke of Saxe-Coburg and Gotha","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1884","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1954","_gen":2},"p_alexander_mountbatten":{"id":"p_alexander_mountbatten","stableId":"p_alexander_mountbatten","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alexander Mountbatten, Marquess of Carisbrooke","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1886","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1960","_gen":2},"p_victoria_eugenie":{"id":"p_victoria_eugenie","stableId":"p_victoria_eugenie","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Victoria Eugenie of Battenberg","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1887","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_from_affected_sons","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1969","_gen":2},"p_alfonso_xiii":{"id":"p_alfonso_xiii","stableId":"p_alfonso_xiii","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alfonso XIII of Spain","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1886","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1941","_gen":2},"p_leopold_mountbatten":{"id":"p_leopold_mountbatten","stableId":"p_leopold_mountbatten","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Leopold Mountbatten","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1889","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1922","_gen":2},"p_maurice_battenberg":{"id":"p_maurice_battenberg","stableId":"p_maurice_battenberg","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Maurice of Battenberg","label":null,"birthOrder":null,"clinicalStatus":"unknown","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1891","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"historically_disputed","notes":"Affected status is disputed; retained as unknown.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1914","_gen":2},"p_waldemar_prussia":{"id":"p_waldemar_prussia","stableId":"p_waldemar_prussia","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Waldemar of Prussia","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1889","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1945","_gen":3},"p_sigismund_prussia":{"id":"p_sigismund_prussia","stableId":"p_sigismund_prussia","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Sigismund of Prussia","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1896","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1978","_gen":3},"p_henry_prussia_jr":{"id":"p_henry_prussia_jr","stableId":"p_henry_prussia_jr","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Henry of Prussia","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1900","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1904","_gen":3},"p_olga":{"id":"p_olga","stableId":"p_olga","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Grand Duchess Olga","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1895","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"molecularly_tested_wild_type","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_tatiana":{"id":"p_tatiana","stableId":"p_tatiana","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Grand Duchess Tatiana","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1897","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"molecularly_tested_wild_type","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_maria":{"id":"p_maria","stableId":"p_maria","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Grand Duchess Maria","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1899","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"molecularly_tested_wild_type","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_anastasia":{"id":"p_anastasia","stableId":"p_anastasia","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Grand Duchess Anastasia","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1901","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"probable_molecular_carrier","notes":"One Romanov daughter was molecularly identified as a carrier; the study assigned this most probably to Anastasia.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_alexey":{"id":"p_alexey","stableId":"p_alexey","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Tsarevich Alexey","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":true,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1904","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"molecularly_confirmed","notes":"Hemizygous for the mutant F9 allele; severe haemophilia B.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_may_teck":{"id":"p_may_teck","stableId":"p_may_teck","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess May of Teck","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1906","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1994","_gen":3},"p_rupert_trematon":{"id":"p_rupert_trematon","stableId":"p_rupert_trematon","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Rupert Cambridge, Viscount Trematon","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1907","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1928","_gen":3},"p_maurice_teck":{"id":"p_maurice_teck","stableId":"p_maurice_teck","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Maurice of Teck","label":null,"birthOrder":null,"clinicalStatus":"unknown","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1910","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_uncertain","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1910","_gen":3},"p_alfonso_asturias":{"id":"p_alfonso_asturias","stableId":"p_alfonso_asturias","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alfonso, Prince of Asturias","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1907","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1938","_gen":3},"p_jaime_spain":{"id":"p_jaime_spain","stableId":"p_jaime_spain","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Infante Jaime of Spain","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1908","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1975","_gen":3},"p_beatriz_spain":{"id":"p_beatriz_spain","stableId":"p_beatriz_spain","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Infanta Beatriz of Spain","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1909","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"2002","_gen":3},"p_cristina_spain":{"id":"p_cristina_spain","stableId":"p_cristina_spain","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Infanta Cristina of Spain","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1911","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1996","_gen":3},"p_gonzalo_spain":{"id":"p_gonzalo_spain","stableId":"p_gonzalo_spain","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Infante Gonzalo of Spain","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1914","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1934","_gen":3}},"unions":{"u_qv_albert":{"id":"u_qv_albert","stableId":"u_qv_albert","a":"p_qv","b":"p_albert","children":["p_victoria_pr","p_edward_vii","p_alice_uk","p_alfred","p_helena","p_louise","p_arthur","p_leopold_albany","p_beatrice"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_victoria_frederick":{"id":"u_victoria_frederick","stableId":"u_victoria_frederick","a":"p_victoria_pr","b":"p_frederick_iii","children":[],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_alice_louis":{"id":"u_alice_louis","stableId":"u_alice_louis","a":"p_alice_uk","b":"p_louis_iv","children":["p_victoria_hesse","p_elisabeth_hesse","p_irene_hesse","p_ernest_louis","p_friedrich_hesse","p_alix"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_leopold_helena":{"id":"u_leopold_helena","stableId":"u_leopold_helena","a":"p_leopold_albany","b":"p_helena_waldeck","children":["p_alice_albany","p_charles_edward"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_beatrice_henry":{"id":"u_beatrice_henry","stableId":"u_beatrice_henry","a":"p_beatrice","b":"p_henry_battenberg","children":["p_alexander_mountbatten","p_victoria_eugenie","p_leopold_mountbatten","p_maurice_battenberg"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_irene_henry":{"id":"u_irene_henry","stableId":"u_irene_henry","a":"p_irene_hesse","b":"p_henry_prussia","children":["p_waldemar_prussia","p_sigismund_prussia","p_henry_prussia_jr"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_alix_nicholas":{"id":"u_alix_nicholas","stableId":"u_alix_nicholas","a":"p_alix","b":"p_nicholas_ii","children":["p_olga","p_tatiana","p_maria","p_anastasia","p_alexey"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_alice_albany_alexander":{"id":"u_alice_albany_alexander","stableId":"u_alice_albany_alexander","a":"p_alice_albany","b":"p_alexander_cambridge","children":["p_may_teck","p_rupert_trematon","p_maurice_teck"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_ena_alfonso":{"id":"u_ena_alfonso","stableId":"u_ena_alfonso","a":"p_victoria_eugenie","b":"p_alfonso_xiii","children":["p_alfonso_asturias","p_jaime_spain","p_beatriz_spain","p_cristina_spain","p_gonzalo_spain"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""}}}};
 
 const TEMPLATES={
+  blank:{name:"Blank",build:()=>{},category:"basic",desc:"Empty canvas — build from scratch."},
+  basic_trio:{name:"Basic trio",build:basicTrioTemplate,category:"basic",desc:"Blank trio layout with two parents and one unannotated child."},
   rare:{name:"Rare disease",build:trioTemplate,desc:"Trio: affected proband and unaffected parents."},
   three:{name:"Three-generation",build:threeGenTemplate,desc:"Standard three-generation family with an affected branch."},
   cancer:{name:"Hereditary cancer",build:cancerTemplate,desc:"Three generations with a BRCA1 variant segregating."},
   cardio:{name:"Cardiogenetics",build:cardioTemplate,desc:"Cardiomyopathy lineage with sudden cardiac death."},
   prenatal:{name:"Prenatal",build:prenatalTemplate,desc:"Consanguineous couple, pregnancy loss and current pregnancy."},
-  queen_victoria_haemophilia_b:{name:"Queen Victoria haemophilia B",build:queenVictoriaHaemophiliaBTemplate,category:"historical",desc:"Royal family historical example of F9-associated X-linked recessive inheritance."},
-  blank:{name:"Blank",build:()=>{},desc:"Empty canvas — build from scratch."}
+  queen_victoria_haemophilia_b:{name:"Queen Victoria haemophilia B",build:queenVictoriaHaemophiliaBTemplate,category:"historical",desc:"Royal family historical example of F9-associated X-linked recessive inheritance."}
 };
 function tmplName(k){return (TEMPLATES[k]||{}).name||"Custom";}
+function basicTrioTemplate(){ const f=newPerson("male"),m=newPerson("female");const u=newUnion(f,m);
+  const c=newPerson("unknown");model.unions[u].children.push(c); }
 function trioTemplate(){ const f=newPerson("male"),m=newPerson("female");const u=newUnion(f,m);
   const c=newPerson("female",{affected:true,proband:true,phenotype:"Developmental delay, seizures",birthYear:"2018"});model.unions[u].children.push(c); }
 function threeGenTemplate(){ const gf=newPerson("male"),gm=newPerson("female");const u1=newUnion(gf,gm);
@@ -1993,9 +2186,10 @@ function queenVictoriaHaemophiliaBTemplate(){
 function openTemplates(){
   const renderGroup=(title,entries)=>entries.length?`<section class="tmpl-group"><h3 class="tmpl-group-title">${title}</h3><div class="tmpl-grid">${entries.map(([k,t])=>`<button class="tmpl-card" onclick="loadTemplate('${k}')"><div class="tc-name">${t.name}</div><div class="tc-desc">${t.desc}</div></button>`).join("")}</div></section>`:"";
   const entries=Object.entries(TEMPLATES);
-  const clinical=entries.filter(([,t])=>t.category!=="historical");
+  const basic=entries.filter(([,t])=>t.category==="basic");
+  const clinical=entries.filter(([,t])=>t.category!=="basic"&&t.category!=="historical");
   const historical=entries.filter(([,t])=>t.category==="historical");
-  openDialog("New from template",renderGroup("Clinical templates",clinical)+renderGroup("Known historical examples",historical),`<button class="hbtn" onclick="closeDialog()">Cancel</button>`);
+  openDialog("New from template",renderGroup("Basic",basic)+renderGroup("Clinical templates",clinical)+renderGroup("Known historical examples",historical),`<button class="hbtn" onclick="closeDialog()">Cancel</button>`);
 }
 function loadTemplate(k){ closeDialog(); history.push(snapshot()); future=[];
   model=blankModel(k); uid=1; ui.sel=null; TEMPLATES[k].build();
@@ -2339,7 +2533,7 @@ function buildFhirBundle(){
   Object.keys(patient).forEach(k=>patient[k]===undefined&&delete patient[k]);
   const patientUrn=add("patient",patient);
   const device={resourceType:"Device",id:"switzerlandomics-pedigree",status:"active",deviceName:[{name:"Switzerland Omics Pedigree",type:"user-friendly-name"}],
-    version:[{value:NATIVE_FORMAT}]};
+    version:[{value:PEDIGREE_APP_VERSION},{value:NATIVE_FORMAT}]};
   const deviceUrn=add("device",device);
   let practitionerUrn=null,organisationUrn=null;
   if(model.meta.reviewer){
@@ -2362,18 +2556,18 @@ function buildFhirBundle(){
       extension:compactExtensions([fhirExtension("age-at-onset","valueString",proband.onset)])};
     Object.keys(obs).forEach(k=>obs[k]===undefined&&delete obs[k]); resultRefs.push({reference:add("phenotype",obs)});
   }
-  if(hasGenetics(proband)){
+  personGeneticVariants(proband).forEach((variant,index)=>{
     const components=[];
-    [["Gene",proband.gene],["Variant type",proband.variantType],["Genome assembly",proband.assembly],["Chromosome",proband.chromosome],
-      ["Genomic start",proband.genomicStart],["Genomic end",proband.genomicEnd],["Reference allele",proband.ref],["Alternate allele",proband.alt],
-      ["Transcript",proband.transcript],["Genomic HGVS",proband.genomicHgvs],["Coding HGVS",proband.codingHgvs],["RNA HGVS",proband.rnaHgvs],
-      ["Protein HGVS",proband.proteinHgvs],["Zygosity",proband.zygosity],["Inheritance",proband.inheritance],["Classification",proband.classification]
+    [["Gene",variant.gene],["Variant type",variant.variantType],["Genome assembly",variant.assembly],["Chromosome",variant.chromosome],
+      ["Genomic start",variant.genomicStart],["Genomic end",variant.genomicEnd],["Reference allele",variant.ref],["Alternate allele",variant.alt],
+      ["Transcript",variant.transcript],["Genomic HGVS",variant.genomicHgvs],["Coding HGVS",variant.codingHgvs],["RNA HGVS",variant.rnaHgvs],
+      ["Protein HGVS",variant.proteinHgvs],["Zygosity",variant.zygosity],["Inheritance",variant.inheritance],["Phase",variant.phase],["Classification",variant.classification]
     ].forEach(([label,value])=>{if(value)components.push({code:{text:label},valueString:String(value)});});
-    const obs={resourceType:"Observation",id:fhirId(proband.id,"genomic"),status:"final",code:{text:"Genomic finding"},subject:{reference:patientUrn},
-      valueString:bestGeneticLabel(proband)||proband.geneticsFreeText||"Genomic finding recorded",component:components.length?components:undefined,
-      extension:compactExtensions([fhirExtension("native-molecular-payload","valueBase64Binary",utf8ToBase64(JSON.stringify({gene:proband.gene,variantType:proband.variantType,chromosome:proband.chromosome,genomicStart:proband.genomicStart,genomicEnd:proband.genomicEnd,ref:proband.ref,alt:proband.alt,genomicHgvs:proband.genomicHgvs,codingHgvs:proband.codingHgvs,rnaHgvs:proband.rnaHgvs,proteinHgvs:proband.proteinHgvs,assembly:proband.assembly,transcript:proband.transcript,zygosity:proband.zygosity,inheritance:proband.inheritance,classification:proband.classification,geneticsFreeText:proband.geneticsFreeText})))])};
-    resultRefs.push({reference:add("genomic",obs)});
-  }
+    const obs={resourceType:"Observation",id:fhirId(`${proband.id}-${variant.id||index+1}`,"genomic"),status:"final",code:{text:"Genomic finding"},subject:{reference:patientUrn},
+      valueString:bestGeneticVariantLabel(variant)||variant.geneticsFreeText||"Genomic finding recorded",component:components.length?components:undefined,
+      extension:compactExtensions([fhirExtension("native-molecular-index","valueInteger",index+1),fhirExtension("native-molecular-payload","valueBase64Binary",utf8ToBase64(JSON.stringify(variant)))])};
+    resultRefs.push({reference:add(`genomic-${index+1}`,obs)});
+  });
   if(proband.sampleId){
     const specimen={resourceType:"Specimen",id:fhirId(proband.sampleId,"specimen"),identifier:[{system:INTEROP_BASE+"/identifier/specimen",value:proband.sampleId}],status:proband.testStatus==="unavailable"?"unavailable":"available",subject:{reference:patientUrn}};
     specimenRefs.push({reference:add("specimen",specimen)});
@@ -2393,7 +2587,7 @@ function buildFhirBundle(){
     const familyConditions=conditionItemsForFamilyMember(p),familyStatus=familyConditions.length||clinicalStatusOf(p)==="unaffected"||clinicalStatusOf(p)==="affected"?"completed":"health-unknown";
     const fmh={resourceType:"FamilyMemberHistory",id:fhirId(p.stableId||p.id,"family"),status:familyStatus,patient:{reference:patientUrn},
       name:p.name||pedId(p),relationship,sex:fhirSex(p),bornString:p.birthYear?String(p.birthYear):undefined,deceasedBoolean:p.deceased||undefined,
-      condition:familyConditions,note:[p.notes,p.geneticsFreeText,hasGenetics(p)?bestGeneticLabel(p):""].filter(Boolean).map(t=>({text:t})),
+      condition:familyConditions,note:[p.notes,p.geneticsFreeText,hasGenetics(p)?geneticSummaryText(p):""].filter(Boolean).map(t=>({text:t})),
       extension:compactExtensions([fhirExtension("native-person-id","valueString",p.id),fhirExtension("pedigree-id","valueString",pedId(p)),
         fhirExtension("clinical-status","valueCode",clinicalStatusOf(p)),fhirExtension("carrier","valueBoolean",!!p.carrier),
         fhirExtension("sample-id","valueString",p.sampleId),fhirExtension("native-person-payload","valueBase64Binary",utf8ToBase64(JSON.stringify(p)))])};
@@ -2467,6 +2661,11 @@ function getFhirExtensions(resource,name){return (resource&&resource.extension||
 function getFhirExtensionValue(resource,name){
   const ext=getFhirExtensions(resource,name)[0]; if(!ext)return undefined;
   const key=Object.keys(ext).find(k=>k.startsWith("value")); return key?ext[key]:undefined;
+}
+function nativeMolecularPayload(resource){
+  const encoded=getFhirExtensionValue(resource,"native-molecular-payload");
+  if(!encoded)return {};
+  try{return JSON.parse(base64ToUtf8(encoded));}catch(e){return {};}
 }
 function humanName(resource){
   const name=resource&&resource.name&&resource.name[0]; if(!name)return "";
@@ -2620,17 +2819,23 @@ function importFhirBundle(bundle){
   if(practitioner)model.meta.reviewer=humanName(practitioner);
   const conditions=resources.filter(r=>r.resourceType==="Condition"&&r.subject?.reference);
   if(conditions[0])model.people[probandId].diagnosis=codeableText(conditions[0].code);
+  const importedVariants=[];
   resources.filter(r=>r.resourceType==="Observation").forEach(obs=>{
     const code=codeableText(obs.code).toLowerCase(),observationValue=fhirObservationValue(obs);
     if(code.includes("phenotyp"))model.people[probandId].phenotype=observationValue;
     if(code.includes("genomic")){
       const componentMap={};(obs.component||[]).forEach(c=>componentMap[codeableText(c.code)]=fhirObservationValue(c));
-      Object.assign(model.people[probandId],{gene:componentMap["Gene"]||"",variantType:componentMap["Variant type"]||"",assembly:componentMap["Genome assembly"]||"GRCh38",
+      const payload=nativeMolecularPayload(obs);
+      const variant=normaliseGeneticVariant(Object.assign({
+        gene:componentMap["Gene"]||"",variantType:componentMap["Variant type"]||"",assembly:componentMap["Genome assembly"]||"GRCh38",
         chromosome:componentMap["Chromosome"]||"",genomicStart:componentMap["Genomic start"]||"",genomicEnd:componentMap["Genomic end"]||"",ref:componentMap["Reference allele"]||"",alt:componentMap["Alternate allele"]||"",
         transcript:componentMap["Transcript"]||"",genomicHgvs:componentMap["Genomic HGVS"]||"",codingHgvs:componentMap["Coding HGVS"]||"",rnaHgvs:componentMap["RNA HGVS"]||"",proteinHgvs:componentMap["Protein HGVS"]||"",
-        zygosity:componentMap["Zygosity"]||"",inheritance:componentMap["Inheritance"]||"",classification:componentMap["Classification"]||"",geneticsFreeText:observationValue});
+        zygosity:componentMap["Zygosity"]||"",inheritance:componentMap["Inheritance"]||"",phase:componentMap["Phase"]||"",classification:componentMap["Classification"]||"",geneticsFreeText:observationValue
+      },payload),importedVariants.length,probandId);
+      if(variantHasData(variant))importedVariants.push(variant);
     }
   });
+  if(importedVariants.length){model.people[probandId].variants=importedVariants;syncPersonPrimaryVariant(model.people[probandId]);}
   const diagnosticReport=resources.find(r=>r.resourceType==="DiagnosticReport"),documentReference=resources.find(r=>r.resourceType==="DocumentReference");
   if(diagnosticReport?.effectiveDateTime)model.meta.date=String(diagnosticReport.effectiveDateTime).slice(0,10);
   if(documentReference?.description)model.meta.indication=documentReference.description;
@@ -2957,7 +3162,7 @@ function migrateModel(){
       :importedPlinkSex!=null?"genetic-sex":"gender";
     const legacyStyle=existing.symbolDisplayOverride||existing.symbolStyle||"auto";
     const defaults={stableId:existing.id,externalIds:{plinkIid:"",fhirIdentifier:""},terminology:{phenotype:[],diagnosis:[],gene:[],variant:[]},interoperability:{},
-      variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",genomicHgvs:"",rnaHgvs:"",geneticsFreeText:"",
+      gene:"",variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",genomicHgvs:"",codingHgvs:"",rnaHgvs:"",proteinHgvs:"",assembly:"GRCh38",transcript:"",zygosity:"",inheritance:"",phase:"",classification:"",geneticsFreeText:"",
       symbolDisplayOverride:legacyStyle,symbolStyle:legacyStyle,consultand:false,birthOrder:null,
       clinicalStatus:existing.clinicalStatus||(existing.affected?"affected":"unaffected"),
       sex:legacySex,geneticSex:migratedGeneticSex,gender:legacySex==="male"?"man":legacySex==="female"?"woman":"unknown",
@@ -2970,6 +3175,7 @@ function migrateModel(){
     p.externalIds=Object.assign({plinkIid:"",fhirIdentifier:""},existingExternal);
     p.terminology=Object.assign({phenotype:[],diagnosis:[],gene:[],variant:[]},existingTerminology);
     p.interoperability=Object.assign({},existingInterop);
+    migratePersonVariants(p,existing);
     if(p.symbolDisplayOverride==="carrier-dot")p.symbolDisplayOverride="carrier-half";
     p.symbolStyle=p.symbolDisplayOverride;
     p.affected=derivedClinicalLayer(p)==="affected";
@@ -2997,7 +3203,7 @@ function initKeys(){ document.addEventListener("keydown",e=>{
 
 
 /* ===== boot ===== */
-function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",layoutPreset:"standard",focus:false}; view={x:0,y:0,scale:1};
+function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",layoutPreset:"standard",focus:false,variantIndexByPerson:{}}; view={x:0,y:0,scale:1};
   model=blankModel("rare"); if(!tryRestore())trioTemplate(); migrateModel();
   if(!ui.sel){const first=P().find(p=>p.proband)||P()[0];ui.sel=first?first.id:null;}
   initCanvas(); initKeys(); computeLayout(); render(); setTimeout(fitView,40); loadPedigreeExportCounter();
@@ -3006,5 +3212,4 @@ init();
 </script>
   </div>
 </main>
-
 
