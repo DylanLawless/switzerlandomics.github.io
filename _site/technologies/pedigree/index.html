@@ -1264,6 +1264,10 @@ function symbolPath(p,cx,cy){
 function hasGenetics(p){ return personGeneticVariants(p).length>0; }
 function compactCoordinate(p){ return compactVariantCoordinate(primaryGeneticVariant(p)||legacyGeneticVariantFromPerson(p)); }
 function bestGeneticLabel(p){ return bestGeneticVariantLabel(primaryGeneticVariant(p)); }
+function addUniqueLabelLine(lines,value){
+  const text=String(value||"").trim();
+  if(text&&!lines.includes(text))lines.push(text);
+}
 function labelLines(p){
   const lp=ui.labelPreset, out=[];
   const ad=()=>{ if(p.deceased&&p.ageAtDeath)return "d. "+p.ageAtDeath; if(p.birthYear)return "b. "+p.birthYear; return null; };
@@ -1304,18 +1308,18 @@ function labelLines(p){
   variants.forEach((variant,index)=>{
     const prefix=variants.length>1?`Variant ${index+1}: `:"";
     const label=bestGeneticVariantLabel(variant);
-    if(label)out.push((prefix+label));
-    if(variant.gene&&(!label||!label.includes(variant.gene)))out.push(prefix+variant.gene);
-    if(variant.variantType)out.push(prefix+variant.variantType);
-    const coord=compactVariantCoordinate(variant); if(coord)out.push(prefix+coord);
-    if(variant.genomicHgvs)out.push(prefix+variant.genomicHgvs);
-    if(variant.transcript&&variant.codingHgvs)out.push(prefix+variant.transcript+":"+variant.codingHgvs);
-    else if(variant.gene&&variant.codingHgvs)out.push(prefix+variant.gene+" "+variant.codingHgvs);
-    if(variant.rnaHgvs)out.push(prefix+variant.rnaHgvs);
-    if(variant.proteinHgvs)out.push(prefix+variant.proteinHgvs);
-    const zg=[]; if(variant.zygosity)zg.push(variant.zygosity); if(variant.inheritance)zg.push(variant.inheritance); if(variant.phase)zg.push("phase "+variant.phase); if(zg.length)out.push(prefix+zg.join(", "));
-    if(variant.classification)out.push(prefix+variant.classification);
-    if(variant.geneticsFreeText)out.push(prefix+variant.geneticsFreeText);
+    if(label)addUniqueLabelLine(out,prefix+label);
+    if(variant.gene&&(!label||!label.includes(variant.gene)))addUniqueLabelLine(out,prefix+variant.gene);
+    if(variant.variantType)addUniqueLabelLine(out,prefix+variant.variantType);
+    const coord=compactVariantCoordinate(variant); if(coord)addUniqueLabelLine(out,prefix+coord);
+    if(variant.genomicHgvs)addUniqueLabelLine(out,prefix+variant.genomicHgvs);
+    if(variant.transcript&&variant.codingHgvs)addUniqueLabelLine(out,prefix+variant.transcript+":"+variant.codingHgvs);
+    else if(variant.gene&&variant.codingHgvs)addUniqueLabelLine(out,prefix+variant.gene+" "+variant.codingHgvs);
+    if(variant.rnaHgvs)addUniqueLabelLine(out,prefix+variant.rnaHgvs);
+    if(variant.proteinHgvs)addUniqueLabelLine(out,prefix+variant.proteinHgvs);
+    const zg=[]; if(variant.zygosity)zg.push(variant.zygosity); if(variant.inheritance)zg.push(variant.inheritance); if(variant.phase)zg.push("phase "+variant.phase); if(zg.length)addUniqueLabelLine(out,prefix+zg.join(", "));
+    if(variant.classification)addUniqueLabelLine(out,prefix+variant.classification);
+    if(variant.geneticsFreeText)addUniqueLabelLine(out,prefix+variant.geneticsFreeText);
   });
   return out;
 }
@@ -1795,12 +1799,20 @@ function activeGeneticVariantIndex(person){
   const stored=Number(ui.variantIndexByPerson[person.id]||0);
   return Math.max(0,Math.min(count-1,Number.isFinite(stored)?stored:0));
 }
+function editableGeneticVariants(person){
+  if(!person)return [];
+  const source=Array.isArray(person.variants)&&person.variants.length?person.variants:personGeneticVariants(person);
+  return source.map((variant,index)=>normaliseGeneticVariant(variant,index,person.id));
+}
 function geneticVariantForEditing(person,index){
-  const variants=Array.isArray(person.variants)?person.variants:[];
-  return variants[index]?normaliseGeneticVariant(variants[index],index,person.id):emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
+  const variants=editableGeneticVariants(person);
+  return variants[index]?variants[index]:emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
 }
 function ensureEditableVariant(person,index){
-  if(!Array.isArray(person.variants))person.variants=[];
+  if(!Array.isArray(person.variants)||!person.variants.length){
+    const existing=editableGeneticVariants(person).filter(variantHasData);
+    person.variants=existing.length?existing:[];
+  }
   while(person.variants.length<=index)person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,person.variants.length)}));
   person.variants[index]=normaliseGeneticVariant(person.variants[index],index,person.id);
   return person.variants[index];
@@ -1826,11 +1838,9 @@ function addGeneticVariant(){
   const currentCount=Array.isArray(person.variants)?person.variants.length:personGeneticVariants(person).length;
   if(currentCount>=MAX_PERSON_VARIANTS){alert(`Pedigree supports up to ${MAX_PERSON_VARIANTS} variant inputs per individual in this version.`);return;}
   commit(()=>{
-    if(!Array.isArray(person.variants)){
-      const existing=personGeneticVariants(person);
+    if(!Array.isArray(person.variants)||!person.variants.length){
+      const existing=editableGeneticVariants(person).filter(variantHasData);
       person.variants=existing.length?existing:[emptyGeneticVariant({id:nextGeneticVariantId(person,0)})];
-    }else if(!person.variants.length){
-      person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,0)}));
     }
     person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,person.variants.length)}));
     if(!ui.variantIndexByPerson)ui.variantIndexByPerson={};
@@ -1851,7 +1861,7 @@ function variantSelF(label,index,key,opts){
     ${opts.map(o=>{const val=Array.isArray(o)?o[0]:o,t=Array.isArray(o)?o[1]:o;return `<option value="${esc(val)}" ${value===val?'selected':''}>${esc(t)}</option>`;}).join("")}</select></div>`;
 }
 function geneticVariantTabs(person,activeIndex){
-  const raw=Array.isArray(person.variants)&&person.variants.length?person.variants:personGeneticVariants(person);
+  const raw=editableGeneticVariants(person);
   const count=Math.max(1,raw.length);
   const buttons=Array.from({length:count},(_,index)=>{
     const variant=raw[index]?normaliseGeneticVariant(raw[index],index,person.id):emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
@@ -3298,7 +3308,7 @@ function choosePlinkFamily(parsed){
   pendingPlinkImport={parsed,fids};
   const options=fids.map((fid,i)=>`<option value="${i}">${esc(fid)} (${parsed.records.filter(r=>r.fid===fid).length} people)</option>`).join("");
   openDialog("Choose PLINK family",`<div class="field"><label>Family</label><select id="plinkFamilyChoice">${options}</select></div><div class="help-text">PLINK families are imported separately and are never merged silently.</div>`,
-    `<button class="hbtn" onclick="pendingPlinkImport=null;closeDialog()">Cancel</button><button class="hbtn primary" onclick="confirmPlinkFamilyImport()">Import</button>`);
+    `<button class="hbtn" onclick="pendingPlinkImport=null;closeDialog()">Cancel</button><button class="hbtn" onclick="confirmPlinkFamilyImport()">Import</button>`);
 }
 function confirmPlinkFamilyImport(){
   if(!pendingPlinkImport)return;
@@ -3487,6 +3497,7 @@ init();
 </script>
   </div>
 </main>
+
 
 
 
