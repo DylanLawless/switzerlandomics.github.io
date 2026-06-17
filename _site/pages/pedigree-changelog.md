@@ -1,5 +1,10 @@
 # Pedigree changelog
 
+## v1.0.4
+
+- Smart deterministic auto-layout to prevent blocking nodes and relationship lines and minimise partner distances.
+- In relationships, the PLINK parental role is hidden when roles are clear and only show for ambiguous parent-role cases. The roles of Father and Mother are used when known or safely inferable. They fall back to Parent 1 and Parent 2 when ambiguous.
+
 ## v1.0.3
 
 - Added relationship creation from the Relationships panel, including linking the selected individual to an existing person, adding a new partner and adding children to a specific relationship.

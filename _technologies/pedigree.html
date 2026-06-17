@@ -1,13 +1,13 @@
 ---
 layout: default
 title: "Pedigree"
-description: "Browser-based clinical pedigree builder for structured family, phenotype and genomic findings review."
-summary: "Build structured clinical pedigrees, record phenotype and genomic findings, and export publication-ready figures and technical reports."
+description: "A free private browser-based clinical pedigree builder for structured family trees, phenotype and genomic findings and clinical genetics."
+summary: "Build free structured clinical pedigrees, record phenotype and genomic findings, and export publication-ready figures and technical reports, and pedigree chart."
 permalink: /technologies/pedigree/
 bodyClass: "page-tech page-pedigree"
 weight: 99
 technology_group: structured-genomics
-version: 1.0.2
+version: 1.0.4
 ---
 
 <style>
@@ -619,7 +619,7 @@ version: 1.0.2
         <circle cx="12" cy="19.5" r="2.5" fill="#2f2f41" stroke="#2f2f41"/>
       </svg><span>Pedigree</span>
     </div>
-    <span class="pedigree-release-tag">v1.0.3</span>
+    <span class="pedigree-release-tag">v1.0.4</span>
     <a class="pedigree-guide-link" href="/technologies/pedigree/standards/" target="_blank" rel="noopener" title="Open the illustrated pedigree standards guide in a new tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Pedigree standards</span><span class="guide-long">and symbols</span>
@@ -724,7 +724,7 @@ version: 1.0.2
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
 const PEDIGREE_SCHEMA_VERSION=7;
-const PEDIGREE_APP_VERSION="v1.0.3";
+const PEDIGREE_APP_VERSION="v1.0.4";
 const NATIVE_FORMAT="pedigree-native/v7";
 const FHIR_R4_VERSION="4.0.1";
 const MAX_PERSON_VARIANTS=5;
@@ -908,6 +908,17 @@ function fillMissingParentRoles(union){
     b:normaliseParentRole(current.b)==="unspecified"?inferred.b:normaliseParentRole(current.b)
   };
 }
+function syncParentRolesFromEndpointHints(union){
+  if(!union)return;
+  const inferred=inferredParentRoles(union.a,union.b);
+  const clearPair=union.a&&union.b&&
+    inferred.a!=="unspecified"&&inferred.b!=="unspecified"&&inferred.a!==inferred.b;
+  if(clearPair){
+    union.parentRoles={a:inferred.a,b:inferred.b};
+  }else{
+    fillMissingParentRoles(union);
+  }
+}
 
 function newPerson(sex,extra={}){ const id=nid("p");
   const legacySex=normaliseGeneticSex(sex),defaultGender=legacySex==="male"?"man":legacySex==="female"?"woman":"unknown";
@@ -973,54 +984,255 @@ function clampLayoutValue(key,value){
   return Math.min(limits.max,Math.max(limits.min,safe));
 }
 let LAY={genH:LAYOUT_PRESETS.standard.genH,slot:LAYOUT_PRESETS.standard.slot,sym:38,offX:80,offY:70};
+const LAYOUT_NODE_BUFFER=22;
+const LAYOUT_EDGE_NODE_BUFFER=18;
+const LAYOUT_RELATIONSHIP_LIFT_MIN=58;
+const LAYOUT_RELAXATION_STEPS=8;
+const LAYOUT_GRID_DIVISIONS=2;
+
+function layoutNumber(value){
+  const n=Number(value);
+  return Number.isFinite(n)?n:null;
+}
+function layoutStableId(p){ return String(p?.stableId||p?.id||""); }
+function layoutComparePeople(a,b){
+  const ao=layoutNumber(a?.birthOrder),bo=layoutNumber(b?.birthOrder);
+  if(ao!=null&&bo!=null&&ao!==bo)return ao-bo;
+  if(ao!=null&&bo==null)return -1;
+  if(ao==null&&bo!=null)return 1;
+  const ay=layoutNumber(a?.birthYear),by=layoutNumber(b?.birthYear);
+  if(ay!=null&&by!=null&&ay!==by)return ay-by;
+  if(ay!=null&&by==null)return -1;
+  if(ay==null&&by!=null)return 1;
+  return layoutStableId(a).localeCompare(layoutStableId(b),undefined,{numeric:true,sensitivity:"base"});
+}
+function layoutNodeGap(){
+  return Math.max(LAY.slot,LAY.sym+LAYOUT_NODE_BUFFER,labelMaxWidth()+LAYOUT_NODE_BUFFER);
+}
+function layoutPairGap(){ return Math.max(layoutNodeGap(),LAY.slot*1.05); }
+function layoutGridStep(){ return Math.max(20,LAY.slot/LAYOUT_GRID_DIVISIONS); }
+function layoutSnap(value){
+  const step=layoutGridStep();
+  return Math.round(value/step)*step;
+}
+function layoutRelationshipLift(){
+  return layoutSnap(Math.max(LAYOUT_RELATIONSHIP_LIFT_MIN,LAY.sym+LAYOUT_EDGE_NODE_BUFFER,layoutGridStep()));
+}
+function layoutMean(values){
+  const clean=values.filter(Number.isFinite);
+  return clean.length?clean.reduce((sum,value)=>sum+value,0)/clean.length:null;
+}
+function layoutParentOrder(union){
+  const ids=[union.a,union.b].filter(id=>id&&model.people[id]);
+  if(ids.length<2)return ids;
+  const roles=union.parentRoles&&typeof union.parentRoles==="object"?union.parentRoles:{};
+  const endpointRole=id=>normaliseParentRole(id===union.a?roles.a:roles.b);
+  const roleScore=id=>{
+    const role=endpointRole(id);
+    if(role==="paternal")return 0;
+    if(role==="maternal")return 1;
+    const shape=genderShape(model.people[id]);
+    if(shape==="male")return 0;
+    if(shape==="female")return 1;
+    return 2;
+  };
+  return ids.sort((a,b)=>(roleScore(a)-roleScore(b))||layoutComparePeople(model.people[a],model.people[b]));
+}
+function layoutOrderedChildren(union){
+  return (Array.isArray(union.children)?union.children:[]).map(id=>model.people[id]).filter(Boolean).sort(layoutComparePeople);
+}
+function layoutResolveGeneration(people,targetFor){
+  if(!people.length)return;
+  const gap=layoutNodeGap();
+  const ordered=[...people].sort((a,b)=>{
+    const at=targetFor(a),bt=targetFor(b);
+    if(Number.isFinite(at)&&Number.isFinite(bt)&&at!==bt)return at-bt;
+    if(Number.isFinite(at)&&!Number.isFinite(bt))return -1;
+    if(!Number.isFinite(at)&&Number.isFinite(bt))return 1;
+    return layoutComparePeople(a,b);
+  });
+  layoutResolveOrderedGeneration(ordered,targetFor);
+}
+function layoutResolveOrderedGeneration(ordered,targetFor){
+  if(!ordered.length)return;
+  const gap=layoutNodeGap();
+  ordered.forEach((p,index)=>{
+    const target=targetFor(p);
+    p._layoutTarget=Number.isFinite(target)?target:index*gap;
+  });
+  ordered[0]._layoutX=ordered[0]._layoutTarget;
+  for(let i=1;i<ordered.length;i++){
+    ordered[i]._layoutX=Math.max(ordered[i]._layoutTarget,ordered[i-1]._layoutX+gap);
+  }
+  const targetCentre=layoutMean(ordered.map(p=>p._layoutTarget));
+  const actualCentre=layoutMean(ordered.map(p=>p._layoutX));
+  const shift=targetCentre!=null&&actualCentre!=null?targetCentre-actualCentre:0;
+  ordered.forEach(p=>{p._layoutX=layoutSnap(p._layoutX+shift);});
+  for(let i=1;i<ordered.length;i++){
+    if(ordered[i]._layoutX<ordered[i-1]._layoutX+gap)ordered[i]._layoutX=ordered[i-1]._layoutX+gap;
+  }
+}
+function layoutApplyChildBearingPartnershipAdjacency(byGen){
+  const gap=layoutNodeGap();
+  U().forEach(union=>{
+    if(!Array.isArray(union.children)||!union.children.length)return;
+    const parents=layoutParentOrder(union);
+    if(parents.length<2)return;
+    const first=model.people[parents[0]],second=model.people[parents[1]];
+    if(!first||!second||first._gen!==second._gen)return;
+    const generation=first._gen;
+    const people=[...(byGen[generation]||[])].sort((a,b)=>a._layoutX-b._layoutX||layoutComparePeople(a,b));
+    const ids=people.map(p=>p.id);
+    const firstIndex=ids.indexOf(first.id),secondIndex=ids.indexOf(second.id);
+    if(firstIndex<0||secondIndex<0||Math.abs(firstIndex-secondIndex)<=1)return;
+    const low=Math.min(firstIndex,secondIndex),high=Math.max(firstIndex,secondIndex);
+    const between=ids.slice(low+1,high);
+    const movableBetween=between.filter(id=>{
+      const person=model.people[id];
+      return person&&!(person.pinned&&person.px!=null);
+    });
+    if(!movableBetween.length)return;
+    const blockerSet=new Set(movableBetween);
+    let ordered=ids.filter(id=>!blockerSet.has(id)&&id!==second.id);
+    const anchorIndex=ordered.indexOf(first.id);
+    if(anchorIndex<0)return;
+    ordered.splice(anchorIndex+1,0,second.id,...movableBetween);
+    byGen[generation]=ordered.map(id=>model.people[id]).filter(Boolean);
+    const targets={};
+    people.forEach(person=>{targets[person.id]=person._layoutX;});
+    targets[second.id]=targets[first.id]+gap;
+    movableBetween.forEach((id,index)=>{targets[id]=targets[second.id]+gap*(index+1);});
+    layoutResolveOrderedGeneration(byGen[generation],person=>targets[person.id]);
+  });
+}
+function layoutSameGenerationUnionDegree(){
+  const degree={};
+  U().forEach(union=>{
+    const a=model.people[union.a],b=model.people[union.b];
+    if(!a||!b||a._gen!==b._gen)return;
+    degree[a.id]=(degree[a.id]||0)+1;
+    degree[b.id]=(degree[b.id]||0)+1;
+  });
+  return degree;
+}
+function layoutRelationshipBlockers(union,people){
+  const a=model.people[union.a],b=model.people[union.b];
+  if(!a||!b||a._gen!==b._gen)return [];
+  const left=Math.min(a.x,b.x),right=Math.max(a.x,b.x);
+  const guard=LAY.sym/2+LAYOUT_EDGE_NODE_BUFFER;
+  if(right-left<=guard*2)return [];
+  return people.filter(p=>p.id!==a.id&&p.id!==b.id&&p.x>left+guard&&p.x<right-guard);
+}
+function layoutApplyRelationshipEdgeAvoidance(byGen){
+  P().forEach(p=>{p._layoutLift=0;});
+  const degree=layoutSameGenerationUnionDegree();
+  const selectedCounts={};
+  U().forEach(union=>{
+    const a=model.people[union.a],b=model.people[union.b];
+    if(!a||!b||a._gen!==b._gen)return;
+    const people=byGen[a._gen]||[];
+    const blockers=layoutRelationshipBlockers(union,people);
+    if(!blockers.length)return;
+    const blockerCentre=layoutMean(blockers.map(p=>p.x));
+    const candidates=[a,b].filter(p=>!(p.pinned&&p.py!=null));
+    if(!candidates.length)return;
+    candidates.sort((pa,pb)=>{
+      const da=degree[pa.id]||0,db=degree[pb.id]||0;
+      if(da!==db)return db-da;
+      const sa=selectedCounts[pa.id]||0,sb=selectedCounts[pb.id]||0;
+      if(sa!==sb)return sb-sa;
+      if(blockerCentre!=null){
+        const ca=Math.abs(pa.x-blockerCentre),cb=Math.abs(pb.x-blockerCentre);
+        if(ca!==cb)return ca-cb;
+      }
+      return layoutComparePeople(pa,pb);
+    });
+    const chosen=candidates[0];
+    selectedCounts[chosen.id]=(selectedCounts[chosen.id]||0)+1;
+    chosen._layoutLift=Math.max(chosen._layoutLift||0,layoutRelationshipLift());
+  });
+}
 function computeLayout(){
   LAY.genH=clampLayoutValue("genH",LAY.genH);
   LAY.slot=clampLayoutValue("slot",LAY.slot);
   const gen=computeGenerations();
-  const effectiveSlot=LAY.slot;
-  const placed={}; let cursor=0;
-  const roots=P().filter(p=>parentsOf(p.id).length===0).sort((a,b)=>(gen[a.id]-gen[b.id])||(a.id<b.id?-1:1));
-  function place(id){
-    if(placed[id])return; placed[id]=true;
-    const kids=childrenOf(id); kids.forEach(place);
-    const px=model.people[id];
-    if(kids.length){
-      const xs=kids.map(k=>model.people[k]._cx); const center=(Math.min(...xs)+Math.max(...xs))/2;
-      const pps=unionsOf(id).map(u=>partnerIn(u,id)).filter(p=>p&&!placed[p]);
-      if(pps.length){ px._cx=center-effectiveSlot/2;
-        pps.forEach((pp,i)=>{placed[pp]=true;model.people[pp]._cx=center+effectiveSlot/2+i*effectiveSlot;}); }
-      else px._cx=center;
-    } else { px._cx=cursor*effectiveSlot; cursor++;
-      const pps=unionsOf(id).map(u=>partnerIn(u,id)).filter(p=>p&&!placed[p]);
-      pps.forEach(pp=>{placed[pp]=true;model.people[pp]._cx=cursor*effectiveSlot;cursor++;}); }
-  }
-  roots.forEach(r=>place(r.id));
-  P().forEach(p=>{ if(!placed[p.id]){p._cx=cursor*effectiveSlot;cursor++;placed[p.id]=true;} });
-  const minx=Math.min(0,...P().map(p=>p._cx||0));
+  const byGen={};
   P().forEach(p=>{
-    const ax=(p._cx||0)-minx+LAY.offX;
-    p.x=p.pinned&&p.px!=null?p.px:ax;
     p._gen=gen[p.id]||0;
+    (byGen[p._gen]=byGen[p._gen]||[]).push(p);
   });
-  // pedigree IDs by generation then x
-  const byGen={}; P().forEach(p=>(byGen[p._gen]=byGen[p._gen]||[]).push(p));
   const generations=Object.keys(byGen).map(Number).sort((a,b)=>a-b);
-  generations.forEach(g=>byGen[g].sort((a,b)=>a.x-b.x).forEach((p,i)=>p._autoId=roman(g+1)+"-"+(i+1)));
+  generations.forEach(g=>{
+    const people=byGen[g].sort(layoutComparePeople);
+    const gap=layoutNodeGap();
+    people.forEach((p,index)=>{p._layoutX=index*gap;});
+  });
+
+  for(let step=0;step<LAYOUT_RELAXATION_STEPS;step++){
+    const targets={};
+    const addTarget=(id,x,weight=1)=>{
+      if(!id||!model.people[id]||!Number.isFinite(x))return;
+      (targets[id]=targets[id]||[]).push({x,weight});
+    };
+    U().forEach(union=>{
+      const children=layoutOrderedChildren(union);
+      const parents=layoutParentOrder(union).map(id=>model.people[id]).filter(Boolean);
+      if(children.length){
+        const parentCentre=layoutMean(parents.map(p=>p._layoutX));
+        const childCentre=layoutMean(children.map(p=>p._layoutX));
+        const centre=parentCentre!=null?parentCentre:childCentre;
+        const gap=layoutNodeGap();
+        const start=centre-((children.length-1)*gap)/2;
+        children.forEach((child,index)=>addTarget(child.id,start+index*gap,2.2));
+      }
+      if(parents.length){
+        const childCentre=layoutMean(children.map(p=>p._layoutX));
+        const parentCentre=layoutMean(parents.map(p=>p._layoutX));
+        const centre=childCentre!=null?childCentre:parentCentre;
+        if(parents.length===1)addTarget(parents[0].id,centre,1.6);
+        else{
+          const gap=layoutPairGap();
+          addTarget(parents[0].id,centre-gap/2,2.4);
+          addTarget(parents[1].id,centre+gap/2,2.4);
+        }
+      }
+    });
+    P().forEach(p=>addTarget(p.id,p._layoutX,.55));
+    generations.forEach(g=>layoutResolveGeneration(byGen[g],p=>{
+      const list=targets[p.id]||[];
+      const total=list.reduce((sum,item)=>sum+item.weight,0);
+      return total?list.reduce((sum,item)=>sum+item.x*item.weight,0)/total:p._layoutX;
+    }));
+  }
+
+  layoutApplyChildBearingPartnershipAdjacency(byGen);
+
+  const minx=Math.min(0,...P().map(p=>p._layoutX||0));
+  P().forEach(p=>{
+    p._cx=p._layoutX||0;
+    const ax=p._cx-minx+LAY.offX;
+    p.x=p.pinned&&p.px!=null?p.px:ax;
+  });
+
+  generations.forEach(g=>byGen[g].sort((a,b)=>a.x-b.x||layoutComparePeople(a,b)).forEach((p,i)=>p._autoId=roman(g+1)+"-"+(i+1)));
+  layoutApplyRelationshipEdgeAvoidance(byGen);
 
   let generationY=LAY.offY;
   generations.forEach(g=>{
     const people=byGen[g];
-    people.forEach(p=>{p.y=p.pinned&&p.py!=null?p.py:generationY;});
+    const maxLift=Math.max(0,...people.map(p=>p._layoutLift||0));
+    generationY+=maxLift;
+    people.forEach(p=>{
+      const lift=p.pinned&&p.py!=null?0:(p._layoutLift||0);
+      p._autoY=generationY-lift;
+      p.y=p.pinned&&p.py!=null?p.py:p._autoY;
+    });
     const labelHeight=Math.max(0,...people.map(labelBlockHeight));
-
     const hasLabels=ui&&ui.labelPreset!=="none";
-
-const requiredGap=hasLabels
-  ? LAY.sym+labelHeight+GENERATION_LABEL_GAP
-  : LAY.sym+GENERATION_BASE_GAP;
-
-generationY+=Math.max(LAY.genH,requiredGap);
-
+    const requiredGap=hasLabels
+      ? LAY.sym+labelHeight+GENERATION_LABEL_GAP
+      : LAY.sym+GENERATION_BASE_GAP;
+    generationY+=Math.max(LAY.genH,requiredGap);
   });
 }
 function roman(n){const m=[[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];let r="";for(const[v,s]of m)while(n>=v){r+=s;n-=v;}return r;}
@@ -1588,14 +1800,16 @@ function roleLabel(p){
 function setField(key,val){ const p=model.people[ui.sel]; if(!p)return;
   if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
   ui._editTimer=setTimeout(()=>{ui._editing=false;},700);
-  if(key==="sex"||key==="geneticSex"){
+  const roleLinkedSexField=key==="sex"||key==="geneticSex";
+  if(roleLinkedSexField){
     setPersonSex(p,val);
-    U().filter(u=>u.a===p.id||u.b===p.id).forEach(fillMissingParentRoles);
+    U().filter(u=>u.a===p.id||u.b===p.id).forEach(syncParentRolesFromEndpointHints);
   }else if(key==="symbolShapeSource")p.symbolShapeSource=normaliseSymbolShapeSource(val);
   else p[key]=val;
   if(key==="clinicalStatus")p.affected=derivedClinicalLayer(p)==="affected";
   if(key==="symbolDisplayOverride")p.symbolStyle=val;
-  liveRefresh(); }
+  liveRefresh();
+  if(roleLinkedSexField)renderInspector(); }
 function setUnionParentRole(unionId,endpoint,value){
   const union=model.unions[unionId];
   if(!union||!["a","b"].includes(endpoint))return;
@@ -1642,7 +1856,22 @@ function addChildToRelationship(unionId){
   const union=model.unions[unionId]; if(!union)return;
   commit(()=>{const child=newPerson("unknown");model.unions[unionId].children.push(child);ui.sel=child;});
 }
-function setChildParents(childId,parentA,parentB){
+function applySelectedParentRoles(union,a,b,parentRoles){
+  if(!union||!parentRoles||typeof parentRoles!=="object")return;
+  const roleA=normaliseParentRole(parentRoles.a),roleB=normaliseParentRole(parentRoles.b);
+  if(roleA==="unspecified"&&roleB==="unspecified")return;
+  union.parentRoles=Object.assign({a:"unspecified",b:"unspecified"},union.parentRoles||{});
+  const sameOrder=(union.a||null)===a&&(union.b||null)===b;
+  const reverseOrder=(union.a||null)===b&&(union.b||null)===a;
+  if(sameOrder){
+    if(roleA!=="unspecified")union.parentRoles.a=roleA;
+    if(roleB!=="unspecified")union.parentRoles.b=roleB;
+  }else if(reverseOrder){
+    if(roleA!=="unspecified")union.parentRoles.b=roleA;
+    if(roleB!=="unspecified")union.parentRoles.a=roleB;
+  }
+}
+function setChildParents(childId,parentA,parentB,parentRoles=null){
   const child=model.people[childId];
   const a=parentA||null,b=parentB||null;
   if(!child)return;
@@ -1650,10 +1879,13 @@ function setChildParents(childId,parentA,parentB){
   commit(()=>{
     U().forEach(union=>{union.children=union.children.filter(id=>id!==childId);});
     if(!a&&!b)return;
+    const roleA=normaliseParentRole(parentRoles?.a),roleB=normaliseParentRole(parentRoles?.b);
     let target=U().find(union=>((union.a||null)===a&&(union.b||null)===b)||((union.a||null)===b&&(union.b||null)===a));
     if(!target){
-      const unionId=newUnion(a,b);
+      const unionId=newUnion(a,b,{parentRoles:{a:roleA,b:roleB}});
       target=model.unions[unionId];
+    }else{
+      applySelectedParentRoles(target,a,b,{a:roleA,b:roleB});
     }
     if(!target.children.includes(childId))target.children.push(childId);
     fillMissingParentRoles(target);
@@ -1663,7 +1895,12 @@ function setChildParents(childId,parentA,parentB){
 function setChildParentsFromPanel(button){
   const card=button.closest(".parentage-card");
   if(!card)return;
-  setChildParents(button.dataset.child||"",card.querySelector('[data-parent-slot="a"]')?.value||"",card.querySelector('[data-parent-slot="b"]')?.value||"");
+  const parentA=card.querySelector('[data-parent-slot="a"]');
+  const parentB=card.querySelector('[data-parent-slot="b"]');
+  setChildParents(button.dataset.child||"",parentA?.value||"",parentB?.value||"",{
+    a:parentA?.value?normaliseParentRole(parentA.dataset.parentRole):"unspecified",
+    b:parentB?.value?normaliseParentRole(parentB.dataset.parentRole):"unspecified"
+  });
 }
 function moveChildToRelationship(childId,unionId){
   const child=model.people[childId],target=model.unions[unionId];
@@ -1800,20 +2037,70 @@ function geneticVariantTabs(person,activeIndex){
   const disabled=count>=MAX_PERSON_VARIANTS?" disabled":"";
   return `<div class="pedigree-variant-tabs" aria-label="Genetic variant navigation"><div class="pedigree-variant-tabs-row">${buttons}</div><button type="button" class="pedigree-variant-add" onclick="addGeneticVariant()"${disabled}>Add variant</button></div>`;
 }
+function parentRoleText(role){
+  const normalised=normaliseParentRole(role);
+  if(normalised==="paternal")return "Father";
+  if(normalised==="maternal")return "Mother";
+  return "";
+}
+function displayedParentRoles(union){
+  const roles={a:normaliseParentRole(union?.parentRoles?.a),b:normaliseParentRole(union?.parentRoles?.b)};
+  if(roles.a==="unspecified"&&union?.a)roles.a=parentRoleHint(model.people[union.a]);
+  if(roles.b==="unspecified"&&union?.b)roles.b=parentRoleHint(model.people[union.b]);
+  if(roles.a!=="unspecified"&&roles.b!=="unspecified"&&roles.a===roles.b)return {a:"unspecified",b:"unspecified"};
+  return roles;
+}
+function parentSlotLabel(union,endpoint,fallback){
+  return parentRoleText(displayedParentRoles(union)[endpoint])||fallback;
+}
+function parentageRoleOrderedSlots(union){
+  const roles=displayedParentRoles(union);
+  const endpoints=[
+    {endpoint:"a",id:union?.a||"",role:normaliseParentRole(roles.a),fallback:"Parent 1"},
+    {endpoint:"b",id:union?.b||"",role:normaliseParentRole(roles.b),fallback:"Parent 2"}
+  ];
+  const father=endpoints.find(item=>item.role==="paternal");
+  const mother=endpoints.find(item=>item.role==="maternal");
+  if(father&&mother){
+    return [
+      {slot:"a",id:father.id,role:"paternal",label:"Father"},
+      {slot:"b",id:mother.id,role:"maternal",label:"Mother"}
+    ];
+  }
+  return endpoints.map((item,index)=>({
+    slot:index===0?"a":"b",
+    id:item.id,
+    role:item.role,
+    label:parentRoleText(item.role)||item.fallback
+  }));
+}
+function parentRoleExportIsClear(union){
+  if(!union)return true;
+  const roles=displayedParentRoles(union);
+  const endpoints=[union.a?"a":"",union.b?"b":""].filter(Boolean);
+  if(endpoints.length===0)return true;
+  if(endpoints.length===1)return normaliseParentRole(roles[endpoints[0]])!=="unspecified";
+  return new Set(endpoints.map(endpoint=>normaliseParentRole(roles[endpoint]))).size===2&&
+    endpoints.every(endpoint=>normaliseParentRole(roles[endpoint])!=="unspecified");
+}
+function plinkParentRoleSelect(union,endpoint,label){
+  const role=normaliseParentRole(union.parentRoles?.[endpoint]);
+  return `<div class="field"><label>${esc(label)}</label><select onchange="setUnionParentRole('${union.id}','${endpoint}',this.value)">
+    <option value="unspecified" ${role==="unspecified"?"selected":""}>Unspecified</option>
+    <option value="paternal" ${role==="paternal"?"selected":""}>Paternal · PAT</option>
+    <option value="maternal" ${role==="maternal"?"selected":""}>Maternal · MAT</option>
+  </select></div>`;
+}
 function plinkParentRoleFields(person){
-  const unions=unionsOf(person.id).filter(u=>Array.isArray(u.children)&&u.children.length);
+  const unions=unionsOf(person.id).filter(u=>Array.isArray(u.children)&&u.children.length&&!parentRoleExportIsClear(u));
   if(!unions.length)return "";
   const fields=unions.map((u,index)=>{
-    const endpoint=u.a===person.id?"a":"b",role=normaliseParentRole(u.parentRoles?.[endpoint]);
+    const endpoint=u.a===person.id?"a":"b";
     const childLabels=u.children.map(id=>model.people[id]).filter(Boolean).map(p=>pedId(p)).join(", ");
-    return `<div class="field"><label>PLINK parental role${unions.length>1?` ${index+1}`:""}${childLabels?` · children ${esc(childLabels)}`:""}</label>
-      <select onchange="setUnionParentRole('${u.id}','${endpoint}',this.value)">
-        <option value="unspecified" ${role==="unspecified"?"selected":""}>Unspecified</option>
-        <option value="paternal" ${role==="paternal"?"selected":""}>Paternal · PAT</option>
-        <option value="maternal" ${role==="maternal"?"selected":""}>Maternal · MAT</option>
-      </select></div>`;
+    const label=`PLINK parental role${unions.length>1?` ${index+1}`:""}${childLabels?` · children ${esc(childLabels)}`:""}`;
+    return plinkParentRoleSelect(u,endpoint,label);
   }).join("");
-  return fields+`<div class="help-text">PLINK PAT and MAT are stored on each parent-child relationship and should be reviewed before export.</div>`;
+  return fields+`<div class="help-text">Only needed when PAT and MAT roles cannot be inferred automatically before export.</div>`;
 }
 function boolSelect(label,union,key){
   const value=!!union[key];
@@ -1841,12 +2128,14 @@ function personParentOptions(selectedId,excludeId){
 function parentageFields(person){
   const parentUnion=parentUnionOf(person.id);
   if(!parentUnion)return "";
-  const parentA=model.people[parentUnion.a],parentB=model.people[parentUnion.b];
-  const summary=[parentA?(parentA.name||pedId(parentA)):"not recorded",parentB?(parentB.name||pedId(parentB)):"not recorded"].join(" + ");
+  const slots=parentageRoleOrderedSlots(parentUnion);
+  const summary=slots.map(slot=>{
+    const parent=model.people[slot.id];
+    return parent?(parent.name||pedId(parent)):"not recorded";
+  }).join(" + ");
   return `<div class="relationship-card parentage-card"><h4>Parentage · ${esc(summary)}</h4>
     <div class="help-text">Change this individual's recorded parents by assigning them to a parent pair. Existing import/export semantics are preserved by moving this individual between relationship child lists.</div>
-    <div class="field"><label>Parent 1</label><select data-parent-slot="a">${personParentOptions(parentUnion.a,person.id)}</select></div>
-    <div class="field"><label>Parent 2</label><select data-parent-slot="b">${personParentOptions(parentUnion.b,person.id)}</select></div>
+    ${slots.map(slot=>`<div class="field"><label>${esc(slot.label)}</label><select data-parent-slot="${esc(slot.slot)}" data-parent-role="${esc(slot.role)}">${personParentOptions(slot.id,person.id)}</select></div>`).join("")}
     <div class="field"><button type="button" class="hbtn" data-child="${esc(person.id)}" onclick="setChildParentsFromPanel(this)">Update recorded parents</button></div>
   </div>`;
 }
@@ -1861,7 +2150,6 @@ function relationshipMoveChildField(person,union,child){
 function relationshipCard(person,union,index,total){
   const partner=model.people[partnerIn(union,person.id)];
   const endpoint=union.a===person.id?"a":"b";
-  const role=normaliseParentRole(union.parentRoles?.[endpoint]);
   const children=Array.isArray(union.children)?union.children.map(id=>model.people[id]).filter(Boolean):[];
   const childLabels=children.map(child=>pedId(child)).join(", ");
   const title=[partner?`Partner: ${partner.name||pedId(partner)}`:"Single recorded parent",childLabels?`children ${childLabels}`:""].filter(Boolean).join(" · ");
@@ -1872,11 +2160,7 @@ function relationshipCard(person,union,index,total){
     ${boolSelect("No children",union,"noChildren")}
     ${boolSelect("Infertility",union,"infertility")}
     ${union.infertility?unionTextField("Infertility reason",union,"infertilityReason"):""}
-    ${children.length?`<div class="field"><label>PLINK parental role for this individual</label><select onchange="setUnionParentRole('${union.id}','${endpoint}',this.value)">
-      <option value="unspecified" ${role==="unspecified"?"selected":""}>Unspecified</option>
-      <option value="paternal" ${role==="paternal"?"selected":""}>Paternal · PAT</option>
-      <option value="maternal" ${role==="maternal"?"selected":""}>Maternal · MAT</option>
-    </select></div>`:""}
+    ${children.length&&!parentRoleExportIsClear(union)?plinkParentRoleSelect(union,endpoint,"PLINK parental role for this individual"):""}
     ${children.length&&unionsOf(person.id).length>1?children.map(child=>relationshipMoveChildField(person,union,child)).join(""):""}
     <div class="field"><button type="button" class="hbtn" onclick="addChildToRelationship('${union.id}')">Add child to this relationship</button></div>
   </div>`;
@@ -2351,7 +2635,7 @@ function nextDisplayedGender(value){
 }
 function setDisplayedGender(p,value){
   setPersonSex(p,value);
-  U().filter(u=>u.a===p.id||u.b===p.id).forEach(fillMissingParentRoles);
+  U().filter(u=>u.a===p.id||u.b===p.id).forEach(syncParentRolesFromEndpointHints);
 }
 
 function ensurePartner(id){ let u=unionsOf(id).find(x=>x.a&&x.b); if(u)return u;
@@ -3721,10 +4005,3 @@ init();
 </script>
   </div>
 </main>
-
-
-
-
-
-
-
