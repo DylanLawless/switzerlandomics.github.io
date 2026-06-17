@@ -1,5 +1,10 @@
 # Pedigree changelog
 
+## v1.0.3
+
+- Added relationship creation from the Relationships panel, including linking the selected individual to an existing person, adding a new partner and adding children to a specific relationship.
+- Added the Pedigree tutorial page.
+
 ## v1.0.2
 
 - Added two known historical example templates: the Gurgy Neolithic ancient-DNA community pedigree from Rivollat et al., Nature 2023, and the CEPH1463 reference family pedigree. The Gurgy template was reconstructed from the published figure and supplementary data to generate ped/fam and may require further correction.

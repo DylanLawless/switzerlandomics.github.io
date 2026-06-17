@@ -619,10 +619,14 @@ version: 1.0.2
         <circle cx="12" cy="19.5" r="2.5" fill="#2f2f41" stroke="#2f2f41"/>
       </svg><span>Pedigree</span>
     </div>
-    <span class="pedigree-release-tag">v1.0.2</span>
+    <span class="pedigree-release-tag">v1.0.3</span>
     <a class="pedigree-guide-link" href="/technologies/pedigree/standards/" target="_blank" rel="noopener" title="Open the illustrated pedigree standards guide in a new tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Pedigree standards</span><span class="guide-long">and symbols</span>
+    </a>
+    <a class="pedigree-guide-link" href="https://docs.switzerlandomics.ch/pages/pedigree_tutorial.html" target="_blank" rel="noopener" title="Open the pedigree tutorial page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
+      <span>Tutorial</span><span class="guide-long"></span>
     </a>
     <div class="spacer"></div>
     <button class="hbtn" id="undoBtn" onclick="undo()" title="Undo (Ctrl+Z)">
@@ -720,7 +724,7 @@ version: 1.0.2
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
 const PEDIGREE_SCHEMA_VERSION=7;
-const PEDIGREE_APP_VERSION="v1.0.2";
+const PEDIGREE_APP_VERSION="v1.0.3";
 const NATIVE_FORMAT="pedigree-native/v7";
 const FHIR_R4_VERSION="4.0.1";
 const MAX_PERSON_VARIANTS=5;
@@ -1172,21 +1176,25 @@ function labelLines(p){
   if(p.phenotype)out.push(p.phenotype);
   if(p.diagnosis)out.push(p.diagnosis);
   const variants=personGeneticVariants(p);
+  const pushVariantLine=value=>{
+    const text=String(value||"").trim();
+    if(text&&!out.includes(text))out.push(text);
+  };
   variants.forEach((variant,index)=>{
     const prefix=variants.length>1?`Variant ${index+1}: `:"";
     const label=bestGeneticVariantLabel(variant);
-    if(label)out.push((prefix+label));
-    if(variant.gene&&(!label||!label.includes(variant.gene)))out.push(prefix+variant.gene);
-    if(variant.variantType)out.push(prefix+variant.variantType);
-    const coord=compactVariantCoordinate(variant); if(coord)out.push(prefix+coord);
-    if(variant.genomicHgvs)out.push(prefix+variant.genomicHgvs);
-    if(variant.transcript&&variant.codingHgvs)out.push(prefix+variant.transcript+":"+variant.codingHgvs);
-    else if(variant.gene&&variant.codingHgvs)out.push(prefix+variant.gene+" "+variant.codingHgvs);
-    if(variant.rnaHgvs)out.push(prefix+variant.rnaHgvs);
-    if(variant.proteinHgvs)out.push(prefix+variant.proteinHgvs);
-    const zg=[]; if(variant.zygosity)zg.push(variant.zygosity); if(variant.inheritance)zg.push(variant.inheritance); if(variant.phase)zg.push("phase "+variant.phase); if(zg.length)out.push(prefix+zg.join(", "));
-    if(variant.classification)out.push(prefix+variant.classification);
-    if(variant.geneticsFreeText)out.push(prefix+variant.geneticsFreeText);
+    if(label)pushVariantLine(prefix+label);
+    if(variant.gene&&(!label||!label.includes(variant.gene)))pushVariantLine(prefix+variant.gene);
+    if(variant.variantType)pushVariantLine(prefix+variant.variantType);
+    const coord=compactVariantCoordinate(variant); if(coord)pushVariantLine(prefix+coord);
+    if(variant.genomicHgvs)pushVariantLine(prefix+variant.genomicHgvs);
+    if(variant.transcript&&variant.codingHgvs)pushVariantLine(prefix+variant.transcript+":"+variant.codingHgvs);
+    else if(variant.gene&&variant.codingHgvs)pushVariantLine(prefix+variant.gene+" "+variant.codingHgvs);
+    if(variant.rnaHgvs)pushVariantLine(prefix+variant.rnaHgvs);
+    if(variant.proteinHgvs)pushVariantLine(prefix+variant.proteinHgvs);
+    const zg=[]; if(variant.zygosity)zg.push(variant.zygosity); if(variant.inheritance)zg.push(variant.inheritance); if(variant.phase)zg.push("phase "+variant.phase); if(zg.length)pushVariantLine(prefix+zg.join(", "));
+    if(variant.classification)pushVariantLine(prefix+variant.classification);
+    if(variant.geneticsFreeText)pushVariantLine(prefix+variant.geneticsFreeText);
   });
   return out;
 }
@@ -1612,6 +1620,28 @@ function setUnionField(unionId,key,value){
   liveRefresh();
   if(key==="consanguineous"||key==="noChildren"||key==="infertility"||key==="relationshipStatus")renderInspector();
 }
+function relationshipPartnerExists(personId,partnerId){
+  return !!unionsOf(personId).find(union=>partnerIn(union,personId)===partnerId);
+}
+function addRelationshipToExisting(partnerId){
+  const person=model.people[ui.sel],partner=model.people[partnerId];
+  if(!person||!partner||person.id===partner.id)return;
+  if(relationshipPartnerExists(person.id,partner.id))return;
+  commit(()=>{newUnion(person.id,partner.id);});
+}
+function addNewRelationshipPartner(){
+  const person=model.people[ui.sel]; if(!person)return;
+  commit(()=>{
+    const shape=genderShape(person),sex=shape==="male"?"female":shape==="female"?"male":"unknown";
+    const partner=newPerson(sex);
+    newUnion(person.id,partner);
+    ui.sel=partner;
+  });
+}
+function addChildToRelationship(unionId){
+  const union=model.unions[unionId]; if(!union)return;
+  commit(()=>{const child=newPerson("unknown");model.unions[unionId].children.push(child);ui.sel=child;});
+}
 function normaliseTwinType(value){
   const type=String(value||"").toUpperCase();
   return ["MZ","DZ","UNKNOWN"].includes(type)?type:"";
@@ -1667,11 +1697,14 @@ function activeGeneticVariantIndex(person){
   return Math.max(0,Math.min(count-1,Number.isFinite(stored)?stored:0));
 }
 function geneticVariantForEditing(person,index){
-  const variants=Array.isArray(person.variants)?person.variants:[];
-  return variants[index]?normaliseGeneticVariant(variants[index],index,person.id):emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
+  const source=Array.isArray(person.variants)&&person.variants.length?person.variants:personGeneticVariants(person);
+  return source[index]?normaliseGeneticVariant(source[index],index,person.id):emptyGeneticVariant({id:nextGeneticVariantId(person,index)});
 }
 function ensureEditableVariant(person,index){
-  if(!Array.isArray(person.variants))person.variants=[];
+  if(!Array.isArray(person.variants)||!person.variants.length){
+    const existing=personGeneticVariants(person);
+    person.variants=existing.length?existing.map((variant,variantIndex)=>normaliseGeneticVariant(variant,variantIndex,person.id)):[];
+  }
   while(person.variants.length<=index)person.variants.push(emptyGeneticVariant({id:nextGeneticVariantId(person,person.variants.length)}));
   person.variants[index]=normaliseGeneticVariant(person.variants[index],index,person.id);
   return person.variants[index];
@@ -1785,12 +1818,23 @@ function relationshipCard(person,union,index,total){
       <option value="paternal" ${role==="paternal"?"selected":""}>Paternal · PAT</option>
       <option value="maternal" ${role==="maternal"?"selected":""}>Maternal · MAT</option>
     </select></div>`:""}
+    <div class="field"><button type="button" class="hbtn" onclick="addChildToRelationship('${union.id}')">Add child to this relationship</button></div>
+  </div>`;
+}
+function relationshipAddCard(person){
+  const candidates=P().filter(candidate=>candidate.id!==person.id&&!relationshipPartnerExists(person.id,candidate.id));
+  const options=candidates.map(candidate=>`<option value="${esc(candidate.id)}">${esc([candidate.name||pedId(candidate),candidate.id].filter(Boolean).join(" · "))}</option>`).join("");
+  return `<div class="relationship-card relationship-add-card"><h4>Add relationship</h4>
+    <div class="help-text">Create a partner relationship with an existing person in this pedigree, or add a new partner.</div>
+    ${candidates.length?`<div class="field"><label>Existing individual</label><select>${options}</select></div>
+      <div class="field"><button type="button" class="hbtn" onclick="addRelationshipToExisting(this.closest('.relationship-add-card').querySelector('select').value)">Add selected person as partner</button></div>`:`<div class="help-text">No other individual is available to connect to this person.</div>`}
+    <div class="field"><button type="button" class="hbtn" onclick="addNewRelationshipPartner()">Add new partner</button></div>
   </div>`;
 }
 function relationshipFields(person){
   const unions=unionsOf(person.id);
-  if(!unions.length)return `<div class="help-text">No partner or parental relationship is recorded for this individual.</div>`;
-  return unions.map((union,index)=>relationshipCard(person,union,index,unions.length)).join("");
+  const recorded=unions.length?unions.map((union,index)=>relationshipCard(person,union,index,unions.length)).join(""):`<div class="help-text">No partner or parental relationship is recorded for this individual.</div>`;
+  return recorded+relationshipAddCard(person);
 }
 function relationshipSummary(person){
   const parts=[];
@@ -3616,6 +3660,8 @@ init();
 </script>
   </div>
 </main>
+
+
 
 
 
