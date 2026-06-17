@@ -1771,6 +1771,41 @@ function addChildToRelationship(unionId){
   const union=model.unions[unionId]; if(!union)return;
   commit(()=>{const child=newPerson("unknown");model.unions[unionId].children.push(child);ui.sel=child;});
 }
+function setChildParents(childId,parentA,parentB){
+  const child=model.people[childId];
+  const a=parentA||null,b=parentB||null;
+  if(!child)return;
+  if((a&&a===childId)||(b&&b===childId)||(a&&b&&a===b))return;
+  commit(()=>{
+    U().forEach(union=>{union.children=union.children.filter(id=>id!==childId);});
+    if(!a&&!b)return;
+    let target=U().find(union=>((union.a||null)===a&&(union.b||null)===b)||((union.a||null)===b&&(union.b||null)===a));
+    if(!target){
+      const unionId=newUnion(a,b);
+      target=model.unions[unionId];
+    }
+    if(!target.children.includes(childId))target.children.push(childId);
+    fillMissingParentRoles(target);
+    ui.sel=childId;
+  });
+}
+function setChildParentsFromPanel(button){
+  const card=button.closest(".parentage-card");
+  if(!card)return;
+  setChildParents(button.dataset.child||"",card.querySelector('[data-parent-slot="a"]')?.value||"",card.querySelector('[data-parent-slot="b"]')?.value||"");
+}
+function moveChildToRelationship(childId,unionId){
+  const child=model.people[childId],target=model.unions[unionId];
+  if(!child||!target)return;
+  commit(()=>{
+    U().forEach(union=>{union.children=union.children.filter(id=>id!==childId);});
+    if(!target.children.includes(childId))target.children.push(childId);
+    ui.sel=childId;
+  });
+}
+function moveChildToRelationshipFromSelect(select){
+  moveChildToRelationship(select.dataset.child||"",select.value||"");
+}
 function normaliseTwinType(value){
   const type=String(value||"").toUpperCase();
   return ["MZ","DZ","UNKNOWN"].includes(type)?type:"";
@@ -1928,6 +1963,30 @@ function unionStatusField(union){
     <option value="unknown" ${status==="unknown"?"selected":""}>Unknown</option>
   </select></div>`;
 }
+function personParentOptions(selectedId,excludeId){
+  return `<option value="" ${!selectedId?"selected":""}>Not recorded</option>`+
+    P().filter(candidate=>candidate.id!==excludeId).map(candidate=>`<option value="${esc(candidate.id)}" ${candidate.id===selectedId?"selected":""}>${esc([candidate.name||pedId(candidate),candidate.id].filter(Boolean).join(" · "))}</option>`).join("");
+}
+function parentageFields(person){
+  const parentUnion=parentUnionOf(person.id);
+  if(!parentUnion)return "";
+  const parentA=model.people[parentUnion.a],parentB=model.people[parentUnion.b];
+  const summary=[parentA?(parentA.name||pedId(parentA)):"not recorded",parentB?(parentB.name||pedId(parentB)):"not recorded"].join(" + ");
+  return `<div class="relationship-card parentage-card"><h4>Parentage · ${esc(summary)}</h4>
+    <div class="help-text">Change this individual's recorded parents by assigning them to a parent pair. Existing import/export semantics are preserved by moving this individual between relationship child lists.</div>
+    <div class="field"><label>Parent 1</label><select data-parent-slot="a">${personParentOptions(parentUnion.a,person.id)}</select></div>
+    <div class="field"><label>Parent 2</label><select data-parent-slot="b">${personParentOptions(parentUnion.b,person.id)}</select></div>
+    <div class="field"><button type="button" class="hbtn" data-child="${esc(person.id)}" onclick="setChildParentsFromPanel(this)">Update recorded parents</button></div>
+  </div>`;
+}
+function relationshipMoveChildField(person,union,child){
+  const options=unionsOf(person.id).map(candidate=>{
+    const partner=model.people[partnerIn(candidate,person.id)];
+    const label=[partner?partner.name||pedId(partner):"Single recorded parent",candidate.children.includes(child.id)?"current":""].filter(Boolean).join(" · ");
+    return `<option value="${esc(candidate.id)}" ${candidate.id===union.id?"selected":""}>${esc(label)}</option>`;
+  }).join("");
+  return `<div class="field"><label>Recorded parent relationship for ${esc(child.name||pedId(child))}</label><select data-child="${esc(child.id)}" onchange="moveChildToRelationshipFromSelect(this)">${options}</select></div>`;
+}
 function relationshipCard(person,union,index,total){
   const partner=model.people[partnerIn(union,person.id)];
   const endpoint=union.a===person.id?"a":"b";
@@ -1947,6 +2006,7 @@ function relationshipCard(person,union,index,total){
       <option value="paternal" ${role==="paternal"?"selected":""}>Paternal · PAT</option>
       <option value="maternal" ${role==="maternal"?"selected":""}>Maternal · MAT</option>
     </select></div>`:""}
+    ${children.length&&unionsOf(person.id).length>1?children.map(child=>relationshipMoveChildField(person,union,child)).join(""):""}
     <div class="field"><button type="button" class="hbtn" onclick="addChildToRelationship('${union.id}')">Add child to this relationship</button></div>
   </div>`;
 }
@@ -1962,8 +2022,9 @@ function relationshipAddCard(person){
 }
 function relationshipFields(person){
   const unions=unionsOf(person.id);
-  const recorded=unions.length?unions.map((union,index)=>relationshipCard(person,union,index,unions.length)).join(""):`<div class="help-text">No partner or parental relationship is recorded for this individual.</div>`;
-  return recorded+relationshipAddCard(person);
+  const parentage=parentageFields(person);
+  const recorded=unions.length?unions.map((union,index)=>relationshipCard(person,union,index,unions.length)).join(""):`<div class="help-text">No partner relationship is recorded for this individual.</div>`;
+  return parentage+recorded+relationshipAddCard(person);
 }
 function relationshipSummary(person){
   const parts=[];
@@ -3789,6 +3850,7 @@ init();
 </script>
   </div>
 </main>
+
 
 
 
