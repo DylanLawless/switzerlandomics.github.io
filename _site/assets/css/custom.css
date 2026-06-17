@@ -217,23 +217,47 @@
 
 
 /* Pedigree export usage counter and responsive app bar */
+/* Pedigree export usage counter and responsive app bar */
 
-.pedigree-appbar {
+.pedigree-page .pedigree-appbar {
   flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
   min-width: 0;
 }
 
-.pedigree-appbar > * {
+.pedigree-page .pedigree-appbar > * {
   flex: 0 0 auto;
 }
 
-.pedigree-appbar .brand {
+.pedigree-page .pedigree-appbar .brand {
   min-width: 0;
 }
 
-.pedigree-appbar .spacer {
-  flex:0 0 .75rem;
-  min-width: 1rem;
+.pedigree-page .pedigree-appbar .spacer {
+  flex: 0 0 0.5rem;
+  min-width: 0;
+  width: 0.5rem;
+}
+
+.pedigree-page .save-state {
+  font-size: .6875rem;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.pedigree-page .save-state .save-dot {
+  flex: 0 0 7px;
+}
+
+.pedigree-page .save-state .save-txt {
+  display: inline-block;
+  width: 10ch;
+  white-space: nowrap;
 }
 
 .pedigree-proof-badge {
@@ -257,7 +281,10 @@
 }
 
 .pedigree-proof-badge-header {
-  flex: 0 1 auto;
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .pedigree-proof-dot {
@@ -298,7 +325,7 @@
   right: 0;
   z-index: 60;
   width: max-content;
-  max-width: min(320px, calc(100vw - 2rem));
+  max-width: 270px;
   padding: .55rem .65rem;
   border: 1px solid var(--pedigree-border, #dcdcdc);
   border-radius: 6px;
@@ -309,6 +336,7 @@
   font-weight: 600;
   line-height: 1.35;
   white-space: normal;
+  overflow-wrap: normal;
   opacity: 0;
   pointer-events: none;
   transform: translateY(-2px);
@@ -323,25 +351,25 @@
 }
 
 @media (max-width: 900px) {
-  .pedigree-appbar {
+  .pedigree-page .pedigree-appbar {
     gap: 8px;
     align-items: flex-start;
   }
 
-  .pedigree-appbar .brand {
+  .pedigree-page .pedigree-appbar .brand {
     flex: 1 1 auto;
   }
 
-  .pedigree-appbar .spacer {
+  .pedigree-page .pedigree-appbar .spacer {
     display: none;
   }
 
-  .pedigree-guide-link {
+  .pedigree-page .pedigree-guide-link {
     flex: 1 1 100%;
     min-width: 0;
   }
 
-  .pedigree-appbar .hbtn {
+  .pedigree-page .pedigree-appbar .hbtn {
     flex: 0 1 auto;
   }
 
@@ -351,15 +379,15 @@
 }
 
 @media (max-width: 560px) {
-  .pedigree-appbar {
+  .pedigree-page .pedigree-appbar {
     padding: 10px;
   }
 
-  .pedigree-appbar .brand {
+  .pedigree-page .pedigree-appbar .brand {
     flex: 1 1 100%;
   }
 
-  .pedigree-appbar .hbtn {
+  .pedigree-page .pedigree-appbar .hbtn {
     flex: 1 1 calc(50% - 8px);
     justify-content: center;
   }
@@ -380,39 +408,4 @@
   .pedigree-proof-badge:focus-within .pedigree-proof-tooltip {
     transform: translate(-50%, 0);
   }
-}
-
-.save-state{
-  font-size:.6875rem;
-  color:var(--text-muted);
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  flex:0 0 auto;
-  white-space:nowrap;
-}
-
-.save-state .save-dot{
-  flex:0 0 7px;
-}
-
-.save-state .save-txt{
-  display:inline-block;
-  width:10ch;
-  white-space:nowrap;
-}
-
-.pedigree-proof-badge-header{
-  display:inline-flex;
-  align-items:center;
-  flex:0 0 auto;
-  white-space:nowrap;
-}
-
-.pedigree-proof-tooltip{
-  width:max-content;
-  max-width:270px;
-  white-space:normal;
-  overflow-wrap:normal;
-  line-height:1.35;
 }
