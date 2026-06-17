@@ -232,7 +232,7 @@
 }
 
 .pedigree-appbar .spacer {
-  flex: 1 1 1.5rem;
+  flex:0 0 .75rem;
   min-width: 1rem;
 }
 
@@ -380,4 +380,39 @@
   .pedigree-proof-badge:focus-within .pedigree-proof-tooltip {
     transform: translate(-50%, 0);
   }
+}
+
+.save-state{
+  font-size:.6875rem;
+  color:var(--text-muted);
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  flex:0 0 auto;
+  white-space:nowrap;
+}
+
+.save-state .save-dot{
+  flex:0 0 7px;
+}
+
+.save-state .save-txt{
+  display:inline-block;
+  width:10ch;
+  white-space:nowrap;
+}
+
+.pedigree-proof-badge-header{
+  display:inline-flex;
+  align-items:center;
+  flex:0 0 auto;
+  white-space:nowrap;
+}
+
+.pedigree-proof-tooltip{
+  width:max-content;
+  max-width:270px;
+  white-space:normal;
+  overflow-wrap:normal;
+  line-height:1.35;
 }

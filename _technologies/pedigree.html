@@ -628,7 +628,14 @@ version: 1.0.4
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Tutorial</span><span class="guide-long"></span>
     </a>
+
+
     <div class="spacer"></div>
+    <div class="save-state" id="saveState" aria-live="polite">
+      <span class="save-dot"></span>
+      <span class="save-txt">Auto save</span>
+    </div>
+
     <button class="hbtn" id="undoBtn" onclick="undo()" title="Undo (Ctrl+Z)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>Undo</button>
     <button class="hbtn" id="redoBtn" onclick="redo()" title="Redo (Ctrl+Shift+Z)">
@@ -648,7 +655,7 @@ version: 1.0.4
       <span class="pedigree-proof-separator" aria-hidden="true"></span>
       <strong data-pedigree-count-total>...</strong>
       <span class="pedigree-proof-tooltip" id="pedigree-export-counter-help" role="tooltip">
-        Public counter of Pedigree export actions. Project data remains in the browser.
+        Public counter of Pedigree export actions.<br>Project data remains in the browser.
       </span>
     </span>
   </header>
@@ -3932,13 +3939,66 @@ function openDialog(title,body,foot){ closeDialog();
 function closeDialog(){ const s=document.getElementById("scrim"); if(s)s.remove(); }
 
 /* ===== autosave ===== */
-function markDirty(){ const caseInput=document.getElementById("caseName"); if(caseInput)model.caseName=caseInput.value; setSave("dirty");
-  clearTimeout(saveTimer); saveTimer=setTimeout(()=>{try{localStorage.setItem("pedigree.v2",snapshot());setSave("saved");}catch(e){setSave("off");}},600); }
-function setSave(state){ const txt={dirty:"Saving…",saved:"Saved locally",off:"Local save unavailable"}[state]||state;
-  if(!saveEl){saveEl=document.createElement("div");saveEl.className="save-state";saveEl.innerHTML='<span class="save-dot"></span><span class="save-txt"></span>';
-    document.querySelector(".pedigree-appbar .spacer").after(saveEl);}
-  saveEl.querySelector(".save-dot").className="save-dot"+(state==="dirty"?" dirty":""); saveEl.querySelector(".save-txt").textContent=txt; }
-function tryRestore(){ try{const s=localStorage.getItem("pedigree.v2");if(s){const o=JSON.parse(s);model=o.model;uid=o.uid;view=o.view||view;ui.sel=o.sel||null;return true;}}catch(e){} return false; }
+function markDirty(){
+  const caseInput=document.getElementById("caseName");
+  if(caseInput)model.caseName=caseInput.value;
+
+  setSave("dirty");
+
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+    try{
+      localStorage.setItem("pedigree.v2",snapshot());
+      setSave("saved");
+    }catch(e){
+      setSave("off");
+    }
+  },600);
+}
+
+function setSave(state){
+  const txt={
+    dirty:"Saving…",
+    saved:"Saved locally",
+    off:"Save unavailable"
+  }[state]||state;
+
+  saveEl=document.getElementById("saveState");
+
+  if(!saveEl){
+    saveEl=document.createElement("div");
+    saveEl.className="save-state";
+    saveEl.id="saveState";
+    saveEl.setAttribute("aria-live","polite");
+    saveEl.innerHTML='<span class="save-dot"></span><span class="save-txt">Auto save</span>';
+
+    const spacer=document.querySelector(".pedigree-appbar .spacer");
+    if(spacer)spacer.after(saveEl);
+  }
+
+  if(!saveEl)return;
+
+  const dot=saveEl.querySelector(".save-dot");
+  const label=saveEl.querySelector(".save-txt");
+
+  if(dot)dot.className="save-dot"+(state==="dirty"?" dirty":"");
+  if(label)label.textContent=txt;
+}
+
+function tryRestore(){
+  try{
+    const s=localStorage.getItem("pedigree.v2");
+    if(s){
+      const o=JSON.parse(s);
+      model=o.model;
+      uid=o.uid;
+      view=o.view||view;
+      ui.sel=o.sel||null;
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
 
 function migrateModel(){
   model.schemaVersion=PEDIGREE_SCHEMA_VERSION;
