@@ -140,7 +140,6 @@
 
 
     <style>
-
  .pedigree-page{
   --pedigree-primary:#e5262f;
   --pedigree-primary-dark:#a01b16;
@@ -149,7 +148,6 @@
   --pedigree-soft:#f3f2f2;
   --pedigree-steel:#5c5a5a;
   --pedigree-border:#dcdcdc;
-
   --bg-app:var(--pedigree-soft);
   --bg-canvas:var(--pedigree-white);
   --bg-panel:var(--pedigree-white);
@@ -185,10 +183,8 @@
 .pedigree-page button{font:inherit;cursor:pointer}
 .pedigree-page input,.pedigree-page select,.pedigree-page textarea{font:inherit;color:var(--text-primary)}
 .pedigree-page ::selection{background:var(--accent-soft)}
-
 .pedigree-page{width:100%;--acmg-red:var(--pedigree-primary);--acmg-red-dark:var(--pedigree-primary-dark);--acmg-black:var(--pedigree-black);--acmg-steel:var(--pedigree-steel);--acmg-soft:var(--pedigree-soft);--acmg-border:var(--pedigree-border);--acmg-surface:var(--pedigree-white);}
 .app{display:grid;grid-template-rows:auto minmax(720px,1fr) auto;min-height:calc(100vh - 8rem);border-top:2px solid var(--acmg-black);border-bottom:1px solid var(--acmg-border);background:var(--acmg-surface);}
-
 /* header */
 .pedigree-appbar{display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--bg-panel);
   border-bottom:1px solid var(--border-subtle);}
@@ -220,7 +216,6 @@
 .pedigree-guide-link svg{width:11px;height:11px;flex:0 0 auto}
 .pedigree-guide-link:hover{color:var(--accent-hover);border-bottom-width:2px}
 @media (max-width:1100px){.pedigree-guide-link .guide-long{display:none}}
-
 /* main grid */
 .main{display:grid;grid-template-columns:minmax(340px,24vw) minmax(0,1fr);min-height:0;background:var(--bg-app)}
 .panel{background:var(--bg-panel);min-height:0;display:flex;flex-direction:column;overflow:hidden}
@@ -231,7 +226,6 @@
 .empty-plot-action{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .empty-plot-action[hidden]{display:none}
 .empty-plot-action .bbtn{width:auto;pointer-events:auto;padding:10px 16px}
-
 /* navigator */
 .nav-section{border-bottom:1px solid var(--border-subtle)}
 .nav-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;font-size:.6875rem;
@@ -276,6 +270,7 @@
 .plot-controls .layout-field select,.plot-controls .layout-field input[type=range]{width:100%}
 .plot-controls .layout-ctl .row{margin:0;padding:0;display:flex;flex-direction:row;gap:8px;align-self:stretch;align-items:stretch;justify-content:flex-end}
 .plot-controls .layout-ctl .row .lbtn{width:auto;min-width:126px;justify-content:center;padding:8px 12px;white-space:nowrap}
+.plot-controls .layout-ctl .row .branch-theme-select{width:auto;min-width:170px;height:auto;padding:8px 10px;border:1px solid var(--border-default);border-radius:var(--r);background:var(--bg-panel);font-size:.75rem;font-weight:600}
 @media (max-width:1100px){
   .plot-controls .layout-ctl{grid-template-columns:repeat(3,minmax(0,1fr))}
   .plot-controls .layout-ctl .row{grid-column:1 / -1}
@@ -285,7 +280,6 @@
   .plot-controls .layout-ctl .row{justify-content:stretch;flex-wrap:wrap}
   .plot-controls .layout-ctl .row .lbtn{flex:1 1 150px}
 }
-
 /* ===== centre: document ===== */
 .document-col{min-height:0;display:flex;flex-direction:column;background:var(--bg-panel)}
 .doc-toolbar{display:flex;align-items:center;gap:10px;padding:8px 14px;background:var(--bg-panel);
@@ -303,10 +297,8 @@
 .tbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
 .tbtn svg{width:13px;height:13px}
 .doc-toolbar select{height:29px;border:1px solid var(--border-default);border-radius:var(--r);padding:0 6px;font-size:.75rem;background:var(--bg-panel)}
-
 .doc-scroll{overflow:auto;flex:1;min-height:0;padding:18px;display:flex;justify-content:center}
 .page{width:100%;max-width:100%}
-
 /* figure */
 .figure{background:var(--bg-canvas);border:1px solid var(--border-subtle);border-radius:var(--r-dialog);
   position:relative;overflow:hidden;height:56vh;transition:height .18s ease}
@@ -327,7 +319,6 @@
 .zoom-cluster button{width:28px;height:28px;border:1px solid var(--border-default);background:var(--bg-panel);
   border-radius:var(--r);color:var(--text-secondary);font-size:.875rem;line-height:1}
 .zoom-cluster button:hover{border-color:var(--border-strong);color:var(--text-primary)}
-
 /* report sections */
 .report{margin-top:18px}
 .rep-block{background:#fff;border:0;border-top:1px solid var(--border-strong);
@@ -351,7 +342,6 @@
 .rep-warn:last-child{border-bottom:0}
 .rep-warn .sev{width:6px;height:6px;border-radius:50%;margin-top:5px;flex:0 0 auto}
 .signoff-block{border-top:2px solid var(--text-secondary);background:#fff}
-
 .rep-records{display:grid;gap:12px;font-size:.75rem;line-height:1.35;}
 .rep-record{border-top:1px solid var(--border-default);padding-top:10px;}
 .rep-record:first-child{border-top:0;padding-top:0;}
@@ -368,7 +358,6 @@
   .rep-record-grid{grid-template-columns:1fr;}
   .rep-record-grid .rep-item-wide{grid-column:auto;}
 }
-
 /* inspector — collapsible flow */
 .insp-head{padding:13px 16px 11px;border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;gap:10px;justify-content:space-between}
 .insp-head .who{display:flex;align-items:center;gap:9px;min-width:0}
@@ -426,14 +415,12 @@
   border-radius:var(--r);padding:9px;font-size:.8125rem}
 .signoff-btn:hover{filter:brightness(1.08)}
 .signoff-btn:disabled{opacity:.5;cursor:default}
-
 /* context bar */
 .context{display:flex;align-items:center;gap:16px;padding:0 16px;background:var(--bg-panel);
   border-top:1px solid var(--border-subtle);font-size:.75rem;color:var(--text-muted)}
 .context .cx{display:flex;align-items:center;gap:6px}
 .context .cx strong{color:var(--text-secondary);font-weight:600}
 .context .spacer{flex:1}
-
 .pedigree-legal-notice{
   display:flex;
   align-items:flex-start;
@@ -444,49 +431,40 @@
   font-size:.6875rem;
   line-height:1.45;
 }
-
 .pedigree-legal-notice p{
   margin:0;
   max-width:900px;
 }
-
 .pedigree-legal-links{
   display:flex;
   flex:0 0 auto;
   gap:14px;
   white-space:nowrap;
 }
-
 .pedigree-legal-links a{
   color:var(--accent);
   text-decoration:none;
 }
-
 .pedigree-legal-links a:hover{
   text-decoration:underline;
 }
-
 @media (max-width:760px){
   .pedigree-legal-notice{
     display:block;
   }
-
   .pedigree-legal-links{
     margin-top:7px;
   }
 }
-
 @media print{
   .pedigree-legal-notice{
     display:none!important;
   }
 }
-
 .pill{padding:2px 9px;border-radius:999px;font-size:.6875rem;font-weight:600;border:1px solid transparent}
 .pill.warn{background:var(--warning-soft);color:var(--warning);border-color:var(--warning-border)}
 .pill.err{background:var(--error-soft);color:var(--error);border-color:var(--error-border)}
 .pill.ok{background:var(--success-soft);color:var(--success);border-color:var(--success-border)}
-
 /* dialog */
 .scrim{position:fixed;inset:0;background:rgba(17,24,39,.35);display:flex;align-items:center;justify-content:center;z-index:50}
 .dialog{background:var(--bg-panel);border-radius:var(--r-dialog);width:min(560px,92vw);max-height:86vh;overflow:auto;
@@ -505,7 +483,6 @@
 .tmpl-card .tc-name{font-weight:600;font-size:.8125rem}
 .tmpl-card .tc-desc{font-size:.6875rem;color:var(--text-muted);margin-top:3px;line-height:1.4}
 .exp-row{display:flex;gap:10px;flex-wrap:wrap}.exp-row>.field{flex:1;min-width:120px}
-
 @media print{
   .app{display:block;height:auto}
   .pedigree-appbar,.navigator,.inspector,.context,.doc-toolbar,.float-toolbar,.zoom-cluster,.fig-cap{display:none!important}
@@ -515,7 +492,6 @@
   .rep-block{break-inside:avoid;box-shadow:none}
   .page{max-width:none}
 }
-
 /* Pedigree application shell and responsive layout */
  /* --pedigree-shell-max:1720px; */
 .pedigree-page{
@@ -525,55 +501,45 @@
   margin:0;
   padding:clamp(1.25rem,2.5vw,2.5rem) clamp(1rem,3vw,3.5rem) 0;
 }
-
 .pedigree-page .pedigree-app-frame{
   width:100%;
   max-width:var(--pedigree-shell-max);
   margin-right:auto;
   margin-left:auto;
 }
-
 .pedigree-page .app{
   margin-top:clamp(.75rem,1.6vw,1.5rem);
   border-top:1px solid var(--border-strong);
 }
-
 .pedigree-page .inspector-flow-head{
   padding:12px 16px;
   border-bottom:1px solid var(--border-subtle);
 }
-
 .pedigree-page .inspector-flow-head strong{
   display:block;
 }
-
 .pedigree-page .inspector-flow-head span{
   display:block;
   color:var(--text-muted);
   margin-top:2px;
 }
-
 .pedigree-page .person-selector{
   padding:12px 16px;
   border-bottom:1px solid var(--border-subtle);
 }
-
 .pedigree-page .person-selector label{
   display:block;
   font-weight:600;
   margin-bottom:4px;
 }
-
 .pedigree-page .person-selector select{
   width:100%;
 }
-
 .pedigree-page .person-empty{
   padding:12px 16px;
   color:var(--text-muted);
   border-bottom:1px solid var(--border-subtle);
 }
-
 .pedigree-page .inspector-divider{
   padding:10px 16px;
   background:var(--pedigree-black)!important;
@@ -583,24 +549,19 @@
   text-transform:uppercase;
   letter-spacing:.04em;
 }
-
 .main{
   grid-template-columns:minmax(340px,24%) minmax(0,1fr);
   grid-template-areas:"inspector document";
 }
-
 .navigator{
   grid-area:navigator;
 }
-
 .document-col{
   grid-area:document;
 }
-
 .inspector{
   grid-area:inspector;
 }
-
 .figure{
   height:68vh;
   min-height:580px;
@@ -609,11 +570,9 @@
   overflow:hidden;
   transition:height .18s ease;
 }
-
 .document-col.focus .figure{
   height:min(86vh,1200px);
 }
-
 .float-toolbar{
   left:12px;
   top:50%;
@@ -621,89 +580,74 @@
   transform:translateY(-50%);
   flex-direction:column;
 }
-
 .float-toolbar .sep{
   width:auto;
   height:1px;
   margin:2px 3px;
 }
-
 .scrim{
   background:rgba(47,47,65,.62);
   backdrop-filter:blur(2px);
 }
-
 .dialog{
   background:#fff;
   opacity:1;
   isolation:isolate;
   border:1px solid var(--border-default);
 }
-
 .isec-head{
   background:var(--pedigree-black);
   color:var(--pedigree-white);
 }
-
 .isec-head:hover,
 .isec.collapsed .isec-head:hover{
   background:var(--pedigree-black);
 }
-
 .isec-head .sum,
 .isec-head .chev{
   color:var(--pedigree-white);
   opacity:.82;
 }
-
 .rep-record-title{
   margin:0;
   font:inherit;
   font-weight:600;
   color:var(--text-primary);
 }
-
 .rep-legend{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(155px,1fr));
   gap:6px 14px;
   break-inside:avoid;
 }
-
 .main.plot-expanded{
   grid-template-columns:minmax(340px,1fr);
   grid-template-areas:
     "document"
     "inspector";
 }
-
 .main.plot-expanded .inspector{
   max-height:44rem;
   border-top:1px solid var(--border-subtle);
 }
-
 @media (min-width:1500px){
   .main{
     grid-template-columns:minmax(380px,22%) minmax(0,1fr);
   }
 }
-
 @media (max-width:1280px){
   .main,
   .main.plot-expanded{
     display:flex;
     flex-direction:column;
   }
-
   .document-col{
     order:1;
     min-width:0;
   }
-
   .inspector{
     order:2;
   }
-
   .main .inspector,
   .main.plot-expanded .inspector{
     display:flex;
@@ -715,33 +659,27 @@
     border-top:1px solid var(--border-subtle);
   }
 }
-
 @media (max-width:760px){
   .pedigree-page{
     padding:1rem .75rem 0;
   }
-
   .figure{
     height:68vh;
     min-height:520px;
   }
-
   .app{
     display:block;
     min-height:0;
   }
-
   .context{
     min-height:36px;
     flex-wrap:wrap;
   }
 }
-
 @media print{
   .rep-block{
     break-inside:auto;
   }
-
   .rep-legend{
     break-inside:avoid;
   }
@@ -767,14 +705,11 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Tutorial</span><span class="guide-long"></span>
     </a>
-
-
     <div class="spacer"></div>
     <div class="save-state" id="saveState" aria-live="polite">
       <span class="save-dot"></span>
       <span class="save-txt">Auto save</span>
     </div>
-
     <button class="hbtn" id="undoBtn" onclick="undo()" title="Undo (Ctrl+Z)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>Undo</button>
     <button class="hbtn" id="redoBtn" onclick="redo()" title="Redo (Ctrl+Shift+Z)">
@@ -798,7 +733,6 @@
       </span>
     </span>
   </header>
-
   <div class="main" id="main">
     <section class="document-col" id="documentCol">
       <div class="doc-scroll" id="docScroll">
@@ -835,10 +769,8 @@
         </div>
       </div>
     </section>
-
     <aside class="panel inspector"><div class="panel-scroll" id="inspectorScroll"><div id="inspBody"></div><div class="inspector-nav" id="navScroll"></div></div></aside>
   </div>
-
   <footer class="context">
     <div class="cx">Selection: <strong id="cxSel">none</strong></div>
     <div class="cx">People: <strong id="cxCount">0</strong></div>
@@ -847,7 +779,6 @@
     <span class="pill ok" id="cxWarn">No issues</span>
   </footer>
 </div>
-
 <section class="pedigree-legal-notice" aria-label="Pedigree legal information">
   <p>
     Pedigree is a research and documentation tool. Project data is processed
@@ -855,7 +786,6 @@
     use of generated outputs is permitted. The application, source code and
     interface may not be copied or redistributed.
   </p>
-
   <nav class="pedigree-legal-links" aria-label="Pedigree legal links">
     <a href="/terms/pedigree/">
       Terms of use
@@ -865,7 +795,6 @@
     </a>
   </nav>
 </section>
-
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
 const PEDIGREE_SCHEMA_VERSION=7;
@@ -878,11 +807,9 @@ const INTEROP_EXT=INTEROP_BASE+"/StructureDefinition/";
 const INTEROP_CODES=INTEROP_BASE+"/CodeSystem/pedigree";
 let uid=1; const nid=p=>p+(uid++);
 let model, view, ui, history=[], future=[], saveTimer=null, saveEl=null, pendingPlinkImport=null;
-
 function blankModel(t){ return {schemaVersion:PEDIGREE_SCHEMA_VERSION,caseName:"Case PD-0001", template:t||"rare",
   meta:{disease:"",indication:"",reviewer:"",institution:"",date:"",lastExportedAt:"",lastExportFormat:"",importWarnings:[]},
   interoperability:{plinkFamilyId:"",lastImportedFormat:"",lastImportedAt:""},people:{}, unions:{}}; }
-
 const P=()=>Object.values(model.people);
 const U=()=>Object.values(model.unions);
 const unionsOf=id=>U().filter(u=>u.a===id||u.b===id);
@@ -890,7 +817,6 @@ const partnerIn=(u,id)=>u.a===id?u.b:u.a;
 const parentUnionOf=id=>U().find(u=>u.children.includes(id));
 const parentsOf=id=>{const u=parentUnionOf(id);return u?[u.a,u.b].filter(Boolean):[];};
 const childrenOf=id=>{const o=[];unionsOf(id).forEach(u=>u.children.forEach(c=>o.push(c)));return o;};
-
 const GENETIC_VARIANT_FIELDS=["gene","variantType","chromosome","genomicStart","genomicEnd","ref","alt","genomicHgvs","codingHgvs","rnaHgvs","proteinHgvs","assembly","transcript","zygosity","inheritance","phase","classification","geneticsFreeText"];
 const GENETIC_VARIANT_DEFAULTS=Object.freeze({gene:"",variantType:"",chromosome:"",genomicStart:"",genomicEnd:"",ref:"",alt:"",genomicHgvs:"",codingHgvs:"",rnaHgvs:"",proteinHgvs:"",assembly:"GRCh38",transcript:"",zygosity:"",inheritance:"",phase:"",classification:"",geneticsFreeText:""});
 function nextGeneticVariantId(person,index){
@@ -985,7 +911,6 @@ function hasCompoundHetPhaseEvidence(variant,variants){
   if(hasReciprocalCompoundHetOrigin(variant,variants))return true;
   return !!(variant.geneticsFreeText||variant.codingHgvs||variant.genomicHgvs||variant.proteinHgvs);
 }
-
 const PLINK_PARENT_ROLES=new Set(["paternal","maternal","unspecified"]);
 const GENETIC_SEX_VALUES=new Set(["male","female","unknown"]);
 const SYMBOL_SHAPE_SOURCES=new Set(["gender","genetic-sex"]);
@@ -1064,7 +989,6 @@ function syncParentRolesFromEndpointHints(union){
     fillMissingParentRoles(union);
   }
 }
-
 function newPerson(sex,extra={}){ const id=nid("p");
   const legacySex=normaliseGeneticSex(sex),defaultGender=legacySex==="male"?"man":legacySex==="female"?"woman":"unknown";
   const defaultGeneticSex=Object.prototype.hasOwnProperty.call(extra,"geneticSex")?normaliseGeneticSex(extra.geneticSex):legacySex;
@@ -1087,7 +1011,6 @@ function newUnion(a,b,extra={}){ const id=nid("u"),providedRoles=extra.parentRol
   model.unions[id]=Object.assign({id,stableId:id,a,b,children:[],parentRoles:mergeParentRoles(a,b,providedRoles),consanguineous:false,relationshipStatus:"current",consanguinityDegree:"",noChildren:false,infertility:false,infertilityReason:""},extra);
   model.unions[id].parentRoles=mergeParentRoles(a,b,providedRoles);
   return id; }
-
 /* ===== undo ===== */
 const snapshot=()=>JSON.stringify({model,uid,view,sel:ui.sel});
 function commit(fn){ history.push(snapshot()); if(history.length>120)history.shift(); future=[]; fn(); afterChange(); }
@@ -1095,23 +1018,82 @@ function restore(s){ const o=JSON.parse(s); model=o.model; uid=o.uid; view=o.vie
 function undo(){ if(!history.length)return; future.push(snapshot()); restore(history.pop()); }
 function redo(){ if(!future.length)return; history.push(snapshot()); restore(future.pop()); }
 function afterChange(){ computeLayout(); render(); markDirty(); }
-
 /* ===== generations ===== */
+function layoutHasLineageContext(id){
+  if(!id||!model.people[id])return false;
+  return !!parentUnionOf(id)||childrenOf(id).length>0;
+}
+function layoutPersonHasDescendant(sourceId,targetId){
+  if(!sourceId||!targetId||sourceId===targetId)return false;
+  const seen=new Set();
+  const stack=childrenOf(sourceId);
+  while(stack.length){
+    const id=stack.shift();
+    if(!id||seen.has(id))continue;
+    if(id===targetId)return true;
+    seen.add(id);
+    childrenOf(id).forEach(childId=>{if(!seen.has(childId))stack.push(childId);});
+  }
+  return false;
+}
+function layoutUnionIsAncestralPair(union){
+  if(!union||!union.a||!union.b)return false;
+  return layoutPersonHasDescendant(union.a,union.b)||layoutPersonHasDescendant(union.b,union.a);
+}
+function layoutPartnersShouldShareGeneration(union,gen){
+  const a=model.people[union.a],b=model.people[union.b];
+  if(!a||!b)return false;
+  if(layoutUnionIsAncestralPair(union))return false;
+  return true;
+}
 function computeGenerations(){
-  const gen={}; P().forEach(p=>gen[p.id]=0); const n=P().length;
-  for(let it=0;it<n+3;it++){ let ch=false;
-    U().forEach(u=>{const b=Math.max(gen[u.a]||0,gen[u.b]||0);
-      u.children.forEach(c=>{if((gen[c]||0)<b+1){gen[c]=b+1;ch=true;}});});
-    U().forEach(u=>{const g=Math.max(gen[u.a]||0,gen[u.b]||0);
-      if((gen[u.a]||0)<g){gen[u.a]=g;ch=true;} if((gen[u.b]||0)<g){gen[u.b]=g;ch=true;}});
-    if(!ch)break; }
+  const gen={};
+  P().forEach(p=>{gen[p.id]=0;});
+  const n=P().length;
+  const syncPartners=()=>{
+    let changed=false;
+    U().forEach(union=>{
+      const a=model.people[union.a],b=model.people[union.b];
+      if(!a||!b)return;
+      if(!layoutPartnersShouldShareGeneration(union,gen))return;
+      const g=Math.max(gen[a.id]||0,gen[b.id]||0);
+      if((gen[a.id]||0)<g){gen[a.id]=g;changed=true;}
+      if((gen[b.id]||0)<g){gen[b.id]=g;changed=true;}
+    });
+    return changed;
+  };
+  for(let it=0;it<n+6;it++){
+    let changed=false;
+    U().forEach(union=>{
+      const a=model.people[union.a],b=model.people[union.b];
+      if(!a&&!b)return;
+      const parentGen=Math.max(a?gen[a.id]||0:0,b?gen[b.id]||0:0);
+      (Array.isArray(union.children)?union.children:[]).forEach(childId=>{
+        if(!model.people[childId])return;
+        if((gen[childId]||0)<parentGen+1){gen[childId]=parentGen+1;changed=true;}
+      });
+    });
+    if(syncPartners())changed=true;
+    U().forEach(union=>{
+      const parents=[union.a,union.b].filter(id=>id&&model.people[id]);
+      if(!parents.length||!Array.isArray(union.children)||!union.children.length)return;
+      const childGens=union.children.map(id=>model.people[id]?gen[id]:null).filter(Number.isFinite);
+      if(!childGens.length)return;
+      const parentGen=Math.max(0,Math.max(...childGens)-1);
+      parents.forEach(id=>{
+        if((gen[id]||0)<parentGen){gen[id]=parentGen;changed=true;}
+      });
+    });
+    if(syncPartners())changed=true;
+    if(!changed)break;
+  }
+  const minGen=Math.min(0,...Object.values(gen));
+  if(minGen!==0)Object.keys(gen).forEach(id=>{gen[id]-=minGen;});
   return gen;
 }
-
-/* ===== layout (deterministic; honours pinned nodes) ===== */
+/* ===== layout (deterministic; layered family blocks; honours dragged nodes) ===== */
 const GENERATION_BASE_GAP=4;
 const GENERATION_LABEL_GAP=6;
-
 const LAYOUT_LIMITS=Object.freeze({
   genH:Object.freeze({min:40,max:280}),
   slot:Object.freeze({min:80,max:280})
@@ -1134,12 +1116,29 @@ const LAYOUT_EDGE_NODE_BUFFER=18;
 const LAYOUT_RELATIONSHIP_LIFT_MIN=58;
 const LAYOUT_RELAXATION_STEPS=8;
 const LAYOUT_GRID_DIVISIONS=2;
-
 function layoutNumber(value){
   const n=Number(value);
   return Number.isFinite(n)?n:null;
 }
-function layoutStableId(p){ return String(p?.stableId||p?.id||""); }
+function layoutGeneratedPedigreeIdText(value){
+  const text=String(value??"").trim();
+  if(!text)return false;
+  const token=text.replace(/^(?:p|person|individual|id)[_-]+/i,"").replace(/^generation[_-]+/i,"");
+  return /^[IVXLCDM]+[_-]\d+$/i.test(token);
+}
+function layoutPersonOrdinal(p){
+  const ids=Object.keys(model?.people||{});
+  const index=p?.id!=null?ids.indexOf(p.id):-1;
+  return index>=0?index:ids.length;
+}
+function layoutStableId(p){
+  const candidates=[p?.externalIds?.plinkIid,p?.sampleId,p?.stableId,p?.id,p?.label];
+  for(const value of candidates){
+    const text=String(value??"").trim();
+    if(text&&!layoutGeneratedPedigreeIdText(text))return text;
+  }
+  return "legacy-"+String(layoutPersonOrdinal(p)).padStart(6,"0");
+}
 function layoutComparePeople(a,b){
   const ao=layoutNumber(a?.birthOrder),bo=layoutNumber(b?.birthOrder);
   if(ao!=null&&bo!=null&&ao!==bo)return ao-bo;
@@ -1155,6 +1154,24 @@ function layoutNodeGap(){
   return Math.max(LAY.slot,LAY.sym+LAYOUT_NODE_BUFFER,labelMaxWidth()+LAYOUT_NODE_BUFFER);
 }
 function layoutPairGap(){ return Math.max(layoutNodeGap(),LAY.slot*1.05); }
+function layoutUnitGap(){ return Math.max(layoutNodeGap()*.56,LAY.sym+LAYOUT_NODE_BUFFER); }
+function layoutUnitParentUnionIds(unit){
+  const ids=new Set();
+  if(!unit||!Array.isArray(unit.ids))return ids;
+  unit.ids.forEach(id=>{
+    const union=parentUnionOf(id);
+    if(union)ids.add(union.id);
+  });
+  return ids;
+}
+function layoutUnitsShareParentUnion(a,b){
+  const aIds=layoutUnitParentUnionIds(a),bIds=layoutUnitParentUnionIds(b);
+  for(const id of aIds){if(bIds.has(id))return true;}
+  return false;
+}
+function layoutUnitSeparation(a,b){
+  return layoutUnitsShareParentUnion(a,b)?0:layoutUnitGap();
+}
 function layoutGridStep(){ return Math.max(20,LAY.slot/LAYOUT_GRID_DIVISIONS); }
 function layoutSnap(value){
   const step=layoutGridStep();
@@ -1166,16 +1183,6 @@ function layoutRelationshipLift(){
 function layoutMean(values){
   const clean=values.filter(Number.isFinite);
   return clean.length?clean.reduce((sum,value)=>sum+value,0)/clean.length:null;
-}
-function layoutSibshipSlots(children,parents){
-  if(!children.length)return [];
-  const parentXs=parents.map(p=>p._layoutX).filter(Number.isFinite);
-  const childCentre=layoutMean(children.map(p=>p._layoutX));
-  const centre=parentXs.length?layoutMean(parentXs):childCentre;
-  if(centre==null)return [];
-  const parentSpan=parentXs.length>=2?Math.max(...parentXs)-Math.min(...parentXs):0;
-  const gap=Math.max(layoutNodeGap(),parentSpan);
-  return children.map((child,index)=>({child,x:centre+(index-(children.length-1)/2)*gap}));
 }
 function layoutParentOrder(union){
   const ids=[union.a,union.b].filter(id=>id&&model.people[id]);
@@ -1196,133 +1203,264 @@ function layoutParentOrder(union){
 function layoutOrderedChildren(union){
   return (Array.isArray(union.children)?union.children:[]).map(id=>model.people[id]).filter(Boolean).sort(layoutComparePeople);
 }
-function layoutResolveGeneration(people,targetFor){
-  if(!people.length)return;
-  const gap=layoutNodeGap();
-  const ordered=[...people].sort((a,b)=>{
+function layoutSibshipSlots(children,parents){
+  if(!children.length)return [];
+  const parentXs=parents.map(p=>p._layoutX).filter(Number.isFinite);
+  const childCentre=layoutMean(children.map(p=>p._layoutX));
+  const centre=parentXs.length?layoutMean(parentXs):childCentre;
+  if(centre==null)return [];
+  const parentSpan=parentXs.length>=2?Math.max(...parentXs)-Math.min(...parentXs):0;
+  const gap=Math.max(layoutNodeGap(),parentSpan);
+  return children.map((child,index)=>({child,x:centre+(index-(children.length-1)/2)*gap}));
+}
+function layoutUnionSameGeneration(union){
+  const a=model.people[union.a],b=model.people[union.b];
+  return !!(a&&b&&a._gen===b._gen);
+}
+function layoutUnitRepresentative(unit){
+  return unit.ids.map(id=>model.people[id]).filter(Boolean).sort(layoutComparePeople)[0]||null;
+}
+function layoutCompareUnits(a,b){
+  const ac=Number.isFinite(a.centre)?a.centre:null,bc=Number.isFinite(b.centre)?b.centre:null;
+  if(ac!=null&&bc!=null&&ac!==bc)return ac-bc;
+  if(ac!=null&&bc==null)return -1;
+  if(ac==null&&bc!=null)return 1;
+  const ar=layoutUnitRepresentative(a),br=layoutUnitRepresentative(b);
+  if(ar&&br)return layoutComparePeople(ar,br);
+  return String(a.id).localeCompare(String(b.id),undefined,{numeric:true,sensitivity:"base"});
+}
+function layoutUnitScore(union){
+  const childCount=Array.isArray(union.children)?union.children.length:0;
+  let score=childCount?10000+childCount*100:500;
+  if(normaliseRelationshipStatus(union.relationshipStatus)==="current")score+=20;
+  [union.a,union.b].forEach(id=>{
+    const p=model.people[id];
+    if(!p)return;
+    if(p.proband)score+=12;
+    if(parentUnionOf(id))score+=8;
+    score+=childrenOf(id).length;
+  });
+  return score;
+}
+function layoutMakeUnit(id,g,ids,union,type){
+  const ordered=union?layoutParentOrder(union).filter(pid=>ids.includes(pid)):ids.slice().sort((a,b)=>layoutComparePeople(model.people[a],model.people[b]));
+  const unit={id,g,ids:ordered,union,type,width:layoutNodeGap(),centre:0,target:0};
+  const memberGap=unit.ids.length>1?layoutPairGap():0;
+  unit.width=layoutNodeGap()+Math.max(0,unit.ids.length-1)*memberGap;
+  unit.left=unit.centre-unit.width/2;
+  unit.right=unit.centre+unit.width/2;
+  return unit;
+}
+function layoutBuildUnits(byGen,generations){
+  const unitsByGen={},unitByPerson={};
+  generations.forEach(g=>{
+    const people=(byGen[g]||[]).slice().sort(layoutComparePeople);
+    const consumed=new Set();
+    const units=[];
+    const candidates=U()
+      .filter(union=>{
+        const a=model.people[union.a],b=model.people[union.b];
+        return a&&b&&a._gen===g&&b._gen===g;
+      })
+      .map(union=>({union,score:layoutUnitScore(union)}))
+      .sort((a,b)=>b.score-a.score||String(a.union.stableId||a.union.id).localeCompare(String(b.union.stableId||b.union.id),undefined,{numeric:true,sensitivity:"base"}));
+    candidates.forEach(({union})=>{
+      if(consumed.has(union.a)||consumed.has(union.b))return;
+      const hasChildren=Array.isArray(union.children)&&union.children.length>0;
+      const oneAnchored=layoutHasLineageContext(union.a)||layoutHasLineageContext(union.b);
+      if(!hasChildren&&!oneAnchored)return;
+      const unit=layoutMakeUnit(`unit-${union.id}`,g,[union.a,union.b],union,hasChildren?"familyCouple":"partnerCouple");
+      units.push(unit);
+      unit.ids.forEach(id=>consumed.add(id));
+    });
+    people.forEach(person=>{
+      if(consumed.has(person.id))return;
+      const unit=layoutMakeUnit(`unit-${person.id}`,g,[person.id],null,"person");
+      units.push(unit);
+      consumed.add(person.id);
+    });
+    units.sort((a,b)=>{
+      const ar=layoutUnitRepresentative(a),br=layoutUnitRepresentative(b);
+      if(ar&&br)return layoutComparePeople(ar,br);
+      return String(a.id).localeCompare(String(b.id),undefined,{numeric:true,sensitivity:"base"});
+    });
+    unitsByGen[g]=units;
+    units.forEach(unit=>unit.ids.forEach(id=>{unitByPerson[id]=unit;}));
+  });
+  return {generations,byGen,unitsByGen,unitByPerson};
+}
+function layoutResolveUnits(units,targetFor){
+  if(!units.length)return;
+  const ordered=units.slice().sort((a,b)=>{
     const at=targetFor(a),bt=targetFor(b);
     if(Number.isFinite(at)&&Number.isFinite(bt)&&at!==bt)return at-bt;
     if(Number.isFinite(at)&&!Number.isFinite(bt))return -1;
     if(!Number.isFinite(at)&&Number.isFinite(bt))return 1;
-    return layoutComparePeople(a,b);
+    return layoutCompareUnits(a,b);
   });
-  layoutResolveOrderedGeneration(ordered,targetFor);
-}
-function layoutResolveOrderedGeneration(ordered,targetFor){
-  if(!ordered.length)return;
-  const gap=layoutNodeGap();
-  ordered.forEach((p,index)=>{
-    const target=targetFor(p);
-    p._layoutTarget=Number.isFinite(target)?target:index*gap;
+  ordered.forEach((unit,index)=>{
+    const target=targetFor(unit);
+    unit.target=Number.isFinite(target)?target:index*(layoutNodeGap()+layoutUnitGap());
   });
-  ordered[0]._layoutX=ordered[0]._layoutTarget;
+  // Forward sweep: each unit at its target, pushed right only as far as the
+  // minimum separation from its left neighbour requires.
+  ordered[0].centre=ordered[0].target;
   for(let i=1;i<ordered.length;i++){
-    ordered[i]._layoutX=Math.max(ordered[i]._layoutTarget,ordered[i-1]._layoutX+gap);
+    const previous=ordered[i-1];
+    const current=ordered[i];
+    const minCentre=previous.centre+previous.width/2+layoutUnitSeparation(previous,current)+current.width/2;
+    current.centre=Math.max(current.target,minCentre);
   }
-  const targetCentre=layoutMean(ordered.map(p=>p._layoutTarget));
-  const actualCentre=layoutMean(ordered.map(p=>p._layoutX));
-  const shift=targetCentre!=null&&actualCentre!=null?targetCentre-actualCentre:0;
-  ordered.forEach(p=>{p._layoutX=layoutSnap(p._layoutX+shift);});
+  // A uniform shift preserves every pairwise gap established above, so
+  // re-centring on the mean target can never reintroduce an overlap.
+  const recentre=()=>{
+    const targetCentre=layoutMean(ordered.map(unit=>unit.target));
+    const actualCentre=layoutMean(ordered.map(unit=>unit.centre));
+    if(targetCentre==null||actualCentre==null)return;
+    const shift=targetCentre-actualCentre;
+    if(shift)ordered.forEach(unit=>{unit.centre=unit.centre+shift;});
+  };
+  recentre();
+  // Defensive second sweep. It can only ever raise a centre to its minimum, so
+  // when the forward sweep already satisfied every gap this is a no-op.
   for(let i=1;i<ordered.length;i++){
-    if(ordered[i]._layoutX<ordered[i-1]._layoutX+gap)ordered[i]._layoutX=ordered[i-1]._layoutX+gap;
+    const previous=ordered[i-1];
+    const current=ordered[i];
+    const minCentre=previous.centre+previous.width/2+layoutUnitSeparation(previous,current)+current.width/2;
+    if(current.centre<minCentre)current.centre=minCentre;
   }
+  // Final symmetric re-centre. The only thing that could have moved a unit
+  // since the first recentre is the one-directional sweep above (right-only),
+  // so this removes any residual rightward bias and guarantees the resolved
+  // row's centroid equals the target centroid — sibships stay under parents.
+  recentre();
+  ordered.forEach(unit=>{
+    unit.left=unit.centre-unit.width/2;
+    unit.right=unit.centre+unit.width/2;
+  });
+  units.splice(0,units.length,...ordered);
 }
-function layoutApplyChildBearingPartnershipAdjacency(byGen){
-  const gap=layoutNodeGap();
+function layoutWriteUnitPositions(ctx){
+  Object.values(ctx.unitsByGen).forEach(units=>{
+    units.forEach(unit=>{
+      const memberGap=unit.ids.length>1?layoutPairGap():0;
+      unit.ids.forEach((id,index)=>{
+        const p=model.people[id];
+        if(!p)return;
+        p._layoutX=unit.centre+(index-(unit.ids.length-1)/2)*memberGap;
+      });
+      unit.left=Math.min(...unit.ids.map(id=>model.people[id]?._layoutX).filter(Number.isFinite))-layoutNodeGap()/2;
+      unit.right=Math.max(...unit.ids.map(id=>model.people[id]?._layoutX).filter(Number.isFinite))+layoutNodeGap()/2;
+    });
+  });
+}
+function layoutAddUnitTarget(targets,unit,x,weight){
+  if(!unit||!Number.isFinite(x))return;
+  (targets[unit.id]=targets[unit.id]||[]).push({x,weight});
+}
+function layoutResolveTargetMap(ctx,targets){
+  ctx.generations.forEach(g=>{
+    const units=ctx.unitsByGen[g]||[];
+    layoutResolveUnits(units,unit=>{
+      const list=targets[unit.id]||[];
+      const total=list.reduce((sum,item)=>sum+item.weight,0);
+      return total?list.reduce((sum,item)=>sum+item.x*item.weight,0)/total:unit.centre;
+    });
+  });
+  layoutWriteUnitPositions(ctx);
+}
+function layoutChildUnitsForUnion(ctx,union){
+  const seen=new Set(),out=[];
+  layoutOrderedChildren(union).forEach(child=>{
+    const unit=ctx.unitByPerson[child.id];
+    if(!unit||seen.has(unit.id))return;
+    seen.add(unit.id);
+    out.push(unit);
+  });
+  return out.sort((a,b)=>{
+    const ac=layoutMean(a.ids.map(id=>layoutOrderedChildren(union).findIndex(child=>child.id===id)).filter(index=>index>=0));
+    const bc=layoutMean(b.ids.map(id=>layoutOrderedChildren(union).findIndex(child=>child.id===id)).filter(index=>index>=0));
+    if(ac!=null&&bc!=null&&ac!==bc)return ac-bc;
+    return layoutCompareUnits(a,b);
+  });
+}
+function layoutUnitMemberOffset(unit,personId){
+  const index=unit.ids.indexOf(personId);
+  if(index<0)return 0;
+  const memberGap=unit.ids.length>1?layoutPairGap():0;
+  return (index-(unit.ids.length-1)/2)*memberGap;
+}
+function layoutChildAnchorOffset(unit,union){
+  const childIds=new Set((Array.isArray(union.children)?union.children:[]).filter(id=>unit.ids.includes(id)));
+  const offsets=unit.ids.filter(id=>childIds.has(id)).map(id=>layoutUnitMemberOffset(unit,id));
+  return layoutMean(offsets)??0;
+}
+function layoutChildUnitSlots(childUnits,centre,union){
+  if(!childUnits.length||!Number.isFinite(centre))return [];
+  if(childUnits.length===1){
+    const unit=childUnits[0];
+    return [{unit,x:centre-layoutChildAnchorOffset(unit,union)}];
+  }
+  const gap=Math.max(layoutNodeGap(),layoutPairGap());
+  return childUnits.map((unit,index)=>{
+    const childAnchor=centre+(index-(childUnits.length-1)/2)*gap;
+    return {unit,x:childAnchor-layoutChildAnchorOffset(unit,union)};
+  });
+}
+function layoutAddFamilyChildTargets(ctx,targets,weight){
   U().forEach(union=>{
     if(!Array.isArray(union.children)||!union.children.length)return;
-    const parents=layoutParentOrder(union);
-    if(parents.length<2)return;
-    const first=model.people[parents[0]],second=model.people[parents[1]];
-    if(!first||!second||first._gen!==second._gen)return;
-    const generation=first._gen;
-    const people=[...(byGen[generation]||[])].sort((a,b)=>a._layoutX-b._layoutX||layoutComparePeople(a,b));
-    const ids=people.map(p=>p.id);
-    const firstIndex=ids.indexOf(first.id),secondIndex=ids.indexOf(second.id);
-    if(firstIndex<0||secondIndex<0||Math.abs(firstIndex-secondIndex)<=1)return;
-    const low=Math.min(firstIndex,secondIndex),high=Math.max(firstIndex,secondIndex);
-    const between=ids.slice(low+1,high);
-    const movableBetween=between.filter(id=>{
-      const person=model.people[id];
-      return person&&!(person.pinned&&person.px!=null);
-    });
-    if(!movableBetween.length)return;
-    const blockerSet=new Set(movableBetween);
-    let ordered=ids.filter(id=>!blockerSet.has(id)&&id!==second.id);
-    const anchorIndex=ordered.indexOf(first.id);
-    if(anchorIndex<0)return;
-    ordered.splice(anchorIndex+1,0,second.id,...movableBetween);
-    byGen[generation]=ordered.map(id=>model.people[id]).filter(Boolean);
-    const targets={};
-    people.forEach(person=>{targets[person.id]=person._layoutX;});
-    targets[second.id]=targets[first.id]+gap;
-    movableBetween.forEach((id,index)=>{targets[id]=targets[second.id]+gap*(index+1);});
-    layoutResolveOrderedGeneration(byGen[generation],person=>targets[person.id]);
-  });
-}
-function layoutApplySafeSibshipSymmetry(byGen){
-  const gap=layoutNodeGap();
-  U().forEach(union=>{
-    const children=layoutOrderedChildren(union);
     const parents=layoutParentOrder(union).map(id=>model.people[id]).filter(Boolean);
-    const slots=layoutSibshipSlots(children,parents).filter(slot=>!(slot.child.pinned&&slot.child.px!=null));
-    if(!slots.length)return;
-    const moving=new Set(slots.map(slot=>slot.child.id));
-    const safe=slots.every(slot=>{
-      const people=byGen[slot.child._gen]||[];
-      return people.every(other=>moving.has(other.id)||Math.abs((other._layoutX||0)-slot.x)>=gap-.5);
+    const parentCentre=layoutMean(parents.map(parent=>parent._layoutX));
+    if(parentCentre==null)return;
+    layoutChildUnitSlots(layoutChildUnitsForUnion(ctx,union),parentCentre,union).forEach(slot=>{
+      layoutAddUnitTarget(targets,slot.unit,slot.x,weight);
     });
-    if(safe)slots.forEach(slot=>{slot.child._layoutX=slot.x;});
   });
 }
-function layoutChildBearingUnionDegree(){
-  const degree={};
+function layoutAddParentCentreTargets(ctx,targets,weight){
   U().forEach(union=>{
     if(!Array.isArray(union.children)||!union.children.length)return;
+    const parentUnitA=ctx.unitByPerson[union.a],parentUnitB=ctx.unitByPerson[union.b];
+    if(!parentUnitA||parentUnitA!==parentUnitB)return;
+    const children=layoutOrderedChildren(union);
+    const childCentre=layoutMean(children.map(child=>child._layoutX));
+    if(childCentre==null)return;
+    layoutAddUnitTarget(targets,parentUnitA,childCentre,weight);
+  });
+}
+function layoutAddPartnerTargets(ctx,targets,weight){
+  U().forEach(union=>{
     const a=model.people[union.a],b=model.people[union.b];
-    if(!a||!b||a._gen!==b._gen)return;
-    degree[a.id]=(degree[a.id]||0)+1;
-    degree[b.id]=(degree[b.id]||0)+1;
-  });
-  return degree;
-}
-function layoutCanShiftGroup(byGen,people,delta){
-  const gap=layoutNodeGap();
-  const moving=new Set(people.map(p=>p.id));
-  return people.every(person=>{
-    const target=(person._layoutX||0)+delta;
-    const generationPeople=byGen[person._gen]||[];
-    return generationPeople.every(other=>
-      moving.has(other.id)||Math.abs((other._layoutX||0)-target)>=gap-.5
-    );
+    if(!a||!b)return;
+    const unitA=ctx.unitByPerson[a.id],unitB=ctx.unitByPerson[b.id];
+    if(!unitA||!unitB||unitA===unitB)return;
+    const pairCentre=layoutMean([a._layoutX,b._layoutX]);
+    if(pairCentre==null)return;
+    const softWeight=a._gen===b._gen?weight:weight*.35;
+    layoutAddUnitTarget(targets,unitA,pairCentre,softWeight);
+    layoutAddUnitTarget(targets,unitB,pairCentre,softWeight);
   });
 }
-function layoutApplyUpwardFamilyCentreAlignment(byGen){
-  const degree=layoutChildBearingUnionDegree();
-  const unions=U()
-    .filter(union=>Array.isArray(union.children)&&union.children.length)
-    .map(union=>{
-      const parents=layoutParentOrder(union).map(id=>model.people[id]).filter(Boolean);
-      const children=layoutOrderedChildren(union);
-      const parentGeneration=parents.length?layoutMean(parents.map(p=>p._gen)):null;
-      return {parents,children,parentGeneration};
-    })
-    .filter(item=>item.parents.length===2&&item.children.length&&Number.isFinite(item.parentGeneration))
-    .sort((a,b)=>b.parentGeneration-a.parentGeneration);
-  for(let pass=0;pass<2;pass++){
-    unions.forEach(item=>{
-      const parents=item.parents;
-      if(parents[0]._gen!==parents[1]._gen)return;
-      if(parents.some(parent=>parent.pinned&&parent.px!=null))return;
-      if(parents.some(parent=>(degree[parent.id]||0)>1))return;
-      const parentCentre=layoutMean(parents.map(parent=>parent._layoutX));
-      const childCentre=layoutMean(item.children.map(child=>child._layoutX));
-      if(parentCentre==null||childCentre==null)return;
-      const delta=childCentre-parentCentre;
-      if(Math.abs(delta)<.5)return;
-      if(!layoutCanShiftGroup(byGen,parents,delta))return;
-      parents.forEach(parent=>{parent._layoutX+=delta;});
-    });
+function layoutAddStableTargets(ctx,targets,weight){
+  Object.values(ctx.unitsByGen).forEach(units=>{
+    units.forEach(unit=>layoutAddUnitTarget(targets,unit,unit.centre,weight));
+  });
+}
+function layoutApplyFamilyBlockLayout(ctx){
+  for(let step=0;step<LAYOUT_RELAXATION_STEPS;step++){
+    const targets={};
+    layoutAddFamilyChildTargets(ctx,targets,12);
+    layoutAddParentCentreTargets(ctx,targets,2.2);
+    layoutAddPartnerTargets(ctx,targets,1.2);
+    layoutAddStableTargets(ctx,targets,.45);
+    layoutResolveTargetMap(ctx,targets);
+  }
+  for(let step=0;step<2;step++){
+    const targets={};
+    layoutAddFamilyChildTargets(ctx,targets,30);
+    layoutAddPartnerTargets(ctx,targets,1.4);
+    layoutResolveTargetMap(ctx,targets);
   }
 }
 function layoutSameGenerationUnionDegree(){
@@ -1379,61 +1517,27 @@ function computeLayout(){
   const byGen={};
   P().forEach(p=>{
     p._gen=gen[p.id]||0;
+    p._layoutLift=0;
     (byGen[p._gen]=byGen[p._gen]||[]).push(p);
   });
   const generations=Object.keys(byGen).map(Number).sort((a,b)=>a-b);
+  const ctx=layoutBuildUnits(byGen,generations);
   generations.forEach(g=>{
-    const people=byGen[g].sort(layoutComparePeople);
-    const gap=layoutNodeGap();
-    people.forEach((p,index)=>{p._layoutX=index*gap;});
+    const units=ctx.unitsByGen[g]||[];
+    const gap=layoutNodeGap()+layoutUnitGap();
+    units.forEach((unit,index)=>{unit.centre=index*gap;});
+    layoutResolveUnits(units,unit=>unit.centre);
   });
-
-  for(let step=0;step<LAYOUT_RELAXATION_STEPS;step++){
-    const targets={};
-    const addTarget=(id,x,weight=1)=>{
-      if(!id||!model.people[id]||!Number.isFinite(x))return;
-      (targets[id]=targets[id]||[]).push({x,weight});
-    };
-    U().forEach(union=>{
-      const children=layoutOrderedChildren(union);
-      const parents=layoutParentOrder(union).map(id=>model.people[id]).filter(Boolean);
-      if(children.length){
-        layoutSibshipSlots(children,parents).forEach(slot=>addTarget(slot.child.id,slot.x,2.2));
-      }
-      if(parents.length){
-        const childCentre=layoutMean(children.map(p=>p._layoutX));
-        const parentCentre=layoutMean(parents.map(p=>p._layoutX));
-        const centre=childCentre!=null?childCentre:parentCentre;
-        if(parents.length===1)addTarget(parents[0].id,centre,1.6);
-        else{
-          const gap=layoutPairGap();
-          addTarget(parents[0].id,centre-gap/2,2.4);
-          addTarget(parents[1].id,centre+gap/2,2.4);
-        }
-      }
-    });
-    P().forEach(p=>addTarget(p.id,p._layoutX,.55));
-    generations.forEach(g=>layoutResolveGeneration(byGen[g],p=>{
-      const list=targets[p.id]||[];
-      const total=list.reduce((sum,item)=>sum+item.weight,0);
-      return total?list.reduce((sum,item)=>sum+item.x*item.weight,0)/total:p._layoutX;
-    }));
-  }
-
-  layoutApplyChildBearingPartnershipAdjacency(byGen);
-  layoutApplySafeSibshipSymmetry(byGen);
-  layoutApplyUpwardFamilyCentreAlignment(byGen);
-
+  layoutWriteUnitPositions(ctx);
+  layoutApplyFamilyBlockLayout(ctx);
   const minx=Math.min(0,...P().map(p=>p._layoutX||0));
   P().forEach(p=>{
     p._cx=p._layoutX||0;
     const ax=p._cx-minx+LAY.offX;
     p.x=p.pinned&&p.px!=null?p.px:ax;
   });
-
   generations.forEach(g=>byGen[g].sort((a,b)=>a.x-b.x||layoutComparePeople(a,b)).forEach((p,i)=>p._autoId=roman(g+1)+"-"+(i+1)));
   layoutApplyRelationshipEdgeAvoidance(byGen);
-
   let generationY=LAY.offY;
   generations.forEach(g=>{
     const people=byGen[g];
@@ -1453,8 +1557,11 @@ function computeLayout(){
   });
 }
 function roman(n){const m=[[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];let r="";for(const[v,s]of m)while(n>=v){r+=s;n-=v;}return r;}
-const pedId=p=>p.label||p._autoId||"?";
-
+function pedId(p){
+  const label=String(p?.label||"").trim();
+  if(label&&!layoutGeneratedPedigreeIdText(label))return label;
+  return p?._autoId||label||"?";
+}
 /* ===== SVG render (symbols per pedigree notation) ===== */
 function geneticSexShape(p){
   const sex=normaliseGeneticSex(p.geneticSex||p.sex);
@@ -1546,19 +1653,16 @@ function symbolPath(p,cx,cy){
   const affected=clinical==="affected";
   let out=`<defs>${symbolClipPath(p,cx,cy,clipId)}</defs>`;
   out+=symbolOutline(p,cx,cy,`fill="${affected&&molecular==="none"?"var(--sym)":"white"}" stroke="var(--sym)" stroke-width="1.8"`);
-
   if(molecular==="carrier-half"||molecular==="compound"){
     out+=`<g clip-path="url(#${clipId})" stroke="var(--sym)" stroke-width="1">`;
     for(let n=-LAY.sym*2;n<LAY.sym*2;n+=6)out+=`<line x1="${cx+n}" y1="${cy+h+3}" x2="${cx+n+LAY.sym}" y2="${cy-h-3}"/>`;
     out+=`</g>`;
-
     if(molecular==="compound"||affected){
       out+=`<rect x="${cx-h-1}" y="${cy-h-1}" width="${h+1}" height="${LAY.sym+2}" fill="var(--sym)" clip-path="url(#${clipId})"/>`;
     }else{
       out+=`<rect x="${cx}" y="${cy-h-2}" width="${h+3}" height="${LAY.sym+4}" fill="white" clip-path="url(#${clipId})"/>`;
     }
   }
-
   if(clinical==="unknown"){
     out+=`<text x="${cx}" y="${cy+6}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="18" font-weight="700" fill="var(--sym)" stroke="white" stroke-width="3" paint-order="stroke">?</text>`;
   }
@@ -1627,7 +1731,6 @@ function labelLines(p){
   });
   return out;
 }
-
 const LABEL_MIN_WIDTH_MULTIPLIER=1.5;
 const LABEL_SLOT_GAP=12;
 const LABEL_FONT_SIZE=10;
@@ -1636,11 +1739,9 @@ const LABEL_LINE_HEIGHT=14;
 const LABEL_ENTRY_GAP=3;
 const LABEL_BLOCK_TOP=17;
 let labelMeasureContext=null;
-
 function labelMaxWidth(){
   return Math.max(LAY.sym*LABEL_MIN_WIDTH_MULTIPLIER,LAY.slot-LABEL_SLOT_GAP);
 }
-
 function measureLabelText(value,fontSize,fontWeight){
   const text=String(value||"");
   if(typeof document!=="undefined"){
@@ -1655,13 +1756,11 @@ function measureLabelText(value,fontSize,fontWeight){
   }
   return text.length*fontSize*.58;
 }
-
 function wrapLabelEntry(value,fontSize,fontWeight,maxWidth){
   const text=String(value||"").trim();
   if(!text)return [];
   const lines=[];
   let current="";
-
   const pushToken=token=>{
     let part="";
     for(const character of token){
@@ -1673,7 +1772,6 @@ function wrapLabelEntry(value,fontSize,fontWeight,maxWidth){
     }
     return part;
   };
-
   text.split(/\s+/).forEach(word=>{
     const candidate=current?current+" "+word:word;
     if(measureLabelText(candidate,fontSize,fontWeight)<=maxWidth){
@@ -1690,7 +1788,6 @@ function wrapLabelEntry(value,fontSize,fontWeight,maxWidth){
   if(current)lines.push(current);
   return lines;
 }
-
 function labelLayout(p){
   const maxWidth=labelMaxWidth(),layout=[];
   labelLines(p).forEach((entry,entryIndex)=>{
@@ -1702,7 +1799,6 @@ function labelLayout(p){
   });
   return layout;
 }
-
 function labelBlockHeight(p){
   const layout=labelLayout(p);
   if(!layout.length)return 0;
@@ -1714,7 +1810,6 @@ function labelBlockHeight(p){
   return height;
 }
 function esc(s){return String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));}
-
 function boundaryPoint(p, towardX, towardY){
   const dx=towardX-p.x, dy=towardY-p.y, h=LAY.sym/2;
   if(!dx&&!dy)return {x:p.x,y:p.y};
@@ -1730,6 +1825,98 @@ function boundaryPoint(p, towardX, towardY){
   return {x:p.x+dx*scale,y:p.y+dy*scale};
 }
 function lineEl(a,b,extra=""){return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="var(--sym)" stroke-width="1.4" ${extra}/>`;}
+const EDGE_COLOUR_THEMES=Object.freeze({
+  "city-sunset":Object.freeze(["#EEAF61","#FB9062","#EE5D6C","#CE4993","#6A0D83"]),
+  "summertime-3":Object.freeze(["#FFBE4F","#6BD2DB","#0EA7B5","#0C457D","#E8702A"]),
+  "metro-ui-colours":Object.freeze(["#D11141","#00B159","#00AEDB","#F37735","#FFC425"]),
+  "seventeen":Object.freeze(["#F7CAC9","#DEC2CB","#C5B9CD","#ABB1CF","#92A8D1"]),
+  "beautiful-blues":Object.freeze(["#011F4B","#03396C","#005B96","#6497B1","#B3CDE0"])
+});
+const EDGE_COLOUR_THEME_NAMES=Object.freeze({
+  "city-sunset":"City Sunset",
+  "summertime-3":"Summertime",
+  "metro-ui-colours":"Metro UI",
+  "seventeen":"Pastel seventeen",
+  "beautiful-blues":"Beautiful Blues"
+});
+function edgeColourEnabled(){ return ui&&ui.edgeColourMode==="semantic"; }
+function normaliseEdgeColourTheme(value){
+  const key=String(value||"");
+  if(key==="default")return "city-sunset";
+  return Object.prototype.hasOwnProperty.call(EDGE_COLOUR_THEMES,key)?key:"city-sunset";
+}
+function edgeColourThemeKey(){ return normaliseEdgeColourTheme(ui&&ui.edgeColourTheme); }
+function edgeColourTheme(){ return EDGE_COLOUR_THEMES[edgeColourThemeKey()]; }
+function edgeColourThemeOptions(){
+  const active=edgeColourThemeKey();
+  return Object.keys(EDGE_COLOUR_THEMES).map(key=>
+    `<option value="${key}" ${key===active?'selected':''}>${esc(EDGE_COLOUR_THEME_NAMES[key]||key)}</option>`
+  ).join("");
+}
+function parseHexColour(value){
+  const hex=String(value||"").replace(/^#/,'');
+  if(!/^[0-9a-fA-F]{6}$/.test(hex))return [47,47,65];
+  return [0,2,4].map(i=>parseInt(hex.slice(i,i+2),16));
+}
+function blendEdgeColours(a,b,t){
+  const aa=parseHexColour(a),bb=parseHexColour(b),mix=Math.max(0,Math.min(1,Number(t)||0));
+  return "#"+aa.map((v,i)=>Math.round(v+(bb[i]-v)*mix).toString(16).padStart(2,"0")).join("").toUpperCase();
+}
+function edgeThemeColour(index){
+  const theme=edgeColourTheme();
+  if(!theme.length)return "#2F2F41";
+  const base=theme[index%theme.length];
+  const round=Math.floor(index/theme.length);
+  if(!round)return base;
+  const partner=theme[round%theme.length];
+  return blendEdgeColours(base,partner,Math.min(.72,.24+(round%4)*.12));
+}
+function semanticUnionGeneration(union){
+  const gens=[model.people[union.a],model.people[union.b]].map(p=>p?._gen).filter(Number.isFinite);
+  return gens.length?Math.min(...gens):0;
+}
+function semanticUnionCentreX(union){
+  const xs=[model.people[union.a],model.people[union.b]].map(p=>p?._layoutX??p?.x).filter(Number.isFinite);
+  return layoutMean(xs)??0;
+}
+function semanticUnionColourMap(){
+  const sorted=U().slice().sort((a,b)=>
+    (semanticUnionGeneration(a)-semanticUnionGeneration(b))||
+    (semanticUnionCentreX(a)-semanticUnionCentreX(b))||
+    String(a.stableId||a.id).localeCompare(String(b.stableId||b.id),undefined,{numeric:true,sensitivity:"base"})
+  );
+  const childBearing=sorted.filter(union=>Array.isArray(union.children)&&union.children.length);
+  const otherUnions=sorted.filter(union=>!childBearing.includes(union));
+  const map={};
+  let index=0;
+  childBearing.concat(otherUnions).forEach(union=>{
+    const seed=edgeThemeColour(index++);
+    const inherited=[union.a,union.b]
+      .map(parentUnionOf)
+      .filter(parentUnion=>parentUnion&&map[parentUnion.id])
+      .map(parentUnion=>map[parentUnion.id]);
+    const unique=[...new Set(inherited)];
+    let colour=seed;
+    if(unique.length===1)colour=blendEdgeColours(unique[0],seed,.32);
+    else if(unique.length>1){
+      const inheritedBlend=unique.slice(1).reduce((current,next)=>blendEdgeColours(current,next,.5),unique[0]);
+      colour=blendEdgeColours(inheritedBlend,seed,.2);
+    }
+    map[union.id]=colour;
+  });
+  return map;
+}
+function edgeStrokeAttrs(union,colourMap){
+  if(!edgeColourEnabled())return 'stroke="var(--sym)" stroke-width="1.4"';
+  const colour=colourMap&&union?colourMap[union.id]:null;
+  return `stroke="${colour||edgeThemeColour(0)}" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"`;
+}
+function edgeLineEl(a,b,union,colourMap,extra=""){
+  return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" ${edgeStrokeAttrs(union,colourMap)} ${extra}/>`;
+}
+function edgePolylineEl(points,union,colourMap,extra=""){
+  return `<polyline points="${points}" fill="none" ${edgeStrokeAttrs(union,colourMap)} ${extra}/>`;
+}
 function unionSlashMark(point){
   const s=8;
   return lineEl({x:point.x-s,y:point.y+s},{x:point.x+s,y:point.y-s});
@@ -1749,10 +1936,15 @@ function arrowPolygon(ax,ay,tx,ty){
   const back=9,half=4.5,bx=tx-ux*back,by=ty-uy*back,px=-uy,py=ux;
   return `${tx},${ty} ${bx+px*half},${by+py*half} ${bx-px*half},${by-py*half}`;
 }
+// How far the parents' midpoint may sit outside the sibship span and still be
+// routed as a straight vertical drop. The sibship bar is extended to meet the
+// descent point, so this only ever caps the bar overhang, never disconnects it.
+function junctionStraightTol(){ return Math.max(LAY.sym*0.6,Math.min(LAY.slot*0.25,40)); }
 function renderSVG(opts){
   const clean=opts.clean, sel=opts.sel; const ps=P();
   if(!ps.length)return {inner:"",bounds:{minx:0,miny:0,maxx:600,maxy:400}};
   let edges="",twins="",nodes="";
+  const unionColourMap=edgeColourEnabled()?semanticUnionColourMap():null;
   U().forEach(u=>{
     const a=model.people[u.a], b=model.people[u.b];
     let unionPoint=null;
@@ -1761,9 +1953,9 @@ function renderSVG(opts){
       const pa=boundaryPoint(a,b.x,b.y), pb=boundaryPoint(b,a.x,a.y);
       if(u.consanguineous){
         const dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.hypot(dx,dy)||1,nx=-dy/len*2,ny=dx/len*2;
-        edges+=lineEl({x:pa.x+nx,y:pa.y+ny},{x:pb.x+nx,y:pb.y+ny});
-        edges+=lineEl({x:pa.x-nx,y:pa.y-ny},{x:pb.x-nx,y:pb.y-ny});
-      } else edges+=lineEl(pa,pb);
+        edges+=edgeLineEl({x:pa.x+nx,y:pa.y+ny},{x:pb.x+nx,y:pb.y+ny},u,unionColourMap);
+        edges+=edgeLineEl({x:pa.x-nx,y:pa.y-ny},{x:pb.x-nx,y:pb.y-ny},u,unionColourMap);
+      } else edges+=edgeLineEl(pa,pb,u,unionColourMap);
       if(normaliseRelationshipStatus(u.relationshipStatus)==="ended")edges+=unionSlashMark(unionPoint);
     } else {
       const only=a||b;
@@ -1773,45 +1965,67 @@ function renderSVG(opts){
       if(u.noChildren)edges+=unionNoChildrenMark(unionPoint);
       else if(u.infertility)edges+=unionInfertilityMark(unionPoint,u.infertilityReason);
     }
-    if(u.children.length&&unionPoint){
+		if(u.children.length&&unionPoint){
       const kids=u.children.map(c=>model.people[c]).filter(Boolean);
       if(!kids.length)return;
       const minChildY=Math.min(...kids.map(k=>k.y));
       const childCentreX=kids.reduce((s,k)=>s+k.x,0)/kids.length;
-      const junction={x:childCentreX,y:minChildY-34};
-      if(ui.routingMode==="clinical"){
-        const elbowY=Math.min(junction.y-12,unionPoint.y+Math.max(18,(junction.y-unionPoint.y)/2));
-        edges+=`<polyline points="${unionPoint.x},${unionPoint.y} ${unionPoint.x},${elbowY} ${junction.x},${elbowY} ${junction.x},${junction.y}" fill="none" stroke="var(--sym)" stroke-width="1.4"/>`;
-      }else edges+=lineEl(unionPoint,junction);
+      const junctionY=minChildY-34;
+      // Sibship anchors: one per twin/multiple group, otherwise one per child.
       const groups={}; kids.forEach(k=>{const g=k.twinGroup||("_"+k.id);(groups[g]=groups[g]||[]).push(k);});
       const anchors=[];
       Object.values(groups).forEach(grp=>{
         const x=grp.reduce((s,k)=>s+k.x,0)/grp.length;
         anchors.push({x,grp});
       });
+      const anchorXs=anchors.map(a=>a.x);
+      const spanMin=Math.min(...anchorXs), spanMax=Math.max(...anchorXs);
+      // Prefer a straight vertical descent. The default junction sits at the
+      // children's centroid; when the parents' midpoint falls within (or within
+      // tolerance of) the sibship span we drop straight through unionPoint.x
+      // instead, collapsing the small dog-leg from residual layout asymmetry.
+      // Only multi-anchor sibships are snapped, where the horizontal bar keeps
+      // the descent connected.
+      let junctionX=childCentreX;
       if(anchors.length>1){
-        edges+=lineEl({x:Math.min(...anchors.map(a=>a.x)),y:junction.y},{x:Math.max(...anchors.map(a=>a.x)),y:junction.y});
+        const tol=junctionStraightTol();
+        if(unionPoint.x>=spanMin-tol&&unionPoint.x<=spanMax+tol)junctionX=unionPoint.x;
+      }
+      const junction={x:junctionX,y:junctionY};
+      if(ui.routingMode==="clinical"){
+        if(Math.abs(junction.x-unionPoint.x)<0.5){
+          edges+=edgePolylineEl(`${unionPoint.x},${unionPoint.y} ${junction.x},${junction.y}`,u,unionColourMap);
+        }else{
+          const elbowY=Math.min(junction.y-12,unionPoint.y+Math.max(18,(junction.y-unionPoint.y)/2));
+          edges+=edgePolylineEl(`${unionPoint.x},${unionPoint.y} ${unionPoint.x},${elbowY} ${junction.x},${elbowY} ${junction.x},${junction.y}`,u,unionColourMap);
+        }
+      }else edges+=edgeLineEl(unionPoint,junction,u,unionColourMap);
+      if(anchors.length>1){
+        // Extend the bar so it always reaches the descent point, even when the
+        // straight drop lands just outside the outermost anchors.
+        const barLeft=Math.min(spanMin,junction.x), barRight=Math.max(spanMax,junction.x);
+        edges+=edgeLineEl({x:barLeft,y:junction.y},{x:barRight,y:junction.y},u,unionColourMap);
       }
       anchors.forEach(({x,grp})=>{
         const branch={x,y:junction.y};
-        if(x!==junction.x)edges+=lineEl(junction,branch);
+        if(Math.abs(x-junction.x)>0.5)edges+=edgeLineEl(junction,branch,u,unionColourMap);
         if(grp.length>1){
           const apex=branch;
           grp.forEach(k=>{
             const end=boundaryPoint(k,apex.x,apex.y);
-            twins+=lineEl(apex,end);
+            twins+=edgeLineEl(apex,end,u,unionColourMap);
           });
           if(grp[0].twinType==="MZ"){
             const pts=grp.map(k=>{
               const end=boundaryPoint(k,apex.x,apex.y);
               return {x:apex.x+(end.x-apex.x)*0.52,y:apex.y+(end.y-apex.y)*0.52};
             });
-            twins+=lineEl(pts[0],pts[pts.length-1]);
+            twins+=edgeLineEl(pts[0],pts[pts.length-1],u,unionColourMap);
           }
         } else {
           const k=grp[0], end=boundaryPoint(k,branch.x,branch.y);
-          if(ui.routingMode==="clinical")edges+=`<polyline points="${branch.x},${branch.y} ${branch.x},${end.y}" fill="none" stroke="var(--sym)" stroke-width="1.4"/>`;
-          else edges+=lineEl(branch,end);
+          if(ui.routingMode==="clinical")edges+=edgePolylineEl(`${branch.x},${branch.y} ${branch.x},${end.y}`,u,unionColourMap);
+          else edges+=edgeLineEl(branch,end,u,unionColourMap);
         }
       });
     }
@@ -1848,7 +2062,6 @@ function renderSVG(opts){
   };
   return {inner:edges+twins+nodes,bounds};
 }
-
 /* ===== render ===== */
 function render(){
   drawStage();
@@ -1867,7 +2080,6 @@ function render(){
     const currentValue=has?displayedMarkerValue(model.people[ui.sel]):"auto";
     const currentLabel=displayedMarkerLabel(currentValue);
     const nextLabel=displayedMarkerLabel(nextDisplayedMarker(currentValue));
-  
     markerButton.textContent=currentLabel;
     markerButton.title="Current marker: "+currentLabel+". Click to set "+nextLabel;
     markerButton.setAttribute(
@@ -1899,7 +2111,6 @@ function quickViewBox(){
   const s=document.getElementById("stage"); s.setAttribute("viewBox",`${view.x} ${view.y} ${vbW} ${vbH}`);
   const bg=s.querySelector(".bgrect"); if(bg){bg.setAttribute("x",view.x);bg.setAttribute("y",view.y);bg.setAttribute("width",vbW);bg.setAttribute("height",vbH);}
 }
-
 /* ===== navigator and plot controls ===== */
 let navCollapsed={warn:true};
 function navSection(k,t,c,body){ const col=navCollapsed[k]?"collapsed":"";
@@ -1934,6 +2145,11 @@ function layoutControlsHtml(){
       <div class="layout-field"><label>Sibling spacing · <span id="lsSib">${LAY.slot}</span> px</label>
         <input type="range" min="${LAYOUT_LIMITS.slot.min}" max="${LAYOUT_LIMITS.slot.max}" step="4" value="${LAY.slot}" oninput="setSpacing('slot',this.value)"></div>
       <div class="row">
+        <button class="lbtn" id="branchColourBtn" aria-pressed="${edgeColourEnabled()}" onclick="toggleBranchColour()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19h16"/><path d="M5 5c5 0 5 8 10 8 2.5 0 3.5-1.2 4-3"/><circle cx="5" cy="5" r="2"/><circle cx="15" cy="13" r="2"/><circle cx="19" cy="10" r="2"/></svg>
+          Branch colour
+        </button>
+        ${edgeColourEnabled()?`<select class="branch-theme-select" id="edgeColourTheme" aria-label="Branch colour theme" title="Branch colour theme" onchange="setEdgeColourTheme(this.value)">${edgeColourThemeOptions()}</select>`:""}
         <button class="lbtn" id="focusBtn" aria-pressed="${ui.focus}" onclick="toggleFocus()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
           Focus figure
@@ -1981,7 +2197,6 @@ function miniSym(p){
     :shape==="female"
       ?`<circle cx="8" cy="8" r="6" fill="${affected&&molecular==="none"?"#2f2f41":"white"}"/>`
       :`<polygon points="8,1 15,8 8,15 1,8" fill="${affected&&molecular==="none"?"#2f2f41":"white"}"/>`;
-
   if(molecular==="carrier-half"||molecular==="compound"){
     out+=`<g clip-path="url(#${clipId})" stroke="#2f2f41" stroke-width=".8">`;
     for(let n=-12;n<24;n+=4)out+=`<line x1="${n}" y1="16" x2="${n+16}" y2="0"/>`;
@@ -1989,7 +2204,6 @@ function miniSym(p){
     if(molecular==="compound"||affected)out+=`<rect x="1" y="1" width="7" height="14" fill="#2f2f41" clip-path="url(#${clipId})"/>`;
     else out+=`<rect x="8" y="1" width="8" height="14" fill="white" clip-path="url(#${clipId})"/>`;
   }
-
   if(clinical==="unknown")out+=`<text x="8" y="11" text-anchor="middle" font-size="8" font-weight="700" fill="#2f2f41" stroke="white" stroke-width="2" paint-order="stroke">?</text>`;
   out+=shape==="male"
     ?`<rect x="2" y="2" width="12" height="12" fill="none" stroke="#2f2f41" stroke-width="1.3"/>`
@@ -2019,7 +2233,6 @@ function roleLabel(p){
   }
   return genderShape(p)==="female"?"Female":genderShape(p)==="male"?"Male":"Individual";
 }
-
 /* ===== inspector — collapsible progressive disclosure ===== */
 function setField(key,val){ const p=model.people[ui.sel]; if(!p)return;
   if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
@@ -2168,7 +2381,6 @@ function toggleField(key){ commit(()=>{ const p=model.people[ui.sel];
   else{p[key]=!p[key]; if(key==='deceased')p.vitalStatus=p.deceased?"deceased":"living";}
   p.affected=derivedClinicalLayer(p)==="affected";
 }); }
-
 const openSec=new Set();
 function toggleSec(k){ openSec.has(k)?openSec.delete(k):openSec.add(k); renderInspector(); }
 function hasTwinOrMultipleBirthGroups(){ return P().some(person=>person.twinGroup); }
@@ -2179,7 +2391,6 @@ function inspectorSectionKeys(){
 }
 function expandAll(){ const keys=inspectorSectionKeys();
   const allOpen=keys.every(k=>openSec.has(k)); keys.forEach(k=>allOpen?openSec.delete(k):openSec.add(k)); renderInspector(); }
-
 function fld(label,key,p,type="text",mono=false){ const v=p[key]??"";
   return `<div class="field ${mono?'mono':''}"><label>${label}</label><input type="${type}" value="${esc(v)}" oninput="${p===model.meta?'setMeta':'setField'}('${key}',this.value)"/></div>`; }
 function selF(label,key,p,opts){ const v=p[key]??"";
@@ -2437,18 +2648,15 @@ function twinSummary(person){
   if(!person.twinGroup)return "";
   return twinTypeLabel(person.twinType);
 }
-
 function isec(k,title,summary,body,state=""){ const col=openSec.has(k)?"":"collapsed";
   const marker=state?`<span class="isec-state ${state}" role="img" aria-label="${state==="error"?"Conflict":"Review needed"}" title="${state==="error"?"Conflict":"Review needed"}"></span>`:"";
   return `<div class="isec ${col}"><button class="isec-head" onclick="toggleSec('${k}')">
     <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     <span>${title}</span><span class="sum">${esc(summary||"")}</span>${marker}</button><div class="isec-body">${body}</div></div>`; }
-
 function inspectorIssueStates(p){
   const states={identity:"",clinical:"",genetics:"",sample:"",prov:""};
   const override=p.symbolDisplayOverride||p.symbolStyle||"auto";
   const status=clinicalStatusOf(p);
-
   if((p.proband&&(status==="unaffected"||status==="not_assessed"))||
      (override==="affected"&&status==="unaffected")||
      (override==="unaffected"&&status==="affected")){
@@ -2456,9 +2664,7 @@ function inspectorIssueStates(p){
   }else if(p.proband&&status==="unknown"){
     states.identity="warning";
   }
-
   if(status==="affected"&&!p.phenotype&&!p.diagnosis)states.clinical="warning";
-
   const variants=personGeneticVariants(p);
   const hasCompoundHet=variants.some(variant=>variant.zygosity==="Compound heterozygous");
   if((override==="compound"&&variants.some(variant=>variant.zygosity)&&!hasCompoundHet)||
@@ -2470,15 +2676,12 @@ function inspectorIssueStates(p){
       states.genetics="warning";
     }
   }
-
   return states;
 }
-
 function renderInspector(){
   const body=document.getElementById("inspBody");
   const m=model.meta;
   const selected=ui.sel&&model.people[ui.sel]?model.people[ui.sel]:null;
-
   const allSectionsOpen=inspectorSectionKeys().every(k=>openSec.has(k));
   const inspectorControls=`<div class="insp-head"><button class="expand-all" onclick="expandAll()">${allSectionsOpen?'Collapse all':'Expand all'}</button></div>`;
   const flowHead=`
@@ -2486,7 +2689,6 @@ function renderInspector(){
   `;
   const caseFields=`<div class="field"><label for="caseName">Case</label><input id="caseName" type="text" value="${esc(model.caseName)}" oninput="setCaseName(this.value)" /></div>${fld("Disease / condition","disease",m)}${fld("Referral indication","indication",m)}`;
   const signoff=`${fld("Reviewer","reviewer",m)}${fld("Institution","institution",m)}${fld("Review date","date",m,"date")}`;
-
   let personSections='';
   if(selected){
     const p=selected;
@@ -2544,7 +2746,6 @@ function renderInspector(){
       ${isec("sample","Sample and test","Select an individual",'<div class="help-text">No active individual.</div>')}
       ${isec("prov","Provenance and notes","Select an individual",'<div class="help-text">No active individual.</div>')}`;
   }
-
   body.innerHTML=inspectorControls+flowHead+
     isec("case","Case details",m.disease||m.indication||"",caseFields)+
     isec("signoff","Reviewer and export details",m.reviewer||m.institution||"",signoff)+
@@ -2558,14 +2759,12 @@ function clinicalStatusLabel(p){
 function statusSummary(p){ const t=[]; if(p.proband)t.push("Proband"); else if(p.consultand)t.push("Consultand"); t.push(clinicalStatusLabel(p));
   if(p.carrier)t.push("Carrier"); if(p.deceased)t.push("Deceased"); return t.join(" · "); }
 function addFounder(){ commit(()=>{const id=newPerson("unknown");ui.sel=id;openSec.add("identity");}); }
-
 /* ===== live report (adaptive; tables for output) ===== */
 function reportTier(){
   const hasClinical=P().some(p=>p.phenotype||p.diagnosis||hasGenetics(p)||p.sampleId);
   const hasCase=model.meta.disease||model.meta.indication||model.meta.reviewer||model.meta.institution;
   return (hasClinical||hasCase)?"report":"figure";
 }
-
 function buildReportLegend(){
   const items=[];
   const add=(key,label,svg)=>{ if(!items.some(x=>x.key===key))items.push({key,label,svg}); };
@@ -2590,7 +2789,6 @@ function buildReportLegend(){
   return `<div class="rep-legend">${items.map(x=>`<span class="li">${x.svg}${esc(x.label)}</span>`).join("")}</div>
     <p class="rep-empty" style="margin:7px 0 0">Generated from the notation used in this pedigree. <a href="/technologies/pedigree/standards/" target="_blank" rel="noopener">Pedigree standards guide</a>.</p>`;
 }
-
 function renderReport(){
   const rep=document.getElementById("report"); const ps=P();
   if(!ps.length){ rep.innerHTML=""; return; }
@@ -2606,7 +2804,6 @@ function renderReport(){
     const cls=options.wide?" rep-item-wide":"";
     return `<div class="rep-item${cls}"><dt>${esc(label)}</dt><dd class="${options.mono?'mono':''}">${esc(value)}</dd></div>`;
   };
-
   const caseRows=[
     ["Case",model.caseName],["Pedigree version",PEDIGREE_APP_VERSION],["Disease / condition",m.disease],["Referral indication",m.indication],
     ["Reviewer",m.reviewer],["Institution",m.institution],["Review date",m.date],
@@ -2615,7 +2812,6 @@ function renderReport(){
   ].filter(r=>r[1]);
   html+=block("Legend",buildReportLegend());
   html+=block("Case summary",`<table class="rep-kv"><tbody>${caseRows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>`);
-
   html+=block(`Identity and status (${ps.length})`,table(
     ["ID","Role","Display name","Sex / symbol","Sex assigned at birth","Status","Birth year","Age at death"],
     order.map(p=>{
@@ -2624,10 +2820,8 @@ function renderReport(){
       return [pedId(p),roleLabel(p),p.name,{male:"Male",female:"Female",unknown:"Unknown"}[genderShape(p)]||"Unknown",p.sexAssignedAtBirth,st.join(", "),p.birthYear,p.ageAtDeath];
     })
   ));
-
   const clinicalRows=order.filter(p=>p.phenotype||p.onset||p.diagnosis).map(p=>[pedId(p),p.phenotype,p.onset,p.diagnosis]);
   if(clinicalRows.length)html+=block("Clinical information",table(["ID","Key phenotype","Age at onset","Diagnosis"],clinicalRows));
-
   const findings=order.flatMap(p=>personGeneticVariants(p).map((variant,index)=>({person:p,variant,index,total:personGeneticVariants(p).length})));
   if(findings.length){
     const records=findings.map(record=>{
@@ -2661,20 +2855,15 @@ function renderReport(){
     }).join("");
     html+=block("Genomic findings",`<div class="rep-records">${records}</div>`);
   }
-
   const sampleRows=order.filter(p=>p.sampleId||p.testStatus).map(p=>[pedId(p),p.sampleId,p.testStatus]);
   if(sampleRows.length)html+=block("Samples and tests",table(["ID","Sample ID","Test status"],sampleRows));
-
   const provenanceRows=order.filter(p=>p.source||p.notes).map(p=>[pedId(p),p.source,p.notes]);
   if(provenanceRows.length)html+=block("Provenance and notes",table(["ID","Information source","Notes"],provenanceRows));
-
   const warns=computeWarnings();
   if(warns.length)html+=block("Preflight and warnings",warns.map(w=>`<div class="rep-warn"><span class="sev ${w.sev}"></span><span>${esc(w.msg)}</span></div>`).join(""));
-
   rep.innerHTML=html;
   document.getElementById("figCapRight").textContent=`${ps.length} individuals`;
 }
-
 /* ===== warnings ===== */
 function computeWarnings(){ const w=[];
   P().forEach(p=>{const issues=statusIssues(p);
@@ -2695,7 +2884,6 @@ function computeWarnings(){ const w=[];
   return w; }
 function isAncestorOfSelf(id,seen){ seen=seen||new Set();
   for(const par of parentsOf(id)){ if(par===id||seen.has(par))return true; seen.add(par); if(isAncestorOfSelf(par,seen))return true; } return false; }
-
 /* ===== context bar ===== */
 function renderContext(){
   document.getElementById("cxSel").textContent=ui.sel?pedId(model.people[ui.sel]):"none";
@@ -2707,7 +2895,6 @@ function renderContext(){
   else if(warn){el.className="pill warn";el.textContent="Review needed";el.title=`${warn} review item${warn===1?'':'s'}`;}
   else{el.className="pill ok";el.textContent="No issues";el.title="No conflicts or review warnings";}
 }
-
 /* ===== canvas interaction: select, reposition, pan, zoom ===== */
 let pointerState=null;
 function initCanvas(){
@@ -2768,7 +2955,6 @@ function fitView(){ const out=renderSVG({clean:true}); if(!out.bounds)return;
   view.x=b.minx-pad-((cw/view.scale)-(b.maxx-b.minx+pad*2))/2;
   view.y=b.miny-pad-((ch/view.scale)-(b.maxy-b.miny+pad*2))/2;
   quickViewBox(); document.getElementById("cxZoom").textContent=Math.round(view.scale*100)+"%"; }
-
 /* ===== layout settings ===== */
 function automaticAnchors(){
   const minx=Math.min(0,...P().map(p=>p._cx||0));
@@ -2810,11 +2996,19 @@ function applyPreset(p){
 function resetLayout(){ commit(()=>{P().forEach(p=>{p.pinned=false;p.px=null;p.py=null;});}); setTimeout(fitView,10); }
 function setPreset(v){ ui.labelPreset=v; computeLayout(); drawStage(); renderReport(); }
 function setRoutingMode(v){ ui.routingMode=v==="flexible"?"flexible":"clinical"; drawStage(); renderReport(); markDirty(); }
+function setEdgeColourTheme(value){
+  ui.edgeColourTheme=normaliseEdgeColourTheme(value);
+  drawStage(); renderLayoutControls();
+}
+function toggleBranchColour(){
+  ui.edgeColourMode=edgeColourEnabled()?"off":"semantic";
+  ui.edgeColourTheme=normaliseEdgeColourTheme(ui.edgeColourTheme);
+  drawStage(); renderLayoutControls();
+}
 function toggleFocus(){ ui.focus=!ui.focus;
   document.getElementById("documentCol").classList.toggle("focus",ui.focus);
   const btn=document.getElementById("focusBtn"); if(btn)btn.setAttribute("aria-pressed",ui.focus);
   setTimeout(()=>{drawStage();fitView();},200); }
-
 /* ===== build actions ===== */
 const DISPLAYED_MARKER_VALUES=["affected","carrier-half","compound","unaffected"];
 function displayedMarkerValue(p){
@@ -2841,7 +3035,6 @@ function setDisplayedMarker(p,value){
   p.symbolDisplayOverride=value;
   p.symbolStyle=value;
 }
-
 const DISPLAYED_GENDER_VALUES=["male","female","unknown"];
 function displayedGenderValue(p){
   if(!p)return "unknown";
@@ -2861,7 +3054,6 @@ function setDisplayedGender(p,value){
   setPersonSex(p,value);
   U().filter(u=>u.a===p.id||u.b===p.id).forEach(syncParentRolesFromEndpointHints);
 }
-
 function ensurePartner(id){ let u=unionsOf(id).find(x=>x.a&&x.b); if(u)return u;
   const me=model.people[id], shape=genderShape(me), psex=shape==="male"?"female":shape==="female"?"male":"unknown";
   const pp=newPerson(psex); return model.unions[newUnion(id,pp)]; }
@@ -2886,10 +3078,8 @@ function deleteIndividual(id){ commit(()=>{
   Object.values(model.unions).forEach(u=>{u.children=u.children.filter(c=>c!==id);if(u.a===id)u.a=null;if(u.b===id)u.b=null;});
   Object.keys(model.unions).forEach(k=>{const u=model.unions[k];if(!u.a&&!u.b)delete model.unions[k];});
   delete model.people[id]; ui.sel=null; }); }
-
 /* ===== templates ===== */
 const QUEEN_VICTORIA_HAEMOPHILIA_B_TEMPLATE={"format":"pedigree-native/v5","schemaVersion":5,"exported":"2026-06-14T00:00:00Z","uid":100,"layout":{"genH":132,"slot":92,"sym":38,"offX":80,"offY":70},"view":{"x":0,"y":0,"scale":1},"labelPreset":"standard","routingMode":"clinical","model":{"schemaVersion":5,"caseName":"Queen Victoria haemophilia B pedigree","template":"custom","meta":{"disease":"Haemophilia B","gene":"F9","variant":"IVS3-3A>G","inheritance":"X-linked recessive","notes":"Consensus historical pedigree. Relationship topology is encoded through native union fields a, b and children, allowing automatic generation assignment."},"interoperability":{"nativeFormat":"pedigree-native/v5","fhirVersion":"4.0.1","source":"historical_consensus"},"people":{"p_qv":{"id":"p_qv","stableId":"p_qv","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Queen Victoria","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1819","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"inferred_obligate","notes":"Unaffected inferred carrier and origin of the documented royal-family lineage.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1901","_gen":0},"p_albert":{"id":"p_albert","stableId":"p_albert","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Albert of Saxe-Coburg and Gotha","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1819","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1861","_gen":0},"p_victoria_pr":{"id":"p_victoria_pr","stableId":"p_victoria_pr","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Victoria, Princess Royal","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1840","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1901","_gen":1},"p_frederick_iii":{"id":"p_frederick_iii","stableId":"p_frederick_iii","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Frederick III, German Emperor","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1831","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1888","_gen":1},"p_edward_vii":{"id":"p_edward_vii","stableId":"p_edward_vii","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Edward VII","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1841","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1910","_gen":1},"p_alice_uk":{"id":"p_alice_uk","stableId":"p_alice_uk","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Alice","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1843","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_from_descendants","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1878","_gen":1},"p_louis_iv":{"id":"p_louis_iv","stableId":"p_louis_iv","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Louis IV, Grand Duke of Hesse","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1837","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1892","_gen":1},"p_alfred":{"id":"p_alfred","stableId":"p_alfred","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alfred, Duke of Edinburgh","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1844","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1900","_gen":1},"p_helena":{"id":"p_helena","stableId":"p_helena","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Helena","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1846","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1923","_gen":1},"p_louise":{"id":"p_louise","stableId":"p_louise","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Louise","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1848","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"No children in this pedigree.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1939","_gen":1},"p_arthur":{"id":"p_arthur","stableId":"p_arthur","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Arthur, Duke of Connaught and Strathearn","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1850","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1942","_gen":1},"p_leopold_albany":{"id":"p_leopold_albany","stableId":"p_leopold_albany","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Leopold, Duke of Albany","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1853","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1884","_gen":1},"p_helena_waldeck":{"id":"p_helena_waldeck","stableId":"p_helena_waldeck","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Helena of Waldeck and Pyrmont","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1861","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1922","_gen":1},"p_beatrice":{"id":"p_beatrice","stableId":"p_beatrice","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Beatrice","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1857","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_from_descendants","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1944","_gen":1},"p_henry_battenberg":{"id":"p_henry_battenberg","stableId":"p_henry_battenberg","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Henry of Battenberg","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1858","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1896","_gen":1},"p_victoria_hesse":{"id":"p_victoria_hesse","stableId":"p_victoria_hesse","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Victoria of Hesse and by Rhine","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1863","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1950","_gen":2},"p_elisabeth_hesse":{"id":"p_elisabeth_hesse","stableId":"p_elisabeth_hesse","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Elisabeth of Hesse and by Rhine","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1864","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":2},"p_irene_hesse":{"id":"p_irene_hesse","stableId":"p_irene_hesse","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Irene of Hesse and by Rhine","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1866","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_from_affected_sons","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1953","_gen":2},"p_henry_prussia":{"id":"p_henry_prussia","stableId":"p_henry_prussia","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Henry of Prussia","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1862","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1929","_gen":2},"p_ernest_louis":{"id":"p_ernest_louis","stableId":"p_ernest_louis","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Ernest Louis, Grand Duke of Hesse","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1868","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1937","_gen":2},"p_friedrich_hesse":{"id":"p_friedrich_hesse","stableId":"p_friedrich_hesse","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Friedrich of Hesse and by Rhine","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1870","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1873","_gen":2},"p_alix":{"id":"p_alix","stableId":"p_alix","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Alix of Hesse, Empress Alexandra Feodorovna","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1872","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"molecularly_confirmed","notes":"Heterozygous F9 IVS3-3A>G carrier confirmed from historical DNA.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":2},"p_nicholas_ii":{"id":"p_nicholas_ii","stableId":"p_nicholas_ii","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Tsar Nicholas II","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1868","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":2},"p_alice_albany":{"id":"p_alice_albany","stableId":"p_alice_albany","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess Alice of Albany","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1883","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_daughter_of_affected_male","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1981","_gen":2},"p_alexander_cambridge":{"id":"p_alexander_cambridge","stableId":"p_alexander_cambridge","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alexander Cambridge, Earl of Athlone","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1874","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1957","_gen":2},"p_charles_edward":{"id":"p_charles_edward","stableId":"p_charles_edward","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Charles Edward, Duke of Saxe-Coburg and Gotha","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1884","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1954","_gen":2},"p_alexander_mountbatten":{"id":"p_alexander_mountbatten","stableId":"p_alexander_mountbatten","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alexander Mountbatten, Marquess of Carisbrooke","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1886","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1960","_gen":2},"p_victoria_eugenie":{"id":"p_victoria_eugenie","stableId":"p_victoria_eugenie","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Victoria Eugenie of Battenberg","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1887","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"obligate_from_affected_sons","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1969","_gen":2},"p_alfonso_xiii":{"id":"p_alfonso_xiii","stableId":"p_alfonso_xiii","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alfonso XIII of Spain","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1886","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1941","_gen":2},"p_leopold_mountbatten":{"id":"p_leopold_mountbatten","stableId":"p_leopold_mountbatten","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Leopold Mountbatten","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1889","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1922","_gen":2},"p_maurice_battenberg":{"id":"p_maurice_battenberg","stableId":"p_maurice_battenberg","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Maurice of Battenberg","label":null,"birthOrder":null,"clinicalStatus":"unknown","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1891","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"historically_disputed","notes":"Affected status is disputed; retained as unknown.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1914","_gen":2},"p_waldemar_prussia":{"id":"p_waldemar_prussia","stableId":"p_waldemar_prussia","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Waldemar of Prussia","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1889","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1945","_gen":3},"p_sigismund_prussia":{"id":"p_sigismund_prussia","stableId":"p_sigismund_prussia","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Sigismund of Prussia","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1896","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1978","_gen":3},"p_henry_prussia_jr":{"id":"p_henry_prussia_jr","stableId":"p_henry_prussia_jr","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Henry of Prussia","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1900","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1904","_gen":3},"p_olga":{"id":"p_olga","stableId":"p_olga","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Grand Duchess Olga","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1895","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"molecularly_tested_wild_type","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_tatiana":{"id":"p_tatiana","stableId":"p_tatiana","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Grand Duchess Tatiana","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1897","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"molecularly_tested_wild_type","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_maria":{"id":"p_maria","stableId":"p_maria","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Grand Duchess Maria","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1899","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"molecularly_tested_wild_type","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_anastasia":{"id":"p_anastasia","stableId":"p_anastasia","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Grand Duchess Anastasia","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":true,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1901","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Heterozygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"probable_molecular_carrier","notes":"One Romanov daughter was molecularly identified as a carrier; the study assigned this most probably to Anastasia.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_alexey":{"id":"p_alexey","stableId":"p_alexey","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Tsarevich Alexey","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":true,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1904","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"molecularly_confirmed","notes":"Hemizygous for the mutant F9 allele; severe haemophilia B.","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1918","_gen":3},"p_may_teck":{"id":"p_may_teck","stableId":"p_may_teck","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Princess May of Teck","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1906","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1994","_gen":3},"p_rupert_trematon":{"id":"p_rupert_trematon","stableId":"p_rupert_trematon","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Rupert Cambridge, Viscount Trematon","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1907","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1928","_gen":3},"p_maurice_teck":{"id":"p_maurice_teck","stableId":"p_maurice_teck","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Prince Maurice of Teck","label":null,"birthOrder":null,"clinicalStatus":"unknown","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1910","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_uncertain","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1910","_gen":3},"p_alfonso_asturias":{"id":"p_alfonso_asturias","stableId":"p_alfonso_asturias","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Alfonso, Prince of Asturias","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1907","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1938","_gen":3},"p_jaime_spain":{"id":"p_jaime_spain","stableId":"p_jaime_spain","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Infante Jaime of Spain","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1908","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1975","_gen":3},"p_beatriz_spain":{"id":"p_beatriz_spain","stableId":"p_beatriz_spain","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Infanta Beatriz of Spain","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1909","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"2002","_gen":3},"p_cristina_spain":{"id":"p_cristina_spain","stableId":"p_cristina_spain","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"female","gender":"woman","sexAssignedAtBirth":"AFAB","name":"Infanta Cristina of Spain","label":null,"birthOrder":null,"clinicalStatus":"unaffected","affected":false,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1911","ageAtDeath":"","phenotype":"","diagnosis":"","onset":"","gene":"","variantType":"","chromosome":"","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"","inheritance":"","classification":"","geneticsFreeText":"","sampleId":"","testStatus":"status_unknown","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1996","_gen":3},"p_gonzalo_spain":{"id":"p_gonzalo_spain","stableId":"p_gonzalo_spain","externalIds":{"plinkIid":"","fhirIdentifier":""},"terminology":{"phenotype":[],"diagnosis":[],"gene":[],"variant":[]},"interoperability":{},"sex":"male","gender":"man","sexAssignedAtBirth":"AMAB","name":"Infante Gonzalo of Spain","label":null,"birthOrder":null,"clinicalStatus":"affected","affected":true,"deceased":true,"proband":false,"consultand":false,"carrier":false,"symbolDisplayOverride":"auto","symbolStyle":"auto","vitalStatus":"deceased","birthYear":"1914","ageAtDeath":"","phenotype":"Haemophilia B","diagnosis":"Haemophilia B","onset":"","gene":"F9","variantType":"splice-altering","chromosome":"X","genomicStart":"","genomicEnd":"","ref":"","alt":"","genomicHgvs":"","codingHgvs":"","rnaHgvs":"","proteinHgvs":"","assembly":"GRCh38","transcript":"","zygosity":"Hemizygous","inheritance":"X-linked recessive","classification":"Pathogenic","geneticsFreeText":"Historical royal-family F9 variant reported as IVS3-3A>G.","sampleId":"","testStatus":"historically_affected","notes":"","twinGroup":null,"twinType":null,"source":"historical_consensus","pinned":false,"px":null,"py":null,"deathYear":"1934","_gen":3}},"unions":{"u_qv_albert":{"id":"u_qv_albert","stableId":"u_qv_albert","a":"p_qv","b":"p_albert","children":["p_victoria_pr","p_edward_vii","p_alice_uk","p_alfred","p_helena","p_louise","p_arthur","p_leopold_albany","p_beatrice"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_victoria_frederick":{"id":"u_victoria_frederick","stableId":"u_victoria_frederick","a":"p_victoria_pr","b":"p_frederick_iii","children":[],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_alice_louis":{"id":"u_alice_louis","stableId":"u_alice_louis","a":"p_alice_uk","b":"p_louis_iv","children":["p_victoria_hesse","p_elisabeth_hesse","p_irene_hesse","p_ernest_louis","p_friedrich_hesse","p_alix"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_leopold_helena":{"id":"u_leopold_helena","stableId":"u_leopold_helena","a":"p_leopold_albany","b":"p_helena_waldeck","children":["p_alice_albany","p_charles_edward"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_beatrice_henry":{"id":"u_beatrice_henry","stableId":"u_beatrice_henry","a":"p_beatrice","b":"p_henry_battenberg","children":["p_alexander_mountbatten","p_victoria_eugenie","p_leopold_mountbatten","p_maurice_battenberg"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_irene_henry":{"id":"u_irene_henry","stableId":"u_irene_henry","a":"p_irene_hesse","b":"p_henry_prussia","children":["p_waldemar_prussia","p_sigismund_prussia","p_henry_prussia_jr"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_alix_nicholas":{"id":"u_alix_nicholas","stableId":"u_alix_nicholas","a":"p_alix","b":"p_nicholas_ii","children":["p_olga","p_tatiana","p_maria","p_anastasia","p_alexey"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_alice_albany_alexander":{"id":"u_alice_albany_alexander","stableId":"u_alice_albany_alexander","a":"p_alice_albany","b":"p_alexander_cambridge","children":["p_may_teck","p_rupert_trematon","p_maurice_teck"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""},"u_ena_alfonso":{"id":"u_ena_alfonso","stableId":"u_ena_alfonso","a":"p_victoria_eugenie","b":"p_alfonso_xiii","children":["p_alfonso_asturias","p_jaime_spain","p_beatriz_spain","p_cristina_spain","p_gonzalo_spain"],"consanguineous":false,"relationshipStatus":"current","consanguinityDegree":"","noChildren":false,"infertility":false,"infertilityReason":""}}}};
-
 const TEMPLATES={
   blank:{name:"Blank",build:()=>{},category:"basic",desc:"Empty canvas — build from scratch."},
   basic_trio:{name:"Basic trio",build:basicTrioTemplate,category:"basic",desc:"Blank trio layout with two parents and one unannotated child."},
@@ -2944,7 +3134,6 @@ function queenVictoriaHaemophiliaBTemplate(){
   model.interoperability.nativeFormat=NATIVE_FORMAT;
   model.interoperability.fhirVersion=FHIR_R4_VERSION;
 }
-
 const NEOLITHIC_GURGY_SAMPLED_FLAG_FAM=`GURGY P_A_top_f 0 0 1 1
 GURGY P_A_top_m 0 0 2 1
 GURGY GLN231A P_A_top_f P_A_top_m 1 2
@@ -3119,7 +3308,6 @@ CEPH1463	NA12886	NA12877	NA12878	1	-9
 CEPH1463	NA12887	NA12877	NA12878	2	-9
 CEPH1463	NA12888	NA12877	NA12878	1	-9
 CEPH1463	NA12893	NA12877	NA12878	1	-9`;
-
 function buildPlinkTemplateFromText(text,fileName,fid,options={}){
   const parsed=parsePlinkText(text,fileName);
   const records=parsed.records.filter(r=>r.fid===fid);
@@ -3178,7 +3366,6 @@ function buildPlinkTemplateFromText(text,fileName,fid,options={}){
   migrateModel();
   ui.sel=P().find(p=>clinicalStatusOf(p)==="affected")?.id||P()[0]?.id||null;
 }
-
 function neolithicGurgyTemplate(){
   buildPlinkTemplateFromText(NEOLITHIC_GURGY_SAMPLED_FLAG_FAM,"master_rivollat_neolithic_gurgy_pedigree.sampled_flag.fam","GURGY",{
     caseName:"Neolithic community DNA 4500 BC",
@@ -3190,7 +3377,6 @@ function neolithicGurgyTemplate(){
     warnings:["Gurgy phenotype values are sampled flags, not biological traits: 2 = sequenced individual, 1 = inferred/not-sampled phantom.","Sequenced Gurgy individuals render as affected because PLINK phenotype 2 maps to affected in the app."]
   });
 }
-
 function ceph1463Template(){
   buildPlinkTemplateFromText(CEPH1463_PED,"ceph1463.ped","CEPH1463",{
     caseName:"CEPH1463 reference family",
@@ -3212,7 +3398,6 @@ function loadTemplate(k){ closeDialog(); history.push(snapshot()); future=[];
   model=blankModel(k); uid=1; ui.sel=null; TEMPLATES[k].build();
   document.getElementById("caseName").value=model.caseName;
   computeLayout(); render(); setTimeout(fitView,20); markDirty(); }
-
 /* ===== export ===== */
 function buildExportSVG(){
   const out=renderSVG({clean:true}), b=out.bounds;
@@ -3288,13 +3473,11 @@ function printClinicalReport(){
     switzerlandomics.ch/terms/pedigree/
   </a>
 </footer>
-
 <script>window.addEventListener("load",()=>setTimeout(()=>window.print(),150));<\/script>
 </body>
 </html>`);
   printWindow.document.close();
 }
-
 function toggleExportOptions(){
   const fmt=document.getElementById("expFmt")?.value;
   const png=document.getElementById("pngScaleField");
@@ -3337,20 +3520,16 @@ function recordExport(fmt){
   renderReport();
   markDirty();
 }
-
 const PEDIGREE_EXPORT_COUNTER_API_BASE="https://pedigree-usage.cold-leaf-e00d.workers.dev";
-
 function formatPedigreeExportCount(value){
   return Number(value||0).toLocaleString();
 }
-
 function updatePedigreeExportCounter(value){
   const formatted=formatPedigreeExportCount(value);
   document.querySelectorAll("[data-pedigree-count-total]").forEach(el=>{
     el.textContent=formatted;
   });
 }
-
 async function loadPedigreeExportCounter(){
   try{
     const response=await fetch(PEDIGREE_EXPORT_COUNTER_API_BASE+"/pedigree/export-count");
@@ -3359,23 +3538,19 @@ async function loadPedigreeExportCounter(){
     updatePedigreeExportCounter(data.count);
   }catch(error){}
 }
-
 async function recordPedigreeExportClick(){
   try{
     await fetch(PEDIGREE_EXPORT_COUNTER_API_BASE+"/pedigree/export-click",{method:"POST"});
   }catch(error){}
 }
-
 function openExportTracked(){
   recordPedigreeExportClick();
   openExport();
 }
-
 function openExportTracked(){
   recordPedigreeExportClick();
   openExport();
 }
-
 function cleanFileStem(value){
   return String(value||"pedigree").trim().replace(/[^A-Za-z0-9._-]+/g,"_").replace(/^_+|_+$/g,"")||"pedigree";
 }
@@ -3561,7 +3736,6 @@ function buildFhirBundle(){
     const organisation={resourceType:"Organization",id:fhirId(model.meta.institution,"organisation"),active:true,name:model.meta.institution};
     organisationUrn=add("organisation",organisation);
   }
-
   const resultRefs=[],specimenRefs=[];
   if(proband.diagnosis){
     const condition={resourceType:"Condition",id:fhirId(proband.id,"condition"),subject:{reference:patientUrn},code:{text:proband.diagnosis},
@@ -3589,7 +3763,6 @@ function buildFhirBundle(){
     const specimen={resourceType:"Specimen",id:fhirId(proband.sampleId,"specimen"),identifier:[{system:INTEROP_BASE+"/identifier/specimen",value:proband.sampleId}],status:proband.testStatus==="unavailable"?"unavailable":"available",subject:{reference:patientUrn}};
     specimenRefs.push({reference:add("specimen",specimen)});
   }
-
   P().filter(p=>p.id!==proband.id).forEach(p=>{
     const relationship=relationshipFromProband(proband.id,p.id);
     const related={resourceType:"RelatedPerson",id:fhirId(p.stableId||p.id,"related"),active:true,patient:{reference:patientUrn},relationship:[relationship],
@@ -3611,7 +3784,6 @@ function buildFhirBundle(){
     if(!fmh.condition.length)delete fmh.condition; if(!fmh.note.length)delete fmh.note;
     Object.keys(fmh).forEach(k=>fmh[k]===undefined&&delete fmh[k]); add("family-"+p.id,fmh);
   });
-
   U().forEach(u=>{
     const basic={resourceType:"Basic",id:fhirId(u.stableId||u.id,"union"),code:{coding:[{system:INTEROP_CODES,code:"pedigree-union",display:"Pedigree union"}],text:"Pedigree union"},
       subject:{reference:patientUrn},extension:compactExtensions([
@@ -3624,7 +3796,6 @@ function buildFhirBundle(){
       ])};
     add("union-"+u.id,basic);
   });
-
   const nativePayload=nativeProjectPayload();
   const binary={resourceType:"Binary",id:fhirId(model.caseName,"native"),contentType:"application/vnd.switzerlandomics.pedigree+json",data:utf8ToBase64(JSON.stringify(nativePayload))};
   const binaryUrn=add("native-binary",binary);
@@ -3644,7 +3815,6 @@ function buildFhirBundle(){
   const provenance={resourceType:"Provenance",id:fhirId(model.caseName,"provenance"),target:[{reference:patientUrn},{reference:documentUrn},{reference:reportUrn}],recorded:new Date().toISOString(),agent:provenanceAgents,
     entity:[{role:"source",what:{reference:binaryUrn}}]};
   add("provenance",provenance);
-
   const bundle={resourceType:"Bundle",id:fhirId(model.caseName,"bundle"),meta:{tag:[{system:INTEROP_CODES,code:"pedigree-family-history",display:"Pedigree family-history exchange"},{system:INTEROP_CODES,code:"fhir-version",display:FHIR_R4_VERSION}]},
     identifier:{system:INTEROP_BASE+"/identifier/case",value:model.caseName||"pedigree"},type:"collection",timestamp:new Date().toISOString(),entry:entries};
   validateFhirBundle(bundle); return bundle;
@@ -3955,14 +4125,12 @@ function buildPlinkText(format,mode){
   let fid;
   if(explicitFid)fid=plinkToken(explicitFid,"Family identifier",strict,warnings,{allowZero:true});
   else fid=derivedPlinkFamilyId(model.caseName||"family",warnings);
-
   const people=plinkExportOrder(),iidByPerson=new Map(),personByIid=new Map();
   people.forEach(p=>{
     const iid=plinkIid(p,strict,warnings);
     if(personByIid.has(iid))throw new Error(`PLINK individual identifier ${iid} is duplicated.`);
     iidByPerson.set(p.id,iid);personByIid.set(iid,p);
   });
-
   let preserveGenotypes=format==="ped",genotypeWidth=0,genotypeEncoding="none";
   if(preserveGenotypes){
     const stored=people.map(p=>{
@@ -3984,7 +4152,6 @@ function buildPlinkText(format,mode){
       addUniqueWarning(warnings,"The PED export contains the six pedigree columns only because no marker genotypes are stored. A matching MAP file is still required by workflows that load PED with --file.");
     }
   }
-
   const rows=[];
   people.forEach(p=>{
     const parentUnions=U().filter(u=>u.children.includes(p.id));
@@ -4147,21 +4314,17 @@ async function importProjectFile(file){
     applyImportedProject(parsed,"native-json");
   }catch(err){alert("Import failed: "+(err&&err.message?err.message:"The selected file is invalid."));}
 }
-
 /* ===== dialog ===== */
 function openDialog(title,body,foot){ closeDialog();
   const s=document.createElement("div"); s.className="scrim"; s.id="scrim";
   s.innerHTML=`<div class="dialog" role="dialog" aria-modal="true"><header>${esc(title)}<button onclick="closeDialog()" aria-label="Close">×</button></header><div class="body">${body}</div><div class="foot">${foot}</div></div>`;
   s.addEventListener("pointerdown",e=>{if(e.target===s)closeDialog();}); document.body.appendChild(s); }
 function closeDialog(){ const s=document.getElementById("scrim"); if(s)s.remove(); }
-
 /* ===== autosave ===== */
 function markDirty(){
   const caseInput=document.getElementById("caseName");
   if(caseInput)model.caseName=caseInput.value;
-
   setSave("dirty");
-
   clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{
     try{
@@ -4172,36 +4335,28 @@ function markDirty(){
     }
   },600);
 }
-
 function setSave(state){
   const txt={
     dirty:"Saving…",
     saved:"Saved locally",
     off:"Save unavailable"
   }[state]||state;
-
   saveEl=document.getElementById("saveState");
-
   if(!saveEl){
     saveEl=document.createElement("div");
     saveEl.className="save-state";
     saveEl.id="saveState";
     saveEl.setAttribute("aria-live","polite");
     saveEl.innerHTML='<span class="save-dot"></span><span class="save-txt">Auto save</span>';
-
     const spacer=document.querySelector(".pedigree-appbar .spacer");
     if(spacer)spacer.after(saveEl);
   }
-
   if(!saveEl)return;
-
   const dot=saveEl.querySelector(".save-dot");
   const label=saveEl.querySelector(".save-txt");
-
   if(dot)dot.className="save-dot"+(state==="dirty"?" dirty":"");
   if(label)label.textContent=txt;
 }
-
 function tryRestore(){
   try{
     const s=localStorage.getItem("pedigree.v2");
@@ -4216,7 +4371,6 @@ function tryRestore(){
   }catch(e){}
   return false;
 }
-
 function migrateModel(){
   model.schemaVersion=PEDIGREE_SCHEMA_VERSION;
   model.people=model.people||{};model.unions=model.unions||{};
@@ -4258,7 +4412,6 @@ function migrateModel(){
   model.meta=Object.assign({disease:"",indication:"",reviewer:"",institution:"",date:"",lastExportedAt:"",lastExportFormat:"",importWarnings:[]},model.meta||{});
   model.interoperability=Object.assign({plinkFamilyId:"",lastImportedFormat:"",lastImportedAt:""},model.interoperability||{});
 }
-
 /* ===== keyboard ===== */
 function initKeys(){ document.addEventListener("keydown",e=>{
   const t=e.target.tagName; if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;
@@ -4270,10 +4423,8 @@ function initKeys(){ document.addEventListener("keydown",e=>{
   if(map[k]){e.preventDefault(); k==="d"?toggleField("deceased"):act(map[k]);}
   else if(e.key==="Enter"){e.preventDefault();openSec.add("identity");renderInspector();document.querySelector("#inspBody input")?.focus();}
   else if(e.key==="Backspace"||e.key==="Delete"){e.preventDefault();act("delete");} }); }
-
-
 /* ===== boot ===== */
-function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",layoutPreset:"standard",focus:false,variantIndexByPerson:{}}; view={x:0,y:0,scale:1};
+function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",edgeColourMode:"off",edgeColourTheme:"city-sunset",layoutPreset:"standard",focus:false,variantIndexByPerson:{}}; view={x:0,y:0,scale:1};
   model=blankModel("rare"); if(!tryRestore())trioTemplate(); migrateModel();
   if(!ui.sel){const first=P().find(p=>p.proband)||P()[0];ui.sel=first?first.id:null;}
   initCanvas(); initKeys(); computeLayout(); render(); setTimeout(fitView,40); loadPedigreeExportCounter();
@@ -4282,8 +4433,6 @@ init();
 </script>
   </div>
 </main>
-
-
 
   </div>
   <div class="footer">
