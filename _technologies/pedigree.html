@@ -7,7 +7,7 @@ permalink: /technologies/pedigree/
 bodyClass: "page-tech page-pedigree"
 weight: 99
 technology_group: structured-genomics
-version: 1.0.4
+version: 1.0.5
 ---
 
 <style>
@@ -93,7 +93,7 @@ version: 1.0.4
 @media (max-width:1100px){.pedigree-guide-link .guide-long{display:none}}
 
 /* main grid */
-.main{display:grid;grid-template-columns:minmax(340px,24vw) minmax(0,1fr) minmax(220px,16vw);min-height:0;background:var(--bg-app)}
+.main{display:grid;grid-template-columns:minmax(340px,24vw) minmax(0,1fr);min-height:0;background:var(--bg-app)}
 .panel{background:var(--bg-panel);min-height:0;display:flex;flex-direction:column;overflow:hidden}
 .navigator{border-right:0;border-left:1px solid var(--border-subtle)}
 .inspector{border-left:0;border-right:1px solid var(--border-subtle);min-width:0;width:100%}
@@ -139,6 +139,23 @@ version: 1.0.4
 .layout-ctl .row .lbtn svg{width:14px;height:14px;flex:0 0 auto}
 .layout-ctl .row .lbtn:hover{border-color:var(--accent);color:var(--accent)}
 .layout-ctl .row .lbtn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.inspector-nav{margin-top:8px;border-top:1px solid var(--border-subtle)}
+.plot-controls{margin:10px 0 14px;padding:10px 12px;border:1px solid var(--border-subtle);border-radius:var(--r);background:var(--bg-panel)}
+.plot-controls .layout-ctl{padding:0;display:grid;grid-template-columns:repeat(5,minmax(120px,1fr)) auto;gap:10px 12px;align-items:end}
+.plot-controls .layout-field{min-width:0}
+.plot-controls .layout-field label{margin:0 0 4px}
+.plot-controls .layout-field select,.plot-controls .layout-field input[type=range]{width:100%}
+.plot-controls .layout-ctl .row{margin:0;padding:0;display:flex;flex-direction:row;gap:8px;align-self:stretch;align-items:stretch;justify-content:flex-end}
+.plot-controls .layout-ctl .row .lbtn{width:auto;min-width:126px;justify-content:center;padding:8px 12px;white-space:nowrap}
+@media (max-width:1100px){
+  .plot-controls .layout-ctl{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .plot-controls .layout-ctl .row{grid-column:1 / -1}
+}
+@media (max-width:680px){
+  .plot-controls .layout-ctl{grid-template-columns:1fr}
+  .plot-controls .layout-ctl .row{justify-content:stretch;flex-wrap:wrap}
+  .plot-controls .layout-ctl .row .lbtn{flex:1 1 150px}
+}
 
 /* ===== centre: document ===== */
 .document-col{min-height:0;display:flex;flex-direction:column;background:var(--bg-panel)}
@@ -439,8 +456,8 @@ version: 1.0.4
 }
 
 .main{
-  grid-template-columns:minmax(340px,24%) minmax(0,1fr) minmax(220px,16%);
-  grid-template-areas:"inspector document navigator";
+  grid-template-columns:minmax(340px,24%) minmax(0,1fr);
+  grid-template-areas:"inspector document";
 }
 
 .navigator{
@@ -525,13 +542,12 @@ version: 1.0.4
 }
 
 .main.plot-expanded{
-  grid-template-columns:minmax(340px,1.35fr) minmax(220px,1fr);
+  grid-template-columns:minmax(340px,1fr);
   grid-template-areas:
-    "document document"
-    "inspector navigator";
+    "document"
+    "inspector";
 }
 
-.main.plot-expanded .navigator,
 .main.plot-expanded .inspector{
   max-height:44rem;
   border-top:1px solid var(--border-subtle);
@@ -539,7 +555,7 @@ version: 1.0.4
 
 @media (min-width:1500px){
   .main{
-    grid-template-columns:minmax(380px,22%) minmax(0,1fr) minmax(240px,15%);
+    grid-template-columns:minmax(380px,22%) minmax(0,1fr);
   }
 }
 
@@ -555,17 +571,11 @@ version: 1.0.4
     min-width:0;
   }
 
-  .navigator{
+  .inspector{
     order:2;
   }
 
-  .inspector{
-    order:3;
-  }
-
-  .main .navigator,
   .main .inspector,
-  .main.plot-expanded .navigator,
   .main.plot-expanded .inspector{
     display:flex;
     width:100%;
@@ -619,7 +629,7 @@ version: 1.0.4
         <circle cx="12" cy="19.5" r="2.5" fill="#2f2f41" stroke="#2f2f41"/>
       </svg><span>Pedigree</span>
     </div>
-    <span class="pedigree-release-tag">v1.0.4</span>
+    <a class="pedigree-release-tag" href="{% link pages/pedigree-changelog.md %}">v1.0.5</a>
     <a class="pedigree-guide-link" href="/technologies/pedigree/standards/" target="_blank" rel="noopener" title="Open the illustrated pedigree standards guide in a new tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Pedigree standards</span><span class="guide-long">and symbols</span>
@@ -661,8 +671,6 @@ version: 1.0.4
   </header>
 
   <div class="main" id="main">
-    <aside class="panel navigator"><div class="panel-scroll" id="navScroll"></div></aside>
-
     <section class="document-col" id="documentCol">
       <div class="doc-scroll" id="docScroll">
         <div class="page">
@@ -693,12 +701,13 @@ version: 1.0.4
           </div>
           <div class="fig-cap"><span id="figCapLeft">Drag a symbol to reposition it. Click empty canvas to deselect.</span>
             <span id="figCapRight"></span></div>
+          <div class="plot-controls" id="layoutControls"></div>
           <div class="report" id="report"></div>
         </div>
       </div>
     </section>
 
-    <aside class="panel inspector"><div class="panel-scroll" id="inspBody"></div></aside>
+    <aside class="panel inspector"><div class="panel-scroll" id="inspectorScroll"><div id="inspBody"></div><div class="inspector-nav" id="navScroll"></div></div></aside>
   </div>
 
   <footer class="context">
@@ -731,7 +740,7 @@ version: 1.0.4
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
 const PEDIGREE_SCHEMA_VERSION=7;
-const PEDIGREE_APP_VERSION="v1.0.4";
+const PEDIGREE_APP_VERSION="v1.0.5";
 const NATIVE_FORMAT="pedigree-native/v7";
 const FHIR_R4_VERSION="4.0.1";
 const MAX_PERSON_VARIANTS=5;
@@ -1029,6 +1038,16 @@ function layoutMean(values){
   const clean=values.filter(Number.isFinite);
   return clean.length?clean.reduce((sum,value)=>sum+value,0)/clean.length:null;
 }
+function layoutSibshipSlots(children,parents){
+  if(!children.length)return [];
+  const parentXs=parents.map(p=>p._layoutX).filter(Number.isFinite);
+  const childCentre=layoutMean(children.map(p=>p._layoutX));
+  const centre=parentXs.length?layoutMean(parentXs):childCentre;
+  if(centre==null)return [];
+  const parentSpan=parentXs.length>=2?Math.max(...parentXs)-Math.min(...parentXs):0;
+  const gap=Math.max(layoutNodeGap(),parentSpan);
+  return children.map((child,index)=>({child,x:centre+(index-(children.length-1)/2)*gap}));
+}
 function layoutParentOrder(union){
   const ids=[union.a,union.b].filter(id=>id&&model.people[id]);
   if(ids.length<2)return ids;
@@ -1112,6 +1131,71 @@ function layoutApplyChildBearingPartnershipAdjacency(byGen){
     layoutResolveOrderedGeneration(byGen[generation],person=>targets[person.id]);
   });
 }
+function layoutApplySafeSibshipSymmetry(byGen){
+  const gap=layoutNodeGap();
+  U().forEach(union=>{
+    const children=layoutOrderedChildren(union);
+    const parents=layoutParentOrder(union).map(id=>model.people[id]).filter(Boolean);
+    const slots=layoutSibshipSlots(children,parents).filter(slot=>!(slot.child.pinned&&slot.child.px!=null));
+    if(!slots.length)return;
+    const moving=new Set(slots.map(slot=>slot.child.id));
+    const safe=slots.every(slot=>{
+      const people=byGen[slot.child._gen]||[];
+      return people.every(other=>moving.has(other.id)||Math.abs((other._layoutX||0)-slot.x)>=gap-.5);
+    });
+    if(safe)slots.forEach(slot=>{slot.child._layoutX=slot.x;});
+  });
+}
+function layoutChildBearingUnionDegree(){
+  const degree={};
+  U().forEach(union=>{
+    if(!Array.isArray(union.children)||!union.children.length)return;
+    const a=model.people[union.a],b=model.people[union.b];
+    if(!a||!b||a._gen!==b._gen)return;
+    degree[a.id]=(degree[a.id]||0)+1;
+    degree[b.id]=(degree[b.id]||0)+1;
+  });
+  return degree;
+}
+function layoutCanShiftGroup(byGen,people,delta){
+  const gap=layoutNodeGap();
+  const moving=new Set(people.map(p=>p.id));
+  return people.every(person=>{
+    const target=(person._layoutX||0)+delta;
+    const generationPeople=byGen[person._gen]||[];
+    return generationPeople.every(other=>
+      moving.has(other.id)||Math.abs((other._layoutX||0)-target)>=gap-.5
+    );
+  });
+}
+function layoutApplyUpwardFamilyCentreAlignment(byGen){
+  const degree=layoutChildBearingUnionDegree();
+  const unions=U()
+    .filter(union=>Array.isArray(union.children)&&union.children.length)
+    .map(union=>{
+      const parents=layoutParentOrder(union).map(id=>model.people[id]).filter(Boolean);
+      const children=layoutOrderedChildren(union);
+      const parentGeneration=parents.length?layoutMean(parents.map(p=>p._gen)):null;
+      return {parents,children,parentGeneration};
+    })
+    .filter(item=>item.parents.length===2&&item.children.length&&Number.isFinite(item.parentGeneration))
+    .sort((a,b)=>b.parentGeneration-a.parentGeneration);
+  for(let pass=0;pass<2;pass++){
+    unions.forEach(item=>{
+      const parents=item.parents;
+      if(parents[0]._gen!==parents[1]._gen)return;
+      if(parents.some(parent=>parent.pinned&&parent.px!=null))return;
+      if(parents.some(parent=>(degree[parent.id]||0)>1))return;
+      const parentCentre=layoutMean(parents.map(parent=>parent._layoutX));
+      const childCentre=layoutMean(item.children.map(child=>child._layoutX));
+      if(parentCentre==null||childCentre==null)return;
+      const delta=childCentre-parentCentre;
+      if(Math.abs(delta)<.5)return;
+      if(!layoutCanShiftGroup(byGen,parents,delta))return;
+      parents.forEach(parent=>{parent._layoutX+=delta;});
+    });
+  }
+}
 function layoutSameGenerationUnionDegree(){
   const degree={};
   U().forEach(union=>{
@@ -1185,12 +1269,7 @@ function computeLayout(){
       const children=layoutOrderedChildren(union);
       const parents=layoutParentOrder(union).map(id=>model.people[id]).filter(Boolean);
       if(children.length){
-        const parentCentre=layoutMean(parents.map(p=>p._layoutX));
-        const childCentre=layoutMean(children.map(p=>p._layoutX));
-        const centre=parentCentre!=null?parentCentre:childCentre;
-        const gap=layoutNodeGap();
-        const start=centre-((children.length-1)*gap)/2;
-        children.forEach((child,index)=>addTarget(child.id,start+index*gap,2.2));
+        layoutSibshipSlots(children,parents).forEach(slot=>addTarget(slot.child.id,slot.x,2.2));
       }
       if(parents.length){
         const childCentre=layoutMean(children.map(p=>p._layoutX));
@@ -1213,6 +1292,8 @@ function computeLayout(){
   }
 
   layoutApplyChildBearingPartnershipAdjacency(byGen);
+  layoutApplySafeSibshipSymmetry(byGen);
+  layoutApplyUpwardFamilyCentreAlignment(byGen);
 
   const minx=Math.min(0,...P().map(p=>p._layoutX||0));
   P().forEach(p=>{
@@ -1642,6 +1723,7 @@ function renderSVG(opts){
 /* ===== render ===== */
 function render(){
   drawStage();
+  renderLayoutControls();
   renderNavigator();
   renderInspector();
   renderReport();
@@ -1689,46 +1771,39 @@ function quickViewBox(){
   const bg=s.querySelector(".bgrect"); if(bg){bg.setAttribute("x",view.x);bg.setAttribute("y",view.y);bg.setAttribute("width",vbW);bg.setAttribute("height",vbH);}
 }
 
-/* ===== navigator ===== */
-let navCollapsed={warn:true,layout:false};
-function renderNavigator(){
-  const ps=P().slice().sort((a,b)=>(a._gen-b._gen)||(a.x-b.x));
-  const warns=computeWarnings();
-  const sect=(k,t,c,body)=>{ const col=navCollapsed[k]?"collapsed":"";
-    return `<div class="nav-section"><div class="nav-head ${col}" onclick="toggleNav('${k}')">
-      <span>${t}</span><span style="display:flex;align-items:center;gap:8px">${c!=null?(typeof c==="string"&&c.includes("warning-counts")?c:`<span class="count">${c}</span>`):""}
-      <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="nav-body">${body}</div></div>`; };
-  const people=ps.map(p=>`<div class="person-row ${ui.sel===p.id?'sel':''}" onclick="select('${p.id}')">
-      <span class="mini-sym">${miniSym(p)}</span><span class="pid">${esc(pedId(p))}</span>
-      <span class="pname">${esc(p.name||roleLabel(p))}</span></div>`).join("")
-      || `<div class="empty-note">No individuals yet.</div>`;
-  const warnHtml=warns.length?warns.map(w=>`<div class="warn-row"><span class="sev ${w.sev}"></span><span>${esc(w.msg)}</span></div>`).join("")
-      :`<div class="empty-note">No structural or clinical warnings.</div>`;
-  const layout=`<div class="layout-ctl">
-      <label for="layoutPreset">Layout preset</label>
-      <select id="layoutPreset" onchange="applyPreset(this.value)">
-        <option value="compact" ${ui.layoutPreset==="compact"?'selected':''}>Compact clinical</option>
-        <option value="standard" ${ui.layoutPreset==="standard"?'selected':''}>Standard space</option>
-        <option value="spacious" ${ui.layoutPreset==="spacious"?'selected':''}>Spacious review</option>
-        <option value="custom" ${ui.layoutPreset==="custom"?'selected':''} disabled>Custom</option>
-      </select>
-      <label for="labelPreset">Symbol labels</label>
-      <select id="labelPreset" onchange="setPreset(this.value)" title="Label detail under each symbol">
-        <option value="none" ${ui.labelPreset==="none"?'selected':''}>No labels</option>
-        <option value="minimal" ${ui.labelPreset==="minimal"?'selected':''}>Minimal</option>
-        <option value="clinical" ${ui.labelPreset==="clinical"?'selected':''}>Clinical</option>
-        <option value="clinical-genetic" ${ui.labelPreset==="clinical-genetic"?'selected':''}>Clinical genetic</option>
-        <option value="technical" ${ui.labelPreset==="technical"?'selected':''}>Full technical</option>
-      </select>
-      <label for="routingMode">Relationship lines</label>
-      <select id="routingMode" onchange="setRoutingMode(this.value)" title="Relationship line routing">
-        <option value="clinical" ${ui.routingMode==="clinical"?'selected':''}>Clinical lines</option>
-        <option value="flexible" ${ui.routingMode==="flexible"?'selected':''}>Flexible lines</option>
-      </select>
-      <label>Generation spacing · <span id="lsGen">${LAY.genH}</span> px</label>
-      <input type="range" min="${LAYOUT_LIMITS.genH.min}" max="${LAYOUT_LIMITS.genH.max}" step="2" value="${LAY.genH}" oninput="setSpacing('genH',this.value)">
-      <label>Sibling spacing · <span id="lsSib">${LAY.slot}</span> px</label>
-      <input type="range" min="${LAYOUT_LIMITS.slot.min}" max="${LAYOUT_LIMITS.slot.max}" step="4" value="${LAY.slot}" oninput="setSpacing('slot',this.value)">
+/* ===== navigator and plot controls ===== */
+let navCollapsed={warn:true};
+function navSection(k,t,c,body){ const col=navCollapsed[k]?"collapsed":"";
+  return `<div class="nav-section"><div class="nav-head ${col}" onclick="toggleNav('${k}')">
+    <span>${t}</span><span style="display:flex;align-items:center;gap:8px">${c!=null?(typeof c==="string"&&c.includes("warning-counts")?c:`<span class="count">${c}</span>`):""}
+    <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></span></div><div class="nav-body">${body}</div></div>`;
+}
+function layoutControlsHtml(){
+  return `<div class="layout-ctl">
+      <div class="layout-field"><label for="layoutPreset">Layout preset</label>
+        <select id="layoutPreset" onchange="applyPreset(this.value)">
+          <option value="compact" ${ui.layoutPreset==="compact"?'selected':''}>Compact clinical</option>
+          <option value="standard" ${ui.layoutPreset==="standard"?'selected':''}>Standard space</option>
+          <option value="spacious" ${ui.layoutPreset==="spacious"?'selected':''}>Spacious review</option>
+          <option value="custom" ${ui.layoutPreset==="custom"?'selected':''} disabled>Custom</option>
+        </select></div>
+      <div class="layout-field"><label for="labelPreset">Symbol labels</label>
+        <select id="labelPreset" onchange="setPreset(this.value)" title="Label detail under each symbol">
+          <option value="none" ${ui.labelPreset==="none"?'selected':''}>No labels</option>
+          <option value="minimal" ${ui.labelPreset==="minimal"?'selected':''}>Minimal</option>
+          <option value="clinical" ${ui.labelPreset==="clinical"?'selected':''}>Clinical</option>
+          <option value="clinical-genetic" ${ui.labelPreset==="clinical-genetic"?'selected':''}>Clinical genetic</option>
+          <option value="technical" ${ui.labelPreset==="technical"?'selected':''}>Full technical</option>
+        </select></div>
+      <div class="layout-field"><label for="routingMode">Relationship lines</label>
+        <select id="routingMode" onchange="setRoutingMode(this.value)" title="Relationship line routing">
+          <option value="clinical" ${ui.routingMode==="clinical"?'selected':''}>Clinical lines</option>
+          <option value="flexible" ${ui.routingMode==="flexible"?'selected':''}>Flexible lines</option>
+        </select></div>
+      <div class="layout-field"><label>Generation spacing · <span id="lsGen">${LAY.genH}</span> px</label>
+        <input type="range" min="${LAYOUT_LIMITS.genH.min}" max="${LAYOUT_LIMITS.genH.max}" step="2" value="${LAY.genH}" oninput="setSpacing('genH',this.value)"></div>
+      <div class="layout-field"><label>Sibling spacing · <span id="lsSib">${LAY.slot}</span> px</label>
+        <input type="range" min="${LAYOUT_LIMITS.slot.min}" max="${LAYOUT_LIMITS.slot.max}" step="4" value="${LAY.slot}" oninput="setSpacing('slot',this.value)"></div>
       <div class="row">
         <button class="lbtn" id="focusBtn" aria-pressed="${ui.focus}" onclick="toggleFocus()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
@@ -1739,15 +1814,28 @@ function renderNavigator(){
           Auto-layout
         </button>
       </div>
-      <!-- <div class="help-text">Drag a symbol to reposition it. Auto-layout restores automatic placement and refits the pedigree.</div> -->
     </div>`;
+}
+function renderLayoutControls(){
+  const el=document.getElementById("layoutControls");
+  if(el)el.innerHTML=layoutControlsHtml();
+}
+function renderNavigator(){
+  const ps=P().slice().sort((a,b)=>(a._gen-b._gen)||(a.x-b.x));
+  const warns=computeWarnings();
+  const people=ps.map(p=>`<div class="person-row ${ui.sel===p.id?'sel':''}" onclick="select('${p.id}')">
+      <span class="mini-sym">${miniSym(p)}</span><span class="pid">${esc(pedId(p))}</span>
+      <span class="pname">${esc(p.name||roleLabel(p))}</span></div>`).join("")
+      || `<div class="empty-note">No individuals yet.</div>`;
+  const warnHtml=warns.length?warns.map(w=>`<div class="warn-row"><span class="sev ${w.sev}"></span><span>${esc(w.msg)}</span></div>`).join("")
+      :`<div class="empty-note">No structural or clinical warnings.</div>`;
   const conflictCount=warns.filter(w=>w.sev==="error").length;
   const reviewCount=warns.filter(w=>w.sev==="warning").length;
   const warningCounts=(conflictCount||reviewCount)
     ?`<span class="warning-counts">${conflictCount?`<span class="count conflict" title="${conflictCount} conflict${conflictCount===1?'':'s'}">${conflictCount}</span>`:""}${reviewCount?`<span class="count review" title="${reviewCount} review item${reviewCount===1?'':'s'}">${reviewCount}</span>`:""}</span>`
     :"";
-  document.getElementById("navScroll").innerHTML =
-    sect("people","People",ps.length,people)+sect("warn","Warnings",warningCounts,warnHtml)+sect("layout","Layout",null,layout);
+  const nav=document.getElementById("navScroll");
+  if(nav)nav.innerHTML=navSection("people","People",ps.length,people)+navSection("warn","Warnings",warningCounts,warnHtml);
 }
 function toggleNav(k){navCollapsed[k]=!navCollapsed[k];renderNavigator();}
 function miniSym(p){
@@ -1944,7 +2032,7 @@ function setCaseName(val){
   if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;} clearTimeout(ui._editTimer);
   ui._editTimer=setTimeout(()=>{ui._editing=false;},700); model.caseName=val; renderReport(); markDirty();
 }
-function liveRefresh(){ computeLayout(); drawStage(); renderNavigator(); renderReport(); renderContext(); markDirty(); }
+function liveRefresh(){ computeLayout(); drawStage(); renderLayoutControls(); renderNavigator(); renderReport(); renderContext(); markDirty(); }
 function toggleField(key){ commit(()=>{ const p=model.people[ui.sel];
   if(key==='proband'){p.proband=!p.proband;if(p.proband)p.consultand=false;}
   else if(key==='consultand'){p.consultand=!p.consultand;if(p.consultand)p.proband=false;}
@@ -2588,7 +2676,7 @@ function applyPreset(p){
     LAY.genH=preset.genH;
     LAY.slot=preset.slot;
   });
-  renderNavigator(); drawStage(); markDirty(); setTimeout(fitView,10);
+  renderLayoutControls(); drawStage(); markDirty(); setTimeout(fitView,10);
 }
 function resetLayout(){ commit(()=>{P().forEach(p=>{p.pinned=false;p.px=null;p.py=null;});}); setTimeout(fitView,10); }
 function setPreset(v){ ui.labelPreset=v; computeLayout(); drawStage(); renderReport(); }
@@ -4065,3 +4153,5 @@ init();
 </script>
   </div>
 </main>
+
+

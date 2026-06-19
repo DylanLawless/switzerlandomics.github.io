@@ -1,5 +1,16 @@
 # Pedigree changelog
 
+## v1.0.5
+
+* Improved the deterministic auto-layout engine to reduce dog-legged edges, favour straight vertical family connections, and preserve symmetry across parent-child relationships.
+* Added bidirectional layout refinement so child positions can influence parent placement, while still respecting pinned nodes and avoiding same-generation overlap.
+* Improved child spacing rules so one child is centred between parents, two children align beneath the parent pair, and larger sibships are placed symmetrically.
+* Preserved partner-with-child adjacency during auto-layout so partners are kept close where this improves relationship clarity.
+* Reworked the application layout to remove the right-side navigator column and give the pedigree canvas more working space.
+* Moved the Layout controls below the plot, before the legend, with Focus figure and Auto-layout kept as the most accessible actions.
+* Moved People and Warnings to the bottom of the left inspector column while preserving their existing behaviour.
+* Linked the version pill to the Pedigree changelog.
+
 ## v1.0.4
 
 - Smart deterministic auto-layout to prevent blocking nodes and relationship lines and minimise partner distances.
