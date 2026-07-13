@@ -2,13 +2,12 @@
 
 ## v1.0.6
 
-
 * Added mutli-color edge support.
 * Auto-layout gets difficult in large complex trees. Updated to a new coordinate algorithm with better stableId ordering.
 * Partners now share a generation by default, unless one partner is an ancestor or descendant of the other.
 * When one partner is moved down, parent generations can also move down so the subtree stays coherent.
 * Legacy generated labels such as I-1, II-3, p_III_2 no longer drive layout ordering.
-* Legacy generated labels no longer override the current _autoId display.
+* Legacy generated labels no longer override the current autoId display.
 
 ## v1.0.5
 
