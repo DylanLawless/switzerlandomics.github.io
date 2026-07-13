@@ -71,8 +71,8 @@ GEM
     rexml (3.4.1)
     rouge (4.5.1)
     safe_yaml (1.0.5)
-    sass-embedded (1.101.0)
-      google-protobuf (~> 4.31)
+    sass-embedded (1.77.5)
+      google-protobuf (>= 3.25, < 5.0)
       rake (>= 13)
     terminal-table (3.0.2)
       unicode-display_width (>= 1.1.1, < 3)
@@ -88,6 +88,7 @@ DEPENDENCIES
   jekyll (~> 4.3)
   jekyll-environment-variables
   jekyll-sitemap
+  sass-embedded (= 1.77.5)
   webrick (~> 1.7)
 
 BUNDLED WITH
