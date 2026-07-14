@@ -1,5 +1,28 @@
 # Pedigree changelog
 
+## v1.0.7
+
+### Pedigree notation
+* Added support for multiple equivalent individuals using an exact number or `n`.
+* Added ongoing pregnancy, SAB, ECT, TOP, stillbirth, gestational age, and fetal sex annotations.
+* Added adoption brackets, dashed adoptive descent lines, and multi-colour relationship edges.
+
+### Parentage and assisted reproduction
+* Added separate biological and adoptive parentage.
+* Added sperm-donor, ovum-donor, gestational-carrier, and intended-parent roles.
+* Kept donor and gestational relationships distinct from partner relationships.
+
+### Data exchange
+* Added FHIR support for pregnancy outcomes, adoption, assisted reproduction, and grouped individuals.
+* Preserved complete native project data for exact FHIR round-trip exchange.
+* Prevented unsupported relationship semantics from being misrepresented in PLINK exports.
+
+### Compatibility and layout
+* Preserved compatibility with schema version 7 and historical templates.
+* Improved layout stability for large and complex pedigrees.
+* Improved generation placement, subtree movement, and automatic pedigree identifier handling.
+
+
 ## v1.0.6
 
 * Added mutli-color edge support.
