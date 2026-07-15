@@ -7,7 +7,7 @@ permalink: /technologies/pedigree/
 bodyClass: "page-tech page-pedigree"
 weight: 99
 technology_group: structured-genomics
-version: 1.0.8
+version: 1.0.9
 ---
 <style>
  .pedigree-page{
@@ -176,6 +176,16 @@ version: 1.0.8
 #stage{width:100%;height:100%;display:block;touch-action:none}
 .fig-cap{display:flex;align-items:center;justify-content:space-between;padding:9px 14px 4px;font-size:.75rem;color:var(--text-muted)}
 .fig-cap strong{color:var(--text-secondary);font-weight:600}
+.case-notes-panel{margin:10px 0 14px;padding:10px 12px;border:1px solid var(--border-subtle);border-radius:var(--r);background:var(--bg-panel)}
+.case-notes-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:7px}
+.case-notes-head label{font-size:.75rem;font-weight:600;color:var(--text-secondary)}
+.case-notes-template{border:1px solid var(--border-default);background:var(--bg-panel);color:var(--text-secondary);border-radius:var(--r);padding:4px 8px;font-size:.6875rem;font-weight:600}
+.case-notes-template:hover{border-color:var(--accent);color:var(--accent)}
+.case-notes-panel textarea{display:block;width:100%;min-height:108px;max-height:420px;resize:vertical;padding:8px 9px;border:1px solid var(--border-default);border-radius:var(--r);background:var(--bg-panel);font:inherit;font-size:.8125rem;line-height:1.45}
+.case-notes-panel textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.case-notes-help{margin-top:6px;color:var(--text-muted);font-size:.6875rem;line-height:1.4}
+.rep-free-text{white-space:pre-wrap;overflow-wrap:anywhere;font-size:.75rem;line-height:1.5}
+
 .float-toolbar{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:3px;
   background:var(--bg-panel);border:1px solid var(--border-default);border-radius:var(--r-dialog);padding:4px;
   box-shadow:0 4px 16px rgba(17,24,39,.10)}
@@ -189,6 +199,7 @@ version: 1.0.8
 .zoom-cluster button{width:28px;height:28px;border:1px solid var(--border-default);background:var(--bg-panel);
   border-radius:var(--r);color:var(--text-secondary);font-size:.875rem;line-height:1}
 .zoom-cluster button:hover{border-color:var(--border-strong);color:var(--text-primary)}
+.zoom-cluster button svg{display:block;width:14px;height:14px;margin:auto}
 /* report sections */
 .report{margin-top:18px}
 .rep-block{background:#fff;border:0;border-top:1px solid var(--border-strong);
@@ -285,6 +296,197 @@ version: 1.0.8
   border-radius:var(--r);padding:9px;font-size:.8125rem}
 .signoff-btn:hover{filter:brightness(1.08)}
 .signoff-btn:disabled{opacity:.5;cursor:default}
+
+/* canvas editors and relationship interaction */
+.canvas-editor{
+  position:absolute;
+  z-index:12;
+  width:min(360px,calc(100% - 24px));
+  max-height:calc(100% - 24px);
+  display:flex;
+  flex-direction:column;
+  background:var(--bg-panel);
+  border:1px solid var(--border-default);
+  border-radius:var(--r-dialog);
+  box-shadow:0 12px 32px rgba(17,24,39,.18);
+  overflow:hidden;
+}
+.canvas-editor[hidden]{display:none}
+.canvas-editor-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 11px;
+  border-bottom:1px solid var(--border-subtle);
+  background:var(--bg-panel);
+}
+.canvas-editor-head .who{display:flex;align-items:center;gap:8px;min-width:0}
+.canvas-editor-head .pid{font-size:.6875rem;font-weight:700;color:var(--text-muted);white-space:nowrap}
+.canvas-editor-head .title{font-size:.8125rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.canvas-editor-close{
+  flex:0 0 auto;
+  width:26px;
+  height:26px;
+  border:0;
+  border-radius:var(--r);
+  background:transparent;
+  color:var(--text-muted);
+  font-size:1rem;
+  line-height:1;
+}
+.canvas-editor-close:hover{background:var(--bg-subtle);color:var(--text-primary)}
+.canvas-editor-menu{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  padding:7px 8px;
+  border-bottom:1px solid var(--border-subtle);
+  background:var(--bg-subtle);
+}
+.canvas-editor-menu button{
+  border:1px solid var(--border-default);
+  border-radius:999px;
+  background:var(--bg-panel);
+  color:var(--text-secondary);
+  padding:4px 8px;
+  font-size:.6875rem;
+  font-weight:600;
+  white-space:nowrap;
+}
+.canvas-editor-menu button[aria-pressed="true"]{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:var(--accent-soft);
+}
+.canvas-editor-body{
+  min-height:0;
+  overflow:auto;
+  padding:10px 11px 12px;
+}
+.canvas-editor-body .field{margin-bottom:9px}
+.canvas-editor-body .field label{font-size:.6875rem}
+.canvas-editor-body .field input,
+.canvas-editor-body .field select,
+.canvas-editor-body .field textarea{padding:5px 7px;font-size:.75rem}
+.canvas-editor-body .relationship-card{padding:8px 8px 10px;margin-bottom:9px}
+.canvas-editor-body .help-text{font-size:.625rem}
+.canvas-editor-notice{
+  margin:0 0 9px;
+  padding:7px 8px;
+  border-left:3px solid var(--warning);
+  background:var(--warning-soft);
+  color:var(--warning);
+  font-size:.6875rem;
+  line-height:1.35;
+}
+.relationship-edge-hit{
+  fill:none;
+  stroke:transparent;
+  stroke-width:14;
+  pointer-events:stroke;
+  cursor:pointer;
+}
+.connection-handle{
+  stroke:#fff;
+  stroke-width:2;
+  cursor:crosshair;
+  pointer-events:all;
+}
+.connection-handle.partner,
+.connection-handle.biological{fill:var(--success)}
+.connection-handle.adoptive,
+.connection-handle.reproductive{fill:var(--accent)}
+.connection-drag-preview{
+  fill:none;
+  stroke:var(--accent);
+  stroke-width:2;
+  stroke-dasharray:5 4;
+  pointer-events:none;
+}
+.connection-drop-target{
+  fill:none;
+  stroke:var(--success);
+  stroke-width:3;
+  pointer-events:none;
+}
+@media (max-width:760px){
+  .canvas-editor{
+    left:12px!important;
+    right:12px!important;
+    width:auto;
+    max-height:72%;
+  }
+}
+
+/* refined canvas relationship ports and information activation */
+.relationship-preview-line{
+  fill:none;
+  stroke:#0b78bd;
+  stroke-width:2;
+  stroke-dasharray:5 4;
+  pointer-events:none;
+}
+.relationship-preview-hit{
+  fill:none;
+  stroke:transparent;
+  stroke-width:14;
+  pointer-events:stroke;
+  cursor:pointer;
+}
+.connection-port{
+  stroke:#fff;
+  stroke-width:1.8;
+  pointer-events:none;
+}
+.connection-port.partner-source{fill:#1a9815}
+.connection-port.partner-target{fill:#1647ff}
+.connection-port.parent-output{fill:#7b3fb2}
+.connection-port.child-input{fill:#ef5ca8}
+.connection-port.reproductive{fill:var(--accent)}
+.connection-port.candidate{opacity:.58}
+.connection-port.active{opacity:1}
+.connection-port.connection-handle{
+  pointer-events:all;
+  cursor:grab;
+}
+.connection-port.connection-handle:active{cursor:grabbing}
+.connection-drag-preview{
+  fill:none;
+  stroke:#0b78bd;
+  stroke-width:2;
+  stroke-dasharray:5 4;
+  pointer-events:none;
+}
+.connection-drop-target{
+  fill:none;
+  stroke:#0b78bd;
+  stroke-width:3;
+  pointer-events:none;
+}
+.person-info-hit{
+  fill:transparent;
+  stroke:transparent;
+  stroke-width:1.5;
+  pointer-events:all;
+  cursor:pointer;
+}
+.person-info-hit:hover{
+  fill:rgba(11,120,189,.05);
+  stroke:#0b78bd;
+}
+.family-layout-box{
+  fill:none;
+  stroke:#c2c4ca;
+  stroke-width:1;
+  stroke-dasharray:1 5;
+  stroke-linecap:round;
+  pointer-events:none;
+}
+.family-layout-box.owned{
+  stroke:#a9acb4;
+  stroke-width:1.2;
+}
 /* context bar */
 .context{display:flex;align-items:center;gap:16px;padding:0 16px;background:var(--bg-panel);
   border-top:1px solid var(--border-subtle);font-size:.75rem;color:var(--text-muted)}
@@ -546,6 +748,93 @@ version: 1.0.8
     flex-wrap:wrap;
   }
 }
+/* Focused application-level canvas workspace. This deliberately avoids the browser Fullscreen API. */
+body.pedigree-workspace-fullscreen-active{overflow:hidden}
+.pedigree-page.pedigree-workspace-fullscreen{
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  width:100vw;
+  height:100vh;
+  max-width:none;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:var(--bg-app);
+}
+.pedigree-page.pedigree-workspace-fullscreen .pedigree-app-frame{
+  width:100%;
+  max-width:none;
+  height:100%;
+  margin:0;
+}
+.pedigree-page.pedigree-workspace-fullscreen .app{
+  display:grid;
+  grid-template-rows:minmax(0,1fr);
+  width:100%;
+  height:100%;
+  min-height:0;
+  margin:0;
+  border:0;
+}
+.pedigree-page.pedigree-workspace-fullscreen .pedigree-appbar,
+.pedigree-page.pedigree-workspace-fullscreen .inspector,
+.pedigree-page.pedigree-workspace-fullscreen .context,
+.pedigree-page.pedigree-workspace-fullscreen .plot-controls,
+.pedigree-page.pedigree-workspace-fullscreen .report,
+.pedigree-page.pedigree-workspace-fullscreen .pedigree-legal-notice{
+  display:none!important;
+}
+.pedigree-page.pedigree-workspace-fullscreen .main{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:0;
+}
+.pedigree-page.pedigree-workspace-fullscreen .document-col,
+.pedigree-page.pedigree-workspace-fullscreen .doc-scroll,
+.pedigree-page.pedigree-workspace-fullscreen .page{
+  width:100%;
+  height:100%;
+  min-height:0;
+}
+.pedigree-page.pedigree-workspace-fullscreen .document-col{
+  display:flex;
+  flex-direction:column;
+}
+.pedigree-page.pedigree-workspace-fullscreen .doc-scroll{
+  display:block;
+  flex:1 1 auto;
+  padding:0;
+  overflow:hidden;
+}
+.pedigree-page.pedigree-workspace-fullscreen .page{
+  display:flex;
+  flex-direction:column;
+}
+.pedigree-page.pedigree-workspace-fullscreen .figure,
+.pedigree-page.pedigree-workspace-fullscreen .document-col.focus .figure{
+  flex:1 1 auto;
+  width:100%;
+  height:auto;
+  min-height:0;
+  max-height:none;
+  resize:none;
+  border:0;
+  border-radius:0;
+}
+.pedigree-page.pedigree-workspace-fullscreen .case-notes-panel{
+  flex:0 0 auto;
+  margin:0;
+  border-right:0;
+  border-bottom:0;
+  border-left:0;
+  border-radius:0;
+}
+.pedigree-page.pedigree-workspace-fullscreen .case-notes-panel textarea{
+  min-height:96px;
+  max-height:32vh;
+}
 @media print{
   .rep-block{
     break-inside:auto;
@@ -566,7 +855,7 @@ version: 1.0.8
         <circle cx="12" cy="19.5" r="2.5" fill="#2f2f41" stroke="#2f2f41"/>
       </svg><span>Pedigree</span>
     </div>
-    <a class="pedigree-release-tag" href="{% link pages/pedigree-changelog.md %}">v1.0.7</a>
+    <a class="pedigree-release-tag" href="{% link pages/pedigree-changelog.md %}">v1.0.9</a>
     <a class="pedigree-guide-link" href="/technologies/pedigree/standards/" target="_blank" rel="noopener" title="Open the illustrated pedigree standards guide in a new tab">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5"/></svg>
       <span>Pedigree standards</span><span class="guide-long">and symbols</span>
@@ -609,14 +898,16 @@ version: 1.0.8
         <div class="page">
           <div class="figure" id="figure">
             <svg id="stage" xmlns="http://www.w3.org/2000/svg"></svg>
+            <div class="canvas-editor" id="canvasPersonEditor" hidden></div>
+            <div class="canvas-editor" id="canvasRelationshipEditor" hidden></div>
             <div class="empty-plot-action" id="emptyPlotAction" hidden>
               <button class="bbtn" onclick="addFounder()">Add the first individual</button>
             </div>
             <div class="float-toolbar" id="floatToolbar">
+              <button onclick="addFounder()" id="tbIndividual" title="Add an independent individual">＋ Individual</button>
               <button onclick="act('parents')" id="tbParents" title="Add parents (P)">＋ Parents</button>
               <button onclick="act('partner')" id="tbPartner" title="Add partner (R)">＋ Partner</button>
               <button onclick="act('child')" id="tbChild" title="Add child (C)">＋ Child</button>
-              <button onclick="act('pregnancy')" id="tbPregnancy" title="Add pregnancy outcome">＋ Pregnancy</button>
               <button onclick="act('sibling')" id="tbSib" title="Add sibling (S)">＋ Sibling</button>
               <button onclick="act('twin')" id="tbTwin" title="Add twin (T)">＋ Twin</button>
               <span class="sep"></span>
@@ -627,14 +918,26 @@ version: 1.0.8
               <span class="sep"></span>
               <button class="danger" onclick="act('delete')" id="tbDel" title="Delete (Del)">Delete</button>
             </div>
-            <div class="zoom-cluster">
-              <button onclick="zoomBy(1.2)" title="Zoom in (+)">＋</button>
-              <button onclick="zoomBy(1/1.2)" title="Zoom out (−)">−</button>
-              <button onclick="fitView()" title="Fit (0)" style="font-size:11px;font-weight:600">Fit</button>
+            <div class="zoom-cluster" aria-label="Canvas view controls">
+              <button onclick="zoomBy(1.2)" title="Zoom in (+)" aria-label="Zoom in">＋</button>
+              <button onclick="zoomBy(1/1.2)" title="Zoom out (−)" aria-label="Zoom out">−</button>
+              <button onclick="fitView()" title="Fit (0)" aria-label="Fit pedigree to canvas" style="font-size:11px;font-weight:600">Fit</button>
+              <button onclick="resetLayout()" title="Auto-layout" aria-label="Auto-layout pedigree">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+              </button>
+              <button id="canvasFullscreenBtn" onclick="toggleCanvasFullscreen()" title="Full screen workspace" aria-label="Enter full screen workspace" aria-pressed="false">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>
+              </button>
             </div>
           </div>
-          <div class="fig-cap"><span id="figCapLeft">Drag a symbol to reposition it. Click empty canvas to deselect.</span>
-            <span id="figCapRight"></span></div>
+          <section class="case-notes-panel" aria-label="Family history notes">
+            <div class="case-notes-head">
+              <label for="familyHistoryNotes">Family history notes</label>
+              <button type="button" class="case-notes-template" onclick="insertFamilyHistoryNotesTemplate()">Insert template</button>
+            </div>
+            <textarea id="familyHistoryNotes" spellcheck="true" placeholder="Family history notes..." oninput="setFamilyHistoryNotes(this.value)" onblur="renderReport()"></textarea>
+            <div class="case-notes-help">Free-text notes and data are stored on your browser. Case information is not transmitted.</div>
+          </section>
           <div class="plot-controls" id="layoutControls"></div>
           <div class="report" id="report"></div>
         </div>
@@ -669,7 +972,7 @@ version: 1.0.8
 <script>
 /* ===== model: structured family graph is the source of truth ===== */
 const PEDIGREE_SCHEMA_VERSION=8;
-const PEDIGREE_APP_VERSION="v1.0.7";
+const PEDIGREE_APP_VERSION="v1.0.9";
 const NATIVE_FORMAT="pedigree-native/v8";
 const FHIR_R4_VERSION="4.0.1";
 const MAX_PERSON_VARIANTS=5;
@@ -678,10 +981,51 @@ const INTEROP_EXT=INTEROP_BASE+"/StructureDefinition/";
 const INTEROP_CODES=INTEROP_BASE+"/CodeSystem/pedigree";
 let uid=1; const nid=p=>p+(uid++);
 let model, view, ui, history=[], future=[], saveTimer=null, saveEl=null, pendingPlinkImport=null;
+let canvasPersonEditorState={open:false,personId:null,section:"identity"};
+let canvasRelationshipEditorState=null;
+let connectionDragPreview=null;
 function blankModel(t){ return {schemaVersion:PEDIGREE_SCHEMA_VERSION,caseName:"Case PD-0001", template:t||"rare",
   meta:{disease:"",indication:"",reviewer:"",institution:"",date:"",lastExportedAt:"",lastExportFormat:"",importWarnings:[]},
+  caseNotes:{familyHistory:""},
   interoperability:{plinkFamilyId:"",lastImportedFormat:"",lastImportedAt:""},
   people:{},unions:{},parentageLinks:{},reproductiveEvents:{}}; }
+function familyHistoryNotesValue(targetModel=model){
+  return String(targetModel?.caseNotes?.familyHistory||"");
+}
+function setFamilyHistoryNotes(value){
+  if(!model.caseNotes||typeof model.caseNotes!=="object"||Array.isArray(model.caseNotes))model.caseNotes={familyHistory:""};
+  model.caseNotes.familyHistory=String(value??"");
+  markDirty();
+}
+function renderCaseNotesEditor(){
+  const textarea=document.getElementById("familyHistoryNotes");
+  if(!textarea)return;
+  const value=familyHistoryNotesValue();
+  if(document.activeElement!==textarea&&textarea.value!==value)textarea.value=value;
+}
+function insertFamilyHistoryNotesTemplate(){
+  const textarea=document.getElementById("familyHistoryNotes");
+  if(!textarea)return;
+  const template=`Reason for family history:
+
+Maternal family:
+
+Paternal family:
+
+Other relevant information:`;
+  const current=textarea.value;
+  const start=Number.isInteger(textarea.selectionStart)?textarea.selectionStart:current.length;
+  const end=Number.isInteger(textarea.selectionEnd)?textarea.selectionEnd:start;
+  const needsLeadingBreak=start>0&&!current.slice(0,start).endsWith("\n");
+  const needsTrailingBreak=end<current.length&&!current.slice(end).startsWith("\n");
+  const insertion=(needsLeadingBreak?"\n\n":"")+template+(needsTrailingBreak?"\n\n":"");
+  textarea.value=current.slice(0,start)+insertion+current.slice(end);
+  const cursor=start+insertion.length;
+  textarea.focus();
+  textarea.setSelectionRange(cursor,cursor);
+  setFamilyHistoryNotes(textarea.value);
+  renderReport();
+}
 const P=()=>Object.values(model.people||{});
 const U=()=>Object.values(model.unions||{});
 const PL=()=>Object.values(model.parentageLinks||{});
@@ -1193,9 +1537,29 @@ function clampLayoutValue(key,value){
 let LAY={genH:LAYOUT_PRESETS.standard.genH,slot:LAYOUT_PRESETS.standard.slot,sym:38,offX:80,offY:70};
 const LAYOUT_NODE_BUFFER=22;
 const LAYOUT_EDGE_NODE_BUFFER=18;
-const LAYOUT_RELATIONSHIP_LIFT_MIN=58;
 const LAYOUT_RELAXATION_STEPS=8;
 const LAYOUT_GRID_DIVISIONS=2;
+// Same-generation relationship routing uses discrete visual lanes rather than
+// moving individual nodes out of their generation row. Lane 0 is the ordinary
+// direct partner line; higher lanes sit above the symbols and are shared by
+// non-overlapping relationship spans.
+const RELATIONSHIP_ROUTE_LANE_GAP=16;
+const RELATIONSHIP_ROUTE_NODE_CLEARANCE=8;
+const RELATIONSHIP_ROUTE_SHOULDER=18;
+const RELATIONSHIP_ROUTE_PORT_STEP=5;
+const RELATIONSHIP_BRIDGE_RADIUS=7;
+const RELATIONSHIP_BRIDGE_CLEARANCE=4;
+const RELATIONSHIP_ROUTE_CLEARANCE=8;
+const RELATIONSHIP_ROUTE_MAX_NUDGE_STEPS=12;
+function relationshipLaneOffset(lane){
+  const index=Math.max(0,Number(lane)||0);
+  if(!index)return 0;
+  return LAY.sym/2+RELATIONSHIP_ROUTE_NODE_CLEARANCE+(index-1)*RELATIONSHIP_ROUTE_LANE_GAP;
+}
+function relationshipLaneBandHeight(maxLane){
+  const index=Math.max(0,Number(maxLane)||0);
+  return index?relationshipLaneOffset(index)+RELATIONSHIP_BRIDGE_RADIUS+2:0;
+}
 function layoutNumber(value){
   const n=Number(value);
   return Number.isFinite(n)?n:null;
@@ -1250,15 +1614,18 @@ function layoutUnitsShareParentUnion(a,b){
   return false;
 }
 function layoutUnitSeparation(a,b){
-  return layoutUnitsShareParentUnion(a,b)?0:layoutUnitGap();
+  if(layoutUnitsShareParentUnion(a,b)){
+    // Ordinary siblings can sit on the normal node grid. When adjacent sibling
+    // units each start their own direct family, keep one inter-family gutter so
+    // their descendant family boxes remain distinct in the next generation.
+    return a?.hasDirectFamily&&b?.hasDirectFamily?layoutUnitGap():0;
+  }
+  return layoutUnitGap();
 }
 function layoutGridStep(){ return Math.max(20,LAY.slot/LAYOUT_GRID_DIVISIONS); }
 function layoutSnap(value){
   const step=layoutGridStep();
   return Math.round(value/step)*step;
-}
-function layoutRelationshipLift(){
-  return layoutSnap(Math.max(LAYOUT_RELATIONSHIP_LIFT_MIN,LAY.sym+LAYOUT_EDGE_NODE_BUFFER,layoutGridStep()));
 }
 function layoutMean(values){
   const clean=values.filter(Number.isFinite);
@@ -1298,16 +1665,28 @@ function layoutUnionSameGeneration(union){
   return !!(a&&b&&a._gen===b._gen);
 }
 function layoutUnitRepresentative(unit){
-  return unit.ids.map(id=>model.people[id]).filter(Boolean).sort(layoutComparePeople)[0]||null;
+  const people=unit.ids.map(id=>model.people[id]).filter(Boolean);
+  if(!people.length)return null;
+  // A partnered sibling should keep the sibling's place in the ancestral
+  // sibship. Prefer the member with recorded parentage over an unrelated
+  // partner when a two-person layout unit is ordered against its siblings.
+  const lineageMembers=people.filter(person=>!!primaryParentageLinkOf(person.id));
+  return (lineageMembers.length?lineageMembers:people).slice().sort(layoutComparePeople)[0]||null;
+}
+function layoutCompareUnitsStructural(a,b){
+  const ar=layoutUnitRepresentative(a),br=layoutUnitRepresentative(b);
+  if(ar&&br){
+    const compared=layoutComparePeople(ar,br);
+    if(compared)return compared;
+  }
+  return String(a.id).localeCompare(String(b.id),undefined,{numeric:true,sensitivity:"base"});
 }
 function layoutCompareUnits(a,b){
   const ac=Number.isFinite(a.centre)?a.centre:null,bc=Number.isFinite(b.centre)?b.centre:null;
   if(ac!=null&&bc!=null&&ac!==bc)return ac-bc;
   if(ac!=null&&bc==null)return -1;
   if(ac==null&&bc!=null)return 1;
-  const ar=layoutUnitRepresentative(a),br=layoutUnitRepresentative(b);
-  if(ar&&br)return layoutComparePeople(ar,br);
-  return String(a.id).localeCompare(String(b.id),undefined,{numeric:true,sensitivity:"base"});
+  return layoutCompareUnitsStructural(a,b);
 }
 function layoutUnitScore(union){
   const childCount=Array.isArray(union.children)?union.children.length:0;
@@ -1324,9 +1703,11 @@ function layoutUnitScore(union){
 }
 function layoutMakeUnit(id,g,ids,union,type){
   const ordered=union?layoutParentOrder(union).filter(pid=>ids.includes(pid)):ids.slice().sort((a,b)=>layoutComparePeople(model.people[a],model.people[b]));
-  const unit={id,g,ids:ordered,union,type,width:layoutNodeGap(),centre:0,target:0};
+  const unit={id,g,ids:ordered,union,type,width:layoutNodeGap(),nodeWidth:layoutNodeGap(),subtreeWidth:layoutNodeGap(),centre:0,target:0};
   const memberGap=unit.ids.length>1?layoutPairGap():0;
   unit.width=layoutNodeGap()+Math.max(0,unit.ids.length-1)*memberGap;
+  unit.nodeWidth=unit.width;
+  unit.subtreeWidth=unit.width;
   unit.left=unit.centre-unit.width/2;
   unit.right=unit.centre+unit.width/2;
   return unit;
@@ -1359,66 +1740,125 @@ function layoutBuildUnits(byGen,generations){
       units.push(unit);
       consumed.add(person.id);
     });
-    units.sort((a,b)=>{
-      const ar=layoutUnitRepresentative(a),br=layoutUnitRepresentative(b);
-      if(ar&&br)return layoutComparePeople(ar,br);
-      return String(a.id).localeCompare(String(b.id),undefined,{numeric:true,sensitivity:"base"});
-    });
+    units.sort(layoutCompareUnitsStructural);
     unitsByGen[g]=units;
     units.forEach(unit=>unit.ids.forEach(id=>{unitByPerson[id]=unit;}));
   });
-  return {generations,byGen,unitsByGen,unitByPerson};
+  return {generations,byGen,unitsByGen,unitByPerson,familyBoxes:[],familyBoxesByParentUnit:{}};
+}
+function layoutUnitPackingWidth(unit){
+  return Math.max(layoutNodeGap(),Number(unit?.nodeWidth)||Number(unit?.width)||0,Number(unit?.subtreeWidth)||0);
+}
+function layoutUnitPrimaryParentUnionId(unit){
+  const representative=layoutUnitRepresentative(unit);
+  const representativeLink=representative&&primaryParentageLinkOf(representative.id);
+  if(representativeLink)return representativeLink.unionId;
+  const counts={};
+  unit.ids.forEach(id=>{
+    const link=primaryParentageLinkOf(id);
+    if(link)counts[link.unionId]=(counts[link.unionId]||0)+1;
+  });
+  return Object.keys(counts).sort((a,b)=>(counts[b]-counts[a])||String(a).localeCompare(String(b),undefined,{numeric:true,sensitivity:"base"}))[0]||"";
+}
+function layoutPackUnitSequence(units){
+  const sequence=units.slice();
+  const offsets={};
+  let cursor=0;
+  sequence.forEach((unit,index)=>{
+    if(index){
+      cursor+=layoutUnitSeparation(sequence[index-1],unit);
+    }
+    const width=layoutUnitPackingWidth(unit);
+    offsets[unit.id]=cursor+width/2;
+    cursor+=width;
+  });
+  const width=cursor;
+  Object.keys(offsets).forEach(id=>{offsets[id]-=width/2;});
+  return {units:sequence,width,offsets};
 }
 function layoutResolveUnits(units,targetFor){
   if(!units.length)return;
-  const ordered=units.slice().sort((a,b)=>{
-    const at=targetFor(a),bt=targetFor(b);
-    if(Number.isFinite(at)&&Number.isFinite(bt)&&at!==bt)return at-bt;
-    if(Number.isFinite(at)&&!Number.isFinite(bt))return -1;
-    if(!Number.isFinite(at)&&Number.isFinite(bt))return 1;
-    return layoutCompareUnits(a,b);
+
+  // Resolve each generation as structural row blocks. Units that represent
+  // siblings from the same parental union are kept contiguous, so an unrelated
+  // person can no longer be inserted between members of a sibship merely
+  // because a relaxation target happens to fall between them.
+  const grouped=new Map();
+  units.forEach(unit=>{
+    const parentUnionId=layoutUnitPrimaryParentUnionId(unit);
+    const key=parentUnionId?`sibship-${parentUnionId}`:`single-${unit.id}`;
+    if(!grouped.has(key))grouped.set(key,[]);
+    grouped.get(key).push(unit);
   });
-  ordered.forEach((unit,index)=>{
-    const target=targetFor(unit);
-    unit.target=Number.isFinite(target)?target:index*(layoutNodeGap()+layoutUnitGap());
+
+  const blocks=[...grouped.entries()].map(([id,members])=>{
+    const ordered=members.slice().sort(layoutCompareUnitsStructural);
+    const packed=layoutPackUnitSequence(ordered);
+    const targetCandidates=ordered.map(unit=>{
+      const target=targetFor(unit);
+      unit.target=Number.isFinite(target)?target:unit.centre;
+      return Number.isFinite(unit.target)?unit.target-packed.offsets[unit.id]:null;
+    }).filter(Number.isFinite);
+    return {
+      id,
+      units:ordered,
+      offsets:packed.offsets,
+      width:packed.width,
+      target:layoutMean(targetCandidates)??layoutMean(ordered.map(unit=>unit.centre))??0,
+      centre:0
+    };
   });
-  // Forward sweep: each unit at its target, pushed right only as far as the
-  // minimum separation from its left neighbour requires.
-  ordered[0].centre=ordered[0].target;
-  for(let i=1;i<ordered.length;i++){
-    const previous=ordered[i-1];
-    const current=ordered[i];
-    const minCentre=previous.centre+previous.width/2+layoutUnitSeparation(previous,current)+current.width/2;
+
+  blocks.sort((a,b)=>{
+    if(a.target!==b.target)return a.target-b.target;
+    const ar=layoutUnitRepresentative(a.units[0]),br=layoutUnitRepresentative(b.units[0]);
+    if(ar&&br){
+      const compared=layoutComparePeople(ar,br);
+      if(compared)return compared;
+    }
+    return String(a.id).localeCompare(String(b.id),undefined,{numeric:true,sensitivity:"base"});
+  });
+
+  const blockSeparation=(leftBlock,rightBlock)=>{
+    const leftUnit=leftBlock.units[leftBlock.units.length-1];
+    const rightUnit=rightBlock.units[0];
+    return layoutUnitSeparation(leftUnit,rightUnit);
+  };
+
+  blocks[0].centre=blocks[0].target;
+  for(let i=1;i<blocks.length;i++){
+    const previous=blocks[i-1],current=blocks[i];
+    const minCentre=previous.centre+previous.width/2+blockSeparation(previous,current)+current.width/2;
     current.centre=Math.max(current.target,minCentre);
   }
-  // A uniform shift preserves every pairwise gap established above, so
-  // re-centring on the mean target can never reintroduce an overlap.
+
   const recentre=()=>{
-    const targetCentre=layoutMean(ordered.map(unit=>unit.target));
-    const actualCentre=layoutMean(ordered.map(unit=>unit.centre));
+    const targetCentre=layoutMean(blocks.map(block=>block.target));
+    const actualCentre=layoutMean(blocks.map(block=>block.centre));
     if(targetCentre==null||actualCentre==null)return;
     const shift=targetCentre-actualCentre;
-    if(shift)ordered.forEach(unit=>{unit.centre=unit.centre+shift;});
+    if(shift)blocks.forEach(block=>{block.centre+=shift;});
   };
   recentre();
-  // Defensive second sweep. It can only ever raise a centre to its minimum, so
-  // when the forward sweep already satisfied every gap this is a no-op.
-  for(let i=1;i<ordered.length;i++){
-    const previous=ordered[i-1];
-    const current=ordered[i];
-    const minCentre=previous.centre+previous.width/2+layoutUnitSeparation(previous,current)+current.width/2;
+
+  for(let i=1;i<blocks.length;i++){
+    const previous=blocks[i-1],current=blocks[i];
+    const minCentre=previous.centre+previous.width/2+blockSeparation(previous,current)+current.width/2;
     if(current.centre<minCentre)current.centre=minCentre;
   }
-  // Final symmetric re-centre. The only thing that could have moved a unit
-  // since the first recentre is the one-directional sweep above (right-only),
-  // so this removes any residual rightward bias and guarantees the resolved
-  // row's centroid equals the target centroid — sibships stay under parents.
   recentre();
-  ordered.forEach(unit=>{
-    unit.left=unit.centre-unit.width/2;
-    unit.right=unit.centre+unit.width/2;
+
+  const resolved=[];
+  blocks.forEach(block=>{
+    block.units.forEach(unit=>{
+      unit.centre=block.centre+block.offsets[unit.id];
+      const width=layoutUnitPackingWidth(unit);
+      unit.left=unit.centre-width/2;
+      unit.right=unit.centre+width/2;
+      resolved.push(unit);
+    });
   });
-  units.splice(0,units.length,...ordered);
+  units.splice(0,units.length,...resolved);
 }
 function layoutWriteUnitPositions(ctx){
   Object.values(ctx.unitsByGen).forEach(units=>{
@@ -1429,8 +1869,12 @@ function layoutWriteUnitPositions(ctx){
         if(!p)return;
         p._layoutX=unit.centre+(index-(unit.ids.length-1)/2)*memberGap;
       });
-      unit.left=Math.min(...unit.ids.map(id=>model.people[id]?._layoutX).filter(Number.isFinite))-layoutNodeGap()/2;
-      unit.right=Math.max(...unit.ids.map(id=>model.people[id]?._layoutX).filter(Number.isFinite))+layoutNodeGap()/2;
+      const memberXs=unit.ids.map(id=>model.people[id]?._layoutX).filter(Number.isFinite);
+      unit.nodeLeft=Math.min(...memberXs)-layoutNodeGap()/2;
+      unit.nodeRight=Math.max(...memberXs)+layoutNodeGap()/2;
+      const width=layoutUnitPackingWidth(unit);
+      unit.left=unit.centre-width/2;
+      unit.right=unit.centre+width/2;
     });
   });
 }
@@ -1450,63 +1894,105 @@ function layoutResolveTargetMap(ctx,targets){
   layoutWriteUnitPositions(ctx);
 }
 function layoutChildUnitsForUnion(ctx,union){
+  const orderedChildren=layoutOrderedChildren(union);
+  const childIndex=new Map(orderedChildren.map((child,index)=>[child.id,index]));
   const seen=new Set(),out=[];
-  layoutOrderedChildren(union).forEach(child=>{
+  orderedChildren.forEach(child=>{
     const unit=ctx.unitByPerson[child.id];
     if(!unit||seen.has(unit.id))return;
     seen.add(unit.id);
     out.push(unit);
   });
   return out.sort((a,b)=>{
-    const ac=layoutMean(a.ids.map(id=>layoutOrderedChildren(union).findIndex(child=>child.id===id)).filter(index=>index>=0));
-    const bc=layoutMean(b.ids.map(id=>layoutOrderedChildren(union).findIndex(child=>child.id===id)).filter(index=>index>=0));
+    const ac=layoutMean(a.ids.map(id=>childIndex.get(id)).filter(Number.isFinite));
+    const bc=layoutMean(b.ids.map(id=>childIndex.get(id)).filter(Number.isFinite));
     if(ac!=null&&bc!=null&&ac!==bc)return ac-bc;
-    return layoutCompareUnits(a,b);
+    return layoutCompareUnitsStructural(a,b);
   });
 }
-function layoutUnitMemberOffset(unit,personId){
-  const index=unit.ids.indexOf(personId);
-  if(index<0)return 0;
-  const memberGap=unit.ids.length>1?layoutPairGap():0;
-  return (index-(unit.ids.length-1)/2)*memberGap;
+function layoutParentUnitForUnion(ctx,union){
+  const units=[union.a,union.b]
+    .filter(id=>id&&model.people[id])
+    .map(id=>ctx.unitByPerson[id])
+    .filter(Boolean);
+  const unique=[...new Set(units)];
+  return unique.length===1?unique[0]:null;
 }
-function layoutChildAnchorOffset(unit,union){
-  const childIds=new Set((Array.isArray(union.children)?union.children:[]).filter(id=>unit.ids.includes(id)));
-  const offsets=unit.ids.filter(id=>childIds.has(id)).map(id=>layoutUnitMemberOffset(unit,id));
-  return layoutMean(offsets)??0;
-}
-function layoutChildUnitSlots(childUnits,centre,union){
-  if(!childUnits.length||!Number.isFinite(centre))return [];
-  if(childUnits.length===1){
-    const unit=childUnits[0];
-    return [{unit,x:centre-layoutChildAnchorOffset(unit,union)}];
-  }
-  const gap=Math.max(layoutNodeGap(),layoutPairGap());
-  return childUnits.map((unit,index)=>{
-    const childAnchor=centre+(index-(childUnits.length-1)/2)*gap;
-    return {unit,x:childAnchor-layoutChildAnchorOffset(unit,union)};
-  });
-}
-function layoutAddFamilyChildTargets(ctx,targets,weight){
+function layoutBuildFamilyBoxes(ctx){
+  const boxes=[],byParentUnit={};
+  Object.values(ctx.unitsByGen).flat().forEach(unit=>{unit.hasDirectFamily=false;});
   U().forEach(union=>{
     if(!Array.isArray(union.children)||!union.children.length)return;
+    const childUnits=layoutChildUnitsForUnion(ctx,union);
+    if(!childUnits.length)return;
+    const parentUnit=layoutParentUnitForUnion(ctx,union);
+    const hierarchicalChildren=parentUnit
+      ?childUnits.filter(unit=>unit!==parentUnit&&unit.g>parentUnit.g)
+      :childUnits;
+    const box={
+      id:`family-${union.id}`,
+      union,
+      parentUnit,
+      childUnits,
+      hierarchicalChildren,
+      directWidth:0,
+      subtreeWidth:0
+    };
+    boxes.push(box);
+    if(parentUnit){
+      parentUnit.hasDirectFamily=true;
+      (byParentUnit[parentUnit.id]=byParentUnit[parentUnit.id]||[]).push(box);
+    }
+  });
+  ctx.familyBoxes=boxes;
+  ctx.familyBoxesByParentUnit=byParentUnit;
+  return boxes;
+}
+function layoutComputeSubtreeMetrics(ctx){
+  Object.values(ctx.unitsByGen).flat().forEach(unit=>{
+    unit.nodeWidth=Number(unit.nodeWidth)||Number(unit.width)||layoutNodeGap();
+    unit.subtreeWidth=unit.nodeWidth;
+  });
+  const boxes=layoutBuildFamilyBoxes(ctx);
+  boxes
+    .filter(box=>box.parentUnit&&box.hierarchicalChildren.length)
+    .sort((a,b)=>b.parentUnit.g-a.parentUnit.g||String(a.union.stableId||a.union.id).localeCompare(String(b.union.stableId||b.union.id),undefined,{numeric:true,sensitivity:"base"}))
+    .forEach(box=>{
+      const packed=layoutPackUnitSequence(box.hierarchicalChildren);
+      box.directWidth=Math.max(box.parentUnit.nodeWidth,packed.width);
+      box.subtreeWidth=box.directWidth;
+      box.parentUnit.subtreeWidth=Math.max(box.parentUnit.subtreeWidth,box.subtreeWidth);
+    });
+}
+function layoutChildUnitSlots(childUnits,centre){
+  if(!childUnits.length||!Number.isFinite(centre))return [];
+  const packed=layoutPackUnitSequence(childUnits);
+  return packed.units.map(unit=>({unit,x:centre+packed.offsets[unit.id]}));
+}
+function layoutFamilyChildBlockCentre(box){
+  const units=box?.childUnits||[];
+  if(!units.length)return null;
+  const left=Math.min(...units.map(unit=>unit.centre-layoutUnitPackingWidth(unit)/2));
+  const right=Math.max(...units.map(unit=>unit.centre+layoutUnitPackingWidth(unit)/2));
+  return Number.isFinite(left)&&Number.isFinite(right)?(left+right)/2:null;
+}
+function layoutAddFamilyChildTargets(ctx,targets,weight){
+  (ctx.familyBoxes||[]).forEach(box=>{
+    const union=box.union;
     const parents=layoutParentOrder(union).map(id=>model.people[id]).filter(Boolean);
     const parentCentre=layoutMean(parents.map(parent=>parent._layoutX));
     if(parentCentre==null)return;
-    layoutChildUnitSlots(layoutChildUnitsForUnion(ctx,union),parentCentre,union).forEach(slot=>{
+    layoutChildUnitSlots(box.childUnits,parentCentre).forEach(slot=>{
       layoutAddUnitTarget(targets,slot.unit,slot.x,weight);
     });
   });
 }
 function layoutAddParentCentreTargets(ctx,targets,weight){
-  U().forEach(union=>{
-    if(!Array.isArray(union.children)||!union.children.length)return;
-    const parentUnitA=ctx.unitByPerson[union.a],parentUnitB=ctx.unitByPerson[union.b];
-    if(!parentUnitA||parentUnitA!==parentUnitB)return;
-    const children=layoutOrderedChildren(union);
-    const childCentre=layoutMean(children.map(child=>child._layoutX));
+  (ctx.familyBoxes||[]).forEach(box=>{
+    if(!box.parentUnit)return;
+    const childCentre=layoutFamilyChildBlockCentre(box);
     if(childCentre==null)return;
-    layoutAddUnitTarget(targets,parentUnitA,childCentre,weight);
+    layoutAddUnitTarget(targets,box.parentUnit,childCentre,weight);
   });
 }
 function layoutAddPartnerTargets(ctx,targets,weight){
@@ -1527,11 +2013,36 @@ function layoutAddStableTargets(ctx,targets,weight){
     units.forEach(unit=>layoutAddUnitTarget(targets,unit,unit.centre,weight));
   });
 }
+function layoutApplyTopDownFamilyAlignment(ctx){
+  // Finalise the hierarchy from older to younger generations. Parent positions
+  // are already packed with descendant extents, so each child sibship block can
+  // now be centred deterministically beneath its current parental midpoint.
+  // Processing top-down removes the one-iteration lag of bidirectional
+  // relaxation without allowing relationship routing to dictate node geometry.
+  ctx.generations.forEach(g=>{
+    const targets={};
+    (ctx.familyBoxes||[]).forEach(box=>{
+      const parents=layoutParentOrder(box.union).map(id=>model.people[id]).filter(Boolean);
+      const parentCentre=layoutMean(parents.map(parent=>parent._layoutX));
+      if(parentCentre==null)return;
+      layoutChildUnitSlots(box.childUnits,parentCentre).forEach(slot=>{
+        if(slot.unit.g===g)layoutAddUnitTarget(targets,slot.unit,slot.x,1);
+      });
+    });
+    if(!Object.keys(targets).length)return;
+    const units=ctx.unitsByGen[g]||[];
+    layoutResolveUnits(units,unit=>{
+      const list=targets[unit.id]||[];
+      return list.length?layoutMean(list.map(item=>item.x)):unit.centre;
+    });
+    layoutWriteUnitPositions(ctx);
+  });
+}
 function layoutApplyFamilyBlockLayout(ctx){
   for(let step=0;step<LAYOUT_RELAXATION_STEPS;step++){
     const targets={};
     layoutAddFamilyChildTargets(ctx,targets,12);
-    layoutAddParentCentreTargets(ctx,targets,2.2);
+    layoutAddParentCentreTargets(ctx,targets,4);
     layoutAddPartnerTargets(ctx,targets,1.2);
     layoutAddStableTargets(ctx,targets,.45);
     layoutResolveTargetMap(ctx,targets);
@@ -1539,19 +2050,11 @@ function layoutApplyFamilyBlockLayout(ctx){
   for(let step=0;step<2;step++){
     const targets={};
     layoutAddFamilyChildTargets(ctx,targets,30);
+    layoutAddParentCentreTargets(ctx,targets,8);
     layoutAddPartnerTargets(ctx,targets,1.4);
     layoutResolveTargetMap(ctx,targets);
   }
-}
-function layoutSameGenerationUnionDegree(){
-  const degree={};
-  U().forEach(union=>{
-    const a=model.people[union.a],b=model.people[union.b];
-    if(!a||!b||a._gen!==b._gen)return;
-    degree[a.id]=(degree[a.id]||0)+1;
-    degree[b.id]=(degree[b.id]||0)+1;
-  });
-  return degree;
+  layoutApplyTopDownFamilyAlignment(ctx);
 }
 function layoutRelationshipBlockers(union,people){
   const a=model.people[union.a],b=model.people[union.b];
@@ -1561,35 +2064,96 @@ function layoutRelationshipBlockers(union,people){
   if(right-left<=guard*2)return [];
   return people.filter(p=>p.id!==a.id&&p.id!==b.id&&p.x>left+guard&&p.x<right-guard);
 }
-function layoutApplyRelationshipEdgeAvoidance(byGen){
-  P().forEach(p=>{p._layoutLift=0;});
-  const degree=layoutSameGenerationUnionDegree();
-  const selectedCounts={};
+function relationshipLaneAssignments(byGen){
+  const candidates=[];
   U().forEach(union=>{
     const a=model.people[union.a],b=model.people[union.b];
     if(!a||!b||a._gen!==b._gen)return;
-    const people=byGen[a._gen]||[];
-    const blockers=layoutRelationshipBlockers(union,people);
-    if(!blockers.length)return;
-    const blockerCentre=layoutMean(blockers.map(p=>p.x));
-    const candidates=[a,b].filter(p=>!(p.pinned&&p.py!=null));
-    if(!candidates.length)return;
-    candidates.sort((pa,pb)=>{
-      const da=degree[pa.id]||0,db=degree[pb.id]||0;
-      if(da!==db)return db-da;
-      const sa=selectedCounts[pa.id]||0,sb=selectedCounts[pb.id]||0;
-      if(sa!==sb)return sb-sa;
-      if(blockerCentre!=null){
-        const ca=Math.abs(pa.x-blockerCentre),cb=Math.abs(pb.x-blockerCentre);
-        if(ca!==cb)return ca-cb;
-      }
-      return layoutComparePeople(pa,pb);
-    });
-    const chosen=candidates[0];
-    selectedCounts[chosen.id]=(selectedCounts[chosen.id]||0)+1;
-    chosen._layoutLift=Math.max(chosen._layoutLift||0,layoutRelationshipLift());
+    const dx=b.x-a.x;
+    if(Math.abs(dx)<1)return;
+    const generation=a._gen;
+    const left=Math.min(a.x,b.x),right=Math.max(a.x,b.x);
+    const sideA=dx<0?-1:1,sideB=-sideA;
+    const candidate={
+      union,a,b,generation,left,right,span:right-left,sideA,sideB,
+      rankA:0,rankB:0,requiredLane:0,lane:0,
+      blockers:layoutRelationshipBlockers(union,byGen[generation]||[])
+    };
+    candidates.push(candidate);
   });
+
+  // Assign a local rank at each node side. The closest relationship keeps the
+  // direct port and progressively more distant relationships receive higher
+  // ranks. This is the key rule that prevents two edges leaving the same side
+  // of a node from visually collapsing into one another.
+  const endpointGroups=new Map();
+  const addEndpoint=(candidate,endpoint,person,side)=>{
+    const key=`${person.id}:${side<0?'left':'right'}`;
+    if(!endpointGroups.has(key))endpointGroups.set(key,[]);
+    endpointGroups.get(key).push({candidate,endpoint});
+  };
+  candidates.forEach(candidate=>{
+    addEndpoint(candidate,'a',candidate.a,candidate.sideA);
+    addEndpoint(candidate,'b',candidate.b,candidate.sideB);
+  });
+  endpointGroups.forEach(entries=>{
+    entries.sort((x,y)=>
+      (x.candidate.span-y.candidate.span)||
+      String(x.candidate.union.stableId||x.candidate.union.id).localeCompare(
+        String(y.candidate.union.stableId||y.candidate.union.id),undefined,{numeric:true,sensitivity:'base'}
+      )
+    );
+    entries.forEach((entry,index)=>{
+      if(entry.endpoint==='a')entry.candidate.rankA=index;
+      else entry.candidate.rankB=index;
+    });
+  });
+
+  const byUnion={},maxLaneByGen={};
+  const grouped={};
+  candidates.forEach(candidate=>{
+    candidate.requiredLane=Math.max(candidate.blockers.length?1:0,candidate.rankA,candidate.rankB);
+    (grouped[candidate.generation]=grouped[candidate.generation]||[]).push(candidate);
+  });
+
+  Object.keys(grouped).map(Number).sort((a,b)=>a-b).forEach(generation=>{
+    const laneIntervals={};
+    const entries=grouped[generation].slice().sort((a,b)=>
+      (a.requiredLane-b.requiredLane)||
+      (a.span-b.span)||
+      String(a.union.stableId||a.union.id).localeCompare(String(b.union.stableId||b.union.id),undefined,{numeric:true,sensitivity:'base'})
+    );
+    entries.forEach(candidate=>{
+      if(candidate.requiredLane<=0){
+        candidate.lane=0;
+      }else{
+        let lane=candidate.requiredLane;
+        while(true){
+          const intervals=laneIntervals[lane]||[];
+          const conflict=intervals.some(interval=>{
+            const overlap=Math.min(candidate.right,interval.right)-Math.max(candidate.left,interval.left);
+            return overlap>RELATIONSHIP_ROUTE_SHOULDER*.5;
+          });
+          if(!conflict)break;
+          lane++;
+        }
+        candidate.lane=lane;
+        (laneIntervals[lane]=laneIntervals[lane]||[]).push({left:candidate.left,right:candidate.right});
+      }
+      maxLaneByGen[generation]=Math.max(maxLaneByGen[generation]||0,candidate.lane);
+      byUnion[candidate.union.id]={
+        lane:candidate.lane,
+        rankA:candidate.rankA,
+        rankB:candidate.rankB,
+        sideA:candidate.sideA,
+        sideB:candidate.sideB,
+        blockers:candidate.blockers.map(person=>person.id)
+      };
+    });
+  });
+  return {byUnion,maxLaneByGen};
 }
+
 function computeLayout(){
   LAY.genH=clampLayoutValue("genH",LAY.genH);
   LAY.slot=clampLayoutValue("slot",LAY.slot);
@@ -1597,11 +2161,11 @@ function computeLayout(){
   const byGen={};
   P().forEach(p=>{
     p._gen=gen[p.id]||0;
-    p._layoutLift=0;
     (byGen[p._gen]=byGen[p._gen]||[]).push(p);
   });
   const generations=Object.keys(byGen).map(Number).sort((a,b)=>a-b);
   const ctx=layoutBuildUnits(byGen,generations);
+  layoutComputeSubtreeMetrics(ctx);
   generations.forEach(g=>{
     const units=ctx.unitsByGen[g]||[];
     const gap=layoutNodeGap()+layoutUnitGap();
@@ -1617,15 +2181,17 @@ function computeLayout(){
     p.x=p.pinned&&p.px!=null?p.px:ax;
   });
   generations.forEach(g=>byGen[g].sort((a,b)=>a.x-b.x||layoutComparePeople(a,b)).forEach((p,i)=>p._autoId=roman(g+1)+"-"+(i+1)));
-  layoutApplyRelationshipEdgeAvoidance(byGen);
+
+  // Relationship conflicts are now resolved by edge lanes, not by lifting one
+  // individual out of an otherwise aligned generation. Reserve a generation-
+  // level routing band above the row when one or more lifted lanes are needed.
+  const relationshipLanes=relationshipLaneAssignments(byGen);
   let generationY=LAY.offY;
   generations.forEach(g=>{
     const people=byGen[g];
-    const maxLift=Math.max(0,...people.map(p=>p._layoutLift||0));
-    generationY+=maxLift;
+    generationY+=relationshipLaneBandHeight(relationshipLanes.maxLaneByGen[g]||0);
     people.forEach(p=>{
-      const lift=p.pinned&&p.py!=null?0:(p._layoutLift||0);
-      p._autoY=generationY-lift;
+      p._autoY=generationY;
       p.y=p.pinned&&p.py!=null?p.py:p._autoY;
     });
     const labelHeight=Math.max(0,...people.map(labelBlockHeight));
@@ -2103,6 +2669,129 @@ function edgeLineEl(a,b,union,colourMap,extra=""){
 function edgePolylineEl(points,union,colourMap,extra=""){
   return `<polyline points="${points}" fill="none" ${edgeStrokeAttrs(union,colourMap)} ${extra}/>`;
 }
+function relationshipSideBoundaryPoint(person,direction,offsetY=0){
+  const h=LAY.sym/2;
+  const dy=Math.max(-h*.72,Math.min(h*.72,Number(offsetY)||0));
+  const shape=symbolGeometryShape(person);
+  let dx=h;
+  if(shape==="female")dx=Math.sqrt(Math.max(0,h*h-dy*dy));
+  else if(shape==="unknown")dx=Math.max(0,h-Math.abs(dy));
+  else if(shape==="triangle")dx=Math.max(0,(dy+h)/2);
+  return {x:person.x+(direction<0?-dx:dx),y:person.y+dy};
+}
+function relationshipRouteCleanPoints(points){
+  const clean=[];
+  (points||[]).forEach(point=>{
+    if(!point||!Number.isFinite(point.x)||!Number.isFinite(point.y))return;
+    const previous=clean[clean.length-1];
+    if(previous&&Math.abs(previous.x-point.x)<.01&&Math.abs(previous.y-point.y)<.01)return;
+    clean.push({x:point.x,y:point.y});
+  });
+  return clean;
+}
+function buildPartnerRelationshipRoutePlan(){
+  const byGen={};
+  P().forEach(person=>(byGen[person._gen]=byGen[person._gen]||[]).push(person));
+  const lanePlan=relationshipLaneAssignments(byGen);
+  const routes={};
+  U().forEach(union=>{
+    const a=model.people[union.a],b=model.people[union.b];
+    if(!a&&!b)return;
+    if(!a||!b){
+      const only=a||b;
+      routes[union.id]={
+        id:`partner-${union.id}`,
+        groupKey:`union-${union.id}`,
+        unionId:union.id,
+        union,
+        points:[],
+        unionPoint:{x:only.x,y:only.y},
+        lane:0,
+        bridgeSegments:[]
+      };
+      return;
+    }
+    const info=lanePlan.byUnion[union.id]||{lane:0,rankA:0,rankB:0,sideA:b.x<a.x?-1:1,sideB:a.x<b.x?-1:1,blockers:[]};
+    const sameGeneration=a._gen===b._gen;
+    const lane=sameGeneration?info.lane||0:0;
+    if(!sameGeneration||!lane){
+      const pa=boundaryPoint(a,b.x,b.y),pb=boundaryPoint(b,a.x,a.y);
+      const points=relationshipRouteCleanPoints([pa,pb]);
+      routes[union.id]={
+        id:`partner-${union.id}`,
+        groupKey:`union-${union.id}`,
+        unionId:union.id,
+        union,
+        points,
+        unionPoint:{x:(a.x+b.x)/2,y:(a.y+b.y)/2},
+        lane:0,
+        bridgeSegments:Math.abs(pa.y-pb.y)<.5?[0]:[]
+      };
+      return;
+    }
+    const portOffset=(rank)=>-Math.min(LAY.sym*.55,RELATIONSHIP_ROUTE_PORT_STEP*(1+Math.max(0,rank)));
+    const pa=relationshipSideBoundaryPoint(a,info.sideA,portOffset(info.rankA));
+    const pb=relationshipSideBoundaryPoint(b,info.sideB,portOffset(info.rankB));
+    const shoulderA={x:pa.x+info.sideA*RELATIONSHIP_ROUTE_SHOULDER,y:pa.y};
+    const shoulderB={x:pb.x+info.sideB*RELATIONSHIP_ROUTE_SHOULDER,y:pb.y};
+    const laneY=Math.min(a.y,b.y)-relationshipLaneOffset(lane);
+    const points=relationshipRouteCleanPoints([
+      pa,
+      shoulderA,
+      {x:shoulderA.x,y:laneY},
+      {x:shoulderB.x,y:laneY},
+      shoulderB,
+      pb
+    ]);
+    const mainSegment=points.findIndex((point,index)=>{
+      const next=points[index+1];
+      return next&&Math.abs(point.y-laneY)<.5&&Math.abs(next.y-laneY)<.5&&Math.abs(next.x-point.x)>RELATIONSHIP_ROUTE_SHOULDER;
+    });
+    routes[union.id]={
+      id:`partner-${union.id}`,
+      groupKey:`union-${union.id}`,
+      unionId:union.id,
+      union,
+      points,
+      unionPoint:{x:(a.x+b.x)/2,y:laneY},
+      lane,
+      bridgeSegments:mainSegment>=0?[mainSegment]:[]
+    };
+  });
+  return {routes,lanePlan};
+}
+function relationshipBridgeArcPath(segment,bridge){
+  const {a,b}=segment;
+  const direction=b.x>=a.x?1:-1;
+  const radius=bridge.radius;
+  const entryX=bridge.x-direction*radius;
+  const exitX=bridge.x+direction*radius;
+  return `M${entryX},${a.y} Q${bridge.x},${a.y-radius*2} ${exitX},${a.y}`;
+}
+function relationshipRoutePathData(route,bridgePlan){
+  const points=route?.points||[];
+  if(!points.length)return "";
+  let d=`M${points[0].x},${points[0].y}`;
+  for(let index=0;index<points.length-1;index++){
+    const a=points[index],b=points[index+1];
+    const horizontal=Math.abs(a.y-b.y)<.5&&Math.abs(a.x-b.x)>.5;
+    const bridges=horizontal?((bridgePlan?.[route.id]?.[index])||[]):[];
+    if(!bridges.length){d+=` L${b.x},${b.y}`;continue;}
+    const direction=b.x>=a.x?1:-1;
+    const ordered=bridges.slice().sort((x,y)=>direction*(x.x-y.x));
+    ordered.forEach(bridge=>{
+      const entryX=bridge.x-direction*bridge.radius;
+      const exitX=bridge.x+direction*bridge.radius;
+      d+=` L${entryX},${a.y} Q${bridge.x},${a.y-bridge.radius*2} ${exitX},${a.y}`;
+    });
+    d+=` L${b.x},${b.y}`;
+  }
+  return d;
+}
+function relationshipRouteStrokeColour(union,colourMap){
+  if(!edgeColourEnabled())return "var(--sym)";
+  return (colourMap&&union&&colourMap[union.id])||edgeThemeColour(0);
+}
 function unionSlashMark(point){
   const s=8;
   return lineEl({x:point.x-s,y:point.y+s},{x:point.x+s,y:point.y-s});
@@ -2130,13 +2819,96 @@ function junctionStraightTol(){ return Math.max(LAY.sym*0.6,Math.min(LAY.slot*0.
 function parentageStrokeAttrs(kind){
   return normaliseParentageKind(kind)==="adoptive"?'stroke-dasharray="7 5"':"";
 }
-function renderUnionParentageGroup(union,unionPoint,kids,kind,colourMap){
-  if(!unionPoint||!kids.length)return {edges:"",twins:""};
-  let edges="",twins="";
-  const extra=parentageStrokeAttrs(kind);
+function relationshipRouteSegments(route){
+  const out=[];
+  const clean=relationshipRouteCleanPoints(route?.points||[]);
+  for(let index=0;index<clean.length-1;index++){
+    const a=clean[index],b=clean[index+1];
+    if(Math.abs(a.y-b.y)<.5&&Math.abs(a.x-b.x)>.5){
+      out.push({
+        orientation:"horizontal",
+        routeId:route.id,
+        groupKey:route.groupKey||route.id,
+        index,
+        left:Math.min(a.x,b.x),
+        right:Math.max(a.x,b.x),
+        y:a.y,
+        a,b
+      });
+    }else if(Math.abs(a.x-b.x)<.5&&Math.abs(a.y-b.y)>.5){
+      out.push({
+        orientation:"vertical",
+        routeId:route.id,
+        groupKey:route.groupKey||route.id,
+        index,
+        x:a.x,
+        y1:Math.min(a.y,b.y),
+        y2:Math.max(a.y,b.y),
+        a,b
+      });
+    }
+  }
+  return out;
+}
+function relationshipCreateRouteOccupancy(){
+  return {horizontal:[],vertical:[]};
+}
+function relationshipRegisterRouteOccupancy(occupancy,route){
+  if(!occupancy||!route)return;
+  relationshipRouteSegments(route).forEach(segment=>{
+    if(segment.orientation==="horizontal")occupancy.horizontal.push(segment);
+    else if(segment.orientation==="vertical")occupancy.vertical.push(segment);
+  });
+}
+function relationshipHorizontalCorridorConflict(occupancy,left,right,y,groupKey){
+  const x1=Math.min(left,right),x2=Math.max(left,right);
+  return (occupancy?.horizontal||[]).some(segment=>{
+    if(segment.groupKey===groupKey)return false;
+    if(Math.abs(segment.y-y)>=RELATIONSHIP_ROUTE_CLEARANCE)return false;
+    const separated=x2+RELATIONSHIP_ROUTE_CLEARANCE<=segment.left||segment.right+RELATIONSHIP_ROUTE_CLEARANCE<=x1;
+    return !separated;
+  });
+}
+function relationshipCorridorBoundsBetween(y1,y2,preferredY,margin=18){
+  if(!Number.isFinite(y1)||!Number.isFinite(y2)||!Number.isFinite(preferredY)){
+    return {minY:preferredY,maxY:preferredY};
+  }
+  const min=Math.min(y1,y2)+margin,max=Math.max(y1,y2)-margin;
+  if(min<=max)return {minY:min,maxY:max};
+  return {minY:preferredY,maxY:preferredY};
+}
+function relationshipReserveHorizontalCorridor(occupancy,{preferredY,left,right,groupKey,minY=-Infinity,maxY=Infinity,bias="balanced"}){
+  if(!Number.isFinite(preferredY)||!Number.isFinite(left)||!Number.isFinite(right))return preferredY;
+  if(Math.abs(right-left)<.5)return preferredY;
+  const step=Math.max(RELATIONSHIP_ROUTE_CLEARANCE+4,RELATIONSHIP_ROUTE_LANE_GAP*.75);
+  const offsets=[0];
+  for(let index=1;index<=RELATIONSHIP_ROUTE_MAX_NUDGE_STEPS;index++){
+    if(bias==="up")offsets.push(-index,index);
+    else if(bias==="down")offsets.push(index,-index);
+    else offsets.push(-index,index);
+  }
+  for(const offset of offsets){
+    const y=preferredY+offset*step;
+    if(y<minY-.01||y>maxY+.01)continue;
+    if(!relationshipHorizontalCorridorConflict(occupancy,left,right,y,groupKey))return y;
+  }
+  return preferredY;
+}
+function relationshipAddGeometryRoute(geometry,route){
+  if(!geometry||!route)return null;
+  const clean=relationshipRouteCleanPoints(route.points||[]);
+  if(clean.length<2)return null;
+  const resolved=Object.assign({},route,{points:clean});
+  geometry.routes[resolved.id]=resolved;
+  relationshipRegisterRouteOccupancy(geometry.occupancy,resolved);
+  return resolved;
+}
+function unionParentageGeometry(unionPoint,kids,options={}){
+  if(!unionPoint||!kids.length)return null;
   const minChildY=Math.min(...kids.map(k=>k.y));
   const childCentreX=kids.reduce((sum,k)=>sum+k.x,0)/kids.length;
-  const junctionY=minChildY-34;
+  const preferredJunctionY=minChildY-34;
+  const junctionY=Number.isFinite(options.junctionY)?options.junctionY:preferredJunctionY;
   const groups={};
   kids.forEach(k=>{const group=k.twinGroup||("_"+k.id);(groups[group]=groups[group]||[]).push(k);});
   const anchors=[];
@@ -2149,44 +2921,140 @@ function renderUnionParentageGroup(union,unionPoint,kids,kind,colourMap){
     if(unionPoint.x>=spanMin-tolerance&&unionPoint.x<=spanMax+tolerance)junctionX=unionPoint.x;
   }
   const junction={x:junctionX,y:junctionY};
+  let stemPoints;
   if(ui.routingMode==="clinical"){
     if(Math.abs(junction.x-unionPoint.x)<.5){
-      edges+=edgePolylineEl(`${unionPoint.x},${unionPoint.y} ${junction.x},${junction.y}`,union,colourMap,extra);
+      stemPoints=[unionPoint,junction];
     }else{
-      const elbowY=Math.min(junction.y-12,unionPoint.y+Math.max(18,(junction.y-unionPoint.y)/2));
-      edges+=edgePolylineEl(`${unionPoint.x},${unionPoint.y} ${unionPoint.x},${elbowY} ${junction.x},${elbowY} ${junction.x},${junction.y}`,union,colourMap,extra);
+      const preferredElbowY=Math.min(junction.y-12,unionPoint.y+Math.max(18,(junction.y-unionPoint.y)/2));
+      const elbowY=Number.isFinite(options.stemElbowY)?options.stemElbowY:preferredElbowY;
+      stemPoints=[unionPoint,{x:unionPoint.x,y:elbowY},{x:junction.x,y:elbowY},junction];
     }
-  }else edges+=edgeLineEl(unionPoint,junction,union,colourMap,extra);
+  }else stemPoints=[unionPoint,junction];
+  return {junction,anchors,spanMin,spanMax,stemPoints,minChildY,preferredJunctionY};
+}
+function pointsAttr(points){
+  return points.map(point=>`${point.x},${point.y}`).join(" ");
+}
+function buildPrimaryParentageGeometryGroup(geometry,union,unionPoint,kids,kind){
+  const groupKey=`parentage-primary-${union.id}-${kind}`;
+  const preliminary=unionParentageGeometry(unionPoint,kids);
+  if(!preliminary)return null;
+  const horizontalXs=[preliminary.junction.x,...preliminary.anchors.map(anchor=>anchor.x)];
+  const horizontalLeft=Math.min(...horizontalXs),horizontalRight=Math.max(...horizontalXs);
+  const junctionBounds=relationshipCorridorBoundsBetween(unionPoint.y,preliminary.minChildY,preliminary.preferredJunctionY,18);
+  const junctionY=relationshipReserveHorizontalCorridor(geometry.occupancy,{
+    preferredY:preliminary.preferredJunctionY,
+    left:horizontalLeft,
+    right:horizontalRight,
+    groupKey,
+    minY:junctionBounds.minY,
+    maxY:junctionBounds.maxY,
+    bias:"up"
+  });
+  let resolved=unionParentageGeometry(unionPoint,kids,{junctionY});
+  if(!resolved)return null;
+  if(ui.routingMode==="clinical"&&Math.abs(resolved.junction.x-unionPoint.x)>.5){
+    const preferredElbowY=Math.min(resolved.junction.y-12,unionPoint.y+Math.max(18,(resolved.junction.y-unionPoint.y)/2));
+    const elbowBounds=relationshipCorridorBoundsBetween(unionPoint.y,resolved.junction.y,preferredElbowY,12);
+    const stemElbowY=relationshipReserveHorizontalCorridor(geometry.occupancy,{
+      preferredY:preferredElbowY,
+      left:unionPoint.x,
+      right:resolved.junction.x,
+      groupKey,
+      minY:elbowBounds.minY,
+      maxY:elbowBounds.maxY,
+      bias:"balanced"
+    });
+    resolved=unionParentageGeometry(unionPoint,kids,{junctionY,stemElbowY});
+  }
+  const result={union,kind,groupKey,geometry:resolved,routes:[],hitRoutes:{}};
+  const addRoute=(suffix,points,layer="edge")=>{
+    const route=relationshipAddGeometryRoute(geometry,{
+      id:`parentage-primary-${union.id}-${kind}-${suffix}`,
+      groupKey,
+      type:"primary-parentage",
+      layer,
+      union,
+      parentageKind:kind,
+      points
+    });
+    if(route)result.routes.push(route);
+    return route;
+  };
+  const {junction,anchors,spanMin,spanMax,stemPoints}=resolved;
+  addRoute("stem",stemPoints);
   if(anchors.length>1){
     const barLeft=Math.min(spanMin,junction.x),barRight=Math.max(spanMax,junction.x);
-    edges+=edgeLineEl({x:barLeft,y:junction.y},{x:barRight,y:junction.y},union,colourMap,extra);
+    addRoute("sibship-bar",[{x:barLeft,y:junction.y},{x:barRight,y:junction.y}]);
   }
-  anchors.forEach(({x,group})=>{
+  anchors.forEach(({x,group},anchorIndex)=>{
     const branch={x,y:junction.y};
-    if(Math.abs(x-junction.x)>.5)edges+=edgeLineEl(junction,branch,union,colourMap,extra);
+    if(Math.abs(x-junction.x)>.5)addRoute(`branch-${anchorIndex}`,[junction,branch]);
     if(group.length>1){
       const apex=branch;
-      group.forEach(k=>{
-        const end=boundaryPoint(k,apex.x,apex.y);
-        twins+=edgeLineEl(apex,end,union,colourMap,extra);
+      group.forEach(child=>{
+        const end=boundaryPoint(child,apex.x,apex.y);
+        addRoute(`twin-${anchorIndex}-${child.id}`,[apex,end],"twin");
+        const link=parentageLinksForChild(child.id,kind).find(candidate=>candidate.unionId===union.id);
+        if(link){
+          result.hitRoutes[link.id]={points:relationshipRouteCleanPoints([...stemPoints,branch,end])};
+        }
       });
       if(group[0].twinType==="MZ"){
-        const points=group.map(k=>{
-          const end=boundaryPoint(k,apex.x,apex.y);
+        const mzPoints=group.map(child=>{
+          const end=boundaryPoint(child,apex.x,apex.y);
           return {x:apex.x+(end.x-apex.x)*.52,y:apex.y+(end.y-apex.y)*.52};
         });
-        twins+=edgeLineEl(points[0],points[points.length-1],union,colourMap,extra);
+        if(mzPoints.length>1)addRoute(`mz-${anchorIndex}`,[mzPoints[0],mzPoints[mzPoints.length-1]],"twin");
       }
     }else{
       const child=group[0],end=boundaryPoint(child,branch.x,branch.y);
-      if(ui.routingMode==="clinical")edges+=edgePolylineEl(`${branch.x},${branch.y} ${branch.x},${end.y}`,union,colourMap,extra);
-      else edges+=edgeLineEl(branch,end,union,colourMap,extra);
+      addRoute(`child-${child.id}`,[branch,{x:branch.x,y:end.y}]);
+      const link=parentageLinksForChild(child.id,kind).find(candidate=>candidate.unionId===union.id);
+      if(link){
+        result.hitRoutes[link.id]={points:relationshipRouteCleanPoints([...stemPoints,branch,end])};
+      }
     }
   });
-  return {edges,twins};
+  geometry.primaryByUnionKind[`${union.id}:${kind}`]=result;
+  return result;
 }
-function renderSecondaryParentageLinks(){
-  let out="";
+function buildRelationshipGeometry(partnerPlan){
+  const geometry={
+    routes:{},
+    occupancy:relationshipCreateRouteOccupancy(),
+    partnerByUnion:{},
+    primaryByUnionKind:{},
+    secondary:[],
+    reproductive:[]
+  };
+
+  Object.values(partnerPlan?.routes||{}).forEach(sourceRoute=>{
+    const route=Object.assign({},sourceRoute,{
+      type:"partner",
+      layer:"partner",
+      points:relationshipRouteCleanPoints(sourceRoute.points||[])
+    });
+    geometry.partnerByUnion[route.unionId]=route;
+    if(route.points.length>=2)relationshipAddGeometryRoute(geometry,route);
+  });
+
+  U().forEach(union=>{
+    const partnerRoute=geometry.partnerByUnion[union.id];
+    const a=model.people[union.a],b=model.people[union.b];
+    const unionPoint=partnerRoute?.unionPoint||(a&&b?{x:(a.x+b.x)/2,y:(a.y+b.y)/2}:a?{x:a.x,y:a.y}:b?{x:b.x,y:b.y}:null);
+    if(!unionPoint)return;
+    const grouped={biological:[],adoptive:[]};
+    (union.children||[]).forEach(childId=>{
+      const child=model.people[childId],link=primaryParentageLinkOf(childId);
+      if(child&&link&&link.unionId===union.id)grouped[normaliseParentageKind(link.relationshipKind)].push(child);
+    });
+    ["biological","adoptive"].forEach(kind=>{
+      if(grouped[kind].length)buildPrimaryParentageGeometryGroup(geometry,union,unionPoint,grouped[kind],kind);
+    });
+  });
+
   PL().forEach(link=>{
     const primary=primaryParentageLinkOf(link.childId);
     if(primary&&primary.id===link.id)return;
@@ -2194,74 +3062,621 @@ function renderSecondaryParentageLinks(){
     if(!union||!child)return;
     const parents=[model.people[union.a],model.people[union.b]].filter(Boolean);
     if(!parents.length)return;
-    const source={x:parents.reduce((sum,p)=>sum+p.x,0)/parents.length,y:parents.reduce((sum,p)=>sum+p.y,0)/parents.length};
+    const source=geometry.partnerByUnion[union.id]?.unionPoint||{
+      x:parents.reduce((sum,p)=>sum+p.x,0)/parents.length,
+      y:parents.reduce((sum,p)=>sum+p.y,0)/parents.length
+    };
     const end=boundaryPoint(child,source.x,source.y);
-    const elbowY=Math.min(end.y-18,source.y+Math.max(20,(end.y-source.y)/2));
-    out+=`<polyline points="${source.x},${source.y} ${source.x},${elbowY} ${end.x},${elbowY} ${end.x},${end.y}" fill="none" stroke="var(--sym)" stroke-width="1.4" ${parentageStrokeAttrs(link.relationshipKind)}/>`;
+    const preferredElbowY=Math.min(end.y-18,source.y+Math.max(20,(end.y-source.y)/2));
+    const bounds=relationshipCorridorBoundsBetween(source.y,end.y,preferredElbowY,14);
+    const groupKey=`parentage-secondary-${link.id}`;
+    const elbowY=relationshipReserveHorizontalCorridor(geometry.occupancy,{
+      preferredY:preferredElbowY,
+      left:source.x,
+      right:end.x,
+      groupKey,
+      minY:bounds.minY,
+      maxY:bounds.maxY,
+      bias:"balanced"
+    });
+    const route=relationshipAddGeometryRoute(geometry,{
+      id:`parentage-secondary-${link.id}`,
+      groupKey,
+      type:"secondary-parentage",
+      layer:"edge",
+      link,
+      parentageKind:normaliseParentageKind(link.relationshipKind),
+      points:[source,{x:source.x,y:elbowY},{x:end.x,y:elbowY},end]
+    });
+    if(route)geometry.secondary.push({link,route});
   });
-  return out;
-}
-function renderReproductiveEventLinks(){
-  let out="";
+
   RE().forEach(event=>{
     const subject=model.people[event.subjectId];
     if(!subject)return;
     const sourceIds=[event.spermContributorId,event.ovumContributorId,event.gestationalCarrierId].filter(Boolean);
-    [...new Set(sourceIds)].forEach((sourceId,index)=>{
+    const uniqueSourceIds=[...new Set(sourceIds)];
+    uniqueSourceIds.forEach((sourceId,index)=>{
       const source=model.people[sourceId];
       if(!source||source.id===subject.id)return;
       const sourceEnd=boundaryPoint(source,subject.x,subject.y);
       const subjectEnd=boundaryPoint(subject,source.x,source.y);
-      const spread=(index-(new Set(sourceIds).size-1)/2)*10;
-      const elbowY=Math.min(subjectEnd.y-18,sourceEnd.y+Math.max(20,(subjectEnd.y-sourceEnd.y)/2));
-      out+=`<polyline points="${sourceEnd.x},${sourceEnd.y} ${sourceEnd.x+spread},${elbowY} ${subjectEnd.x+spread},${elbowY} ${subjectEnd.x},${subjectEnd.y}" fill="none" stroke="var(--sym)" stroke-width="1.4"/>`;
+      const spread=(index-(uniqueSourceIds.length-1)/2)*10;
+      const sourceX=sourceEnd.x+spread,targetX=subjectEnd.x+spread;
+      const preferredElbowY=Math.min(subjectEnd.y-18,sourceEnd.y+Math.max(20,(subjectEnd.y-sourceEnd.y)/2));
+      const bounds=relationshipCorridorBoundsBetween(sourceEnd.y,subjectEnd.y,preferredElbowY,14);
+      const groupKey=`reproductive-${event.id}`;
+      const elbowY=relationshipReserveHorizontalCorridor(geometry.occupancy,{
+        preferredY:preferredElbowY,
+        left:sourceX,
+        right:targetX,
+        groupKey,
+        minY:bounds.minY,
+        maxY:bounds.maxY,
+        bias:"balanced"
+      });
+      const route=relationshipAddGeometryRoute(geometry,{
+        id:`reproductive-${event.id}-${sourceId}`,
+        groupKey,
+        type:"reproductive",
+        layer:"edge",
+        event,
+        sourceId,
+        points:[
+          sourceEnd,
+          {x:sourceX,y:sourceEnd.y},
+          {x:sourceX,y:elbowY},
+          {x:targetX,y:elbowY},
+          {x:targetX,y:subjectEnd.y},
+          subjectEnd
+        ]
+      });
+      if(route)geometry.reproductive.push({event,sourceId,route});
+    });
+  });
+
+  return geometry;
+}
+function relationshipRouteUsesUnionStyle(route){
+  return route?.type==="partner"||route?.type==="primary-parentage";
+}
+function relationshipRouteStrokeAttrs(route,colourMap){
+  if(relationshipRouteUsesUnionStyle(route)){
+    const extra=route.type==="primary-parentage"?parentageStrokeAttrs(route.parentageKind):"";
+    return `${edgeStrokeAttrs(route.union,colourMap)} ${extra}`.trim();
+  }
+  const extra=route?.type==="secondary-parentage"?parentageStrokeAttrs(route.parentageKind):"";
+  return `stroke="var(--sym)" stroke-width="1.4" ${extra}`.trim();
+}
+function relationshipRouteBaseWidth(route){
+  if(route?.type==="partner"&&route.union?.consanguineous)return edgeColourEnabled()?7:5;
+  if(relationshipRouteUsesUnionStyle(route)&&edgeColourEnabled())return 4.2;
+  return 1.4;
+}
+function renderRelationshipGeometryRoute(route,colourMap,bridgePlan){
+  if(!route||!route.points?.length)return "";
+  const d=relationshipRoutePathData(route,bridgePlan);
+  if(!d)return "";
+  if(route.type==="partner"&&route.union?.consanguineous){
+    const colour=relationshipRouteStrokeColour(route.union,colourMap);
+    const outerWidth=edgeColourEnabled()?7:5;
+    const innerWidth=edgeColourEnabled()?2.2:1.8;
+    return `<path d="${d}" fill="none" stroke="${colour}" stroke-width="${outerWidth}" stroke-linecap="round" stroke-linejoin="round"/>`+
+      `<path d="${d}" fill="none" stroke="#fff" stroke-width="${innerWidth}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  return `<path d="${d}" fill="none" ${relationshipRouteStrokeAttrs(route,colourMap)}/>`;
+}
+function renderRelationshipBridgeOverlays(route,colourMap,bridgePlan){
+  if(!route||!route.points?.length)return "";
+  const entries=bridgePlan?.[route.id];
+  if(!entries)return "";
+  let out="";
+  Object.keys(entries).map(Number).sort((a,b)=>a-b).forEach(index=>{
+    const a=route.points[index],b=route.points[index+1];
+    if(!a||!b)return;
+    entries[index].forEach(bridge=>{
+      const d=relationshipBridgeArcPath({a,b},bridge);
+      if(route.type==="partner"&&route.union?.consanguineous){
+        const colour=relationshipRouteStrokeColour(route.union,colourMap);
+        const outerWidth=edgeColourEnabled()?7:5;
+        const innerWidth=edgeColourEnabled()?2.2:1.8;
+        out+=`<path d="${d}" fill="none" stroke="#fff" stroke-width="${outerWidth+4}" stroke-linecap="round"/>`;
+        out+=`<path d="${d}" fill="none" stroke="${colour}" stroke-width="${outerWidth}" stroke-linecap="round"/>`;
+        out+=`<path d="${d}" fill="none" stroke="#fff" stroke-width="${innerWidth}" stroke-linecap="round"/>`;
+      }else{
+        const baseWidth=relationshipRouteBaseWidth(route);
+        out+=`<path d="${d}" fill="none" stroke="#fff" stroke-width="${baseWidth+4}" stroke-linecap="round"/>`;
+        out+=`<path d="${d}" fill="none" ${relationshipRouteStrokeAttrs(route,colourMap)}/>`;
+      }
     });
   });
   return out;
+}
+function renderUnionParentageGroup(group,colourMap,bridgePlan){
+  if(!group)return {edges:"",twins:""};
+  let edges="",twins="";
+  group.routes.forEach(route=>{
+    const rendered=renderRelationshipGeometryRoute(route,colourMap,bridgePlan);
+    if(route.layer==="twin")twins+=rendered;
+    else edges+=rendered;
+  });
+  return {edges,twins};
+}
+function renderSecondaryParentageLinks(interactive=false,geometry=null,colourMap=null,bridgePlan=null){
+  let out="";
+  (geometry?.secondary||[]).forEach(({link,route})=>{
+    out+=renderRelationshipGeometryRoute(route,colourMap,bridgePlan);
+    if(interactive)out+=edgeHitPolyline(pointsAttr(route.points),"parentage",link.id);
+  });
+  return out;
+}
+function renderReproductiveEventLinks(interactive=false,geometry=null,colourMap=null,bridgePlan=null){
+  let out="";
+  (geometry?.reproductive||[]).forEach(({event,sourceId,route})=>{
+    out+=renderRelationshipGeometryRoute(route,colourMap,bridgePlan);
+    if(interactive)out+=edgeHitPolyline(pointsAttr(route.points),"reproductive",event.id,{"source-id":sourceId});
+  });
+  return out;
+}
+function relationshipBridgeClusters(xs){
+  const sorted=[...new Set(xs.map(value=>Math.round(value*1000)/1000))].sort((a,b)=>a-b);
+  const groups=[];
+  sorted.forEach(x=>{
+    const group=groups[groups.length-1];
+    if(!group||x-group[group.length-1]>RELATIONSHIP_BRIDGE_RADIUS*2+RELATIONSHIP_BRIDGE_CLEARANCE){
+      groups.push([x]);
+    }else group.push(x);
+  });
+  return groups.map(group=>{
+    const min=Math.min(...group),max=Math.max(...group);
+    return {x:(min+max)/2,radius:Math.min(18,RELATIONSHIP_BRIDGE_RADIUS+(max-min)/2)};
+  });
+}
+function buildRelationshipBridgePlan(geometry){
+  const routes=Object.values(geometry?.routes||{});
+  const segments=routes.flatMap(route=>relationshipRouteSegments(route));
+  const horizontals=segments.filter(segment=>segment.orientation==="horizontal");
+  const verticals=segments.filter(segment=>segment.orientation==="vertical");
+  const plan={};
+  horizontals.forEach(horizontal=>{
+    const length=horizontal.right-horizontal.left;
+    if(length<=RELATIONSHIP_BRIDGE_RADIUS*2+RELATIONSHIP_BRIDGE_CLEARANCE*2+2)return;
+    const crossings=verticals.filter(vertical=>{
+      if(vertical.routeId===horizontal.routeId)return false;
+      if(vertical.groupKey===horizontal.groupKey)return false;
+      if(vertical.x<=horizontal.left+RELATIONSHIP_BRIDGE_RADIUS+RELATIONSHIP_BRIDGE_CLEARANCE)return false;
+      if(vertical.x>=horizontal.right-RELATIONSHIP_BRIDGE_RADIUS-RELATIONSHIP_BRIDGE_CLEARANCE)return false;
+      return horizontal.y>vertical.y1+1&&horizontal.y<vertical.y2-1;
+    }).map(vertical=>vertical.x);
+    const bridges=relationshipBridgeClusters(crossings).filter(bridge=>
+      bridge.x-bridge.radius>horizontal.left+1&&bridge.x+bridge.radius<horizontal.right-1
+    );
+    if(!bridges.length)return;
+    (plan[horizontal.routeId]=plan[horizontal.routeId]||{})[horizontal.index]=bridges;
+  });
+  return plan;
+}
+
+
+function edgeHitLine(a,b,kind,id,extra={}){
+  const attrs=Object.entries(extra).map(([key,value])=>` data-${key}="${esc(String(value??""))}"`).join("");
+  return `<line class="relationship-edge-hit" data-edge-kind="${esc(kind)}" data-edge-id="${esc(id)}"${attrs} x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"/>`;
+}
+function edgeHitPolyline(points,kind,id,extra={}){
+  const attrs=Object.entries(extra).map(([key,value])=>` data-${key}="${esc(String(value??""))}"`).join("");
+  return `<polyline class="relationship-edge-hit" data-edge-kind="${esc(kind)}" data-edge-id="${esc(id)}"${attrs} points="${points}"/>`;
+}
+function biologicalDescendantOf(sourceId,targetId){
+  if(!sourceId||!targetId||sourceId===targetId)return false;
+  const seen=new Set(),queue=childrenOf(sourceId).slice();
+  while(queue.length){
+    const id=queue.shift();
+    if(!id||seen.has(id))continue;
+    if(id===targetId)return true;
+    seen.add(id);
+    childrenOf(id).forEach(childId=>{if(!seen.has(childId))queue.push(childId);});
+  }
+  return false;
+}
+function connectionPortPoint(person,role,side=0,offset=0){
+  const h=LAY.sym/2,gap=9;
+  if(role==="partner-source"||role==="partner-target"){
+    const direction=side<0?-1:1;
+    return {x:person.x+direction*(h+gap),y:person.y+offset};
+  }
+  if(role==="parent-output")return {x:person.x+offset,y:person.y+h+gap};
+  if(role==="child-input")return {x:person.x+offset,y:person.y-h-gap};
+  return {x:person.x+offset,y:person.y};
+}
+function connectionPortCircle(point,role,data={},title="",options={}){
+  const attrs=Object.entries(data).map(([key,value])=>` data-${key}="${esc(String(value??""))}"`).join("");
+  const classes=["connection-port",role,options.active?"active":"",options.candidate?"candidate":"",options.draggable?"connection-handle":""].filter(Boolean).join(" ");
+  const handleAttrs=options.draggable?` data-handle-kind="${esc(String(options.handleKind||""))}" data-x="${point.x}" data-y="${point.y}"`:"";
+  return `<circle class="${classes}" cx="${point.x}" cy="${point.y}" r="6"${handleAttrs}${attrs}>${title?`<title>${esc(title)}</title>`:""}</circle>`;
+}
+function relationshipPreviewLine(a,b,kind,id,extra={}){
+  const attrs=Object.entries(extra).map(([key,value])=>` data-${key}="${esc(String(value??""))}"`).join("");
+  return `<line class="relationship-preview-line" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"/>`+
+    `<line class="relationship-preview-hit relationship-edge-hit" data-edge-kind="${esc(kind)}" data-edge-id="${esc(id)}"${attrs} x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"/>`;
+}
+function relationshipPreviewPolyline(points,kind,id,extra={}){
+  const attrs=Object.entries(extra).map(([key,value])=>` data-${key}="${esc(String(value??""))}"`).join("");
+  return `<polyline class="relationship-preview-line" points="${points}"/>`+
+    `<polyline class="relationship-preview-hit relationship-edge-hit" data-edge-kind="${esc(kind)}" data-edge-id="${esc(id)}"${attrs} points="${points}"/>`;
+}
+function selectedRelationshipContext(person){
+  const partnerUnions=unionsOf(person.id).filter(union=>model.people[partnerIn(union,person.id)]);
+  const incomingParentage=parentageLinksForChild(person.id);
+  const outgoingParentage=PL().filter(link=>{
+    const union=model.unions[link.unionId];
+    return union&&(union.a===person.id||union.b===person.id)&&model.people[link.childId];
+  });
+  return {partnerUnions,incomingParentage,outgoingParentage};
+}
+function canShowParentChildConnectionPort(parentId,childId){
+  const parent=model.people[parentId],child=model.people[childId];
+  return !!parent&&!!child&&parentId!==childId;
+}
+function renderCandidateRelationshipPorts(selected,context,activePersonIds){
+  let out="";
+  const currentPartners=new Set(context.partnerUnions.map(union=>partnerIn(union,selected.id)).filter(Boolean));
+  P().forEach(person=>{
+    if(person.id===selected.id)return;
+    // Blue partner inputs are always available when a new union can be created.
+    if(!currentPartners.has(person.id)){
+      [-1,1].forEach(side=>{
+        out+=connectionPortCircle(connectionPortPoint(person,"partner-target",side),"partner-target",{},"Available partner connection",{candidate:true});
+      });
+    }
+    // Purple/pink ports describe possible user actions, not pre-approved semantic
+    // mutations. Every other individual remains reachable; biological cycle,
+    // duplicate-parent and two-parent constraints are validated only on drop.
+    if(canShowParentChildConnectionPort(person.id,selected.id)){
+      out+=connectionPortCircle(connectionPortPoint(person,"parent-output"),"parent-output",{},"Available parent connection",{candidate:true});
+    }
+    if(canShowParentChildConnectionPort(selected.id,person.id)){
+      out+=connectionPortCircle(connectionPortPoint(person,"child-input"),"child-input",{},"Available child connection",{candidate:true});
+    }
+  });
+  return out;
+}
+function renderSelectedRelationshipPorts(person,context){
+  let previews="",ports="",controlPorts="";
+  const h=LAY.sym/2;
+  const activePersonIds=new Set([person.id]);
+
+  // The selected individual exposes stable semantic ports. Green side ports are
+  // dedicated to creating a new partner relationship; existing unions are moved
+  // from their remote blue endpoint so the interaction has one unambiguous meaning.
+  [-1,1].forEach(side=>{
+    const point=connectionPortPoint(person,"partner-source",side);
+    controlPorts+=connectionPortCircle(point,"partner-source",{
+      "anchor-id":person.id,
+      "target-port-role":"partner-target",
+      "fixed-x":point.x,
+      "fixed-y":point.y,
+      "drag-mode":"partner",
+      "drag-token":`partner-new:${person.id}:${side}`
+    },"Drag to a blue partner input to add a relationship",{active:true,draggable:true,handleKind:"partner-new"});
+  });
+  const childInputPoint=connectionPortPoint(person,"child-input");
+  controlPorts+=connectionPortCircle(childInputPoint,"child-input",{
+    "child-id":person.id,
+    "target-port-role":"parent-output",
+    "fixed-x":childInputPoint.x,
+    "fixed-y":childInputPoint.y,
+    "drag-mode":"parentage",
+    "drag-token":`parentage-new-parent:${person.id}`
+  },"Drag to a purple parent output to add a parent",{active:true,draggable:true,handleKind:"parentage-new-parent"});
+  const parentOutputPoint=connectionPortPoint(person,"parent-output");
+  controlPorts+=connectionPortCircle(parentOutputPoint,"parent-output",{
+    "parent-id":person.id,
+    "target-port-role":"child-input",
+    "fixed-x":parentOutputPoint.x,
+    "fixed-y":parentOutputPoint.y,
+    "drag-mode":"parentage",
+    "drag-token":`parentage-new-child:${person.id}`
+  },"Drag to a pink child input to add a child",{active:true,draggable:true,handleKind:"parentage-new-child"});
+
+  // Existing partner relationships are shown as temporary blue interaction routes.
+  // The selected person remains the fixed anchor; dragging the remote blue endpoint
+  // replaces the other endpoint of the same canonical union.
+  const partnerBySide={"-1":[],"1":[]};
+  const partnerRoutePlan=buildPartnerRelationshipRoutePlan();
+  context.partnerUnions.forEach(union=>{
+    const partner=model.people[partnerIn(union,person.id)];
+    if(!partner)return;
+    const side=partner.x>=person.x?1:-1;
+    partnerBySide[String(side)].push({union,partner,route:partnerRoutePlan.routes[union.id]||null});
+    activePersonIds.add(partner.id);
+  });
+  [-1,1].forEach(side=>{
+    const entries=partnerBySide[String(side)].sort((a,b)=>(a.route?.lane||0)-(b.route?.lane||0)||a.partner.y-b.partner.y);
+    entries.forEach(entry=>{
+      let routePoints=entry.route?.points?.slice()||[];
+      if(routePoints.length&&entry.union.a!==person.id)routePoints=routePoints.reverse();
+      const source=routePoints[0]||connectionPortPoint(person,"partner-source",side,0);
+      const targetSide=entry.partner.x>=person.x?-1:1;
+      const target=routePoints[routePoints.length-1]||connectionPortPoint(entry.partner,"partner-target",targetSide,0);
+      const dragToken=`union:${entry.union.id}:${person.id}`;
+      if(connectionDragPreview?.dragToken!==dragToken){
+        previews+=routePoints.length>1
+          ?relationshipPreviewPolyline(pointsAttr(routePoints),"union",entry.union.id)
+          :relationshipPreviewLine(source,target,"union",entry.union.id);
+      }
+      ports+=connectionPortCircle(source,"partner-source",{},`Relationship with ${entry.partner.name||pedId(entry.partner)}`,{active:true});
+      if(connectionDragPreview?.dragToken!==dragToken){
+        ports+=connectionPortCircle(target,"partner-target",{
+          "union-id":entry.union.id,
+          "anchor-id":person.id,
+          "target-port-role":"partner-target",
+          "fixed-x":source.x,
+          "fixed-y":source.y,
+          "drag-mode":"partner",
+          "drag-token":dragToken,
+          "edge-kind":"union",
+          "edge-id":entry.union.id
+        },`Move ${entry.partner.name||pedId(entry.partner)} to another partner input`,{active:true,draggable:true,handleKind:"partner"});
+      }
+    });
+  });
+
+  // Incoming biological/adoptive parentage is represented per parent endpoint.
+  // The existing parentage-link record remains canonical and keeps its stable ID.
+  context.incomingParentage.forEach((link,linkIndex)=>{
+    const union=model.unions[link.unionId];
+    if(!union)return;
+    const kind=normaliseParentageKind(link.relationshipKind);
+    const rowOffset=linkIndex*12;
+    ["a","b"].forEach((slot,slotIndex)=>{
+      const parent=model.people[union[slot]];
+      if(!parent)return;
+      activePersonIds.add(parent.id);
+      const parentPort=connectionPortPoint(parent,"parent-output");
+      const childPort=connectionPortPoint(person,"child-input",0,(slotIndex===0?-8:8));
+      childPort.y-=rowOffset;
+      const midY=parentPort.y+(childPort.y-parentPort.y)*.55;
+      const points=`${parentPort.x},${parentPort.y} ${parentPort.x},${midY} ${childPort.x},${midY} ${childPort.x},${childPort.y}`;
+      const dragToken=`parentage:${link.id}:${slot}`;
+      if(connectionDragPreview?.dragToken!==dragToken){
+        previews+=relationshipPreviewPolyline(points,"parentage",link.id);
+      }
+      if(connectionDragPreview?.dragToken!==dragToken){
+        ports+=connectionPortCircle(parentPort,"parent-output",{
+          "link-id":link.id,
+          slot,
+          "child-id":person.id,
+          "target-port-role":"parent-output",
+          "fixed-x":childPort.x,
+          "fixed-y":childPort.y,
+          "drag-mode":"parentage",
+          "drag-token":dragToken,
+          "edge-kind":"parentage",
+          "edge-id":link.id
+        },`Move ${kind} parent ${parent.name||pedId(parent)}`,{active:true,draggable:true,handleKind:kind});
+      }
+      ports+=connectionPortCircle(childPort,"child-input",{},`${kind[0].toUpperCase()+kind.slice(1)} parentage entry`,{active:true});
+    });
+  });
+
+  // Outgoing parentage remains visible for orientation and relationship editing.
+  // A parental union can serve several children, so these routes are not rewired
+  // from a single selected-parent endpoint without identifying the child link first.
+  context.outgoingParentage.forEach((link,index)=>{
+    const child=model.people[link.childId];
+    if(!child)return;
+    activePersonIds.add(child.id);
+    const parentPort=connectionPortPoint(person,"parent-output",0,(index-(context.outgoingParentage.length-1)/2)*8);
+    const childPort=connectionPortPoint(child,"child-input");
+    const midY=parentPort.y+(childPort.y-parentPort.y)*.55;
+    const points=`${parentPort.x},${parentPort.y} ${parentPort.x},${midY} ${childPort.x},${midY} ${childPort.x},${childPort.y}`;
+    previews+=relationshipPreviewPolyline(points,"parentage",link.id);
+    ports+=connectionPortCircle(parentPort,"parent-output",{},`Parent of ${child.name||pedId(child)}`,{active:true});
+    ports+=connectionPortCircle(childPort,"child-input",{},`Child ${child.name||pedId(child)}`,{active:true});
+  });
+
+  // Preserve direct assisted-reproduction rewiring through its own semantic role.
+  const event=reproductiveEventForSubject(person.id);
+  if(event){
+    const roles=[
+      ["spermContributorId","Sperm contributor",-11],
+      ["ovumContributorId","Ovum contributor",0],
+      ["gestationalCarrierId","Gestational carrier",11]
+    ];
+    roles.forEach(([role,label,xOffset])=>{
+      const source=event[role]&&model.people[event[role]];
+      if(!source)return;
+      const point={x:person.x+xOffset,y:person.y-h-45};
+      ports+=connectionPortCircle(point,"reproductive",{
+        "event-id":event.id,role,"subject-id":person.id,"target-port-role":"reproductive"
+      },`Move ${label.toLowerCase()} ${source.name||pedId(source)}`,{active:true,draggable:true,handleKind:"reproductive"});
+    });
+  }
+
+  // Render the selected person's control ports last so a green new-relationship
+  // handle remains reachable even where an existing route begins at the same point.
+  return {previews,ports:ports+controlPorts,activePersonIds};
+}
+function compatibleConnectionDropPorts(handleData){
+  const ports=[];
+  if(handleData.handleKind==="partner"||handleData.handleKind==="partner-new"){
+    const currentPartners=handleData.handleKind==="partner-new"
+      ?new Set(unionsOf(handleData.anchorId).map(union=>partnerIn(union,handleData.anchorId)).filter(Boolean))
+      :new Set();
+    P().forEach(person=>{
+      if(person.id===handleData.anchorId||currentPartners.has(person.id))return;
+      [-1,1].forEach(side=>ports.push({id:person.id,...connectionPortPoint(person,"partner-target",side),role:"partner-target",side}));
+    });
+    return ports;
+  }
+  if(handleData.handleKind==="parentage-new-parent"){
+    P().forEach(person=>{
+      if(!canShowParentChildConnectionPort(person.id,handleData.childId))return;
+      ports.push({id:person.id,...connectionPortPoint(person,"parent-output"),role:"parent-output",side:0});
+    });
+    return ports;
+  }
+  if(handleData.handleKind==="parentage-new-child"){
+    P().forEach(person=>{
+      if(!canShowParentChildConnectionPort(handleData.parentId,person.id))return;
+      ports.push({id:person.id,...connectionPortPoint(person,"child-input"),role:"child-input",side:0});
+    });
+    return ports;
+  }
+  if(handleData.handleKind==="biological"||handleData.handleKind==="adoptive"){
+    P().forEach(person=>{
+      if(person.id===handleData.childId)return;
+      ports.push({id:person.id,...connectionPortPoint(person,"parent-output"),role:"parent-output",side:0});
+    });
+    return ports;
+  }
+  if(handleData.handleKind==="reproductive"){
+    P().forEach(person=>{
+      if(person.id===handleData.subjectId)return;
+      ports.push({id:person.id,x:person.x,y:person.y,role:"reproductive",side:0});
+    });
+  }
+  return ports;
+}
+function renderConnectionDragPreview(){
+  if(!connectionDragPreview)return "";
+  const fixed={
+    x:connectionDragPreview.fixedX??connectionDragPreview.startX,
+    y:connectionDragPreview.fixedY??connectionDragPreview.startY
+  };
+  const moving={
+    x:connectionDragPreview.targetX??connectionDragPreview.x,
+    y:connectionDragPreview.targetY??connectionDragPreview.y
+  };
+  let out="";
+  if(connectionDragPreview.dragMode==="parentage"){
+    const movingIsChild=connectionDragPreview.handleKind==="parentage-new-child";
+    const parentPoint=movingIsChild?fixed:moving;
+    const childPoint=movingIsChild?moving:fixed;
+    const midY=parentPoint.y+(childPoint.y-parentPoint.y)*.55;
+    const points=`${parentPoint.x},${parentPoint.y} ${parentPoint.x},${midY} ${childPoint.x},${midY} ${childPoint.x},${childPoint.y}`;
+    out+=`<polyline class="connection-drag-preview" points="${points}"/>`;
+  }else{
+    out+=`<line class="connection-drag-preview" x1="${fixed.x}" y1="${fixed.y}" x2="${moving.x}" y2="${moving.y}"/>`;
+  }
+  if(connectionDragPreview.handleKind!=="partner-new"){
+    const movingRole=connectionDragPreview.movingPortRole||"";
+    if(movingRole)out+=`<circle class="connection-port ${esc(movingRole)} active" cx="${moving.x}" cy="${moving.y}" r="6"/>`;
+  }
+  if(connectionDragPreview.targetId){
+    out+=`<circle class="connection-drop-target" cx="${moving.x}" cy="${moving.y}" r="9"/>`;
+  }
+  return out;
+}
+function renderCanvasInteractionOverlay(){
+  const selected=ui.sel&&model.people[ui.sel]?model.people[ui.sel]:null;
+  if(!selected)return renderConnectionDragPreview();
+  const context=selectedRelationshipContext(selected);
+  const active=renderSelectedRelationshipPorts(selected,context);
+  const candidates=renderCandidateRelationshipPorts(selected,context,active.activePersonIds);
+  return active.previews+candidates+active.ports+renderConnectionDragPreview();
+}
+function selectedFamilyLayoutUnions(personId){
+  if(!personId||!model.people[personId])return [];
+  const ids=new Set();
+  const incoming=primaryParentageLinkOf(personId);
+  if(incoming&&model.unions[incoming.unionId]&&model.unions[incoming.unionId].children.length){
+    ids.add(incoming.unionId);
+  }
+  unionsOf(personId).forEach(union=>{
+    if(Array.isArray(union.children)&&union.children.length)ids.add(union.id);
+  });
+  return [...ids].map(id=>model.unions[id]).filter(Boolean).sort((a,b)=>{
+    const aOwned=a.a===personId||a.b===personId;
+    const bOwned=b.a===personId||b.b===personId;
+    if(aOwned!==bOwned)return aOwned?-1:1;
+    return String(a.stableId||a.id).localeCompare(String(b.stableId||b.id),undefined,{numeric:true,sensitivity:"base"});
+  });
+}
+function familyLayoutBoxBounds(union){
+  if(!union)return null;
+  const parents=[union.a,union.b].map(id=>model.people[id]).filter(Boolean);
+  const children=(Array.isArray(union.children)?union.children:[]).map(id=>model.people[id]).filter(Boolean);
+  if(!parents.length||!children.length)return null;
+  const people=parents.concat(children);
+  const halfWidth=layoutNodeGap()/2;
+  const top=Math.min(...parents.map(person=>person.y))-LAY.sym/2-18;
+  const bottom=Math.max(...children.map(person=>person.y+LAY.sym/2+LABEL_BLOCK_TOP+labelBlockHeight(person)))+12;
+  const left=Math.min(...people.map(person=>person.x))-halfWidth;
+  const right=Math.max(...people.map(person=>person.x))+halfWidth;
+  if(![left,right,top,bottom].every(Number.isFinite))return null;
+  return {x:left,y:top,width:Math.max(layoutNodeGap(),right-left),height:Math.max(LAY.genH/2,bottom-top)};
+}
+function renderSelectedFamilyLayoutBoxes(personId){
+  return selectedFamilyLayoutUnions(personId).map(union=>{
+    const bounds=familyLayoutBoxBounds(union);
+    if(!bounds)return "";
+    const owned=union.a===personId||union.b===personId;
+    const parentNames=[union.a,union.b].map(id=>model.people[id]).filter(Boolean).map(person=>person.name||pedId(person));
+    return `<rect class="family-layout-box${owned?" owned":""}" x="${bounds.x}" y="${bounds.y}" width="${bounds.width}" height="${bounds.height}" rx="8"><title>Layout family: ${esc(parentNames.join(" + ")||union.id)}</title></rect>`;
+  }).join("");
+}
+function personInfoActiveArea(person,cx,cy,labels){
+  const identity=labels.find(line=>line.role==="identity");
+  if(!identity)return "";
+  const baseline=cy+LAY.sym/2+LABEL_BLOCK_TOP;
+  const width=Math.max(42,Math.min(labelMaxWidth()+14,measureLabelText(identity.text,identity.fontSize,identity.fontWeight)+16));
+  const height=Math.max(20,identity.fontSize+9);
+  const x=cx-width/2,y=baseline-identity.fontSize-5;
+  return `<rect class="person-info-hit" data-id="${esc(person.id)}" x="${x}" y="${y}" width="${width}" height="${height}" rx="5"><title>Open information editor for ${esc(pedId(person))}</title></rect>`;
 }
 
 function renderSVG(opts){
   const clean=opts.clean,sel=opts.sel,ps=P();
   if(!ps.length)return {inner:"",bounds:{minx:0,miny:0,maxx:600,maxy:400}};
   rebuildUnionChildrenCache();
-  let edges="",twins="",nodes="";
+  let edges="",twins="",partnerEdges="",relationshipBridgeOverlays="",nodes="",interactionHits="";
   const unionColourMap=edgeColourEnabled()?semanticUnionColourMap():null;
+  const partnerPlan=buildPartnerRelationshipRoutePlan();
+  const relationshipGeometry=buildRelationshipGeometry(partnerPlan);
+  const relationshipBridgePlan=buildRelationshipBridgePlan(relationshipGeometry);
+
   U().forEach(union=>{
     const a=model.people[union.a],b=model.people[union.b];
-    let unionPoint=null;
-    if(a&&b){
-      unionPoint={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
-      const pa=boundaryPoint(a,b.x,b.y),pb=boundaryPoint(b,a.x,a.y);
-      if(union.consanguineous){
-        const dx=pb.x-pa.x,dy=pb.y-pa.y,len=Math.hypot(dx,dy)||1,nx=-dy/len*2,ny=dx/len*2;
-        edges+=edgeLineEl({x:pa.x+nx,y:pa.y+ny},{x:pb.x+nx,y:pb.y+ny},union,unionColourMap);
-        edges+=edgeLineEl({x:pa.x-nx,y:pa.y-ny},{x:pb.x-nx,y:pb.y-ny},union,unionColourMap);
-      }else edges+=edgeLineEl(pa,pb,union,unionColourMap);
-      if(normaliseRelationshipStatus(union.relationshipStatus)==="ended")edges+=unionSlashMark(unionPoint);
-    }else{
+    const partnerRoute=relationshipGeometry.partnerByUnion[union.id]||null;
+    let unionPoint=partnerRoute?.unionPoint||null;
+    if(a&&b&&partnerRoute){
+      partnerEdges+=renderRelationshipGeometryRoute(partnerRoute,unionColourMap,relationshipBridgePlan);
+      if(!clean&&partnerRoute.points.length)interactionHits+=edgeHitPolyline(pointsAttr(partnerRoute.points),"union",union.id);
+      if(normaliseRelationshipStatus(union.relationshipStatus)==="ended")partnerEdges+=unionSlashMark(unionPoint);
+    }else if(!unionPoint){
       const only=a||b;
       if(only)unionPoint={x:only.x,y:only.y};
     }
+
     const allChildren=childrenOfUnion(union.id);
     if(unionPoint&&!allChildren.length){
-      if(union.noChildren)edges+=unionNoChildrenMark(unionPoint);
-      else if(union.infertility)edges+=unionInfertilityMark(unionPoint,union.infertilityReason);
+      if(union.noChildren)partnerEdges+=unionNoChildrenMark(unionPoint);
+      else if(union.infertility)partnerEdges+=unionInfertilityMark(unionPoint,union.infertilityReason);
     }
+
     if(unionPoint&&union.children.length){
-      const grouped={biological:[],adoptive:[]};
-      union.children.forEach(childId=>{
-        const child=model.people[childId],link=primaryParentageLinkOf(childId);
-        if(child&&link&&link.unionId===union.id)grouped[normaliseParentageKind(link.relationshipKind)].push(child);
-      });
       ["biological","adoptive"].forEach(kind=>{
-        if(!grouped[kind].length)return;
-        const rendered=renderUnionParentageGroup(union,unionPoint,grouped[kind],kind,unionColourMap);
-        edges+=rendered.edges;twins+=rendered.twins;
+        const group=relationshipGeometry.primaryByUnionKind[`${union.id}:${kind}`];
+        if(!group)return;
+        const rendered=renderUnionParentageGroup(group,unionColourMap,relationshipBridgePlan);
+        edges+=rendered.edges;
+        twins+=rendered.twins;
+        if(!clean){
+          Object.entries(group.hitRoutes).forEach(([linkId,hitRoute])=>{
+            if(hitRoute?.points?.length>1)interactionHits+=edgeHitPolyline(pointsAttr(hitRoute.points),"parentage",linkId);
+          });
+        }
       });
     }
   });
-  edges+=renderSecondaryParentageLinks();
-  edges+=renderReproductiveEventLinks();
+
+  edges+=renderSecondaryParentageLinks(!clean,relationshipGeometry,unionColourMap,relationshipBridgePlan);
+  edges+=renderReproductiveEventLinks(!clean,relationshipGeometry,unionColourMap,relationshipBridgePlan);
+  Object.values(relationshipGeometry.routes).forEach(route=>{
+    relationshipBridgeOverlays+=renderRelationshipBridgeOverlays(route,unionColourMap,relationshipBridgePlan);
+  });
+
   ps.forEach(p=>{
     const cx=p.x,cy=p.y,h=LAY.sym/2,outcome=pregnancyOutcomeOf(p);
     let g=`<g class="node" data-id="${p.id}" style="cursor:${clean?'default':'grab'}">`;
@@ -2289,30 +3704,48 @@ function renderSVG(opts){
       }
       g+=`<text x="${cx}" y="${labelY}" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="${line.fontSize}" font-weight="${line.fontWeight}" fill="${index===0?'var(--sym)':'#5c5a5a'}">${esc(line.text)}</text>`;
     });
-    g+="</g>";nodes+=g;
+    if(!clean)g+=personInfoActiveArea(p,cx,cy,labels);
+    g+="</g>";
+    nodes+=g;
   });
+
   const xs=ps.map(p=>p.x),ys=ps.map(p=>p.y);
+  const routePoints=Object.values(relationshipGeometry.routes||{}).flatMap(route=>route.points||[]);
+  const routeXs=routePoints.map(point=>point.x).filter(Number.isFinite);
+  const routeYs=routePoints.map(point=>point.y).filter(Number.isFinite);
   const horizontalMargin=Math.max(60,labelMaxWidth()/2+12);
+  const personBottoms=ps.map(p=>p.y+LAY.sym/2+LABEL_BLOCK_TOP+labelBlockHeight(p)+10);
   const bounds={
-    minx:Math.min(...xs)-horizontalMargin,
-    miny:Math.min(...ys)-56,
-    maxx:Math.max(...xs)+horizontalMargin,
-    maxy:Math.max(...ps.map(p=>p.y+LAY.sym/2+LABEL_BLOCK_TOP+labelBlockHeight(p)+10))
+    minx:Math.min(...xs,...routeXs)-horizontalMargin,
+    miny:Math.min(...ys,...routeYs)-Math.max(56,RELATIONSHIP_BRIDGE_RADIUS+10),
+    maxx:Math.max(...xs,...routeXs)+horizontalMargin,
+    maxy:Math.max(...personBottoms,...routeYs)+Math.max(10,RELATIONSHIP_BRIDGE_RADIUS+4)
   };
-  return {inner:edges+twins+nodes,bounds};
+  const familyLayoutBoxes=!clean&&sel?renderSelectedFamilyLayoutBoxes(sel):"";
+  const interactionOverlay=!clean?renderCanvasInteractionOverlay():"";
+  return {
+    inner:edges+twins+partnerEdges+relationshipBridgeOverlays+familyLayoutBoxes+interactionHits+nodes+interactionOverlay,
+    bounds
+  };
 }
+
 /* ===== render ===== */
 function render(){
   drawStage();
   renderLayoutControls();
   renderNavigator();
   renderInspector();
+  renderCanvasPersonEditor();
+  renderCanvasRelationshipEditor();
+  renderCaseNotesEditor();
   renderReport();
   renderContext();
   const has=!!ui.sel;
   const emptyPlotAction=document.getElementById("emptyPlotAction");
   if(emptyPlotAction)emptyPlotAction.hidden=P().length!==0;
-  ["tbParents","tbPartner","tbChild","tbPregnancy","tbSib","tbTwin","tbAff","tbPro","tbGender","tbDel"].forEach(id=>document.getElementById(id).disabled=!has);
+  ["tbParents","tbPartner","tbChild","tbSib","tbTwin","tbAff","tbPro","tbGender","tbDel"].forEach(id=>document.getElementById(id).disabled=!has);
+  const individualButton=document.getElementById("tbIndividual");
+  if(individualButton)individualButton.disabled=false;
   document.getElementById("tbParents").disabled=!has||parentsOf(ui.sel).length>0;
   const markerButton=document.getElementById("tbAff");
   if(markerButton){
@@ -2344,11 +3777,13 @@ function drawStage(){
   stage.setAttribute("viewBox",`${view.x} ${view.y} ${vbW} ${vbH}`);
   const out=renderSVG({clean:false,sel:ui.sel});
   stage.innerHTML=`<rect class="bgrect" x="${view.x}" y="${view.y}" width="${vbW}" height="${vbH}" fill="var(--bg-canvas)"/>`+(out.inner||"");
+  positionCanvasEditors();
 }
 function quickViewBox(){
   const fig=document.getElementById("figure"),cw=fig.clientWidth,ch=fig.clientHeight,vbW=cw/view.scale,vbH=ch/view.scale;
   const s=document.getElementById("stage"); s.setAttribute("viewBox",`${view.x} ${view.y} ${vbW} ${vbH}`);
   const bg=s.querySelector(".bgrect"); if(bg){bg.setAttribute("x",view.x);bg.setAttribute("y",view.y);bg.setAttribute("width",vbW);bg.setAttribute("height",vbH);}
+  positionCanvasEditors();
 }
 /* ===== navigator and plot controls ===== */
 let navCollapsed={warn:true};
@@ -2379,9 +3814,9 @@ function layoutControlsHtml(){
           <option value="clinical" ${ui.routingMode==="clinical"?'selected':''}>Clinical lines</option>
           <option value="flexible" ${ui.routingMode==="flexible"?'selected':''}>Flexible lines</option>
         </select></div>
-      <div class="layout-field"><label>Generation spacing · <span id="lsGen">${LAY.genH}</span> px</label>
+      <div class="layout-field"><label>Y-axis <span id="lsGen">${LAY.genH}</span> px</label>
         <input type="range" min="${LAYOUT_LIMITS.genH.min}" max="${LAYOUT_LIMITS.genH.max}" step="2" value="${LAY.genH}" oninput="setSpacing('genH',this.value)"></div>
-      <div class="layout-field"><label>Sibling spacing · <span id="lsSib">${LAY.slot}</span> px</label>
+      <div class="layout-field"><label>X-axis <span id="lsSib">${LAY.slot}</span> px</label>
         <input type="range" min="${LAYOUT_LIMITS.slot.min}" max="${LAYOUT_LIMITS.slot.max}" step="4" value="${LAY.slot}" oninput="setSpacing('slot',this.value)"></div>
       <div class="row">
         <button class="lbtn" id="branchColourBtn" aria-pressed="${edgeColourEnabled()}" onclick="toggleBranchColour()">
@@ -2488,7 +3923,7 @@ function setField(key,val){ const p=model.people[ui.sel]; if(!p)return;
   if(key==="clinicalStatus")p.affected=derivedClinicalLayer(p)==="affected";
   if(key==="symbolDisplayOverride")p.symbolStyle=val;
   liveRefresh();
-  if(roleLinkedSexField||key==="adoptionStatus")renderInspector(); }
+  if(roleLinkedSexField||key==="adoptionStatus"){renderInspector();renderCanvasPersonEditor();} }
 function setRepresentationField(key,value){
   const person=model.people[ui.sel];if(!person||!["mode","countMode","count"].includes(key))return;
   if(!ui._editing){history.push(snapshot());future=[];ui._editing=true;}clearTimeout(ui._editTimer);
@@ -2498,7 +3933,7 @@ function setRepresentationField(key,value){
   else representation[key]=value;
   person.representation=normaliseRepresentation(representation);
   liveRefresh();
-  if(key!=="count")renderInspector();
+  if(key!=="count"){renderInspector();renderCanvasPersonEditor();}
 }
 function setPregnancyField(key,value){
   const person=model.people[ui.sel];if(!person||!["outcome","gestationalAgeWeeks","gestationalAgeDays","fetalSexAnnotation","fetalSexDeterminationMethod","indication"].includes(key))return;
@@ -2512,7 +3947,7 @@ function setPregnancyField(key,value){
   person.pregnancy=normalisePregnancy(pregnancy);
   if(person.pregnancy.outcome==="stillbirth"){person.deceased=true;person.vitalStatus="deceased";}
   liveRefresh();
-  if(key==="outcome")renderInspector();
+  if(key==="outcome"){renderInspector();renderCanvasPersonEditor();}
 }
 function setReproductiveEventField(subjectId,key,value){
   const subject=model.people[subjectId];
@@ -2594,7 +4029,7 @@ function setUnionField(unionId,key,value){
   else if(key==="relationshipStatus")union[key]=normaliseRelationshipStatus(value);
   else union[key]=value;
   liveRefresh();
-  if(key==="consanguineous"||key==="noChildren"||key==="infertility"||key==="relationshipStatus")renderInspector();
+  if(key==="consanguineous"||key==="noChildren"||key==="infertility"||key==="relationshipStatus"){renderInspector();renderCanvasPersonEditor();renderCanvasRelationshipEditor();}
 }
 function relationshipPartnerExists(personId,partnerId){
   return !!unionsOf(personId).find(union=>partnerIn(union,personId)===partnerId);
@@ -2745,6 +4180,7 @@ function selectGeneticVariant(index){
   if(!ui.variantIndexByPerson)ui.variantIndexByPerson={};
   ui.variantIndexByPerson[person.id]=Math.max(0,Number(index)||0);
   renderInspector();
+  renderCanvasPersonEditor();
 }
 function setVariantField(index,key,value){
   const person=model.people[ui.sel]; if(!person||!GENETIC_VARIANT_FIELDS.includes(key))return;
@@ -2872,12 +4308,16 @@ function unionTextField(label,union,key){
   const value=union[key]??"";
   return `<div class="field"><label>${label}</label><input type="text" value="${esc(value)}" oninput="setUnionField('${union.id}','${key}',this.value)"/></div>`;
 }
-function unionStatusField(union){
+function unionStatusField(union,allowSibling=false){
   const status=normaliseRelationshipStatus(union.relationshipStatus);
-  return `<div class="field"><label>Relationship status</label><select onchange="setUnionField('${union.id}','relationshipStatus',this.value)">
+  const handler=allowSibling
+    ?`setUnionRelationshipStatusFromCanvas('${union.id}',this.value)`
+    :`setUnionField('${union.id}','relationshipStatus',this.value)`;
+  return `<div class="field"><label>Relationship status</label><select onchange="${handler}">
     <option value="current" ${status==="current"?"selected":""}>Current</option>
     <option value="ended" ${status==="ended"?"selected":""}>Ended</option>
     <option value="unknown" ${status==="unknown"?"selected":""}>Unknown</option>
+    ${allowSibling?`<option value="sibling">Sibling</option>`:""}
   </select></div>`;
 }
 function personParentOptions(selectedId,excludeId){
@@ -3098,6 +4538,59 @@ function adoptionFields(person){
     <option value="adopted-out" ${person.adoptionStatus==="adopted-out"?"selected":""}>Adopted out</option>
   </select></div>`;
 }
+
+function personEditorSectionDefinitions(p){
+  if(!p)return [];
+  const issueStates=inspectorIssueStates(p);
+  const identity=`${fld("Display name","name",p)}
+    <div class="field-row">${fld("Pedigree ID override","label",p)}${fld("Sample ID","sampleId",p)}</div>
+    ${selF("Sex","sex",p,[["male","Male"],["female","Female"],["unknown","Unknown"]])}
+    ${selF("Sex assigned at birth annotation","sexAssignedAtBirth",p,[["","Not displayed"],["AFAB","AFAB"],["AMAB","AMAB"],["UAAB","UAAB"]])}
+    ${representationFields(p)}
+    ${selF("Clinical status","clinicalStatus",p,[["auto","Automatic"],["affected","Affected"],["unaffected","Unaffected"],["unknown","Unknown or uncertain"],["not_assessed","Not assessed"]])}
+    ${selF("Symbol display override","symbolDisplayOverride",p,[["auto","Automatic"],["affected","Affected fill"],["unaffected","Unaffected fill"],["uncertain","Unknown status"],["carrier-half","Carrier pattern"],["compound","Compound-heterozygous marker"]])}
+    ${statusIssues(p).errors.length?`<div class="status-conflict">${esc(statusIssues(p).errors.join(" "))} The underlying data have not been changed.</div>`:""}
+    ${statusIssues(p).reviews.length?`<div class="status-review">${esc(statusIssues(p).reviews.join(" "))}</div>`:""}
+    <div class="toggle-grid">${tog("Proband","proband",p)}${tog("Consultand","consultand",p)}${tog("Carrier","carrier",p)}${tog("Deceased","deceased",p)}</div>
+    <div class="field-row" style="margin-top:11px">${fld("Birth year","birthYear",p)}${p.deceased?fld("Age at death","ageAtDeath",p):""}</div>`;
+  const reproduction=`${pregnancyFields(p)}${reproductiveEventFields(p)}`;
+  const clinical=`${fld("Key phenotype","phenotype",p)}${fld("Age at onset","onset",p)}${fld("Diagnosis","diagnosis",p)}`;
+  const activeVariantIndex=activeGeneticVariantIndex(p);
+  const genetics=`${geneticVariantTabs(p,activeVariantIndex)}
+    ${variantSelF("Zygosity",activeVariantIndex,"zygosity",["","Heterozygous","Homozygous","Hemizygous","Compound heterozygous","Heteroplasmic","Homoplasmic","Mosaic","Low-level mosaic","Unknown","Not tested"])}
+    ${variantSelF("Inheritance",activeVariantIndex,"inheritance",["","Maternal","Paternal","De novo","Suspected de novo","Inherited","Biparental","Germline mosaic","Somatic","Unknown origin"])}
+    ${variantSelF("Phase",activeVariantIndex,"phase",["","Unknown","Cis","Trans","Not assessed"])}
+    ${variantSelF("Classification",activeVariantIndex,"classification",["","Pathogenic","Likely pathogenic","Variant of uncertain significance","Likely benign","Benign","Risk allele","Drug response","Association","Not classified"])}
+    <div class="field-row">${variantSelF("Genome reference",activeVariantIndex,"assembly",["GRCh38","GRCh37","T2T-CHM13"])}
+      ${variantSelF("Variant type",activeVariantIndex,"variantType",["","SNV","MNV","Insertion","Deletion","Indel","Delins","Duplication","Inversion","CNV gain","CNV loss","Structural variant","Translocation","Repeat expansion","Mitochondrial variant","Fusion","Complex rearrangement","Other"])}</div>
+    ${variantFld("Chromosome / contig",activeVariantIndex,"chromosome","text",true)}
+    ${variantFld("Genomic start",activeVariantIndex,"genomicStart","text",true)}
+    ${variantFld("Genomic end",activeVariantIndex,"genomicEnd","text",true)}
+    <div class="field-row">${variantFld("REF",activeVariantIndex,"ref","text",true)}${variantFld("ALT",activeVariantIndex,"alt","text",true)}</div>
+    ${variantFld("Gene",activeVariantIndex,"gene")}
+    ${variantFld("Transcript",activeVariantIndex,"transcript","text",true)}
+    ${variantFld("Genomic HGVS (g.)",activeVariantIndex,"genomicHgvs","text",true)}${variantFld("Coding HGVS (c. / n.)",activeVariantIndex,"codingHgvs","text",true)}
+    ${variantFld("RNA HGVS (r.)",activeVariantIndex,"rnaHgvs","text",true)}${variantFld("Protein HGVS (p.)",activeVariantIndex,"proteinHgvs","text",true)}
+    ${variantFld("Additional genetics information",activeVariantIndex,"geneticsFreeText")}`;
+  const sample=`${fld("Sample ID","sampleId",p)}${selF("Test status","testStatus",p,[["","Not set"],["tested","Tested"],["pending","Test pending"],["untested","Not tested"],["unavailable","Result unavailable"]])}`;
+  const prov=`${selF("Information source","source",p,[["clinician","Clinician-entered"],["patient","Patient-reported"],["record","Medical record"],["inferred","Inferred"]])}${fld("Notes","notes",p)}`;
+  const sections=[
+    {key:"identity",menu:"Identity",title:"Identity and status",summary:statusSummary(p),body:identity,state:issueStates.identity||""},
+    {key:"reproduction",menu:"Pregnancy",title:"Pregnancy and reproduction",summary:reproductionSummary(p),body:reproduction,state:""},
+    {key:"clinical",menu:"Clinical",title:"Clinical",summary:p.phenotype||p.diagnosis||"",body:clinical,state:issueStates.clinical||""},
+    {key:"genetics",menu:"Genetics",title:"Genetics",summary:geneticSummaryText(p),body:genetics,state:issueStates.genetics||""}
+  ];
+  if(hasTwinOrMultipleBirthGroups()){
+    sections.push({key:"twins",menu:"Twins",title:"Twin and multiple birth",summary:twinSummary(p),body:twinFields(p),state:""});
+  }
+  sections.push(
+    {key:"relationships",menu:"Relationships",title:"Relationships",summary:relationshipSummary(p),body:adoptionFields(p)+relationshipFields(p),state:""},
+    {key:"sample",menu:"Sample",title:"Sample and test",summary:p.sampleId||({tested:"Tested",pending:"Pending",untested:"Not tested"}[p.testStatus]||""),body:sample,state:""},
+    {key:"prov",menu:"Notes",title:"Provenance and notes",summary:"",body:prov,state:""}
+  );
+  return sections;
+}
+
 function renderInspector(){
   const body=document.getElementById("inspBody");
   const m=model.meta;
@@ -3109,55 +4602,11 @@ function renderInspector(){
   `;
   const caseFields=`<div class="field"><label for="caseName">Case</label><input id="caseName" type="text" value="${esc(model.caseName)}" oninput="setCaseName(this.value)" /></div>${fld("Disease / condition","disease",m)}${fld("Referral indication","indication",m)}`;
   const signoff=`${fld("Reviewer","reviewer",m)}${fld("Institution","institution",m)}${fld("Review date","date",m,"date")}`;
-  let personSections='';
+  let personSections="";
   if(selected){
-    const p=selected;
-    const issueStates=inspectorIssueStates(p);
-    const identity=`${fld("Display name","name",p)}
-      <div class="field-row">${fld("Pedigree ID override","label",p)}${fld("Sample ID","sampleId",p)}</div>
-      ${selF("Sex","sex",p,[["male","Male"],["female","Female"],["unknown","Unknown"]])}
-      ${selF("Sex assigned at birth annotation","sexAssignedAtBirth",p,[["","Not displayed"],["AFAB","AFAB"],["AMAB","AMAB"],["UAAB","UAAB"]])}
-      ${representationFields(p)}
-      ${selF("Clinical status","clinicalStatus",p,[["auto","Automatic"],["affected","Affected"],["unaffected","Unaffected"],["unknown","Unknown or uncertain"],["not_assessed","Not assessed"]])}
-      ${selF("Symbol display override","symbolDisplayOverride",p,[["auto","Automatic"],["affected","Affected fill"],["unaffected","Unaffected fill"],["uncertain","Unknown status"],["carrier-half","Carrier pattern"],["compound","Compound-heterozygous marker"]])}
-      <!-- <div class="help-text">Automatic derives the clinical display from applicable role information. Molecular zygosity and carrier status remain independent. Display overrides change presentation only.</div> -->
-      ${statusIssues(p).errors.length?`<div class="status-conflict">${esc(statusIssues(p).errors.join(" "))} The underlying data have not been changed.</div>`:""}
-      ${statusIssues(p).reviews.length?`<div class="status-review">${esc(statusIssues(p).reviews.join(" "))}</div>`:""}
-      <div class="toggle-grid">${tog("Proband","proband",p)}${tog("Consultand","consultand",p)}${tog("Carrier","carrier",p)}${tog("Deceased","deceased",p)}</div>
-      <div class="field-row" style="margin-top:11px">${fld("Birth year","birthYear",p)}${p.deceased?fld("Age at death","ageAtDeath",p):""}</div>`;
-    const reproduction=`${pregnancyFields(p)}${reproductiveEventFields(p)}`;
-    const clinical=`${fld("Key phenotype","phenotype",p)}${fld("Age at onset","onset",p)}${fld("Diagnosis","diagnosis",p)}
-      <!-- <div class="help-text">Phenotype and diagnosis fields may contain controlled terminology or concise clinical text.</div> -->
-    `;
-    const activeVariantIndex=activeGeneticVariantIndex(p);
-    const genetics=`${geneticVariantTabs(p,activeVariantIndex)}
-      ${variantSelF("Zygosity",activeVariantIndex,"zygosity",["","Heterozygous","Homozygous","Hemizygous","Compound heterozygous","Heteroplasmic","Homoplasmic","Mosaic","Low-level mosaic","Unknown","Not tested"])}
-      ${variantSelF("Inheritance",activeVariantIndex,"inheritance",["","Maternal","Paternal","De novo","Suspected de novo","Inherited","Biparental","Germline mosaic","Somatic","Unknown origin"])}
-      ${variantSelF("Phase",activeVariantIndex,"phase",["","Unknown","Cis","Trans","Not assessed"])}
-      ${variantSelF("Classification",activeVariantIndex,"classification",["","Pathogenic","Likely pathogenic","Variant of uncertain significance","Likely benign","Benign","Risk allele","Drug response","Association","Not classified"])}
-      <div class="field-row">${variantSelF("Genome reference",activeVariantIndex,"assembly",["GRCh38","GRCh37","T2T-CHM13"])}
-        ${variantSelF("Variant type",activeVariantIndex,"variantType",["","SNV","MNV","Insertion","Deletion","Indel","Delins","Duplication","Inversion","CNV gain","CNV loss","Structural variant","Translocation","Repeat expansion","Mitochondrial variant","Fusion","Complex rearrangement","Other"])}</div>
-      ${variantFld("Chromosome / contig",activeVariantIndex,"chromosome","text",true)}
-      ${variantFld("Genomic start",activeVariantIndex,"genomicStart","text",true)}
-      ${variantFld("Genomic end",activeVariantIndex,"genomicEnd","text",true)}
-      <div class="field-row">${variantFld("REF",activeVariantIndex,"ref","text",true)}${variantFld("ALT",activeVariantIndex,"alt","text",true)}</div>
-      ${variantFld("Gene",activeVariantIndex,"gene")}
-      ${variantFld("Transcript",activeVariantIndex,"transcript","text",true)}
-      ${variantFld("Genomic HGVS (g.)",activeVariantIndex,"genomicHgvs","text",true)}${variantFld("Coding HGVS (c. / n.)",activeVariantIndex,"codingHgvs","text",true)}
-      ${variantFld("RNA HGVS (r.)",activeVariantIndex,"rnaHgvs","text",true)}${variantFld("Protein HGVS (p.)",activeVariantIndex,"proteinHgvs","text",true)}
-      ${variantFld("Additional genetics information",activeVariantIndex,"geneticsFreeText")}`;
-    const sample=`${fld("Sample ID","sampleId",p)}${selF("Test status","testStatus",p,[["","Not set"],["tested","Tested"],["pending","Test pending"],["untested","Not tested"],["unavailable","Result unavailable"]])}`;
-    const prov=`${selF("Information source","source",p,[["clinician","Clinician-entered"],["patient","Patient-reported"],["record","Medical record"],["inferred","Inferred"]])}${fld("Notes","notes",p)}`;
-    const twinSection=hasTwinOrMultipleBirthGroups()?isec("twins","Twin and multiple birth",twinSummary(p),twinFields(p)):"";
-    personSections=`<div class="insp-head"><div class="who"><span class="mini-sym">${miniSym(p)}</span><div style="min-width:0"><div class="pid-big">${esc(pedId(p))}</div><div class="title">${esc(p.name||roleLabel(p))}</div></div></div></div>
-      ${isec("identity","Identity and status",statusSummary(p),identity,issueStates.identity)}
-      ${isec("reproduction","Pregnancy and reproduction",reproductionSummary(p),reproduction)}
-      ${isec("clinical","Clinical",p.phenotype||p.diagnosis||"",clinical,issueStates.clinical)}
-      ${isec("genetics","Genetics",geneticSummaryText(p),genetics,issueStates.genetics)}
-      ${twinSection}
-      ${isec("relationships","Relationships",relationshipSummary(p),adoptionFields(p)+relationshipFields(p))}
-      ${isec("sample","Sample and test",p.sampleId||({tested:"Tested",pending:"Pending",untested:"Not tested"}[p.testStatus]||""),sample)}
-      ${isec("prov","Provenance and notes","",prov)}`;
+    const sections=personEditorSectionDefinitions(selected);
+    personSections=`<div class="insp-head"><div class="who"><span class="mini-sym">${miniSym(selected)}</span><div style="min-width:0"><div class="pid-big">${esc(pedId(selected))}</div><div class="title">${esc(selected.name||roleLabel(selected))}</div></div></div></div>`+
+      sections.map(section=>isec(section.key,section.title,section.summary,section.body,section.state)).join("");
   }else{
     const twinSection=hasTwinOrMultipleBirthGroups()?isec("twins","Twin and multiple birth","Select an individual",'<div class="help-text">No active individual.</div>'):"";
     personSections=`<div class="person-empty">Click on an individual.</div>
@@ -3174,6 +4623,586 @@ function renderInspector(){
     isec("case","Case details",m.disease||m.indication||"",caseFields)+
     isec("signoff","Reviewer and export details",m.reviewer||m.institution||"",signoff)+
     personSections;
+}
+
+function openCanvasPersonEditor(personId){
+  if(!model.people[personId])return;
+  ui.sel=personId;
+  const sections=personEditorSectionDefinitions(model.people[personId]);
+  const current=sections.some(section=>section.key===canvasPersonEditorState.section)?canvasPersonEditorState.section:"identity";
+  canvasPersonEditorState={open:true,personId,section:current};
+  canvasRelationshipEditorState=null;
+  render();
+}
+function closeCanvasPersonEditor(){
+  canvasPersonEditorState.open=false;
+  const element=document.getElementById("canvasPersonEditor");
+  if(element)element.hidden=true;
+}
+function setCanvasPersonEditorSection(key){
+  const person=model.people[canvasPersonEditorState.personId];
+  if(!person)return;
+  const sections=personEditorSectionDefinitions(person);
+  if(!sections.some(section=>section.key===key))return;
+  canvasPersonEditorState.section=key;
+  renderCanvasPersonEditor();
+}
+function worldToFigurePixel(x,y){
+  return {x:(x-view.x)*view.scale,y:(y-view.y)*view.scale};
+}
+function positionCanvasEditorElement(element,worldX,worldY,preferRight=true){
+  if(!element||element.hidden)return;
+  const fig=document.getElementById("figure");
+  if(!fig)return;
+  const point=worldToFigurePixel(worldX,worldY);
+  const width=element.offsetWidth||360,height=element.offsetHeight||300;
+  const gap=Math.max(18,LAY.sym*view.scale/2+16);
+  let left=preferRight?point.x+gap:point.x-width-gap;
+  if(left+width>fig.clientWidth-12)left=point.x-width-gap;
+  if(left<12)left=12;
+  let top=point.y-34;
+  top=Math.max(12,Math.min(top,Math.max(12,fig.clientHeight-height-12)));
+  element.style.left=`${left}px`;
+  element.style.top=`${top}px`;
+}
+function positionCanvasEditors(){
+  const personElement=document.getElementById("canvasPersonEditor");
+  const person=model.people[canvasPersonEditorState.personId];
+  if(personElement&&!personElement.hidden&&person)positionCanvasEditorElement(personElement,person.x,person.y,true);
+  const relationshipElement=document.getElementById("canvasRelationshipEditor");
+  if(relationshipElement&&!relationshipElement.hidden&&canvasRelationshipEditorState){
+    positionCanvasEditorElement(
+      relationshipElement,
+      canvasRelationshipEditorState.worldX,
+      canvasRelationshipEditorState.worldY,
+      true
+    );
+  }
+}
+function renderCanvasPersonEditor(){
+  const element=document.getElementById("canvasPersonEditor");
+  if(!element)return;
+  const person=canvasPersonEditorState.open&&canvasPersonEditorState.personId===ui.sel?model.people[ui.sel]:null;
+  if(!person){element.hidden=true;return;}
+  const sections=personEditorSectionDefinitions(person);
+  let active=sections.find(section=>section.key===canvasPersonEditorState.section);
+  if(!active){active=sections[0];canvasPersonEditorState.section=active?.key||"identity";}
+  if(!active){element.hidden=true;return;}
+  element.innerHTML=`<div class="canvas-editor-head">
+      <div class="who"><span class="mini-sym">${miniSym(person)}</span><span class="pid">${esc(pedId(person))}</span><span class="title">${esc(person.name||roleLabel(person))}</span></div>
+      <button type="button" class="canvas-editor-close" onclick="closeCanvasPersonEditor()" aria-label="Close person editor">×</button>
+    </div>
+    <div class="canvas-editor-menu">${sections.map(section=>`<button type="button" aria-pressed="${section.key===active.key}" onclick="setCanvasPersonEditorSection('${section.key}')">${esc(section.menu)}</button>`).join("")}</div>
+    <div class="canvas-editor-body">${active.body}</div>`;
+  element.hidden=false;
+  requestAnimationFrame(positionCanvasEditors);
+}
+function closeCanvasRelationshipEditor(){
+  canvasRelationshipEditorState=null;
+  const element=document.getElementById("canvasRelationshipEditor");
+  if(element)element.hidden=true;
+}
+function openCanvasRelationshipEditor(kind,id,worldX,worldY,extra={}){
+  canvasPersonEditorState.open=false;
+  canvasRelationshipEditorState={kind,id,worldX,worldY,notice:"",...extra};
+  renderCanvasPersonEditor();
+  renderCanvasRelationshipEditor();
+}
+function setCanvasRelationshipNotice(message){
+  if(!canvasRelationshipEditorState)return;
+  canvasRelationshipEditorState.notice=String(message||"");
+  renderCanvasRelationshipEditor();
+}
+function showRelationshipInteractionNotice(kind,id,personId,message,extra={}){
+  const person=model.people[personId];
+  if(!person)return;
+  if(!canvasRelationshipEditorState||canvasRelationshipEditorState.kind!==kind||canvasRelationshipEditorState.id!==id){
+    canvasRelationshipEditorState={kind,id,worldX:person.x,worldY:person.y,notice:"",...extra};
+  }
+  canvasRelationshipEditorState.notice=String(message||"");
+  renderCanvasRelationshipEditor();
+}
+function parentageKindOptions(link){
+  const current=normaliseParentageKind(link.relationshipKind);
+  const otherKind=current==="biological"?"adoptive":"biological";
+  const conflict=parentageLinksForChild(link.childId,otherKind).some(candidate=>candidate.id!==link.id);
+  return `<option value="biological" ${current==="biological"?"selected":""} ${current!=="biological"&&conflict?"disabled":""}>Biological parentage</option>
+    <option value="adoptive" ${current==="adoptive"?"selected":""} ${current!=="adoptive"&&conflict?"disabled":""}>Adoptive parentage</option>`;
+}
+function setParentageKindFromCanvas(linkId,value){
+  const link=model.parentageLinks[linkId],kind=normaliseParentageKind(value);
+  if(!link)return;
+  const current=normaliseParentageKind(link.relationshipKind);
+  if(current===kind)return;
+  const conflict=parentageLinksForChild(link.childId,kind).find(candidate=>candidate.id!==link.id);
+  if(conflict){
+    setCanvasRelationshipNotice(`This individual already has ${kind} parentage. Edit that relationship separately.`);
+    return;
+  }
+  commit(()=>{link.relationshipKind=kind;rebuildUnionChildrenCache();});
+  if(canvasRelationshipEditorState)canvasRelationshipEditorState.notice="";
+}
+function reproductiveRoleControl(event,sourceId,role,label){
+  const assigned=event[role]||null;
+  const active=assigned===sourceId;
+  const occupied=assigned&&assigned!==sourceId;
+  const occupiedPerson=occupied&&model.people[assigned];
+  return `<div class="field"><label>${esc(label)}</label><select onchange="setReproductiveEdgeRole('${event.id}','${sourceId}','${role}',this.value==='true')">
+    <option value="false" ${!active?"selected":""}>No</option>
+    <option value="true" ${active?"selected":""} ${occupied?"disabled":""}>${occupied?`Assigned to ${esc(occupiedPerson?.name||pedId(occupiedPerson))}`:"Yes"}</option>
+  </select></div>`;
+}
+function setReproductiveEdgeRole(eventId,sourceId,role,enabled){
+  const event=model.reproductiveEvents[eventId],source=model.people[sourceId];
+  if(!event||!source||!["spermContributorId","ovumContributorId","gestationalCarrierId"].includes(role))return;
+  if(enabled&&event[role]&&event[role]!==sourceId){
+    const occupied=model.people[event[role]];
+    setCanvasRelationshipNotice(`${role==="spermContributorId"?"Sperm contributor":role==="ovumContributorId"?"Ovum contributor":"Gestational carrier"} is already assigned to ${occupied?(occupied.name||pedId(occupied)):"the existing individual"}.`);
+    return;
+  }
+  commit(()=>{
+    if(enabled)event[role]=sourceId;
+    else if(event[role]===sourceId)event[role]=null;
+    if(!event.spermContributorId&&!event.ovumContributorId&&!event.gestationalCarrierId&&!(event.intendedParentIds||[]).length&&!event.notes){
+      delete model.reproductiveEvents[event.id];
+    }
+  });
+  const stillConnected=model.reproductiveEvents[eventId]&&[
+    model.reproductiveEvents[eventId].spermContributorId,
+    model.reproductiveEvents[eventId].ovumContributorId,
+    model.reproductiveEvents[eventId].gestationalCarrierId
+  ].includes(sourceId);
+  if(!stillConnected)closeCanvasRelationshipEditor();
+}
+function renderCanvasRelationshipEditor(){
+  const element=document.getElementById("canvasRelationshipEditor");
+  const state=canvasRelationshipEditorState;
+  if(!element||!state){if(element)element.hidden=true;return;}
+  let title="Relationship",body="";
+  if(state.kind==="union"){
+    const union=model.unions[state.id];
+    if(!union){closeCanvasRelationshipEditor();return;}
+    const a=model.people[union.a],b=model.people[union.b];
+    title="Partner relationship";
+    body=`<div class="help-text" style="margin-bottom:9px">${esc([a?(a.name||pedId(a)):"",b?(b.name||pedId(b)):""].filter(Boolean).join(" + ")||"Recorded relationship")}</div>
+      ${unionStatusField(union,true)}
+      ${boolSelect("Consanguineous union",union,"consanguineous")}
+      ${union.consanguineous?unionTextField("Consanguinity degree",union,"consanguinityDegree"):""}
+      ${boolSelect("No children",union,"noChildren")}
+      ${boolSelect("Infertility",union,"infertility")}
+      ${union.infertility?unionTextField("Infertility reason",union,"infertilityReason"):""}`;
+  }else if(state.kind==="parentage"){
+    const link=model.parentageLinks[state.id],child=link&&model.people[link.childId],union=link&&model.unions[link.unionId];
+    if(!link||!child||!union){closeCanvasRelationshipEditor();return;}
+    const parents=[model.people[union.a],model.people[union.b]].filter(Boolean);
+    title="Parentage relationship";
+    body=`<div class="help-text" style="margin-bottom:9px">${esc(parents.map(parent=>parent.name||pedId(parent)).join(" + ")||"Recorded parentage")} → ${esc(child.name||pedId(child))}</div>
+      <div class="field"><label>Relationship type</label><select onchange="setParentageKindFromCanvas('${link.id}',this.value)">${parentageKindOptions(link)}</select></div>
+      <div class="help-text">Adoption brackets are controlled separately by the individual's Adoption status.</div>`;
+  }else if(state.kind==="reproductive"){
+    const event=model.reproductiveEvents[state.id],source=model.people[state.sourceId],subject=event&&model.people[event.subjectId];
+    if(!event||!source||!subject){closeCanvasRelationshipEditor();return;}
+    title="Reproductive relationship";
+    body=`<div class="help-text" style="margin-bottom:9px">${esc(source.name||pedId(source))} → ${esc(subject.name||pedId(subject))}</div>
+      ${reproductiveRoleControl(event,source.id,"spermContributorId","Sperm contributor")}
+      ${reproductiveRoleControl(event,source.id,"ovumContributorId","Ovum contributor")}
+      ${reproductiveRoleControl(event,source.id,"gestationalCarrierId","Gestational carrier")}`;
+  }else{
+    closeCanvasRelationshipEditor();
+    return;
+  }
+  const notice=state.notice?`<div class="canvas-editor-notice">${esc(state.notice)}</div>`:"";
+  element.innerHTML=`<div class="canvas-editor-head"><div class="who"><span class="title">${esc(title)}</span></div>
+      <button type="button" class="canvas-editor-close" onclick="closeCanvasRelationshipEditor()" aria-label="Close relationship editor">×</button></div>
+    <div class="canvas-editor-body">${notice}${body}</div>`;
+  element.hidden=false;
+  requestAnimationFrame(positionCanvasEditors);
+}
+function deleteActiveRelationship(){
+  const state=canvasRelationshipEditorState;
+  if(!state)return false;
+  if(state.kind==="union"){
+    const union=model.unions[state.id];
+    if(!union){closeCanvasRelationshipEditor();return true;}
+    const dependants=parentageLinksForUnion(union.id);
+    if(dependants.length){
+      setCanvasRelationshipNotice(`This partner relationship is used by ${dependants.length} parentage relationship${dependants.length===1?"":"s"}. Delete the corresponding parentage line${dependants.length===1?"":"s"} first so no parent-child data is removed implicitly.`);
+      return true;
+    }
+    canvasRelationshipEditorState=null;
+    commitCanvasRelationshipChange(()=>{delete model.unions[union.id];rebuildUnionChildrenCache();});
+    return true;
+  }
+  if(state.kind==="parentage"){
+    const link=model.parentageLinks[state.id];
+    if(!link){closeCanvasRelationshipEditor();return true;}
+    const unionId=link.unionId;
+    canvasRelationshipEditorState=null;
+    commitCanvasRelationshipChange(()=>{
+      delete model.parentageLinks[link.id];
+      rebuildUnionChildrenCache();
+      const union=model.unions[unionId];
+      if(union&&!parentageLinksForUnion(unionId).length&&(!union.a||!union.b)&&!unionHasRelationshipDetails(union)){
+        delete model.unions[unionId];
+      }
+    });
+    return true;
+  }
+  if(state.kind==="reproductive"){
+    const event=model.reproductiveEvents[state.id];
+    const sourceId=state.sourceId||"";
+    if(!event||!sourceId){closeCanvasRelationshipEditor();return true;}
+    canvasRelationshipEditorState=null;
+    commitCanvasRelationshipChange(()=>{
+      ["spermContributorId","ovumContributorId","gestationalCarrierId"].forEach(role=>{
+        if(event[role]===sourceId)event[role]=null;
+      });
+      const hasDirectRole=!!(event.spermContributorId||event.ovumContributorId||event.gestationalCarrierId);
+      const hasIntendedParents=(event.intendedParentIds||[]).length>0;
+      if(!hasDirectRole&&!hasIntendedParents&&!String(event.notes||"").trim())delete model.reproductiveEvents[event.id];
+    });
+    return true;
+  }
+  return false;
+}
+function commitCanvasRelationshipChange(change){
+  const positions=new Map(P().map(person=>[person.id,{
+    x:person.x,y:person.y,pinned:!!person.pinned,px:person.px,py:person.py
+  }]));
+  commit(()=>{
+    change();
+    // Endpoint dragging is a manual graph-edit operation. Preserve the current
+    // canvas geometry so changing an edge does not trigger an unrelated auto-layout.
+    // The existing Auto-layout action remains the explicit way to release these pins.
+    positions.forEach((position,id)=>{
+      const person=model.people[id];
+      if(!person)return;
+      person.pinned=true;
+      person.px=position.x;
+      person.py=position.y;
+    });
+  });
+}
+function unionHasRelationshipDetails(union){
+  if(!union)return false;
+  return normaliseRelationshipStatus(union.relationshipStatus)!=="current"||
+    !!union.consanguineous||!!String(union.consanguinityDegree||"").trim()||
+    !!union.noChildren||!!union.infertility||!!String(union.infertilityReason||"").trim();
+}
+function biologicalParentageLinkOf(personId){
+  return parentageLinksForChild(personId,"biological")[0]||null;
+}
+function unionParentIds(union){
+  return union?[union.a,union.b].filter(Boolean):[];
+}
+function sameUnionParentSet(first,second){
+  const a=unionParentIds(first).slice().sort(),b=unionParentIds(second).slice().sort();
+  return a.length===b.length&&a.every((id,index)=>id===b[index]);
+}
+function siblingParentageWouldCycle(childId,parentUnion){
+  return unionParentIds(parentUnion).some(parentId=>parentId===childId||layoutPersonHasDescendant(childId,parentId));
+}
+function convertUnionToSiblingRelationship(unionId){
+  const directUnion=model.unions[unionId];
+  if(!directUnion)return;
+  const firstId=directUnion.a,secondId=directUnion.b;
+  const first=model.people[firstId],second=model.people[secondId];
+  if(!first||!second){
+    setCanvasRelationshipNotice("A sibling relationship requires two recorded individuals.");
+    return;
+  }
+  const directDependants=parentageLinksForUnion(directUnion.id);
+  if(directDependants.length){
+    setCanvasRelationshipNotice("This relationship is already used as a parental relationship for one or more children. It cannot be converted to a sibling relationship without changing those children's parentage.");
+    return;
+  }
+  if(unionHasRelationshipDetails(directUnion)){
+    setCanvasRelationshipNotice("This partner relationship contains relationship-specific information. It was not converted automatically. Remove or review those details first.");
+    return;
+  }
+
+  const firstLink=biologicalParentageLinkOf(firstId);
+  const secondLink=biologicalParentageLinkOf(secondId);
+  if(!firstLink&&!secondLink){
+    setCanvasRelationshipNotice("Sibling relationships are derived from shared biological parentage. Add parents to either individual first, then set this relationship to Sibling.");
+    return;
+  }
+
+  if(firstLink&&secondLink){
+    const firstParents=model.unions[firstLink.unionId],secondParents=model.unions[secondLink.unionId];
+    if(!firstParents||!secondParents){
+      setCanvasRelationshipNotice("The recorded parentage could not be resolved. Review the parent relationships before creating a sibling relationship.");
+      return;
+    }
+    if(firstParents.id!==secondParents.id&&!sameUnionParentSet(firstParents,secondParents)){
+      setCanvasRelationshipNotice("Both individuals already have different biological parents. Their parentage was not merged automatically. Reconcile or move the parent relationships first, then create the sibling relationship.");
+      return;
+    }
+    if(firstParents.id!==secondParents.id&&(unionHasRelationshipDetails(firstParents)||unionHasRelationshipDetails(secondParents))){
+      setCanvasRelationshipNotice("The recorded parents match, but the parental relationships contain distinct relationship-specific information. They were not merged automatically.");
+      return;
+    }
+    if(siblingParentageWouldCycle(firstId,firstParents)||siblingParentageWouldCycle(secondId,firstParents)){
+      setCanvasRelationshipNotice("The sibling relationship would create a circular parent-child relationship and was not created.");
+      return;
+    }
+    canvasRelationshipEditorState=null;
+    commitCanvasRelationshipChange(()=>{
+      if(firstParents.id!==secondParents.id){
+        secondLink.unionId=firstParents.id;
+        const duplicate=secondParents;
+        if(!parentageLinksForUnion(duplicate.id).length&&!unionHasRelationshipDetails(duplicate))delete model.unions[duplicate.id];
+      }
+      delete model.unions[directUnion.id];
+      rebuildUnionChildrenCache();
+      ui.sel=firstId;
+    });
+    return;
+  }
+
+  const sourceLink=firstLink||secondLink;
+  const sourceParents=sourceLink&&model.unions[sourceLink.unionId];
+  const siblingId=firstLink?secondId:firstId;
+  if(!sourceParents){
+    setCanvasRelationshipNotice("The recorded parentage could not be resolved. Review the parent relationships before creating a sibling relationship.");
+    return;
+  }
+  if(siblingParentageWouldCycle(siblingId,sourceParents)){
+    setCanvasRelationshipNotice("The sibling relationship would create a circular parent-child relationship and was not created.");
+    return;
+  }
+  canvasRelationshipEditorState=null;
+  commitCanvasRelationshipChange(()=>{
+    newParentageLink(siblingId,sourceParents.id,"biological");
+    delete model.unions[directUnion.id];
+    rebuildUnionChildrenCache();
+    ui.sel=firstId;
+  });
+}
+function setUnionRelationshipStatusFromCanvas(unionId,value){
+  if(value==="sibling"){
+    convertUnionToSiblingRelationship(unionId);
+    return;
+  }
+  setUnionField(unionId,"relationshipStatus",value);
+}
+
+function createPartnerConnection(anchorPersonId,targetId){
+  const anchor=model.people[anchorPersonId],target=model.people[targetId];
+  if(!anchor||!target||anchorPersonId===targetId)return;
+  if(relationshipPartnerExists(anchorPersonId,targetId)){
+    showRelationshipInteractionNotice("union",unionsOf(anchorPersonId).find(union=>partnerIn(union,anchorPersonId)===targetId)?.id||"",anchorPersonId,
+      "These individuals already have a partner relationship.");
+    return;
+  }
+  commitCanvasRelationshipChange(()=>{
+    newUnion(anchorPersonId,targetId);
+    ui.sel=anchorPersonId;
+  });
+}
+function pairUnionFor(parentA,parentB,excludeUnionId=""){
+  return U().find(union=>union.id!==excludeUnionId&&
+    ((union.a===parentA&&union.b===parentB)||(union.a===parentB&&union.b===parentA)))||null;
+}
+function createParentChildConnection(parentId,childId,selectionId=childId){
+  const parent=model.people[parentId],child=model.people[childId];
+  if(!parent||!child||parentId===childId)return;
+  const link=parentageLinksForChild(childId,"biological")[0]||null;
+  if(biologicalDescendantOf(childId,parentId)){
+    showRelationshipInteractionNotice("parentage",link?.id||"",child.id,
+      "This connection would create a circular biological ancestry relationship. The parent-child relationship was not changed.");
+    return;
+  }
+  if(link){
+    const union=model.unions[link.unionId];
+    if(!union){
+      showRelationshipInteractionNotice("parentage",link.id,child.id,
+        "The recorded biological parentage could not be resolved. Review the existing parent relationship before adding another parent.");
+      return;
+    }
+    if(union.a===parentId||union.b===parentId){
+      showRelationshipInteractionNotice("parentage",link.id,child.id,
+        "This biological parent-child relationship already exists.");
+      return;
+    }
+    if(union.a&&union.b){
+      showRelationshipInteractionNotice("parentage",link.id,child.id,
+        "This individual already has two biological parents. Drag an existing purple parent endpoint to replace one of them, or change the relationship type where appropriate.");
+      return;
+    }
+    const existingParent=union.a||union.b||null;
+    const otherLinks=parentageLinksForUnion(union.id).filter(candidate=>candidate.id!==link.id);
+    const targetUnion=existingParent?pairUnionFor(existingParent,parentId,union.id):null;
+    let retainedDetailedOldUnion=false;
+    commitCanvasRelationshipChange(()=>{
+      if(!otherLinks.length&&!targetUnion){
+        const slot=union.a?"b":"a";
+        union[slot]=parentId;
+        union.parentRoles=union.parentRoles&&typeof union.parentRoles==="object"?union.parentRoles:{a:"unspecified",b:"unspecified"};
+        union.parentRoles[slot]=parentRoleHint(parent);
+        syncParentRolesFromEndpointHints(union);
+      }else{
+        let nextUnion=targetUnion;
+        if(!nextUnion){
+          const unionId=newUnion(existingParent,parentId);
+          nextUnion=model.unions[unionId];
+        }
+        link.unionId=nextUnion.id;
+        fillMissingParentRoles(nextUnion);
+        if(!otherLinks.length){
+          if(unionHasRelationshipDetails(union))retainedDetailedOldUnion=true;
+          else delete model.unions[union.id];
+        }
+      }
+      rebuildUnionChildrenCache();
+      ui.sel=model.people[selectionId]?selectionId:childId;
+    });
+    if(retainedDetailedOldUnion){
+      showRelationshipInteractionNotice("parentage",link.id,child.id,
+        "The parent was added to the new parental relationship. The previous relationship was retained because it contains relationship-specific information.");
+    }
+    return;
+  }
+  commitCanvasRelationshipChange(()=>{
+    let union=U().find(candidate=>
+      ((candidate.a===parentId&&!candidate.b)||(candidate.b===parentId&&!candidate.a))&&
+      !unionHasRelationshipDetails(candidate));
+    if(!union){
+      const unionId=newUnion(parentId,null);
+      union=model.unions[unionId];
+    }
+    newParentageLink(childId,union.id,"biological");
+    rebuildUnionChildrenCache();
+    ui.sel=model.people[selectionId]?selectionId:childId;
+  });
+}
+function rewirePartnerConnection(unionId,anchorPersonId,targetId){
+  const union=model.unions[unionId],anchor=model.people[anchorPersonId],target=model.people[targetId];
+  if(!union||!anchor||!target||targetId===anchorPersonId)return;
+  if(union.a!==anchorPersonId&&union.b!==anchorPersonId)return;
+  const slot=union.a===anchorPersonId?"b":"a";
+  if(union[slot]===targetId)return;
+  const unionChildren=childrenOfUnion(union.id);
+  if(unionChildren.some(childId=>childId===targetId||layoutPersonHasDescendant(childId,targetId))){
+    showRelationshipInteractionNotice("union",union.id,anchorPersonId,"This change would create a circular parent-child relationship. The relationship was not changed.");
+    return;
+  }
+  const duplicate=U().find(candidate=>candidate.id!==union.id&&
+    ((candidate.a===anchorPersonId&&candidate.b===targetId)||(candidate.a===targetId&&candidate.b===anchorPersonId)));
+  if(duplicate){
+    showRelationshipInteractionNotice("union",union.id,anchorPersonId,"These two individuals already have a separate partner relationship. The relationships were not merged.");
+    return;
+  }
+  commitCanvasRelationshipChange(()=>{
+    union[slot]=targetId;
+    union.parentRoles=union.parentRoles&&typeof union.parentRoles==="object"?union.parentRoles:{a:"unspecified",b:"unspecified"};
+    union.parentRoles[slot]=parentRoleHint(target);
+    syncParentRolesFromEndpointHints(union);
+    ui.sel=anchorPersonId;
+  });
+}
+function rewireParentageConnection(linkId,slot,targetId){
+  const link=model.parentageLinks[linkId],target=model.people[targetId];
+  if(!link||!target||!["a","b"].includes(slot))return;
+  const child=model.people[link.childId],union=model.unions[link.unionId];
+  if(!child||!union||targetId===child.id)return;
+  const otherSlot=slot==="a"?"b":"a";
+  if(union[otherSlot]===targetId){
+    showRelationshipInteractionNotice("parentage",link.id,child.id,"The same individual cannot occupy both parent slots.");
+    return;
+  }
+  if(union[slot]===targetId)return;
+  const kind=normaliseParentageKind(link.relationshipKind);
+  if(layoutPersonHasDescendant(child.id,targetId)){
+    showRelationshipInteractionNotice("parentage",link.id,child.id,`A descendant cannot be reassigned as a ${kind} parent of this individual.`);
+    return;
+  }
+
+  const nextA=slot==="a"?targetId:union.a||null;
+  const nextB=slot==="b"?targetId:union.b||null;
+  const otherLinks=parentageLinksForUnion(union.id).filter(candidate=>candidate.id!==link.id);
+  const existingTargetUnion=U().find(candidate=>candidate.id!==union.id&&
+    (((candidate.a||null)===nextA&&(candidate.b||null)===nextB)||
+     ((candidate.a||null)===nextB&&(candidate.b||null)===nextA)));
+  let retainedDetailedOldUnion=false;
+
+  canvasRelationshipEditorState=null;
+  commitCanvasRelationshipChange(()=>{
+    if(!otherLinks.length&&!existingTargetUnion){
+      // Common case: this parentage link is the only structure depending on the
+      // union. Move the existing union endpoint in place so the old relationship
+      // line becomes the new one rather than leaving an orphan union behind.
+      union[slot]=targetId;
+      union.parentRoles=union.parentRoles&&typeof union.parentRoles==="object"?union.parentRoles:{a:"unspecified",b:"unspecified"};
+      union.parentRoles[slot]=parentRoleHint(target);
+      syncParentRolesFromEndpointHints(union);
+    }else{
+      // Shared unions must not be mutated because that would silently change the
+      // parents of siblings or another parentage type. Move only this canonical
+      // parentage link, preserving its ID, stableId, notes and relationship kind.
+      let targetUnion=existingTargetUnion;
+      if(!targetUnion){
+        const roles={
+          a:slot==="a"?parentRoleHint(target):normaliseParentRole(union.parentRoles?.a),
+          b:slot==="b"?parentRoleHint(target):normaliseParentRole(union.parentRoles?.b)
+        };
+        const unionId=newUnion(nextA,nextB,{parentRoles:roles});
+        targetUnion=model.unions[unionId];
+      }
+      link.unionId=targetUnion.id;
+      fillMissingParentRoles(targetUnion);
+
+      // If the old union had no other dependants, the drag represents replacing
+      // that relationship. Remove a purely structural old union. Preserve one
+      // carrying explicit relationship metadata rather than discarding user data.
+      if(!otherLinks.length){
+        if(unionHasRelationshipDetails(union))retainedDetailedOldUnion=true;
+        else delete model.unions[union.id];
+      }
+    }
+    rebuildUnionChildrenCache();
+    ui.sel=child.id;
+  });
+
+  if(retainedDetailedOldUnion){
+    showRelationshipInteractionNotice("parentage",link.id,child.id,
+      "Parentage was moved to the existing target relationship. The previous partner relationship was retained because it contains relationship-specific information.");
+  }
+}
+function rewireReproductiveConnection(eventId,role,targetId){
+  const event=model.reproductiveEvents[eventId],target=model.people[targetId];
+  if(!event||!target||!["spermContributorId","ovumContributorId","gestationalCarrierId"].includes(role))return;
+  if(targetId===event.subjectId){
+    showRelationshipInteractionNotice("reproductive",event.id,event.subjectId,"The subject cannot be assigned as their own reproductive contributor or gestational carrier.",{sourceId:event[role]||targetId});
+    return;
+  }
+  if(event[role]===targetId)return;
+  commitCanvasRelationshipChange(()=>{event[role]=targetId;});
+}
+function findConnectionDropTarget(world,handleData){
+  const threshold=Math.max(LAY.sym*.52,16/view.scale);
+  let best=null,bestDistance=Infinity;
+  compatibleConnectionDropPorts(handleData).forEach(port=>{
+    const distance=Math.hypot(port.x-world.x,port.y-world.y);
+    if(distance<=threshold&&distance<bestDistance){best=port;bestDistance=distance;}
+  });
+  return best;
+}
+function applyConnectionHandleDrop(handleData,targetId){
+  if(!targetId)return;
+  if(handleData.handleKind==="partner-new"){
+    createPartnerConnection(handleData.anchorId,targetId);
+  }else if(handleData.handleKind==="partner"){
+    rewirePartnerConnection(handleData.unionId,handleData.anchorId,targetId);
+  }else if(handleData.handleKind==="parentage-new-parent"){
+    createParentChildConnection(targetId,handleData.childId,handleData.childId);
+  }else if(handleData.handleKind==="parentage-new-child"){
+    createParentChildConnection(handleData.parentId,targetId,handleData.parentId);
+  }else if(handleData.handleKind==="biological"||handleData.handleKind==="adoptive"){
+    rewireParentageConnection(handleData.linkId,handleData.slot,targetId);
+  }else if(handleData.handleKind==="reproductive"){
+    rewireReproductiveConnection(handleData.eventId,handleData.role,targetId);
+  }
 }
 function clinicalStatusLabel(p){
   const status=clinicalStatusOf(p);
@@ -3247,6 +5276,8 @@ function renderReport(){
   ].filter(r=>r[1]);
   html+=block("Legend",buildReportLegend());
   html+=block("Case summary",`<table class="rep-kv"><tbody>${caseRows.map(r=>`<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join("")}</tbody></table>`);
+  const familyHistoryNotes=familyHistoryNotesValue().trim();
+  if(familyHistoryNotes)html+=block("Family history notes",`<div class="rep-free-text">${esc(familyHistoryNotes)}</div>`);
   html+=block(`Identity and status (${ps.length})`,table(
     ["ID","Role","Display name","Sex / symbol","Sex assigned at birth","Represents","Pregnancy outcome","Adoption","Status","Birth year","Age at death"],
     order.map(p=>{
@@ -3314,10 +5345,6 @@ function renderReport(){
   const warns=computeWarnings();
   if(warns.length)html+=block("Preflight and warnings",warns.map(w=>`<div class="rep-warn"><span class="sev ${w.sev}"></span><span>${esc(w.msg)}</span></div>`).join(""));
   rep.innerHTML=html;
-  const represented=representedPeopleSummary();
-  document.getElementById("figCapRight").textContent=represented.unknownGroups
-    ?`${represented.records} records · ${represented.known}+ people · ${represented.unknownGroups} unknown group${represented.unknownGroups===1?"":"s"}`
-    :`${represented.records} records · ${represented.known} people`;
 }
 /* ===== warnings ===== */
 function computeWarnings(){ const warnings=[];
@@ -3409,51 +5436,154 @@ function renderContext(){
 /* ===== canvas interaction: select, reposition, pan, zoom ===== */
 let pointerState=null;
 function initCanvas(){
-  const s=document.getElementById("stage"), fig=document.getElementById("figure");
+  const s=document.getElementById("stage"),fig=document.getElementById("figure");
   s.addEventListener("pointerdown",e=>{
+    const infoHit=e.target.closest(".person-info-hit");
+    const handle=e.target.closest(".connection-handle");
+    const edge=e.target.closest(".relationship-edge-hit");
     const node=e.target.closest(".node");
     const world=screenToWorld(e.clientX,e.clientY);
-    if(node){ pointerState={mode:"maybe-drag",id:node.dataset.id,startX:e.clientX,startY:e.clientY,
-      origWX:world.x,origWY:world.y,moved:false}; try{s.setPointerCapture(e.pointerId);}catch(_){} }
-    else { pointerState={mode:"pan",vx:view.x,vy:view.y,startX:e.clientX,startY:e.clientY,moved:false}; try{s.setPointerCapture(e.pointerId);}catch(_){}
-       }
+    if(infoHit){
+      pointerState={mode:"info-click",id:infoHit.dataset.id,startX:e.clientX,startY:e.clientY,moved:false};
+      try{s.setPointerCapture(e.pointerId);}catch(_){}
+      return;
+    }
+    if(handle){
+      const handleData={...handle.dataset};
+      pointerState={mode:"connection-drag",handleData,startX:e.clientX,startY:e.clientY,moved:false};
+      connectionDragPreview={
+        startX:Number(handleData.x),startY:Number(handleData.y),
+        fixedX:Number(handleData.fixedX??handleData.x),fixedY:Number(handleData.fixedY??handleData.y),
+        dragMode:handleData.dragMode||"direct",dragToken:handleData.dragToken||"",
+        edgeKind:handleData.edgeKind||"",edgeId:handleData.edgeId||"",
+        handleKind:handleData.handleKind||"",movingPortRole:handleData.targetPortRole||"",
+        x:world.x,y:world.y,targetId:null,targetX:null,targetY:null
+      };
+      canvasRelationshipEditorState=null;
+      renderCanvasRelationshipEditor();
+      try{s.setPointerCapture(e.pointerId);}catch(_){}
+      return;
+    }
+    if(edge){
+      pointerState={
+        mode:"edge-click",edgeKind:edge.dataset.edgeKind,edgeId:edge.dataset.edgeId,
+        sourceId:edge.dataset.sourceId||"",worldX:world.x,worldY:world.y,
+        startX:e.clientX,startY:e.clientY,moved:false
+      };
+      try{s.setPointerCapture(e.pointerId);}catch(_){}
+      return;
+    }
+    if(node){
+      pointerState={mode:"maybe-drag",id:node.dataset.id,startX:e.clientX,startY:e.clientY,origWX:world.x,origWY:world.y,moved:false};
+      try{s.setPointerCapture(e.pointerId);}catch(_){}
+      return;
+    }
+    pointerState={mode:"pan",vx:view.x,vy:view.y,startX:e.clientX,startY:e.clientY,moved:false};
+    try{s.setPointerCapture(e.pointerId);}catch(_){}
   });
   s.addEventListener("pointermove",e=>{
     if(!pointerState)return;
+    if(pointerState.mode==="connection-drag"){
+      const world=screenToWorld(e.clientX,e.clientY);
+      const target=findConnectionDropTarget(world,pointerState.handleData);
+      pointerState.moved=true;
+      connectionDragPreview={
+        ...connectionDragPreview,x:world.x,y:world.y,
+        targetId:target?.id||null,targetX:target?.x??null,targetY:target?.y??null,targetRole:target?.role||""
+      };
+      drawStage();
+      return;
+    }
+    if(pointerState.mode==="info-click"||pointerState.mode==="edge-click"){
+      if(Math.hypot(e.clientX-pointerState.startX,e.clientY-pointerState.startY)>=4)pointerState.moved=true;
+      return;
+    }
     if(pointerState.mode==="pan"){
-      const dx=e.clientX-pointerState.startX, dy=e.clientY-pointerState.startY;
+      const dx=e.clientX-pointerState.startX,dy=e.clientY-pointerState.startY;
       if(Math.hypot(dx,dy)>=4)pointerState.moved=true;
       view.x=pointerState.vx-dx/view.scale;
       view.y=pointerState.vy-dy/view.scale;
       quickViewBox();
       return;
     }
-    const dx=e.clientX-pointerState.startX, dy=e.clientY-pointerState.startY;
-    if(!pointerState.moved && Math.hypot(dx,dy)<4) return;
-    if(!pointerState.moved){ pointerState.moved=true; history.push(snapshot()); future=[]; } // start drag = one undo step
+    const dx=e.clientX-pointerState.startX,dy=e.clientY-pointerState.startY;
+    if(!pointerState.moved&&Math.hypot(dx,dy)<4)return;
+    if(!pointerState.moved){
+      pointerState.moved=true;
+      history.push(snapshot());
+      future=[];
+    }
     pointerState.mode="dragging";
     const world=screenToWorld(e.clientX,e.clientY);
     const p=model.people[pointerState.id];
-    p.pinned=true; p.px=world.x; p.py=world.y; p.x=world.x; p.y=world.y;
+    if(!p)return;
+    p.pinned=true;p.px=world.x;p.py=world.y;p.x=world.x;p.y=world.y;
     drawStage();
   });
   s.addEventListener("pointerup",e=>{
     if(!pointerState)return;
-    if(pointerState.mode==="maybe-drag"||(!pointerState.moved&&pointerState.id)){ select(pointerState.id); }
-    else if(pointerState.mode==="dragging"){ liveRefresh(); }
-    else if(pointerState.mode==="pan"&&!pointerState.moved){ select(null); }
+    const state=pointerState;
     pointerState=null;
+    if(state.mode==="connection-drag"){
+      const targetId=connectionDragPreview?.targetId||null;
+      connectionDragPreview=null;
+      if(targetId)applyConnectionHandleDrop(state.handleData,targetId);
+      else drawStage();
+      return;
+    }
+    if(state.mode==="info-click"){
+      if(!state.moved)openCanvasPersonEditor(state.id);
+      return;
+    }
+    if(state.mode==="edge-click"){
+      if(!state.moved){
+        openCanvasRelationshipEditor(state.edgeKind,state.edgeId,state.worldX,state.worldY,state.sourceId?{sourceId:state.sourceId}:{});
+      }
+      return;
+    }
+    if(state.mode==="maybe-drag"||(!state.moved&&state.id)){
+      selectCanvasPersonForRelationships(state.id);
+    }else if(state.mode==="dragging"){
+      liveRefresh();
+    }else if(state.mode==="pan"&&!state.moved){
+      select(null);
+    }
   });
-  s.addEventListener("wheel",e=>{ e.preventDefault();
-    const r=fig.getBoundingClientRect(); const mx=view.x+(e.clientX-r.left)/view.scale, my=view.y+(e.clientY-r.top)/view.scale;
-    const f=e.deltaY<0?1.1:1/1.1, ns=Math.min(3,Math.max(.2,view.scale*f));
-    view.x=mx-(e.clientX-r.left)/ns; view.y=my-(e.clientY-r.top)/ns; view.scale=ns;
-    quickViewBox(); document.getElementById("cxZoom").textContent=Math.round(view.scale*100)+"%";
+  s.addEventListener("pointercancel",()=>{
+    pointerState=null;connectionDragPreview=null;drawStage();
+  });
+  s.addEventListener("dblclick",e=>{
+    if(e.target.closest(".connection-handle,.relationship-edge-hit,.person-info-hit"))return;
+    const node=e.target.closest(".node");
+    if(!node)return;
+    e.preventDefault();
+    openCanvasPersonEditor(node.dataset.id);
+  });
+  s.addEventListener("wheel",e=>{
+    e.preventDefault();
+    const r=fig.getBoundingClientRect();
+    const mx=view.x+(e.clientX-r.left)/view.scale,my=view.y+(e.clientY-r.top)/view.scale;
+    const f=e.deltaY<0?1.1:1/1.1,ns=Math.min(3,Math.max(.2,view.scale*f));
+    view.x=mx-(e.clientX-r.left)/ns;view.y=my-(e.clientY-r.top)/ns;view.scale=ns;
+    quickViewBox();
+    document.getElementById("cxZoom").textContent=Math.round(view.scale*100)+"%";
   },{passive:false});
 }
 function screenToWorld(cx,cy){ const r=document.getElementById("figure").getBoundingClientRect();
   return {x:view.x+(cx-r.left)/view.scale, y:view.y+(cy-r.top)/view.scale}; }
-function select(id){ ui.sel=id; render(); }
+function selectCanvasPersonForRelationships(id){
+  if(!id||!model.people[id])return;
+  ui.sel=id;
+  canvasPersonEditorState.open=false;
+  canvasRelationshipEditorState=null;
+  render();
+}
+function select(id){
+  ui.sel=id;
+  canvasRelationshipEditorState=null;
+  if(canvasPersonEditorState.personId!==id)canvasPersonEditorState.open=false;
+  render();
+}
 function zoomBy(f){ const fig=document.getElementById("figure");
   const cx=view.x+fig.clientWidth/2/view.scale, cy=view.y+fig.clientHeight/2/view.scale;
   view.scale=Math.min(3,Math.max(.2,view.scale*f));
@@ -3520,6 +5650,50 @@ function toggleFocus(){ ui.focus=!ui.focus;
   document.getElementById("documentCol").classList.toggle("focus",ui.focus);
   const btn=document.getElementById("focusBtn"); if(btn)btn.setAttribute("aria-pressed",ui.focus);
   setTimeout(()=>{drawStage();fitView();},200); }
+function canvasViewportWorldCenter(){
+  const figure=document.getElementById("figure");
+  if(!figure||!view||!Number.isFinite(view.scale)||view.scale<=0)return null;
+  return {
+    x:view.x+(figure.clientWidth||0)/(2*view.scale),
+    y:view.y+(figure.clientHeight||0)/(2*view.scale)
+  };
+}
+function canvasFullscreenButtonIcon(active){
+  return active
+    ?`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 3v6H3M15 3v6h6M9 21v-6H3M15 21v-6h6"/></svg>`
+    :`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/></svg>`;
+}
+function updateCanvasFullscreenControl(){
+  const button=document.getElementById("canvasFullscreenBtn");
+  if(!button)return;
+  const active=!!ui.canvasFullscreen;
+  button.setAttribute("aria-pressed",String(active));
+  button.setAttribute("aria-label",active?"Exit full screen workspace":"Enter full screen workspace");
+  button.title=active?"Exit full screen workspace (Esc)":"Full screen workspace";
+  button.innerHTML=canvasFullscreenButtonIcon(active);
+}
+function setCanvasFullscreen(active){
+  const next=!!active;
+  if(!!ui.canvasFullscreen===next){updateCanvasFullscreenControl();return;}
+  const centre=canvasViewportWorldCenter();
+  ui.canvasFullscreen=next;
+  const page=document.querySelector(".pedigree-page");
+  if(page)page.classList.toggle("pedigree-workspace-fullscreen",next);
+  document.body.classList.toggle("pedigree-workspace-fullscreen-active",next);
+  updateCanvasFullscreenControl();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const figure=document.getElementById("figure");
+    if(centre&&figure&&view.scale>0){
+      view.x=centre.x-(figure.clientWidth||0)/(2*view.scale);
+      view.y=centre.y-(figure.clientHeight||0)/(2*view.scale);
+    }
+    drawStage();
+    renderContext();
+  }));
+}
+function toggleCanvasFullscreen(force){
+  setCanvasFullscreen(typeof force==="boolean"?force:!ui.canvasFullscreen);
+}
 /* ===== build actions ===== */
 const DISPLAYED_MARKER_VALUES=["affected","carrier-half","compound","unaffected"];
 function displayedMarkerValue(p){
@@ -3958,6 +6132,7 @@ function buildExportSVG(){
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="${b.minx} ${b.miny} ${w} ${h}"><rect x="${b.minx}" y="${b.miny}" width="${w}" height="${h}" fill="#FFFFFF"/>${inner}</svg>`;
 }
 function printClinicalReport(){
+  renderReport();
   const printWindow=window.open("","_blank");
   if(!printWindow){alert("The print report could not be opened. Allow pop-ups for this site and try again.");return;}
   const exportedAt=new Date();
@@ -3997,6 +6172,7 @@ function printClinicalReport(){
   .rep-item dt{color:#5c5a5a;font-weight:600}.rep-item dd{margin:0;overflow-wrap:anywhere}.rep-item-wide{grid-column:1/-1}
   .rep-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 12px;font-size:7.5pt}
   .rep-legend .li{display:flex;align-items:center;gap:6px}.rep-empty,.rep-warn{font-size:7.5pt}.rep-empty a{display:none}
+  .rep-free-text{white-space:pre-wrap;overflow-wrap:anywhere;font-size:8pt;line-height:1.5}
   .sev{display:inline-block;width:6px;height:6px;border-radius:50%;background:#5c5a5a;margin-right:6px}
   .research-footer{margin-top:12mm;padding-top:4mm;border-top:1px solid #5c5a5a;color:#5c5a5a;font-size:7.2pt;line-height:1.45}
   .research-footer strong{color:#2f2f41}
@@ -4191,6 +6367,8 @@ function upgradeImportedModelCollections(targetModel){
   targetModel.unions=targetModel.unions||{};
   targetModel.parentageLinks=targetModel.parentageLinks&&typeof targetModel.parentageLinks==="object"&&!Array.isArray(targetModel.parentageLinks)?targetModel.parentageLinks:{};
   targetModel.reproductiveEvents=targetModel.reproductiveEvents&&typeof targetModel.reproductiveEvents==="object"&&!Array.isArray(targetModel.reproductiveEvents)?targetModel.reproductiveEvents:{};
+  targetModel.caseNotes=targetModel.caseNotes&&typeof targetModel.caseNotes==="object"&&!Array.isArray(targetModel.caseNotes)?targetModel.caseNotes:{};
+  targetModel.caseNotes.familyHistory=String(targetModel.caseNotes.familyHistory||"");
   Object.entries(targetModel.people).forEach(([key,person])=>{if(person&&person.id==null)person.id=key;});
   Object.entries(targetModel.unions).forEach(([key,union])=>{if(union&&union.id==null)union.id=key;});
   let index=1;
@@ -4504,7 +6682,10 @@ function buildFhirBundle(){
   const binaryUrn=add("native-binary",binary);
   const documentReference={resourceType:"DocumentReference",id:fhirId(model.caseName,"document"),status:"current",type:{coding:[{system:INTEROP_CODES,code:"clinical-pedigree",display:"Clinical pedigree"}],text:"Clinical pedigree"},subject:{reference:patientUrn},date:new Date().toISOString(),
     author:[practitionerUrn?{reference:practitionerUrn}:{reference:deviceUrn}],custodian:organisationUrn?{reference:organisationUrn}:undefined,
-    description:model.meta.indication||model.meta.disease||"Clinical pedigree exchange package",content:[{attachment:{contentType:binary.contentType,url:binaryUrn,title:cleanFileStem(model.caseName)+".pedigree.json"}}]};
+    description:model.meta.indication||model.meta.disease||"Clinical pedigree exchange package",
+    extension:compactExtensions([fhirExtension("family-history-notes","valueString",familyHistoryNotesValue().trim())]),
+    content:[{attachment:{contentType:binary.contentType,url:binaryUrn,title:cleanFileStem(model.caseName)+".pedigree.json"}}]};
+  if(!documentReference.extension.length)delete documentReference.extension;
   Object.keys(documentReference).forEach(k=>documentReference[k]===undefined&&delete documentReference[k]);
   const documentUrn=add("document",documentReference);
   const report={resourceType:"DiagnosticReport",id:fhirId(model.caseName,"report"),status:"final",code:{coding:[{system:INTEROP_CODES,code:"pedigree-report",display:"Clinical pedigree report"}],text:"Clinical pedigree report"},subject:{reference:patientUrn},
@@ -4735,6 +6916,9 @@ function importFhirBundle(bundle){
   const organisation=resources.find(r=>r.resourceType==="Organization"),practitioner=resources.find(r=>r.resourceType==="Practitioner");
   if(organisation?.name)model.meta.institution=organisation.name;
   if(practitioner)model.meta.reviewer=humanName(practitioner);
+  const pedigreeDocument=resources.find(r=>r.resourceType==="DocumentReference");
+  const projectedFamilyHistoryNotes=pedigreeDocument?getFhirExtensionValue(pedigreeDocument,"family-history-notes"):"";
+  if(projectedFamilyHistoryNotes)model.caseNotes.familyHistory=String(projectedFamilyHistoryNotes);
   const conditions=resources.filter(r=>r.resourceType==="Condition"&&r.subject?.reference);
   if(conditions[0])model.people[probandId].diagnosis=codeableText(conditions[0].code);
   const importedVariants=[];
@@ -5195,22 +7379,30 @@ function migrateModel(){
   model.meta=Object.assign({disease:"",indication:"",reviewer:"",institution:"",date:"",lastExportedAt:"",lastExportFormat:"",importWarnings:[]},model.meta||{});
   model.meta.importWarnings=Array.isArray(model.meta.importWarnings)?model.meta.importWarnings:[];
   pregnancyRepairWarnings.forEach(message=>{if(!model.meta.importWarnings.includes(message))model.meta.importWarnings.push(message);});
+  model.caseNotes=model.caseNotes&&typeof model.caseNotes==="object"&&!Array.isArray(model.caseNotes)?model.caseNotes:{};
+  model.caseNotes.familyHistory=String(model.caseNotes.familyHistory||"");
   model.interoperability=Object.assign({plinkFamilyId:"",lastImportedFormat:"",lastImportedAt:""},model.interoperability||{});
   rebuildUnionChildrenCache();
 }
 /* ===== keyboard ===== */
 function initKeys(){ document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"&&ui.canvasFullscreen){e.preventDefault();toggleCanvasFullscreen(false);return;}
   const t=e.target.tagName; if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;
   const meta=e.metaKey||e.ctrlKey;
   if(meta&&e.key.toLowerCase()==="z"){e.preventDefault();e.shiftKey?redo():undo();return;}
   if(meta)return; const k=e.key.toLowerCase();
   if(k==="0"){fitView();return;} if(k==="+"||k==="="){zoomBy(1.2);return;} if(k==="-"){zoomBy(1/1.2);return;}
+  if(e.key==="Backspace"||e.key==="Delete"){
+    e.preventDefault();
+    if(deleteActiveRelationship())return;
+    if(ui.sel)act("delete");
+    return;
+  }
   if(!ui.sel)return; const map={p:"parents",r:"partner",c:"child",s:"sibling",t:"twin",d:"deceased"};
   if(map[k]){e.preventDefault(); k==="d"?toggleField("deceased"):act(map[k]);}
-  else if(e.key==="Enter"){e.preventDefault();openSec.add("identity");renderInspector();document.querySelector("#inspBody input")?.focus();}
-  else if(e.key==="Backspace"||e.key==="Delete"){e.preventDefault();act("delete");} }); }
+  else if(e.key==="Enter"){e.preventDefault();openSec.add("identity");renderInspector();document.querySelector("#inspBody input")?.focus();} }); }
 /* ===== boot ===== */
-function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",edgeColourMode:"off",edgeColourTheme:"city-sunset",layoutPreset:"standard",focus:false,variantIndexByPerson:{}}; view={x:0,y:0,scale:1};
+function init(){ ui={sel:null,labelPreset:"clinical",routingMode:"clinical",edgeColourMode:"off",edgeColourTheme:"city-sunset",layoutPreset:"standard",focus:false,canvasFullscreen:false,variantIndexByPerson:{}}; view={x:0,y:0,scale:1};
   model=blankModel("rare"); if(!tryRestore())trioTemplate(); migrateModel();
   if(!ui.sel){const first=P().find(p=>p.proband)||P()[0];ui.sel=first?first.id:null;}
   initCanvas(); initKeys(); computeLayout(); render(); setTimeout(fitView,40); loadPedigreeExportCounter();
@@ -5219,5 +7411,7 @@ init();
 </script>
   </div>
 </main>
+
+
 
 

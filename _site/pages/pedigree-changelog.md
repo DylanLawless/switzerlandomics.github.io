@@ -1,5 +1,26 @@
 # Pedigree changelog
 
+## v1.0.9
+
+### Layout and relationship editing
+* Improved auto-layout to keep parents, partners and children together as coherent family units.
+* Improved relationship line routing to separate overlapping connections and clearly bridge unrelated line crossings.
+* Expanded visual parent-child relationship editing across the full pedigree canvas.
+
+## v1.0.8
+
+### Visual relationship editing
+* Added direct relationship editing on the pedigree canvas using draggable connection points.
+* Added visual creation and rewiring of parent-child and partner relationships.
+* Added sibling relationship handling through shared parentage.
+* Added direct relationship editing and deletion by selecting relationship lines.
+* Added a compact person editor directly on the canvas.
+
+### Canvas workspace
+* Added a focused full-screen canvas workspace for building and editing pedigrees.
+* Added Auto-layout and full-screen controls alongside Zoom and Fit.
+* Kept Family history notes available in the focused workspace for rapid note taking during consultations.
+
 ## v1.0.7
 
 ### Pedigree notation
