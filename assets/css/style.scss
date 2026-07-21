@@ -1177,6 +1177,21 @@ pre.code-copy code {
   }
 }
 
+/* Full-width background for sections nested inside
+   non-centred content columns */
+
+.dark-background-area--column-bleed {
+  width: auto;
+  margin-left: 0;
+  margin-right: 0;
+
+  background: $black;
+  color: $white;
+
+  box-shadow: 0 0 0 100vmax $black;
+  clip-path: inset(0 -100vmax);
+}
+
 /* reusable dark text list */
 
 .dark-background-area--compact {

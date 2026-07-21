@@ -3,14 +3,89 @@ layout: tech
 title: "Swiss-UK genomic interoperability project"
 description: "Building the open foundation for genomic information to work across organisations, systems and borders."
 permalink: /pages/swiss-uk-genomics/
+content_width: wide
+content_alignment: left
 ---
 
+Building the open foundation for genomic information to work across organisations, systems and borders.
 
-Building the open foundation for genomic information to work across organisations, systems, and borders.
+Genomic information can move between organisations. The provenance, analysis criteria, clinical context and evidence needed to understand and evaluate it do not always move with it.
 
-Genomics spans sequencing, analysis, interpretation, clinical care, research and drug discovery. But when genomic information moves between independent organisations and systems, the provenance, analysis context and evidence needed to understand and evaluate it do not always move with it.
+The result is bespoke integration, repeated translation and repeated verification.
 
-The result is bespoke integration, repeated translation, and repeated verification.
+<figure>
+  <img
+    src="{{ '/images/swiss-uk-genomics/swiss-uk-project_1_tiny.png' | relative_url }}"
+    alt="Genomic interoperability across Swiss and UK organisations"
+  >
+  <figcaption>
+    <strong>Figure</strong>. Switzerland-UK innovation closing the last meter.
+  </figcaption>
+</figure>
+
+---
+
+<section class="dark-background-area dark-background-area--compact dark-background-area--column-bleed">
+  <div class="container dark-background-area__inner dark-background-area__inner--text">
+
+    <div class="dark-background-area__content dark-background-area__content--wide">
+
+      <p class="dark-background-area__kicker">The project</p>
+
+      <h2>The technology is here. The handoffs are not.</h2>
+
+      <p>
+        Genomics already supports precision medicine, healthcare, research,
+        drug discovery and pharmaceutical R&amp;D. But genomic information
+        can still lose its meaning when it moves between organisations and systems.
+      </p>
+
+      <p>
+        We are bringing Swiss and UK partners together to build and prove
+        the shared standards that make those handoffs work.
+      </p>
+
+    </div>
+
+
+    <div
+      class="dark-background-area__text-list"
+      aria-label="The project"
+    >
+
+      <div class="dark-background-area__text-item">
+        <span class="dark-background-area__eyebrow">The problem</span>
+        <h3>Information changes hands. Context gets lost.</h3>
+        <p>
+          Different systems still require repeated translation,
+          integration and verification.
+        </p>
+      </div>
+
+
+      <div class="dark-background-area__text-item">
+        <span class="dark-background-area__eyebrow">The project</span>
+        <h3>Build the shared rules. Prove they work.</h3>
+        <p>
+          Swiss and UK partners will test common standards across
+          independent organisations and real genomic workflows.
+        </p>
+      </div>
+
+
+      <div class="dark-background-area__text-item">
+        <span class="dark-background-area__eyebrow">The principle</span>
+        <h3>Standardise the handoff, not the algorithm.</h3>
+        <p>
+          Labs, hospitals, researchers and companies keep their own tools.
+          Their genomic information becomes easier to understand, verify and reuse.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 
 ---
 
@@ -27,175 +102,587 @@ The result is bespoke integration, repeated translation, and repeated verificati
 </figure>
 
 Swiss and UK participants are invited to submit proposals for joint research and development projects that lead to innovative applications and products with strong commercial potential in both Switzerland and the UK.
-This bilateral call is open exclusively to Swiss and UK partners and aims to strengthen cross-border innovation collaboration.
-This project is being developed for the Switzerland-UK bilateral call, supported by Innosuisse and Innovate UK.
+
+This bilateral call is open exclusively to Swiss and UK partners and aims to strengthen cross-border innovation collaboration. This project is being developed for the Switzerland-UK bilateral call, supported by Innosuisse and Innovate UK.
+
 For more information see the [Innosuisse, Swiss Innovation Agency](https://www.innosuisse.admin.ch/en/switzerland-uk-call-for-projects) call page.
 
 ---
 
-## The project
+<section class="review-criteria" aria-labelledby="review-criteria-title">
 
-We are bringing together Swiss and UK partners to build and validate an **open interoperability layer for genomic information**.
+  <div class="review-criteria__intro">
+    <h2 id="review-criteria-title">Evidence at a glance</h2>
+    <p>
+      Genomics already operates at population, healthcare and commercial scale.
+      The project addresses the remaining interoperability gap between independent systems.
+    </p>
+  </div>
 
-The project will provide shared representations, mappings, reference implementations and conformance tests for the information that must remain connected across genomic workflows:
 
-**Provenance → Analysis criteria → Variant interpretation → Clinical context → Supporting evidence**
+  <div class="review-criteria__list">
 
-> **Standardise the handoff, not the algorithm.**
 
-Genome centres, laboratories, hospitals, research organisations and companies remain free to use their own instruments, algorithms, databases and products. The shared layer provides a common way for independent systems to exchange and reuse genomic information without losing the context needed to understand, reproduce and independently evaluate it.
+    <!-- Business need -->
 
-## Partner participation
+    <details class="review-criterion" open>
+      <summary class="review-criterion__summary">
 
-**We are seeking partners across healthcare, genomics, academia and industry to validate, implement and adopt the shared foundation across real Swiss and UK workflows.**
+        <span class="review-criterion__title">
+          Business need
+        </span>
 
-Partners can contribute at different points in the genomic information chain, including data generation, analysis, clinical use, software implementation, standards development and independent validation.
+        <span class="review-criterion__preview">
+          <span class="review-pill">
+            <strong>680,000+</strong>
+            NHS tests / year
+          </span>
 
-## From working foundations to shared infrastructure
+          <span class="review-pill">
+            <strong>1M+</strong>
+            WGS
+          </span>
+        </span>
 
-We have already developed and tested open standards and reference implementations across each major layer of this chain:
+        <span class="review-criterion__chevron" aria-hidden="true"></span>
 
-**SPHN Omics · QV + QVSS · ACMG Validator · Pedigree · QuantBayes + QEM**
+      </summary>
 
-These provide existing scientific, technical and adoption proof. The project will connect and extend these foundations, address remaining interoperability gaps and validate them through independent use across Swiss and UK healthcare, academia and industry.
+      <div class="review-criterion__body">
 
-## Outcome
+        <p>
+          Genomic information already moves at scale between healthcare, research and industry,
+          but provenance, analysis criteria and supporting evidence still require repeated
+          translation and verification.
+        </p>
 
-Success will be demonstrated when independent Swiss and UK organisations can produce, exchange and consume interoperable genomic information without requiring the same vendor or software stack.
+        <div class="review-metrics">
 
-The resulting standards and reference implementations will remain open to the wider community. Healthcare and industry can build their own products, algorithms and services on top of the common foundation.
+          <div class="review-metric">
+            <strong>680,000+</strong>
+            <span>NHS genomic tests / year</span>
+          </div>
 
-**Shared infrastructure reduces repeated integration. Open implementations accelerate adoption. Common interfaces expand the ecosystem for every compatible provider.**
+          <div class="review-metric">
+            <strong>1M+</strong>
+            <span>WGS across UK Biobank + All of Us</span>
+          </div>
+
+        </div>
+
+      </div>
+    </details>
+
+
+    <!-- Approach and innovation -->
+
+    <details class="review-criterion">
+      <summary class="review-criterion__summary">
+
+        <span class="review-criterion__title">
+          Approach &amp; innovation
+        </span>
+
+        <span class="review-criterion__preview">
+          <span class="review-pill">
+            <strong>5</strong>
+            working foundations
+          </span>
+        </span>
+
+        <span class="review-criterion__chevron" aria-hidden="true"></span>
+
+      </summary>
+
+      <div class="review-criterion__body">
+
+        <p>
+          Start from working standards and implementations, then standardise the handoff
+          between independent genomic systems rather than the algorithms themselves.
+        </p>
+
+        <div class="review-metrics">
+
+          <div class="review-metric">
+            <strong>5</strong>
+            <span>working foundations</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>[X]</strong>
+            <span>validation studies</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>[X]</strong>
+            <span>real cases</span>
+          </div>
+
+        </div>
+
+      </div>
+    </details>
+
+
+    <!-- Project team -->
+
+    <details class="review-criterion">
+      <summary class="review-criterion__summary">
+
+        <span class="review-criterion__title">
+          Project team
+        </span>
+
+        <span class="review-criterion__preview">
+          <span class="review-pill">
+            CH + UK consortium
+          </span>
+        </span>
+
+        <span class="review-criterion__chevron" aria-hidden="true"></span>
+
+      </summary>
+
+      <div class="review-criterion__body">
+
+        <p>
+          The consortium combines genomic data generation, healthcare, research,
+          scientific methodology, software implementation and commercial adoption
+          across Switzerland and the UK.
+        </p>
+
+        <div class="review-metrics">
+
+          <div class="review-metric">
+            <strong>[X]</strong>
+            <span>partners</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>[X]</strong>
+            <span>institutions</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>[X]</strong>
+            <span>major programmes represented</span>
+          </div>
+
+        </div>
+
+      </div>
+    </details>
+
+
+    <!-- Target market -->
+
+    <details class="review-criterion">
+      <summary class="review-criterion__summary">
+
+        <span class="review-criterion__title">
+          Target market
+        </span>
+
+        <span class="review-criterion__preview">
+          <span class="review-pill">
+            <strong>5</strong>
+            Swiss genetics centres
+          </span>
+
+          <span class="review-pill">
+            <strong>680,000+</strong>
+            NHS tests
+          </span>
+        </span>
+
+        <span class="review-criterion__chevron" aria-hidden="true"></span>
+
+      </summary>
+
+      <div class="review-criterion__body">
+
+        <p>
+          The primary adopters are genome centres, hospitals, diagnostic laboratories,
+          software providers and biotechnology and pharmaceutical companies that
+          generate, analyse or consume genomic information.
+        </p>
+
+        <div class="review-metrics">
+
+          <div class="review-metric">
+            <strong>5</strong>
+            <span>Swiss university medical-genetics centres</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>680,000+</strong>
+            <span>NHS genomic tests / year</span>
+          </div>
+
+        </div>
+
+      </div>
+    </details>
+
+
+    <!-- Outcomes and route to market -->
+
+    <details class="review-criterion">
+      <summary class="review-criterion__summary">
+
+        <span class="review-criterion__title">
+          Outcomes &amp; route to market
+        </span>
+
+        <span class="review-criterion__preview">
+          <span class="review-pill">
+            <strong>2,073</strong>
+            exports
+          </span>
+
+          <span class="review-pill">
+            <strong>2,095</strong>
+            software downloads
+          </span>
+        </span>
+
+        <span class="review-criterion__chevron" aria-hidden="true"></span>
+
+      </summary>
+
+      <div class="review-criterion__body">
+
+        <p>
+          Working standards and reference implementations already exist.
+          The project connects them, removes interoperability bottlenecks and
+          validates adoption through real partner workflows.
+        </p>
+
+        <div class="review-metrics">
+
+          <div class="review-metric">
+            <strong>2,073</strong>
+            <span>User reports</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>1,302</strong>
+            <span>Package downloads</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>793</strong>
+            <span>Engine downloads</span>
+          </div>
+
+        </div>
+
+      </div>
+    </details>
+
+
+    <!-- Wider impact -->
+
+    <details class="review-criterion">
+      <summary class="review-criterion__summary">
+
+        <span class="review-criterion__title">
+          Wider impact
+        </span>
+
+        <span class="review-criterion__preview">
+          <span class="review-pill">
+            <strong>490,640</strong>
+            UK Biobank WGS
+          </span>
+
+          <span class="review-pill">
+            <strong>535,000+</strong>
+            All of Us WGS
+          </span>
+        </span>
+
+        <span class="review-criterion__chevron" aria-hidden="true"></span>
+
+      </summary>
+
+      <div class="review-criterion__body">
+
+        <p>
+          Open specifications, mappings, reference implementations and conformance
+          tools are designed for independent adoption beyond the initial Swiss-UK consortium.
+        </p>
+
+        <div class="review-metrics">
+
+          <div class="review-metric">
+            <strong>490,640</strong>
+            <span>UK Biobank WGS</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>535,000+</strong>
+            <span>All of Us WGS</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>CH + UK</strong>
+            <span>initial cross-border validation</span>
+          </div>
+
+        </div>
+
+      </div>
+    </details>
+
+
+    <!-- Added value -->
+
+    <details class="review-criterion">
+      <summary class="review-criterion__summary">
+
+        <span class="review-criterion__title">
+          Added value
+        </span>
+
+        <span class="review-criterion__preview">
+          <span class="review-pill">
+            <strong>£200M</strong>
+            WGS programme
+          </span>
+
+          <span class="review-pill">
+            <strong>&gt;$6.8BN</strong>
+            selected acquisitions
+          </span>
+        </span>
+
+        <span class="review-criterion__chevron" aria-hidden="true"></span>
+
+      </summary>
+
+      <div class="review-criterion__body">
+
+        <p>
+          Shared infrastructure protects existing investment and reduces repeated
+          integration while allowing organisations to retain their own technology,
+          intellectual property and commercial differentiation.
+        </p>
+
+        <div class="review-metrics">
+
+          <div class="review-metric">
+            <strong>£200M</strong>
+            <span>UK Biobank WGS programme</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>$4.34BN</strong>
+            <span>Illumina FY2025 revenue</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>£223.9M</strong>
+            <span>Oxford Nanopore FY2025 revenue</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>$160M</strong>
+            <span>PacBio FY2025 revenue</span>
+          </div>
+
+          <div class="review-metric">
+            <strong>&gt;$6.8BN</strong>
+            <span>selected Roche acquisitions</span>
+          </div>
+
+        </div>
+
+      </div>
+    </details>
+
+
+  </div>
+</section>
 
 ---
 
-## Existing foundations and reference implementations
 
-The project starts from working, scientifically grounded implementations rather than from a blank specification. Together, these demonstrate key parts of the interoperability layer that the Swiss-UK project will connect, extend and validate across independent organisations.
+## What the project will deliver
 
-## 1. Genomic data provenance & interoperability
+### Work package 1. Genomic data and provenance interoperability
 
-**Omics semantic implementation**
+**Purpose:** Make genomic and omics information portable between data generators, laboratories, research environments and downstream systems.
+The project will validate the shared representations and mappings for genomic data provenance, sample and sequencing metadata, machine-readable semantic structures, and alignment between national and international data models.
 
-### Give omics data a shared language.
+**Outcome:** A genome centre produces structured genomic metadata that can be consumed by an independent hospital, research environment or commercial analytical system without reconstructing its provenance.
 
-Maps genomic and omics data into shared semantic structures so hospitals, laboratories, researchers and companies can exchange and reuse information consistently across systems.
+**Working validation:** Omics schema with SPHN-aligned genomic and omics semantic mappings already support structured metadata conversion for clinical and research integration, including FAIR representations in RDF, SQL and other machine-readable formats ([van der Horst et al., 2023](https://doi.org/10.20944/preprints202312.0373.v1)).
 
-Open, ready-to-use mappings and converters for FAIR representations including SPHN-compliant RDF, SQL and other machine-readable formats.
-
-### Implementation & social proof
-
-* SIB Personalized Health Informatics Group, SPHN Omics Guidelines: https://sphn-semantic-framework.readthedocs.io/en/latest/concepts_guidelines/omics_guidelines.html
-* Switzerland Omics SPHN implementation: https://genomicvault.switzerlandomics.ch/rdf/sphn_compliance
+* SIB Personalized Health Informatics Group, [SPHN Omics Guidelines](https://sphn-semantic-framework.readthedocs.io/en/latest/concepts_guidelines/omics_guidelines.html)
+* Switzerland Omics [schema implementation](https://genomicvault.switzerlandomics.ch/rdf/sphn_compliance)
 * SPHN-compliant genomic metadata conversion for clinical and research integration
 * Ready-to-use implementation for data generated by genome centres and other omics providers
 
-### Science & standards
+### Work package 2. Reproducible genomic analysis criteria
 
-van der Horst E, Unni D, Kopmels F, Armida J, Touré V, Franke W, Crameri K, Cirillo E, Österle S. *Bridging Clinical and Genomic Knowledge: An Extension of the SPHN RDF Schema for Seamless Integration and FAIRification of Omics Data.* Preprints.org (2023). DOI: https://doi.org/10.20944/preprints202312.0373.v1.
+**Purpose:** Make the criteria used to select and analyse genomic variation explicit, portable and reproducible.
+The project will validate machine-readable specifications for variant selection and analysis criteria, allowing independent organisations to communicate exactly which records of genetic variation qualify for an analysis and why.
 
----
+**Outcome:** A genomic analysis or gene panel provider can communicate both the variants reported and the criteria used to select them, allowing another organisation to reproduce or independently evaluate the analysis.
 
-## 2. Reproducible genomic analysis
+**Working validation:** The Qualifying Variant Framework records reusable criteria for reproducible genomic analysis, while SGA-QVSS-1.0.0 defines a portable, auditable and reusable representation of rule-based criteria for qualifying records of genetic variation ([Lawless et al., 2026](https://doi.org/10.1093/bioinformatics/btaf676); [Swiss Genomics Association, 2026a](https://doi.org/10.5281/zenodo.20553446)).
 
-**Qualifying Variant Framework + QVSS**
-
-### Make genomic analysis criteria portable.
-
-Records the rules used to select genetic variants in a standardised, reusable format, making analyses easier to reproduce, audit and transfer across tools and providers.
-
-Open normative standard with reference implementations for creating and applying human-readable and machine-readable Qualifying Variant specifications.
-
-### Implementation & social proof
-
-* Qualifying Variant database: https://switzerlandomics.ch/technologies/qv_database/
+* Qualifying Variant [database](https://switzerlandomics.ch/technologies/qv_database/)
+* Qualifying Variant publication, *Bioinformatics* ([Lawless et al., 2026](https://doi.org/10.1093/bioinformatics/btaf676))
 * Open normative standard: [SGA-QVSS-1.0.0](https://www.swissgenomicsassociation.ch/pages/sga_qvss)
+* Portable, auditable and reusable representation of rule-based criteria for qualifying records of genetic variation
+* DOI: https://doi.org/10.5281/zenodo.20553446
 
-### Science & standards
+### Work package 3. Structured variant interpretation
 
-* [Qualifying Variant database](https://switzerlandomics.ch/technologies/qv_database/): reusable criteria for reproducible genomic analysis, described in [Lawless et al. (2026)](https://doi.org/10.1093/bioinformatics/btaf676), *Bioinformatics*.
-* [SGA-QVSS-1.0.0](https://www.swissgenomicsassociation.ch/pages/sga_qvss): the Qualifying Variant Set Standard defines a portable, auditable and reusable representation of rule-based criteria for qualifying records of genetic variation. [![DOI](https://zenodo.org/badge/1258109244.svg)](https://doi.org/10.5281/zenodo.20553446)
+**Purpose:** Make genomic variant interpretation structured, portable and independently reviewable.
+The project will validate structured representations for interpretation criteria, supporting evidence, classification decisions and consistent reporting, together with reference implementations and conformance mechanisms.
 
----
+**Outcome:** A variant interpretation produced by one organisation can be inspected and independently reviewed by another organisation without depending on the originating software or reconstructing the assessment from an unstructured report.
 
-## 3. Variant interpretation & reporting
+**Working validation:** ACMG Validator provides a working implementation for structured ACMG/AMP variant interpretation, including evidence recording, completeness checking, internal consistency validation and structured report export ([Richards et al., 2015](https://doi.org/10.1038/gim.2015.30); [Tavtigian et al., 2020](https://doi.org/10.1002/humu.24088)).
 
-**ACMG Validator**
-
-### Make variant interpretation consistently reportable.
-
-Structures ACMG/AMP evidence review so criteria, evidence, caveats, completeness and classification decisions are recorded consistently and can be inspected across providers.
-
-Free, open access browser implementation with private local processing and structured PDF, HTML, JSON and Markdown report export.
-
-### Implementation & social proof
-
-* Working ACMG/AMP implementation: https://switzerlandomics.ch/technologies/acmg-validator/
+* Working ACMG/AMP [implementation](https://switzerlandomics.ch/technologies/acmg-validator/)
 * Capabilities: structured multi-variant review, evidence recording, completeness checking and internal consistency validation
 * Outputs: PDF, HTML, JSON and Markdown
-* Live web platform: https://switzerlandomics.ch/technologies/acmg-validator/
+* [Live web platform](https://switzerlandomics.ch/technologies/acmg-validator/)
 
-### Science & standards
+### Work package 4. Clinical context and family history
 
-Richards S, et al. *Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology.* Genetics in Medicine (2015). DOI: https://doi.org/10.1038/gim.2015.30.
+**Purpose:** Preserve the clinical and family context needed to understand genomic information after it changes hands, demonstrating value through real-world evaluation in healthcare and commercial workflows using structured pedigree, family history, phenotype and clinical context based on established nomenclature and interoperable healthcare standards.
 
-Tavtigian SV, Harrison SM, Boucher KM, Biesecker LG. *Fitting a naturally scaled point system to the ACMG/AMP variant classification guidelines.* Human Mutation (2020). DOI: https://doi.org/10.1002/humu.24088.
+**Outcome:** A receiving clinical or research organisation can understand the family and clinical context behind genomic information without depending on the originating software or reconstructing the record manually.
+
+**Working validation:** Pedigree records relationships, phenotype and genomic findings in a structured format based on established human pedigree nomenclature and interoperable healthcare standards including HL7 FHIR (Bennett et al., 1995; [Bennett et al., 2008](https://doi.org/10.1007/s10897-008-9169-9); [Bennett et al., 2022](https://doi.org/10.1002/jgc4.1621)).
+
+* Open source [Pedigree application](https://switzerlandomics.ch/technologies/pedigree/)
+* **User reports:** 2,073 as of July 2026
+* **User adoption:** Clinics in EU, USA, CH
+
+<!-- User support statements: to add -->
+
+### Work package 5. Verifiable evidence
+
+**Purpose:** Preserve the supporting evidence needed to independently assess genomic information after it changes hands, demonstrating value across healthcare, research, commercial and AI-agent workflows through structured evidence requirements, completeness and review.
+
+**Outcome:** A receiving organisation can inspect the supporting evidence and assess whether declared evidence requirements have been satisfied without depending on the originating software.
+
+**Working validation:** The Qualifying Evidence Matrix (SGA-QEM-1.0.0) provides an open, structured representation of declared evidence requirements and whether verifiable evidence is present or absent. QuantBayes adds a quantitative layer for assessing evidence sufficiency under those declared requirements, while QuantBayes Studio applies the same framework across scientific, clinical, commercial and AI-agent workflows without deciding whether the underlying conclusion is true ([Quant Group et al., 2025](https://doi.org/10.64898/2025.12.02.25341503); [Swiss Genomics Association, 2026b](https://doi.org/10.5281/zenodo.17936586)).
+
+* Open access [QuantBayes Studio](https://quantbayes.com/) - Web community platform and AI-agent API.
+* Open source [R package and engine](https://switzerlandomics.ch/technologies/quantbayes/) - CRAN downloads: 1,302 as of July 2026 [![CRAN version](https://www.r-pkg.org/badges/version/quantbayes)](https://cran.r-project.org/package=quantbayes) [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/quantbayes)](https://cran.r-project.org/package=quantbayes) 
+* Open access page [QuantBayes engine](/technologies/quantbayes/)
+* Open source [macOS/Linux engine](https://switzerlandomics.ch/technologies/quantbayes/) - Desktop software downloads: 793 as of July 2026 [record](https://zenodo.org/records/17919369)
+* [Open normative standard: SGA-QEM-1.0.0](https://www.swissgenomicsassociation.ch/pages/sga_qem)
+
+
+<!---
+<figure>
+  <img
+    src="{{ '/images/swiss-uk-genomics/qem_and_quantbayes_extended.png' | relative_url }}"
+    alt="Qualifying Evidence Matrix and QuantBayes evidence assessment framework"
+  >
+  <figcaption>
+    <strong>Figure</strong>. The Qualifying Evidence Matrix and QuantBayes support structured evidence recording and independent assessment of evidence sufficiency.
+  </figcaption>
+</figure>
+-->
+
+### Cross-organisational validation and adoption
+
+**Purpose:** Demonstrate that the shared framework works across independent Swiss and UK organisations, sectors and software environments.
+
+Partners will map real workflows, produce conformant information, consume information produced by another organisation, independently implement project specifications, validate reference implementations and test cross-border handoffs.
+
+Where relevant, the project will also assess alignment with applicable accreditation, quality-management and regulatory requirements.
+
+**Outcome:** Independent Swiss and UK organisations produce, exchange and consume interoperable genomic information without requiring the same vendor or software stack.
+
+**Validation opportunities**
+
+The main project result is not the publication of another specification. It is demonstrated use across independent organisations and real genomic workflows.
+
+The following studies illustrate how consortium partners could validate different parts of the shared foundation. They are examples for consortium development and do not represent confirmed studies until a partner has formally committed.
+
+**Rare disease and clinical genetics**
+
+A clinical genetics or rare-disease partner applies the shared framework to real or appropriately governed cases, testing provenance, analysis criteria, pedigree context, variant interpretation and evidence exchange across organisations.
+
+**Partner contribution:** Use the shared mappings and representations on real clinical or research cases.
+
+**Cancer and common disease genomics**
+
+A research or healthcare partner tests whether genomic analysis criteria and supporting evidence can be transferred between analytical environments in cancer or complex disease workflows.
+
+**Partner contribution:** Apply shared representations to an existing genomic study or analytical pipeline.
+
+**Drug discovery and pharmaceutical R&D**
+
+An industry partner maps genomic evidence entering a target discovery, biomarker or translational research workflow and evaluates whether provenance, analysis criteria and supporting evidence can be consumed without bespoke reconstruction.
+
+**Partner contribution:** Integrate or evaluate project outputs within an existing drug discovery or translational workflow.
+
+**Gene panel and diagnostic services**
+
+A testing or diagnostic service provider produces structured analysis criteria and interpretation outputs that can be independently consumed or reviewed by another organisation.
+
+**Partner contribution:** Produce conformant information from an operational or representative testing workflow.
+
+**Genome centres and sequencing providers**
+
+A sequencing provider or genome centre maps existing genomic data and metadata outputs into the shared project representation without replacing its existing infrastructure.
+
+**Partner contribution:** Allow mapping and validation of existing outputs.
+
+**Research cohorts and biobanks**
+
+Large-scale research resources such as UK Biobank or All of Us could provide relevant analytical contexts where permitted by their respective data-access and governance requirements.
+
+A validation study could apply reproducible analysis specifications and evidence structures to an existing large-scale genomic analysis and test whether another analytical environment can reproduce the declared criteria.
+
+**Partner contribution:** Independently reproduce or validate a defined analytical workflow.
+
+<!--
+Consortium development notes retained from earlier draft:
+Potential research contexts include UK Biobank (UKBB) and All of Us (AoU), subject to applicable access conditions.
+Potential industry outreach noted during consortium development includes Illumina, Roche and Axelios.
+These names do not indicate participation, endorsement or commitment.
+-->
+
+### Consortium and partner participation
+
+We are joining with partners across healthcare, genomics, academia and industry to validate, implement and adopt the shared foundation across real Swiss and UK workflows.
+
+Partners can contribute at different points in the genomic information chain, including data generation, analysis, clinical use, software implementation, standards development and independent validation.
+
+**Produce · Map · Consume · Validate**
+
+| Partner | Country | Sector | Project role | Validation or adoption commitment |
+|---|:---:|---|---|---|
+| [Partner] | CH | Genome centre / laboratory | Produce or map | Omics schema, provenance and QV |
+| [Partner] | CH | Healthcare | Consume and validate | Omics schema, Pedigree and QEM |
+| [Partner] | CH | Academia / research | Reproduce and validate | Omics schema, QV and ACMG |
+| [Partner] | CH | SME / industry | Integrate or map | Omics schema, QV and QEM |
+| [Partner] | UK | Genome centre / laboratory | Produce or map | Omics schema, provenance and QV |
+| [Partner] | UK | Healthcare | Consume and validate | Omics schema, Pedigree and QEM |
+| [Partner] | UK | Academia / research | Reproduce and validate | Omics schema, QV and ACMG |
+| [Partner] | UK | SME / industry | Integrate or map | Omics schema, QV and QEM |
+
+The strongest partner commitments demonstrate real adoption rather than general endorsement: producing conformant data, consuming another organisation's output, integrating a project standard, validating a reference implementation, or testing a cross-border genomic workflow.
+
+**Current partner and standards community**
+
+* [Swiss Genomics Association](https://www.swissgenomicsassociation.ch)
+
+Partners interested in participating can support the proposal through a short letter of interest describing the relevant need, their proposed contribution and the workflow or setting in which they would help validate or adopt the project outputs.
 
 ---
-
-## 4. Clinical family context
-
-**Pedigree**
-
-### Make family history portable.
-
-Records pedigrees, relationships, phenotype and genomic findings in a structured, standardised format so clinical family history can be understood and reused across systems.
-
-Free, open access implementation based on established scientific pedigree nomenclature and interoperable healthcare standards including HL7 FHIR.
-
-### Implementation & social proof
-
-* Application: https://switzerlandomics.ch/technologies/pedigree/
-* User exports: 2,073 as of July 2026
-* User support statements: to add
-
-### Science & standards
-
-Bennett RL, Steinhaus KA, Uhrich SB, et al. *Recommendations for standardized human pedigree nomenclature.* American Journal of Human Genetics. 1995;56:745–752.
-
-Bennett RL, French KS, Resta RG, Doyle DL. *Standardized Human Pedigree Nomenclature: Update and Assessment of the Recommendations of the National Society of Genetic Counselors.* Journal of Genetic Counseling. 2008;17:424–433. https://doi.org/10.1007/s10897-008-9169-9
-
-Bennett RL, French KS, Resta RG, Austin J. *Practice resource-focused revision: Standardized pedigree nomenclature update centered on sex and gender inclusivity.* Journal of Genetic Counseling. 2022;31:1238–1248. https://doi.org/10.1002/jgc4.1621
-
----
-
-## 5. Evidence reliability & verification
-
-**QuantBayes + QEM**
-
-### Make the evidence behind precision medicine verifiable.
-
-Measures verifiable evidence completeness, making genomic results easier to inspect and compare across providers.
-
-Available as an open source engine for macOS, Linux and R, with a web platform, community profiles and API access.
-
-### Implementation & social proof
-
-* Open source R package and engine: https://switzerlandomics.ch/technologies/quantbayes/
-* Open source macOS/Linux engine: https://switzerlandomics.ch/technologies/quantbayes/
-* CRAN package downloads: 1,302 as of July 2026
-* Desktop software downloads: 793 as of July 2026: https://zenodo.org/records/17919369
-* QuantBayes Studio: https://quantbayes.com/
-* Open normative standard: [SGA-QEM-1.0.0](https://www.swissgenomicsassociation.ch/pages/sga_qem)
-* [QuantBayes engine](/technologies/quantbayes/): quantifies genomic variant evidence sufficiency with Bayesian posterior intervals. [![CRAN version](https://www.r-pkg.org/badges/version/quantbayes)](https://cran.r-project.org/package=quantbayes) [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/quantbayes)](https://cran.r-project.org/package=quantbayes) [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17919369.svg)](https://doi.org/10.5281/zenodo.17919369)
-
-### Science & standards
-
-* Quant Group, et al. *A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease.* medRxiv (2025). DOI: https://doi.org/10.64898/2025.12.02.25341503.
-* [SGA-QEM-1.0.0](https://www.swissgenomicsassociation.ch/pages/sga_qem): the Qualifying Evidence Matrix defines a minimal binary matrix for recording whether verifiable evidence is present or absent for evaluated items. [![DOI](https://zenodo.org/badge/1116700370.svg)](https://doi.org/10.5281/zenodo.17936586)
-
----
-
 
 ## Deployment and accessibility
 
@@ -209,77 +696,252 @@ Available as an open source engine for macOS, Linux and R, with a web platform, 
 
 ---
 
-## Adoption and validation partners
 
-The project will be validated through independent implementation and use across Switzerland and the UK. Partners will contribute according to their role in the genomic information chain, demonstrating that the shared foundation works across different organisations, systems and commercial models.
 
-| Partner   | Country        | Sector                     | Project role | Validation or adoption commitment                  |
-| --------- | -------------- | -------------------------- | ------------ | -------------------------------------------------- |
-| [Partner] | CH    | Genome centre / laboratory | Allow mapping | Omics schema, QV |
-| [Partner] | CH    | Healthcare                 | Use mapping | Omics schema, Pedigree, QEM |
-| [Partner] | CH    | Academia / research        | Use mapping | Omics schema, QV, ACMG |
-| [Partner] | CH    | SME / industry             | Allow mapping | Omics schema, QV, QEM |
-| [Partner] | UK | Genome centre / laboratory | Allow mapping | Omics schema, QV |
-| [Partner] | UK | Healthcare                 | Use mapping | Omics schema, Pedigree, QEM |
-| [Partner] | UK | Academia / research        | Use mapping | Omics schema, QV, ACMG |
-| [Partner] | UK | SME / industry             | Allow mapping | Omics schema, QV, QEM |
+<div class="project-implementation-grid">
 
-The strongest partner commitments will demonstrate real adoption rather than general endorsement: producing conformant data, consuming another organisation's output, integrating a project standard, validating a reference implementation, or testing a cross-border genomic workflow.
 
-<figure>
-  <img
-    src="{{ '/images/swiss-uk-genomics/sga_qv_es_A.png' | relative_url }}"
-    alt="Innosuisse and Innovate UK"
+  <!-- Omics schema -->
+
+<div class="media-card-grid">
+
+
+  <!-- Omics schema -->
+
+  <article class="media-card">
+        <!-- src="{{ '/images/portfolio/landingpage_swiss_genomics_association.png' | relative_url }}" -->
+
+    <a
+      class="media-card-image"
+      href="https://genomicvault.switzerlandomics.ch/rdf/sphn_compliance"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <img
+        src="{{ '/images/portfolio/landingpage_omics_schema.png' | relative_url }}"
+        alt="Omics schema and Swiss genomics standards"
+        loading="lazy"
+      >
+    </a>
+
+    <div class="media-card-body">
+
+      <div class="media-card-meta">
+        Genomic data interoperability
+      </div>
+
+      <h4>Omics schema</h4>
+
+      <p>
+        SPHN-aligned genomic and omics semantic mappings for structured,
+        machine-readable clinical and research data.
+      </p>
+
+    </div>
+
+  </article>
+
+
+  <!-- ACMG Validator -->
+
+  <article class="media-card">
+
+    <a
+      class="media-card-image"
+      href="https://switzerlandomics.ch/technologies/acmg-validator/"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <img
+        src="{{ '/images/portfolio/landingpage_acmg_validator.png' | relative_url }}"
+        alt="ACMG Validator interface"
+        loading="lazy"
+      >
+    </a>
+
+    <div class="media-card-body">
+
+      <div class="media-card-meta">
+        Clinical genomics review interface
+      </div>
+
+      <h4>ACMG Validator</h4>
+
+      <p>
+        A browser-based review interface that turns ACMG/AMP variant classification
+        into a structured evidence record.
+      </p>
+
+    </div>
+
+  </article>
+
+
+  <!-- Pedigree -->
+
+  <article class="media-card">
+
+    <a
+      class="media-card-image"
+      href="https://switzerlandomics.ch/technologies/pedigree/"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <img
+        src="{{ '/images/portfolio/landingpage_pedigree.png' | relative_url }}"
+        alt="Pedigree builder landing page"
+        loading="lazy"
+      >
+    </a>
+
+    <div class="media-card-body">
+
+      <div class="media-card-meta">
+        Clinical workflow interface
+      </div>
+
+      <h4>Pedigree builder</h4>
+
+      <p>
+        A standards-based product interface that turns family history into a
+        clinical pedigree, report, and exchangeable record.
+      </p>
+
+    </div>
+
+  </article>
+
+
+  <!-- QuantBayes Studio -->
+
+  <article class="media-card">
+
+    <a
+      class="media-card-image"
+      href="https://quantbayes.com"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <img
+        src="{{ '/images/portfolio/landingpage_quantbayes_studio.png' | relative_url }}"
+        alt="QuantBayes Studio landing page"
+        loading="lazy"
+      >
+    </a>
+
+    <div class="media-card-body">
+
+      <div class="media-card-meta">
+        Evidence verification platform
+      </div>
+
+      <h4>QuantBayes Studio</h4>
+
+      <p>
+        A product identity and platform experience for evidence-based verification
+        across AI outputs, scientific claims, clinical findings, engineering checks,
+        and regulated review workflows.
+      </p>
+
+    </div>
+
+  </article>
+
+<!-- QuantBayes Engine -->
+
+<article class="media-card">
+
+  <a
+    class="media-card-image"
+    href="https://switzerlandomics.ch/technologies/quantbayes/"
+    target="_blank"
+    rel="noreferrer"
   >
-  <figcaption>
-    <strong>Figure</strong>. Swiss Genomics Association.
-  </figcaption>
-</figure>
+    <img
+      src="{{ '/images/portfolio/landingpage_quantbayes_engine.png' | relative_url }}"
+      alt="QuantBayes open-source engine"
+      loading="lazy"
+    >
+  </a>
+
+  <div class="media-card-body">
+
+    <div class="media-card-meta">
+      Open-source evidence engine
+    </div>
+
+    <h4>QuantBayes Engine</h4>
+
+    <p>
+      An open-source Bayesian engine for quantifying evidence sufficiency under
+      declared requirements across genomic, scientific, clinical and automated workflows.
+    </p>
+
+  </div>
+
+</article>
 
 
-<figure>
-  <img
-    src="{{ '/images/swiss-uk-genomics/qem_and_quantbayes_extended.png' | relative_url }}"
-    alt="Innosuisse and Innovate UK"
-  >
-  <figcaption>
-    <strong>Figure</strong>. The qualifying evidence standard and evidence interpretation engine supports verifiable trust.
-  </figcaption>
-</figure>
+</div>
+</div>
 
-<figure>
-  <img
-    src="{{ '/images/swiss-uk-genomics/acmg_validator_poster_2.png' | relative_url }}"
-    alt="Innosuisse and Innovate UK"
-  >
-  <figcaption>
-    <strong>Figure</strong>. ACMG validator.
-  </figcaption>
-</figure>
+---
 
+## Route to adoption and market
 
-## Partners
+The primary adopters of the shared foundation are genome centres, genomic laboratories, healthcare providers, research organisations, diagnostic and software providers, and biotechnology and pharmaceutical companies that generate, analyse, exchange or consume genomic information.
 
-* Swiss Genomics Association <https://www.swissgenomicsassociation.ch>
+The route to adoption is based on open specifications, usable reference implementations, independent implementation, conformance testing and validation within real partner workflows. Successful validation allows organisations to adopt the shared representations without replacing their existing instruments, algorithms or products.
 
+Commercial providers remain free to differentiate through analytical methods, proprietary databases, artificial intelligence, regulated software, integration, support and professional services.
 
-## Areas of focus
+Common inputs and outputs reduce integration cost and expand the addressable ecosystem for every compatible provider.
 
-* Community standard consortium.
-* Without conflict to user IP.
-* Accreditation.
-* Validation studies: research UKBB, AoU, 
-* Validation studies: clinical cases, 
-* Validation studies: industry with Illumina, Roche Axelios, 
-* Validation studies: service, genome centres.
+---
 
-## Review criteria:
+## Wider impact
 
-* The business need, technological challenge, or market opportunity behind your innovation
+The shared specifications, mappings, reference implementations and conformance tools will remain available beyond the immediate project consortium.
+
+Healthcare providers can receive and evaluate genomic information from different providers. Researchers can reproduce analytical criteria across institutions. Genome centres and laboratories can provide outputs that are easier to integrate downstream. Commercial organisations can build products and services against common interfaces rather than repeatedly developing bespoke connections.
+
+The wider result is an open foundation that can be independently adopted across healthcare, academia and industry while preserving organisational autonomy and commercial competition.
+
+Success will be demonstrated through independent adoption and cross-border interoperability, not simply through publication of another standard.
+
+---
+
+## References
+
+Bennett RL, Steinhaus KA, Uhrich SB, et al. Recommendations for standardized human pedigree nomenclature. *American Journal of Human Genetics*. 1995;56:745–752.
+
+Bennett RL, French KS, Resta RG, Doyle DL. Standardized human pedigree nomenclature: update and assessment of the recommendations of the National Society of Genetic Counselors. *Journal of Genetic Counseling*. 2008;17:424–433. DOI: <https://doi.org/10.1007/s10897-008-9169-9>.
+
+Bennett RL, French KS, Resta RG, Austin J. Practice resource-focused revision: standardized pedigree nomenclature update centered on sex and gender inclusivity. *Journal of Genetic Counseling*. 2022;31:1238–1248. DOI: <https://doi.org/10.1002/jgc4.1621>.
+
+Lawless D, et al. Qualifying Variant database: reusable criteria for reproducible genomic analysis. *Bioinformatics*. 2026. DOI: <https://doi.org/10.1093/bioinformatics/btaf676>.
+
+Quant Group, et al. A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease. *medRxiv*. 2025. DOI: <https://doi.org/10.64898/2025.12.02.25341503>.
+
+Richards S, Aziz N, Bale S, Bick D, Das S, Gastier-Foster J, et al. Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology. *Genetics in Medicine*. 2015. DOI: <https://doi.org/10.1038/gim.2015.30>.
+
+Swiss Genomics Association. SGA-QVSS-1.0.0: Qualifying Variant Set Standard. Zenodo. 2026a. DOI: <https://doi.org/10.5281/zenodo.20553446>.
+
+Swiss Genomics Association. SGA-QEM-1.0.0: Qualifying Evidence Matrix. Zenodo. 2026b. DOI: <https://doi.org/10.5281/zenodo.17936586>.
+
+Tavtigian SV, Harrison SM, Boucher KM, Biesecker LG. Fitting a naturally scaled point system to the ACMG/AMP variant classification guidelines. *Human Mutation*. 2020. DOI: <https://doi.org/10.1002/humu.24088>.
+
+van der Horst E, Unni D, Kopmels F, Armida J, Touré V, Franke W, Crameri K, Cirillo E, Österle S. Bridging clinical and genomic knowledge: an extension of the SPHN RDF schema for seamless integration and FAIRification of omics data. *Preprints.org*. 2023. DOI: <https://doi.org/10.20944/preprints202312.0373.v1>.
+
+<!--
+Internal proposal review criteria retained from earlier draft:
+
+* The business need, technological challenge, or market opportunity behind the innovation
 * The approach and focus of the innovation
 * The project team, resources and their roles
 * Target market and market awareness
 * Outcomes and route to market
 * Wider impact outside the project team
 * Added Value
+-->
 

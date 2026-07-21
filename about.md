@@ -1,5 +1,4 @@
 ---
-
 title: About
 layout: default
 description: Switzerland Omics builds advanced statistical systems, software, evidence databases, and interpretation infrastructure for genomic medicine.
