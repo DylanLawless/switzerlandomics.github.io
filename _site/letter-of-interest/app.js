@@ -15,10 +15,11 @@
     professionalTitle: document.getElementById("professional-title"),
     organisation: document.getElementById("organisation"),
     email: document.getElementById("email"),
-    toolName: document.getElementById("tool-name"),
-    comment: document.getElementById("comment"),
+    areaOfExpertise: document.getElementById("area-of-expertise"),
+    selectedAreasFieldset: document.getElementById("selected-areas-fieldset"),
+    selectedAreasList: document.getElementById("selected-areas-list"),
+    selectAllAreas: document.getElementById("select-all-areas"),
     consentSubmission: document.getElementById("consent-submission"),
-    consentPrivateSharing: document.getElementById("consent-private"),
     consentPublicDisplay: document.getElementById("consent-public"),
     signatureCanvas: document.getElementById("signature-canvas"),
     clearSignature: document.getElementById("clear-signature"),
@@ -57,6 +58,12 @@
     elements.form.addEventListener("submit", handleSubmit);
     elements.clearSignature.addEventListener("click", clearSignatureCanvas);
     elements.downloadJson.addEventListener("click", downloadDemoPayload);
+
+    if (elements.selectAllAreas) {
+      elements.selectAllAreas.addEventListener("change", () => {
+        setAllAreaOptions(elements.selectAllAreas.checked);
+      });
+    }
   }
 
   async function loadInvitation() {
@@ -83,10 +90,6 @@
       throw new Error(data.error || "This invitation is invalid or has expired.");
     }
 
-    if (data.statementVersion !== config.statementVersion) {
-      throw new Error("This invitation uses a different statement version.");
-    }
-
     invitation = data;
     populateInvitation(invitation);
     elements.invitationStatus.textContent = `Invitation valid until ${formatDate(invitation.expiresAt)}.`;
@@ -96,14 +99,98 @@
     elements.fullName.value = data.recipientName || "";
     elements.organisation.value = data.organisation || "";
     elements.email.value = data.email || "";
-    elements.toolName.value = data.toolName || "";
+    renderAreaOptions(data.availableAreas || []);
 
     if (config.mode !== "demo") {
       elements.email.readOnly = true;
     }
   }
 
-function initialiseSignatureCanvas() {
+  function renderAreaOptions(areas) {
+    elements.selectedAreasList.replaceChildren();
+
+    if (!Array.isArray(areas) || areas.length === 0) {
+      elements.selectedAreasFieldset.hidden = true;
+      updateSelectAllAreasState();
+      return;
+    }
+
+    elements.selectedAreasFieldset.hidden = false;
+
+    for (const area of areas) {
+      const key = String(area.key || "");
+      if (!key) {
+        continue;
+      }
+
+      const option = document.createElement("div");
+      option.className = "area-option form-check";
+
+      const input = document.createElement("input");
+      input.className = "form-check-input";
+      input.type = "checkbox";
+      input.name = "selectedAreas";
+      input.value = key;
+      input.id = `area-${key}`;
+      input.checked = true;
+
+      input.addEventListener("change", updateSelectAllAreasState);
+
+      const label = document.createElement("label");
+      label.className = "form-check-label";
+      label.htmlFor = input.id;
+
+      const labelText = document.createElement("span");
+      labelText.textContent = area.label || key;
+      label.appendChild(labelText);
+
+      if (area.implementation) {
+        const implementation = document.createElement("span");
+        implementation.className = "area-implementation";
+        implementation.textContent = area.implementation;
+        label.appendChild(implementation);
+      }
+
+      option.appendChild(input);
+      option.appendChild(label);
+      elements.selectedAreasList.appendChild(option);
+    }
+
+    updateSelectAllAreasState();
+  }
+
+  function setAllAreaOptions(checked) {
+    const inputs = elements.selectedAreasList.querySelectorAll('input[name="selectedAreas"]');
+
+    for (const input of inputs) {
+      input.checked = checked;
+    }
+
+    updateSelectAllAreasState();
+  }
+
+  function updateSelectAllAreasState() {
+    if (!elements.selectAllAreas) {
+      return;
+    }
+
+    const inputs = Array.from(
+      elements.selectedAreasList.querySelectorAll('input[name="selectedAreas"]')
+    );
+
+    if (inputs.length === 0) {
+      elements.selectAllAreas.checked = false;
+      elements.selectAllAreas.indeterminate = false;
+      return;
+    }
+
+    const checkedCount = inputs.filter((input) => input.checked).length;
+
+    elements.selectAllAreas.checked = checkedCount === inputs.length;
+    elements.selectAllAreas.indeterminate = checkedCount > 0 && checkedCount < inputs.length;
+  }
+
+  function initialiseSignatureCanvas() {
     const canvas = elements.signatureCanvas;
     const context = canvas.getContext("2d", { alpha: true });
 
@@ -412,26 +499,26 @@ function initialiseSignatureCanvas() {
 
       const data = await readJsonResponse(response);
       if (!response.ok || !data.success) {
-        throw new Error(data.error || "The statement could not be submitted.");
+        throw new Error(data.error || "The letter could not be submitted.");
       }
 
       elements.form.hidden = true;
       elements.successSection.hidden = false;
       if (data.emailStatus === "sent") {
-        elements.successMessage.textContent = "Your statement has been recorded and the signed PDF has been sent by email.";
+        elements.successMessage.textContent = "Your letter has been recorded and the signed PDF has been sent by email.";
       } else if (data.emailStatus === "failed") {
-        elements.successMessage.textContent = "Your statement has been recorded, but email delivery failed. Switzerland Omics can resend the confirmation from the stored record.";
+        elements.successMessage.textContent = "Your letter has been recorded, but email delivery failed. Switzerland Omics can resend the confirmation from the stored record.";
       } else {
-        elements.successMessage.textContent = "Your statement has been recorded. Email delivery is not configured for this environment.";
+        elements.successMessage.textContent = "Your letter has been recorded. Email delivery is not configured for this environment.";
       }
       elements.submissionReference.textContent = data.reference;
       elements.referenceLine.hidden = false;
       elements.successSection.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (error) {
-      showError(error instanceof Error ? error.message : "The statement could not be submitted.");
+      showError(error instanceof Error ? error.message : "The letter could not be submitted.");
       isSubmitting = false;
       elements.submitButton.disabled = false;
-      elements.submitButton.textContent = "Submit statement";
+      elements.submitButton.textContent = "Submit letter";
       resetTurnstile();
     }
   }
@@ -440,6 +527,10 @@ function initialiseSignatureCanvas() {
     if (!elements.form.checkValidity()) {
       elements.form.reportValidity();
       return "Please complete all required fields.";
+    }
+
+    if (requiresAreaSelection() && getSelectedAreaKeys().length === 0) {
+      return "Please select at least one area of interest.";
     }
 
     if (!signatureHasInk) {
@@ -457,24 +548,39 @@ function initialiseSignatureCanvas() {
     return null;
   }
 
+  function requiresAreaSelection() {
+    return Boolean(invitation && Array.isArray(invitation.availableAreas) && invitation.availableAreas.length > 0);
+  }
+
+  function getSelectedAreaKeys() {
+    return Array.from(elements.selectedAreasList.querySelectorAll('input[name="selectedAreas"]:checked'))
+      .map((input) => input.value);
+  }
+
   function buildPayload() {
     const fullName = elements.fullName.value.trim();
+    const statementVersion =
+      invitation && invitation.statementVersion
+        ? invitation.statementVersion
+        : config.demoInvitation.statementVersion;
 
     return {
       token: config.mode === "demo" ? "demo-token" : invitationToken,
       fullName,
       professionalTitle: elements.professionalTitle.value.trim(),
       organisation: elements.organisation.value.trim(),
+      areaOfExpertise: elements.areaOfExpertise.value.trim(),
+      selectedAreas: getSelectedAreaKeys(),
       email: elements.email.value.trim().toLowerCase(),
-      toolName: elements.toolName.value.trim(),
-      comment: elements.comment.value.trim(),
+      toolName: "General",
+      comment: "",
       typedSignature: fullName,
       signatureDataUrl: elements.signatureCanvas.toDataURL("image/png"),
       signatureStrokes: serialiseSignatureStrokes(),
       consentSubmission: elements.consentSubmission.checked,
-      consentPrivateSharing: elements.consentPrivateSharing.checked,
+      consentPrivateSharing: elements.consentSubmission.checked,
       consentPublicDisplay: elements.consentPublicDisplay.checked,
-      statementVersion: config.statementVersion,
+      statementVersion,
       turnstileToken: getTurnstileToken(),
       submittedAtClient: new Date().toISOString()
     };
@@ -586,4 +692,3 @@ function initialiseSignatureCanvas() {
     elements.formError.hidden = true;
   }
 })();
-

@@ -181,6 +181,31 @@
       color: #2f2f41;
     }
 
+    .area-options {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .area-option {
+      padding: 0.95rem 1rem;
+      background: #ffffff;
+      border: 1px solid #d8d6d6;
+      border-radius: 8px;
+    }
+
+    .area-option .form-check-label {
+      display: block;
+      width: 100%;
+      line-height: 1.35;
+    }
+
+    .area-implementation {
+      display: block;
+      margin-top: 0.18rem;
+      color: #5c5a5a;
+      font-size: 0.88rem;
+    }
+
     .signature-box {
       display: block;
       width: 100%;
@@ -273,21 +298,27 @@
       <header class="mb-5">
         <h1 id="page-title" class="mb-3">Letter of interest</h1>
 
-        <p id="page-introduction" class="mb-3">
-          Your voluntary statement helps Switzerland Omics demonstrate
-          <strong>genuine use and value</strong> when speaking with
-          <strong>grant funding organisations</strong> and
-          <strong>prospective partners</strong>.
-        </p>
+          <p id="page-introduction" class="mb-3">
+  Your voluntary letter helps us to demonstrate
+  <strong>genuine community interest</strong> when pursuing fundraising
+  opportunities and prospective institutional or commercial partners, 
+including grant calls such as
+  <a
+    href="https://www.innosuisse.admin.ch/en/switzerland-uk-call-for-projects"
+    target="_blank"
+    rel="noopener noreferrer"
+  >Innosuisse collaborative projects</a>.
+</p>
 
         <p class="mb-3">
-          Switzerland Omics provides <strong>community tools</strong> and
-          <strong>personal support</strong>.
+          This letter is <strong>voluntary and non-binding</strong>. It does not
+          create any obligation to purchase, fund, endorse, test, adopt, or enter
+          into an agreement with Switzerland Omics.
         </p>
 
         <p class="mb-3">
           Your email address is used only to process this document and send
-          confirmation. It is <strong>not included</strong> when the statement is shared.
+          confirmation. It is <strong>not included</strong> when the letter is shared.
         </p>
 
         <p
@@ -299,29 +330,22 @@
       </header>
 
       <section class="mb-5" aria-labelledby="statement-heading">
-        <h2 id="statement-heading" class="h4 mb-3">Statement</h2>
+        <h2 id="statement-heading" class="h4 mb-3">Letter text</h2>
 
         <div id="statement-text" class="text-box">
           <p>
-            I confirm that I have used one or more
-            <strong>Switzerland Omics community tools</strong> or received
-            <strong>support from Switzerland Omics</strong>.
+            I, <strong>[Professional title] [Name]</strong> of
+            <strong>[Organisation]</strong>, welcome the continued development of
+            open-access community tools, standards and reference implementations
+            that support the exchange, reproducibility and independent evaluation
+            of genomic information across healthcare, research and industry.
           </p>
 
           <p>
-            I consider this work <strong>useful</strong> and support its continued
-            development and maintenance.
-          </p>
-
-          <p>
-            I understand that Switzerland Omics may use this statement according
-            to the <strong>permissions I select below</strong>.
-          </p>
-
-          <p>
-            This statement is <strong>voluntary and non-binding</strong>. It does
-            not create any obligation to purchase, fund, endorse, or enter into an
-            agreement with Switzerland Omics.
+            I am particularly interested in continued development in the areas
+            selected below. I welcome efforts to make practical, openly available
+            tools and infrastructure in these areas accessible to the wider
+            genomics community.
           </p>
         </div>
       </section>
@@ -384,87 +408,80 @@
             </div>
 
             <div class="col-12">
-              <label class="form-label" for="tool-name">Tool or support received</label>
+              <label class="form-label" for="area-of-expertise">Area of expertise or professional interest <span class="text-muted">(optional)</span></label>
               <input
                 class="form-control"
-                id="tool-name"
-                name="toolName"
+                id="area-of-expertise"
+                name="areaOfExpertise"
                 type="text"
-                maxlength="150"
-                readonly
-                required
+                maxlength="250"
+                autocomplete="off"
               >
-            </div>
-
-            <div class="col-12">
-              <label class="form-label" for="comment">How was this useful? <span class="text-muted">(optional)</span></label>
-              <textarea
-                class="form-control"
-                id="comment"
-                name="comment"
-                maxlength="2000"
-                rows="5"
-              ></textarea>
             </div>
           </div>
 
-          <fieldset class="border-0 p-0 mb-5">
-            <legend class="h4 mb-2">How we may use this statement</legend>
-            <p class="form-meta mb-4">The first confirmation is required. The other permissions are optional.</p>
+          <fieldset
+            id="selected-areas-fieldset"
+            class="border-0 p-0 mb-5"
+            aria-describedby="selected-areas-help"
+            hidden
+          >
+            <legend class="h4 mb-2">Areas of interest</legend>
+            <p id="selected-areas-help" class="form-meta mb-4">
+              Our open access focus areas are listed. Please select all or at least one area. 
+            </p>
 
-            <div class="form-check mb-3">
-              <input
-                class="form-check-input"
-                id="consent-submission"
-                name="consentSubmission"
-                type="checkbox"
-                required
-              >
-              <label
-                class="form-check-label"
-                id="consent-submission-label"
-                for="consent-submission"
-              >
-                I confirm that the information above is correct and that I voluntarily
-                submit this <strong>non-binding statement</strong>.
-              </label>
-            </div>
-
-            <div class="form-check mb-3">
-              <input
-                class="form-check-input"
-                id="consent-private"
-                name="consentPrivateSharing"
-                type="checkbox"
-              >
-              <label
-                class="form-check-label"
-                id="consent-private-label"
-                for="consent-private"
-              >
-                Switzerland Omics may share this statement <strong>privately</strong>
-                with grant funding organisations and prospective institutional or
-                commercial partners. My email address will not be included.
-              </label>
-            </div>
-
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                id="consent-public"
-                name="consentPublicDisplay"
-                type="checkbox"
-              >
-              <label
-                class="form-check-label"
-                id="consent-public-label"
-                for="consent-public"
-              >
-                Switzerland Omics may <strong>publicly display</strong> my name,
-                organisation and statement. My email address will not be displayed.
-              </label>
-            </div>
+            <div id="selected-areas-list" class="area-options"></div>
           </fieldset>
+					
+
+<fieldset class="border-0 p-0 mb-5">
+  <legend class="h4 mb-2">How we may use this letter</legend>
+  <p class="form-meta mb-4">
+    The first permission is required. A discreet supporter listing is optional.
+  </p>
+
+  <div class="form-check mb-3">
+    <input
+      class="form-check-input"
+      id="consent-submission"
+      name="consentSubmission"
+      type="checkbox"
+      required
+    >
+    <label
+      class="form-check-label"
+      id="consent-submission-label"
+      for="consent-submission"
+    >
+      The information above is correct and I voluntarily
+      submit this <strong>non-binding letter of interest</strong>.
+      Switzerland Omics may use this letter <strong>privately</strong> for
+      fundraising purposes and to demonstrate community interest
+      in its tools and infrastructure. My email address <strong>will not</strong>
+      be included.
+    </label>
+  </div>
+
+  <div class="form-check">
+    <input
+      class="form-check-input"
+      id="consent-public"
+      name="consentPublicDisplay"
+      type="checkbox"
+    >
+    <label
+      class="form-check-label"
+      id="consent-public-label"
+      for="consent-public"
+    >
+      Switzerland Omics may discreetly list me as a supporter, together with my
+      organisation and areas of interest, in a factual supporter listing such as
+      a Switzerland Omics supporters page. This will not be used in public
+      advertising. My email address will not be displayed.
+    </label>
+  </div>
+</fieldset>					
 
           <fieldset class="border-0 p-0 mb-4">
             <legend class="h4 mb-4">Signature</legend>
@@ -487,15 +504,21 @@
 
           <div id="turnstile-container" class="mb-4" hidden></div>
 
+
           <div class="form-actions pt-2">
-            <button id="submit-button" class="button-link" type="submit">Submit statement</button>
-            <p class="form-meta mb-0">You may contact Switzerland Omics later to correct or withdraw this statement.</p>
-          </div>
+  <button id="submit-button" class="button-link" type="submit">Submit letter</button>
+  <p class="form-meta mb-0">
+    You may contact
+    <a href="mailto:admin@switzerlandomics.ch">admin@switzerlandomics.ch</a>
+    later to correct or withdraw this letter.
+  </p>
+</div>
+
         </form>
       </section>
 
       <section id="success-section" class="text-box mt-5" aria-labelledby="success-heading" hidden>
-        <h2 id="success-heading" class="h4 mb-3">Statement submitted</h2>
+        <h2 id="success-heading" class="h4 mb-3">Letter submitted</h2>
         <p id="success-message"></p>
         <p id="reference-line" class="mb-0" hidden>
           Reference: <strong id="submission-reference"></strong>
@@ -515,7 +538,6 @@
   <script src="app.js"></script>
 </body>
 </html>
-
 
   </div>
   <div class="footer">
