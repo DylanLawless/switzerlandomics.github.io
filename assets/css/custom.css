@@ -1,5 +1,50 @@
+
+/* reusable horizontal table scroll */
+
 .table-wrapper {
-  overflow-x: scroll;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrapper table {
+  margin-bottom: 0;
+}
+
+/* dark table variant for tables inside dark sections */
+
+.table-wrapper--dark {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.table-wrapper--dark table {
+  width: max-content;
+  min-width: 100%;
+  color: rgba(255, 255, 255, 0.86);
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Bootstrap table compatibility */
+
+.table-wrapper--dark .table {
+  --bs-table-color: rgba(255, 255, 255, 0.86);
+  --bs-table-bg: transparent;
+  --bs-table-border-color: rgba(255, 255, 255, 0.22);
+  --bs-table-hover-color: #ffffff;
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.06);
+}
+
+.table-wrapper--dark th,
+.table-wrapper--dark td {
+  white-space: nowrap;
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+.table-wrapper--dark th {
+  color: #ffffff;
 }
 
 /* reusable semantic inline pills */
@@ -861,22 +906,79 @@ figcaption {
 
 /* ─────────────────────────────────────────────
    Chevron
+   Fixed-size arrow with subtle closed-state glow.
+   The glow uses opacity only, so it does not change
+   row height, layout, spacing or chevron position.
    ───────────────────────────────────────────── */
 
 .disclosure-chevron {
-  width: 0.5rem;
-  height: 0.5rem;
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+
+  width: 0.3rem;
+  height: 0.3rem;
 
   border-right: 1.5px solid rgba(255, 255, 255, 0.82);
   border-bottom: 1.5px solid rgba(255, 255, 255, 0.82);
 
   transform: rotate(45deg);
 
-  transition: transform 0.15s ease;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.disclosure-chevron::after {
+  content: "";
+  position: absolute;
+  inset: -0.55rem;
+
+  border-radius: 999px;
+
+  opacity: 0;
+  pointer-events: none;
+
+  box-shadow:
+    0 0 0 0.28rem rgba(255, 255, 255, 0.08),
+    0 0 0.85rem 0.08rem rgba(255, 255, 255, 0.26);
+}
+
+.disclosure-item:not([open]) .disclosure-chevron::after {
+  animation: disclosure-chevron-pulse 2.0s ease-in-out infinite;
+}
+
+.disclosure-summary:hover .disclosure-chevron,
+.disclosure-summary:focus-visible .disclosure-chevron {
+  border-color: var(--disclosure-white);
+}
+
+.disclosure-summary:hover .disclosure-chevron::after,
+.disclosure-summary:focus-visible .disclosure-chevron::after {
+  animation: none;
+  opacity: 0.42;
 }
 
 .disclosure-item[open] .disclosure-chevron {
   transform: rotate(225deg);
+}
+
+.disclosure-item[open] .disclosure-chevron::after,
+.disclosure-item[open] .disclosure-summary:hover .disclosure-chevron::after,
+.disclosure-item[open] .disclosure-summary:focus-visible .disclosure-chevron::after {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes disclosure-chevron-pulse {
+  0%,
+  100% {
+    opacity: 0.10;
+  }
+
+  50% {
+    opacity: 0.65;
+  }
 }
 
 
@@ -1065,5 +1167,25 @@ figcaption {
 
   .disclosure-badge {
     white-space: normal;
+  }
+}
+
+
+/* ─────────────────────────────────────────────
+   Reduced motion
+   ───────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .disclosure-chevron {
+    transition: none;
+  }
+
+  .disclosure-chevron::after {
+    animation: none;
+  }
+
+  .disclosure-item:not([open]) .disclosure-chevron::after {
+    opacity: 0.18;
   }
 }

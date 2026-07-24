@@ -1,87 +1,73 @@
-/* reusable split figure */
 
-.split-figure {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
-  gap: 0;
-  margin: 2rem 0;
-  border-top: 1px solid #d8d6d6;
-  border-bottom: 1px solid #d8d6d6;
-}
+<!-- Business need -->
 
-.split-figure__media {
-  padding: 1rem 1.25rem 1rem 0;
-  border-right: 1px solid #d8d6d6;
-}
+<details class="disclosure-item">
+  <summary class="disclosure-summary">
 
-.split-figure__media img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
+    <span class="disclosure-title">
+      Business need
+    </span>
 
-.split-figure__caption {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.45rem;
-  margin: 0;
-  padding: 1rem 0 1rem 1.25rem;
-  color: $steel;
-  font-size: 0.9rem;
-  line-height: 1.45;
-}
+    <span class="disclosure-meta">
+      <span class="disclosure-badge">
+        <strong>680,000+</strong>
+        NHS tests
+      </span>
 
-.split-figure__caption strong {
-  color: $black;
-  font-size: 0.95rem;
-  line-height: 1.25;
-}
+      <span class="disclosure-badge">
+        <strong>1M+</strong>
+        research WGS
+      </span>
 
-@media (max-width: 768px) {
-  .split-figure {
-    grid-template-columns: 1fr;
-  }
+<div class="disclosure-metric">
+  <strong>27+</strong>
+  <span>Companies and service providers create the commercial route to adoption.</span>
+</div>
 
-  .split-figure__media {
-    padding: 1rem 0;
-    border-right: 0;
-    border-bottom: 1px solid #d8d6d6;
-  }
+<div class="disclosure-metric">
+  <strong>25+</strong>
+  <span>Genetics clinics create the healthcare route to adoption.</span>
+</div>
 
-  .split-figure__caption {
-    padding: 1rem 0;
-  }
-}
+    <span class="disclosure-chevron" aria-hidden="true"></span>
 
-.split-figure--reverse .split-figure__media {
-  grid-column: 2;
-  grid-row: 1;
-  padding: 1rem 0 1rem 1.25rem;
-  border-right: 0;
-  border-left: 1px solid #d8d6d6;
-}
+  </summary>
 
-.split-figure--reverse .split-figure__caption {
-  grid-column: 1;
-  grid-row: 1;
-  padding: 1rem 1.25rem 1rem 0;
-}
+  <div class="disclosure-body">
 
-@media (max-width: 768px) {
-  .split-figure--reverse .split-figure__media,
-  .split-figure--reverse .split-figure__caption {
-    grid-column: auto;
-    grid-row: auto;
-  }
+    <p>
+      Genomic information already moves at scale between healthcare, research and industry.
+      The business need is broader than national sequencing programmes: hospitals,
+      laboratories, software platforms, service providers, clinics and SMEs all need
+      genomic outputs that can be understood, verified and reused without repeated
+      custom mapping.
+    </p>
 
-  .split-figure--reverse .split-figure__media {
-    padding: 1rem 0;
-    border-left: 0;
-    border-bottom: 1px solid #d8d6d6;
-  }
+    <div class="disclosure-metrics">
 
-  .split-figure--reverse .split-figure__caption {
-    padding: 1rem 0;
-  }
-}
+      <div class="disclosure-metric">
+        <strong>680,000+</strong>
+        <span>NHS genomic tests per year create a high-volume clinical interoperability need.</span>
+      </div>
+
+      <div class="disclosure-metric">
+        <strong>1M+</strong>
+        <span>Research WGS across UK Biobank and Swiss Genomics shows the scale of reusable genomic assets.</span>
+      </div>
+
+  <div class="disclosure-metric">
+    <strong>27+</strong>
+    <span>Companies and service providers create the commercial route to adoption.</span>
+  </div>
+
+  <div class="disclosure-metric">
+    <strong>25+</strong>
+    <span>Genetics clinics create the healthcare route to adoption.</span>
+  </div>
+
+    </div>
+
+  </div>
+</details>
+
+

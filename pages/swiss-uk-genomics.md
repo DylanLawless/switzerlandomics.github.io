@@ -100,8 +100,9 @@ Labs, hospitals and companies already have powerful genomic systems. What they l
         <span class="dark-background-area__eyebrow">The principle</span>
         <h3>Standardise the handoff, not the algorithm.</h3>
         <p>
-          Labs, hospitals, researchers and companies keep their own tools.
-          Their genomic information becomes easier to understand, verify and reuse.
+            Labs, hospitals, researchers and companies keep their exiting tools.
+            The semantic layer removes repeated custom mapping, so data
+            can move between systems with its meaning intact.
         </p>
       </div>
 
@@ -161,56 +162,80 @@ For more information see the [Innosuisse, Swiss Innovation Agency](https://www.i
 
   <div class="disclosure-list">
 
-    <!-- Business need -->
 
-    <details class="disclosure-item">
-      <summary class="disclosure-summary">
 
-        <span class="disclosure-title">
-          Business need
-        </span>
 
-        <span class="disclosure-meta">
-          <span class="disclosure-badge">
-            <strong>680,000+</strong>
-            NHS tests / year
-          </span>
+<!-- Business need -->
 
-          <span class="disclosure-badge">
-            <strong>1M+</strong>
-            WGS
-          </span>
-        </span>
+<details class="disclosure-item">
+  <summary class="disclosure-summary">
 
-        <span class="disclosure-chevron" aria-hidden="true"></span>
+    <span class="disclosure-title">
+      Business need
+    </span>
 
-      </summary>
+    <span class="disclosure-meta">
+      <span class="disclosure-badge">
+        <strong>851,000+</strong>
+        NHS tests
+      </span>
 
-      <div class="disclosure-body">
+      <span class="disclosure-badge">
+        <strong>1M+</strong>
+        research WGS
+      </span>
 
-        <p>
-          Genomic information already moves at scale between healthcare, research and industry,
-          but provenance, analysis criteria and supporting evidence still require repeated
-          translation and verification.
-        </p>
+      <span class="disclosure-badge">
+        <strong>27+</strong>
+        companies
+      </span>
 
-        <div class="disclosure-metrics">
+      <span class="disclosure-badge">
+        <strong>25+</strong>
+        genetics clinics
+      </span>
+    </span>
 
-          <div class="disclosure-metric">
-            <strong>680,000+</strong>
-            <span>NHS genomic tests / year</span>
-          </div>
+    <span class="disclosure-chevron" aria-hidden="true"></span>
 
-          <div class="disclosure-metric">
-            <strong>1M+</strong>
-            <span>WGS across UK Biobank + All of Us</span>
-          </div>
+  </summary>
 
-        </div>
+  <div class="disclosure-body">
 
+    <p>
+      Genomic information already moves at scale between healthcare, research and industry.
+      The business need is broader than national sequencing programmes: hospitals,
+      laboratories, software platforms, service providers, clinics and SMEs all need
+      genomic outputs that can be understood, verified and reused without repeated
+      custom mapping.
+    </p>
+
+    <div class="disclosure-metrics">
+
+      <div class="disclosure-metric">
+        <strong>851,000+</strong>
+        <span>NHS genomic tests per year create a high-volume clinical interoperability need.</span>
       </div>
-    </details>
 
+      <div class="disclosure-metric">
+        <strong>1M+</strong>
+        <span>Research WGS across UK Biobank and Swiss Genomics shows the scale of reusable genomic assets.</span>
+      </div>
+
+      <div class="disclosure-metric">
+        <strong>27+</strong>
+        <span>Companies and service providers create the commercial route to adoption.</span>
+      </div>
+
+      <div class="disclosure-metric">
+        <strong>25+</strong>
+        <span>Genetics clinics create the healthcare route to adoption.</span>
+      </div>
+
+    </div>
+
+  </div>
+</details>
 
     <!-- Approach and innovation -->
 
@@ -225,6 +250,11 @@ For more information see the [Innosuisse, Swiss Innovation Agency](https://www.i
           <span class="disclosure-badge">
             <strong>5</strong>
             working foundations
+          </span>
+          
+<span class="disclosure-badge">
+            <strong>8</strong>
+            studies
           </span>
         </span>
 
@@ -247,13 +277,13 @@ For more information see the [Innosuisse, Swiss Innovation Agency](https://www.i
           </div>
 
           <div class="disclosure-metric">
-            <strong>[X]</strong>
+            <strong>8</strong>
             <span>validation studies</span>
           </div>
 
           <div class="disclosure-metric">
-            <strong>[X]</strong>
-            <span>real cases</span>
+            <strong>1000</strong>
+            <span>rare disease and cancer cases</span>
           </div>
 
         </div>
@@ -292,17 +322,17 @@ For more information see the [Innosuisse, Swiss Innovation Agency](https://www.i
         <div class="disclosure-metrics">
 
           <div class="disclosure-metric">
-            <strong>[X]</strong>
+            <strong>9</strong>
             <span>partners</span>
           </div>
 
           <div class="disclosure-metric">
-            <strong>[X]</strong>
+            <strong>4</strong>
             <span>institutions</span>
           </div>
 
           <div class="disclosure-metric">
-            <strong>[X]</strong>
+            <strong>3</strong>
             <span>major programmes represented</span>
           </div>
 
@@ -326,9 +356,14 @@ For more information see the [Innosuisse, Swiss Innovation Agency](https://www.i
             <strong>5</strong>
             Swiss genetics centres
           </span>
+          
+<span class="disclosure-badge">
+            <strong>21</strong>
+            B2B companies
+          </span>
 
           <span class="disclosure-badge">
-            <strong>680,000+</strong>
+            <strong>851,000+</strong>
             NHS tests
           </span>
         </span>
@@ -351,9 +386,14 @@ For more information see the [Innosuisse, Swiss Innovation Agency](https://www.i
             <strong>5</strong>
             <span>Swiss university medical-genetics centres</span>
           </div>
+          
+<div class="disclosure-metric">
+            <strong>21</strong>
+            <span>B2B companies</span>
+          </div>
 
           <div class="disclosure-metric">
-            <strong>680,000+</strong>
+            <strong>851,000+</strong>
             <span>NHS genomic tests / year</span>
           </div>
 
@@ -391,7 +431,7 @@ For more information see the [Innosuisse, Swiss Innovation Agency](https://www.i
       <div class="disclosure-body">
 
         <p>
-          Working standards and reference implementations already exist.
+          Traction already exists with working standards and reference implementations.
           The project connects them, removes interoperability bottlenecks and
           validates adoption through real partner workflows.
         </p>
@@ -474,70 +514,62 @@ For more information see the [Innosuisse, Swiss Innovation Agency](https://www.i
     </details>
 
 
-    <!-- Added value -->
+<!-- Added value -->
 
-    <details class="disclosure-item">
-      <summary class="disclosure-summary">
+<details class="disclosure-item">
+  <summary class="disclosure-summary">
 
-        <span class="disclosure-title">
-          Added value
-        </span>
+    <span class="disclosure-title">
+      Added value
+    </span>
 
-        <span class="disclosure-meta">
-          <span class="disclosure-badge">
-            <strong>£200M</strong>
-            WGS programme
-          </span>
+    <span class="disclosure-meta">
+      <span class="disclosure-badge">
+        <strong>£3.4M</strong>
+        service costs saved
+      </span>
 
-          <span class="disclosure-badge">
-            <strong>&gt;$6.8BN</strong>
-            selected acquisitions
-          </span>
-        </span>
+      <span class="disclosure-badge">
+        <strong>20%</strong>
+        lower translation cost
+      </span>
 
-        <span class="disclosure-chevron" aria-hidden="true"></span>
+      <span class="disclosure-badge">
+        <strong>10%</strong>
+        service revenue upside
+      </span>
+    </span>
 
-      </summary>
+    <span class="disclosure-chevron" aria-hidden="true"></span>
 
-      <div class="disclosure-body">
+  </summary>
 
-        <p>
-          Shared infrastructure protects existing investment and reduces repeated
-          integration while allowing organisations to retain their own technology,
-          intellectual property and commercial differentiation.
-        </p>
+  <div class="disclosure-body">
 
-        <div class="disclosure-metrics">
+    <p>Genomics already attracts major healthcare, academic and commercial investment. The project adds value by reducing repeated semantic mapping, metadata translation and IT integration, while making genomic services easier to sell, accept and reuse across organisations.
+    </p>
 
-          <div class="disclosure-metric">
-            <strong>£200M</strong>
-            <span>UK Biobank WGS programme</span>
-          </div>
+    <div class="disclosure-metrics">
 
-          <div class="disclosure-metric">
-            <strong>$4.34BN</strong>
-            <span>Illumina FY2025 revenue</span>
-          </div>
-
-          <div class="disclosure-metric">
-            <strong>£223.9M</strong>
-            <span>Oxford Nanopore FY2025 revenue</span>
-          </div>
-
-          <div class="disclosure-metric">
-            <strong>$160M</strong>
-            <span>PacBio FY2025 revenue</span>
-          </div>
-
-          <div class="disclosure-metric">
-            <strong>&gt;$6.8BN</strong>
-            <span>selected Roche acquisitions</span>
-          </div>
-
-        </div>
-
+      <div class="disclosure-metric">
+        <strong>£3.4M</strong>
+        <span>Estimated government service costs saved through reduced custom integration and repeated verification.</span>
       </div>
-    </details>
+
+      <div class="disclosure-metric">
+        <strong>20%</strong>
+        <span>Potential reduction in metadata translation, semantic mapping and IT compliance effort.</span>
+      </div>
+
+      <div class="disclosure-metric">
+        <strong>10%</strong>
+        <span>Potential increase in commercial service revenue by making genomic outputs easier to accept across organisations.</span>
+      </div>
+
+    </div>
+
+  </div>
+</details>
 
   </div>
 </section>
@@ -694,8 +726,6 @@ The project will validate structured representations for interpretation criteria
 
 ---
 
-
-
 <section class="dark-background-area dark-background-area--compact dark-background-area--column-bleed" markdown="1">
 <div class="py-5 dark-background-area__markdown" markdown="1">
 
@@ -703,8 +733,7 @@ The project will validate structured representations for interpretation criteria
 
 Working foundations are already available for public access, private use, online deployment, secure offline use and partner integration.
 
-<div class="table-wrapper" markdown="1">
-
+<div class="table-wrapper table-wrapper--dark" markdown="1">
 | Implementation | Public access | Private / local use | Online | Offline secure | HPC / API | Desktop | Non-restrictive licence |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | WP1 · Omics schema | <span class="status-icon status-icon--check" role="img" aria-label="Publicly available" title="Publicly available"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Available for private or local use" title="Available for private or local use"></span> | <span class="status-icon status-icon--cloud-check" role="img" aria-label="Available online" title="Available online"></span> | <span class="status-icon status-icon--shield-check" role="img" aria-label="Available for secure offline use" title="Available for secure offline use"></span> | <span class="status-icon status-icon--check" role="img" aria-label="HPC or API available" title="HPC or API available"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Desktop available" title="Desktop available"></span> | <span class="status-icon status-icon--licence-check" role="img" aria-label="Non-restrictive licence" title="Non-restrictive licence"></span> |
@@ -712,7 +741,7 @@ Working foundations are already available for public access, private use, online
 | WP3 · ACMG Validator | <span class="status-icon status-icon--check" role="img" aria-label="Publicly available" title="Publicly available"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Available for private or local use" title="Available for private or local use"></span> | <span class="status-icon status-icon--cloud-check" role="img" aria-label="Available online" title="Available online"></span> | <span class="status-icon status-icon--shield-check" role="img" aria-label="Available for secure offline use" title="Available for secure offline use"></span> | <span class="status-icon status-icon--check" role="img" aria-label="HPC or API available" title="HPC or API available"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Desktop available" title="Desktop available"></span> | <span class="status-icon status-icon--licence-check" role="img" aria-label="Non-restrictive licence" title="Non-restrictive licence"></span> |
 | WP4 · Pedigree | <span class="status-icon status-icon--check" role="img" aria-label="Publicly available" title="Publicly available"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Available for private or local use" title="Available for private or local use"></span> | <span class="status-icon status-icon--cloud-check" role="img" aria-label="Available online" title="Available online"></span> | <span class="status-icon status-icon--shield-check" role="img" aria-label="Available for secure offline use" title="Available for secure offline use"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Available via API" title="Available via API"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Desktop available" title="Desktop available"></span> | <span class="status-icon status-icon--licence-check" role="img" aria-label="Non-restrictive licence" title="Non-restrictive licence"></span> |
 | WP5 · QEM standard | <span class="status-icon status-icon--check" role="img" aria-label="Publicly available" title="Publicly available"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Available for private or local use" title="Available for private or local use"></span> | <span class="status-icon status-icon--cloud-check" role="img" aria-label="Available online" title="Available online"></span> | <span class="status-icon status-icon--shield-check" role="img" aria-label="Available for secure offline use" title="Available for secure offline use"></span> | <span class="status-icon status-icon--check" role="img" aria-label="HPC or API available" title="HPC or API available"></span> | <span class="status-icon status-icon--check" role="img" aria-label="Desktop available" title="Desktop available"></span> | <span class="status-icon status-icon--licence-check" role="img" aria-label="Non-restrictive licence" title="Non-restrictive licence"></span> |
-
+{: .table .table-hover}
 </div>
 
 </div>
@@ -960,21 +989,31 @@ Keep your system. Add the trusted handoff. Measure the value.
 The consortium is organised around focused partner roles, so each organisation can test the handoff in the part of the genomic workflow it already knows best.
 We have developed open-source conversion layer ready to use: schemas, mappings, reference tools, APIs and conformance checks. Prospective partners apply it to one existing output or workflow and measure whether it reduces cost, speeds review or increases acceptance.
 
+<div class="table-wrapper" markdown="1">
 | Partner                            | Pilot                                                                                    | Value                                                                                  |
 | ---------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | Genome centre / laboratory     | Adopt the trusted handoff package for one existing genomic output.                       | Less custom formatting, easier delivery to partners and higher compatible throughput.  |
 | Healthcare / clinical genetics | Assess one trusted handoff package in an existing clinical review workflow.              | Faster review, lower IT burden and safer use of external genomic results.              |
 | Academic / research group      | Test one existing analysis through the reproducibility and evidence layer.               | Stronger publications, easier collaboration and a clearer route from discovery to use. |
 | SME / industry partner         | Attach the trusted handoff package to one existing product, platform or analysis output. | More eligible customers, shorter sales friction and protected IP.                      |
+{: .table .table-hover}
 
+</div>
+
+<br>
 **Bilateral validation model**
 
+<div class="table-wrapper" markdown="1">
 | Role                  | Switzerland                        | United Kingdom                  |
 | --------------------- | ---------------------------------- | ------------------------------- |
 | Output adopter       | [Swiss genome centre / laboratory] | [UK genome centre / laboratory] |
 | Clinical reviewer     | [Swiss healthcare partner]         | [UK healthcare partner]         |
 | Independent validator | [Swiss academic partner]           | [UK academic partner]           |
 | Product adopter       | [Swiss SME / industry partner]     | [UK SME / industry partner]     |
+{: .table .table-hover}
+</div>
+
+<br>
 
 No partner has to replace its pipeline, accreditation model, software product or commercial IP. Adoption starts with one handoff in one workflow. If it works, the same pattern can support future pilots, service agreements and commercial adoption.
 
@@ -1122,11 +1161,16 @@ Participation does not have to mean building a new internal programme. For many 
 
 Switzerland Omics leads the shared technical layer: schemas, mappings, reference tools, APIs, conformance checks and partner-facing documentation. Partners bring the real setting where the handoff must work: a laboratory output, a clinical review process, a research analysis, a product export or a customer-facing workflow.
 
+<div class="table-wrapper" markdown="1">
 | Participation route            | What it means                                                                       | Suitable for                                                                                              |
 | ------------------------------ | ----------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | **Funded project partner**     | A defined role, budget and deliverable inside the grant proposal.                   | Organisations ready to commit staff time, eligible costs or matched contribution.                         |
 | **In-kind validation partner** | A focused test using existing workflows, staff expertise or representative outputs. | Hospitals, labs, research groups and companies that want to validate value without a large new programme. |
 | **Early adoption partner**     | A pilot, letter of support or product/service alignment around the trusted handoff. | Partners that want early access, influence on the standard and first-mover compatibility benefits.        |
+{: .table .table-hover}
+</div>
+
+<br>
 
 Join where the return is clear: one workflow, one output, one measurable improvement. Lower cost, faster review, safer reuse or easier adoption is enough to justify a focused contribution.
 
@@ -1135,25 +1179,29 @@ Join where the return is clear: one workflow, one output, one measurable improve
 
 ## References
 
-Bennett RL, Steinhaus KA, Uhrich SB, et al. Recommendations for standardized human pedigree nomenclature. *American Journal of Human Genetics*. 1995;56:745–752. DOI: <https://doi.org/10.1007/BF01408073>.
+Bennett RL, Steinhaus KA, Uhrich SB, et al. Recommendations for standardized human pedigree nomenclature. *American Journal of Human Genetics*. 1995;56:745–752. DOI: [10.1007/BF01408073](https://doi.org/10.1007/BF01408073).
 
-Bennett RL, French KS, Resta RG, Doyle DL. Standardized human pedigree nomenclature: update and assessment of the recommendations of the National Society of Genetic Counselors. *Journal of Genetic Counseling*. 2008;17:424–433. DOI: <https://doi.org/10.1007/s10897-008-9169-9>.
+Bennett RL, French KS, Resta RG, Doyle DL. Standardized human pedigree nomenclature: update and assessment of the recommendations of the National Society of Genetic Counselors. *Journal of Genetic Counseling*. 2008;17:424–433. DOI: [10.1007/s10897-008-9169-9](https://doi.org/10.1007/s10897-008-9169-9).
 
-Bennett RL, French KS, Resta RG, Austin J. Practice resource-focused revision: standardized pedigree nomenclature update centered on sex and gender inclusivity. *Journal of Genetic Counseling*. 2022;31:1238–1248. DOI: <https://doi.org/10.1002/jgc4.1621>.
+Bennett RL, French KS, Resta RG, Austin J. Practice resource-focused revision: standardized pedigree nomenclature update centered on sex and gender inclusivity. *Journal of Genetic Counseling*. 2022;31:1238–1248. DOI:
+[10.1002/jgc4.1621](https://doi.org/10.1002/jgc4.1621).
 
-Lawless D, et al. Qualifying Variant database: reusable criteria for reproducible genomic analysis. *Bioinformatics*. 2026. DOI: <https://doi.org/10.1093/bioinformatics/btaf676>.
+Lawless D, et al. Qualifying Variant database: reusable criteria for reproducible genomic analysis. *Bioinformatics*. 2026. DOI: 
+[10.1093/bioinformatics/btaf676](https://doi.org/10.1093/bioinformatics/btaf676).
 
-Quant Group, et al. A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease. *medRxiv*. 2025. DOI: <https://doi.org/10.64898/2025.12.02.25341503>.
+Quant Group, et al. A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease. *medRxiv*. 2025. 
+DOI: [10.64898/2025.12.02.25341503](https://doi.org/10.64898/2025.12.02.25341503).
 
-Richards S, Aziz N, Bale S, Bick D, Das S, Gastier-Foster J, et al. Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology. *Genetics in Medicine*. 2015. DOI: <https://doi.org/10.1038/gim.2015.30>.
+Richards S, Aziz N, Bale S, Bick D, Das S, Gastier-Foster J, et al. Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology. *Genetics in Medicine*. 2015. DOI: [10.1038/gim.2015.30](https://doi.org/10.1038/gim.2015.30).
 
-Swiss Genomics Association. SGA-QVSS-1.0.0: Qualifying Variant Set Standard. Zenodo. 2026a. DOI: <https://doi.org/10.5281/zenodo.20553446>.
+Swiss Genomics Association. SGA-QVSS-1.0.0: Qualifying Variant Set Standard. Zenodo. 2026a. DOI: [10.5281/zenodo.20553446](https://doi.org/10.5281/zenodo.20553446).
 
 Swiss Genomics Association. SGA-QEM-1.0.0: Qualifying Evidence Matrix. Zenodo. 2026b. DOI: <https://doi.org/10.5281/zenodo.17936586>.
 
 Tavtigian SV, Harrison SM, Boucher KM, Biesecker LG. Fitting a naturally scaled point system to the ACMG/AMP variant classification guidelines. *Human Mutation*. 2020. DOI: <https://doi.org/10.1002/humu.24088>.
 
-van der Horst E, Unni D, Kopmels F, Armida J, Touré V, Franke W, Crameri K, Cirillo E, Österle S. Bridging clinical and genomic knowledge: an extension of the SPHN RDF schema for seamless integration and FAIRification of omics data. *Preprints.org*. 2023. DOI: <https://doi.org/10.20944/preprints202312.0373.v1>.
+van der Horst E, Unni D, Kopmels F, Armida J, Touré V, Franke W, Crameri K, Cirillo E, Österle S. Bridging clinical and genomic knowledge: an extension of the SPHN RDF schema for seamless integration and FAIRification of omics data. *Preprints.org*. 2023. DOI: 
+[10.20944/preprints202312.0373](https://doi.org/10.20944/preprints202312.0373.v1).
 
 <!--
 Internal proposal review criteria retained from earlier draft:
@@ -1166,3 +1214,10 @@ Internal proposal review criteria retained from earlier draft:
 * Wider impact outside the project team
 * Added Value
 -->
+
+
+## Statistics
+
+* <https://www.england.nhs.uk/statistics/statistical-work-areas/genomic-testing-activity/>
+
+
