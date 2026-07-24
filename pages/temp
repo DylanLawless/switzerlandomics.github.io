@@ -1,0 +1,87 @@
+/* reusable split figure */
+
+.split-figure {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(16rem, 0.75fr);
+  gap: 0;
+  margin: 2rem 0;
+  border-top: 1px solid #d8d6d6;
+  border-bottom: 1px solid #d8d6d6;
+}
+
+.split-figure__media {
+  padding: 1rem 1.25rem 1rem 0;
+  border-right: 1px solid #d8d6d6;
+}
+
+.split-figure__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.split-figure__caption {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 1rem 0 1rem 1.25rem;
+  color: $steel;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.split-figure__caption strong {
+  color: $black;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+@media (max-width: 768px) {
+  .split-figure {
+    grid-template-columns: 1fr;
+  }
+
+  .split-figure__media {
+    padding: 1rem 0;
+    border-right: 0;
+    border-bottom: 1px solid #d8d6d6;
+  }
+
+  .split-figure__caption {
+    padding: 1rem 0;
+  }
+}
+
+.split-figure--reverse .split-figure__media {
+  grid-column: 2;
+  grid-row: 1;
+  padding: 1rem 0 1rem 1.25rem;
+  border-right: 0;
+  border-left: 1px solid #d8d6d6;
+}
+
+.split-figure--reverse .split-figure__caption {
+  grid-column: 1;
+  grid-row: 1;
+  padding: 1rem 1.25rem 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .split-figure--reverse .split-figure__media,
+  .split-figure--reverse .split-figure__caption {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .split-figure--reverse .split-figure__media {
+    padding: 1rem 0;
+    border-left: 0;
+    border-bottom: 1px solid #d8d6d6;
+  }
+
+  .split-figure--reverse .split-figure__caption {
+    padding: 1rem 0;
+  }
+}

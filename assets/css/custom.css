@@ -2,6 +2,56 @@
   overflow-x: scroll;
 }
 
+/* reusable semantic inline pills */
+
+.semantic-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.35rem;
+  padding: 0.22rem 0.55rem;
+  border: 1px solid #dcdcdc;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #5c5a5a;
+  font-size: 0.68rem;
+  font-weight: 650;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: 0.08em;
+}
+
+.semantic-pill--blue {
+  background: #eef3f8;
+  border-color: #c3d6e6;
+  color: #2c5f8a;
+}
+
+.semantic-pill--amber {
+  background: #fbf4e6;
+  border-color: #e0c98f;
+  color: #8a5a00;
+}
+
+.semantic-pill--light-green {
+  background: #f3faf5;
+  border-color: #d3eadb;
+  color: #2f7d4f;
+}
+
+.semantic-pill--green {
+  background: #e1f3e8;
+  border-color: #8fcda4;
+  color: #1f5c39;
+}
+
+.semantic-pill--red {
+  background: #fdeceb;
+  border-color: #f3c4c1;
+  color: #a01b16;
+}
+
+
 /* Custom iframe overflow scroll box for PanelAppRex */
 
 .full-width-iframe iframe {
@@ -490,370 +540,6 @@ figcaption {
 }
 
 
-/* ─────────────────────────────────────────────
-   Review criteria accordion
-   Dark collapsible headers + structured evidence
-   ───────────────────────────────────────────── */
-
-.review-criteria {
-  --review-dark: #2f2f41;
-  --review-white: #ffffff;
-  --review-soft: #f3f2f2;
-  --review-steel: #5c5a5a;
-  --review-border: #d8d6d6;
-  --review-red: #e5262f;
-
-  margin: 3rem 0;
-}
-
-
-/* ─────────────────────────────────────────────
-   Intro
-   ───────────────────────────────────────────── */
-
-.review-criteria__intro {
-  max-width: 46rem;
-  margin-bottom: 1.5rem;
-}
-
-.review-criteria__kicker {
-  margin: 0 0 0.4rem;
-
-  color: var(--review-steel);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.review-criteria__intro h2 {
-  margin: 0;
-  color: var(--review-dark);
-}
-
-.review-criteria__intro > p:last-child {
-  margin: 0.6rem 0 0;
-
-  color: var(--review-steel);
-  line-height: 1.5;
-}
-
-
-/* ─────────────────────────────────────────────
-   Accordion shell
-   ───────────────────────────────────────────── */
-
-.review-criteria__list {
-  border-top: 1px solid var(--review-border);
-}
-
-.review-criterion {
-  margin: 0;
-  border-bottom: 1px solid var(--review-border);
-}
-
-
-/* Remove native disclosure marker */
-
-.review-criterion > summary {
-  list-style: none;
-}
-
-.review-criterion > summary::-webkit-details-marker {
-  display: none;
-}
-
-
-/* ─────────────────────────────────────────────
-   Dark dropdown header
-   ───────────────────────────────────────────── */
-
-.review-criterion__summary {
-  display: grid;
-
-  grid-template-columns:
-    minmax(11rem, 0.34fr)
-    minmax(0, 1fr)
-    auto;
-
-  align-items: center;
-  gap: 1rem;
-
-  width: 100%;
-  min-height: 3.25rem;
-
-  padding: 0.75rem 1rem;
-
-  background: var(--review-dark);
-  color: var(--review-white);
-
-  cursor: pointer;
-  user-select: none;
-}
-
-.review-criterion__summary:hover {
-  background: #39394b;
-}
-
-
-/* Criterion heading */
-
-.review-criterion__title {
-  min-width: 0;
-
-  color: var(--review-white);
-
-  font-size: 0.78rem;
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-}
-
-
-/* ─────────────────────────────────────────────
-   Compact metrics visible in dropdown header
-   ───────────────────────────────────────────── */
-
-.review-criterion__preview {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex-wrap: wrap;
-
-  gap: 0.35rem;
-  min-width: 0;
-}
-
-.review-pill {
-  display: inline-flex;
-  align-items: baseline;
-
-  gap: 0.3rem;
-
-  padding: 0.25rem 0.55rem;
-
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
-
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.74);
-
-  font-size: 0.66rem;
-  line-height: 1.2;
-
-  white-space: nowrap;
-}
-
-.review-pill strong {
-  color: var(--review-white);
-
-  font-size: 0.7rem;
-  font-weight: 650;
-
-  font-variant-numeric: tabular-nums;
-}
-
-
-/* ─────────────────────────────────────────────
-   Chevron
-   ───────────────────────────────────────────── */
-
-.review-criterion__chevron {
-  width: 0.5rem;
-  height: 0.5rem;
-
-  border-right: 1.5px solid rgba(255, 255, 255, 0.82);
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.82);
-
-  transform: rotate(45deg);
-
-  transition: transform 0.15s ease;
-}
-
-.review-criterion[open] .review-criterion__chevron {
-  transform: rotate(225deg);
-}
-
-
-/* ─────────────────────────────────────────────
-   Expanded evidence
-   Structured two-column layout
-   ───────────────────────────────────────────── */
-
-.review-criterion__body {
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1.15fr)
-    minmax(18rem, 0.85fr);
-
-  padding: 0;
-
-  border-right: 1px solid var(--review-border);
-  border-left: 1px solid var(--review-border);
-
-  background: var(--review-white);
-}
-
-
-/* Left column: explanation */
-
-.review-criterion__body > p {
-  margin: 0;
-
-  padding: 1.2rem 1.25rem;
-
-  border-right: 1px solid var(--review-border);
-
-  color: var(--review-dark);
-
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-
-/* ─────────────────────────────────────────────
-   Right column: metric pills
-   ───────────────────────────────────────────── */
-
-.review-metrics {
-  display: flex;
-  align-content: flex-start;
-  align-items: flex-start;
-  flex-wrap: wrap;
-
-  gap: 0.45rem;
-
-  margin: 0;
-
-  padding: 1rem;
-}
-
-
-/* Light metric pill */
-
-.review-metric {
-  display: inline-flex;
-  align-items: baseline;
-
-  gap: 0.4rem;
-
-  width: auto;
-  min-width: 0;
-
-  padding: 0.45rem 0.7rem;
-
-  border: 1px solid rgba(47, 47, 65, 0.10);
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.98),
-      rgba(248, 248, 248, 0.96)
-    );
-
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    0 1px 2px rgba(47, 47, 65, 0.035);
-}
-
-.review-metric strong {
-  flex: 0 0 auto;
-
-  color: var(--review-dark);
-
-  font-size: 0.88rem;
-  font-weight: 650;
-  line-height: 1.2;
-
-  font-variant-numeric: tabular-nums;
-}
-
-.review-metric span {
-  color: var(--review-steel);
-
-  font-size: 0.7rem;
-  line-height: 1.25;
-}
-
-
-/* No special treatment for any individual criterion.
-   This also neutralises review-criterion--strong
-   if the class remains in the HTML. */
-
-.review-criterion--strong .review-criterion__summary {
-  box-shadow: none;
-}
-
-
-/* ─────────────────────────────────────────────
-   Keyboard focus
-   ───────────────────────────────────────────── */
-
-.review-criterion__summary:focus-visible {
-  outline: 3px solid rgba(229, 38, 31, 0.24);
-  outline-offset: -3px;
-}
-
-
-/* ─────────────────────────────────────────────
-   Mobile
-   ───────────────────────────────────────────── */
-
-@media (max-width: 767.98px) {
-
-  .review-criteria {
-    margin: 2rem 0;
-  }
-
-
-  /* Header becomes title + chevron,
-     with preview pills on second line */
-
-  .review-criterion__summary {
-    grid-template-columns: minmax(0, 1fr) auto;
-
-    gap: 0.5rem;
-
-    padding: 0.8rem 0.9rem;
-  }
-
-  .review-criterion__preview {
-    grid-column: 1 / -1;
-    grid-row: 2;
-
-    justify-content: flex-start;
-  }
-
-  .review-criterion__chevron {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-
-  /* Stack explanation above metric area */
-
-  .review-criterion__body {
-    grid-template-columns: 1fr;
-  }
-
-  .review-criterion__body > p {
-    padding: 1rem;
-
-    border-right: 0;
-    border-bottom: 1px solid var(--review-border);
-  }
-
-  .review-metrics {
-    padding: 0.9rem;
-  }
-
-  .review-pill {
-    white-space: normal;
-  }
-}
-
 
 /* ─────────────────────────────────────────────
    Media cards
@@ -1005,3 +691,379 @@ figcaption {
 
 }
 
+
+/* ─────────────────────────────────────────────
+   Disclosure panels
+   Reusable collapsible information panels with
+   dark headers, optional header badges, and
+   expanded content areas
+   ───────────────────────────────────────────── */
+
+.disclosure-group {
+  --disclosure-dark: #2f2f41;
+  --disclosure-white: #ffffff;
+  --disclosure-soft: #f3f2f2;
+  --disclosure-steel: #5c5a5a;
+  --disclosure-border: #d8d6d6;
+  --disclosure-red: #e5262f;
+
+  margin: 3rem 0;
+}
+
+
+/* ─────────────────────────────────────────────
+   Intro
+   ───────────────────────────────────────────── */
+
+.disclosure-intro {
+  max-width: 46rem;
+  margin-bottom: 1.5rem;
+}
+
+.disclosure-kicker {
+  margin: 0 0 0.4rem;
+
+  color: var(--disclosure-steel);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.disclosure-intro h2 {
+  margin: 0;
+  color: var(--disclosure-dark);
+}
+
+.disclosure-intro > p:last-child {
+  margin: 0.6rem 0 0;
+
+  color: var(--disclosure-steel);
+  line-height: 1.5;
+}
+
+
+/* ─────────────────────────────────────────────
+   Panel shell
+   ───────────────────────────────────────────── */
+
+.disclosure-list {
+  border-top: 1px solid var(--disclosure-border);
+}
+
+.disclosure-item {
+  margin: 0;
+  border-bottom: 1px solid var(--disclosure-border);
+}
+
+
+/* Remove native disclosure marker */
+
+.disclosure-item > summary {
+  list-style: none;
+}
+
+.disclosure-item > summary::-webkit-details-marker {
+  display: none;
+}
+
+
+/* ─────────────────────────────────────────────
+   Header
+   Title uses natural available width.
+   Header badges sit on the right.
+   Chevron stays at the far right.
+   ───────────────────────────────────────────── */
+
+.disclosure-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+
+  align-items: center;
+  gap: 1rem;
+
+  width: 100%;
+  min-height: 3.25rem;
+
+  padding: 0.75rem 1rem;
+
+  background: var(--disclosure-dark);
+  color: var(--disclosure-white);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.disclosure-summary:hover {
+  background: #39394b;
+}
+
+
+/* Header title */
+
+.disclosure-title {
+  min-width: 0;
+
+  color: var(--disclosure-white);
+
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+
+/* Header badges */
+
+.disclosure-meta {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.disclosure-meta:empty {
+  display: none;
+}
+
+.disclosure-badge {
+  display: inline-flex;
+  align-items: baseline;
+
+  gap: 0.3rem;
+
+  padding: 0.25rem 0.55rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.74);
+
+  font-size: 0.66rem;
+  line-height: 1.2;
+
+  white-space: nowrap;
+}
+
+.disclosure-badge strong {
+  color: var(--disclosure-white);
+
+  font-size: 0.7rem;
+  font-weight: 650;
+
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* ─────────────────────────────────────────────
+   Chevron
+   ───────────────────────────────────────────── */
+
+.disclosure-chevron {
+  width: 0.5rem;
+  height: 0.5rem;
+
+  border-right: 1.5px solid rgba(255, 255, 255, 0.82);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.82);
+
+  transform: rotate(45deg);
+
+  transition: transform 0.15s ease;
+}
+
+.disclosure-item[open] .disclosure-chevron {
+  transform: rotate(225deg);
+}
+
+
+/* ─────────────────────────────────────────────
+   Simple expanded content
+   Single-column content with light side borders
+   ───────────────────────────────────────────── */
+
+.disclosure-content {
+  padding: 1.1rem 1.25rem;
+  border-right: 1px solid var(--disclosure-border);
+  border-left: 1px solid var(--disclosure-border);
+  background: var(--disclosure-white);
+}
+
+.disclosure-content > :first-child {
+  margin-top: 0;
+}
+
+.disclosure-content > :last-child {
+  margin-bottom: 0;
+}
+
+
+/* ─────────────────────────────────────────────
+   Structured expanded body
+   Optional two-column evidence or metrics layout
+   ───────────────────────────────────────────── */
+
+.disclosure-body {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(18rem, 0.85fr);
+
+  padding: 0;
+
+  border-right: 1px solid var(--disclosure-border);
+  border-left: 1px solid var(--disclosure-border);
+
+  background: var(--disclosure-white);
+}
+
+
+/* Left column: explanation */
+
+.disclosure-body > p {
+  margin: 0;
+
+  padding: 1.2rem 1.25rem;
+
+  border-right: 1px solid var(--disclosure-border);
+
+  color: var(--disclosure-dark);
+
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+
+/* ─────────────────────────────────────────────
+   Right column: light metric badges
+   ───────────────────────────────────────────── */
+
+.disclosure-metrics {
+  display: flex;
+  align-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+  gap: 0.45rem;
+
+  margin: 0;
+
+  padding: 1rem;
+}
+
+.disclosure-metric {
+  display: inline-flex;
+  align-items: baseline;
+
+  gap: 0.4rem;
+
+  width: auto;
+  min-width: 0;
+
+  padding: 0.45rem 0.7rem;
+
+  border: 1px solid rgba(47, 47, 65, 0.10);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(248, 248, 248, 0.96)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    0 1px 2px rgba(47, 47, 65, 0.035);
+}
+
+.disclosure-metric strong {
+  flex: 0 0 auto;
+
+  color: var(--disclosure-dark);
+
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.2;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.disclosure-metric span {
+  color: var(--disclosure-steel);
+
+  font-size: 0.7rem;
+  line-height: 1.25;
+}
+
+
+/* ─────────────────────────────────────────────
+   Keyboard focus
+   ───────────────────────────────────────────── */
+
+.disclosure-summary:focus-visible {
+  outline: 3px solid rgba(229, 38, 31, 0.24);
+  outline-offset: -3px;
+}
+
+
+/* ─────────────────────────────────────────────
+   Mobile
+   ───────────────────────────────────────────── */
+
+@media (max-width: 767.98px) {
+
+  .disclosure-group {
+    margin: 2rem 0;
+  }
+
+
+  /* Header becomes title + chevron,
+     with header badges on the second line */
+
+  .disclosure-summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    gap: 0.5rem;
+
+    padding: 0.8rem 0.9rem;
+  }
+
+  .disclosure-meta {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    justify-content: flex-start;
+  }
+
+  .disclosure-chevron {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+
+  /* Stack structured evidence body */
+
+  .disclosure-body {
+    grid-template-columns: 1fr;
+  }
+
+  .disclosure-body > p {
+    padding: 1rem;
+
+    border-right: 0;
+    border-bottom: 1px solid var(--disclosure-border);
+  }
+
+  .disclosure-metrics {
+    padding: 0.9rem;
+  }
+
+  .disclosure-badge {
+    white-space: normal;
+  }
+}
