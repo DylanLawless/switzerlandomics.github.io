@@ -31,20 +31,22 @@ Labs, hospitals and companies already have powerful genomic systems. What they l
 </figure>
 
 
+## Why this matters for healthcare and innovation
 
+In critical care, the value of a diagnosis is often measured in hours. In a 2025 neonatal intensive-care study, a [same-day genome-sequencing workflow](https://www.forbes.com/sites/williamhaseltine/2025/10/22/record-breaking-genome-sequencing-brings-same-day-diagnosis-to-newborns/) detected a pathogenic variant in an infant with tonic seizures, identifying a genetic epilepsy syndrome responsive to sodium-channel blockers. The fastest interpreted report was produced in 6 hours 47 minutes. Across 44 intensive-care studies, rapid genomic testing produced a diagnosis in 37% of children, changed clinical management in 26%, and reduced net healthcare costs by $14,265 per child tested ([Wojcik et al., 2025](https://doi.org/10.1056/NEJMc2512825); [Kingsmore et al., 2024](https://doi.org/10.1038/s41525-024-00404-0)).
 
-<!---
+The same principle applies across precision medicine. Switzerland and the United Kingdom already have complementary expertise in sequencing, AI, drug discovery, genomic engineering and gene therapy, distributed across hospitals, universities, laboratories, biotechnology and technology companies. The missing element is a reliable way for their data, evidence and analytical outputs to move between systems. This project creates that shared, verifiable handoff, allowing partners to keep their existing systems and intellectual property while shortening the path from discovery to treatment and from technology to adoption.
+
 <figure>
 
   <img
-    src="{{ '/images/swiss-uk-genomics/swiss-uk-project_1_tiny.png' | relative_url }}"
+    src="{{ '/images/swiss-uk-genomics/kingsmore_2024_fig_2_reproduced_wide.jpg' | relative_url }}"
     alt="Genomic interoperability across Swiss and UK organisations"
   >
   <figcaption>
-    <strong>Figure</strong>. Swiss-UK innovation building the trusted bridge between genomic systems.
+    <strong>Figure</strong>. Data from Kingsmore et al. (2024). Trends show the fastest genomics diagnosis in hours, the number of genetic diseases of known cause, the number of FDA-approved genetic therapies, and genome-sequencing reagent cost in US dollars. Author and year labels identify the studies reporting data.
   </figcaption>
 </figure>
---->
 
 ---
 
@@ -1184,15 +1186,27 @@ Bennett RL, Steinhaus KA, Uhrich SB, et al. Recommendations for standardized hum
 Bennett RL, French KS, Resta RG, Doyle DL. Standardized human pedigree nomenclature: update and assessment of the recommendations of the National Society of Genetic Counselors. *Journal of Genetic Counseling*. 2008;17:424–433. DOI: [10.1007/s10897-008-9169-9](https://doi.org/10.1007/s10897-008-9169-9).
 
 Bennett RL, French KS, Resta RG, Austin J. Practice resource-focused revision: standardized pedigree nomenclature update centered on sex and gender inclusivity. *Journal of Genetic Counseling*. 2022;31:1238–1248. DOI:
+
+Clark MM, Hildreth A, Batalov S, et al. Diagnosis of genetic diseases in seriously ill children by rapid whole-genome sequencing and automated phenotyping and interpretation. *Science Translational Medicine*. 2019;11:eaat6177. DOI: [10.1126/scitranslmed.aat6177](https://doi.org/10.1126/scitranslmed.aat6177).
+
+Gorzynski JE, Goenka SD, Shafin K, et al. Ultrarapid nanopore genome sequencing in a critical care setting. *New England Journal of Medicine*. 2022;386:700–702. DOI: [10.1056/NEJMc2112090](https://doi.org/10.1056/NEJMc2112090).
 [10.1002/jgc4.1621](https://doi.org/10.1002/jgc4.1621).
 
+Kingsmore SF, Nofsinger R, Ellsworth K. Rapid genomic sequencing for genetic disease diagnosis and therapy in intensive care units: a review. *npj Genomic Medicine*. 2024;9:17. DOI: [10.1038/s41525-024-00404-0](https://doi.org/10.1038/s41525-024-00404-0).
+
 Lawless D, et al. Qualifying Variant database: reusable criteria for reproducible genomic analysis. *Bioinformatics*. 2026. DOI: 
+
+Miller NA, Farrow EG, Gibson M, et al. A 26-hour system of highly sensitive whole genome sequencing for emergency management of genetic diseases. *Genome Medicine*. 2015;7:100. DOI: [10.1186/s13073-015-0221-8](https://doi.org/10.1186/s13073-015-0221-8).
+
+Owen MJ, Lefebvre S, Hansen C, et al. An automated 13.5 h system for scalable diagnosis and acute management guidance for genetic diseases. *Nature Communications*. 2022;13:4057. DOI: [10.1038/s41467-022-31446-6](https://doi.org/10.1038/s41467-022-31446-6).
 [10.1093/bioinformatics/btaf676](https://doi.org/10.1093/bioinformatics/btaf676).
 
 Quant Group, et al. A Bayesian model for quantifying genomic variant evidence sufficiency in Mendelian disease. *medRxiv*. 2025. 
 DOI: [10.64898/2025.12.02.25341503](https://doi.org/10.64898/2025.12.02.25341503).
 
 Richards S, Aziz N, Bale S, Bick D, Das S, Gastier-Foster J, et al. Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology. *Genetics in Medicine*. 2015. DOI: [10.1038/gim.2015.30](https://doi.org/10.1038/gim.2015.30).
+
+Saunders CJ, Miller NA, Soden SE, et al. Rapid whole-genome sequencing for genetic disease diagnosis in neonatal intensive care units. *Science Translational Medicine*. 2012;4:154ra135. DOI: [10.1126/scitranslmed.3004041](https://doi.org/10.1126/scitranslmed.3004041).
 
 Swiss Genomics Association. SGA-QVSS-1.0.0: Qualifying Variant Set Standard. Zenodo. 2026a. DOI: [10.5281/zenodo.20553446](https://doi.org/10.5281/zenodo.20553446).
 
@@ -1202,6 +1216,9 @@ Tavtigian SV, Harrison SM, Boucher KM, Biesecker LG. Fitting a naturally scaled 
 
 van der Horst E, Unni D, Kopmels F, Armida J, Touré V, Franke W, Crameri K, Cirillo E, Österle S. Bridging clinical and genomic knowledge: an extension of the SPHN RDF schema for seamless integration and FAIRification of omics data. *Preprints.org*. 2023. DOI: 
 [10.20944/preprints202312.0373](https://doi.org/10.20944/preprints202312.0373.v1).
+
+Wojcik MH, et al. Toward same-day genome sequencing in the critical care setting. *New England Journal of Medicine*. 2025;393:2063–2065. DOI: [10.1056/NEJMc2512825](https://doi.org/10.1056/NEJMc2512825).
+
 
 <!--
 Internal proposal review criteria retained from earlier draft:
@@ -1215,9 +1232,9 @@ Internal proposal review criteria retained from earlier draft:
 * Added Value
 -->
 
-
+<!---
 ## Statistics
 
 * <https://www.england.nhs.uk/statistics/statistical-work-areas/genomic-testing-activity/>
-
+--->
 
