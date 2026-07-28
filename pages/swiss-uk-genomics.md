@@ -1059,15 +1059,6 @@ Independent systems do not need to become the same system. They need a trusted w
 Healthcare gains safer access to external genomic information. Research gains reproducible criteria. Industry gains a clearer route into clinical and research markets.
 Success is not another standard on a website. Success is genomic information that moves faster, costs less to use and keeps its meaning across organisations and borders.
 
----
-
-## Traction
-
-The project already has practical signals of support, use and adoption.
-We have secured [Amazon AWS funding](https://aws.amazon.com/partners/funding/) for HPC services supporting work in Switzerland and the UK.
-We are working with the [Swiss Genomics Association](https://www.swissgenomicsassociation.ch) on normative standards for open, evidence-based genomics practice in healthcare, research and national settings.
-The tools are already being used beyond the proposal stage. Switzerland Omics applications have generated approximately 3,000 user reports to date, and the underlying open-source software has received approximately 3,000 downloads so far this year. We are also gathering [supporting letters of interest](http://switzerlandomics.ch/letter-of-interest/) from prospective users in clinics, laboratories and industry.
-
 </div>
 </section>
 
@@ -1175,6 +1166,31 @@ Switzerland Omics leads the shared technical layer: schemas, mappings, reference
 <br>
 
 Join where the return is clear: one workflow, one output, one measurable improvement. Lower cost, faster review, safer reuse or easier adoption is enough to justify a focused contribution.
+
+---
+
+<section class="dark-background-area dark-background-area--compact dark-background-area--column-bleed" markdown="1">
+<div class="py-5 dark-background-area__markdown" markdown="1">
+
+
+## Traction
+
+The project already has practical evidence of support, use and adoption.
+
+Previous [Amazon AWS funding](https://aws.amazon.com/partners/funding/) has contributed to high-performance computing work. 
+We are working with the [Swiss Genomics Association](https://www.swissgenomicsassociation.ch) on normative standards for open, evidence-based genomics in healthcare, research and national settings.
+Our software applications have generated approximately 3,000 user reports, and the underlying open-source software has received approximately 3,000 downloads this year. We are also gathering [letters of interest](http://switzerlandomics.ch/letter-of-interest/) from prospective users and partners in clinics, laboratories, research organisations and industry.
+
+Additional applications are currently under review through the [AWS Cloud Credit for Research](https://aws.amazon.com/government-education/research-and-technical-computing/cloud-credit-for-research/) programme, OpenAI’s [Trusted Access for Biology Research](https://openai.com/form/trusted-access-for-biology-research/) programme, and Anthropic’s [AI for Science rare-disease research grants](https://www.anthropic.com/news/rare-disease-research-grants).
+
+Much of the technical work remains under active development, with six public preprints currently available through medRxiv and Preprints.org.
+As of 28 July 2026, the technical studies underpinning this project have received 9,001 preprint downloads. Two recently published journal articles have received a further 721 downloads.
+The underlying methods have also been applied this year two rare-disease studies, which have received 2,287 preprint downloads so far in studies affecting over 1,000 patients.
+
+<!-- That is 12,009 article downloads, 3,000 web uses, 3,000 software downloads, and used in research projects for at least 1,000 patients.  -->
+
+</div>
+</section>
 
 ---
 
