@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Amino acids and codons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="A clinical genetics reference for DNA, RNA, codons, amino acid abbreviations and protein consequences." />
+  <meta property="og:title" content="Amino acids and codons"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="A clinical genetics reference for DNA, RNA, codons, amino acid abbreviations and protein consequences."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-tech'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    
+
+
+
+<div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+  <div class="row justify-content-start">
+    <div class="col-12 col-md-10 col-xxl-9">
+      <div class="tech tech-single tech-single--wide">
+        <h1 class="title">Amino acids and codons</h1>
+        <div class="content">
+          <style>
+#aa-viewer {
+  width: 100%;
+  height: clamp(300px, 32vw, 420px);
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+.codon-switch {
+  display: inline-flex;
+  overflow: hidden;
+  margin: 0.25rem 0 0.5rem;
+  border: 1px solid #d8d8dd;
+  border-radius: 999px;
+  background: #fff;
+}
+
+.codon-switch button {
+  appearance: none;
+  border: 0;
+  border-right: 1px solid #d8d8dd;
+  padding: 0.45rem 0.9rem;
+  background: #fff;
+  color: #2f2f41;
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.codon-switch button:last-child {
+  border-right: 0;
+}
+
+.codon-switch button[aria-pressed="true"] {
+  background: #2f2f41;
+  color: #fff;
+}
+
+.codon-switch button:focus-visible {
+  outline: 2px solid #e5262f;
+  outline-offset: -2px;
+}
+</style>
+
+<p><strong>A quick reference for DNA, RNA, codons and amino acid notation used in clinical genetics.</strong></p>
+
+<h2 id="dna-to-rna-to-protein">DNA to RNA to protein</h2>
+
+<p>Protein-coding DNA is transcribed into RNA. The RNA sequence is read in groups of three nucleotides, called <strong>codons</strong>. Each codon specifies an amino acid or a translation stop.</p>
+
+<div class="table-wrapper">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th> </th>
+        <th>Sequence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>DNA coding strand, 5′ → 3′</strong></td>
+        <td><code class="language-plaintext highlighter-rouge">ATG GAA TGG</code></td>
+      </tr>
+      <tr>
+        <td><strong>mRNA, 5′ → 3′</strong></td>
+        <td><code class="language-plaintext highlighter-rouge">AUG GAA UGG</code></td>
+      </tr>
+      <tr>
+        <td><strong>Amino acids</strong></td>
+        <td><code class="language-plaintext highlighter-rouge">Met Glu Trp</code></td>
+      </tr>
+      <tr>
+        <td><strong>One-letter code</strong></td>
+        <td><code class="language-plaintext highlighter-rouge">M E W</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<p><strong>DNA → RNA → codons → amino acids → protein</strong></p>
+
+<p>For a DNA coding sequence, the corresponding mRNA sequence is the same except that RNA uses <strong>uracil (U)</strong> instead of <strong>thymine (T)</strong>.</p>
+
+<h2 id="dna-and-rna-bases">DNA and RNA bases</h2>
+
+<div class="table-wrapper">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>DNA</th>
+        <th>RNA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A, adenine</td>
+        <td>A, adenine</td>
+      </tr>
+      <tr>
+        <td>C, cytosine</td>
+        <td>C, cytosine</td>
+      </tr>
+      <tr>
+        <td>G, guanine</td>
+        <td>G, guanine</td>
+      </tr>
+      <tr>
+        <td>T, thymine</td>
+        <td>U, uracil</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>The example above refers to the <strong>DNA coding strand</strong>. The DNA template strand is complementary to the resulting RNA sequence.</p>
+
+<h2 id="amino-acid-reference">Amino acid reference</h2>
+
+<p>Clinical genetics commonly uses both three-letter and one-letter amino acid abbreviations. Select an amino acid to inspect its three-dimensional chemical structure.</p>
+
+<div class="row align-items-start">
+
+<div class="col-12 col-lg-7">
+
+    <div class="table-wrapper">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Amino acid</th>
+            <th>3-letter</th>
+            <th>1-letter</th>
+            <th>DNA codons</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="alanine" aria-current="true">Alanine</a></td>
+            <td>Ala</td>
+            <td>A</td>
+            <td>GCT, GCC, GCA, GCG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="arginine">Arginine</a></td>
+            <td>Arg</td>
+            <td>R</td>
+            <td>CGT, CGC, CGA, CGG, AGA, AGG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="asparagine">Asparagine</a></td>
+            <td>Asn</td>
+            <td>N</td>
+            <td>AAT, AAC</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="aspartic-acid">Aspartic acid</a></td>
+            <td>Asp</td>
+            <td>D</td>
+            <td>GAT, GAC</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="cysteine">Cysteine</a></td>
+            <td>Cys</td>
+            <td>C</td>
+            <td>TGT, TGC</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="glutamine">Glutamine</a></td>
+            <td>Gln</td>
+            <td>Q</td>
+            <td>CAA, CAG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="glutamic-acid">Glutamic acid</a></td>
+            <td>Glu</td>
+            <td>E</td>
+            <td>GAA, GAG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="glycine">Glycine</a></td>
+            <td>Gly</td>
+            <td>G</td>
+            <td>GGT, GGC, GGA, GGG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="histidine">Histidine</a></td>
+            <td>His</td>
+            <td>H</td>
+            <td>CAT, CAC</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="isoleucine">Isoleucine</a></td>
+            <td>Ile</td>
+            <td>I</td>
+            <td>ATT, ATC, ATA</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="leucine">Leucine</a></td>
+            <td>Leu</td>
+            <td>L</td>
+            <td>TTA, TTG, CTT, CTC, CTA, CTG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="lysine">Lysine</a></td>
+            <td>Lys</td>
+            <td>K</td>
+            <td>AAA, AAG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="methionine">Methionine</a></td>
+            <td>Met</td>
+            <td>M</td>
+            <td>ATG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="phenylalanine">Phenylalanine</a></td>
+            <td>Phe</td>
+            <td>F</td>
+            <td>TTT, TTC</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="proline">Proline</a></td>
+            <td>Pro</td>
+            <td>P</td>
+            <td>CCT, CCC, CCA, CCG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="serine">Serine</a></td>
+            <td>Ser</td>
+            <td>S</td>
+            <td>TCT, TCC, TCA, TCG, AGT, AGC</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="threonine">Threonine</a></td>
+            <td>Thr</td>
+            <td>T</td>
+            <td>ACT, ACC, ACA, ACG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="tryptophan">Tryptophan</a></td>
+            <td>Trp</td>
+            <td>W</td>
+            <td>TGG</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="tyrosine">Tyrosine</a></td>
+            <td>Tyr</td>
+            <td>Y</td>
+            <td>TAT, TAC</td>
+          </tr>
+          <tr>
+            <td><a href="#aa-viewer" class="aa-structure-link" data-aa="valine">Valine</a></td>
+            <td>Val</td>
+            <td>V</td>
+            <td>GTT, GTC, GTA, GTG</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+<div class="col-12 col-lg-5 mt-4 mt-lg-0">
+
+<aside class="border rounded bg-white" aria-live="polite">
+
+<div class="p-3 border-bottom">
+  <h3 id="aa-structure-name" class="mb-1">Alanine</h3>
+  <p id="aa-structure-meta" class="text-muted mb-0">Ala · A</p>
+</div>
+
+<div id="aa-viewer" role="img" aria-label="Interactive three-dimensional structure of alanine"></div>
+
+<p id="aa-structure-status" class="small text-muted px-3 pb-3 mb-0">
+  Loading 3D structure...
+</p>
+
+</aside>
+
+</div>
+
+</div>
+
+<h2 id="genetic-code">Genetic code</h2>
+
+<p>The standard genetic code is shown below. Select <strong>RNA</strong> or <strong>DNA</strong> to switch between mRNA codons and the corresponding coding-strand DNA codons.</p>
+
+<div class="codon-switch" role="group" aria-label="Genetic code sequence type">
+  <button type="button" data-code-mode="rna" aria-pressed="true">RNA</button>
+  <button type="button" data-code-mode="dna" aria-pressed="false">DNA</button>
+</div>
+
+<p id="genetic-code-mode-description" class="small text-muted">
+  Showing mRNA codons. RNA uses uracil (U).
+</p>
+
+<div class="table-wrapper">
+  <table class="table table-hover" id="genetic-code-table">
+    <thead>
+      <tr>
+        <th>First base</th>
+        <th>Second base U</th>
+        <th>Second base C</th>
+        <th>Second base A</th>
+        <th>Second base G</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>U</strong></td>
+        <td>UUU Phe (F)<br />UUC Phe (F)<br />UUA Leu (L)<br />UUG Leu (L)</td>
+        <td>UCU Ser (S)<br />UCC Ser (S)<br />UCA Ser (S)<br />UCG Ser (S)</td>
+        <td>UAU Tyr (Y)<br />UAC Tyr (Y)<br />UAA Stop<br />UAG Stop</td>
+        <td>UGU Cys (C)<br />UGC Cys (C)<br />UGA Stop<br />UGG Trp (W)</td>
+      </tr>
+      <tr>
+        <td><strong>C</strong></td>
+        <td>CUU Leu (L)<br />CUC Leu (L)<br />CUA Leu (L)<br />CUG Leu (L)</td>
+        <td>CCU Pro (P)<br />CCC Pro (P)<br />CCA Pro (P)<br />CCG Pro (P)</td>
+        <td>CAU His (H)<br />CAC His (H)<br />CAA Gln (Q)<br />CAG Gln (Q)</td>
+        <td>CGU Arg (R)<br />CGC Arg (R)<br />CGA Arg (R)<br />CGG Arg (R)</td>
+      </tr>
+      <tr>
+        <td><strong>A</strong></td>
+        <td>AUU Ile (I)<br />AUC Ile (I)<br />AUA Ile (I)<br />AUG Met (M)</td>
+        <td>ACU Thr (T)<br />ACC Thr (T)<br />ACA Thr (T)<br />ACG Thr (T)</td>
+        <td>AAU Asn (N)<br />AAC Asn (N)<br />AAA Lys (K)<br />AAG Lys (K)</td>
+        <td>AGU Ser (S)<br />AGC Ser (S)<br />AGA Arg (R)<br />AGG Arg (R)</td>
+      </tr>
+      <tr>
+        <td><strong>G</strong></td>
+        <td>GUU Val (V)<br />GUC Val (V)<br />GUA Val (V)<br />GUG Val (V)</td>
+        <td>GCU Ala (A)<br />GCC Ala (A)<br />GCA Ala (A)<br />GCG Ala (A)</td>
+        <td>GAU Asp (D)<br />GAC Asp (D)<br />GAA Glu (E)<br />GAG Glu (E)</td>
+        <td>GGU Gly (G)<br />GGC Gly (G)<br />GGA Gly (G)<br />GGG Gly (G)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h2 id="start-and-stop-codons">Start and stop codons</h2>
+
+<div class="table-wrapper">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Function</th>
+        <th>RNA codon</th>
+        <th>DNA coding sequence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Start, methionine</td>
+        <td>AUG</td>
+        <td>ATG</td>
+      </tr>
+      <tr>
+        <td>Stop</td>
+        <td>UAA</td>
+        <td>TAA</td>
+      </tr>
+      <tr>
+        <td>Stop</td>
+        <td>UAG</td>
+        <td>TAG</td>
+      </tr>
+      <tr>
+        <td>Stop</td>
+        <td>UGA</td>
+        <td>TGA</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p><code class="language-plaintext highlighter-rouge">AUG</code> commonly initiates translation and also encodes methionine. Stop codons terminate translation and do not encode an amino acid.</p>
+
+<h2 id="clinical-genetics">Clinical genetics</h2>
+
+<p>A nucleotide change can alter the codon and therefore the resulting protein sequence.</p>
+
+<div class="table-wrapper">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th> </th>
+        <th>Reference</th>
+        <th>Alternate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>DNA codon</strong></td>
+        <td><code class="language-plaintext highlighter-rouge">TGG</code></td>
+        <td><code class="language-plaintext highlighter-rouge">TAG</code></td>
+      </tr>
+      <tr>
+        <td><strong>RNA codon</strong></td>
+        <td><code class="language-plaintext highlighter-rouge">UGG</code></td>
+        <td><code class="language-plaintext highlighter-rouge">UAG</code></td>
+      </tr>
+      <tr>
+        <td><strong>Protein</strong></td>
+        <td>Trp</td>
+        <td>Stop</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p><code class="language-plaintext highlighter-rouge">TGG → TAG</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">Trp → Ter</code></p>
+
+<p>A single nucleotide change can therefore leave the amino acid unchanged, change one amino acid to another, introduce a stop codon or remove an existing start or stop signal.</p>
+
+<h2 id="variant-consequences">Variant consequences</h2>
+
+<p>A genomic variant can have different predicted consequences depending on the transcript and genomic feature it overlaps. Ensembl assigns Sequence Ontology (SO) consequence terms to each allele and transcript combination, so the same allele can have different consequences in different transcripts.</p>
+
+<p>The table below is reproduced and reformatted from the <a href="https://www.ensembl.org/info/genome/variation/prediction/predicted_data.html">Ensembl Variation calculated variant consequences</a> reference (Ensembl release 116, June 2026), retaining Ensembl’s display colours, Sequence Ontology terms, descriptions, accessions, severity order and IMPACT labels.</p>
+
+<p><strong>IMPACT is not pathogenicity.</strong> Ensembl’s HIGH, MODERATE, LOW and MODIFIER labels describe predicted molecular consequence and are separate from clinical variant classification. Ensembl also notes that its severity ordering is necessarily subjective.</p>
+
+<p><img src="/images/technologies/consequences.svg" alt="consequences.svg" /></p>
+
+<div class="table-wrapper">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th> </th>
+        <th>Consequence</th>
+        <th>Description</th>
+        <th>SO accession</th>
+        <th>IMPACT</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff0000;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff0000" title="Ensembl colour #ff0000"></span></td>
+        <td><strong>Transcript ablation</strong></td>
+        <td>A feature ablation whereby the deleted region includes a transcript feature</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001893">SO:0001893</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#FF581A;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #FF581A" title="Ensembl colour #FF581A"></span></td>
+        <td><strong>Splice acceptor variant</strong></td>
+        <td>A splice variant that changes the 2 base region at the 3’ end of an intron</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001574">SO:0001574</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#FF581A;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #FF581A" title="Ensembl colour #FF581A"></span></td>
+        <td><strong>Splice donor variant</strong></td>
+        <td>A splice variant that changes the 2 base region at the 5’ end of an intron</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001575">SO:0001575</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff0000;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff0000" title="Ensembl colour #ff0000"></span></td>
+        <td><strong>Stop gained</strong></td>
+        <td>A sequence variant whereby at least one base of a codon is changed, resulting in a premature stop codon, leading to a shortened transcript</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001587">SO:0001587</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#9400D3;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #9400D3" title="Ensembl colour #9400D3"></span></td>
+        <td><strong>Frameshift variant</strong></td>
+        <td>A sequence variant which causes a disruption of the translational reading frame, because the number of nucleotides inserted or deleted is not a multiple of three</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001589">SO:0001589</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff0000;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff0000" title="Ensembl colour #ff0000"></span></td>
+        <td><strong>Stop lost</strong></td>
+        <td>A sequence variant where at least one base of the terminator codon (stop) is changed, resulting in an elongated transcript</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001578">SO:0001578</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ffd700;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ffd700" title="Ensembl colour #ffd700"></span></td>
+        <td><strong>Start lost</strong></td>
+        <td>A codon variant that changes at least one base of the canonical start codon</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0002012">SO:0002012</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff69b4;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff69b4" title="Ensembl colour #ff69b4"></span></td>
+        <td><strong>Transcript amplification</strong></td>
+        <td>A feature amplification of a region containing a transcript</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001889">SO:0001889</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#7f7f7f;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #7f7f7f" title="Ensembl colour #7f7f7f"></span></td>
+        <td><strong>Feature elongation</strong></td>
+        <td>A sequence variant that causes the extension of a genomic feature, with regard to the reference sequence</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001907">SO:0001907</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#7f7f7f;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #7f7f7f" title="Ensembl colour #7f7f7f"></span></td>
+        <td><strong>Feature truncation</strong></td>
+        <td>A sequence variant that causes the reduction of a genomic feature, with regard to the reference sequence</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001906">SO:0001906</a></td>
+        <td>HIGH</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff69b4;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff69b4" title="Ensembl colour #ff69b4"></span></td>
+        <td><strong>Inframe insertion</strong></td>
+        <td>An inframe non synonymous variant that inserts bases into in the coding sequence</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001821">SO:0001821</a></td>
+        <td>MODERATE</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff69b4;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff69b4" title="Ensembl colour #ff69b4"></span></td>
+        <td><strong>Inframe deletion</strong></td>
+        <td>An inframe non synonymous variant that deletes bases from the coding sequence</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001822">SO:0001822</a></td>
+        <td>MODERATE</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ffd700;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ffd700" title="Ensembl colour #ffd700"></span></td>
+        <td><strong>Missense variant</strong></td>
+        <td>A sequence variant, that changes one or more bases, resulting in a different amino acid sequence but where the length is preserved</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001583">SO:0001583</a></td>
+        <td>MODERATE</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#FF0080;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #FF0080" title="Ensembl colour #FF0080"></span></td>
+        <td><strong>Protein altering variant</strong></td>
+        <td>A sequence_variant which is predicted to change the protein encoded in the coding sequence</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001818">SO:0001818</a></td>
+        <td>MODERATE</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff7f50;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff7f50" title="Ensembl colour #ff7f50"></span></td>
+        <td><strong>Splice donor 5th base variant</strong></td>
+        <td>A sequence variant that causes a change at the 5th base pair after the start of the intron in the orientation of the transcript</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001787">SO:0001787</a></td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff7f50;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff7f50" title="Ensembl colour #ff7f50"></span></td>
+        <td><strong>Splice region variant</strong></td>
+        <td>A sequence variant in which a change has occurred within the region of the splice site, either within 1-3 bases of the exon or 3-8 bases of the intron</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001630">SO:0001630</a></td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff7f50;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff7f50" title="Ensembl colour #ff7f50"></span></td>
+        <td><strong>Splice donor region variant</strong></td>
+        <td>A sequence variant that falls in the region between the 3rd and 6th base after splice junction (5’ end of intron)</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0002170">SO:0002170</a></td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff7f50;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff7f50" title="Ensembl colour #ff7f50"></span></td>
+        <td><strong>Splice polypyrimidine tract variant</strong></td>
+        <td>A sequence variant that falls in the polypyrimidine tract at 3’ end of intron between 17 and 3 bases from the end (acceptor -3 to acceptor -17)</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0002169">SO:0002169</a></td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff00ff;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff00ff" title="Ensembl colour #ff00ff"></span></td>
+        <td><strong>Incomplete terminal codon variant</strong></td>
+        <td>A sequence variant where at least one base of the final codon of an incompletely annotated transcript is changed</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001626">SO:0001626</a></td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#76ee00;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #76ee00" title="Ensembl colour #76ee00"></span></td>
+        <td><strong>Start retained variant</strong></td>
+        <td>A sequence variant where at least one base in the start codon is changed, but the start remains</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0002019">SO:0002019</a></td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#76ee00;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #76ee00" title="Ensembl colour #76ee00"></span></td>
+        <td><strong>Stop retained variant</strong></td>
+        <td>A sequence variant where at least one base in the terminator codon is changed, but the terminator remains</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001567">SO:0001567</a></td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#76ee00;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #76ee00" title="Ensembl colour #76ee00"></span></td>
+        <td><strong>Synonymous variant</strong></td>
+        <td>A sequence variant where there is no resulting change to the encoded amino acid</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001819">SO:0001819</a></td>
+        <td>LOW</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#458b00;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #458b00" title="Ensembl colour #458b00"></span></td>
+        <td><strong>Coding sequence variant</strong></td>
+        <td>A sequence variant that changes the coding sequence</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001580">SO:0001580</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#458b00;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #458b00" title="Ensembl colour #458b00"></span></td>
+        <td><strong>Mature miRNA variant</strong></td>
+        <td>A transcript variant located with the sequence of the mature miRNA</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001620">SO:0001620</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#7ac5cd;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #7ac5cd" title="Ensembl colour #7ac5cd"></span></td>
+        <td><strong>5 prime UTR variant</strong></td>
+        <td>A UTR variant of the 5’ UTR</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001623">SO:0001623</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#7ac5cd;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #7ac5cd" title="Ensembl colour #7ac5cd"></span></td>
+        <td><strong>3 prime UTR variant</strong></td>
+        <td>A UTR variant of the 3’ UTR</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001624">SO:0001624</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#32cd32;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #32cd32" title="Ensembl colour #32cd32"></span></td>
+        <td><strong>Non coding transcript exon variant</strong></td>
+        <td>A sequence variant that changes non-coding exon sequence in a non-coding transcript</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001792">SO:0001792</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#02599c;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #02599c" title="Ensembl colour #02599c"></span></td>
+        <td><strong>Intron variant</strong></td>
+        <td>A transcript variant occurring within an intron</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001627">SO:0001627</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#ff4500;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #ff4500" title="Ensembl colour #ff4500"></span></td>
+        <td><strong>NMD transcript variant</strong></td>
+        <td>A variant in a transcript that is the target of NMD</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001621">SO:0001621</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#32cd32;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #32cd32" title="Ensembl colour #32cd32"></span></td>
+        <td><strong>Non coding transcript variant</strong></td>
+        <td>A transcript variant of a non coding RNA gene</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001619">SO:0001619</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#458b00;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #458b00" title="Ensembl colour #458b00"></span></td>
+        <td><strong>Coding transcript variant</strong></td>
+        <td>A transcript variant of a protein coding gene</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001968">SO:0001968</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#a2b5cd;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #a2b5cd" title="Ensembl colour #a2b5cd"></span></td>
+        <td><strong>Upstream gene variant</strong></td>
+        <td>A sequence variant located 5’ of a gene</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001631">SO:0001631</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#a2b5cd;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #a2b5cd" title="Ensembl colour #a2b5cd"></span></td>
+        <td><strong>Downstream gene variant</strong></td>
+        <td>A sequence variant located 3’ of a gene</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001632">SO:0001632</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#a52a2a;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #a52a2a" title="Ensembl colour #a52a2a"></span></td>
+        <td><strong>TFBS ablation</strong></td>
+        <td>A feature ablation whereby the deleted region includes a transcription factor binding site</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001895">SO:0001895</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#a52a2a;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #a52a2a" title="Ensembl colour #a52a2a"></span></td>
+        <td><strong>TFBS amplification</strong></td>
+        <td>A feature amplification of a region containing a transcription factor binding site</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001892">SO:0001892</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#a52a2a;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #a52a2a" title="Ensembl colour #a52a2a"></span></td>
+        <td><strong>TF binding site variant</strong></td>
+        <td>A sequence variant located within a transcription factor binding site</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001782">SO:0001782</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#a52a2a;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #a52a2a" title="Ensembl colour #a52a2a"></span></td>
+        <td><strong>Regulatory region ablation</strong></td>
+        <td>A feature ablation whereby the deleted region includes a regulatory region</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001894">SO:0001894</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#a52a2a;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #a52a2a" title="Ensembl colour #a52a2a"></span></td>
+        <td><strong>Regulatory region amplification</strong></td>
+        <td>A feature amplification of a region containing a regulatory region</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001891">SO:0001891</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#a52a2a;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #a52a2a" title="Ensembl colour #a52a2a"></span></td>
+        <td><strong>Regulatory region variant</strong></td>
+        <td>A sequence variant located within a regulatory region</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001566">SO:0001566</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#636363;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #636363" title="Ensembl colour #636363"></span></td>
+        <td><strong>Intergenic variant</strong></td>
+        <td>A sequence variant located in the intergenic region, between genes</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001628">SO:0001628</a></td>
+        <td>MODIFIER</td>
+      </tr>
+      <tr>
+        <td><span style="display:inline-block;width:0.8rem;height:0.8rem;background:#636363;border:1px solid rgba(0,0,0,.15);vertical-align:-0.05rem;" aria-label="Ensembl colour #636363" title="Ensembl colour #636363"></span></td>
+        <td><strong>Sequence variant</strong></td>
+        <td>A sequence_variant is a non exact copy of a sequence_feature or genome exhibiting one or more sequence_alteration</td>
+        <td><a href="http://www.sequenceontology.org/miso/current_svn/term/SO:0001060">SO:0001060</a></td>
+        <td>MODIFIER</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 id="ensembl-impact-labels">Ensembl IMPACT labels</h3>
+
+<div class="table-wrapper">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>IMPACT</th>
+        <th>Ensembl description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>HIGH</strong></td>
+        <td>The variant is assumed to have high (disruptive) impact in the protein, probably causing protein truncation, loss of function or triggering nonsense mediated decay.</td>
+      </tr>
+      <tr>
+        <td><strong>MODERATE</strong></td>
+        <td>A non-disruptive variant that might change protein effectiveness.</td>
+      </tr>
+      <tr>
+        <td><strong>LOW</strong></td>
+        <td>Assumed to be mostly harmless or unlikely to change protein behaviour.</td>
+      </tr>
+      <tr>
+        <td><strong>MODIFIER</strong></td>
+        <td>Usually non-coding variants or variants affecting non-coding genes, where predictions are difficult or there is no evidence of impact.</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<h2 id="hgvs-notation">HGVS notation</h2>
+
+<p>Protein changes are commonly represented using HGVS nomenclature.</p>
+
+<p>For example:</p>
+
+<p><code class="language-plaintext highlighter-rouge">p.Trp24Ter</code></p>
+
+<p>means that tryptophan (<code class="language-plaintext highlighter-rouge">Trp</code>, <code class="language-plaintext highlighter-rouge">W</code>) at amino acid position 24 is replaced by a translation termination signal.</p>
+
+<p>The corresponding coding DNA change is described separately using HGVS coding-sequence notation, for example:</p>
+
+<p><code class="language-plaintext highlighter-rouge">c.71G&gt;A</code></p>
+
+<p>The exact relationship between genomic DNA, coding DNA and protein notation depends on the reference sequence, transcript and reading frame.</p>
+
+<h2 id="interpretation">Interpretation</h2>
+
+<p>A codon or amino acid consequence describes what a sequence variant changes. It does not by itself establish whether the variant is pathogenic or whether it explains a patient’s phenotype.</p>
+
+<p>Clinical variant interpretation additionally considers evidence such as population frequency, inheritance, phenotype, functional studies, segregation, gene-disease relationships and other relevant evidence.</p>
+
+<h2 id="mitochondrial-genetic-code">Mitochondrial genetic code</h2>
+
+<p>Human mitochondrial DNA uses a genetic code that differs at several codons from the standard genetic code shown above. Mitochondrial variants should therefore be interpreted using the appropriate mitochondrial genetic code.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>National Center for Biotechnology Information. <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi">The genetic codes</a></li>
+  <li>Human Genome Variation Society. <a href="https://hgvs-nomenclature.org/">HGVS nomenclature</a></li>
+  <li>Ensembl. <a href="https://www.ensembl.org/info/genome/variation/prediction/predicted_data.html">Calculated variant consequences</a>. Ensembl release 116, June 2026.</li>
+  <li>Sequence Ontology. <a href="http://www.sequenceontology.org/">Sequence Ontology</a></li>
+  <li>National Library of Medicine. <a href="https://pubchem.ncbi.nlm.nih.gov/">PubChem</a></li>
+</ul>
+
+<script>
+(function () {
+  const table = document.getElementById("genetic-code-table");
+  const buttons = Array.from(document.querySelectorAll("[data-code-mode]"));
+  const description = document.getElementById("genetic-code-mode-description");
+
+  if (!table || !buttons.length) {
+    return;
+  }
+
+  const cells = Array.from(table.querySelectorAll("th, td"));
+
+  cells.forEach(function (cell) {
+    cell.dataset.rnaHtml = cell.innerHTML;
+  });
+
+  function toDna(html) {
+    return html
+      .replace(/\b[ACGU]{3}\b/g, function (codon) {
+        return codon.replace(/U/g, "T");
+      })
+      .replace(/Second base U/g, "Second base T")
+      .replace(/<strong>U<\/strong>/g, "<strong>T</strong>");
+  }
+
+  function setMode(mode) {
+    const dna = mode === "dna";
+
+    cells.forEach(function (cell) {
+      cell.innerHTML = dna ? toDna(cell.dataset.rnaHtml) : cell.dataset.rnaHtml;
+    });
+
+    buttons.forEach(function (button) {
+      button.setAttribute(
+        "aria-pressed",
+        button.dataset.codeMode === mode ? "true" : "false"
+      );
+    });
+
+    if (description) {
+      description.textContent = dna
+        ? "Showing coding-strand DNA codons. DNA uses thymine (T)."
+        : "Showing mRNA codons. RNA uses uracil (U).";
+    }
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setMode(button.dataset.codeMode);
+    });
+  });
+
+  setMode("rna");
+})();
+</script>
+
+<script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+
+<script>
+(function () {
+  const aminoAcids = {
+    "alanine":       { name: "Alanine",       three: "Ala", one: "A", pubchem: "L-alanine" },
+    "arginine":      { name: "Arginine",      three: "Arg", one: "R", pubchem: "L-arginine" },
+    "asparagine":    { name: "Asparagine",    three: "Asn", one: "N", pubchem: "L-asparagine" },
+    "aspartic-acid": { name: "Aspartic acid", three: "Asp", one: "D", pubchem: "L-aspartic acid" },
+    "cysteine":      { name: "Cysteine",      three: "Cys", one: "C", pubchem: "L-cysteine" },
+    "glutamine":     { name: "Glutamine",     three: "Gln", one: "Q", pubchem: "L-glutamine" },
+    "glutamic-acid": { name: "Glutamic acid", three: "Glu", one: "E", pubchem: "L-glutamic acid" },
+    "glycine":       { name: "Glycine",       three: "Gly", one: "G", pubchem: "glycine" },
+    "histidine":     { name: "Histidine",     three: "His", one: "H", pubchem: "L-histidine" },
+    "isoleucine":    { name: "Isoleucine",    three: "Ile", one: "I", pubchem: "L-isoleucine" },
+    "leucine":       { name: "Leucine",       three: "Leu", one: "L", pubchem: "L-leucine" },
+    "lysine":        { name: "Lysine",        three: "Lys", one: "K", pubchem: "L-lysine" },
+    "methionine":    { name: "Methionine",    three: "Met", one: "M", pubchem: "L-methionine" },
+    "phenylalanine": { name: "Phenylalanine", three: "Phe", one: "F", pubchem: "L-phenylalanine" },
+    "proline":       { name: "Proline",       three: "Pro", one: "P", pubchem: "L-proline" },
+    "serine":        { name: "Serine",        three: "Ser", one: "S", pubchem: "L-serine" },
+    "threonine":     { name: "Threonine",     three: "Thr", one: "T", pubchem: "L-threonine" },
+    "tryptophan":    { name: "Tryptophan",    three: "Trp", one: "W", pubchem: "L-tryptophan" },
+    "tyrosine":      { name: "Tyrosine",      three: "Tyr", one: "Y", pubchem: "L-tyrosine" },
+    "valine":        { name: "Valine",        three: "Val", one: "V", pubchem: "L-valine" }
+  };
+
+  const host = document.getElementById("aa-viewer");
+  const titleEl = document.getElementById("aa-structure-name");
+  const metaEl = document.getElementById("aa-structure-meta");
+  const statusEl = document.getElementById("aa-structure-status");
+  const links = Array.from(document.querySelectorAll(".aa-structure-link"));
+
+  if (!host || !window.$3Dmol) {
+    if (statusEl) {
+      statusEl.textContent = "3D viewer unavailable.";
+    }
+    return;
+  }
+
+  const viewer = $3Dmol.createViewer(host, {
+    backgroundColor: "white"
+  });
+
+  let requestId = 0;
+
+  function setActiveLink(key) {
+    links.forEach(function (link) {
+      if (link.dataset.aa === key) {
+        link.setAttribute("aria-current", "true");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  async function fetchPubChem3D(compoundName) {
+    const encoded = encodeURIComponent(compoundName);
+    const url =
+      "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/" +
+      encoded +
+      "/SDF?record_type=3d";
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("No 3D conformer returned");
+    }
+
+    return response.text();
+  }
+
+  async function showAminoAcid(key) {
+    const amino = aminoAcids[key];
+
+    if (!amino) {
+      return;
+    }
+
+    const thisRequest = ++requestId;
+
+    setActiveLink(key);
+
+    titleEl.textContent = amino.name;
+    metaEl.textContent = amino.three + " · " + amino.one;
+
+    host.setAttribute(
+      "aria-label",
+      "Interactive three-dimensional structure of " +
+        amino.name.toLowerCase()
+    );
+
+    statusEl.textContent = "Loading 3D structure...";
+
+    viewer.clear();
+    viewer.render();
+
+    try {
+      const sdf = await fetchPubChem3D(amino.pubchem);
+
+      if (thisRequest !== requestId) {
+        return;
+      }
+
+      viewer.clear();
+      viewer.addModel(sdf, "sdf");
+
+      viewer.setStyle(
+        {},
+        {
+          stick: {
+            radius: 0.13
+          },
+          sphere: {
+            scale: 0.27
+          }
+        }
+      );
+
+      viewer.zoomTo();
+      viewer.render();
+
+      statusEl.textContent =
+        "Drag to rotate · scroll to zoom · right-drag to translate";
+    } catch (error) {
+      if (thisRequest !== requestId) {
+        return;
+      }
+
+      viewer.clear();
+      viewer.render();
+
+      statusEl.textContent =
+        "The 3D structure could not be loaded from PubChem.";
+    }
+  }
+
+  links.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      showAminoAcid(link.dataset.aa);
+    });
+  });
+
+  window.addEventListener("resize", function () {
+    viewer.resize();
+    viewer.render();
+  });
+
+  showAminoAcid("alanine");
+})();
+</script>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
