@@ -214,7 +214,7 @@ This is converted into a weight \(W_i\) between 0 and 1. The weighted prior beco
 
 \[\pi_i \sim \text{Beta}(\alpha_i, \beta_i), \quad \alpha_i = \text{round}(2Np_i^\ast) + \tilde w_i,\; \beta_i = 2N - \text{round}(2Np_i^\ast) + 1\]
 
-<p>where $\tilde w_i = \max(1, S_i + 1)$ adds a pseudo-count based on classification strength.</p>
+<p>where \(\tilde w_i = \max(1, S_i + 1)\) adds a pseudo-count based on classification strength.</p>
 
 <p>Simulating \(M\) draws from this prior, we compute normalised weights:</p>
 

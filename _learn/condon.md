@@ -1,7 +1,6 @@
 ---
 title: "Amino acids and codons"
 layout: tech
-permalink: /codon/
 show_call_box: false
 weight: 99
 technology_group: structured-genomics
@@ -10,6 +9,10 @@ content_alignment: left
 description: "A clinical genetics reference for DNA, RNA, codons, amino acid abbreviations and protein consequences."
 summary: "Quick reference for translating DNA and RNA codons into amino acids and understanding common protein notation used in clinical genetics."
 ---
+
+A quick reference for DNA, RNA, codons and amino acid notation used in clinical genetics.
+
+<!-- permalink: /codon/ -->
 
 <style>
 #aa-viewer {
@@ -57,7 +60,6 @@ summary: "Quick reference for translating DNA and RNA codons into amino acids an
 }
 </style>
 
-**A quick reference for DNA, RNA, codons and amino acid notation used in clinical genetics.**
 
 ## DNA to RNA to protein
 
