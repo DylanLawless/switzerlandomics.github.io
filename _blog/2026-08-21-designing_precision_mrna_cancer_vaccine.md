@@ -38,7 +38,7 @@ entities:
 
 Pharmaceutical partners Moderna and Merck announced on Wednesday that their novel mRNA-based vaccine, 
 was effective in a late-stage clinical trial of patients with melanoma, one of the deadliest forms of skin cancer.
-The treatment is individually tailored to target a patient’s unique cancer mutations.
+The treatment is individually tailored to target a patient’s unique cancer variants.
 This triggered a dramatic jump in the share price for Moderna Inc. from $63 to $174.
 
 Intismeran autogene, formerly mRNA-4157/V940, is designed separately for each patient. Tumour DNA, matched normal DNA, tumour RNA, and HLA type are used to select up to 34 tumour-specific neoantigens. Those selected sequences are assembled into one mRNA construct and manufactured as an individual vaccine.
@@ -55,7 +55,7 @@ tumour biopsy + matched blood
             ↓
    somatic variant set
             ↓
- mutation-derived peptides
+ variant-derived peptides
             ↓
  patient-specific ranking
             ↓
@@ -70,14 +70,11 @@ tumour biopsy + matched blood
 
 *Figure 1. Patient-specific workflow from tumour and normal sampling through sequencing, vaccine design, manufacture, and administration.*
 
-
-
-
 ## 1. Define the patient's tumour-specific search space
 
 The first step is matched tumour-normal sequencing.
 
-KEYNOTE-942 reports next-generation sequencing on the **Illumina NovaSeq** platform. Whole-exome sequencing was performed by **Personalis**. Tumour WES defined the mutanome. Blood WES supplied the matched normal comparison and was also used for HLA typing. Tumour RNA-seq established the transcriptome. These data entered Moderna's automated mRNA-4157 design system. [Weber et al., 2024][weber2024]
+KEYNOTE-942 reports next-generation sequencing on the **Illumina NovaSeq** platform. Whole-exome sequencing was performed by **Personalis**. WES was performed in tumour and for the matched normal comparison and was also used for HLA typing. Tumour RNA-seq established the transcriptome. These data entered Moderna's automated mRNA-4157 design system. [Weber et al., 2024][weber2024]
 
 The matched normal sample determines which variants are tumour-specific for that patient.
 
@@ -90,11 +87,11 @@ variant in tumour + absent from normal
 → somatic candidate
 ```
 
-Population frequency is secondary to this patient-specific comparison. A recurrent cancer mutation can qualify. A private passenger mutation can also qualify. The relevant requirement is tumour specificity and useful immune presentation.
+Population frequency is secondary to this patient-specific comparison. A recurrent cancer variant can qualify. A private passenger variant can also qualify. The relevant requirement is tumour specificity and useful immune presentation.
 
-The 34 targets are therefore a **product capacity**, not a fixed gene panel. The source genes can differ completely between patients.
+The 34 targets are therefore a **product capacity**, not a fixed gene panel. The source genes can differ completely between patients. However, it is notable that their patent specifies genes and variants.
 
-A driver such as `BRAF`, `KRAS`, or `TP53` can contribute a target when the mutation produces a useful neoantigen. A passenger mutation can also contribute. The gene provides the sequence context. The selected object is the mutation-derived peptide in the context of the patient's HLA repertoire.
+A driver such as `BRAF`, `KRAS`, or `TP53` can contribute a target when the variant produces a useful neoantigen. A passenger variant can also contribute. The gene provides the sequence context. The selected object is the variant-derived peptide in the context of the patient's HLA repertoire.
 
 A simple example shows the transition from variant to antigen:
 
@@ -126,14 +123,14 @@ That altered residue becomes the centre of a set of candidate peptide sequences.
 
 ## 2. Generate candidate neoantigens
 
-The clinical papers describe the overall workflow. Moderna's patent disclosures provide more detail on candidate generation. The patent describes projection of somatic coding variants onto **GENCODE** protein sequences. A typical single amino-acid substitution is represented by a 25-amino-acid source sequence. The mutant residue is centred between 12 native amino acids on each side. [Moderna patent][moderna-patent]
+The clinical papers describe the overall workflow. Moderna's patent disclosures provide more detail on candidate generation. The patent describes projection of somatic coding variants onto **GENCODE** protein sequences. A typical single amino-acid substitution is represented by a 25-amino-acid source sequence. The variant residue is centred between 12 native amino acids on each side [Moderna patent][moderna-patent] (although we need not restrict to SNVs).
 
 ```text
 12 native amino acids
         ↓
 ABCDEFGHIJKL[M]NOPQRSTUVWX
-            ↑
-         mutation
+             ↑
+          variant
 ```
 
 This 25-amino-acid sequence is a source region. The MHC class I candidate is shorter.
@@ -147,9 +144,9 @@ ABCDEFGHIJKL[M]NOPQRSTUVWX
 possible class-I windows:
 
 IJKL[M]NOP
-JKL[M]NOPQ
-KL[M]NOPQR
-L[M]NOPQRST
+ JKL[M]NOPQ
+  KL[M]NOPQR
+   L[M]NOPQRST
 ```
 
 The patent describes class I candidates in the **8 to 11 amino-acid** range. Class II candidates are longer. Insertions and deletions can generate several consecutive altered residues and a different peptide geometry. [Moderna patent][moderna-patent]
@@ -157,7 +154,7 @@ The patent describes class I candidates in the **8 to 11 amino-acid** range. Cla
 This creates a much larger search space than the final number of vaccine targets suggests.
 
 ```text
-hundreds of coding mutations
+hundreds of coding variants
           ↓
 many altered protein sequences
           ↓
@@ -167,12 +164,12 @@ many peptide:HLA combinations
           ↓
 ranked patient-specific candidates
           ↓
-up to 34 selected neoantigens
+up to N selected neoantigens (34 here)
 ```
 
-Tumour RNA-seq then adds direct evidence about expression. A DNA variant can be well supported while the corresponding transcript is absent or weakly expressed. RNA evidence can show whether the transcript is present, whether the mutant allele is represented, and how much of the mutant transcript is observed.
+Tumour RNA-seq then adds direct evidence about expression. A DNA variant can be well supported while the corresponding transcript is absent or weakly expressed. RNA evidence can show whether the transcript is present, whether the variant allele is represented, and how much of the variant transcript is observed.
 
-The Moderna patent describes transcript abundance, DNA and RNA variant frequency, sequence-call confidence, and predicted HLA binding among candidate features. It also describes clonality, mutation type, and amino-acid properties as possible inputs. [Moderna patent][moderna-patent]
+The Moderna patent describes transcript abundance, DNA and RNA variant allele frequency (VAF), sequence-call confidence, and predicted HLA binding among candidate features. It also describes clonality, variant type, and amino-acid properties as possible inputs. [Moderna patent][moderna-patent]
 
 A practical ranking system can distinguish cases such as:
 
@@ -185,7 +182,7 @@ HLA prediction   strong
 
 Candidate B
 DNA VAF          0.05
-RNA mutant read  absent
+RNA variant read  absent
 transcript       low
 HLA prediction   moderate
 ```
@@ -194,9 +191,9 @@ The exact production thresholds and coefficients are private.
 
 ### Quantify the evidence before ranking
 
-The patent quantifies variant-call confidence, DNA and RNA VAF, transcript abundance, predicted HLA affinity, and tumour-purity-adjusted VAF thresholds, with one low-purity example reducing 10% to 5%. Ten of 20 and 500 of 1,000 mutant RNA reads both give VAF 0.5, but different certainty. A Bayesian count model makes this explicit.
+The patent quantifies variant-call confidence, DNA and RNA VAF, transcript abundance, predicted HLA affinity, and tumour-purity-adjusted VAF thresholds, with one low-purity example reducing 10% to 5%. Ten of 20 and 500 of 1,000 variant RNA reads both give VAF 0.5, but different certainty. A Bayesian count model makes this explicit.
 
-For mutant-supporting reads \(k_i\) from \(n_i\) informative reads:
+For variant-supporting reads $$k_i$$ from $$n_i$$ informative reads:
 
 $$
 \theta_i \sim \mathrm{Beta}(\alpha,\beta)
@@ -220,16 +217,16 @@ $$
 P(\theta_i > \theta_{\min}\mid k_i,n_i)
 $$
 
-Here \(\theta_i\) can represent mutant-allele expression. Richer models can include tumour purity, copy number, and assay error. This is illustrative, not a disclosed Moderna model. The same principle applies to somatic calls, where read quality, depth, purity, and matched-normal evidence affect confidence.
+Here $$\theta_i$$ can represent variant-allele expression. Richer models can include tumour purity, copy number, and assay error. This is illustrative, not a disclosed Moderna model. The same principle applies to somatic calls, where read quality, depth, purity, and matched-normal evidence affect confidence.
 
 ## 3. Rank each peptide in the patient's HLA context
 
 HLA genotype defines the antigen-presentation space for the patient.
 
-The same tumour mutation can have different value in two people because their HLA molecules can differ in peptide-binding preference.
+The same tumour variant can have different value in two people because their HLA molecules can differ in peptide-binding preference.
 
 ```text
-same mutant peptide
+same variant peptide
 
 Patient A
 HLA-A*02:01
@@ -246,7 +243,7 @@ The 2026 KEYNOTE-942 data supplement provides the clearest public description of
     <img src="/images/mrna_vaccine/Kim_2026_Figure_S2.png" alt="Neoantigen selection algorithm overview" style="width: 100%;">
 </div>
 
-*Figure 2. Extract from Kim 2026 et al. figure S2. Neoantigen selection algorithm overview from the KEYNOTE-942 programme. Patient tumour DNA-seq, normal DNA-seq, tumour RNA-seq, and HLA typing feed mutation and peptide annotation, neoantigen selection, feature annotation, automated concatemer design, and mRNA sequence design. The published figure states that distinct MHC class I and II models are used. The figure was originally reprinted from Weber et al. in their earlier Lancet article.*
+*Figure 2. Extract from Kim 2026 et al. figure S2. Neoantigen selection algorithm overview from the KEYNOTE-942 programme. Patient tumour DNA-seq, normal DNA-seq, tumour RNA-seq, and HLA typing feed variant and peptide annotation, neoantigen selection, feature annotation, automated concatemer design, and mRNA sequence design. The published figure states that distinct MHC class I and II models are used. The figure was originally reprinted from Weber et al. in their earlier Lancet article.*
 
 The clinical figure gives the production architecture:
 
@@ -258,7 +255,7 @@ patient HLA typing
           ↓
       patient data
           ↓
-annotate mutations, peptides, and HLA type
+annotate variants, peptides, and HLA type
           ↓
 neoantigen selection algorithm
           ↓
@@ -275,10 +272,13 @@ up to 34 neoantigens
 
 The patent names **NetMHCpan** and **NetMHCIIpan** for HLA prediction. It compares NetMHCpan 3.0 with 4.0 EL and uses percentile rank, with about 0.5% as a strong class-I cutoff; this was better balanced across HLA alleles than IC50. [Moderna patent][moderna-patent]
 
+> NetMHCpan and NetMHCIIpan by Morten Nielsen and colleagues at DTU Health Tech of Technical University of Denmark.  
+> "The NetMHCpan-4.1 server predicts binding of peptides to any MHC molecule of known sequence using artificial neural networks (ANNs). The method is trained on a combination of more than 850,000 quantitative Binding Affinity (BA) and Mass-Spectrometry Eluted Ligands (EL) peptides. The BA data covers 170 MHC molecules from human (HLA-A, B, C, E), mouse (H-2), cattle (BoLA), primates (Patr, Mamu, Gogo), swine (SLA) and equine (Eqca). The EL data covers 177 MHC molecules from human (HLA-A, B, C, E), mouse (H-2), cattle (BoLA), primates (Patr, Mamu, Gogo), swine (SLA), equine (Eqca) and dog (DLA). Furthermore, the user can obtain predictions to any custom MHC class I molecule by uploading a full length MHC protein sequence. Predictions can be made for peptides of any length."
+
 It also names a **Centering Score** for TCR engagement and an **Anchoring Score** for differential HLA binding. Optional peptide:HLA docking is described, with **Rosetta** as an example for estimating residue solvent exposure.
 
 ```text
-mutant peptide
+variant peptide
       ↓
 HLA prediction
       ↓
@@ -330,10 +330,10 @@ The selected set is therefore best understood as a portfolio.
 ```text
 target A   target B   target C   ...   target N
    │          │          │               │
-different tumour mutations and HLA contexts
+different tumour variants and HLA contexts
 ```
 
-A broader set can reduce dependence on one antigen, one tumour subclone, or one presentation route. It can also include both driver and passenger mutations.
+A broader set can reduce dependence on one antigen, one tumour subclone, or one presentation route. It can also include both driver and passenger variants.
 
 The patent describes this as a constrained design problem. Its computerised system scores and ranks candidate sequences, then selects them subject to the maximum vaccine length:
 
@@ -349,16 +349,16 @@ $$
 
 A probability-aware implementation can extend that score with calibrated target probabilities, clonality, HLA breadth, redundancy, and construct compatibility. This explains why the preferred set need not be the 34 highest independent peptide scores.
 
-Tumour mutational burden only defines the amount of starting material. It does not directly define target quality. KEYNOTE-942 exploratory analyses retained a treatment effect in both TMB-high and TMB-low groups. The study was not powered for definitive biomarker subgroup conclusions. [Carlino et al., 2026][carlino2026]
+Tumour variant burden only defines the amount of starting material. It does not directly define target quality. KEYNOTE-942 exploratory analyses retained a treatment effect in both TMB-high and TMB-low groups. The study was not powered for definitive biomarker subgroup conclusions. [Carlino et al., 2026][carlino2026]
 
 ## 5. Compile the selected targets into one mRNA sequence
 
 The selected neoantigens are assembled into a single synthetic polyepitope open reading frame.
 
 ```text
-Gene A mutation → neoantigen A
-Gene B mutation → neoantigen B
-Gene C mutation → neoantigen C
+Gene A variant → neoantigen A
+Gene B variant → neoantigen B
+Gene C variant → neoantigen C
 
               ↓
 
@@ -369,16 +369,16 @@ Gene C mutation → neoantigen C
 single patient-specific mRNA ORF
 ```
 
-The full native tumour proteins are not reproduced in the construct. The shared molecular identity between vaccine and tumour is the **mutant peptide:HLA complex**.
+The full native tumour proteins are not reproduced in the construct. The shared molecular identity between vaccine and tumour is the **variant peptide:HLA complex**.
 
 On the tumour side:
 
 ```text
-native mutant protein
+native variant protein
         ↓
 intracellular processing
         ↓
-mutant peptide
+variant peptide
         ↓
 patient HLA
         ↓
@@ -392,7 +392,7 @@ synthetic concatemer
         ↓
 intracellular processing
         ↓
-same mutant peptide
+same variant peptide
         ↓
 same patient HLA
         ↓
@@ -518,7 +518,7 @@ define plausible candidates
 → select the best-supported target set
 ```
 
-That distinction matters when only 34 targets can enter the product. A candidate with a high score based on weak evidence is different from a candidate with the same score supported by deep sequencing, strong mutant RNA expression, robust HLA presentation, and independent functional evidence.
+That distinction matters when only 34 targets can enter the product. A candidate with a high score based on weak evidence is different from a candidate with the same score supported by deep sequencing, strong variant RNA expression, robust HLA presentation, and independent functional evidence.
 
 The next major opportunity is therefore to improve the **statistical design of the target set**. Better priors, better likelihood models, calibrated probabilities, and explicit treatment of missing evidence can make each inclusion and exclusion quantitatively defensible. The same approach can be used wherever patient-specific molecular data must be converted into a finite therapeutic design.
 
