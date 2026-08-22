@@ -210,9 +210,12 @@ This is converted into a weight \(W_i\) between 0 and 1. The weighted prior beco
 
 \[p_i^\ast = W_i \cdot p_i\]
 
-<p>To account for uncertainty and inter-individual variability, we define a Beta prior distribution for the allele in a cohort of $N$ diploid individuals:</p>
+<p>To account for uncertainty and inter-individual variability, we define a Beta prior distribution for the allele in a cohort of \(N\) diploid individuals:</p>
 
-\[\pi_i \sim \text{Beta}(\alpha_i, \beta_i), \quad \alpha_i = \text{round}(2Np_i^\ast) + \tilde w_i,\; \beta_i = 2N - \text{round}(2Np_i^\ast) + 1\]
+<div class="table-responsive">
+  <div class="table table-hover">\[\pi_i \sim \text{Beta}(\alpha_i, \beta_i), \quad \alpha_i = \text{round}(2Np_i^\ast) + \tilde w_i,\; \beta_i = 2N - \text{round}(2Np_i^\ast) + 1\]
+</div>
+</div>
 
 <p>where \(\tilde w_i = \max(1, S_i + 1)\) adds a pseudo-count based on classification strength.</p>
 

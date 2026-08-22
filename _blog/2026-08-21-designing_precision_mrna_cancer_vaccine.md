@@ -193,7 +193,7 @@ The exact production thresholds and coefficients are private.
 
 The patent quantifies variant-call confidence, DNA and RNA VAF, transcript abundance, predicted HLA affinity, and tumour-purity-adjusted VAF thresholds, with one low-purity example reducing 10% to 5%. Ten of 20 and 500 of 1,000 variant RNA reads both give VAF 0.5, but different certainty. A Bayesian count model makes this explicit.
 
-For variant-supporting reads $$k_i$$ from $$n_i$$ informative reads:
+For variant-supporting reads $$k_i$$ from $$n_i$$ informative reads:  
 
 $$
 \theta_i \sim \mathrm{Beta}(\alpha,\beta)
@@ -289,13 +289,10 @@ optional peptide:HLA structure
 
 A patient-specific self proteome can reject exact self matches. Candidate features may enter regression, random forest, neural-network, support-vector, Gaussian-mixture, or hierarchical Bayesian models. These are patent embodiments; the current production model and weights are undisclosed.
 
-Each stage carries uncertainty. A useful statistical representation for candidate \(i\) is:
+Each stage carries uncertainty. A useful statistical representation for candidate \(i\) is:  
 
-$$
-q_i =
-P(\text{useful target}_i\mid
-\text{DNA, RNA, peptide, HLA, functional evidence})
-$$
+$$ q_i =
+P(\text{useful target}_i\mid$$ DNA, RNA, peptide, HLA, functional evidence$$)$$
 
 Evidence can update prior odds when the component models support that factorisation:
 
@@ -306,10 +303,15 @@ $$
 \frac{P(Z_i=1)}
      {P(Z_i=0)}
 \times
-BF_{\mathrm{DNA}}
+$$ 
+$$BF_{\mathrm{DNA}}
 \times
+$$ 
+$$ 
 BF_{\mathrm{RNA}}
 \times
+$$ 
+$$ 
 BF_{\mathrm{HLA}}
 \times
 \cdots
@@ -338,13 +340,17 @@ A broader set can reduce dependence on one antigen, one tumour subclone, or one 
 The patent describes this as a constrained design problem. Its computerised system scores and ranks candidate sequences, then selects them subject to the maximum vaccine length:
 
 $$
-\underset{\mathcal N}{\operatorname{argmax}}
-\quad
-\mathrm{Score}(\mathcal N)
-\qquad
-\text{subject to}
-\qquad
-\mathrm{Length}(\mathcal N)\leq L_{\max}
+\begin{aligned}
+\mathcal N^* &= \operatorname*{argmax}_{\mathcal N}
+\mathrm{Score}(\mathcal N) \\
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\text{subject to}\quad
+\mathrm{Length}(\mathcal N) &\leq L_{\max}
+\end{aligned}
 $$
 
 A probability-aware implementation can extend that score with calibrated target probabilities, clonality, HLA breadth, redundancy, and construct compatibility. This explains why the preferred set need not be the 34 highest independent peptide scores.
@@ -495,8 +501,8 @@ For each candidate, the useful quantity is therefore something like:
 
 $$
 P(\text{useful neoantigen}\mid
-\text{DNA, RNA, HLA, structural and functional evidence})
 $$
+DNA, RNA, HLA, structural and functional evidence$$)$$
 
 Missing evidence should remain uncertainty. Confirmed negative evidence should reduce probability. Strong positive evidence should increase it. New measurements should update the posterior.
 

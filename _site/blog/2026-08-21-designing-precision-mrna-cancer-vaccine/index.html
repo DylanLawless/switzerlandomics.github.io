@@ -398,25 +398,24 @@ optional peptide:HLA structure
 
 <p>Each stage carries uncertainty. A useful statistical representation for candidate (i) is:</p>
 
-\[q_i =
-P(\text{useful target}_i\mid
-\text{DNA, RNA, peptide, HLA, functional evidence})\]
+<p>\(q_i =
+P(\text{useful target}_i\mid\) DNA, RNA, peptide, HLA, functional evidence\()\)</p>
 
 <p>Evidence can update prior odds when the component models support that factorisation:</p>
 
-\[\frac{P(Z_i=1\mid D_i)}
+<p>\(\frac{P(Z_i=1\mid D_i)}
      {P(Z_i=0\mid D_i)}
 =
 \frac{P(Z_i=1)}
      {P(Z_i=0)}
+\times\) 
+\(BF_{\mathrm{DNA}}
+\times\) 
+\(BF_{\mathrm{RNA}}
+\times\) 
+\(BF_{\mathrm{HLA}}
 \times
-BF_{\mathrm{DNA}}
-\times
-BF_{\mathrm{RNA}}
-\times
-BF_{\mathrm{HLA}}
-\times
-\cdots\]
+\cdots\)</p>
 
 <p>Correlated evidence requires a joint or hierarchical model. The equation is a general representation of the inference problem. It is not a claim about the internal quantity or factorisation used by Moderna.</p>
 
@@ -439,13 +438,15 @@ different tumour variants and HLA contexts
 
 <p>The patent describes this as a constrained design problem. Its computerised system scores and ranks candidate sequences, then selects them subject to the maximum vaccine length:</p>
 
-\[\underset{\mathcal N}{\operatorname{argmax}}
-\quad
-\mathrm{Score}(\mathcal N)
-\qquad
-\text{subject to}
-\qquad
-\mathrm{Length}(\mathcal N)\leq L_{\max}\]
+\[\begin{aligned}
+\mathcal N^* &amp;= \operatorname*{argmax}_{\mathcal N}
+\mathrm{Score}(\mathcal N) \\
+\end{aligned}\]
+
+\[\begin{aligned}
+\text{subject to}\quad
+\mathrm{Length}(\mathcal N) &amp;\leq L_{\max}
+\end{aligned}\]
 
 <p>A probability-aware implementation can extend that score with calibrated target probabilities, clonality, HLA breadth, redundancy, and construct compatibility. This explains why the preferred set need not be the 34 highest independent peptide scores.</p>
 
@@ -581,8 +582,8 @@ patient-specific immune measurement
 
 <p>For each candidate, the useful quantity is therefore something like:</p>
 
-\[P(\text{useful neoantigen}\mid
-\text{DNA, RNA, HLA, structural and functional evidence})\]
+<p>\(P(\text{useful neoantigen}\mid\)
+DNA, RNA, HLA, structural and functional evidence\()\)</p>
 
 <p>Missing evidence should remain uncertainty. Confirmed negative evidence should reduce probability. Strong positive evidence should increase it. New measurements should update the posterior.</p>
 

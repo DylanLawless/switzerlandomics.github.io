@@ -113,6 +113,12 @@ $font-family-heading: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
 @import "pages/page-tech";
 @import "page-infra-maturity";
 
+.content mjx-container[display="true"] {
+  color: $steel;
+  font-size: 1em;
+  font-weight: 400;
+}
+
 body {
   font-size: 1rem;
   line-height: 1.2;
@@ -148,6 +154,8 @@ body {
 html {
 	  font-size: 110%; // 110% of browser default (16px = 17.6px)
   }
+
+  /* Keep display equations at the surrounding text scale */
 
 // custom buttoms
 // .button-link {
