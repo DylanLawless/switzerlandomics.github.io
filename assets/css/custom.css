@@ -47,6 +47,35 @@
   color: #ffffff;
 }
 
+
+/* table column controls */
+/* reusable table column width control */
+
+.table-columns {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table-columns th:nth-child(1),
+.table-columns td:nth-child(1) {
+  width: var(--table-col-1, auto);
+}
+
+.table-columns th:nth-child(2),
+.table-columns td:nth-child(2) {
+  width: var(--table-col-2, auto);
+}
+
+.table-columns th:nth-child(3),
+.table-columns td:nth-child(3) {
+  width: var(--table-col-3, auto);
+}
+
+.table-columns th:nth-child(4),
+.table-columns td:nth-child(4) {
+  width: var(--table-col-4, auto);
+}
+
 /* reusable semantic inline pills */
 
 .semantic-pill {

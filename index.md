@@ -19,8 +19,8 @@ show_call_box: false
 </p>
 
 <div class="hero-actions">
-  <a class="button button-primary" href="{{ '/contact/' | relative_url }}">
-    Licensing
+  <a class="button button-primary" href="{{ '/pricing/' | relative_url }}">
+    Pricing
   </a>
 
   <a class="button" href="{{ '/technologies/' | relative_url }}">
