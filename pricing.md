@@ -7,7 +7,7 @@ intro_image_absolute: true
 intro_image_hide_on_mobile: false
 ---
 
-**Large**: large biotech, pharmaceutical, hospital, or enterprise organisations.  
+**Large**: large biotech, pharmaceutical, hospital, and enterprise organisations.  
 **Medium**: small and medium enterprise, academic groups, and clinics.  
 **Single**: single-user access.  
 
