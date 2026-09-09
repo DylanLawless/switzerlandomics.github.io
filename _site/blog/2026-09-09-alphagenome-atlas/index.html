@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>AlphaGenome Atlas - what would validate it?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  
+  <meta property="og:title" content="AlphaGenome Atlas - what would validate it?"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">AlphaGenome Atlas - what would validate it?</h1>
+                <div class="content"><p>2026-09-09</p>
+
+<p>A human genome contains many variants, but only a small fraction materially change observable biology. Protein-coding variants are comparatively tractable because we can often reason directly from a changed codon to an altered protein. Non-coding variants are currently harder. A single nucleotide may alter transcription-factor binding, chromatin accessibility, transcription, splicing or another regulatory process, and the effect may exist only in a particular cell type.</p>
+
+<p>Google DeepMind’s new <strong>AlphaGenome Atlas</strong> is an attempt to make those effects predictable and searchable at genome scale.</p>
+
+<blockquote>
+  <p>Data sources: <a href="https://deepmind.google.com/science/alphagenome/downloads">https://deepmind.google.com/science/alphagenome/downloads</a></p>
+
+  <p><strong>1. AVI SNV scores, 88.5 GB</strong> is the main genome-wide lookup table. For each possible SNV it provides the raw AVI score and PHRED-scaled AVI score, so it is the file you would use to annotate a VCF with a single variant-prioritisation metric.</p>
+
+  <p><strong>2. AlphaGenome SNV merged splicing scores, 20.6 GB</strong> contains a specific underlying AlphaGenome prediction rather than the overall AVI score. It estimates how each SNV is predicted to affect splicing, so it is closer to a specialised splicing-effect resource such as SpliceAI.</p>
+
+  <p><strong>3. AVI SNV feature importance scores, 283.9 GB</strong> contains the SHAP attribution values explaining each AVI prediction. Instead of only knowing that a variant has a high AVI score, this dataset shows whether that score is driven by splicing, RNA expression, TF binding, conservation, AlphaMissense, protein-disruption features, and so on.</p>
+</blockquote>
+
+<p>The simplest way to understand the resource is to start with what goes in and what comes out. We can pick a variant reproted in the manuscript; such as <code class="language-plaintext highlighter-rouge">chr9:128225994:G&gt;A</code>. 
+GeneBe shows what was previously predicted or known for this example variant <a href="https://genebe.net/variant/hg38/9-128225994-G-A">https://genebe.net/variant/hg38/9-128225994-G-A</a>.
+For essentially every possible single-nucleotide substitution in the GRCh38 human genome, AlphaGenome Atlas already contains precomputed predictions for the alternative allele. The authors calculated effects for approximately <strong>9 billion possible SNVs</strong>, together with more than <strong>100 million observed indels</strong>.</p>
+
+<p>The basic hierarchy is:</p>
+
+\[\text{variant}
+\rightarrow
+\text{predicted molecular effects}
+\rightarrow
+\text{AVI prioritisation score}\]
+
+<p>It is useful to separate three names that are easy to blur together. <strong>AlphaGenome</strong> is the underlying sequence-to-function model: it takes DNA sequence and predicts molecular readouts. <strong>AlphaGenome Atlas</strong> is the genome-wide resource created by running and precomputing those predictions at enormous scale. <strong>AVI</strong>, the AlphaGenome Variant Impact score, is a separate model that compresses selected AlphaGenome predictions together with other annotations into a single variant-level prioritisation score.</p>
+
+<h2 id="from-one-variant-to-thousands-of-predicted-molecular-effects">From one variant to thousands of predicted molecular effects</h2>
+
+<p>AlphaGenome does considerably more than assign a variant a generic “damaging” score. It predicts the molecular readout of the reference sequence and then of the sequence containing the alternative allele. The difference is converted into assay-specific effect scores.</p>
+
+<p>For an individual variant, Atlas contains on average about <strong>27,000 experiment-specific scalar predictions</strong>, or roughly 15,000 excluding additional active-allele scores. These predictions span hundreds of biosamples and modalities including DNase-seq and ATAC-seq for chromatin accessibility, ChIP-seq for transcription-factor binding and histone modifications, CAGE and PRO-Cap for transcription initiation, RNA-seq, splicing, polyadenylation and chromatin-contact maps.</p>
+
+<p>In practical terms, one of those predictions might mean that an allele is expected to reduce transcription in macrophages, alter splice-site usage in neurons or weaken transcription-factor binding in a particular cellular context. This is the interesting biological layer of AlphaGenome: the output can describe a predicted molecular mechanism rather than merely place a variant somewhere on a deleteriousness scale.</p>
+
+<p>Google then compresses this very high-dimensional information to construct <strong>AVI, the AlphaGenome Variant Impact score</strong>. The AlphaGenome predictions are first reduced to <strong>ten modality-level features</strong> representing DNase-seq, ATAC-seq, transcription-factor ChIP-seq, histone-mark ChIP-seq, CAGE, PRO-Cap, RNA-seq, polyadenylation, splicing and chromatin-contact maps. These capture different layers of gene regulation, from chromatin accessibility and transcription-factor binding through transcription, RNA processing and three-dimensional genome organisation.</p>
+
+<p>AVI then adds eight non-AlphaGenome features. Protein-coding effects are represented by <strong>AlphaMissense</strong>, DeepMind’s missense-variant effect predictor, together with three protein-disruption annotations from the <strong>Ensembl Variant Effect Predictor (VEP)</strong>: stop-gained/frameshift, start-lost and stop-lost. Evolutionary constraint is represented by <strong>PhastCons 470-way</strong> conservation and the <strong>Zoonomia Cactus 241-way</strong> alignment, and two indicator variables record whether the variant is an insertion or deletion. AVI therefore uses <strong>18 inputs per variant: 10 AlphaGenome regulatory features, 4 coding features, 2 conservation features and 2 indel indicators</strong>.</p>
+
+<p>Those inputs enter a neural-network classifier that produces a raw AVI score.</p>
+
+<h2 id="model-architecture">Model architecture</h2>
+
+<p>AVI is not a conventional neural network that simply passes 18 features through several dense layers to produce one score. The authors use a <strong>hybrid linear-hypernetwork architecture</strong>. Of the 18 AVI inputs, 16 biological features are collected in the vector \(x\): the ten AlphaGenome features, AlphaMissense, two conservation measures and three VEP loss-of-function annotations. The remaining two inputs form \(v\), indicating whether the variant is an insertion or deletion; for an SNV, both indicators are zero.</p>
+
+<p>A small two-layer neural network, called the <strong>encoder</strong>, first reads \((x,v)\) and produces a hidden representation,</p>
+
+\[h = h_{\phi}(x,v).\]
+
+<p>That hidden state is then used by the hypernetwork to generate a new set of 16 feature weights and a bias specifically for that variant. At the highest level, the AVI calculation is simply:</p>
+
+\[\text{AVI raw logit}
+=
+\text{variant-specific score}
++
+\text{global score}
++
+\text{indel adjustment}.\]
+
+<p>More precisely, the model is:</p>
+
+\[\operatorname{logit}
+=
+\underbrace{
+w_{\phi}(h_{\phi}(x,v))^{T}x
++
+b_{\phi}(h_{\phi}(x,v))
+}_{\text{variant-specific linear hypernetwork}}
++
+\underbrace{
+w_{\theta}^{T}x+b_{\theta}
+}_{\text{global linear model}}
++
+\underbrace{
+o_{\mathrm{indel}}(v)
+}_{\text{indel offset}}.\]
+
+<p>The three terms have distinct roles. The <strong>global linear model</strong> learns one fixed set of coefficients \(w_\theta\) that applies to every variant. The <strong>linear hypernetwork</strong> is more unusual: it examines the particular combination of evidence present for a variant, generates a new set of coefficients \(w_\phi\), and then applies those coefficients back to the same 16 biological features. The final term learns a small baseline adjustment for insertions and deletions.</p>
+
+<p>This means AVI can represent interactions without abandoning an interpretable linear scoring structure. For one allele, the combination of features might lead the hypernetwork to place relatively greater weight on a strong splicing prediction; for another, the generated weighting may instead emphasise conservation, AlphaMissense or another feature. The model therefore combines a <strong>fixed genome-wide assessment</strong> with a <strong>variant-specific reweighting of the evidence</strong>.</p>
+
+<p>The encoder itself is small. It contains two fully connected layers with either <strong>16 or 32 hidden units</strong>, GELU activations, dropout of <code class="language-plaintext highlighter-rouge">0.4</code> and L2 activity regularisation of <code class="language-plaintext highlighter-rouge">10^{-5}</code>. Separate projection heads generate the 16 variant-specific weights and the bias. The generated weights are constrained to be non-negative using either an exponential or softplus activation, while the bias is controlled through a sigmoid gate.</p>
+
+<p>The released AVI score is an <strong>ensemble of six such models</strong>. They were selected from a larger hyperparameter and resampling sweep and differ in encoder size, exponential versus softplus weight generation, and bias-gating configuration. For a variant, the six raw logits are averaged to produce the final raw AVI prediction.</p>
+
+<h2 id="how-avi-is-trained-and-scored">How AVI is trained and scored</h2>
+
+<p>The architecture tells us how AVI combines its features, but an equally important question is <strong>what the model is actually trained to predict</strong>. AVI was not trained directly on clinical pathogenic-versus-benign labels (this is a good development which we support constantly for <a href="http://switzerlandomics.ch/blog/2026-03-15-quinary-inference-the-fifth-layer-of-genomics/">quinary infereance</a> and for <a href="https://switzerlandomics.ch/blog/2026-08-15-fine-tuning/">fine tuning foundation models</a>). Instead, the authors use population frequency as a proxy for <strong>negative selection</strong>, the idea that variants which substantially reduce biological fitness tend, on average, to remain uncommon in the population.</p>
+
+<p>Training variants come from <strong>gnomAD v4.1</strong> and are labelled using <code class="language-plaintext highlighter-rouge">FAF95_GRPMAX</code>, a conservative measure of the highest filtering allele frequency observed across ancestry groups. Variants with <code class="language-plaintext highlighter-rouge">FAF95_GRPMAX &lt; 0.001</code> are labelled <em>proxy impactful</em>, while those with <code class="language-plaintext highlighter-rouge">0.001 ≤ FAF95_GRPMAX &lt; 0.999</code> are labelled <em>proxy neutral</em>. 
+This is a pragmatic but somewhat arbitrary binary threshold for what is fundamentally a continuous population-genetic signal, although such cut-offs are common in rare-variant studies and I have used similar thresholds in cohort SKAT-O analyses myself (<a href="https://doi.org/10.1101/2025.06.12.25329504">doi:10.1101/2025.06.12.25329504</a>).</p>
+
+<p>The classes are then balanced to reduce obvious mutational confounding. SNVs are matched within <strong>96 strand-invariant trinucleotide substitution contexts</strong>, meaning that variants are compared with others having the same type of base change in the same immediate three-base sequence context. Indels up to 10 bp are balanced by indel length. Thus the model cannot obtain an easy advantage simply because, for example, particular sequence contexts mutate more frequently than others.</p>
+
+<p>Each member of the six-model ensemble is trained with a sigmoid and <strong>binary cross-entropy loss using AdamW</strong>, a standard objective and optimiser for binary classification. Importantly, the sigmoid probability is used only during optimisation. At inference, the model retains the <strong>raw logit</strong>, the unbounded model score before probability or rank scaling, and the six ensemble logits are averaged to obtain the raw AVI prediction.</p>
+
+<p>That raw value is finally converted into a <strong>PHRED-scaled genome-wide rank</strong>. AVI 10 corresponds approximately to the top 10% of scored SNVs, AVI 20 to the top 1%, and AVI 30 to the top 0.1%. This distinction is important: <strong>AVI 20 does not mean a 99% probability that a variant is pathogenic</strong>. It means that the variant ranks within approximately the highest-scoring 1% of SNVs under AVI. AVI is therefore a relative variant-impact prioritisation score, not a probability of pathogenicity, penetrance or a directly measured molecular effect.</p>
+
+<h2 id="how-new-is-this-idea">How new is this idea?</h2>
+
+<p>There is an important historical context. Genomics researchers have been annotating variants with precomputed computational predictions for a long time. <strong>VEP</strong> assigns molecular consequences. <strong>dbNSFP</strong> has long made large collections of precomputed functional-prediction and conservation scores convenient to query, particularly for protein-altering and splice-related variants. CADD provides an integrated deleteriousness score, while specialised tools such as SpliceAI target particular mechanisms.</p>
+
+<p>So the general workflow</p>
+
+<p><code class="language-plaintext highlighter-rouge">variant → lookup predictions → prioritise</code></p>
+
+<p>is not a new category of analysis.</p>
+
+<p>The interesting advance is the biological information underneath the lookup. AlphaGenome predicts <strong>allele-specific molecular behaviour directly from sequence across many regulatory assays and biological contexts</strong>, then precomputes those predictions across essentially all possible SNVs.</p>
+
+<p>Its value therefore depends on the accuracy and generalisability of those sequence-to-function predictions within an already mature variant-annotation ecosystem. With that complete, validation is central to judging the contribution.</p>
+
+<h2 id="what-counts-as-validation">What counts as validation?</h2>
+
+<p>The paper presents several forms of validation, each addressing a different question:</p>
+
+<p><em>Does it rank known variants correctly?</em> \(\rightarrow\) <em>Does it improve genetic discovery?</em> \(\rightarrow\) <em>Does the variant produce the predicted molecular change?</em></p>
+
+<p>ClinVar benchmarking addresses the first question. AVI performs strongly across several consequence classes, although ClinVar is not fully independent experimental ground truth. Variant-prediction methods often share information from gnomAD, conservation scores, existing annotations and common knowledge bases, while ClinVar classifications are themselves curated using overlapping evidence. Some circularity therefore remains possible even when direct train-test overlap has been removed.</p>
+
+<p>The rare-variant association analyses address the second question: whether AlphaGenome and AVI enrich variant sets for biologically relevant signal and thereby improve genotype-phenotype discovery. That is valuable evidence of usefulness, but it does not identify the molecular effect of an individual allele.</p>
+
+<p>The strongest sequence-to-function validation comes from measuring the quantity that AlphaGenome predicts. The paper does this in several places. Across ten held-out saturation genome-editing screens, AVI achieved the highest Spearman correlation with measured variant effects in eight. In the <code class="language-plaintext highlighter-rouge">DNM1</code> experiment, the authors mutagenised <strong>265 nucleotides</strong>, tested <strong>796 variants across five cell lines</strong>, and directly measured alternative splice-site usage. AlphaGenome’s merged splicing score and AVI’s splicing attribution both achieved an AUPRC of <strong>0.943</strong>, compared with 0.940 for SpliceAI and 0.939 for Pangolin. The authors also performed <strong>ChIP-nexus</strong> experiments for three transcription factors and observed binding footprints at predicted motif instances, including cell-type-specific effects.</p>
+
+<p>These experiments show that AlphaGenome can reproduce measured biology in selected settings. The remaining question is how well that accuracy generalises across the enormous diversity of regulatory contexts represented in the Atlas.</p>
+
+<p>For a resource of this scale, I would like to see a larger <strong>prospective validation set of previously uncharacterised variants of uncertain significance (VUS)</strong>. Variants could be selected before testing from several predicted mechanisms and introduced into relevant cellular, organoid or, where justified, in vivo systems. The key comparison should be quantitative and pre-specified: predicted versus observed change in transcription, splice usage, chromatin accessibility, TF binding or another molecular phenotype, ideally including <strong>direction, effect size and biological context</strong>.</p>
+
+<p>That is a demanding standard for a typical computational biology laboratory. For a programme involving Google DeepMind, the Broad Institute and multiple experimental collaborators, the scale of the resource makes it a reasonable one to pursue. A catalogue covering roughly nine billion possible SNVs becomes far more convincing when previously uncertain variants can repeatedly move from <strong>prediction to controlled perturbation to quantitative measurement</strong>.</p>
+
+<h2 id="where-skat-burden-and-acat-enter">Where SKAT, burden and ACAT enter</h2>
+
+<p>The paper also contains a large population-genetic demonstration using rare-variant association tests. These analyses are valuable, but they answer a different question.</p>
+
+<p>Burden tests, SKAT and ACAT are established methods for asking whether <strong>a collection of individually rare variants is collectively associated with a phenotype</strong>. They differ in the genetic architectures they tolerate: a classical burden test works particularly well when variants have coherent effects, SKAT allows effects to vary in direction, and ACAT-based approaches remain useful when only a subset of variants in a set carries the signal.</p>
+
+<p>The AlphaGenome innovation here is upstream of those statistics. If a regulatory region contains hundreds of rare variants but only a few actually affect the relevant biology, collapsing all of them together dilutes association signal. A better functional predictor should construct a cleaner set.</p>
+
+<p>The authors tested this using circulating levels of <strong>2,028 proteins in up to 54,189 UK Biobank participants</strong>, considering rare variants with per-variant <code class="language-plaintext highlighter-rouge">MAF &lt; 0.1%</code>. They filtered conventional non-coding variant sets using the top 1% of AlphaGenome or AVI predictions, and then applied established BURDEN, SKAT, ACAT-V and ACAT-O tests using REGENIE.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">PLA2G7</code> example explains the idea particularly well. An unfiltered upstream region contained <strong>526 rare variants</strong> and produced a minimum <code class="language-plaintext highlighter-rouge">P = 1.10 × 10^-8</code> using ACAT-O, which did not pass the study-wide threshold. Filtering using the older JARVIS score reduced the set to <strong>33 variants</strong> and produced <code class="language-plaintext highlighter-rouge">P = 3.59 × 10^-11</code>, again with ACAT-O. AVI top-1% filtering reduced the set to only <strong>four variants</strong>, at which point an ordinary burden test produced <code class="language-plaintext highlighter-rouge">β = -1.73 SD</code> and <code class="language-plaintext highlighter-rouge">P = 1.74 × 10^-13</code>.</p>
+
+<p>Nothing fundamental changed in the association statistics. The definition of the variant set changed.</p>
+
+<p>Across the wider analysis, Atlas filtering produced a <strong>22% increase in conditionally independent rare non-coding aggregate discoveries</strong>. After additionally accounting for known low-frequency and rare single-variant pQTLs, <strong>177 of 241 remaining significant aggregates, 73%, came from Atlas-derived masks</strong>. The authors also observed a shift away from ACAT-V and towards burden and SKAT signals, which they interpret as evidence that Atlas-defined sets contain a greater density of genuinely functional variants.</p>
+
+<p>I like this analysis. I have worked with rare-variant set tests for almost a decade, including implementing SKAT from first principles to reproduce the calculations underlying the work of Seunggeun Lee and colleagues (<a href="https://github.com/leelabsg/SKAT">https://github.com/leelabsg/SKAT</a>), developing new aggregate-analysis approaches (<a href="https://doi.org/10.1101/2025.06.12.25329504">doi:10.1101/2025.06.12.25329504</a>), and building the open-source <a href="https://switzerlandomics.ch/technologies/archipelago/">Archipelago package</a> for visualising results from SKAT, ACAT and related methods (<a href="https://doi.org/10.1002/gepi.70025">doi:10.1002/gepi.70025</a>). I regard this family of statistics as extremely useful.</p>
+
+<p>But that is also why I would be precise about what the result demonstrates.</p>
+
+<p><strong>Association validates the usefulness of an annotation for genetic discovery; it does not directly validate the predicted molecular mechanism of an individual variant.</strong></p>
+
+<p>If an AVI-filtered group produces a stronger SKAT or burden association, we have evidence that AVI enriched the set for variants carrying human genetic signal. We do not yet know from that result alone whether a particular nucleotide changes transcription by the predicted magnitude, in the predicted direction, through the predicted regulatory element, in the predicted cell type.</p>
+
+<p>This distinction is especially relevant because AVI is not AlphaGenome alone. It combines AlphaGenome-derived features with AlphaMissense, protein-disruption annotations, conservation and a model trained using population depletion. A successful AVI association therefore cannot automatically be attributed to a particular AlphaGenome molecular prediction.</p>
+
+<h2 id="what-would-convince-me">What would convince me?</h2>
+
+<p>For a sequence-to-function model, the strongest tests resemble the DNM1 experiment, saturation genome editing or a deep mutational scan.</p>
+
+<p>Take a regulatory element. Generate hundreds or thousands of alternative alleles. Measure the relevant molecular phenotype experimentally. Then compare the measurements directly with predictions made before seeing those results.</p>
+
+<p>For a splicing prediction, measure splice usage. For a transcription prediction, measure transcription. For a TF-binding prediction, measure binding. And do this across genuinely held-out loci, regulatory mechanisms and cell types.</p>
+
+<p>The difficult standard is not merely whether variants with high scores are <em>enriched</em> for functional effects. It is whether the model can reproduce their <strong>direction, magnitude, tissue specificity and molecular mechanism</strong>.</p>
+
+<p>That is where I remain cautious about the scale of the evidence. AlphaGenome Atlas contains predictions for roughly nine billion possible SNVs, across an enormous diversity of genomic contexts. The paper contains impressive functional experiments showing that the approach can work very well in selected settings. Its population analyses additionally show that the annotations can improve rare-variant genetic discovery.</p>
+
+<p>The remaining question is one of generalisation:</p>
+
+<blockquote>
+  <p><strong>Can these allele-specific predictions reproduce measured molecular effects with similar accuracy across the enormous diversity of the human regulatory genome?</strong></p>
+
+  <p>If large, independent perturbation datasets repeatedly answer yes, then AlphaGenome Atlas becomes considerably more interesting than another genome-wide variant-scoring resource. It would mean that we are beginning to move from <strong>annotating variants</strong> to <strong>predicting their molecular behaviour from sequence</strong>.</p>
+
+  <p>That is the part worth testing hardest.</p>
+
+</blockquote>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>
+    <p><strong>Cheng J, Taylor KR, Nicolaisen L, et al. (2026).</strong> AlphaGenome Atlas: <em>in silico</em> mutagenesis of the entire human genome improves prioritization and interpretation of non-coding variants. Google DeepMind. <a href="https://storage.googleapis.com/deepmind-media/DeepMind.com/Blog/alphagenome-atlas-a-predictive-map-of-every-possible-dna-letter-change-in-the-human-genome/alphagenome-atlas.pdf">alphagenome-atlas.pdf</a></p>
+  </li>
+  <li>
+    <p><a href="https://deepmind.google.com/science/alphagenome/atlas">https://deepmind.google.com/science/alphagenome/atlas</a></p>
+  </li>
+</ul>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
