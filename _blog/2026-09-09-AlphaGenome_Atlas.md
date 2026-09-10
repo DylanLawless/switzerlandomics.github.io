@@ -26,6 +26,7 @@ For essentially every possible single-nucleotide substitution in the GRCh38 huma
 
 The basic hierarchy is:
 
+<div class="math-responsive" markdown="block">
 $$
 \text{variant}
 \rightarrow
@@ -33,6 +34,7 @@ $$
 \rightarrow
 \text{AVI prioritisation score}
 $$
+</div>
 
 It is useful to separate three names that are easy to blur together. **AlphaGenome** is the underlying sequence-to-function model: it takes DNA sequence and predicts molecular readouts. **AlphaGenome Atlas** is the genome-wide resource created by running and precomputing those predictions at enormous scale. **AVI**, the AlphaGenome Variant Impact score, is a separate model that compresses selected AlphaGenome predictions together with other annotations into a single variant-level prioritisation score.
 
@@ -63,6 +65,8 @@ $$
 
 That hidden state is then used by the hypernetwork to generate a new set of 16 feature weights and a bias specifically for that variant. At the highest level, the AVI calculation is simply:
 
+
+<div class="math-responsive" markdown="block">
 $$
 \text{AVI raw logit}
 =
@@ -72,9 +76,11 @@ $$
 +
 \text{indel adjustment}.
 $$
+</div>
 
 More precisely, the model is:
 
+<div class="math-responsive" markdown="block">
 $$
 \operatorname{logit}
 =
@@ -92,6 +98,7 @@ w_{\theta}^{T}x+b_{\theta}
 o_{\mathrm{indel}}(v)
 }_{\text{indel offset}}.
 $$
+</div>
 
 The three terms have distinct roles. The **global linear model** learns one fixed set of coefficients $$w_\theta$$ that applies to every variant. The **linear hypernetwork** is more unusual: it examines the particular combination of evidence present for a variant, generates a new set of coefficients $$w_\phi$$, and then applies those coefficients back to the same 16 biological features. The final term learns a small baseline adjustment for insertions and deletions.
 
@@ -195,6 +202,44 @@ The remaining question is one of generalisation:
 >
 > That is the part worth testing hardest.
 >
+
+## Important details for use
+
+**Reference-genome metadata:** Atlas states that scores use the GRCh38 (hg38) assembly with GENCODE v46 annotations, but the downloadable score table does not itself identify an exact reference FASTA, assembly accession, or checksum. This is important because the reference allele is implicit rather than included in the lookup key.
+
+**Downloads:** Access currently requires a logged-in desktop browser, making large downloads relatively slow and more prone to interruption. The AVI release is also distributed as a ZIP archives that must then be unpacked, temporarily requiring storage for both the archive and extracted files:
+
+- 82 GB AVI SNV score table: `.tsv.gz`
+- 3.0 MB Tabix index: `.tsv.gz.tbi`
+
+`gzcat alphagenome_variant_impact_score_snvs.tsv.gz | head`
+
+<div class="table-responsive" markdown="block">
+| #CHROM | POS   | REF  |  ALT  |  raw_score   |   PHRED |
+|---|---|---|---|---|---|
+| chr1  | 10001 | T    |  A    |  -0.03868    |   1.06466 |
+| chr1  | 10001 | T    |  C    |  -0.032  | 1.3114 |
+| chr1  | 10001 | T    |  G    |  -0.0372 | 1.11839 |
+| chr1  | 10002 | A    |  C    |  -0.03583   |    1.16835 |
+| chr1  | 10002 | A    |  G    |  -0.03301   |    1.27293 |
+| chr1  | 10002 | A    |  T    |  -0.03668   |    1.13731 |
+{: .table .table-hover}
+</div>
+
+
+`gzcat combined_alphagenome_splicing_snvs.tsv.gz | head`
+
+<div class="table-responsive" markdown="block">
+| #CHROM | POS   | REF  |  ALT  alphagenome_splicing |
+|---|---|---|---|---|
+| chr1 |  65409  | A  |  C  |  0.003052
+| chr1 |  65409  | A  |  G  |  0.003479
+| chr1 |  65409  | A  |  T  |  0.001343
+| chr1 |  65410  | C  |  A  |  0.005615
+| chr1 |  65410  | C  |  G  |  0.003113
+| chr1 |  65410  | C  |  T  |  0.001892
+{: .table .table-hover}
+</div>
 
 ## References
 

@@ -177,11 +177,13 @@ For essentially every possible single-nucleotide substitution in the GRCh38 huma
 
 <p>The basic hierarchy is:</p>
 
-\[\text{variant}
+<div class="math-responsive">
+  <p>\(\text{variant}
 \rightarrow
 \text{predicted molecular effects}
 \rightarrow
-\text{AVI prioritisation score}\]
+\text{AVI prioritisation score}\)</p>
+</div>
 
 <p>It is useful to separate three names that are easy to blur together. <strong>AlphaGenome</strong> is the underlying sequence-to-function model: it takes DNA sequence and predicts molecular readouts. <strong>AlphaGenome Atlas</strong> is the genome-wide resource created by running and precomputing those predictions at enormous scale. <strong>AVI</strong>, the AlphaGenome Variant Impact score, is a separate model that compresses selected AlphaGenome predictions together with other annotations into a single variant-level prioritisation score.</p>
 
@@ -209,17 +211,20 @@ For essentially every possible single-nucleotide substitution in the GRCh38 huma
 
 <p>That hidden state is then used by the hypernetwork to generate a new set of 16 feature weights and a bias specifically for that variant. At the highest level, the AVI calculation is simply:</p>
 
-\[\text{AVI raw logit}
+<div class="math-responsive">
+  <p>\(\text{AVI raw logit}
 =
 \text{variant-specific score}
 +
 \text{global score}
 +
-\text{indel adjustment}.\]
+\text{indel adjustment}.\)</p>
+</div>
 
 <p>More precisely, the model is:</p>
 
-\[\operatorname{logit}
+<div class="math-responsive">
+  <p>\(\operatorname{logit}
 =
 \underbrace{
 w_{\phi}(h_{\phi}(x,v))^{T}x
@@ -233,7 +238,8 @@ w_{\theta}^{T}x+b_{\theta}
 +
 \underbrace{
 o_{\mathrm{indel}}(v)
-}_{\text{indel offset}}.\]
+}_{\text{indel offset}}.\)</p>
+</div>
 
 <p>The three terms have distinct roles. The <strong>global linear model</strong> learns one fixed set of coefficients \(w_\theta\) that applies to every variant. The <strong>linear hypernetwork</strong> is more unusual: it examines the particular combination of evidence present for a variant, generates a new set of coefficients \(w_\phi\), and then applies those coefficients back to the same 16 biological features. The final term learns a small baseline adjustment for insertions and deletions.</p>
 
@@ -336,6 +342,144 @@ This is a pragmatic but somewhat arbitrary binary threshold for what is fundamen
   <p>That is the part worth testing hardest.</p>
 
 </blockquote>
+
+<h2 id="important-details-for-use">Important details for use</h2>
+
+<p><strong>Reference-genome metadata:</strong> Atlas states that scores use the GRCh38 (hg38) assembly with GENCODE v46 annotations, but the downloadable score table does not itself identify an exact reference FASTA, assembly accession, or checksum. This is important because the reference allele is implicit rather than included in the lookup key.</p>
+
+<p><strong>Downloads:</strong> Access currently requires a logged-in desktop browser, making large downloads relatively slow and more prone to interruption. The AVI release is also distributed as a ZIP archives that must then be unpacked, temporarily requiring storage for both the archive and extracted files:</p>
+
+<ul>
+  <li>82 GB AVI SNV score table: <code class="language-plaintext highlighter-rouge">.tsv.gz</code></li>
+  <li>3.0 MB Tabix index: <code class="language-plaintext highlighter-rouge">.tsv.gz.tbi</code></li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">gzcat alphagenome_variant_impact_score_snvs.tsv.gz | head</code></p>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#CHROM</th>
+        <th>POS</th>
+        <th>REF</th>
+        <th>ALT</th>
+        <th>raw_score</th>
+        <th>PHRED</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>chr1</td>
+        <td>10001</td>
+        <td>T</td>
+        <td>A</td>
+        <td>-0.03868</td>
+        <td>1.06466</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>10001</td>
+        <td>T</td>
+        <td>C</td>
+        <td>-0.032</td>
+        <td>1.3114</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>10001</td>
+        <td>T</td>
+        <td>G</td>
+        <td>-0.0372</td>
+        <td>1.11839</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>10002</td>
+        <td>A</td>
+        <td>C</td>
+        <td>-0.03583</td>
+        <td>1.16835</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>10002</td>
+        <td>A</td>
+        <td>G</td>
+        <td>-0.03301</td>
+        <td>1.27293</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>10002</td>
+        <td>A</td>
+        <td>T</td>
+        <td>-0.03668</td>
+        <td>1.13731</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p><code class="language-plaintext highlighter-rouge">gzcat combined_alphagenome_splicing_snvs.tsv.gz | head</code></p>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>#CHROM</th>
+        <th>POS</th>
+        <th>REF</th>
+        <th>ALT  alphagenome_splicing</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>chr1</td>
+        <td>65409</td>
+        <td>A</td>
+        <td>C</td>
+        <td>0.003052</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>65409</td>
+        <td>A</td>
+        <td>G</td>
+        <td>0.003479</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>65409</td>
+        <td>A</td>
+        <td>T</td>
+        <td>0.001343</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>65410</td>
+        <td>C</td>
+        <td>A</td>
+        <td>0.005615</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>65410</td>
+        <td>C</td>
+        <td>G</td>
+        <td>0.003113</td>
+      </tr>
+      <tr>
+        <td>chr1</td>
+        <td>65410</td>
+        <td>C</td>
+        <td>T</td>
+        <td>0.001892</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <h2 id="references">References</h2>
 
