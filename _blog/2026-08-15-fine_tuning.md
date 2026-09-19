@@ -2,6 +2,8 @@
 title: Fine-tuning foundation models with biological priors
 layout: page
 math: mathjax
+tags:
+  - ai
 date: 2026-08-15
 ---
 
