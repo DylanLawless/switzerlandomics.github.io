@@ -157,9 +157,13 @@
                 <h1 class="title">Building a language model from scratch in R</h1>
                 <div class="content"><p>2026-09-19</p>
 
-<p>Most people now encounter language models through systems such as ChatGPT. We supply text, and the model produces a response. The underlying process is less visible: how does a neural network learn from text in the first place, and what happens mathematically when it generates the next word or character?</p>
+<p>Most people now encounter language models through systems such as ChatGPT. You supply text, and the model produces a response. The underlying process is less visible: how does a neural network learn from text in the first place, and what happens mathematically when it generates the next word or character?</p>
 
-<p>We built a small language model entirely in R to examine that process directly. It uses a vanilla recurrent neural network (RNN) trained from randomly initialised parameters on an ordinary laptop CPU.</p>
+<p>Some of our time is devoted to ML/AI methods. This is usually focused on genomic sequences and protein structures. 
+We enjoy understanding these systems from first principles, including the mathematics behind how they learn. 
+For this blog we built a small language model entirely in R to examine that process directly. 
+It uses a vanilla recurrent neural network (RNN) trained from randomly initialised parameters on an ordinary laptop CPU. 
+It allows anyone to follow the learning process and judge the results without specialist biological knowledge.</p>
 
 <p>There are no pretrained weights, Python dependencies, GPU operations or deep-learning frameworks performing automatic differentiation. 
 Python is now the standard language for AI development, but it is not a requirement. We work extensively in R, so we built this language model entirely from first principles in base R, rather than adapting a pre-existing implementation or relying on a deep-learning framework.

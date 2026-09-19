@@ -10,9 +10,13 @@ date: 2026-09-19
 
 <p>{{ page.date | date: "%Y-%m-%d" }}</p>
 
-Most people now encounter language models through systems such as ChatGPT. We supply text, and the model produces a response. The underlying process is less visible: how does a neural network learn from text in the first place, and what happens mathematically when it generates the next word or character?
+Most people now encounter language models through systems such as ChatGPT. You supply text, and the model produces a response. The underlying process is less visible: how does a neural network learn from text in the first place, and what happens mathematically when it generates the next word or character?
 
-We built a small language model entirely in R to examine that process directly. It uses a vanilla recurrent neural network (RNN) trained from randomly initialised parameters on an ordinary laptop CPU. 
+Some of our time is devoted to ML/AI methods. This is usually focused on genomic sequences and protein structures. 
+We enjoy understanding these systems from first principles, including the mathematics behind how they learn. 
+For this blog we built a small language model entirely in R to examine that process directly. 
+It uses a vanilla recurrent neural network (RNN) trained from randomly initialised parameters on an ordinary laptop CPU. 
+It allows anyone to follow the learning process and judge the results without specialist biological knowledge.
 
 There are no pretrained weights, Python dependencies, GPU operations or deep-learning frameworks performing automatic differentiation. 
 Python is now the standard language for AI development, but it is not a requirement. We work extensively in R, so we built this language model entirely from first principles in base R, rather than adapting a pre-existing implementation or relying on a deep-learning framework.
@@ -21,8 +25,6 @@ The forward pass, loss calculation, gradients and parameter updates are implemen
 The objective is to understand the complete learning algorithm rather than reproduce the capabilities of a modern language model. The model learns one task: given the characters it has already encountered, predict the next character.
 
 Our implementation follows the mathematics of Andrej Karpathy's 2015 [minimal character-level RNN](https://gist.github.com/karpathy/d4dee566867f8291f086) which he discussed [here](https://karpathy.github.io/2015/05/21/rnn-effectiveness/) and [here](https://github.com/karpathy/char-rnn). We have separated the model from data preparation and experiment control, and added validation, reproducible checkpoints, tests and visual monitoring so that we can examine what happens during training.
-
-
 
 ## Where this fits in AI history
 
