@@ -26,6 +26,8 @@ The objective is to understand the complete learning algorithm rather than repro
 
 Our implementation follows the mathematics of Andrej Karpathy's 2015 [minimal character-level RNN](https://gist.github.com/karpathy/d4dee566867f8291f086) which he discussed [here](https://karpathy.github.io/2015/05/21/rnn-effectiveness/) and [here](https://github.com/karpathy/char-rnn). We have separated the model from data preparation and experiment control, and added validation, reproducible checkpoints, tests and visual monitoring so that we can examine what happens during training.
 
+The code is available here <https://github.com/switzerlandomics/src-min_char_rnn_r>.
+
 ## Where this fits in AI history
 
 Neural networks were already being used to learn patterns in data long before modern generative AI. An important reference point is AlexNet, published in 2012. It used a deep convolutional neural network with approximately 60 million parameters to classify images into 1,000 categories. Its training dataset contained approximately 1.2 million labelled images, and training took several days on two GPUs.

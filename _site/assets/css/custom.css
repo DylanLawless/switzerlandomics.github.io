@@ -1,3 +1,8 @@
+/* Prevent long hyperlinks from overflowing on small screens */
+.main-content a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 
 /* reusable horizontal table scroll */
 

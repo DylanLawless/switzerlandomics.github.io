@@ -173,6 +173,8 @@ The forward pass, loss calculation, gradients and parameter updates are implemen
 
 <p>Our implementation follows the mathematics of Andrej Karpathy’s 2015 <a href="https://gist.github.com/karpathy/d4dee566867f8291f086">minimal character-level RNN</a> which he discussed <a href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/">here</a> and <a href="https://github.com/karpathy/char-rnn">here</a>. We have separated the model from data preparation and experiment control, and added validation, reproducible checkpoints, tests and visual monitoring so that we can examine what happens during training.</p>
 
+<p>The code is available here <a href="https://github.com/switzerlandomics/src-min_char_rnn_r">https://github.com/switzerlandomics/src-min_char_rnn_r</a>.</p>
+
 <h2 id="where-this-fits-in-ai-history">Where this fits in AI history</h2>
 
 <p>Neural networks were already being used to learn patterns in data long before modern generative AI. An important reference point is AlexNet, published in 2012. It used a deep convolutional neural network with approximately 60 million parameters to classify images into 1,000 categories. Its training dataset contained approximately 1.2 million labelled images, and training took several days on two GPUs.</p>
