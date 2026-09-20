@@ -1,5 +1,5 @@
 ---
-title: "Building a language model from scratch in R"
+title: "Building a recurrent neural network language model from scratch in R"
 layout: page
 math: mathjax
 description: "A character-level recurrent neural network implemented from first principles in R: how it learns, validates predictions and generates text on a laptop CPU."

@@ -1,4 +1,5 @@
-/* Prevent long hyperlinks from overflowing on small screens */
+/* Allow long URLs to wrap without expanding the page width */
+.content a,
 .main-content a {
   overflow-wrap: anywhere;
   word-break: break-word;
