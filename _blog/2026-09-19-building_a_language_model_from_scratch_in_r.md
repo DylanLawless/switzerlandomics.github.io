@@ -206,6 +206,30 @@ The exercise does not reproduce a modern frontier language model. It establishes
 
 The complete source code, experiment runner, tests and monitoring tools are available in the accompanying project.
 
+## End results
+
+We are not too concerned with producing eloquent peotry since we know this model can only predict the next character. We also only run for a few minutes on a laptop CPU. We are mostly focused on accurate math and model design - once that is in place we can simply scale on larger hardware.
+
+The initial run at a validation around 4 shows basically random nonsense:
+
+> === iteration 0 - validation 4.174441 - seed "F" ===  
+>
+> GKAcABncQJz;zIUDo pH 'WzCEEZ;hiDs3elwHb;3Ld:!&aD-:UN--p3Njcs  
+>
+> OpMcQKBUHnitsb-&dLY VRaxwGAMY,AlPTPTrWdpbnu  
+>
+> ewiHHOFLUvy.,sc.uD:xjzoBcLgtIMAyinD:E?OIFBzVGdt,r.fW,Z,lwjPav&rWNMdTWmPkOi:HhoqkCe VluX,  
+>
+> gztLeQ  
+
+After a short time we reach a validation <2.5 and it starts to have a recognisable structure:
+
+> === iteration 20000 - validation 2.293285 - seed "F" ===  
+>
+> had:  
+>
+> O, shamle se hemer witly of butist ous kil you bene sur and nod ucy swary hath ywe, he wempesty hourive, a sestoviiswio my nou, th muth le nat hase thoo of Ro ewtiture wurs go stom himlard iings  
+
 ## References
 
 Krizhevsky A, Sutskever I, Hinton GE. (2012). [ImageNet Classification with Deep Convolutional Neural Networks](https://arxiv.org/abs/1207.0580).

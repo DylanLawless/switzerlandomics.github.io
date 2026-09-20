@@ -372,6 +372,34 @@ You are all resolved rather to die than to famish?
 
 <p>The complete source code, experiment runner, tests and monitoring tools are available in the accompanying project.</p>
 
+<h2 id="end-results">End results</h2>
+
+<p>We are not too concerned with producing eloquent peotry since we know this model can only predict the next character. We also only run for a few minutes on a laptop CPU. We are mostly focused on accurate math and model design - once that is in place we can simply scale on larger hardware.</p>
+
+<p>The initial run at a validation around 4 shows basically random nonsense:</p>
+
+<blockquote>
+  <p>=== iteration 0 - validation 4.174441 - seed “F” ===</p>
+
+  <p>GKAcABncQJz;zIUDo pH ‘WzCEEZ;hiDs3elwHb;3Ld:!&amp;aD-:UN–p3Njcs</p>
+
+  <p>OpMcQKBUHnitsb-&amp;dLY VRaxwGAMY,AlPTPTrWdpbnu</p>
+
+  <p>ewiHHOFLUvy.,sc.uD:xjzoBcLgtIMAyinD:E?OIFBzVGdt,r.fW,Z,lwjPav&amp;rWNMdTWmPkOi:HhoqkCe VluX,</p>
+
+  <p>gztLeQ</p>
+</blockquote>
+
+<p>After a short time we reach a validation &lt;2.5 and it starts to have a recognisable structure:</p>
+
+<blockquote>
+  <p>=== iteration 20000 - validation 2.293285 - seed “F” ===</p>
+
+  <p>had:</p>
+
+  <p>O, shamle se hemer witly of butist ous kil you bene sur and nod ucy swary hath ywe, he wempesty hourive, a sestoviiswio my nou, th muth le nat hase thoo of Ro ewtiture wurs go stom himlard iings</p>
+</blockquote>
+
 <h2 id="references">References</h2>
 
 <p>Krizhevsky A, Sutskever I, Hinton GE. (2012). <a href="https://arxiv.org/abs/1207.0580">ImageNet Classification with Deep Convolutional Neural Networks</a>.</p>
