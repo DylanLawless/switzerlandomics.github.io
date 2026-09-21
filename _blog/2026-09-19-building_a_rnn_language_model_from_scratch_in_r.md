@@ -96,7 +96,7 @@ $$
 h_t=\tanh(W_{xh}x_t+W_{hh}h_{t-1}+b_h).
 $$
 
-Here, \(x_t\) represents the current character and \(h_{t-1}\) represents the preceding hidden state. The two weight matrices and bias determine how the current input and previous context contribute to the new hidden state.
+Here, $$x_t$$ represents the current character and $$h_{t-1}$$ represents the preceding hidden state. The two weight matrices and bias determine how the current input and previous context contribute to the new hidden state.
 
 The model then converts that state into an output score for every character in its vocabulary:
 
@@ -208,7 +208,7 @@ The complete source code, experiment runner, tests and monitoring tools are avai
 
 ## End results
 
-We are not too concerned with producing eloquent peotry since we know this model can only predict the next character. We also only run for a few minutes on a laptop CPU. We are mostly focused on accurate math and model design - once that is in place we can simply scale on larger hardware.
+We are not too concerned with producing eloquent poetry since we know this model can only predict the next character. We also only run for a few minutes on a laptop CPU. We are mostly focused on accurate math and model design - once that is in place we can simply scale on larger hardware.
 
 The initial run at a validation around 4 shows basically random nonsense:
 

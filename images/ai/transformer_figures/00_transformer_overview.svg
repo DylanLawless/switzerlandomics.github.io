@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">How our character-level Transformer learns and generates text</title>
+  <desc id="desc">An overview figure showing one shared character-level Transformer used for both training and generation. The figure begins with the input context F i r s, passes through embeddings, a causal Transformer block and next-character scores, then branches into training and generation. The training branch compares predicted next characters with the true next characters i, r, s and t to compute a loss and update the parameters with Adam. The generation branch samples one next character from the last position, appends it to the context and repeats. The central Transformer block is highlighted to show the key model component.</desc>
+
+  <defs>
+    <marker id="arrow-black" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000000"/>
+    </marker>
+    <marker id="arrow-grey" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9A9A9A"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E5262F"/>
+    </marker>
+
+    <style><![CDATA[
+      text {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        fill: #000000;
+        font-size: 16px;
+      }
+      .title { font-size: 30px; font-weight: 700; }
+      .subtitle { font-size: 17px; }
+      .section { font-size: 20px; font-weight: 700; }
+      .small { font-size: 14px; }
+      .tiny { font-size: 12px; }
+      .center { text-anchor: middle; }
+      .right { text-anchor: end; }
+      .label-bold { font-weight: 700; }
+
+      .neutral-box { fill: #F3F2F2; stroke: #D9D9D9; stroke-width: 1.8; }
+      .token-box { fill: #F3F2F2; stroke: #D9D9D9; stroke-width: 1.6; }
+      .model-box { fill: #FDEBED; stroke: #E5262F; stroke-width: 2.2; }
+      .output-box { fill: #FFFFFF; stroke: #D9D9D9; stroke-width: 1.8; }
+      .branch-box { fill: #FFFFFF; stroke: #D9D9D9; stroke-width: 1.8; }
+
+      .line-black { stroke: #000000; stroke-width: 2.2; fill: none; marker-end: url(#arrow-black); }
+      .line-grey { stroke: #9A9A9A; stroke-width: 2; fill: none; marker-end: url(#arrow-grey); }
+      .line-red { stroke: #E5262F; stroke-width: 2.4; fill: none; marker-end: url(#arrow-red); }
+      .soft-line { stroke: #D9D9D9; stroke-width: 1.3; fill: none; }
+      .dashed { stroke-dasharray: 7 6; }
+
+      .chip { fill: #FFFFFF; stroke: #D9D9D9; stroke-width: 1.3; rx: 9; }
+
+      .mini-mask-allowed { fill: #FDEBED; stroke: #FFFFFF; stroke-width: 1.5; }
+      .mini-mask-highlight { fill: #F88379; stroke: #FFFFFF; stroke-width: 1.5; }
+      .mini-mask-masked { fill: #F3F2F2; stroke: #FFFFFF; stroke-width: 1.5; }
+    ]]></style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="760" fill="#FFFFFF"/>
+
+  <text x="600" y="54" class="title center">How our character-level Transformer learns and generates text</text>
+  <text x="600" y="84" class="subtitle center">One shared model is used in two modes: training uses the true next characters; generation uses a sampled next character.</text>
+
+  <text x="150" y="152" class="section center">Input context</text>
+  <text x="425" y="152" class="section center">Embeddings</text>
+  <text x="675" y="152" class="section center">Causal Transformer</text>
+  <text x="1010" y="152" class="section center">Next-character scores</text>
+
+  <g>
+    <rect class="token-box" x="70" y="188" width="60" height="60" rx="12"/>
+    <rect class="token-box" x="140" y="188" width="60" height="60" rx="12"/>
+    <rect class="token-box" x="210" y="188" width="60" height="60" rx="12"/>
+    <rect class="token-box" x="280" y="188" width="60" height="60" rx="12"/>
+
+    <text x="100" y="226" class="center label-bold">F</text>
+    <text x="170" y="226" class="center label-bold">i</text>
+    <text x="240" y="226" class="center label-bold">r</text>
+    <text x="310" y="226" class="center label-bold">s</text>
+
+    <text x="205" y="272" class="small center">Four supplied characters</text>
+  </g>
+
+  <path d="M346 218 H390" class="line-black"/>
+  <path d="M505 218 H555" class="line-red"/>
+  <path d="M795 218 H855" class="line-black"/>
+
+  <g>
+    <rect class="neutral-box" x="390" y="168" width="115" height="100" rx="12"/>
+
+    <path d="M420 190 H475" class="soft-line"/>
+    <path d="M420 210 H475" class="soft-line"/>
+    <path d="M420 230 H475" class="soft-line"/>
+    <path d="M420 250 H475" class="soft-line"/>
+    <path d="M420 190 V250" class="soft-line"/>
+    <path d="M475 190 V250" class="soft-line"/>
+
+    <text x="447.5" y="286" class="center label-bold">X ∈ ℝ⁴ˣ⁴⁸</text>
+    <text x="447.5" y="307" class="small center">character + position embeddings</text>
+  </g>
+
+  <g>
+    <rect class="model-box" x="555" y="146" width="240" height="145" rx="18"/>
+
+    <text x="675" y="180" class="center label-bold">one causal self-attention block</text>
+    <text x="675" y="202" class="small center">layer norm → attention → residual</text>
+    <text x="675" y="222" class="small center">layer norm → feed-forward → residual</text>
+
+    <g transform="translate(606 233)">
+      <rect x="0" y="0" width="22" height="22" class="mini-mask-allowed"/>
+      <rect x="24" y="0" width="22" height="22" class="mini-mask-masked"/>
+      <rect x="48" y="0" width="22" height="22" class="mini-mask-masked"/>
+      <rect x="72" y="0" width="22" height="22" class="mini-mask-masked"/>
+
+      <rect x="0" y="24" width="22" height="22" class="mini-mask-allowed"/>
+      <rect x="24" y="24" width="22" height="22" class="mini-mask-allowed"/>
+      <rect x="48" y="24" width="22" height="22" class="mini-mask-masked"/>
+      <rect x="72" y="24" width="22" height="22" class="mini-mask-masked"/>
+
+      <rect x="0" y="48" width="22" height="22" class="mini-mask-highlight"/>
+      <rect x="24" y="48" width="22" height="22" class="mini-mask-highlight"/>
+      <rect x="48" y="48" width="22" height="22" class="mini-mask-highlight"/>
+      <rect x="72" y="48" width="22" height="22" class="mini-mask-masked"/>
+
+      <rect x="0" y="72" width="22" height="22" class="mini-mask-allowed"/>
+      <rect x="24" y="72" width="22" height="22" class="mini-mask-allowed"/>
+      <rect x="48" y="72" width="22" height="22" class="mini-mask-allowed"/>
+      <rect x="72" y="72" width="22" height="22" class="mini-mask-allowed"/>
+
+      <rect x="-2" y="46" width="98" height="26" fill="none" stroke="#E5262F" stroke-width="1.7"/>
+    </g>
+
+    <text x="726" y="288" class="tiny center">causal mask lets each position use only itself and earlier characters</text>
+  </g>
+
+  <g>
+    <rect class="output-box" x="855" y="162" width="250" height="112" rx="14"/>
+
+    <text x="980" y="187" class="center label-bold">logits for 65 characters</text>
+
+    <g>
+      <rect class="chip" x="882" y="202" width="65" height="28"/>
+      <rect class="chip" x="955" y="202" width="65" height="28"/>
+      <rect class="chip" x="1028" y="202" width="50" height="28"/>
+
+      <text x="914.5" y="220" class="tiny center">a: 0.18</text>
+      <text x="987.5" y="220" class="tiny center">t: 0.24</text>
+      <text x="1053" y="220" class="tiny center">…</text>
+    </g>
+
+    <text x="980" y="250" class="small center">softmax is applied to the final position</text>
+    <text x="980" y="270" class="small center">to obtain p(next character | “Firs”)</text>
+  </g>
+
+  <text x="330" y="394" class="section center">Training</text>
+  <text x="870" y="394" class="section center">Generation</text>
+
+  <path d="M980 285 V330 H350" class="line-black"/>
+  <path d="M980 285 V330 H855" class="line-black"/>
+
+  <g>
+    <rect class="branch-box" x="80" y="424" width="500" height="248" rx="16"/>
+
+    <text x="112" y="455" class="label-bold">True next characters from the training text</text>
+
+    <g>
+      <rect class="token-box" x="112" y="478" width="54" height="54" rx="10"/>
+      <rect class="token-box" x="176" y="478" width="54" height="54" rx="10"/>
+      <rect class="token-box" x="240" y="478" width="54" height="54" rx="10"/>
+      <rect class="token-box" x="304" y="478" width="54" height="54" rx="10"/>
+
+      <text x="139" y="512" class="center label-bold">i</text>
+      <text x="203" y="512" class="center label-bold">r</text>
+      <text x="267" y="512" class="center label-bold">s</text>
+      <text x="331" y="512" class="center label-bold">t</text>
+
+      <text x="235" y="555" class="small center">Targets for the window “Firs”</text>
+    </g>
+
+    <path d="M406 505 H466" class="line-black"/>
+
+    <rect class="neutral-box" x="466" y="466" width="90" height="76" rx="12"/>
+    <text x="511" y="495" class="center label-bold">Loss</text>
+    <text x="511" y="516" class="tiny center">cross-entropy</text>
+    <text x="511" y="534" class="tiny center">across all</text>
+    <text x="511" y="550" class="tiny center">positions</text>
+
+    <path d="M511 558 V601" class="line-black"/>
+
+    <rect class="neutral-box" x="428" y="602" width="165" height="46" rx="12"/>
+    <text x="510.5" y="629" class="small center label-bold">update parameters with Adam</text>
+
+    <text x="112" y="596" class="small">The model predicts all next-character targets in the window.</text>
+    <text x="112" y="618" class="small">Those errors are combined into one loss, and the shared</text>
+    <text x="112" y="640" class="small">parameters are updated. Training uses the true continuation,</text>
+    <text x="112" y="662" class="small">not a sampled character.</text>
+  </g>
+
+  <g>
+    <rect class="branch-box" x="630" y="424" width="490" height="248" rx="16"/>
+
+    <text x="662" y="455" class="label-bold">Sample from the final-position distribution</text>
+
+    <rect class="neutral-box" x="662" y="480" width="92" height="60" rx="12"/>
+    <text x="708" y="506" class="center label-bold">sample</text>
+    <text x="708" y="527" class="tiny center">one character</text>
+
+    <path d="M756 510 H804" class="line-red"/>
+
+    <rect class="token-box" x="804" y="480" width="54" height="60" rx="12"/>
+    <text x="831" y="516" class="center label-bold">?</text>
+    <text x="831" y="556" class="tiny center">sampled</text>
+
+    <path d="M831 570 V598" class="line-black"/>
+
+    <rect class="neutral-box" x="724" y="600" width="216" height="48" rx="12"/>
+    <text x="832" y="628" class="small center label-bold">append sampled character to the context</text>
+
+    <path d="M940 624 H1012" class="line-black"/>
+    <path d="M1012 624 V511 H981" class="line-grey dashed"/>
+    <text x="1042" y="562" class="tiny">repeat prediction</text>
+
+    <text x="662" y="596" class="small">Generation uses only the last position’s distribution.</text>
+    <text x="662" y="618" class="small">A sampled character is appended to the context, then the</text>
+    <text x="662" y="640" class="small">model predicts again with the updated sequence. The sampled</text>
+    <text x="662" y="662" class="small">character is unknown in advance, so it is shown as “?”.</text>
+  </g>
+</svg>

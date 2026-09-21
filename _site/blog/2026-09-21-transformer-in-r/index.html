@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Building a character-level Transformer in R</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="A character-level recurrent neural network implemented from first principles in R: how it learns, validates predictions and generates text on a laptop CPU." />
+  <meta property="og:title" content="Building a character-level Transformer in R"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="A character-level recurrent neural network implemented from first principles in R: how it learns, validates predictions and generates text on a laptop CPU."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">Building a character-level Transformer in R</h1>
+                <div class="content"><p>2026-09-21</p>
+
+<p>We sometimes develop AI models for biological data, including genomic sequences and protein structures. To make the underlying algorithms easier to understand on the blog, we are rebuilding them from first principles in R, using ordinary text so readers can follow the mathematics and learning process without specialist biological knowledge.</p>
+
+<p>Building on our previous work with recurrent neural networks (RNNs), we now reproduce a small, GPT-like <strong>Transformer</strong> from first principles in R. Unlike RNNs, which process text sequentially through a recurrent hidden state<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, the Transformer uses <strong>causal self-attention</strong> to process positions within a context window in parallel, while preventing each position from accessing future characters.</p>
+
+<p>In practice this means the model can directly compare each character with all others in its context, without carrying a hidden state forward. This avoids the long-range dependency issues of RNNs and makes training much faster. In fact, Vaswani <em>et al.</em> report that Transformers train up to an order of magnitude faster than comparable recurrent models. Figure 1 shows the core architecture of our minimal character-level Transformer: character+position embeddings → one causal self-attention block (with a feed-forward sublayer) → output scores for the next character.</p>
+
+<p>The code is available here <a href="https://github.com/switzerlandomics/src-min_char_transformer_r">https://github.com/switzerlandomics/src-min_char_transformer_r</a>.</p>
+
+<p>We use the Tiny Shakespeare dataset, containing 40,000 lines, consisting of 1,115,394 characters of dialogue and other text. 
+The first line of text reads “<em>Firs</em>t Citizen: Before we proceed…”, which you will recognise in some of the figures below as the prompt: <em>F i r s …</em>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ wc data/tiny_shakespeare.txt
+40000  202651 1115394 data/tiny_shakespeare.txt
+
+$ head data/tiny_shakespeare.txt
+First Citizen:
+Before we proceed any further, hear me speak.
+
+All:
+Speak, speak.
+
+First Citizen:
+You are all resolved rather to die than to famish?
+</code></pre></div></div>
+
+<p><img src="/images/ai/transformer_figures/00_transformer_architecture.png" alt="Figure 1: Architecture of the minimal character-level Transformer model." style="width: 75%;" /></p>
+
+<p><em><strong>Figure 1. The implemented Transformer model.</strong> Input characters (“F i r s”) are first converted to learned character and position embeddings, summed to form the input matrix \(X\). We then apply one “Transformer block” (pre‑layer‑norm, single-head self-attention plus a feed-forward network, each with residual connections). The output vector at the final position is projected to produce unnormalized logit scores over the 65-character vocabulary, which are passed through softmax to give the next-character probabilities.</em></p>
+
+<h2 id="rnns-versus-transformers">RNNs versus Transformers</h2>
+
+<p>Traditional sequence models like RNNs process tokens sequentially. Each new input updates a hidden state that carries information forward. This sequential dependence makes RNNs inherently slow to train (since they cannot parallelize over positions) and prone to forgetting information over long distances due to vanishing gradients. For example, determining that <em>“bank”</em> refers to a river bank might require an RNN to propagate information across many intermediate words.</p>
+
+<p>By contrast, a Transformer sees the whole context at once.  It replaces recurrence with self-attention: at each layer, every position computes <strong>queries</strong>, <strong>keys</strong> and <strong>values</strong> to attend to all other positions simultaneously. Positional embeddings are added so the model knows each token’s order. In practice this means:</p>
+
+<ul>
+  <li><strong>Parallel processing:</strong> All input positions are processed in parallel, greatly reducing training time.</li>
+  <li><strong>Global context:</strong> Each token’s representation can incorporate information from any other token in the window, not just the last hidden state.</li>
+  <li><strong>Positional encoding:</strong> The model learns fixed or learned positional embeddings so that it still “knows” which character is first, second, etc..</li>
+</ul>
+
+<p>Figure 2 illustrates this contrast. In the RNN (left), characters are fed one by one and each step carries a hidden state forward. In the Transformer (right), all characters are embedded and then interact through self-attention in a single block.</p>
+
+<p><img src="/images/ai/transformer_figures/01_rnn_vs_transformer.png" alt="Figure 2: Comparison of RNN and Transformer sequence processing." style="width: 75%;" /></p>
+
+<p><em><strong>Figure 2</strong>. In an RNN (left), characters are processed sequentially with a hidden state passed from one step to the next. The Transformer (right) processes all input positions in one go using self-attention (no recurrent hidden state). The Transformer’s positional embeddings (⊕) preserve order, and each position attends to all others simultaneously.</em></p>
+
+<h2 id="transformer-model-details">Transformer model details</h2>
+
+<p>Our implementation follows the decoder-only Transformer style (like GPT) with one attention block. Given a sequence of \(n\) input characters encoded as indices, we look up both character embeddings and learned positional embeddings (each of dimension \(d\)), and sum them to form an input matrix \(X\in\mathbb{R}^{n\times d}\). This matrix is then layer-normalised before entering the self-attention sublayer (we use the “pre-LN” variant).</p>
+
+<p>Within the self-attention sublayer, we compute <strong>queries</strong> (\(Q\)), <strong>keys</strong> (\(K\)), and <strong>values</strong> (\(V\)) as linear projections of the normalised input \(H=\operatorname{LN}_1(X)\):</p>
+
+<div class="math-responsive">
+  <p>\(Q = HW_Q,\quad K = HW_K,\quad V = HW_V,\)</p>
+</div>
+
+<p>where \(W_Q,W_K,W_V\in\mathbb{R}^{d\times d}\) are learned weight matrices. The scaled dot-product attention is then</p>
+
+<div class="math-responsive">
+  <p>\(\operatorname{Attention}(Q,K,V)
+=
+\operatorname{softmax}\!\left(
+\frac{QK^T}{\sqrt{d}}+M
+\right)VW_O.\)</p>
+</div>
+
+<p>Here, \(M\) is the causal mask: it prevents each position from attending to characters that come after it.</p>
+
+<p>This applies softmax row-wise to the masked query–key scores, producing <strong>attention weights between 0 and 1 that sum to 1 for each query</strong>. In other words, each query position \(i\) computes a weighted sum of the value vectors from its current and earlier positions. The weights are determined by the compatibility (scaled dot product) between that query and each permitted key.</p>
+
+<p>Because our model has a <strong>single attention head</strong>, we use only one set of these projections. After attention, we add its output to the original input through a residual connection. We then apply layer normalisation before a position-wise feed-forward network,</p>
+
+\[F(a)=\operatorname{ReLU}(aW_1+b_1)W_2+b_2,\]
+
+<p>which consists of two linear transformations with a ReLU activation between them. A second residual connection completes the Transformer block, followed by a final layer normalisation.</p>
+
+<p>Finally, we multiply the resulting representations by an output weight matrix \(W_{\mathrm{out}}\in\mathbb{R}^{d\times65}\) and add a bias to obtain logits for all 65 characters at every input position. <strong>During generation, we use the logits at the final input position</strong> and apply softmax to obtain a probability distribution from which to sample the next character.</p>
+
+<p>In summary, our forward pass is:</p>
+
+<ul>
+  <li>Embed characters + positions → \(X\).</li>
+  <li>Compute one masked self-attention output matrix \(A\) (above).</li>
+  <li>Feed \(A\) through the feed-forward sublayer to get \(Y\).</li>
+  <li>Output logits \(z = Y_n W_o + b_o\) for the final position \(n\).</li>
+  <li>Probabilities \(p = \text{softmax}(z)\) for the next character.</li>
+</ul>
+
+<p>Each step involves simple linear algebra and nonlinearity, making the math straightforward yet expressive. Figure 3 (next section) shows how we apply the mask to ensure the model is autoregressive during generation.</p>
+
+<h2 id="causal-masking-for-autoregression">Causal masking for autoregression</h2>
+
+<p>To use the Transformer for language modeling, we must enforce causality: when predicting each character, the model should <em>not</em> see future characters in the sequence. We implement this with a <strong>causal mask</strong> on the attention. Concretely, in the matrix \((QK^T)/\sqrt{d}\) we add large negative values (effectively \(-\infty\)) wherever \(j&gt;i\), so that the softmax assigns zero weight to those positions. In practice this means each query position \(i\) can only attend to itself and earlier key positions.</p>
+
+<p>Figure 3 illustrates this: cells above the diagonal (future positions) are shaded off-white and receive no weight. The allowed (unmasked) cells use a color scale (red) proportional to the actual attention weight. For decoding, a token cannot attend to tokens not yet generated. Thus, the self-attention module in the decoder is causally masked.</p>
+
+<p><img src="/images/ai/transformer_figures/02_causal_mask.png" alt="Figure 3: Causal attention mask." style="width: 75%;" /></p>
+
+<p><em><strong>Figure 3. Causal masking in self-attention</strong>. White cells are masked (future positions) and have zero weight; only the allowed cells (below the diagonal) are colored according to attention weight. Each row is a query position and shows which previous keys it can attend to. This ensures the model cannot “see” future characters when generating text.</em></p>
+
+<h2 id="one-prediction-step-the-math">One prediction step: the math</h2>
+
+<p>Putting it all together for a single input window, the Transformer computes next-character probabilities as follows:</p>
+
+<ol>
+  <li><strong>Embedding:</strong> Form matrix \(X\in\mathbb{R}^{n\times d}\) by summing character and position embeddings for the \(n\) input characters.</li>
+  <li><strong>Compute Q,K,V:</strong> As above, \(Q=XW_Q\), \(K=XW_K\), \(V=XW_V\).</li>
+  <li><strong>Dot-Product:</strong> Compute scaled dot-products \(S = QK^T/\sqrt{d}\) (an \(n\times n\) matrix).</li>
+  <li><strong>Apply mask:</strong> Set \(S_{i,j}=-\infty\) for all \(j&gt;i\) (future tokens).</li>
+  <li><strong>Softmax:</strong> Apply \(\text{softmax}\) to each row of \(S\) to obtain attention weights.</li>
+  <li><strong>Weighted sum:</strong> \(A = \text{softmax}(S) \, V\), so that \(A_{i} = \sum_j (\text{softmax}(S)_{i,j})\,V_j\). Row \(i\) of \(A\) is the attended output for query \(i\).</li>
+  <li><strong>Feed-forward:</strong> For each row \(A_i\), apply \(F(A_i) = W_2\mathrm{ReLU}(W_1A_i + b_1) + b_2\) and add the residual connection.</li>
+  <li><strong>Output projection:</strong> Take the last output vector \(F(A_n)\) and compute logits \(z = F(A_n)W_o + b_o\).</li>
+  <li><strong>Softmax:</strong> Finally \(p = \text{softmax}(z)\) gives the probability distribution for the next character.</li>
+</ol>
+
+<p>Figure 4 schematically illustrates this process for our four-character prompt “Firs” (characterized by vectors on the left).  The core operation is attention: each query vector is dotted with key vectors, scaled by \(\sqrt{d}\), and normalized to form the weight matrix. As Glass Box Medicine explains, after softmax we have “attention weights” that sum to 1 for each row, and we use those to combine the value vectors. The resulting output at position 4 (for “s”) feeds into the final softmax. (Layer norms and residuals are omitted in the diagram for clarity.)</p>
+
+<p><img src="/images/ai/transformer_figures/03_one_prediction_step.png" alt="Figure 4: Single-step Transformer computation." style="width: 101%;" /></p>
+
+<p><em><strong>Figure 4. The forward-pass computations for one Transformer prediction step on input “F i r s”</strong>. The input characters are embedded and added to position embeddings. We compute queries/keys/values (Q,K,V) and form the scaled dot-product matrix \(QK^T/\sqrt{d}\). After masking future positions, we apply softmax row-wise to obtain attention weights, which weight-sum the rows of \(V\). The attention outputs are then passed through a feed-forward layer. The final output vector at position 4 is projected to 65 logits and softmaxed. (Residual connections and layer norms are applied at each sub-layer, as in Figure 1.)</em></p>
+
+<h2 id="training-and-evaluation">Training and evaluation</h2>
+
+<p>We train this model on the Tiny Shakespeare dataset (a corpus of Shakespeare plays) using maximum likelihood. At each step, the model is given a sequence of \(n=128\) characters (we accumulated overlapping windows, training on all positions). The true next character for each position provides a cross-entropy loss; we sum the losses over the \(n\) positions and backpropagate to update all parameters. We use the Adam optimizer with default settings.</p>
+
+<p>Figure 5 plots the training loss and held-out validation loss (in nats per character) over 300,000 updates. The <em>uniform baseline</em> (log loss of a uniform model over 65 symbols, about 4.1744 nats/char) is shown near the top of the plot, and a <em>bigram baseline</em> (using single-character frequencies given the previous char) is also indicated.  Even early in training the Transformer far outperforms these naive baselines.  Both curves decrease as the model learns; the lowest <strong>validation</strong> loss recorded was about 1.7472 nats/char at 295,000 updates, which is where we saved the final checkpoint.  (At that point, our model was selected for text generation in our blog example.)</p>
+
+<p><img src="/images/ai/transformer_figures/04_training_curve.png" alt="Figure 5: Training and validation loss." style="width: 100%;" /></p>
+
+<p><em><strong>Figure 5. Training and validation loss (in nats/character) over 300k updates for the Transformer</strong>. Training loss is exponentially smoothed for clarity. The uniform baseline (no knowledge of text) has loss ≈4.1744; the bigram baseline is about 2.4692. The model quickly improves, reaching ~1.75 nats/char on validation by 295k updates. The red dot marks the best validation checkpoint (1.7472 nats at 295,000 updates), which we use for generation.</em></p>
+
+<p>Our implementation reproduces the expected behavior: given the same prompt <code class="language-plaintext highlighter-rouge">Firs</code>, it predicts and samples the same continuation as recorded in our “generation comparison” (see our experiments folder). The code and training logs are available in the repository for full transparency.</p>
+
+<h2 id="learned-attention-weights">Learned attention weights</h2>
+
+<p>Finally, we visualize the actual attention weights learned by the model for the prompt <code class="language-plaintext highlighter-rouge">Firs</code>. Figure 6 shows the 4×4 attention matrix from the best checkpoint.  Each row corresponds to a query position (1 through 4 for “F”, “i”, “r”, “s”, and each column corresponds to a key position.  Masked (future) positions are white. The colored cells show the weight (importance) assigned to each permitted key by that query.  For example, row 4 shows how the model at “s” distributes attention over {F,i,r,s}.  We annotate this figure with a colorbar for clarity.</p>
+
+<p><img src="/images/ai/transformer_figures/05_learned_attention_map.png" alt="Figure 6: Learned attention weights." style="width: 75%;" /></p>
+
+<p><em><strong>Figure 6. Actual attention weights from the best-validation checkpoint, for the input “F i r s”</strong>. Each row is one query position, each column one key position. Off-white cells were masked (future positions) and have weight 0. The color intensity indicates how much attention that query paid to each allowed key. The model’s attention is automatically normalized (each row sums to 1). These patterns show how, for each position, the model is combining its context. (For example, later positions tend to assign more weight to recent characters.) Importantly, every position has direct access to all earlier positions, a property known to help learning long-range dependencies.</em></p>
+
+<h2 id="have-we-reached-agi-yet">Have we reached AGI yet?</h2>
+
+<p>In this blog post we have implemented a minimal Transformer language model in R, from the ground up. We covered the intuition and math behind self-attention, causally masked generation, and multi-layer feed-forward networks. The figures illustrate how the Transformer fundamentally differs from an RNN, how it computes its predictions, and how well it trains on real data. Importantly, all our results come from the same learned model (no hand-tuning of the figures), demonstrating the approach’s correctness.</p>
+
+<p>Like our previous RNN example, this exercise highlights that <strong>modern deep learning architectures can be understood and built using simple code and math</strong>. Our Transformer uses only 1 head and 1 layer, but it still effectively captures sequence patterns in the Shakespeare text. The same principles scale to larger models and datasets. In future work we will extend this to even longer contexts and explore the Transformer’s applications in omics sequence data.</p>
+
+<h2 id="end-results">End results</h2>
+
+<p>As with the previous RNN blog post, we are not too concerned with producing eloquent poetry.
+We are mostly focused on accurate math and model design - once that is in place we can simply scale on larger hardware.</p>
+
+<p>The initial run at a validation around 4 shows basically random nonsense:</p>
+
+<p><strong>Update 0 - validation 4.18 - prompt “Firs”</strong></p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xg.BFPFbzvfMYbBwA  
+
+tZrQqRZy3jmrhtngmq;!  
+
+aWaSpLHIf'eauW,kDNOd,P;  
+DLUVCjasqLZGPwpoIMwrg3&amp;  
+lThgLsyqhFQ-SSuw!Kfj$ml  
+pAw.zdesCxn'q?&amp;&amp;?$T*
+</code></pre></div></div>
+
+<hr />
+
+<p>After a short time it starts to have a recognisable structure:</p>
+
+<p><strong>Update 250,000 - validation 1.77 - prompt “Firs”</strong></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>First stand in till if royar douceving
+Clinif;
+You must! cousin and figher
+To way that lend
+And loves not a thee
+This be burgice is pabarandy, do brich nigh;
+Net me town.
+
+NORTHUMB:
+Go
+</code></pre></div></div>
+
+<hr />
+
+<p><strong>update 260,000 - validation 1.76 - prompt “Firs”</strong></p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>First utsern sunfried rests 
+and to galinght that 
+dear's cope heaving in the utbuar in 
+must at and smethere batted?
+
+CORIOLANUS:
+Host gaitie, splaint is she pevers
+Inf, sirving there wa
+</code></pre></div></div>
+<hr />
+
+<p><strong>Update 295,000 - validation 1.74 - prompt “Firs”</strong></p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e
+Maring weld sound, a
+That look; our pressay
+cause cold ostandont: sot, so both unfame,
+Unbuit me whost to be bood eson.
+Comful
+To and my gal my greath fooble, that you,
+She no b
+</code></pre></div></div>
+
+<p>The generated text remains imperfect, but the lower validation loss and increasingly recognisable structure show that our single-block Transformer learns from text on a laptop CPU. 
+Built entirely from first principles in R, it demonstrates a core mechanism of the 2017 Transformer architecture. 
+Our next project will extend this work to a deeper GPT-2-style model.</p>
+
+<p>The training data and code are provided in the <a href="https://github.com/switzerlandomics/src-min_char_transformer_r">src-min_char_transformer_r</a> repository on GitHub.</p>
+
+<h2 id="references">References</h2>
+
+<p>Vaswani A, Shazeer N, Parmar N, et al. (2017). <em>Attention Is All You Need</em>, <a href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a> . Advances in Neural Information Processing Systems, 30.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>A note on terminology: a <em>hidden state</em> does not mean secret or inaccessible. A hidden state’s activations are internal numerical representations within the network, rather than the inputs supplied to it or the outputs it produces. Our R implementation could simply inspect these values directly at every step if we choose. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

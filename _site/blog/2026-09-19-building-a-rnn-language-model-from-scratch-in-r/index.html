@@ -268,7 +268,7 @@ You are all resolved rather to die than to famish?
 
 \[h_t=\tanh(W_{xh}x_t+W_{hh}h_{t-1}+b_h).\]
 
-<p>Here, (x_t) represents the current character and (h_{t-1}) represents the preceding hidden state. The two weight matrices and bias determine how the current input and previous context contribute to the new hidden state.</p>
+<p>Here, \(x_t\) represents the current character and \(h_{t-1}\) represents the preceding hidden state. The two weight matrices and bias determine how the current input and previous context contribute to the new hidden state.</p>
 
 <p>The model then converts that state into an output score for every character in its vocabulary:</p>
 
@@ -374,7 +374,7 @@ You are all resolved rather to die than to famish?
 
 <h2 id="end-results">End results</h2>
 
-<p>We are not too concerned with producing eloquent peotry since we know this model can only predict the next character. We also only run for a few minutes on a laptop CPU. We are mostly focused on accurate math and model design - once that is in place we can simply scale on larger hardware.</p>
+<p>We are not too concerned with producing eloquent poetry since we know this model can only predict the next character. We also only run for a few minutes on a laptop CPU. We are mostly focused on accurate math and model design - once that is in place we can simply scale on larger hardware.</p>
 
 <p>The initial run at a validation around 4 shows basically random nonsense:</p>
 

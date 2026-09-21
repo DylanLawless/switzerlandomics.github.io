@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600" width="900" height="1600" role="img" aria-labelledby="fig-title fig-desc">
+  <title id="fig-title">One next-character prediction in a causal Transformer</title>
+  <desc id="fig-desc">A vertical mobile layout of a forward-pass diagram showing how the context T, h, e and space is converted into embeddings, processed with causal self-attention, transformed by residual and feed-forward operations, and used to predict a probability distribution for the next character after the sequence The space.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#000000"/>
+    </marker>
+    <style>
+      text { font-family: "Helvetica Neue"; fill: #000000; font-size: 16px; }
+      .title { font-size: 21.333px; font-weight: 700; }
+      .subtitle { font-size: 16px; }
+      .stage-title { font-size: 18px; font-weight: 700; }
+      .small { font-size: 13px; }
+      .tiny { font-size: 12px; }
+      .token { font-size: 28px; }
+      .token-small { font-size: 22px; }
+      .math { font-size: 15px; }
+      .center { text-anchor: middle; dominant-baseline: middle; }
+      .panel { fill: #FFFFFF; stroke: #D9D9D9; stroke-width: 1.5; }
+      .panel-attn { fill: #FDEBED; stroke: #E5262F; stroke-width: 2; }
+      .mini-allowed { fill: #F9C9C5; stroke: #D9D9D9; stroke-width: 1; }
+      .mini-masked { fill: #F3F2F2; stroke: #D9D9D9; stroke-width: 1; }
+      .neutral-box { fill: #F3F2F2; stroke: #D9D9D9; stroke-width: 1.3; }
+      .highlight-box { fill: #FDEBED; stroke: #E5262F; stroke-width: 1.8; }
+      .arrow-line { fill: none; stroke: #000000; stroke-width: 2; marker-end: url(#arrow); }
+      .soft-arrow { fill: none; stroke: #000000; stroke-width: 1.6; marker-end: url(#arrow); }
+      .red-outline { fill: none; stroke: #E5262F; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <rect width="900" height="1600" fill="#FFFFFF"/>
+
+  <text class="title" x="450" y="48" text-anchor="middle">One next-character prediction</text>
+  <text class="subtitle" x="450" y="82" text-anchor="middle">Forward pass for T h e ␠, with d = 48 and V = 65.</text>
+
+  <!-- stage 1 -->
+  <g transform="translate(70,120)">
+    <rect class="panel" x="0" y="0" width="760" height="250" rx="10"/>
+    <text class="stage-title" x="380" y="34" text-anchor="middle">1. Character and position embeddings</text>
+    <text class="small" x="380" y="58" text-anchor="middle">Learned character embeddings are combined with learned position embeddings.</text>
+    <g>
+      <rect class="neutral-box" x="90" y="88" width="58" height="58" rx="7"/>
+      <rect class="neutral-box" x="190" y="88" width="58" height="58" rx="7"/>
+      <rect class="neutral-box" x="290" y="88" width="58" height="58" rx="7"/>
+      <rect class="neutral-box" x="390" y="88" width="58" height="58" rx="7"/>
+      <text class="token center" x="119" y="117">T</text>
+      <text class="token center" x="219" y="117">h</text>
+      <text class="token center" x="319" y="117">e</text>
+      <text class="token center" x="419" y="117">␠</text>
+      <text class="small" x="515" y="120">Input context</text>
+    </g>
+    <g>
+      <rect class="highlight-box" x="250" y="165" width="260" height="56" rx="8"/>
+      <text class="math" x="380" y="194" text-anchor="middle">X ∈ ℝ⁴ˣ⁴⁸</text>
+    </g>
+  </g>
+
+  <path class="arrow-line" d="M450 380 V430"/>
+
+  <!-- stage 2 -->
+  <g transform="translate(70,440)">
+    <rect class="panel-attn" x="0" y="0" width="760" height="450" rx="10"/>
+    <text class="stage-title" x="380" y="34" text-anchor="middle">2. Causal self-attention</text>
+    <text class="small" x="380" y="58" text-anchor="middle">Queries, keys and values are derived from X, then future positions are masked.</text>
+
+    <text class="math" x="40" y="110">Q = LN₁(X)Wq</text>
+    <text class="math" x="40" y="136">K = LN₁(X)Wk</text>
+    <text class="math" x="40" y="162">V = LN₁(X)Wv</text>
+    <text class="math" x="40" y="200">A = softmax(QKᵀ / √48 + causal mask)</text>
+    <text class="math" x="40" y="228">Attention output = AVWo</text>
+
+    <text class="small" x="520" y="96" text-anchor="middle">Causal attention matrix</text>
+    <g transform="translate(420,115)">
+      <text class="token-small center" x="24" y="-10">T</text>
+      <text class="token-small center" x="72" y="-10">h</text>
+      <text class="token-small center" x="120" y="-10">e</text>
+      <text class="token-small center" x="168" y="-10">␠</text>
+      <text class="token-small center" x="-14" y="24">T</text>
+      <text class="token-small center" x="-14" y="72">h</text>
+      <text class="token-small center" x="-14" y="120">e</text>
+      <text class="token-small center" x="-14" y="168">␠</text>
+
+      <rect class="mini-allowed" x="0" y="0" width="48" height="48"/>
+      <rect class="mini-masked" x="48" y="0" width="48" height="48"/>
+      <rect class="mini-masked" x="96" y="0" width="48" height="48"/>
+      <rect class="mini-masked" x="144" y="0" width="48" height="48"/>
+
+      <rect class="mini-allowed" x="0" y="48" width="48" height="48"/>
+      <rect class="mini-allowed" x="48" y="48" width="48" height="48"/>
+      <rect class="mini-masked" x="96" y="48" width="48" height="48"/>
+      <rect class="mini-masked" x="144" y="48" width="48" height="48"/>
+
+      <rect class="mini-allowed" x="0" y="96" width="48" height="48"/>
+      <rect class="mini-allowed" x="48" y="96" width="48" height="48"/>
+      <rect class="mini-allowed" x="96" y="96" width="48" height="48"/>
+      <rect class="mini-masked" x="144" y="96" width="48" height="48"/>
+
+      <rect class="mini-allowed" x="0" y="144" width="48" height="48"/>
+      <rect class="mini-allowed" x="48" y="144" width="48" height="48"/>
+      <rect class="mini-allowed" x="96" y="144" width="48" height="48"/>
+      <rect class="mini-allowed" x="144" y="144" width="48" height="48"/>
+      <rect class="red-outline" x="-1" y="95" width="146" height="50"/>
+    </g>
+
+    <text class="tiny" x="380" y="372" text-anchor="middle">Softmax is applied row-wise after masking future positions.</text>
+    <text class="tiny" x="380" y="396" text-anchor="middle">The highlighted row can use T, h and e, but not a later position.</text>
+  </g>
+
+  <path class="arrow-line" d="M450 900 V950"/>
+
+  <!-- stage 3 -->
+  <g transform="translate(70,960)">
+    <rect class="panel" x="0" y="0" width="760" height="230" rx="10"/>
+    <text class="stage-title" x="380" y="34" text-anchor="middle">3. Residual + feed-forward</text>
+    <text class="small" x="380" y="58" text-anchor="middle">Attention output is added back to X, then transformed again.</text>
+    <rect class="neutral-box" x="165" y="90" width="430" height="52" rx="8"/>
+    <text class="math" x="380" y="117" text-anchor="middle">R = X + Attention output</text>
+    <path class="soft-arrow" d="M380 143 V170"/>
+    <rect class="neutral-box" x="145" y="175" width="470" height="70" rx="8"/>
+    <text class="math" x="380" y="202" text-anchor="middle">Y = R + FFN(LN₂(R))</text>
+    <text class="tiny" x="380" y="228" text-anchor="middle">FFN = two learned linear layers with a ReLU activation.</text>
+  </g>
+
+  <path class="arrow-line" d="M450 1200 V1250"/>
+
+  <!-- stage 4 -->
+  <g transform="translate(70,1260)">
+    <rect class="panel" x="0" y="0" width="760" height="250" rx="10"/>
+    <text class="stage-title" x="380" y="34" text-anchor="middle">4. Next-character probabilities</text>
+    <text class="small" x="380" y="58" text-anchor="middle">The final position yields scores for all 65 possible next characters.</text>
+    <rect class="neutral-box" x="130" y="88" width="500" height="50" rx="8"/>
+    <text class="math" x="380" y="114" text-anchor="middle">Logits = LN₃(Y)Wout + bout</text>
+    <rect class="highlight-box" x="170" y="155" width="420" height="46" rx="8"/>
+    <text class="math" x="380" y="179" text-anchor="middle">Select row 4 → p(next character | "The ")</text>
+    <text class="tiny" x="380" y="221" text-anchor="middle">Softmax converts the row-4 logits into a probability distribution.</text>
+  </g>
+</svg>
