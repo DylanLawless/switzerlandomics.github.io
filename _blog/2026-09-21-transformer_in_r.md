@@ -38,8 +38,9 @@ First Citizen:
 You are all resolved rather to die than to famish?
 ```
 
-<img src="/images/ai/transformer_figures/00_transformer_architecture.png" alt="Figure 1: Architecture of the minimal character-level Transformer model." style="width: 75%;">
-
+<img src="/images/ai/transformer_figures/00_transformer_architecture.png"
+  alt="Figure 1: Architecture of the minimal character-level Transformer model."
+  style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;">
 
 ***Figure 1. The implemented Transformer model.** Input characters (“F i r s”) are first converted to learned character and position embeddings, summed to form the input matrix $$X$$. We then apply one "Transformer block" (pre‑layer‑norm, single-head self-attention plus a feed-forward network, each with residual connections). The output vector at the final position is projected to produce unnormalized logit scores over the 65-character vocabulary, which are passed through softmax to give the next-character probabilities.*
 
@@ -55,7 +56,9 @@ By contrast, a Transformer sees the whole context at once.  It replaces recurren
 
 Figure 2 illustrates this contrast. In the RNN (left), characters are fed one by one and each step carries a hidden state forward. In the Transformer (right), all characters are embedded and then interact through self-attention in a single block.
 
-<img src="/images/ai/transformer_figures/01_rnn_vs_transformer.png" alt="Figure 2: Comparison of RNN and Transformer sequence processing." style="width: 75%;">
+
+<img src="/images/ai/transformer_figures/01_rnn_vs_transformer.png" alt="Figure 2: Comparison of RNN and Transformer sequence processing." style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;">
+
 
 ***Figure 2**. In an RNN (left), characters are processed sequentially with a hidden state passed from one step to the next. The Transformer (right) processes all input positions in one go using self-attention (no recurrent hidden state). The Transformer’s positional embeddings (⊕) preserve order, and each position attends to all others simultaneously.*
 
@@ -113,7 +116,8 @@ To use the Transformer for language modeling, we must enforce causality: when pr
 
 Figure 3 illustrates this: cells above the diagonal (future positions) are shaded off-white and receive no weight. The allowed (unmasked) cells use a color scale (red) proportional to the actual attention weight. For decoding, a token cannot attend to tokens not yet generated. Thus, the self-attention module in the decoder is causally masked.
 
-<img src="/images/ai/transformer_figures/02_causal_mask.png" alt="Figure 3: Causal attention mask." style="width: 75%;">
+
+<img src="/images/ai/transformer_figures/02_causal_mask.png" alt="Figure 3: Causal attention mask." style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;">
 
 ***Figure 3. Causal masking in self-attention**. White cells are masked (future positions) and have zero weight; only the allowed cells (below the diagonal) are colored according to attention weight. Each row is a query position and shows which previous keys it can attend to. This ensures the model cannot "see" future characters when generating text.*
 
@@ -153,7 +157,7 @@ Our implementation reproduces the expected behavior: given the same prompt `Firs
 
 Finally, we visualize the actual attention weights learned by the model for the prompt `Firs`. Figure 6 shows the 4×4 attention matrix from the best checkpoint.  Each row corresponds to a query position (1 through 4 for "F", "i", "r", "s", and each column corresponds to a key position.  Masked (future) positions are white. The colored cells show the weight (importance) assigned to each permitted key by that query.  For example, row 4 shows how the model at “s” distributes attention over {F,i,r,s}.  We annotate this figure with a colorbar for clarity. 
 
-<img src="/images/ai/transformer_figures/05_learned_attention_map.png" alt="Figure 6: Learned attention weights." style="width: 75%;">
+<img src="/images/ai/transformer_figures/05_learned_attention_map.png" alt="Figure 6: Learned attention weights." style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;">
 
 ***Figure 6. Actual attention weights from the best-validation checkpoint, for the input "F i r s"**. Each row is one query position, each column one key position. Off-white cells were masked (future positions) and have weight 0. The color intensity indicates how much attention that query paid to each allowed key. The model’s attention is automatically normalized (each row sums to 1). These patterns show how, for each position, the model is combining its context. (For example, later positions tend to assign more weight to recent characters.) Importantly, every position has direct access to all earlier positions, a property known to help learning long-range dependencies.*  
 

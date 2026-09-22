@@ -939,6 +939,25 @@ pre.code-copy code {
   }
 }
 
+// To limit oversized images on desktop based on <75% of view height
+// Responsive image template
+/* 
+<img
+  src="/images/example.png"
+  alt="Image description."
+  style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;"
+>
+*/
+.content figure img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 75vh;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* reusable split figure */
 
 .split-figure {
