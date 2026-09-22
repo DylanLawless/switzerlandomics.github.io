@@ -1,8 +1,8 @@
 ---
-title: "Building a character-level Transformer in R"
+title: "Building a GPT-like Transformer from scratch in R"
 layout: page
 math: mathjax
-description: "A character-level recurrent neural network implemented from first principles in R: how it learns, validates predictions and generates text on a laptop CPU."
+description: "A small, GPT-like Transformer built from first principles in base R: causal self-attention, manual gradients, character-level prediction and measured learning on a laptop CPU."
 tags:
   - ai
 date: 2026-09-21
@@ -162,8 +162,6 @@ Finally, we visualize the actual attention weights learned by the model for the 
 In this blog post we have implemented a minimal Transformer language model in R, from the ground up. We covered the intuition and math behind self-attention, causally masked generation, and multi-layer feed-forward networks. The figures illustrate how the Transformer fundamentally differs from an RNN, how it computes its predictions, and how well it trains on real data. Importantly, all our results come from the same learned model (no hand-tuning of the figures), demonstrating the approach’s correctness. 
 
 Like our previous RNN example, this exercise highlights that **modern deep learning architectures can be understood and built using simple code and math**. Our Transformer uses only 1 head and 1 layer, but it still effectively captures sequence patterns in the Shakespeare text. The same principles scale to larger models and datasets. In future work we will extend this to even longer contexts and explore the Transformer’s applications in omics sequence data.
-
-
 
 ## End results
 
