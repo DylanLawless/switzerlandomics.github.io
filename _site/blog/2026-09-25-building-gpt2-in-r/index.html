@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Building a GPT-2-style language model from scratch in R</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="A GPT-2-style decoder-only Transformer implemented from first principles in R: byte tokens, multi-head causal attention, stacked blocks, GELU, tied embeddings and manual gradients on a laptop CPU." />
+  <meta property="og:title" content="Building a GPT-2-style language model from scratch in R"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="A GPT-2-style decoder-only Transformer implemented from first principles in R: byte tokens, multi-head causal attention, stacked blocks, GELU, tied embeddings and manual gradients on a laptop CPU."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+    <!-- Automatically display code inside script tags with type=math/tex using MathJax -->
+<script type="text/javascript" defer
+  src="/assets/js/mathjax-script-type.js">
+</script>
+
+<!-- Copied from https://docs.mathjax.org/en/latest/web/components/combined.html -->
+<script type="text/javascript" id="MathJax-script" defer
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">Building a GPT-2-style language model from scratch in R</h1>
+                <div class="content"><p>2026-09-25</p>
+
+<p>We sometimes develop AI methods for genomic sequences and protein structures. For this series, we rebuild the underlying models from first principles in R using ordinary text, so the mathematics can be examined without specialist biological knowledge.</p>
+
+<p>A <a href="https://en.wikipedia.org/wiki/Generative_pre-trained_transformer">generative pre-trained transformer</a> (GPT) is a decoder-only Transformer trained to predict the next token from the tokens that precede it. The Transformer introduced self-attention, allowing positions within a sequence to interact directly while training can be parallelised across positions [Vaswani et al., 2017]. GPT used a decoder-only stack with causal attention, in which each position can use earlier tokens but not future ones [Radford et al., 2018].</p>
+
+<p>Here we reproduce the main computational structure of GPT-2 in R. 
+Our model uses byte tokens, learns token and position embeddings, multi-head causal self-attention, independently parameterised Transformer blocks, GELU feed-forward layers and tied input/output embeddings. The complete forward pass, backward pass, cross-entropy loss and Adam updates are implemented directly with R matrices and arrays, without a deep-learning framework or automatic differentiation.</p>
+
+<p>In our open-source implementation <strong>min-GPT2 from scratch</strong> no external packages were used. We train or evaluate the model using basic R. <code class="language-plaintext highlighter-rouge">ggplot2</code> and <code class="language-plaintext highlighter-rouge">svglite</code> were used only to produce figures on this page. The parameters begin as random numbers and are learned from Tiny Shakespeare on a laptop CPU.</p>
+
+<p>The code is available here <a href="https://github.com/switzerlandomics/src-min_gpt2_r">https://github.com/switzerlandomics/src-min_gpt2_r</a>.</p>
+
+<p>We use the Tiny Shakespeare dataset, containing 40,000 lines, consisting of 1,115,394 characters of dialogue and other text. 
+The first line of text reads “<em>Firs</em>t Citizen: Before we proceed…”, which you will recognise in some of the figures below as the prompt: <em>F i r s …</em>.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ wc data/tiny_shakespeare.txt
+40000  202651 1115394 data/tiny_shakespeare.txt
+
+$ head data/tiny_shakespeare.txt
+First Citizen:
+Before we proceed any further, hear me speak.
+</code></pre></div></div>
+
+<h2 id="where-gpt-2-fits">Where GPT-2 fits</h2>
+
+<p>GPT-1 combined generative pre-training with supervised adaptation to individual language tasks [Radford et al., 2018]. The model first learned by predicting text, then used the resulting parameters as the starting point for supervised task-specific training.</p>
+
+<p><u>GPT-2</u> showed that a substantially larger decoder-only Transformer trained on web text could perform several tasks directly from textual context, without task-specific parameter updates [Radford et al., 2019]. Its largest version contained approximately 1.5 billion parameters. The important change was not the invention of autoregressive language modelling, but the range of behaviour produced by scaling a single next-token prediction objective.</p>
+
+<p>GPT-2 also attracted attention outside machine-learning research. OpenAI initially released smaller models while delaying the complete 1.5-billion-parameter checkpoint, then released the full model later in 2019 [OpenAI, 2019a; OpenAI, 2019b]. The staged release made general-purpose language generation part of a broader discussion about increasingly capable models.</p>
+
+<p>GPT-3 extended the same scaling direction to 175 billion parameters and demonstrated substantially stronger in-context learning [Brown et al., 2020]. ChatGPT, released in 2022, subsequently made conversational language models directly accessible to a broad public audience [OpenAI, 2022]. GPT-2 therefore occupies an important intermediate position between the introduction of generative Transformer pre-training and the later public adoption of large language models.</p>
+
+<p>Our model for this blog post is many orders of magnitude smaller. The largest experiment described here contains 369,504 trainable parameters and uses a context of 96 byte tokens. Its purpose is to expose the main computations in a form that can be inspected completely.</p>
+
+<h2 id="from-a-transformer-to-gpt-2">From a Transformer to GPT-2</h2>
+
+<p>Our <a href="https://switzerlandomics.ch/blog/2026-09-21-transformer-in-r/">previous project</a> implemented one causal self-attention head in one Transformer block. A GPT-2-style model extends this structure with multiple heads, independently parameterised blocks, pre-layer normalisation, GELU feed-forward layers and a final layer normalisation.</p>
+
+<p>For an input representation \(X\), one block computes</p>
+
+\[H = X + \operatorname{MHA}(\operatorname{LN}_1(X)),\]
+
+<p>followed by</p>
+
+\[Y = H + \operatorname{FFN}(\operatorname{LN}_2(H)).\]
+
+<p>Here, \(\operatorname{LN}\) is layer normalisation, \(\operatorname{MHA}\) is multi-head attention, \(\operatorname{FFN}\) is the feed-forward network, \(H\) is the intermediate representation after attention, and \(Y\) is the block output.</p>
+
+<p>The residual additions preserve a direct path through the block, while attention and the feed-forward network learn transformations of the current representation. The output \(Y\) becomes the input to the next independently parameterised block.</p>
+
+<p>Our largest experiment uses three blocks, four attention heads and an embedding dimension of 96. Each head therefore operates on 24 features.</p>
+
+<p><img src="/images/ai/gpt2_figures/blocks_and_heads.svg" alt="GPT-2-style architecture with stacked Transformer blocks and multiple attention heads." style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;" /></p>
+
+<p><em><strong>Figure 1. Stacked blocks and multiple attention heads.</strong> Our largest model uses three independently parameterised Transformer blocks. Within each block, the 96-dimensional representation is divided across four 24-dimensional attention heads, recombined by an output projection and passed through the residual and feed-forward paths.</em></p>
+
+<h2 id="tokens-and-context">Tokens and context</h2>
+
+<p>A language model operates on numerical token IDs rather than text directly. GPT-2 used byte-level byte-pair encoding (BPE), which builds a vocabulary of frequently occurring byte sequences and can represent arbitrary text [Radford et al., 2019]. Its released tokenizer contains 50,257 token IDs.</p>
+
+<p>Our tokenizer deliberately stops one step earlier. Each UTF-8 byte maps directly to one of 256 token IDs, using the byte value plus one because R indexes from one. The ASCII text <code class="language-plaintext highlighter-rouge">you are,</code> therefore contains eight tokens. No vocabulary is learned from the corpus, and no token already represents a complete word or common subword.</p>
+
+<p>This choice separates the Transformer from the tokenisation algorithm. It makes the mapping between the original file and the model input exact, while retaining a fixed vocabulary capable of representing arbitrary UTF-8 byte sequences. It is simpler than GPT-2’s BPE and usually requires more tokens to represent the same text.</p>
+
+<p>The corpus is read as raw bytes and divided contiguously into 80% training, 10% validation and 10% test data. A training window pairs every input token with the token that follows it. For example,</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>input:   First Ci
+target:  irst Cit
+</code></pre></div></div>
+
+<p>Every position therefore supplies a next-token training example.</p>
+
+<p>Each token ID selects a row from a learned token-embedding matrix \(E\), and each position \(t\) selects a learned position embedding \(P_t\). For token \(x_t\) at position \(t\),</p>
+
+\[X_t = E_{x_t} + P_t.\]
+
+<p>The resulting vectors \(X_t\) form the initial sequence representation passed to the first Transformer block.</p>
+
+<h2 id="multi-head-causal-attention">Multi-head causal attention</h2>
+
+<p><u>Multi-head causal attention</u> allows several attention operations to act on different feature subspaces of the same sequence. A single linear projection produces query (\(Q\)), key (\(K\)) and value (\(V\)) representations, whose feature dimension is then divided across the heads.</p>
+
+<p>For head \(i\),</p>
+
+\[\operatorname{head}_i =
+\operatorname{softmax}\!\left(
+\frac{Q_iK_i^T}{\sqrt{d_h}} + M
+\right)V_i,\]
+
+<p>where \(Q_i\), \(K_i\) and \(V_i\) are the query, key and value matrices for that head, \(d_h\) is its feature dimension, and \(M\) is the causal mask. Entries above the diagonal are set to \(-\infty\) before softmax, so their attention weights become zero and a position cannot use future tokens.</p>
+
+<p>The \(h\) head outputs are concatenated and projected back to the embedding dimension,</p>
+
+\[\operatorname{MHA}(X) =
+\operatorname{Concat}(\operatorname{head}_1,\ldots,\operatorname{head}_h)W_O,\]
+
+<p>where \(\operatorname{MHA}\) denotes multi-head attention, \(X\) is the input sequence representation and \(W_O\) is the learned output-projection matrix.</p>
+
+<p>The four heads in our largest model therefore calculate four separate attention matrices for the same sequence. Their outputs are combined before the residual connection returns the result to the common 96-dimensional representation.</p>
+
+<p><img src="/images/ai/gpt2_figures/attention_block.gif" alt="Animation of learned causal attention weights across heads and Transformer blocks." style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;" /></p>
+
+<p><em><strong>Figure 2. Learned attention across blocks and heads.</strong> Each frame shows one attention matrix from the same model and prompt. Rows are query tokens and columns are key tokens. Future positions are causally masked; the remaining weights are normalised independently within each row.</em></p>
+
+<h2 id="stacking-transformer-blocks">Stacking Transformer blocks</h2>
+
+<p>Each block has its own query, key, value, attention-output and feed-forward parameters. Stacking blocks therefore repeats the same computational pattern without reusing the same learned transformation.</p>
+
+<p>The feed-forward sublayer expands each position independently from dimension \(d\) to \(4d\), applies the GELU activation, then projects it back to \(d\). GELU is defined as</p>
+
+\[\operatorname{GELU}(x)=x\Phi(x),\]
+
+<p>where \(\Phi(x)\) is the cumulative distribution function of a standard normal distribution. GPT-2 uses the following tanh approximation,</p>
+
+\[\operatorname{GELU}(x)
+=
+\frac{x}{2}
+\left[
+1+\tanh\left(
+\sqrt{\frac{2}{\pi}}
+\left(x+0.044715x^3\right)
+\right)
+\right].\]
+
+<p>Here, \(\tanh\) is the hyperbolic tangent. The factor \(\sqrt{2/\pi}\) and fitted coefficient \(0.044715\) make this expression closely approximate the exact normal-distribution form while using elementary operations.</p>
+
+<p>Attention mixes information between sequence positions, while the feed-forward transformation acts independently on the resulting representation at each position. Residual connections preserve the input to both sublayers, and layer normalisation is applied before each transformation.</p>
+
+<p>The attention-output and feed-forward down-projection matrices are initialised with a standard deviation scaled by \(1/\sqrt{2L}\), where \(L\) is the number of Transformer blocks. This follows GPT-2’s residual-path scaling and reduces the growth of residual contributions as depth increases.</p>
+
+<h2 id="how-the-model-predicts-the-next-token">How the model predicts the next token</h2>
+
+<p>After the final Transformer block, the sequence passes through a final layer normalisation. Each position then contains a \(d\)-dimensional feature vector representing the preceding context available at that position.</p>
+
+<p>GPT-2 shares its input token embeddings with the output projection. We use the same <u>tied embeddings</u>. If \(E\in\mathbb{R}^{V\times d}\) is the token-embedding matrix and \(H\in\mathbb{R}^{T\times d}\) is the final hidden<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> representation, the output logits are</p>
+
+\[Z = HE^T.\]
+
+<p>The same matrix that maps token IDs into vectors therefore maps final vectors back to scores over the vocabulary. Weight tying removes a separate \(d\times V\) output matrix and requires gradients from both uses to accumulate into the same parameters.</p>
+
+<p>Softmax converts the logits at each position into a probability distribution over the 256 possible next byte tokens. During generation we use the distribution at the final context position, sample one token, append it to the sequence and repeat.</p>
+
+<h2 id="learning-the-parameters">Learning the parameters</h2>
+
+<p>Training minimises next-token cross-entropy over every position in every sampled window. For batch size \(B\) and context length \(T\),</p>
+
+\[\mathcal{L}(\theta)
+=
+-\frac{1}{BT}
+\sum_{b=1}^{B}\sum_{t=1}^{T}
+\log p_\theta\!\left(x_{b,t+1}\mid x_{b,\leq t}\right).\]
+
+<p>A model assigning equal probability to all 256 byte tokens has loss</p>
+
+\[\log(256) \approx 5.545\]
+
+<p>nats per token. Training adjusts the parameters so that the observed continuation receives progressively more probability than competing tokens.</p>
+
+<p>The complete backward pass is implemented manually. Gradients pass from cross-entropy through the tied output projection, final layer normalisation, each Transformer block in reverse order, the residual paths, feed-forward layers, multi-head attention and finally the token and position embeddings. The attention backward pass explicitly differentiates the value-weighted output, softmax attention weights, scaled query-key products and the combined QKV projection.</p>
+
+<p>Adam performs the parameter updates with first- and second-moment estimates. The implementation also computes the global gradient norm and clips it when required. Numerical gradient tests compare selected analytical derivatives with finite-difference estimates before longer training runs.</p>
+
+<p>No automatic differentiation system constructs this backward pass. The forward and backward computations use the same R arrays and matrix operations visible in the source code.</p>
+
+<h2 id="training-on-tiny-shakespeare">Training on Tiny Shakespeare</h2>
+
+<p>Tiny Shakespeare contains 1,115,394 characters of dialogue and other text. Because our tokenizer operates on UTF-8 bytes, the model trains on the byte representation of the file rather than a learned word or subword vocabulary.</p>
+
+<p>Our largest experiment uses a context length of 96 tokens, embedding dimension 96, four attention heads, three Transformer blocks and batch size four. It trains for 20,000 parameter updates on the CPU:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Rscript experiments/run.R <span class="se">\</span>
+  <span class="nt">--input</span><span class="o">=</span>data/tiny_shakespeare.txt <span class="se">\</span>
+  <span class="nt">--iterations</span><span class="o">=</span>20000 <span class="se">\</span>
+  <span class="nt">--context-length</span><span class="o">=</span>96 <span class="se">\</span>
+  <span class="nt">--embedding-size</span><span class="o">=</span>96 <span class="se">\</span>
+  <span class="nt">--n-heads</span><span class="o">=</span>4 <span class="se">\</span>
+  <span class="nt">--n-layers</span><span class="o">=</span>3 <span class="se">\</span>
+  <span class="nt">--batch-size</span><span class="o">=</span>4 <span class="se">\</span>
+  <span class="nt">--validation-interval</span><span class="o">=</span>500 <span class="se">\</span>
+  <span class="nt">--checkpoint-interval</span><span class="o">=</span>1000 <span class="se">\</span>
+  <span class="nt">--plot-detailed</span>
+</code></pre></div></div>
+
+<p>For vocabulary size \(V=256\), context length \(C=96\), embedding dimension \(d=96\) and \(L=3\) blocks, the parameter count is</p>
+
+\[N
+=
+Vd + Cd + L(12d^2+13d) + 2d
+=
+369{,}504.\]
+
+<p>The tied output projection adds no second vocabulary matrix. The initial and trained checkpoints therefore have the same architecture and exactly the same number of parameters; learning changes their numerical values rather than their size.</p>
+
+<p>Training loss is measured on sampled training windows. Validation uses fixed windows from the held-out validation split and does not update the parameters. The checkpoint with the lowest measured validation loss is saved as the selected model; generated text is not used for model selection. The separate test split remains unused during ordinary checkpoint selection.</p>
+
+<p>In our git repo, each run records its command, resolved settings, corpus checksum, metrics, initial model, best-validation model and resumable latest checkpoint. This keeps the training result associated with the exact data and configuration that produced it. These details were used for the figures shown.</p>
+
+<p><img src="/images/ai/gpt2_figures/training_detail.svg" alt="Training-window and held-out validation loss for the GPT-2-style model." style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;" /></p>
+
+<p><em><strong>Figure 3. Training and held-out validation loss.</strong> Training loss is measured on sampled windows and validation loss on fixed held-out windows. The marked checkpoint is selected by the lowest measured validation loss rather than by the appearance of generated text.</em></p>
+
+<h2 id="what-the-model-learned">What the model learned</h2>
+
+<p>The random and trained models are almost the same size on disk. They contain the same architecture and number of parameters; training changes only the parameter values. The model’s learned behaviour is therefore stored in the particular numerical configuration of those weights.
+ One direct way to inspect that change is to compare their next-token probability distributions for the same prompt.</p>
+
+<p><img src="/images/ai/gpt2_figures/next_token_probabilities.svg" alt="Comparison of next-token probabilities before training and at the best-validation checkpoint." style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;" /></p>
+
+<p><em><strong>Figure 4. Next-token probabilities before and after training.</strong> The figure compares the initial random model with the checkpoint selected by held-out validation, using the same prompt. Training redistributes probability over the byte-token vocabulary according to structure learned from the corpus.</em></p>
+
+<p>Generation uses the same forward pass but no target token is supplied. The model receives a prompt, predicts a distribution for the next byte, samples one token and appends it to the context. The new sequence is then passed through the model again to predict the following token.</p>
+
+<p>The repository records samples from successive training checkpoints using the same prompt and sampling settings. The generated text becomes progressively more structured as the next-token model improves, although the corpus, context and model remain deliberately small.</p>
+
+<p><img src="/images/ai/gpt2_figures/sample_typing_demo_compressed.gif" alt="Generated text from successive training checkpoints of the GPT-2-style model." style="display: block; width: auto; max-width: 100%; max-height: 75vh; height: auto; margin: 0 auto;" /></p>
+
+<p><em><strong>Figure 5. Generated text during training.</strong> Each sample uses the same prompt and sampling settings at a different checkpoint. The model begins with random parameters and develops increasingly recognisable local text structure as training proceeds.</em></p>
+
+<h2 id="what-this-reproduces-and-what-it-does-not">What this reproduces and what it does not</h2>
+
+<p>Our implementation demo reproduces the main computational structure of a GPT-2-style decoder: learned token and position embeddings, pre-layer normalisation, multi-head masked self-attention, stacked independently parameterised blocks, GELU feed-forward layers, residual connections, a final layer normalisation and tied token embeddings. The loss, backward pass and Adam updates are also implemented directly.</p>
+
+<p>It is not an exact reimplementation of the full OpenAI GPT-2 model. GPT-2 used byte-level BPE rather than raw byte tokens, a much larger vocabulary and context, substantially wider and deeper networks, and a vastly larger training corpus [Radford et al., 2019]. Our model is trained from random parameters on Tiny Shakespeare rather than using OpenAI’s pretrained weights.</p>
+
+<p>Generation is also intentionally simple. The implementation recomputes the active context for every new token rather than caching keys and values from earlier positions. A key-value cache would make inference more efficient without changing the learned attention operation, but would obscure the basic generation path we want to inspect here.
+The scale is different, but the learning problem is the same.</p>
+
+<p>Our first project exposed this process in a <a href="https://switzerlandomics.ch/blog/2026-09-19-building-a-rnn-language-model-from-scratch-in-r/">recurrent neural network</a>. 
+The second replaced recurrence with a <a href="https://switzerlandomics.ch/blog/2026-09-21-transformer-in-r/">single-block causal Transformer</a>. 
+This third model adds the depth, multiple attention heads, nonlinear feed-forward transformations and parameter sharing characteristic of GPT-2-style language models while remaining small enough to inspect from input bytes to final gradients.</p>
+
+<p>Applying the same ideas to biological data requires additional structure, including genomic context, dominant and recessive inheritance, and genotype-phenotype relationships. These constraints become part of the model and training design.</p>
+
+<p>For a compact introduction to the broader principles of modern deep learning, we recommend François Fleuret’s <a href="https://fleuret.org/francois/lbdl.html"><em>The Little Book of Deep Learning</em></a>. The PDF is freely available, and the pocket-sized physical edition is particularly useful as a concise technical reference.</p>
+
+<h2 id="references">References</h2>
+
+<p>Brown TB, Mann B, Ryder N, et al. <a href="https://arxiv.org/abs/2005.14165">Language Models are Few-Shot Learners</a>. <em>Advances in Neural Information Processing Systems</em>. 2020;33:1877-1901.</p>
+
+<p>Fleuret F. <em>The Little Book of Deep Learning</em>. <a href="https://fleuret.org/francois/lbdl.html">https://fleuret.org/francois/lbdl.html</a>.</p>
+
+<p>OpenAI. <a href="https://openai.com/index/better-language-models/">Better Language Models and Their Implications</a>. 2019a.</p>
+
+<p>OpenAI. <a href="https://openai.com/index/gpt-2-6-month-follow-up/">GPT-2: 6-Month Follow-Up</a>. 2019b.</p>
+
+<p>OpenAI. <a href="https://openai.com/index/chatgpt/">ChatGPT: Optimizing Language Models for Dialogue</a>. 2022.</p>
+
+<p>Radford A, Narasimhan K, Salimans T, Sutskever I. <a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">Improving Language Understanding by Generative Pre-Training</a>. OpenAI. 2018.</p>
+
+<p>Radford A, Wu J, Child R, Luan D, Amodei D, Sutskever I. <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language Models are Unsupervised Multitask Learners</a>. OpenAI. 2019.</p>
+
+<p>Vaswani A, Shazeer N, Parmar N, et al. <a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a>. <em>Advances in Neural Information Processing Systems</em>. 2017;30.</p>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1">
+      <p>A note on terminology: a <em>hidden state</em> does not mean secret or inaccessible. A hidden state’s activations are internal numerical representations within the network, rather than the inputs supplied to it or the outputs it produces. Our R implementation could simply inspect these values directly at every step if we choose. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>

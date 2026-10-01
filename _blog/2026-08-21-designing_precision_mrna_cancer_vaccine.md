@@ -524,7 +524,7 @@ define plausible candidates
 → select the best-supported target set
 ```
 
-That distinction matters when only 34 targets can enter the product. A candidate with a high score based on weak evidence is different from a candidate with the same score supported by deep sequencing, strong variant RNA expression, robust HLA presentation, and independent functional evidence.
+That's important when only 34 targets can enter the product. A candidate with a high score based on weak evidence is different from a candidate with the same score supported by deep sequencing, strong variant RNA expression, robust HLA presentation, and independent functional evidence.
 
 The next major opportunity is therefore to improve the **statistical design of the target set**. Better priors, better likelihood models, calibrated probabilities, and explicit treatment of missing evidence can make each inclusion and exclusion quantitatively defensible. The same approach can be used wherever patient-specific molecular data must be converted into a finite therapeutic design.
 
