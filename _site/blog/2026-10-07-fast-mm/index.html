@@ -163,6 +163,9 @@
 
 <p>The first validation succeeded. Starting from random coefficients and without being given Strassen’s formula, <code class="language-plaintext highlighter-rouge">fast_mm_search</code> independently recovered and exactly verified a seven-product \(2\times2\) matrix-multiplication algorithm. Its equations differ from the familiar textbook form of Strassen’s algorithm while achieving the same exact rank-7 result.</p>
 
+<p>The code and reproducible results are available in the 
+<a href="https://github.com/switzerlandomics/ai-fast_mm_search"><code class="language-plaintext highlighter-rouge">fast_mm_search</code></a> repo.</p>
+
 <h2 id="why-do-seven-products-matter">Why do seven products matter?</h2>
 
 <p>For two \(2\times2\) matrices, ordinary multiplication uses <strong>8 scalar multiplications</strong>. In 1969, Volker Strassen showed that the same result could be computed exactly using <strong>7</strong>. Recursion compounds this one-product saving:</p>
@@ -215,13 +218,15 @@
 
 <p><code class="language-plaintext highlighter-rouge">fast_mm_search</code> starts with random coefficients and optimises them against the matrix-multiplication tensor. Promising numerical candidates are reconstructed as exact rational coefficients and passed to a separate exact verifier.</p>
 
-\[\text{random search}
+<div class="math-responsive">
+  <p>\(\text{random search}
 \rightarrow
 \text{numerical candidate}
 \rightarrow
 \text{exact formula}
 \rightarrow
-\text{independent verification}.\]
+\text{independent verification}.\)</p>
+</div>
 
 <p>The validation campaign tested independent random starting points until an exact rule was found. Seed <strong>581</strong> reached a relative numerical residual of
 \(3.09\times10^{-8}.\)</p>
@@ -256,21 +261,25 @@ P_7 &amp;= (a-d)(e+g+h).
 
 <p>The output is reconstructed as</p>
 
-\[AB=
+<div class="math-responsive">
+  <p>\(AB=
 \begin{pmatrix}
 -P_1-P_3+P_6+P_7 &amp;
 P_1+P_2-P_6-P_7\\
 P_5+P_6 &amp;
 P_2-P_4-P_6-P_7
-\end{pmatrix}.\]
+\end{pmatrix}.\)</p>
+</div>
 
 <p>Expanding these expressions gives exactly</p>
 
-\[AB=
+<div class="math-responsive">
+  <p>\(AB=
 \begin{pmatrix}
 ae+bg &amp; af+bh\\
 ce+dg &amp; cf+dh
-\end{pmatrix}.\]
+\end{pmatrix}.\)</p>
+</div>
 
 <p>The residual \(3.09\times10^{-8}\) describes the numerical search stage. Exact reconstruction converts the candidate into an integer-coefficient identity, and the independent verifier then checks the complete matrix-multiplication tensor. The verified result has <strong>zero mismatches and zero exact residual</strong>.</p>
 
@@ -364,10 +373,6 @@ Match:      True
 <p>The classical \(2\times2\), rank-7 result serves here as a validation target. <code class="language-plaintext highlighter-rouge">fast_mm_search</code> recovered an exact seven-product algorithm from random initial coefficients without access to Strassen’s formula, and the resulting coefficient representation differs from the familiar textbook construction.</p>
 
 <p>This validates the numerical search, exact reconstruction and independent verification pipeline. The same machinery can now be applied to finite \((u,r)\) problems whose solutions are unknown.</p>
-
-<p>The code and reproducible results will be available in the
-<code class="language-plaintext highlighter-rouge">fast_mm_search</code> repository shortly (check back here).
-<!-- [`fast_mm_search`](REPOSITORY_URL). --></p>
 
 <h2 id="technical-details">Technical details</h2>
 
