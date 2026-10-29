@@ -1,10 +1,11 @@
 ---
 layout: default
 title: "ACMG Validator"
-description: "ACMG criteria calculator and classification validator. Review variant classification evidence, mark criteria and evidence status, modulate criterion strength with justification, check point-based consistency, document caveats, track completeness, and export a structured report. Runs in your browser. No upload."
+description: "ACMG criteria calculator and classification validator. Review variant classification evidence, mark criteria and evidence status, modulate criterion strength with justification, check point-based consistency, document caveats, track completeness, and export a structured report. Core review runs in your browser; optional lookups query external services."
 summary: "A browser-based ACMG/AMP evidence review and classification validator for structured variant interpretation, caveat checking, multi-variant case review, and report export."
 permalink: /technologies/acmg-validator/
 weight: 99
+version: 1.1.0
 technology_group: structured-genomics
 ---
 
@@ -17,12 +18,16 @@ technology_group: structured-genomics
         <header class="acmg-hero acmg-no-print">
           <div class="acmg-hero-meta">
             <p class="acmg-kicker">ACMG Validator</p>
-            <p class="acmg-release-tag">v1.0.0</p>
+			<a
+			  class="acmg-release-tag"
+			  href="{% link pages/acmg-validator-changelog.md %}"
+			  title="View ACMG Validator changelog"
+			>v{{ page.version }}</a>
           </div>
           <h1 id="acmg-title" class="title">Review the evidence,<br>not just the verdict.</h1>
 
 			  <p class="acmg-lead">Variant interpretation often ends with a classification. Clinical review needs the record behind it. ACMG Validator helps you check every ACMG/AMP criterion, record evidence, confirm non-applicable criteria, and export a structured report.</p>
-			  <p class="acmg-lead acmg-lead-privacy">Private by design. Nothing leaves your browser.</p>
+			  <p class="acmg-lead acmg-lead-privacy">Core review data stays in your browser. Optional evidence and gene-structure lookups query external services only when you use them.</p>
 			
 			  <div class="acmg-hero-actions acmg-example-actions">
 			    <span class="acmg-example-label">Examples</span>
@@ -88,7 +93,7 @@ technology_group: structured-genomics
 
           <details class="acmg-genebe-import acmg-no-print" id="acmg-genebe-panel">
             <summary>Search evidence sources</summary>
-            <p class="acmg-section-note">Optional external evidence lookup for a single genomic variant. Imported evidence criteria are marked for second review by default.</p>
+            <p class="acmg-section-note">Optional external evidence lookup for the active variant only. Existing variants and reviewed criteria are preserved; imported suggestions are marked for second review by default.</p>
             <form id="acmg-genebe-form" class="acmg-genebe-form">
               <div class="acmg-grid">
                 <label class="acmg-field"><span>Chromosome</span><input id="acmg-genebe-chr" type="text" placeholder="7" autocomplete="off"></label>
@@ -144,8 +149,10 @@ technology_group: structured-genomics
           <div class="acmg-editor acmg-no-print">
 
             <!-- variant + case context -->
-            <section class="acmg-section">
-              <h2 class="acmg-h2">1 · Variant and case context</h2>
+            <section class="acmg-section acmg-workflow-section" id="acmg-variant-context-section" data-workflow-view="case variant">
+              <details class="acmg-work-panel" id="acmg-variant-details-panel" open>
+                <summary><span>1 · Variant and case context</span><span class="acmg-panel-summary" id="acmg-variant-details-summary">Variant not specified</span></summary>
+                <div class="acmg-work-panel-body">
               <div class="acmg-inline-variant-tabs" id="acmg-inline-variant-tabs" aria-label="Active variant navigation">
                 <button type="button" class="acmg-case-tab acmg-active" data-variant="0">Variant 1</button>
               </div>
@@ -279,13 +286,16 @@ technology_group: structured-genomics
                   <label class="acmg-field acmg-field-wide"><span>Non-standard imported provenance keys</span><textarea id="acmg-prov-extra" readonly placeholder="Additional imported keys are shown here and included in JSON exports."></textarea></label>
                 </div>
               </details>
-
+                </div>
+              </details>
             </section>
 
             <!-- gene structure viewer -->
-            <section class="acmg-section acmg-gsv-section" id="acmg-gsv-section">
-              <h2 class="acmg-h2">2 · Gene structure view</h2>
-              <p class="acmg-section-note">The gene structure view follows the active variant context. It uses the gene symbol when available and the genomic coordinate to highlight the variant position.</p>
+            <section class="acmg-section acmg-gsv-section acmg-workflow-section" id="acmg-gsv-section" data-workflow-view="variant">
+              <details class="acmg-work-panel" id="acmg-gsv-panel">
+                <summary><span>2 · Gene structure view</span><span class="acmg-panel-summary">Optional reference view</span></summary>
+                <div class="acmg-work-panel-body">
+              <p class="acmg-section-note">The gene structure view follows the active variant context. It uses the gene symbol when available and the genomic coordinate to highlight the variant position. Opening this panel may query the Ensembl proxy.</p>
 
               <div class="gsv-root acmg-gsv-root">
                 <div id="acmg-gsv-status" class="gsv-status acmg-gsv-status" role="status" aria-live="polite">Gene structure viewer will load when a gene is entered.</div>
@@ -327,10 +337,12 @@ technology_group: structured-genomics
 
                 <div class="gsv-tooltip" id="acmg-gsv-tooltip" role="tooltip"></div>
               </div>
+                </div>
+              </details>
             </section>
 
             <!-- criteria -->
-            <section class="acmg-section">
+            <section class="acmg-section acmg-workflow-section" id="acmg-criteria-section" data-workflow-view="variant">
               <div class="acmg-section-head">
                 <div>
                   <h2 class="acmg-h2">3 · Criteria review</h2>
@@ -346,23 +358,23 @@ technology_group: structured-genomics
                 </div>
               </div>
 
-              <div class="acmg-group">
-                <h3 class="acmg-group-title" data-group="pathogenic">Pathogenic evidence</h3>
+              <details class="acmg-group acmg-criteria-group" data-criteria-group="pathogenic">
+                <summary><span class="acmg-group-title" data-group="pathogenic">Pathogenic evidence</span><span class="acmg-group-summary" id="acmg-pathogenic-summary">0 reviewed</span></summary>
                 <div class="acmg-crit-list" id="acmg-list-pathogenic"></div>
-              </div>
+              </details>
 
-              <div class="acmg-group">
-                <h3 class="acmg-group-title" data-group="benign">Benign evidence</h3>
+              <details class="acmg-group acmg-criteria-group" data-criteria-group="benign">
+                <summary><span class="acmg-group-title" data-group="benign">Benign evidence</span><span class="acmg-group-summary" id="acmg-benign-summary">0 reviewed</span></summary>
                 <div class="acmg-crit-list" id="acmg-list-benign"></div>
-              </div>
+              </details>
             </section>
 
             <!-- genotype-level review -->
-            <section class="acmg-section" id="acmg-genotype-section">
+            <section class="acmg-section acmg-workflow-section" id="acmg-genotype-section" data-workflow-view="variant genotype">
               <h2 class="acmg-h2">4 · Genotype-level review</h2>
-              <p class="acmg-section-note">Use this when a case has more than one variant. Variant-level ACMG evidence remains separate; this section records whether the variants were reviewed together, phase, recessive evidence and phenotype fit. Do not sum ACMG scores across variants.</p>
+              <p class="acmg-section-note">Record the case-level genotype interpretation for one variant or several. Variant-level ACMG evidence remains separate; document the disease model, phase when relevant, the single-variant or combination context, phenotype fit and residual uncertainty. Do not sum ACMG scores across variants.</p>
               <div class="acmg-grid">
-                <label class="acmg-field"><span>Gene reviewed together</span><input data-genotype="gene" type="text" placeholder="CFTR" autocomplete="off"></label>
+                <label class="acmg-field"><span>Gene reviewed</span><input data-genotype="gene" type="text" placeholder="CFTR" autocomplete="off"></label>
                 <label class="acmg-field"><span>Disease / condition</span><input data-genotype="disease" type="text" placeholder="Cystic fibrosis" autocomplete="off"></label>
                 <label class="acmg-field"><span>Inheritance model</span>
                   <select data-genotype="inheritance"><option value="">—</option><option>AD</option><option>AR</option><option>XLD</option><option>XLR</option><option>Mitochondrial</option><option>Other</option></select>
@@ -370,7 +382,7 @@ technology_group: structured-genomics
                 <label class="acmg-field"><span>Phase</span>
                   <select data-genotype="phase"><option value="">—</option><option>Confirmed in trans</option><option>Confirmed in cis</option><option>Inferred in trans</option><option>Phase unknown</option><option>Not assessed</option></select>
                 </label>
-                <label class="acmg-field acmg-field-wide"><span>Variant combination</span><input data-genotype="combination" type="text" placeholder="Variant 1 and Variant 2 reviewed as a possible biallelic genotype" autocomplete="off"></label>
+                <label class="acmg-field acmg-field-wide"><span>Variant / combination context</span><input data-genotype="combination" type="text" placeholder="Single-variant interpretation or Variant 1 and Variant 2 reviewed as a possible biallelic genotype" autocomplete="off"></label>
                 <label class="acmg-field acmg-field-wide"><span>Phase evidence</span><input data-genotype="phase_evidence" type="text" placeholder="Parental testing, segregation, read-backed phasing, inferred from family data, or not assessed" autocomplete="off"></label>
                 <label class="acmg-field acmg-field-wide"><span>Genotype-level conclusion</span><input data-genotype="conclusion" type="text" placeholder="Biallelic variants in trans are compatible with the AR disease model" autocomplete="off"></label>
                 <label class="acmg-field acmg-field-wide"><span>Phenotype fit</span><input data-genotype="phenotype_fit" type="text" placeholder="Clinical phenotype supports / does not support the genotype-level interpretation" autocomplete="off"></label>
@@ -378,8 +390,8 @@ technology_group: structured-genomics
               </div>
             </section>
             <!-- classification + sign-off -->
-            <section class="acmg-section acmg-signoff-section" id="acmg-signoff-section">
-              <h2 class="acmg-h2">5 · Classification and sign-off</h2>
+            <section class="acmg-section acmg-signoff-section acmg-workflow-section" id="acmg-signoff-section" data-workflow-view="variant">
+              <h2 class="acmg-h2" id="acmg-signoff-heading">5 · Classification and sign-off</h2>
               <div class="acmg-grid">
                 <label class="acmg-field"><span>Entered classification</span>
                   <select data-meta="entered_classification">
@@ -397,23 +409,6 @@ technology_group: structured-genomics
 
           </div>
 
-          <!-- report (live, read-only mirror; the only thing that prints) -->
-          <section class="acmg-report" id="acmg-report" aria-label="Structured review report">
-            <div id="acmg-report-body"></div>
-            <div class="acmg-export-cta acmg-no-print">
-              <div class="acmg-export-copy">
-                <h2 class="acmg-h2">Download the report</h2>
-                <p>A structured, shareable record of this review — PDF for sign-off, HTML or JSON for your records.</p>
-              </div>
-              <div class="acmg-export">
-                <button id="acmg-print" class="button-link" type="button">Print / Save PDF</button>
-                <button id="acmg-html" class="button-link" type="button">Download HTML</button>
-                <button id="acmg-json" class="acmg-button-secondary" type="button">JSON</button>
-                <button id="acmg-md" class="acmg-button-secondary" type="button">Markdown</button>
-              </div>
-            </div>
-          </section>
-
           <!-- SEO / educational explainer (server rendered) -->
           <details class="acmg-explainer acmg-no-print">
             <summary>About the ACMG criteria and this validator</summary>
@@ -429,8 +424,9 @@ technology_group: structured-genomics
             <p>Feedback on this page is important to catch errors in logic or to better meet user needs. Please contact us at <a href="mailto:admin@switzerlandomics.ch">admin@switzerlandomics.ch</a> to report.</p>
           </section>
 
-          <section class="acmg-references acmg-no-print">
-            <h2 class="acmg-h2">References</h2>
+          <details class="acmg-work-panel acmg-references acmg-no-print">
+            <summary><span>References</span><span class="acmg-panel-summary">Sources and standards</span></summary>
+            <div class="acmg-work-panel-body">
             <ol class="acmg-ref-list">
               <li>Richards S, et al. (2015). Standards and guidelines for the interpretation of sequence variants: a joint consensus recommendation of the American College of Medical Genetics and Genomics and the Association for Molecular Pathology. <em>Genetics in Medicine</em>, 17(5), 405–423. <a href="https://doi.org/10.1038/gim.2015.30">doi:10.1038/gim.2015.30</a></li>
               <li>Tavtigian SV, Harrison SM, Boucher KM, Biesecker LG. (2020). Fitting a naturally scaled point system to the ACMG/AMP variant classification guidelines. <em>Human Mutation</em>, 41, 1734–1737. <a href="https://doi.org/10.1002/humu.24088">doi:10.1002/humu.24088</a></li>
@@ -443,6 +439,24 @@ technology_group: structured-genomics
               <li>van der Horst, E.; Unni, D.; Kopmels, F.; Armida, J.; Touré, V.; Franke, W.; Crameri, K.; Cirillo, E.; Österle, S. (2023) “Bridging Clinical and Genomic Knowledge: An Extension of the SPHN RDF Schema for Seamless Integration and FAIRification of Omics Data.” Preprints.org.<a href="http://doi.org/10.20944/preprints202312.0373.v1">doi:10.20944/preprints202312.0373.v1</a></li>
             </ol>
             <p class="acmg-ref-note">Public ACMG implementations such as InterVar and TAPES are listed for reference only; they are not implemented here and no assertion of their quality is made.</p>
+            </div>
+          </details>
+
+          <!-- report summary on screen; full clinical audit is generated for export/print -->
+          <section class="acmg-report" id="acmg-report" aria-label="Structured review report">
+            <div id="acmg-report-body"></div>
+            <div class="acmg-export-cta acmg-no-print">
+              <div class="acmg-export-copy">
+                <h2 class="acmg-h2">Download the report</h2>
+                <p>A structured, shareable record of this review — PDF for sign-off, HTML or JSON for your records.</p>
+              </div>
+              <div class="acmg-export">
+                <button id="acmg-print" class="button-link" type="button">Print / Save PDF</button>
+                <button id="acmg-html" class="button-link" type="button">Download HTML</button>
+                <button id="acmg-json" class="acmg-button-secondary" type="button">JSON</button>
+                <button id="acmg-md" class="acmg-button-secondary" type="button">Markdown</button>
+              </div>
+            </div>
           </section>
 
           <footer class="acmg-footer-text">
@@ -468,6 +482,25 @@ technology_group: structured-genomics
   margin-bottom:30px;
   padding-bottom:22px;
   border-bottom:1px solid var(--acmg-border);
+}
+
+.acmg-release-tag{
+  color:var(--acmg-steel);
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  text-decoration:none;
+}
+
+.acmg-release-tag:hover{
+  color:var(--acmg-red);
+  text-decoration:none;
+}
+
+.acmg-release-tag:focus-visible{
+  outline:3px solid rgba(229,38,31,.28);
+  outline-offset:2px;
 }
 
 .acmg-editor{margin-top:24px;}
@@ -512,7 +545,7 @@ technology_group: structured-genomics
 .acmg-entry-label{margin:0 0 8px;color:var(--acmg-steel);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;}
 
 /* JSON import */
-.acmg-json-import{margin-top:18px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;background:#fff;padding:0;}
+.acmg-json-import{margin-top:18px;border:1px solid var(--acmg-red);border-radius:6px;background:#fff;padding:0;}
 .acmg-json-import summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--acmg-black);list-style:none;}
 .acmg-json-import summary::-webkit-details-marker{display:none;}
 .acmg-json-import summary::after{content:"+";float:right;color:var(--acmg-red);font-weight:700;}
@@ -536,7 +569,7 @@ technology_group: structured-genomics
 
 
 /* GeneBe evidence lookup */
-.acmg-genebe-import{margin-top:14px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-black);border-radius:6px;background:#fff;padding:0;}
+.acmg-genebe-import{margin-top:14px;border:1px solid var(--acmg-black);border-radius:6px;background:#fff;padding:0;}
 .acmg-genebe-import summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--acmg-black);list-style:none;}
 .acmg-genebe-import summary::-webkit-details-marker{display:none;}
 .acmg-genebe-import summary::after{content:"+";float:right;color:var(--acmg-red);font-weight:700;}
@@ -557,7 +590,7 @@ technology_group: structured-genomics
 .acmg-genebe-summary{margin-top:0;margin-bottom:14px;padding:10px;border:1px solid var(--acmg-border);border-radius:5px;background:var(--acmg-soft);color:var(--acmg-black);font-size:.78rem;line-height:1.35;white-space:pre-wrap;overflow:auto;max-height:240px;}
 
 /* multi-variant case tabs */
-.acmg-case-tabs{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:0 0 18px;padding:12px;border:2px solid rgba(229,38,31,.32);border-left:6px solid var(--acmg-red);border-radius:8px;background:linear-gradient(135deg,rgba(229,38,31,.08),rgba(47,47,65,.04));}
+.acmg-case-tabs{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin:0 0 18px;padding:12px;border:2px solid rgba(229,38,31,.32);border-radius:8px;background:linear-gradient(135deg,rgba(229,38,31,.08),rgba(47,47,65,.04));}
 .acmg-case-tabs-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1 1 auto;}
 .acmg-case-tab{border:1px solid rgba(229,38,31,.35);background:#fff;color:var(--acmg-black);font:inherit;font-size:.84rem;font-weight:600;padding:8px 12px;border-radius:6px;cursor:pointer;box-shadow:0 1px 0 rgba(47,47,65,.05);}
 .acmg-case-tab:hover{border-color:var(--acmg-red);color:var(--acmg-red);}
@@ -635,6 +668,35 @@ technology_group: structured-genomics
 .acmg-legend-dot[data-state="incomplete"]{color:#8a5a00;background:#fbf4e6;border-color:#e0c98f;}
 .acmg-legend-dot[data-state="conflict"]{color:#a01b16;background:#fdeceb;border-color:#f3c4c1;}
 .acmg-legend-dot[data-state="untouched"]{color:#5c5a5a;background:#fff;border-color:#dcdcdc;}
+
+/* reusable workflow and disclosure panels */
+.acmg-workflow-section[hidden]{display:none!important;}
+.acmg-work-panel{border:1px solid var(--acmg-border);border-radius:6px;background:var(--acmg-surface);overflow:hidden;}
+.acmg-work-panel>summary,.acmg-criteria-group>summary,.acmg-report-detail>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;color:var(--acmg-black);font-weight:700;}
+.acmg-work-panel>summary::-webkit-details-marker,.acmg-criteria-group>summary::-webkit-details-marker,.acmg-report-detail>summary::-webkit-details-marker{display:none;}
+.acmg-work-panel>summary{padding:12px 14px;}
+.acmg-work-panel>summary::after,.acmg-criteria-group>summary::after,.acmg-report-detail>summary::after{content:"+";color:var(--acmg-red);font-weight:700;flex:0 0 auto;}
+.acmg-work-panel[open]>summary::after,.acmg-criteria-group[open]>summary::after,.acmg-report-detail[open]>summary::after{content:"−";}
+.acmg-panel-summary,.acmg-group-summary{margin-left:auto;color:var(--acmg-steel);font-size:.76rem;font-weight:600;text-align:right;}
+.acmg-work-panel-body{border-top:1px solid var(--acmg-border);padding:14px;}
+.acmg-work-panel-body>.acmg-section-note:first-child{margin-top:0;}
+.acmg-criteria-group{margin-top:14px;border:1px solid var(--acmg-border);border-radius:6px;background:var(--acmg-surface);overflow:hidden;}
+.acmg-criteria-group>summary{padding:10px 12px;}
+.acmg-criteria-group[open]>summary{border-bottom:1px solid var(--acmg-border);}
+.acmg-criteria-group .acmg-crit-list{padding:0 12px;}
+.acmg-tab-status{display:inline-flex;align-items:center;margin-left:6px;font-size:.72rem;font-weight:600;opacity:.8;}
+.acmg-report-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 18px;}
+.acmg-report-variant-card{border:1px solid var(--acmg-border);border-radius:6px;background:var(--acmg-surface);padding:12px 14px;}
+.acmg-report-variant-card[data-tone="ok"]{border-color:var(--acmg-ok);}
+.acmg-report-variant-card[data-tone="warn"]{border-color:var(--acmg-warn);}
+.acmg-report-variant-card[data-tone="bad"]{border-color:var(--acmg-red);}
+.acmg-report-variant-card h3{margin:0 0 5px;font-size:.98rem;color:var(--acmg-black);}
+.acmg-report-variant-card p{margin:.2rem 0;color:var(--acmg-steel);font-size:.84rem;line-height:1.4;}
+.acmg-report-detail{margin:12px 0;border:1px solid var(--acmg-border);border-radius:6px;background:var(--acmg-surface);overflow:hidden;}
+.acmg-report-detail>summary{padding:11px 13px;}
+.acmg-report-detail[open]>summary{border-bottom:1px solid var(--acmg-border);}
+.acmg-report-detail-body{padding:12px 14px;}
+.acmg-report-detail-body>.acmg-rep-block:first-child{margin-top:0;}
 
 /* sections */
 .acmg-section{border-top:2px solid var(--acmg-black);padding-top:16px;margin-top:30px;}
@@ -747,7 +809,7 @@ technology_group: structured-genomics
 
 
 /* provenance metadata */
-.acmg-provenance{margin-top:18px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;background:#fff;padding:0;}
+.acmg-provenance{margin-top:18px;border:1px solid var(--acmg-red);border-radius:6px;background:#fff;padding:0;}
 .acmg-provenance summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--acmg-black);list-style:none;}
 .acmg-provenance summary::-webkit-details-marker{display:none;}
 .acmg-provenance summary::after{content:"+";float:right;color:var(--acmg-red);font-weight:700;}
@@ -768,13 +830,15 @@ technology_group: structured-genomics
 
 /* report */
 .acmg-report{margin-top:34px;border-top:2px solid var(--acmg-black);padding-top:16px;}
-.acmg-export-cta{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:16px 18px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;background:var(--acmg-soft);margin:22px 0;}
+.acmg-report-screen-summary>.acmg-h2{margin:0 0 12px;}
+.acmg-report-screen-note{margin:4px 0 0;color:var(--acmg-steel);font-size:.82rem;line-height:1.45;max-width:58rem;}
+.acmg-export-cta{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:16px 18px;border:1px solid var(--acmg-red);border-radius:6px;background:var(--acmg-soft);margin:22px 0;}
 .acmg-export-copy h2{margin:0;}
 .acmg-export-copy p{margin:.2rem 0 0;color:var(--acmg-steel);font-size:.88rem;max-width:34rem;}
 .acmg-export{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
 .acmg-button-secondary{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border:1px solid var(--acmg-border);border-radius:5px;background:var(--acmg-surface);color:var(--acmg-black);font-size:15px;line-height:1;cursor:pointer;}
 .acmg-button-secondary:hover{border-color:var(--acmg-red);color:var(--acmg-red);}
-.acmg-rep-stamp{border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;padding:14px 16px;margin:0 0 18px;background:var(--acmg-surface);}
+.acmg-rep-stamp{border:1px solid var(--acmg-red);border-radius:6px;padding:14px 16px;margin:0 0 18px;background:var(--acmg-surface);}
 .acmg-rep-stamp h3{margin:0 0 8px;font-size:1rem;color:var(--acmg-black);}
 .acmg-rep-stamp .acmg-verdict{margin-bottom:4px;}
 .acmg-rep-scoreboard{border:1px solid var(--acmg-border);border-radius:6px;background:var(--acmg-surface);overflow:hidden;margin:0 0 18px;}
@@ -798,6 +862,28 @@ technology_group: structured-genomics
 .acmg-rep-criteria-table th:nth-child(5),.acmg-rep-criteria-table td:nth-child(5){width:12%;}
 .acmg-rep-criteria-table th:nth-child(6),.acmg-rep-criteria-table td:nth-child(6){width:40%;}
 .acmg-rep-criteria-table td{overflow-wrap:anywhere;}
+.acmg-rep-audit-intro{margin:0 0 16px;padding:10px 12px;border:1px solid var(--acmg-border);border-radius:6px;background:var(--acmg-soft);color:var(--acmg-steel);font-size:.82rem;line-height:1.45;}
+.acmg-rep-audit-note{margin:7px 0 0;color:var(--acmg-steel);font-size:.8rem;line-height:1.45;}
+.acmg-rep-criteria-audit{table-layout:fixed;}
+.acmg-rep-criteria-audit th:nth-child(1),.acmg-rep-criteria-audit td:nth-child(1){width:23%;}
+.acmg-rep-criteria-audit th:nth-child(2),.acmg-rep-criteria-audit td:nth-child(2){width:13%;}
+.acmg-rep-criteria-audit th:nth-child(3),.acmg-rep-criteria-audit td:nth-child(3){width:14%;}
+.acmg-rep-criteria-audit th:nth-child(4),.acmg-rep-criteria-audit td:nth-child(4){width:12%;}
+.acmg-rep-criteria-audit th:nth-child(5),.acmg-rep-criteria-audit td:nth-child(5){width:7%;}
+.acmg-rep-criteria-audit th:nth-child(6),.acmg-rep-criteria-audit td:nth-child(6){width:31%;}
+.acmg-rep-criteria-audit tbody tr:not(.acmg-rep-group-row){break-inside:avoid;}
+.acmg-rep-group-row th{background:#f7f7f7;color:var(--acmg-black);font-size:.74rem;text-transform:uppercase;letter-spacing:.05em;}
+.acmg-rep-criteria-audit tr[data-rowstate="incomplete"] td{background:#fffbf1;}
+.acmg-rep-criteria-audit tr[data-rowstate="conflict"] td{background:#fff5f4;}
+.acmg-rep-criterion-def{margin-top:4px;color:var(--acmg-steel);font-size:.72rem;line-height:1.35;font-weight:400;}
+.acmg-rep-rowstate{margin-top:3px;color:var(--acmg-steel);font-size:.7rem;font-weight:600;}
+.acmg-rep-doc-label{margin:.15rem 0 .25rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.04em;font-weight:700;color:var(--acmg-steel);}
+.acmg-rep-doc-muted{color:var(--acmg-steel);font-size:.72rem;line-height:1.35;margin:.2rem 0;}
+.acmg-rep-doc-warning{color:var(--acmg-warn);font-size:.72rem;font-weight:700;margin-top:.3rem;}
+.acmg-rep-notes{font-size:.75rem;line-height:1.4;}
+.acmg-rep-caveat-audit{margin:.2rem 0 .4rem;padding-left:1rem;}
+.acmg-rep-caveat-audit li{font-size:.7rem;line-height:1.35;margin-bottom:2px;}
+.acmg-rep-caveat-audit li[data-checked="false"]{color:var(--acmg-warn);}
 .acmg-rep-kv td:first-child{width:34%;font-weight:600;color:var(--acmg-black);background:#fafafa;}
 .acmg-rep-list{margin:0;padding-left:1.15rem;}
 .acmg-rep-list li{font-size:.85rem;line-height:1.45;margin-bottom:4px;}
@@ -813,14 +899,12 @@ technology_group: structured-genomics
 .acmg-rep-gsv-utr{background:var(--gsv-utr,#b8c4d1);}
 .acmg-rep-gsv-hl{background:var(--gsv-hl,#e5261f);opacity:.85;}
 .acmg-rep-gsv-line{display:inline-block;width:20px;height:0;border-top:2px solid var(--acmg-steel);}
-.acmg-rep-block{border-left:3px solid transparent;padding-left:10px;}
+.acmg-rep-block{padding-left:0;}
 .acmg-rep-block h3{color:var(--acmg-black);}
-.acmg-rep-block:nth-of-type(odd){border-left-color:rgba(229,38,31,.18);}
-.acmg-rep-block:nth-of-type(even){border-left-color:rgba(47,47,65,.14);}
-.acmg-rep-scoreboard{border-top:4px solid var(--acmg-red);}
+.acmg-rep-scoreboard{border-color:rgba(229,38,31,.45);}
 .acmg-rep-table th{border-top:2px solid rgba(229,38,31,.22);}
 .acmg-rep-criteria-table td:first-child strong{color:var(--acmg-red-dark);}
-.acmg-explainer{margin-top:34px;border:1px solid var(--acmg-border);border-left:4px solid var(--acmg-red);border-radius:6px;background:#fff;color:var(--acmg-black);padding:0;}
+.acmg-explainer{margin-top:34px;border:1px solid var(--acmg-border);border-radius:6px;background:#fff;color:var(--acmg-black);padding:0;}
 .acmg-explainer summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--acmg-black);list-style:none;}
 .acmg-explainer summary::-webkit-details-marker{display:none;}
 .acmg-explainer summary::after{content:"+";float:right;color:var(--acmg-red);font-weight:700;}
@@ -858,6 +942,9 @@ technology_group: structured-genomics
 }
 @media (max-width:760px){
   .acmg-resource-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .acmg-report-summary-grid{grid-template-columns:1fr;}
+  .acmg-work-panel>summary,.acmg-criteria-group>summary,.acmg-report-detail>summary{align-items:flex-start;}
+  .acmg-panel-summary,.acmg-group-summary{text-align:left;margin-left:0;}
   .acmg-scoreboard{position:static;}
   .acmg-crit{grid-template-columns:1fr;}
   .acmg-crit-controls{grid-template-columns:1fr 1fr;}
@@ -876,8 +963,20 @@ technology_group: structured-genomics
   .header,.footer,.sub-footer,.acmg-no-print{display:none!important;}
   .acmg-app{--acmg-shadow:none;}
   .acmg-report{border-top:none;margin-top:0;padding-top:0;}
-  .acmg-rep-block,.acmg-rep-stamp{break-inside:avoid;}
+  .acmg-rep-block,.acmg-rep-stamp,.acmg-report-variant-card{break-inside:avoid;page-break-inside:avoid;}
+  .acmg-report-detail{border:none!important;margin:0!important;overflow:visible!important;}
+  .acmg-report-detail>summary{display:none!important;}
+  .acmg-report-detail-body{display:block!important;padding:0!important;}
+  .acmg-rep-criterion-audit-block{break-inside:auto!important;page-break-inside:auto!important;}
+  .acmg-rep-criteria-audit{break-inside:auto!important;page-break-inside:auto!important;}
+  .acmg-rep-criteria-audit thead{display:table-header-group;}
+  .acmg-rep-criteria-audit tbody tr{break-inside:avoid;page-break-inside:avoid;}
   .acmg-rep-table th{background:#f2f2f2!important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .acmg-rep-table thead{display:table-header-group;}
+  .acmg-rep-criteria-audit th,.acmg-rep-criteria-audit td{padding:5px 6px;font-size:7.6pt;line-height:1.25;}
+  .acmg-report-variant-audit{break-before:page;page-break-before:always;}
+  .acmg-rep-audit-intro{break-inside:avoid;page-break-inside:avoid;}
+  .acmg-rep-gsv-img{max-height:160mm;object-fit:contain;}
 }
 </style>
 
@@ -1683,7 +1782,7 @@ technology_group: structured-genomics
   ];
 
   // state
-  var ACMG_VALIDATOR_VERSION = 'v1.0.0';
+  var ACMG_VALIDATOR_VERSION = 'v{{ page.version }}';
   var ACMG_VALIDATOR_SOFTWARE = 'ACMG Validator by Switzerland Omics';
   var meta = {};
   var crit = {};
@@ -1698,6 +1797,7 @@ technology_group: structured-genomics
   var lastReportBody = '';
   var filterMode = 'all';
   var criteriaDense = true;
+  var workflowView = 'variant';
   var activeVariant = 0;
   var variants = [];
   var genotype = {};
@@ -1733,15 +1833,54 @@ technology_group: structured-genomics
     Object.keys(src || {}).forEach(function(k){ obj[k] = src[k]; });
     return obj;
   }
+  function cloneData(src){
+    if (src === undefined || src === null) return null;
+    return JSON.parse(JSON.stringify(src));
+  }
+  function normaliseGeneStructureGene(value){
+    return String(value || '').trim().toUpperCase();
+  }
+  function normaliseGeneStructureCoordinate(value){
+    return String(value || '').toLowerCase().replace(/[\s,]/g,'');
+  }
+  function geneStructureViewKey(gene, coordinate){
+    return normaliseGeneStructureGene(gene) + '|' + normaliseGeneStructureCoordinate(coordinate);
+  }
+  function geneStructureViewKeyForMeta(metaState){
+    metaState = metaState || {};
+    return geneStructureViewKey(metaState.gene, metaState.coordinate);
+  }
+  function geneStructureSnapshotMatchesMeta(snapshot, metaState){
+    if (!snapshot) return false;
+    metaState = metaState || {};
+    var snapshotKey = snapshot.view_key || geneStructureViewKey(snapshot.query_gene || snapshot.gene, snapshot.query_coordinate);
+    return snapshotKey === geneStructureViewKeyForMeta(metaState);
+  }
+  function cloneVariantState(src){
+    src = src || {};
+    return {
+      meta:cloneMetaState(src.meta || {}),
+      crit:cloneCritState(src.crit || emptyCritState()),
+      external_evidence:cloneData(src.external_evidence || null),
+      gene_structure:cloneData(src.gene_structure || null)
+    };
+  }
   function ensureVariants(){
-    if (!variants.length) variants.push({ meta:cloneMetaState(meta), crit:cloneCritState(crit) });
+    if (!variants.length) variants.push({ meta:cloneMetaState(meta), crit:cloneCritState(crit), external_evidence:null, gene_structure:null });
   }
   function saveActiveVariant(){
     ensureVariants();
-    variants[activeVariant] = { meta:cloneMetaState(meta), crit:cloneCritState(crit) };
+    var existing = variants[activeVariant] || {};
+    variants[activeVariant] = {
+      meta:cloneMetaState(meta),
+      crit:cloneCritState(crit),
+      external_evidence:cloneData(existing.external_evidence || null),
+      gene_structure:geneStructureSnapshotMatchesMeta(existing.gene_structure, meta) ? existing.gene_structure : null
+    };
   }
   function loadVariantState(idx){
     ensureVariants();
+    if (idx < 0 || idx >= variants.length) return;
     activeVariant = idx;
     meta = cloneMetaState(variants[idx].meta);
     crit = cloneCritState(variants[idx].crit);
@@ -1768,42 +1907,36 @@ technology_group: structured-genomics
     if (d.group === 'pathogenic') return ['supporting','moderate','strong','very_strong'];
     return ['supporting','moderate','strong'];
   }
-  function isModified(code){ return crit[code].strength !== defByCode[code].strength; }
-  function notation(code){
-    var d = defByCode[code], s = crit[code];
-    if (s.strength === d.strength) return code;
-    return code + '_' + STRENGTH_SUFFIX[s.strength];
+  function stateForCode(code, criterionState){
+    return (criterionState && criterionState[code]) || emptyCritState()[code];
   }
-  function strengthOptionsHtml(d, sel){
-    return allowedStrengths(d).map(function(k){
-      var pts = POINTS[d.group][k];
-      var lab = STRENGTH_LABEL[k] + ' (' + (pts > 0 ? '+' : '') + pts + ')';
-      lab += (k === d.strength) ? ' \u00b7 default' : ' \u00b7 modified';
-      return '<option value="'+k+'"'+(k===sel?' selected':'')+'>'+esc(lab)+'</option>';
-    }).join('');
+  function hasNoteFor(code, criterionState){
+    var n = stateForCode(code, criterionState).notes;
+    return !!(n && n.trim());
   }
-
-  function caveatComplete(code){
-    var d = defByCode[code]; var s = crit[code];
+  function caveatCompleteFor(code, criterionState){
+    var d = defByCode[code], s = stateForCode(code, criterionState);
     if (!d.caveats) return true;
     for (var i=0;i<d.caveats.length;i++){ if (!s.caveats[i]) return false; }
     return true;
   }
-  function hasNote(code){ var n = crit[code].notes; return !!(n && n.trim()); }
-  function touched(code){
-    var s = crit[code];
-    return s.status !== 'not_assessed' || s.evidence !== 'not_assessed' || hasNote(code);
+  function touchedFor(code, criterionState){
+    var s = stateForCode(code, criterionState);
+    return s.status !== 'not_assessed' || s.evidence !== 'not_assessed' || hasNoteFor(code, criterionState);
   }
-
-  // single source of truth for per-row presentation state
-  function rowStateOf(code){
-    var d = defByCode[code], s = crit[code];
-    if (!touched(code)) return 'untouched';
+  function notationFor(code, criterionState){
+    var d = defByCode[code], s = stateForCode(code, criterionState);
+    if (s.strength === d.strength) return code;
+    return code + '_' + STRENGTH_SUFFIX[s.strength];
+  }
+  function rowStateFor(code, criterionState){
+    var d = defByCode[code], s = stateForCode(code, criterionState);
+    if (!touchedFor(code, criterionState)) return 'untouched';
     if (s.status === 'accepted'){
       var missing = (s.evidence === 'not_assessed') ||
-                    (d.caveats && !caveatComplete(code)) ||
-                    (d.requiresNote && !hasNote(code)) ||
-                    (s.strength !== d.strength && !hasNote(code));
+                    (d.caveats && !caveatCompleteFor(code, criterionState)) ||
+                    (d.requiresNote && !hasNoteFor(code, criterionState)) ||
+                    (s.strength !== d.strength && !hasNoteFor(code, criterionState));
       if (missing) return 'incomplete';
       if (s.evidence === 'absent_after_review' || s.evidence === 'not_available' ||
           s.evidence === 'not_applicable' || s.evidence === 'conflicting') return 'conflict';
@@ -1815,6 +1948,22 @@ technology_group: structured-genomics
     if (s.status === 'not_assessed' && s.evidence !== 'not_assessed') return 'incomplete';
     return 'untouched';
   }
+  function isModified(code){ return stateForCode(code, crit).strength !== defByCode[code].strength; }
+  function notation(code){ return notationFor(code, crit); }
+
+  function strengthOptionsHtml(d, sel){
+    return allowedStrengths(d).map(function(k){
+      var pts = POINTS[d.group][k];
+      var lab = STRENGTH_LABEL[k] + ' (' + (pts > 0 ? '+' : '') + pts + ')';
+      lab += (k === d.strength) ? ' \u00b7 default' : ' \u00b7 modified';
+      return '<option value="'+k+'"'+(k===sel?' selected':'')+'>'+esc(lab)+'</option>';
+    }).join('');
+  }
+
+  function caveatComplete(code){ return caveatCompleteFor(code, crit); }
+  function hasNote(code){ return hasNoteFor(code, crit); }
+  function touched(code){ return touchedFor(code, crit); }
+  function rowStateOf(code){ return rowStateFor(code, crit); }
 
   function categoryFromScore(total){
     if (total >= 10) return 'pathogenic';
@@ -1875,10 +2024,17 @@ technology_group: structured-genomics
     document.getElementById('acmg-list-benign').innerHTML = b.join('');
   }
 
-  function compute(){
+  function anyTouchedFor(criterionState){
+    for (var code in criterionState){ if (touchedFor(code, criterionState)) return true; }
+    return false;
+  }
+
+  function computeVariant(metaState, criterionState){
+    metaState = metaState || {};
+    criterionState = criterionState || emptyCritState();
     var pathPts = 0, benPts = 0, accepted = [];
     CRITERIA.forEach(function(c){
-      var code = c[1], s = crit[code];
+      var code = c[1], s = stateForCode(code, criterionState);
       if (s.status === 'accepted'){
         var pv = POINTS[s.group][s.strength] || 0;
         if (pv >= 0) pathPts += pv; else benPts += pv;
@@ -1887,10 +2043,9 @@ technology_group: structured-genomics
     });
     var total = pathPts + benPts;
     var derived = categoryFromScore(total);
-
     var conflicts = [], warnings = [], missing = [], modifications = [];
 
-    if (crit.BA1.status === 'accepted' && accepted.some(function(c){ return defByCode[c].group === 'pathogenic'; })){
+    if (stateForCode('BA1', criterionState).status === 'accepted' && accepted.some(function(c){ return defByCode[c].group === 'pathogenic'; })){
       conflicts.push('BA1 is stand-alone benign evidence but pathogenic criteria are also accepted. Resolve before retaining a pathogenic classification.');
     }
     if (pathPts >= 4 && benPts <= -4){
@@ -1898,46 +2053,41 @@ technology_group: structured-genomics
     }
 
     accepted.forEach(function(code){
-      var d = defByCode[code], s = crit[code], note = hasNote(code);
+      var d = defByCode[code], s = stateForCode(code, criterionState), note = hasNoteFor(code, criterionState);
       if (s.strength !== d.strength){
-        modifications.push(notation(code) + ' \u2014 applied at ' + STRENGTH_LABEL[s.strength] + ', default ' + STRENGTH_LABEL[d.strength]);
+        modifications.push(notationFor(code, criterionState) + ' \u2014 applied at ' + STRENGTH_LABEL[s.strength] + ', default ' + STRENGTH_LABEL[d.strength]);
         if (!note) warnings.push(code + ' applied at a non-default strength (' + STRENGTH_LABEL[s.strength] + ') without a justification note.');
       }
-      if (s.evidence === 'not_assessed'){
-        warnings.push(code + ' is accepted but no evidence finding was recorded (evidence "Not assessed").');
-      }
+      if (s.evidence === 'not_assessed') warnings.push(code + ' is accepted but no evidence finding was recorded (evidence "Not assessed").');
       if (s.evidence === 'absent_after_review' || s.evidence === 'not_available' || s.evidence === 'not_applicable'){
         conflicts.push(code + ' is accepted but its evidence is recorded as "' + labelOf(EVIDENCE_OPTS, s.evidence) + '". An accepted criterion must be supported by present evidence.');
       }
-      if (s.evidence === 'conflicting'){
-        conflicts.push(code + ' is accepted while its evidence is marked conflicting.');
-      }
-      if (d.requiresNote && !note){
-        warnings.push(code + ' requires reviewer notes (manual criterion) but none were entered.');
-      }
-      if (d.caveats && !caveatComplete(code)){
-        warnings.push(code + ' caveat checklist is incomplete.');
-      }
-      if (d.deprecated){
-        warnings.push(code + ' is deprecated by the ClinGen SVI and is generally not recommended as evidence.');
-      }
+      if (s.evidence === 'conflicting') conflicts.push(code + ' is accepted while its evidence is marked conflicting.');
+      if (d.requiresNote && !note) warnings.push(code + ' requires reviewer notes (manual criterion) but none were entered.');
+      if (d.caveats && !caveatCompleteFor(code, criterionState)) warnings.push(code + ' caveat checklist is incomplete.');
+      if (d.deprecated) warnings.push(code + ' is deprecated by the ClinGen SVI and is generally not recommended as evidence.');
     });
 
-    var entered = meta.entered_classification || '';
-    var mismatch = false;
-    if (accepted.length && !entered){
-      warnings.push('Entered classification has not been selected. Select the final classification before treating the review as internally consistent.');
+    var completion = criteriaCompletenessSummaryFor(criterionState);
+    var reviewIncomplete = completion.counts.untouched > 0 || completion.flagged > 0;
+    if (completion.counts.untouched){
+      warnings.push(completion.counts.untouched + ' ACMG/AMP ' + (completion.counts.untouched === 1 ? 'criterion remains' : 'criteria remain') + ' not assessed. Review completeness is not established.');
     }
+    if (completion.flagged){
+      warnings.push(completion.flagged + ' ACMG/AMP ' + (completion.flagged === 1 ? 'criterion has' : 'criteria have') + ' an incomplete or conflicting review state that requires attention.');
+    }
+
+    var entered = metaState.entered_classification || '';
+    var mismatch = false;
+    if (accepted.length && !entered) warnings.push('Entered classification has not been selected. Select the final classification before treating the review as internally consistent.');
     if (entered && accepted.length && entered !== derived){
       mismatch = true;
       warnings.push('Entered classification (' + CLASS_LABEL[entered] + ') differs from the point-based category (' + CLASS_LABEL[derived] + ').');
     }
-    if (accepted.length && !meta.signoff){
-      warnings.push('Reviewer sign-off has not been completed. Complete sign-off before treating the review as internally consistent.');
-    }
+    if (accepted.length && !metaState.signoff) warnings.push('Reviewer sign-off has not been completed. Complete sign-off before treating the review as internally consistent.');
 
     if (accepted.length && derived === 'vus'){
-      var na = function(code){ return crit[code].status === 'not_assessed'; };
+      var na = function(code){ return stateForCode(code, criterionState).status === 'not_assessed'; };
       if (na('PS2') && na('PM6')) missing.push('Confirmed de novo status (PS2 / PM6 not assessed)');
       if (na('PP1') && na('BS4')) missing.push('Segregation testing (PP1 / BS4 not assessed)');
       if (na('PS3') && na('BS3')) missing.push('Functional evidence (PS3 / BS3 not assessed)');
@@ -1946,25 +2096,23 @@ technology_group: structured-genomics
     }
 
     var verdict, tone;
-    if (!accepted.length && !anyTouched()){ verdict = 'Incomplete review'; tone = 'idle'; }
+    if (!accepted.length && !anyTouchedFor(criterionState)){ verdict = 'Incomplete review'; tone = 'idle'; }
     else if (conflicts.length){ verdict = 'Conflict detected'; tone = 'bad'; }
     else if (mismatch){ verdict = 'Classification mismatch'; tone = 'bad'; }
+    else if (reviewIncomplete){ verdict = 'Incomplete review'; tone = 'idle'; }
     else if (warnings.length){ verdict = 'Review completed with warnings'; tone = 'warn'; }
     else if (!accepted.length){ verdict = 'Incomplete review'; tone = 'idle'; }
     else { verdict = 'Internally consistent'; tone = 'ok'; }
 
     return {
       pathPts:pathPts, benPts:benPts, total:total, derived:derived,
-      entered:entered, accepted:accepted, conflicts:conflicts,
-      warnings:warnings, missing:missing, modifications:modifications,
-      verdict:verdict, tone:tone, mismatch:mismatch
+      entered:entered, accepted:accepted, conflicts:conflicts, warnings:warnings,
+      missing:missing, modifications:modifications, verdict:verdict, tone:tone, mismatch:mismatch
     };
   }
 
-  function anyTouched(){
-    for (var code in crit){ if (touched(code)) return true; }
-    return false;
-  }
+  function compute(){ return computeVariant(meta, crit); }
+  function anyTouched(){ return anyTouchedFor(crit); }
 
   function validationReasonHtml(r){
     var items = [];
@@ -1973,14 +2121,10 @@ technology_group: structured-genomics
     }
     r.conflicts.forEach(function(x){ items.push(x); });
     r.warnings.forEach(function(x){ items.push(x); });
-    if (r.missing.length){
-      r.missing.forEach(function(x){ items.push('Potentially useful missing evidence: ' + x + '.'); });
-    }
+    if (r.missing.length) r.missing.forEach(function(x){ items.push('Potentially useful missing evidence: ' + x + '.'); });
     var seen = {};
     items = items.filter(function(x){ if (seen[x]) return false; seen[x] = true; return true; });
-    if (!items.length){
-      items.push('The current status reflects an incomplete review or unresolved fields in the active variant.');
-    }
+    if (!items.length) items.push('The current status reflects an incomplete review or unresolved fields in the active variant.');
     return '<strong>Why this status?</strong><ul>' + items.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
   }
 
@@ -1992,7 +2136,6 @@ technology_group: structured-genomics
     var v = document.getElementById('sb-verdict');
     v.textContent = r.verdict;
     v.setAttribute('data-tone', r.tone);
-
     var help = document.getElementById('sb-help');
     var reasons = document.getElementById('sb-reasons');
     if (help && reasons){
@@ -2009,68 +2152,68 @@ technology_group: structured-genomics
     }
   }
 
-  function criteriaCompletenessSummary(){
+  function criteriaCompletenessSummaryFor(criterionState, groupFilter){
     var counts = { complete:0, noevidence:0, incomplete:0, conflict:0, untouched:0 };
-    var accepted = 0;
-    var contributing = [];
-
+    var accepted = 0, contributing = [], total = 0;
     CRITERIA.forEach(function(c){
-      var code = c[1];
-      var s = crit[code];
-      var st = rowStateOf(code);
-
+      if (groupFilter && c[0] !== groupFilter) return;
+      total++;
+      var code = c[1], s = stateForCode(code, criterionState), st = rowStateFor(code, criterionState);
       counts[st]++;
-
       if (s.status === 'accepted'){
         accepted++;
-        contributing.push({
-          code: code,
-          notation: notation(code),
-          group: c[0],
-          points: POINTS[c[0]][s.strength] || 0
-        });
+        contributing.push({ code:code, notation:notationFor(code, criterionState), group:c[0], points:POINTS[c[0]][s.strength] || 0 });
       }
     });
-
-    var total = CRITERIA.length;
     var addressed = total - counts.untouched;
     var flagged = counts.incomplete + counts.conflict;
-
     return {
-      counts: counts,
-      accepted: accepted,
-      contributing: contributing,
-      total: total,
-      addressed: addressed,
-      flagged: flagged,
+      counts:counts, accepted:accepted, contributing:contributing, total:total, addressed:addressed, flagged:flagged,
       text: addressed === 0
         ? ('No criteria addressed yet \u00b7 ' + total + ' to review')
         : (addressed + ' of ' + total + ' criteria addressed \u00b7 ' + accepted + ' applied \u00b7 ' + flagged + ' need attention')
     };
   }
 
+  function criteriaCompletenessSummary(){ return criteriaCompletenessSummaryFor(crit); }
+
+  function renderCriteriaGroupSummaries(){
+    [['pathogenic','acmg-pathogenic-summary'],['benign','acmg-benign-summary']].forEach(function(item){
+      var summary = criteriaCompletenessSummaryFor(crit, item[0]);
+      var el = document.getElementById(item[1]);
+      if (!el) return;
+      el.textContent = summary.addressed + '/' + summary.total + ' reviewed \u00b7 ' + summary.accepted + ' applied \u00b7 ' + summary.flagged + ' need attention';
+    });
+  }
+
+  function renderVariantDetailsSummary(){
+    var el = document.getElementById('acmg-variant-details-summary');
+    if (!el) return;
+    var parts = [];
+    if (meta.gene) parts.push(meta.gene);
+    if (meta.hgvs_c) parts.push(meta.hgvs_c);
+    else if (meta.hgvs_p) parts.push(meta.hgvs_p);
+    el.textContent = parts.length ? parts.join(' \u00b7 ') : 'Variant not specified';
+  }
+
   function renderCompleteness(){
     var summary = criteriaCompletenessSummary();
     var counts = summary.counts;
     var order = ['complete','noevidence','incomplete','conflict'];
-
     document.getElementById('acmg-comp-bar').innerHTML = order.map(function(st){
       if (!counts[st]) return '';
       return '<span class="acmg-comp-seg" data-state="'+st+'" style="width:'+(counts[st]/summary.total*100).toFixed(2)+'%"></span>';
     }).join('');
-
     document.getElementById('acmg-comp-text').textContent = summary.text;
-
     var pillBox = document.getElementById('acmg-comp-pills');
     if (pillBox){
       pillBox.innerHTML = summary.contributing.map(function(x){
         var pts = x.points > 0 ? '+' + x.points : String(x.points);
-        return '<span class="acmg-comp-pill" data-group="'+esc(x.group)+'">' +
-          esc(x.notation) +
-          '<span class="acmg-comp-pill-points">' + esc(pts) + '</span>' +
-          '</span>';
+        return '<span class="acmg-comp-pill" data-group="'+esc(x.group)+'">' + esc(x.notation) + '<span class="acmg-comp-pill-points">' + esc(pts) + '</span></span>';
       }).join('');
     }
+    renderCriteriaGroupSummaries();
+    renderVariantDetailsSummary();
   }
 
   function variantLine(){
@@ -2083,15 +2226,40 @@ technology_group: structured-genomics
   }
 
   function computeForVariant(v){
-    var oldMeta = meta, oldCrit = crit;
-    meta = cloneMetaState(v.meta);
-    crit = cloneCritState(v.crit);
-    var out = compute();
-    meta = oldMeta;
-    crit = oldCrit;
-    return out;
+    return computeVariant((v && v.meta) || {}, (v && v.crit) || emptyCritState());
   }
 
+  function summariseVariant(v, idx){
+    var result = computeForVariant(v);
+    var completeness = criteriaCompletenessSummaryFor((v && v.crit) || emptyCritState());
+    return {
+      index:idx,
+      label:shortVariantLabel(v, idx),
+      result:result,
+      completeness:completeness,
+      signedOff:!!(v && v.meta && v.meta.signoff)
+    };
+  }
+
+  function summariseCase(){
+    ensureVariants();
+    var summaries = variants.map(function(v, i){ return summariseVariant(v, i); });
+    var conflicts = [], warnings = [], anyMismatch = false, anyIncomplete = false;
+    summaries.forEach(function(summary, i){
+      if (summary.result.conflicts.length) conflicts.push('Variant ' + (i + 1) + ': ' + summary.result.conflicts.join(' '));
+      if (summary.result.warnings.length) warnings.push('Variant ' + (i + 1) + ': ' + summary.result.warnings.join(' '));
+      if (summary.result.mismatch) anyMismatch = true;
+      if (summary.result.verdict === 'Incomplete review') anyIncomplete = true;
+    });
+    if (variants.length > 1){
+      if (!genotype.phase) warnings.push('Genotype review: phase not recorded.');
+      if (genotype.phase === 'Phase unknown' || genotype.phase === 'Not assessed') warnings.push('Genotype review: compound heterozygosity should not be assumed while phase is ' + genotype.phase + '.');
+      if (!genotype.conclusion) warnings.push('Genotype review: genotype-level conclusion not recorded.');
+    }
+    var tone = conflicts.length ? 'bad' : (anyMismatch ? 'bad' : (anyIncomplete ? 'idle' : (warnings.length ? 'warn' : 'ok')));
+    var verdict = conflicts.length ? 'Conflict detected' : (anyMismatch ? 'Classification mismatch' : (anyIncomplete ? 'Incomplete review' : (warnings.length ? 'Review completed with warnings' : 'Internally consistent')));
+    return { variants:summaries, conflicts:conflicts, warnings:warnings, tone:tone, verdict:verdict, allSignedOff:summaries.every(function(x){ return x.signedOff; }) };
+  }
 
 
   var PROVENANCE_KEYS = [
@@ -2208,59 +2376,154 @@ technology_group: structured-genomics
       extra.value = Object.keys(provenance.extra || {}).sort().map(function(k){ return k + '\t' + provenance.extra[k]; }).join('\n');
     }
   }
-  function geneStructureReportHtml(){
+  function geneStructureSnapshotFromDom(context){
     var canvas = document.getElementById('acmg-gsv-canvas');
     var card = document.getElementById('acmg-gsv-card');
-    if (!canvas || !canvas.width || !canvas.height || (card && card.hidden)) return '';
+    if (!canvas || !canvas.width || !canvas.height || (card && card.hidden)) return null;
     try {
       var dataUrl = canvas.toDataURL('image/png');
-      if (!dataUrl || dataUrl === 'data:,') return '';
+      if (!dataUrl || dataUrl === 'data:,') return null;
       function gsvText(id){
         var el = document.getElementById(id);
         return el ? el.textContent.trim() : '';
       }
-      var gene = gsvText('acmg-gsv-card-gene');
-      var loc = gsvText('acmg-gsv-card-loc');
+      context = context || {};
       var tx = document.getElementById('acmg-gsv-tx-select');
       var txLabel = tx && tx.selectedOptions && tx.selectedOptions.length ? tx.selectedOptions[0].textContent.trim() : '';
-      var asm = gsvText('acmg-gsv-i-asm');
-      var strand = gsvText('acmg-gsv-i-str');
-      var txn = gsvText('acmg-gsv-i-txn');
-      var exn = gsvText('acmg-gsv-i-exn');
-      return '<div class="acmg-rep-block acmg-rep-gsv-block"><h3>Gene structure view</h3>'+
-        '<table class="acmg-rep-table acmg-rep-kv acmg-rep-gsv-meta"><tbody>'+
-          '<tr><td>Gene</td><td>'+esc(gene || meta.gene || '\u2014')+'</td></tr>'+
-          '<tr><td>Genomic location</td><td>'+esc(loc || meta.coordinate || '\u2014')+'</td></tr>'+
-          '<tr><td>Transcript used</td><td>'+esc(txLabel || meta.transcript || '\u2014')+'</td></tr>'+
-          '<tr><td>Assembly</td><td>'+esc(asm || meta.build || '\u2014')+'</td></tr>'+
-          '<tr><td>Strand</td><td>'+esc(strand || '\u2014')+'</td></tr>'+
-          '<tr><td>Transcripts</td><td>'+esc(txn || '\u2014')+'</td></tr>'+
-          '<tr><td>Exons</td><td>'+esc(exn || '\u2014')+'</td></tr>'+
-        '</tbody></table>'+
-        '<img class="acmg-rep-gsv-img" src="'+dataUrl+'" alt="Gene structure view for the active variant">'+
-        '<div class="acmg-rep-gsv-legend" aria-label="Gene structure legend">'+
-          '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-cds"></span>Coding exon</span>'+
-          '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-utr"></span>UTR</span>'+
-          '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-line"></span>Intron (condensed)</span>'+
-          '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-hl"></span>Variant position</span>'+
-        '</div></div>';
+      var link = document.getElementById('acmg-gsv-ensembl-link');
+      var queryGene = context.gene || meta.gene || '';
+      var queryCoordinate = context.coordinate || meta.coordinate || '';
+      return {
+        captured_at:new Date().toISOString(),
+        variant_index:activeVariant + 1,
+        view_key:geneStructureViewKey(queryGene, queryCoordinate),
+        query_gene:queryGene,
+        query_coordinate:queryCoordinate,
+        gene:gsvText('acmg-gsv-card-gene') || meta.gene || '',
+        location:gsvText('acmg-gsv-card-loc') || meta.coordinate || '',
+        transcript:txLabel || meta.transcript || '',
+        assembly:gsvText('acmg-gsv-i-asm') || meta.build || '',
+        strand:gsvText('acmg-gsv-i-str') || '',
+        transcript_count:gsvText('acmg-gsv-i-txn') || '',
+        exon_count:gsvText('acmg-gsv-i-exn') || '',
+        pixel_width:canvas.width || 0,
+        pixel_height:canvas.height || 0,
+        source_url:link ? link.href : '',
+        data_url:dataUrl
+      };
     } catch (err) {
-      return '';
+      return null;
     }
   }
 
-  function reportCriteriaPillsHtml(r){
+  /*
+   * The gene viewer uses one shared canvas, while the case model may contain
+   * several variants. A canvas snapshot is therefore accepted only when the
+   * viewer has explicitly marked that canvas as belonging to the active
+   * variant identity. This prevents a late external response, a variant switch,
+   * or a changed coordinate from attaching the wrong plot to a report.
+   */
+  function captureGeneStructureForActiveVariant(context, refreshReport){
+    ensureVariants();
+    context = context || {};
+
+    if (context.variant_index !== undefined && context.variant_index !== null && context.variant_index !== ''){
+      if (Number(context.variant_index) !== activeVariant) return;
+    }
+
+    var activeViewKey = geneStructureViewKeyForMeta(meta);
+    var expectedViewKey = context.view_key || geneStructureViewKey(context.gene || meta.gene, context.coordinate || meta.coordinate);
+    if (expectedViewKey !== activeViewKey) return;
+
+    var canvas = document.getElementById('acmg-gsv-canvas');
+    if (!canvas) return;
+
+    var canvasViewKey = canvas.getAttribute('data-acmg-view-key') || '';
+    var canvasVariant = canvas.getAttribute('data-acmg-variant-index');
+    if (!canvasViewKey || canvasViewKey !== activeViewKey) return;
+    if (canvasVariant !== null && canvasVariant !== '' && Number(canvasVariant) !== activeVariant) return;
+
+    var snapshot = geneStructureSnapshotFromDom({
+      gene:meta.gene || '',
+      coordinate:meta.coordinate || '',
+      view_key:activeViewKey,
+      variant_index:activeVariant
+    });
+    if (!snapshot || !geneStructureSnapshotMatchesMeta(snapshot, meta)) return;
+
+    var existing = variants[activeVariant] || {};
+    existing.meta = cloneMetaState(meta);
+    existing.crit = cloneCritState(crit);
+    existing.external_evidence = cloneData(existing.external_evidence || null);
+    existing.gene_structure = snapshot;
+    variants[activeVariant] = existing;
+
+    if (refreshReport){
+      var currentResult = compute();
+      renderReport(currentResult);
+      buildExports(currentResult);
+      renderTabs();
+    }
+  }
+
+  document.addEventListener('acmg:gsv:loaded', function(event){
+    captureGeneStructureForActiveVariant((event && event.detail) || {}, true);
+  });
+
+  document.addEventListener('acmg:gsv:invalidated', function(event){
+    ensureVariants();
+    var detail = (event && event.detail) || {};
+    if (detail.variant_index !== undefined && detail.variant_index !== null && detail.variant_index !== ''){
+      if (Number(detail.variant_index) !== activeVariant) return;
+    }
+    var existing = variants[activeVariant];
+    if (existing) existing.gene_structure = null;
+  });
+
+  function geneStructureReportHtml(snapshot, metaState){
+    metaState = metaState || {};
+    if (!snapshot || !snapshot.data_url || !geneStructureSnapshotMatchesMeta(snapshot, metaState)){
+      return '<div class="acmg-rep-block acmg-rep-gsv-block"><h3>Gene structure view</h3>'+
+        '<p class="acmg-rep-empty">No current gene-structure plot was loaded and retained for this variant.</p></div>';
+    }
+
+    var alt = 'Gene structure plot for ' + (snapshot.gene || metaState.gene || 'variant');
+    if (snapshot.location || metaState.coordinate) alt += ' at ' + (snapshot.location || metaState.coordinate);
+
+    return '<div class="acmg-rep-block acmg-rep-gsv-block"><h3>Gene structure view used during review</h3>'+
+      '<table class="acmg-rep-table acmg-rep-kv acmg-rep-gsv-meta"><tbody>'+
+        '<tr><td>Gene</td><td>'+esc(snapshot.gene || metaState.gene || '\u2014')+'</td></tr>'+
+        '<tr><td>Genomic location</td><td>'+esc(snapshot.location || metaState.coordinate || '\u2014')+'</td></tr>'+
+        '<tr><td>Transcript shown</td><td>'+esc(snapshot.transcript || metaState.transcript || '\u2014')+'</td></tr>'+
+        '<tr><td>Assembly</td><td>'+esc(snapshot.assembly || metaState.build || '\u2014')+'</td></tr>'+
+        '<tr><td>Strand</td><td>'+esc(snapshot.strand || '\u2014')+'</td></tr>'+
+        '<tr><td>Transcripts returned</td><td>'+esc(snapshot.transcript_count || '\u2014')+'</td></tr>'+
+        '<tr><td>Exons</td><td>'+esc(snapshot.exon_count || '\u2014')+'</td></tr>'+
+        '<tr><td>View captured</td><td>'+esc(snapshot.captured_at || '\u2014')+'</td></tr>'+
+        '<tr><td>Source</td><td>'+(snapshot.source_url ? '<a href="'+esc(snapshot.source_url)+'" target="_blank" rel="noopener">Ensembl</a>' : 'Ensembl')+'</td></tr>'+
+      '</tbody></table>'+
+      '<img class="acmg-rep-gsv-img" src="'+snapshot.data_url+'" alt="'+esc(alt)+'">'+
+      '<div class="acmg-rep-gsv-legend" aria-label="Gene structure legend">'+
+        '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-cds"></span>Coding exon</span>'+
+        '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-utr"></span>UTR</span>'+
+        '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-line"></span>Intron (condensed)</span>'+
+        '<span class="acmg-rep-gsv-li"><span class="acmg-rep-gsv-sw acmg-rep-gsv-hl"></span>Variant position</span>'+
+      '</div></div>';
+  }
+
+  function reportCriteriaPillsHtml(r, criterionState){
+    criterionState = criterionState || crit;
     if (!r || !r.accepted || !r.accepted.length) return '';
     return '<div class="acmg-rep-comp-pills">'+r.accepted.map(function(code){
-      var d = defByCode[code], s = crit[code];
-      var pts = s && s.status === 'accepted' ? (POINTS[s.group][s.strength] || 0) : 0;
+      var d = defByCode[code], s = stateForCode(code, criterionState);
+      var pts = s.status === 'accepted' ? (POINTS[s.group][s.strength] || 0) : 0;
       var sign = pts > 0 ? '+' + pts : String(pts);
-      return '<span class="acmg-comp-pill" data-group="'+esc(d.group)+'"><span>'+esc(notation(code))+'</span><span class="acmg-comp-pill-points">'+esc(sign)+'</span></span>';
+      return '<span class="acmg-comp-pill" data-group="'+esc(d.group)+'"><span>'+esc(notationFor(code, criterionState))+'</span><span class="acmg-comp-pill-points">'+esc(sign)+'</span></span>';
     }).join('')+'</div>';
   }
 
-  function reportScoreboardHtml(r){
-    var summary = criteriaCompletenessSummary();
+  function reportScoreboardHtml(r, criterionState){
+    var summary = criteriaCompletenessSummaryFor(criterionState || crit);
     return '<div class="acmg-rep-scoreboard">'+
       '<div class="acmg-rep-score-cells">'+
         '<div class="acmg-rep-score-cell"><span class="acmg-rep-score-val">'+esc(r.pathPts)+'</span><span class="acmg-rep-score-lab">Pathogenic points</span></div>'+
@@ -2269,374 +2532,352 @@ technology_group: structured-genomics
         '<div class="acmg-rep-score-cell"><span class="acmg-rep-score-val">'+(r.accepted.length ? esc(CLASS_LABEL[r.derived]) : '\u2014')+'</span><span class="acmg-rep-score-lab">Point-based category</span></div>'+
         '<div class="acmg-rep-score-cell"><span class="acmg-verdict" data-tone="'+esc(r.tone)+'">'+esc(r.verdict)+'</span><span class="acmg-rep-score-lab">Validation status</span></div>'+
       '</div>'+
-      '<div class="acmg-rep-score-completeness">'+esc(summary.text)+reportCriteriaPillsHtml(r)+'</div>'+
+      '<div class="acmg-rep-score-completeness">'+esc(summary.text)+reportCriteriaPillsHtml(r, criterionState)+'</div>'+
     '</div>';
+  }
+
+  function reportVariantSummaryCard(v, idx, summary){
+    var r = summary.result, c = summary.completeness;
+    var category = r.entered ? CLASS_LABEL[r.entered] : (r.accepted.length ? CLASS_LABEL[r.derived] : 'Classification not entered');
+    return '<article class="acmg-report-variant-card" data-tone="'+esc(r.tone)+'">'+
+      '<h3>Variant '+(idx+1)+' · '+esc(summary.label)+'</h3>'+
+      '<p><strong>'+esc(category)+'</strong> · '+esc(String(r.total))+' points · '+esc(c.addressed+'/'+c.total)+' criteria explicitly addressed</p>'+
+      '<p>'+esc(c.accepted+' applied · '+c.counts.noevidence+' no contribution · '+c.flagged+' need attention · '+c.counts.untouched+' not assessed')+'</p>'+
+      '<p><strong>Validation:</strong> '+esc(r.verdict)+' · '+(summary.signedOff?'reviewer sign-off completed':'reviewer sign-off incomplete')+'</p>'+
+      reportCriteriaPillsHtml(r, v.crit)+
+    '</article>';
+  }
+
+  function reportCompletenessAuditHtml(criterionState){
+    var summary = criteriaCompletenessSummaryFor(criterionState);
+    var c = summary.counts;
+    var resolved = c.complete + c.noevidence;
+    return '<div class="acmg-rep-block acmg-rep-completeness-audit"><h3>Review completeness</h3>'+
+      '<table class="acmg-rep-table acmg-rep-kv"><tbody>'+
+        '<tr><td>Total ACMG/AMP criteria</td><td>'+summary.total+'</td></tr>'+
+        '<tr><td>Explicitly addressed</td><td>'+summary.addressed+' / '+summary.total+'</td></tr>'+
+        '<tr><td>Resolved review states</td><td>'+resolved+' ('+c.complete+' applied; '+c.noevidence+' no contribution)</td></tr>'+
+        '<tr><td>Incomplete</td><td>'+c.incomplete+'</td></tr>'+
+        '<tr><td>Conflict</td><td>'+c.conflict+'</td></tr>'+
+        '<tr><td>Not assessed</td><td>'+c.untouched+'</td></tr>'+
+      '</tbody></table>'+
+      '<p class="acmg-rep-audit-note">'+
+        (summary.addressed === summary.total && !summary.flagged
+          ? 'All ACMG/AMP criteria have an explicit resolved review state.'
+          : 'The audit table below identifies every criterion that is incomplete, conflicting or not assessed.')+
+      '</p></div>';
+  }
+
+  function criterionDocumentationHtml(code, criterionState){
+    var d = defByCode[code], row = stateForCode(code, criterionState);
+    var parts = [];
+    var anyCaveat = (row.caveats || []).some(function(x){ return !!x; });
+    if (d.caveats && d.caveats.length && (row.status === 'accepted' || anyCaveat)){
+      parts.push('<div class="acmg-rep-doc-label">Caveat checklist</div><ul class="acmg-rep-caveat-audit">'+
+        d.caveats.map(function(item, i){
+          var checked = !!row.caveats[i];
+          return '<li data-checked="'+(checked?'true':'false')+'"><strong>'+(checked?'Confirmed':'Not confirmed')+':</strong> '+esc(item)+'</li>';
+        }).join('')+'</ul>');
+    } else if (d.caveats && d.caveats.length && row.status !== 'not_assessed'){
+      parts.push('<div class="acmg-rep-doc-muted">Criterion-specific caveat checklist not required for the recorded status.</div>');
+    }
+    if (row.notes){
+      parts.push('<div class="acmg-rep-doc-label">Reviewer notes</div><div class="acmg-rep-notes">'+esc(row.notes).replace(/\n/g,'<br>')+'</div>');
+    }
+    if (d.deprecated) parts.push('<div class="acmg-rep-doc-warning">Deprecated by ClinGen SVI.</div>');
+    return parts.length ? parts.join('') : '<span class="acmg-rep-doc-muted">\u2014</span>';
+  }
+
+  function reportCriteriaAuditTableHtml(criterionState){
+    criterionState = criterionState || emptyCritState();
+    var html = '<table class="acmg-rep-table acmg-rep-criteria-audit"><thead><tr>'+
+      '<th>Criterion</th><th>Review status</th><th>Evidence finding</th><th>Strength</th><th>Points</th><th>Documentation</th>'+
+      '</tr></thead><tbody>';
+    var currentGroup = '';
+    CRITERIA.forEach(function(c){
+      var code = c[1], d = defByCode[code], row = stateForCode(code, criterionState), state = rowStateFor(code, criterionState);
+      if (d.group !== currentGroup){
+        currentGroup = d.group;
+        html += '<tr class="acmg-rep-group-row"><th colspan="6">'+(currentGroup === 'pathogenic' ? 'Pathogenic evidence' : 'Benign evidence')+'</th></tr>';
+      }
+      var pts = row.status === 'accepted' ? (POINTS[row.group][row.strength] || 0) : 0;
+      var strength = STRENGTH_LABEL[row.strength] || row.strength;
+      if (row.strength !== d.strength) strength += ' (default '+(STRENGTH_LABEL[d.strength] || d.strength)+')';
+      html += '<tr data-rowstate="'+esc(state)+'">'+
+        '<td><strong>'+esc(notationFor(code, criterionState))+'</strong><div class="acmg-rep-criterion-def">'+esc(d.def)+'</div></td>'+
+        '<td>'+esc(labelOf(STATUS_OPTS,row.status))+'<div class="acmg-rep-rowstate">'+esc(ROW_LABEL[state] || state)+'</div></td>'+
+        '<td>'+esc(labelOf(EVIDENCE_OPTS,row.evidence))+'</td>'+
+        '<td>'+esc(strength)+'</td>'+
+        '<td>'+(row.status === 'accepted' ? esc(pts > 0 ? '+'+pts : String(pts)) : '\u2014')+'</td>'+
+        '<td>'+criterionDocumentationHtml(code, criterionState)+'</td>'+
+      '</tr>';
+    });
+    return html + '</tbody></table>';
+  }
+
+  function reportVariantDetailHtml(v, idx, vr, kv, listBlock){
+    var metaState = (v && v.meta) || {};
+    var criterionState = (v && v.crit) || emptyCritState();
+    var title = 'Variant ' + (idx + 1) + ': ' + shortVariantLabel(v, idx);
+    var completion = criteriaCompletenessSummaryFor(criterionState);
+    var identity = '<div class="acmg-rep-block"><h3>Variant identity</h3>'+kv([
+      ['Gene',metaState.gene],['Transcript',metaState.transcript],['cDNA',metaState.hgvs_c],['Protein',metaState.hgvs_p],
+      ['Genome build',metaState.build],['Coordinate',metaState.coordinate],['Reference allele',metaState.ref],['Alternate allele',metaState.alt],['Variant type',metaState.variant_type],['Zygosity',metaState.zygosity]
+    ])+'</div>';
+    var review = '<div class="acmg-rep-block acmg-rep-criterion-audit-block"><h3>Complete ACMG/AMP criterion audit ('+completion.total+' criteria)</h3>'+
+      '<p class="acmg-rep-audit-note">Every criterion is shown, including criteria that did not contribute, were marked not applicable, remain incomplete, conflict, or were not assessed.</p>'+
+      reportCriteriaAuditTableHtml(criterionState)+'</div>';
+    var score = '<div class="acmg-rep-block"><h3>Classification and point score</h3>'+kv([
+      ['Pathogenic points',String(vr.pathPts)],['Benign points',String(vr.benPts)],['Total',String(vr.total)],
+      ['Point-based category',vr.accepted.length?CLASS_LABEL[vr.derived]:'\u2014'],['Entered classification',vr.entered?CLASS_LABEL[vr.entered]:'\u2014'],
+      ['Validation status',vr.verdict],['Reviewer sign-off',metaState.signoff?'Completed':'Not completed'],
+      ['Consistency',vr.accepted.length?(vr.mismatch?'Mismatch':'Consistent with selected criteria'):'\u2014']
+    ])+'</div>';
+    var external = '';
+    if (v && v.external_evidence){
+      external = '<div class="acmg-rep-block"><h3>External evidence lookup</h3>'+kv([
+        ['Source',v.external_evidence.source || 'GeneBe public API'],
+        ['Imported',v.external_evidence.imported_at || ''],
+        ['Import mode',v.external_evidence.import_mode || ''],
+        ['Imported suggestions',String(v.external_evidence.imported_criteria_count || 0)],
+        ['Preserved reviewed criteria',String(v.external_evidence.preserved_criteria_count || 0)]
+      ])+'</div>';
+    }
+    var detailBody = identity + reportCompletenessAuditHtml(criterionState) + geneStructureReportHtml(v && v.gene_structure, metaState) +
+      review + score + external +
+      listBlock('Strength modifications',vr.modifications) + listBlock('Conflicts',vr.conflicts,'bad') +
+      listBlock('Warnings',vr.warnings,'warn') + listBlock('Potentially useful missing evidence',vr.missing);
+    return '<details class="acmg-report-detail acmg-report-variant-audit"><summary><span>'+esc(title)+' · full audit record</span><span class="acmg-panel-summary">'+esc(completion.addressed+'/'+completion.total+' addressed · '+vr.verdict)+'</span></summary><div class="acmg-report-detail-body">'+detailBody+'</div></details>';
+  }
+
+  function reportScreenSummaryHtml(stamp, cards){
+    return '<div class="acmg-report-screen-summary">'+
+      '<h2 class="acmg-h2">Report summary</h2>'+
+      stamp + cards +
+      '<p class="acmg-report-screen-note">The complete clinical review record is included in the downloadable report, including case provenance, the captured gene-structure view where available, the full ACMG/AMP criterion audit, genotype-level review, classification details, warnings and limitations.</p>'+
+    '</div>';
+  }
+
+  function genotypeReviewReportHtml(kv){
+    return '<div class="acmg-rep-block"><h3>Genotype-level review</h3>'+kv([
+      ['Gene reviewed',genotype.gene],
+      ['Disease / condition',genotype.disease],
+      ['Inheritance model',genotype.inheritance],
+      ['Number of variants in case',String(variants.length)],
+      ['Phase',genotype.phase],
+      ['Variant / combination context',genotype.combination],
+      ['Phase evidence',genotype.phase_evidence],
+      ['Genotype-level conclusion',genotype.conclusion],
+      ['Phenotype fit',genotype.phenotype_fit],
+      ['Residual uncertainty',genotype.uncertainty]
+    ])+'</div>';
   }
 
   function renderReport(r){
     saveActiveVariant();
     var body = document.getElementById('acmg-report-body');
-
     function kv(rows){
-      return '<table class="acmg-rep-table acmg-rep-kv"><tbody>'+rows.map(function(x){
-        return '<tr><td>'+esc(x[0])+'</td><td>'+esc(x[1]||'\u2014')+'</td></tr>';
-      }).join('')+'</tbody></table>';
+      return '<table class="acmg-rep-table acmg-rep-kv"><tbody>'+rows.map(function(x){ return '<tr><td>'+esc(x[0])+'</td><td>'+esc(x[1]||'\u2014')+'</td></tr>'; }).join('')+'</tbody></table>';
     }
     function listBlock(title, items, cls){
       if (!items.length) return '<div class="acmg-rep-block"><h3>'+esc(title)+'</h3><p class="acmg-rep-empty">None.</p></div>';
-      return '<div class="acmg-rep-block"><h3>'+esc(title)+'</h3><ul class="acmg-rep-list '+(cls||'')+'">'+
-        items.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>';
+      return '<div class="acmg-rep-block"><h3>'+esc(title)+'</h3><ul class="acmg-rep-list '+(cls||'')+'">'+items.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>';
     }
-    function variantTitle(v, idx){
-      var m = v.meta || {};
-      var label = 'Variant ' + (idx + 1);
-      if (m.gene || m.hgvs_c || m.hgvs_p) label += ': ' + esc(shortVariantLabel(v, idx));
-      return label;
-    }
-    function variantBlocks(v, idx, vr){
-      var oldMeta = meta, oldCrit = crit;
-      meta = cloneMetaState(v.meta);
-      crit = cloneCritState(v.crit);
-
-      var ident = '<div class="acmg-rep-block"><h3>'+variantTitle(v, idx)+' identity</h3>'+kv([
-        ['Gene',meta.gene],['Transcript',meta.transcript],['cDNA',meta.hgvs_c],['Protein',meta.hgvs_p],
-        ['Genome build',meta.build],['Coordinate',meta.coordinate],['Reference allele',meta.ref],['Alternate allele',meta.alt],['Variant type',meta.variant_type],['Zygosity',meta.zygosity]
-      ])+'</div>';
-
-      var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
-      var critTable;
-      if (considered.length){
-        critTable = '<table class="acmg-rep-table acmg-rep-criteria-table"><thead><tr><th>Criterion</th><th>Status</th><th>Applied strength</th><th>Points</th><th>Evidence status</th><th>Notes</th></tr></thead><tbody>'+
-          considered.map(function(code){
-            var d = defByCode[code], s = crit[code];
-            var pts = (s.status==='accepted') ? (POINTS[s.group][s.strength]||0) : 0;
-            var strengthCell = esc(STRENGTH_LABEL[s.strength]) + (s.strength!==d.strength ? ' <span class="acmg-rep-empty">(modified)</span>' : '');
-            return '<tr><td><strong>'+esc(notation(code))+'</strong></td>'+
-              '<td>'+esc(labelOf(STATUS_OPTS,s.status))+'</td>'+
-              '<td>'+strengthCell+'</td>'+
-              '<td>'+(s.status==='accepted'?(pts>0?'+'+pts:pts):'\u2014')+'</td>'+
-              '<td>'+esc(labelOf(EVIDENCE_OPTS,s.evidence))+'</td>'+
-              '<td>'+(s.notes?esc(s.notes):'<span class="acmg-rep-empty">\u2014</span>')+'</td></tr>';
-          }).join('')+'</tbody></table>';
-      } else {
-        critTable = '<p class="acmg-rep-empty">No criteria reviewed yet.</p>';
-      }
-
-      var score = '<div class="acmg-rep-block"><h3>'+variantTitle(v, idx)+' score</h3>'+kv([
-        ['Pathogenic points', String(vr.pathPts)],
-        ['Benign points', String(vr.benPts)],
-        ['Total', String(vr.total)],
-        ['Point-based category', vr.accepted.length?CLASS_LABEL[vr.derived]:'\u2014'],
-        ['Entered classification', vr.entered?CLASS_LABEL[vr.entered]:'\u2014'],
-        ['Consistency', vr.accepted.length?(vr.mismatch?'Mismatch':'Consistent with selected criteria'):'\u2014']
-      ])+'</div>';
-
-      meta = oldMeta;
-      crit = oldCrit;
-
-      return ident +
-        (idx === activeVariant ? geneStructureReportHtml() : '') +
-        '<div class="acmg-rep-block"><h3>'+variantTitle(v, idx)+' criteria reviewed ('+considered.length+')</h3>'+critTable+'</div>' +
-        score +
-        listBlock(variantTitle(v, idx)+' conflicts', vr.conflicts, 'bad') +
-        listBlock(variantTitle(v, idx)+' warnings', vr.warnings, 'warn') +
-        listBlock(variantTitle(v, idx)+' potentially useful missing evidence', vr.missing);
-    }
+    var first = (variants[0] && variants[0].meta) || meta || {};
+    var generatedAt = new Date().toISOString().replace('T',' ').replace(/\.\d{3}Z$/,' UTC');
+    var caseIdentifier = (provenance.values && (provenance.values.id || provenance.values.genome_id)) || '';
+    var sampleIdentifier = (provenance.values && provenance.values['metadata.samples.0.sample_id']) || '';
+    var limitations = '<div class="acmg-rep-block"><h3>Limitations</h3><p class="acmg-rep-empty" style="line-height:1.55">This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not annotate variants, does not assert clinical validity, and is not a substitute for expert clinical judgement or a regulated diagnostic report.</p></div>';
+    var auditIntro = '<div class="acmg-rep-audit-intro"><strong>Complete review record.</strong> The summary above contains only the contributing criteriais. The full criterion-level audit is reported as a complete audit record below.</div>';
 
     if (variants.length > 1){
-      var results = variants.map(function(v){ return computeForVariant(v); });
-      var allConflicts = [], allWarnings = [], anyMismatch = false;
-      results.forEach(function(vr, i){
-        if (vr.conflicts.length) allConflicts.push('Variant '+(i+1)+': '+vr.conflicts.join(' '));
-        if (vr.warnings.length) allWarnings.push('Variant '+(i+1)+': '+vr.warnings.join(' '));
-        if (vr.mismatch) anyMismatch = true;
-      });
-      if (!genotype.phase) allWarnings.push('Genotype review: phase not recorded.');
-      if (genotype.phase === 'Phase unknown' || genotype.phase === 'Not assessed') allWarnings.push('Genotype review: compound heterozygosity should not be assumed while phase is '+genotype.phase+'.');
-      if (!genotype.conclusion && variants.length > 1) allWarnings.push('Genotype review: genotype-level conclusion not recorded.');
-
-      var tone = allConflicts.length ? 'bad' : (anyMismatch ? 'bad' : (allWarnings.length ? 'warn' : 'ok'));
-      var verdict = allConflicts.length ? 'Conflict detected' : (anyMismatch ? 'Classification mismatch' : (allWarnings.length ? 'Review completed with warnings' : 'Internally consistent'));
-
-      var first = variants[0].meta || {};
-      var stamp = '<div class="acmg-rep-stamp">'+
-        '<h3>Structured ACMG evidence review</h3>'+
-        '<span class="acmg-verdict" data-tone="'+tone+'">'+esc(verdict)+'</span>'+
-        '<div style="font-size:.85rem;color:var(--acmg-steel);margin-top:8px;line-height:1.5">'+
-          variants.length+' variants reviewed in one case report<br>'+
-          'Software: '+esc(ACMG_VALIDATOR_SOFTWARE+' '+ACMG_VALIDATOR_VERSION)+'<br>'+
-          'Case: '+esc((first.disease || genotype.disease || '\u2014'))+' \u00b7 Inheritance: '+esc((first.inheritance || genotype.inheritance || '\u2014'))+'<br>'+
-          'Reviewer: '+esc(first.reviewer||'\u2014')+' \u00b7 '+esc(first.institution||'\u2014')+' \u00b7 '+esc(first.date||'\u2014')+'<br>'+
-          'Sign-off: '+(variants.every(function(v){ return !!v.meta.signoff; })?'completed for all variants':'not completed for all variants')+
-        '</div></div>';
-
-      var ctx = '<div class="acmg-rep-block"><h3>Case context</h3>'+kv([
-        ['Disease',first.disease || genotype.disease],
-        ['Inheritance',first.inheritance || genotype.inheritance],
-        ['Phenotype / HPO',first.phenotype],
-        ['Reviewer',first.reviewer],
-        ['Institution',first.institution],
-        ['Review date',first.date],
-        ['Guideline basis',first.guideline]
+      var caseSummary = summariseCase();
+      var stamp = '<div class="acmg-rep-stamp"><h3>Structured ACMG evidence review</h3><span class="acmg-verdict" data-tone="'+esc(caseSummary.tone)+'">'+esc(caseSummary.verdict)+'</span>'+
+        '<div style="font-size:.85rem;color:var(--acmg-steel);margin-top:8px;line-height:1.5">'+variants.length+' variants reviewed in one case report<br>'+
+        'Software: '+esc(ACMG_VALIDATOR_SOFTWARE+' '+ACMG_VALIDATOR_VERSION)+'<br>'+ 'Report generated: '+esc(generatedAt)+'<br>'+
+        (caseIdentifier ? 'Case identifier: '+esc(caseIdentifier)+'<br>' : '')+
+        (sampleIdentifier ? 'Sample identifier: '+esc(sampleIdentifier)+'<br>' : '')+
+        'Case: '+esc(first.disease || genotype.disease || '\u2014')+' \u00b7 Inheritance: '+esc(first.inheritance || genotype.inheritance || '\u2014')+'<br>'+
+        'Guideline basis: '+esc(first.guideline || '\u2014')+'<br>'+
+        'Reviewer: '+esc(first.reviewer||'\u2014')+' \u00b7 '+esc(first.institution||'\u2014')+' \u00b7 '+esc(first.date||'\u2014')+'<br>'+
+        'Sign-off: '+(caseSummary.allSignedOff?'completed for all variants':'not completed for all variants')+'</div></div>';
+      var cards = '<div class="acmg-report-summary-grid">'+caseSummary.variants.map(function(summary, i){ return reportVariantSummaryCard(variants[i], i, summary); }).join('')+'</div>';
+      var caseDetail = '<details class="acmg-report-detail"><summary><span>Case context and provenance</span><span class="acmg-panel-summary">Detailed record</span></summary><div class="acmg-report-detail-body">'+
+        '<div class="acmg-rep-block"><h3>Case context</h3>'+kv([['Disease',first.disease || genotype.disease],['Inheritance',first.inheritance || genotype.inheritance],['Phenotype / HPO',first.phenotype],['Reviewer',first.reviewer],['Institution',first.institution],['Review date',first.date],['Guideline basis',first.guideline]])+'</div>'+
+        provenanceBlockHtml()+'</div></details>';
+      var variantDetails = variants.map(function(v, i){ return reportVariantDetailHtml(v, i, caseSummary.variants[i].result, kv, listBlock); }).join('');
+      var genotypeBlock = genotypeReviewReportHtml(kv);
+      var caseConclusion = '<div class="acmg-rep-block"><h3>Overall conclusion</h3>'+kv([
+        ['Validation status',caseSummary.verdict],['Scoring note','Variant-level ACMG scores are kept separate and are not summed across variants.'],['Genotype note','Pair-level or genotype-level interpretation is recorded separately from variant-level ACMG evidence.']
       ])+'</div>';
-
-      var genotypeBlock = '<div class="acmg-rep-block"><h3>Genotype-level review</h3>'+kv([
-        ['Gene reviewed together',genotype.gene],
-        ['Disease / condition',genotype.disease],
-        ['Inheritance model',genotype.inheritance],
-        ['Number of variants reviewed',String(variants.length)],
-        ['Phase',genotype.phase],
-        ['Variant combination',genotype.combination],
-        ['Phase evidence',genotype.phase_evidence],
-        ['Genotype-level conclusion',genotype.conclusion],
-        ['Phenotype fit',genotype.phenotype_fit],
-        ['Residual uncertainty',genotype.uncertainty]
-      ])+'</div>';
-
-      var blocks = variants.map(function(v, i){ return variantBlocks(v, i, results[i]); }).join('');
-      var overall = '<div class="acmg-rep-block"><h3>Overall conclusion</h3>'+kv([
-        ['Validation status',verdict],
-        ['Scoring note','Variant-level ACMG scores are kept separate and are not summed across variants.'],
-        ['Genotype note','Pair-level or genotype-level interpretation is recorded separately from variant-level ACMG evidence.']
-      ])+'</div>';
-
-      var limitations = '<div class="acmg-rep-block"><h3>Limitations</h3>'+
-        '<p class="acmg-rep-empty" style="line-height:1.55">This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not annotate variants, does not assert clinical validity, and is not a substitute for expert clinical judgement or a regulated diagnostic report.</p></div>';
-
-      body.innerHTML = stamp + reportScoreboardHtml(r) + ctx + provenanceBlockHtml() + blocks + genotypeBlock + overall +
-        listBlock('Overall conflicts', allConflicts, 'bad') +
-        listBlock('Overall warnings', allWarnings, 'warn') +
-        limitations;
-      lastReportBody = body.innerHTML;
+      var caseAudit = '<details class="acmg-report-detail"><summary><span>Case-level review details</span><span class="acmg-panel-summary">Genotype, warnings and limitations</span></summary><div class="acmg-report-detail-body">'+
+        genotypeBlock + caseConclusion + listBlock('Overall conflicts',caseSummary.conflicts,'bad') + listBlock('Overall warnings',caseSummary.warnings,'warn') + limitations + '</div></details>';
+      lastReportBody = stamp + cards + auditIntro + caseDetail + variantDetails + caseAudit;
+      body.innerHTML = reportScreenSummaryHtml(stamp, cards);
       return;
     }
 
-    var stamp = '<div class="acmg-rep-stamp">'+
-      '<h3>Structured ACMG evidence review</h3>'+
-      '<span class="acmg-verdict" data-tone="'+r.tone+'">'+esc(r.verdict)+'</span>'+
-      '<div style="font-size:.85rem;color:var(--acmg-steel);margin-top:8px;line-height:1.5">'+
-        esc(variantLine())+'<br>'+
-        'Software: '+esc(ACMG_VALIDATOR_SOFTWARE+' '+ACMG_VALIDATOR_VERSION)+'<br>'+
-        'Entered classification: '+(r.entered?esc(CLASS_LABEL[r.entered]):'\u2014')+
-        ' \u00b7 Point-based category: '+(r.accepted.length?esc(CLASS_LABEL[r.derived]):'\u2014')+
-        ' ('+r.total+' pts)<br>'+
-        'Reviewer: '+esc(meta.reviewer||'\u2014')+' \u00b7 '+esc(meta.institution||'\u2014')+' \u00b7 '+esc(meta.date||'\u2014')+'<br>'+
-        'Sign-off: '+(meta.signoff?'completed':'not completed')+
-      '</div></div>';
+    var v = variants[0] || { meta:cloneMetaState(meta), crit:cloneCritState(crit), external_evidence:null, gene_structure:null };
+    var vr = computeForVariant(v);
+    var completion = criteriaCompletenessSummaryFor(v.crit);
+    var stampSingle = '<div class="acmg-rep-stamp"><h3>Structured ACMG evidence review</h3><span class="acmg-verdict" data-tone="'+esc(vr.tone)+'">'+esc(vr.verdict)+'</span>'+
+      '<div style="font-size:.85rem;color:var(--acmg-steel);margin-top:8px;line-height:1.5">'+esc(shortVariantLabel(v,0))+'<br>'+
+      'Software: '+esc(ACMG_VALIDATOR_SOFTWARE+' '+ACMG_VALIDATOR_VERSION)+'<br>'+ 'Report generated: '+esc(generatedAt)+'<br>'+
+      (caseIdentifier ? 'Case identifier: '+esc(caseIdentifier)+'<br>' : '')+
+      (sampleIdentifier ? 'Sample identifier: '+esc(sampleIdentifier)+'<br>' : '')+
+      'Case: '+esc(v.meta.disease || '\u2014')+' \u00b7 Inheritance: '+esc(v.meta.inheritance || '\u2014')+'<br>'+
+      'Guideline basis: '+esc(v.meta.guideline || '\u2014')+'<br>'+
+      'Entered classification: '+(vr.entered?esc(CLASS_LABEL[vr.entered]):'\u2014')+' \u00b7 Point-based category: '+(vr.accepted.length?esc(CLASS_LABEL[vr.derived]):'\u2014')+' ('+vr.total+' pts)<br>'+
+      'Criteria: '+completion.addressed+'/'+completion.total+' addressed \u00b7 '+completion.flagged+' need attention<br>'+
+      'Reviewer: '+esc(v.meta.reviewer||'\u2014')+' \u00b7 '+esc(v.meta.institution||'\u2014')+' \u00b7 '+esc(v.meta.date||'\u2014')+'<br>'+
+      'Sign-off: '+(v.meta.signoff?'completed':'not completed')+'</div></div>';
+    var singleSummary = '<div class="acmg-report-summary-grid">'+reportVariantSummaryCard(v,0,summariseVariant(v,0))+'</div>';
+    var contextAndViewer = '<details class="acmg-report-detail"><summary><span>Case context and provenance</span><span class="acmg-panel-summary">Detailed record</span></summary><div class="acmg-report-detail-body">'+
+      '<div class="acmg-rep-block"><h3>Case context</h3>'+kv([['Disease',v.meta.disease],['Inheritance',v.meta.inheritance],['Phenotype / HPO',v.meta.phenotype],['Reviewer',v.meta.reviewer],['Institution',v.meta.institution],['Review date',v.meta.date],['Guideline basis',v.meta.guideline]])+'</div>'+
+      provenanceBlockHtml()+'</div></details>';
+    var genotypeDetail = '<details class="acmg-report-detail"><summary><span>Genotype-level review</span><span class="acmg-panel-summary">Case-level interpretation</span></summary><div class="acmg-report-detail-body">'+
+      genotypeReviewReportHtml(kv)+'</div></details>';
+    lastReportBody = stampSingle + singleSummary + auditIntro + contextAndViewer + genotypeDetail + reportVariantDetailHtml(v,0,vr,kv,listBlock) +
+      '<details class="acmg-report-detail"><summary><span>Limitations</span><span class="acmg-panel-summary">Report scope</span></summary><div class="acmg-report-detail-body">'+limitations+'</div></details>';
+    body.innerHTML = reportScreenSummaryHtml(stampSingle, singleSummary);
+  }
 
-    var ident = '<div class="acmg-rep-block"><h3>Variant identity</h3>'+kv([
-      ['Gene',meta.gene],['Transcript',meta.transcript],['cDNA',meta.hgvs_c],['Protein',meta.hgvs_p],
-      ['Genome build',meta.build],['Coordinate',meta.coordinate],['Reference allele',meta.ref],['Alternate allele',meta.alt],['Variant type',meta.variant_type],['Zygosity',meta.zygosity]
-    ])+'</div>';
-    var ctx = '<div class="acmg-rep-block"><h3>Case context</h3>'+kv([
-      ['Disease',meta.disease],['Inheritance',meta.inheritance],['Phenotype / HPO',meta.phenotype],['Guideline basis',meta.guideline]
-    ])+'</div>';
+  function criterionPayloadForState(code, criterionState){
+    var d = defByCode[code], row = stateForCode(code, criterionState);
+    return {
+      criterion:code, notation:notationFor(code, criterionState), group:d.group, status:row.status, default_strength:d.strength, applied_strength:row.strength,
+      strength_modified:row.strength !== d.strength, points:row.status==='accepted' ? (POINTS[row.group][row.strength]||0) : 0,
+      evidence_status:row.evidence,
+      caveat_status:d.caveats ? (caveatCompleteFor(code, criterionState)?'completed':'incomplete') : 'not_applicable',
+      caveats:d.caveats ? d.caveats.map(function(item, i){ return { item:item, confirmed:!!row.caveats[i] }; }) : [],
+      row_state:rowStateFor(code, criterionState), notes:row.notes || ''
+    };
+  }
 
-    var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
-    var critTable;
-    if (considered.length){
-      critTable = '<table class="acmg-rep-table acmg-rep-criteria-table"><thead><tr><th>Criterion</th><th>Status</th><th>Applied strength</th><th>Points</th><th>Evidence status</th><th>Notes</th></tr></thead><tbody>'+
-        considered.map(function(code){
-          var d = defByCode[code], s = crit[code];
-          var pts = (s.status==='accepted') ? (POINTS[s.group][s.strength]||0) : 0;
-          var strengthCell = esc(STRENGTH_LABEL[s.strength]) + (s.strength!==d.strength ? ' <span class="acmg-rep-empty">(modified)</span>' : '');
-          return '<tr><td><strong>'+esc(notation(code))+'</strong></td>'+
-            '<td>'+esc(labelOf(STATUS_OPTS,s.status))+'</td>'+
-            '<td>'+strengthCell+'</td>'+
-            '<td>'+(s.status==='accepted'?(pts>0?'+'+pts:pts):'\u2014')+'</td>'+
-            '<td>'+esc(labelOf(EVIDENCE_OPTS,s.evidence))+'</td>'+
-            '<td>'+(s.notes?esc(s.notes):'<span class="acmg-rep-empty">\u2014</span>')+'</td></tr>';
-        }).join('')+'</tbody></table>';
-    } else {
-      critTable = '<p class="acmg-rep-empty">No criteria reviewed yet.</p>';
+  function buildVariantPayload(v, idx){
+    var metaState = (v && v.meta) || {};
+    var criterionState = (v && v.crit) || emptyCritState();
+    var vr = computeVariant(metaState, criterionState);
+    var considered = CRITERIA.map(function(c){ return c[1]; }).filter(function(code){ return touchedFor(code, criterionState); });
+    var out = {
+      variant_index:idx + 1,
+      variant:{ gene:metaState.gene||'', transcript:metaState.transcript||'', hgvs_c:metaState.hgvs_c||'', hgvs_p:metaState.hgvs_p||'', genome_build:metaState.build||'', coordinate:metaState.coordinate||'', ref:metaState.ref||'', alt:metaState.alt||'', variant_type:metaState.variant_type||'', zygosity:metaState.zygosity||'' },
+      case_context:{ disease:metaState.disease||'', inheritance:metaState.inheritance||'', phenotype:metaState.phenotype||'' },
+      criteria:considered.map(function(code){ return criterionPayloadForState(code, criterionState); }),
+      criteria_audit:CRITERIA.map(function(c){ return criterionPayloadForState(c[1], criterionState); }),
+      validation:{ pathogenic_points:vr.pathPts, benign_points:vr.benPts, total_points:vr.total, point_based_category:vr.accepted.length?vr.derived:null, entered_classification:vr.entered||null, verdict:vr.verdict, strength_modifications:vr.modifications, conflicts:vr.conflicts, warnings:vr.warnings, missing_evidence:vr.missing }
+    };
+    if (v && v.external_evidence) out.external_evidence = cloneData(v.external_evidence);
+    if (v && v.gene_structure){
+      out.gene_structure_view = {
+        captured_at:v.gene_structure.captured_at || '',
+        gene:v.gene_structure.gene || '',
+        location:v.gene_structure.location || '',
+        transcript:v.gene_structure.transcript || '',
+        assembly:v.gene_structure.assembly || '',
+        strand:v.gene_structure.strand || '',
+        source_url:v.gene_structure.source_url || '',
+        pixel_width:v.gene_structure.pixel_width || 0,
+        pixel_height:v.gene_structure.pixel_height || 0,
+        image_embedded_in_html_pdf:!!v.gene_structure.data_url
+      };
     }
-    var critBlock = '<div class="acmg-rep-block"><h3>Criteria reviewed ('+considered.length+')</h3>'+critTable+'</div>';
-
-    var scoreBlock = '<div class="acmg-rep-block"><h3>Point score</h3>'+kv([
-      ['Pathogenic points', String(r.pathPts)],
-      ['Benign points', String(r.benPts)],
-      ['Total', String(r.total)],
-      ['Point-based category', r.accepted.length?CLASS_LABEL[r.derived]:'\u2014'],
-      ['Entered classification', r.entered?CLASS_LABEL[r.entered]:'\u2014'],
-      ['Consistency', r.accepted.length?(r.mismatch?'Mismatch':'Consistent with selected criteria'):'\u2014']
-    ])+'</div>';
-
-    var limitations = '<div class="acmg-rep-block"><h3>Limitations</h3>'+
-      '<p class="acmg-rep-empty" style="line-height:1.55">This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not annotate the variant, does not assert clinical validity, and is not a substitute for expert clinical judgement or a regulated diagnostic report.</p></div>';
-
-    body.innerHTML = stamp + reportScoreboardHtml(r) + ident + geneStructureReportHtml() + ctx + provenanceBlockHtml() + critBlock + scoreBlock +
-      listBlock('Strength modifications', r.modifications) +
-      listBlock('Conflicts', r.conflicts, 'bad') +
-      listBlock('Warnings', r.warnings, 'warn') +
-      listBlock('Potentially useful missing evidence', r.missing) +
-      limitations;
-
-    lastReportBody = body.innerHTML;
+    return out;
   }
 
   function buildExports(r){
     saveActiveVariant();
+    var variantPayload = variants.map(function(v, idx){ return buildVariantPayload(v, idx); });
     if (variants.length > 1){
-      var variantPayload = variants.map(function(v, idx){
-        var oldMeta = meta, oldCrit = crit;
-        meta = cloneMetaState(v.meta);
-        crit = cloneCritState(v.crit);
-        var vr = compute();
-        var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
-        var critObjs = considered.map(function(code){
-          var d = defByCode[code], s = crit[code];
-          return {
-            criterion: code, notation: notation(code), group: d.group,
-            status: s.status, default_strength: d.strength, applied_strength: s.strength,
-            strength_modified: s.strength !== d.strength,
-            points: s.status==='accepted' ? (POINTS[s.group][s.strength]||0) : 0,
-            evidence_status: s.evidence,
-            caveat_status: d.caveats ? (caveatComplete(code)?'completed':'incomplete') : 'not_applicable',
-            row_state: rowStateOf(code),
-            notes: s.notes || ''
-          };
-        });
-        var out = {
-          variant_index: idx + 1,
-          variant:{ gene:meta.gene||'', transcript:meta.transcript||'', hgvs_c:meta.hgvs_c||'', hgvs_p:meta.hgvs_p||'', genome_build:meta.build||'', coordinate:meta.coordinate||'', ref:meta.ref||'', alt:meta.alt||'', variant_type:meta.variant_type||'', zygosity:meta.zygosity||'' },
-          case_context:{ disease:meta.disease||'', inheritance:meta.inheritance||'', phenotype:meta.phenotype||'' },
-          criteria: critObjs,
-          validation:{ pathogenic_points:vr.pathPts, benign_points:vr.benPts, total_points:vr.total, point_based_category:vr.accepted.length?vr.derived:null, entered_classification:vr.entered||null, verdict:vr.verdict, conflicts:vr.conflicts, warnings:vr.warnings, missing_evidence:vr.missing }
-        };
-        meta = oldMeta;
-        crit = oldCrit;
-        return out;
-      });
       var obj = {
-        schema:'switzerlandomics.acmg-validator.case.v1',
-        generated_at:new Date().toISOString(),
-        review:{ reviewer:(variants[0].meta||{}).reviewer||'', institution:(variants[0].meta||{}).institution||'', date:(variants[0].meta||{}).date||'' },
+        schema:'switzerlandomics.acmg-validator.case.v1', generated_at:new Date().toISOString(),
+        review:{ reviewer:(variants[0].meta||{}).reviewer||'', institution:(variants[0].meta||{}).institution||'', date:(variants[0].meta||{}).date||'', signoff:variants.every(function(v){ return !!(v.meta && v.meta.signoff); }) },
         case_context:{ disease:(variants[0].meta||{}).disease||genotype.disease||'', inheritance:(variants[0].meta||{}).inheritance||genotype.inheritance||'', phenotype:(variants[0].meta||{}).phenotype||'' },
-        provenance:provenancePayload(),
-        variants:variantPayload,
-        genotype_review:genotype,
-        note:'Variant-level ACMG scores are kept separate and are not summed across variants.'
+        provenance:provenancePayload(), variants:variantPayload, genotype_review:cloneData(genotype), note:'Variant-level ACMG scores are kept separate and are not summed across variants.'
       };
       lastJson = JSON.stringify(obj, null, 2);
-
-      var L = [];
-      L.push('# ACMG Validator case report'); L.push('');
-      L.push('**Variants reviewed:** ' + variants.length);
-      L.push('**Disease:** ' + ((variants[0].meta||{}).disease || genotype.disease || '\u2014'));
-      L.push('**Inheritance:** ' + ((variants[0].meta||{}).inheritance || genotype.inheritance || '\u2014'));
-      L.push('**Reviewer:** ' + ((variants[0].meta||{}).reviewer || '\u2014') + ' \u00b7 ' + ((variants[0].meta||{}).institution || '\u2014') + ' \u00b7 ' + ((variants[0].meta||{}).date || '\u2014'));
-      if (hasProvenance()){
-        L.push(''); L.push('## Sample provenance and sequencing metadata'); L.push('');
-        provenanceRows().forEach(function(row){ L.push('- ' + row[0] + ': ' + row[1]); });
-      }
-      L.push('');
+      var L = ['# ACMG Validator case report','', '**Variants reviewed:** '+variants.length, '**Disease:** '+((variants[0].meta||{}).disease || genotype.disease || '\u2014'), '**Inheritance:** '+((variants[0].meta||{}).inheritance || genotype.inheritance || '\u2014'), '**Reviewer:** '+((variants[0].meta||{}).reviewer || '\u2014')+' \u00b7 '+((variants[0].meta||{}).institution || '\u2014')+' \u00b7 '+((variants[0].meta||{}).date || '\u2014')];
+      if (hasProvenance()){ L.push('','## Sample provenance and sequencing metadata',''); provenanceRows().forEach(function(row){ L.push('- '+row[0]+': '+row[1]); }); }
       variantPayload.forEach(function(v){
-        L.push('## Variant ' + v.variant_index + ': ' + (v.variant.gene || '') + ' ' + (v.variant.hgvs_c || '') + ' ' + (v.variant.hgvs_p || ''));
-        L.push('');
-        L.push('- Transcript: ' + (v.variant.transcript || '\u2014'));
-        L.push('- Zygosity: ' + (v.variant.zygosity || '\u2014'));
-        L.push('- Total points: ' + v.validation.total_points);
-        L.push('- Point-based category: ' + (v.validation.point_based_category ? CLASS_LABEL[v.validation.point_based_category] : '\u2014'));
-        L.push('- Entered classification: ' + (v.validation.entered_classification ? CLASS_LABEL[v.validation.entered_classification] : '\u2014'));
-        L.push('');
-        L.push('| Criterion | Status | Applied strength | Points | Evidence status | Notes |');
-        L.push('|---|---|---|---|---|---|');
-        if (v.criteria.length){
-          v.criteria.forEach(function(c){
-            L.push('| '+c.notation+' | '+c.status+' | '+c.applied_strength+' | '+c.points+' | '+c.evidence_status+' | '+(c.notes ? c.notes.replace(/\|/g,'\\|').replace(/\n/g,' ') : '\u2014')+' |');
-          });
-        } else {
-          L.push('| \u2014 | \u2014 | \u2014 | \u2014 | \u2014 | No criteria reviewed |');
-        }
-        L.push('');
+        L.push('','## Variant '+v.variant_index+': '+(v.variant.gene||'')+' '+(v.variant.hgvs_c||'')+' '+(v.variant.hgvs_p||''),'',
+          '- Transcript: '+(v.variant.transcript||'\u2014'), '- Zygosity: '+(v.variant.zygosity||'\u2014'), '- Total points: '+v.validation.total_points,
+          '- Point-based category: '+(v.validation.point_based_category?CLASS_LABEL[v.validation.point_based_category]:'\u2014'), '- Entered classification: '+(v.validation.entered_classification?CLASS_LABEL[v.validation.entered_classification]:'\u2014'), '',
+          '| Criterion | Status | Applied strength | Points | Evidence status | Notes |','|---|---|---|---|---|---|');
+        if (v.criteria_audit.length){ v.criteria_audit.forEach(function(c){ L.push('| '+c.notation+' | '+c.status+' | '+c.applied_strength+' | '+c.points+' | '+c.evidence_status+' | '+(c.notes ? c.notes.replace(/\|/g,'\\|').replace(/\n/g,' ') : '\u2014')+' |'); }); }
+        else L.push('| \u2014 | \u2014 | \u2014 | \u2014 | \u2014 | No criteria reviewed |');
       });
-      L.push('## Genotype-level review'); L.push('');
-      L.push('- Gene reviewed together: ' + (genotype.gene || '\u2014'));
-      L.push('- Phase: ' + (genotype.phase || '\u2014'));
-      L.push('- Variant combination: ' + (genotype.combination || '\u2014'));
-      L.push('- Genotype-level conclusion: ' + (genotype.conclusion || '\u2014'));
-      L.push('- Residual uncertainty: ' + (genotype.uncertainty || '\u2014'));
-      L.push('');
-      L.push('Variant-level ACMG scores are kept separate and are not summed across variants.');
+      L.push('','## Genotype-level review','', '- Gene reviewed: '+(genotype.gene||'\u2014'), '- Phase: '+(genotype.phase||'\u2014'), '- Variant / combination context: '+(genotype.combination||'\u2014'), '- Genotype-level conclusion: '+(genotype.conclusion||'\u2014'), '- Residual uncertainty: '+(genotype.uncertainty||'\u2014'), '', 'Variant-level ACMG scores are kept separate and are not summed across variants.');
       lastMd = L.join('\n');
       return;
     }
-    var considered = CRITERIA.map(function(c){return c[1];}).filter(touched);
-    var critObjs = considered.map(function(code){
-      var d = defByCode[code], s = crit[code];
-      return {
-        criterion: code, notation: notation(code), group: d.group,
-        status: s.status, default_strength: d.strength, applied_strength: s.strength,
-        strength_modified: s.strength !== d.strength,
-        points: s.status==='accepted' ? (POINTS[s.group][s.strength]||0) : 0,
-        evidence_status: s.evidence,
-        caveat_status: d.caveats ? (caveatComplete(code)?'completed':'incomplete') : 'not_applicable',
-        row_state: rowStateOf(code),
-        notes: s.notes || ''
-      };
-    });
-    var obj = {
-      schema:'switzerlandomics.acmg-validator.v1',
-      generated_at: new Date().toISOString(),
-      guideline_basis: meta.guideline || '',
-      review:{ reviewer:meta.reviewer||'', institution:meta.institution||'', date:meta.date||'', signoff:!!meta.signoff },
-      variant:{ gene:meta.gene||'', transcript:meta.transcript||'', hgvs_c:meta.hgvs_c||'', hgvs_p:meta.hgvs_p||'', genome_build:meta.build||'', coordinate:meta.coordinate||'', ref:meta.ref||'', alt:meta.alt||'', variant_type:meta.variant_type||'', zygosity:meta.zygosity||'' },
-      case_context:{ disease:meta.disease||'', inheritance:meta.inheritance||'', phenotype:meta.phenotype||'' },
-      provenance:provenancePayload(),
-      criteria: critObjs,
-      validation:{
-        pathogenic_points:r.pathPts, benign_points:r.benPts, total_points:r.total,
-        point_based_category:r.accepted.length?r.derived:null,
-        entered_classification:r.entered||null,
-        verdict:r.verdict, strength_modifications:r.modifications,
-        conflicts:r.conflicts, warnings:r.warnings, missing_evidence:r.missing
-      }
-    };
-    lastJson = JSON.stringify(obj, null, 2);
 
-    var L = [];
-    L.push('# ACMG Validator report'); L.push('');
-    L.push('**Variant:** ' + variantLine());
-    L.push('**Reviewer:** ' + (meta.reviewer||'\u2014') + ' \u00b7 ' + (meta.institution||'\u2014') + ' \u00b7 ' + (meta.date||'\u2014'));
-    L.push('**Guideline basis:** ' + (meta.guideline||'\u2014'));
-    L.push('**Sign-off:** ' + (meta.signoff?'completed':'not completed')); L.push('');
+    var single = variantPayload[0];
+    var objSingle = {
+      schema:'switzerlandomics.acmg-validator.v1', generated_at:new Date().toISOString(), guideline_basis:(variants[0].meta||{}).guideline || '',
+      review:{ reviewer:(variants[0].meta||{}).reviewer||'', institution:(variants[0].meta||{}).institution||'', date:(variants[0].meta||{}).date||'', signoff:!!((variants[0].meta||{}).signoff) },
+      variant:single.variant, case_context:single.case_context, provenance:provenancePayload(), genotype_review:cloneData(genotype), criteria:single.criteria, validation:single.validation
+    };
+    if (variants[0].external_evidence) objSingle.external_evidence = cloneData(variants[0].external_evidence);
+    lastJson = JSON.stringify(objSingle, null, 2);
+    var singleMeta = variants[0].meta || {};
+    var singleResult = computeForVariant(variants[0]);
+    var md = ['# ACMG Validator report','',
+      '**Variant:** '+shortVariantLabel(variants[0],0),
+      '**Reviewer:** '+(singleMeta.reviewer||'\u2014')+' \u00b7 '+(singleMeta.institution||'\u2014')+' \u00b7 '+(singleMeta.date||'\u2014'),
+      '**Guideline basis:** '+(singleMeta.guideline||'\u2014'),
+      '**Sign-off:** '+(singleMeta.signoff?'completed':'not completed'),''];
     if (hasProvenance()){
-      L.push('## Sample provenance and sequencing metadata'); L.push('');
-      provenanceRows().forEach(function(row){ L.push('- ' + row[0] + ': ' + row[1]); });
-      L.push('');
+      md.push('## Sample provenance and sequencing metadata','');
+      provenanceRows().forEach(function(row){ md.push('- '+row[0]+': '+row[1]); });
+      md.push('');
     }
-    L.push('## Validation status: ' + r.verdict); L.push('');
-    L.push('- Pathogenic points: ' + r.pathPts);
-    L.push('- Benign points: ' + r.benPts);
-    L.push('- Total: ' + r.total);
-    L.push('- Point-based category: ' + (r.accepted.length?CLASS_LABEL[r.derived]:'\u2014'));
-    L.push('- Entered classification: ' + (r.entered?CLASS_LABEL[r.entered]:'\u2014')); L.push('');
-    L.push('## Criteria reviewed'); L.push('');
-    if (considered.length){
-      L.push('| Criterion | Status | Applied strength | Points | Evidence status | Notes |');
-      L.push('|---|---|---|---|---|---|');
-      considered.forEach(function(code){
-        var d = defByCode[code], s = crit[code];
-        var pts = s.status==='accepted' ? (POINTS[s.group][s.strength]||0) : 0;
-        var str = STRENGTH_LABEL[s.strength] + (s.strength!==d.strength?' (modified)':'');
-        L.push('| '+notation(code)+' | '+labelOf(STATUS_OPTS,s.status)+' | '+str+' | '+(s.status==='accepted'?pts:'\u2014')+' | '+labelOf(EVIDENCE_OPTS,s.evidence)+' | '+(s.notes?s.notes.replace(/\|/g,'\\|').replace(/\n/g,' '):'\u2014')+' |');
+    md.push('## Validation status: '+singleResult.verdict,'',
+      '- Pathogenic points: '+singleResult.pathPts,
+      '- Benign points: '+singleResult.benPts,
+      '- Total: '+singleResult.total,
+      '- Point-based category: '+(singleResult.accepted.length?CLASS_LABEL[singleResult.derived]:'\u2014'),
+      '- Entered classification: '+(singleResult.entered?CLASS_LABEL[singleResult.entered]:'\u2014'),'',
+      '## Criteria reviewed','',
+      '| Criterion | Status | Applied strength | Points | Evidence status | Notes |','|---|---|---|---|---|---|');
+    if (single.criteria_audit.length){
+      single.criteria_audit.forEach(function(c){
+        var str = STRENGTH_LABEL[c.applied_strength] + (c.strength_modified?' (modified)':'');
+        md.push('| '+c.notation+' | '+labelOf(STATUS_OPTS,c.status)+' | '+str+' | '+(c.status==='accepted'?c.points:'\u2014')+' | '+labelOf(EVIDENCE_OPTS,c.evidence_status)+' | '+(c.notes ? c.notes.replace(/\|/g,'\\|').replace(/\n/g,' ') : '\u2014')+' |');
       });
-    } else { L.push('_No criteria reviewed yet._'); }
-    L.push('');
-    function md(title,arr){ L.push('## '+title); L.push(''); if(!arr.length){L.push('_None._');}else{arr.forEach(function(x){L.push('- '+x);});} L.push(''); }
-    md('Strength modifications', r.modifications);
-    md('Conflicts', r.conflicts);
-    md('Warnings', r.warnings);
-    md('Potentially useful missing evidence', r.missing);
-    L.push('## Limitations'); L.push('');
-    L.push('This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not assert clinical validity. Generated with ACMG Validator, Switzerland Omics.');
-    lastMd = L.join('\n');
+    } else {
+      md.push('| \u2014 | \u2014 | \u2014 | \u2014 | \u2014 | No criteria reviewed |');
+    }
+    md.push('');
+    function appendMdSection(title, items){
+      md.push('## '+title,'');
+      if (!items.length) md.push('_None._');
+      else items.forEach(function(x){ md.push('- '+x); });
+      md.push('');
+    }
+    appendMdSection('Strength modifications',singleResult.modifications);
+    appendMdSection('Conflicts',singleResult.conflicts);
+    appendMdSection('Warnings',singleResult.warnings);
+    appendMdSection('Potentially useful missing evidence',singleResult.missing);
+    md.push('## Genotype-level review','',
+      '- Gene reviewed: '+(genotype.gene||'\u2014'),
+      '- Disease / condition: '+(genotype.disease||'\u2014'),
+      '- Inheritance model: '+(genotype.inheritance||'\u2014'),
+      '- Phase: '+(genotype.phase||'\u2014'),
+      '- Variant / combination context: '+(genotype.combination||'\u2014'),
+      '- Phase evidence: '+(genotype.phase_evidence||'\u2014'),
+      '- Genotype-level conclusion: '+(genotype.conclusion||'\u2014'),
+      '- Phenotype fit: '+(genotype.phenotype_fit||'\u2014'),
+      '- Residual uncertainty: '+(genotype.uncertainty||'\u2014'),'');
+    md.push('## Limitations','', 'This report records the completeness and internal consistency of a manual ACMG/AMP evidence review. It does not assert clinical validity. Generated with ACMG Validator, Switzerland Omics.');
+    lastMd = md.join('\n');
   }
 
-  function pageCss(){ var s = document.querySelector('style'); return s ? s.textContent : ''; }
+  function pageCss(){ var styleEl = document.querySelector('style'); return styleEl ? styleEl.textContent : ''; }
+
   function buildReportHtml(){
     var title = 'ACMG evidence review';
-    if (meta.gene || meta.transcript || meta.hgvs_c) title += ' \u2014 ' + variantLine();
+    if (variants.length > 1) title += ' \u2014 ' + variants.length + ' variants';
+    else if (meta.gene || meta.transcript || meta.hgvs_c) title += ' \u2014 ' + variantLine();
     var footer = '<footer class="acmg-footer-text">Generated with ACMG Validator, a tool from '+
       '<a href="https://switzerlandomics.ch">Switzerland Omics</a>. The validator checks internal consistency and process completion only; '+
       'it does not assert clinical validity, does not annotate variants, and does not constitute medical advice. '+
@@ -2644,11 +2885,13 @@ technology_group: structured-genomics
     var extra = 'body{margin:0;padding:28px;background:#fff;font-family:ui-sans-serif,system-ui,sans-serif;}'+
       '.acmg-shell{max-width:1000px;margin:0 auto;}'+
       '.acmg-report{border-top:none!important;margin:0!important;padding:0!important;}'+
-      '.acmg-rep-block{break-inside:avoid;}'+
-      '.acmg-rep-scoreboard,.acmg-rep-stamp{break-inside:avoid;}';
+      '.acmg-rep-block,.acmg-report-variant-card{break-inside:avoid;}'+
+      '.acmg-rep-scoreboard,.acmg-rep-stamp{break-inside:avoid;}'+
+      '@media print{.acmg-report-detail>summary{display:none!important}.acmg-report-detail:not([open])>.acmg-report-detail-body{display:block!important}.acmg-report-detail-body{display:block!important}}';
+    var exportBody = lastReportBody.replace(/<details class="acmg-report-detail([^"]*)">/g, '<details class="acmg-report-detail$1" open>');
     return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+
       esc(title)+'</title><style>'+pageCss()+'\n'+extra+'</style></head><body><main class="acmg-app"><section class="acmg-shell">'+
-      '<div class="acmg-report">'+lastReportBody+'</div>'+footer+'</section></main></body></html>';
+      '<div class="acmg-report">'+exportBody+'</div>'+footer+'</section></main></body></html>';
   }
 
   function shortVariantLabel(v, idx){
@@ -2661,11 +2904,33 @@ technology_group: structured-genomics
 
   function renderVariantButtons(includeLabels){
     ensureVariants();
-    var html = '';
-    variants.forEach(function(v, i){
-      html += '<button type="button" class="acmg-case-tab'+(i===activeVariant?' acmg-active':'')+'" data-variant="'+i+'">Variant '+(i+1)+(includeLabels ? '<span class="acmg-tab-sub"> · '+esc(shortVariantLabel(v,i))+'</span>' : '')+'</button>';
+    return variants.map(function(v, i){
+      var summary = summariseVariant(v, i);
+      var active = workflowView === 'variant' && i === activeVariant;
+      var status = summary.completeness.addressed + '/' + summary.completeness.total;
+      if (summary.completeness.flagged) status += ' · ' + summary.completeness.flagged + ' attention';
+      else if (summary.signedOff && summary.completeness.addressed === summary.completeness.total) status += ' · complete';
+      return '<button type="button" class="acmg-case-tab'+(active?' acmg-active':'')+'" data-variant="'+i+'">Variant '+(i+1)+(includeLabels ? '<span class="acmg-tab-sub"> · '+esc(shortVariantLabel(v,i))+'</span><span class="acmg-tab-status">'+esc(status)+'</span>' : '')+'</button>';
+    }).join('');
+  }
+
+  function applyWorkflowView(){
+    var editor = document.querySelector('.acmg-editor');
+    if (editor) editor.hidden = false;
+    var signoffHeading = document.getElementById('acmg-signoff-heading');
+    if (signoffHeading) signoffHeading.textContent = '5 · Classification and sign-off';
+
+    // The editor is a continuous 1–5 workflow. Case context and genotype
+    // controls are navigation anchors, not mutually exclusive views.
+    document.querySelectorAll('.acmg-workflow-section').forEach(function(section){
+      section.hidden = false;
     });
-    return html;
+  }
+
+  function setWorkflowView(view){
+    workflowView = view;
+    applyWorkflowView();
+    renderTabs();
   }
 
   function renderTabs(){
@@ -2680,6 +2945,7 @@ technology_group: structured-genomics
       row.innerHTML = html;
     }
     if (inlineRow) inlineRow.innerHTML = renderVariantButtons(false);
+    applyWorkflowView();
   }
 
   function fillGenotypeFields(){
@@ -2692,8 +2958,10 @@ technology_group: structured-genomics
   function notifyGeneStructureViewer(){
     document.dispatchEvent(new CustomEvent('acmg:gsv:update', {
       detail: {
-        gene: meta.gene || '',
-        coordinate: meta.coordinate || ''
+        gene:meta.gene || '',
+        coordinate:meta.coordinate || '',
+        variant_index:activeVariant,
+        view_key:geneStructureViewKeyForMeta(meta)
       }
     }));
   }
@@ -2707,6 +2975,7 @@ technology_group: structured-genomics
     buildExports(r);
     renderTabs();
     applyFilter();
+    applyWorkflowView();
     notifyGeneStructureViewer();
   }
 
@@ -2794,7 +3063,10 @@ technology_group: structured-genomics
         status:item.status || 'not_assessed',
         strength:item.applied_strength || item.strength || d.strength,
         evidence:item.evidence_status || item.evidence || 'not_assessed',
-        caveats:d.caveats ? d.caveats.map(function(){ return item.caveat_status === 'completed'; }) : [],
+        caveats:d.caveats ? d.caveats.map(function(caveat, i){
+          if (Array.isArray(item.caveats) && item.caveats[i]) return !!item.caveats[i].confirmed;
+          return item.caveat_status === 'completed';
+        }) : [],
         notes:item.notes || ''
       };
     });
@@ -2847,8 +3119,9 @@ technology_group: structured-genomics
   function applyImportedState(newMeta, newCrit, newVariants, newGenotype, newProvenance){
     meta = cloneMetaState(newMeta || {});
     crit = cloneCritState(newCrit || emptyCritState());
-    variants = (newVariants && newVariants.length) ? newVariants : [{ meta:cloneMetaState(meta), crit:cloneCritState(crit) }];
+    variants = (newVariants && newVariants.length) ? newVariants.map(cloneVariantState) : [{ meta:cloneMetaState(meta), crit:cloneCritState(crit), external_evidence:null, gene_structure:null }];
     activeVariant = 0;
+    workflowView = 'variant';
     genotype = cloneObj(newGenotype || {});
     provenance = normaliseProvenancePayload(newProvenance);
     meta = cloneMetaState(variants[0].meta);
@@ -2873,7 +3146,9 @@ technology_group: structured-genomics
       var exampleVariants = sourceExamples.map(function(v){
         return {
           meta:metaFromPayload(v, v.review || {}, v.case_context || {}),
-          crit:criterionStateFromPayload(v.criteria || [])
+          crit:criterionStateFromPayload(v.criteria || []),
+          external_evidence:cloneData(v.external_evidence || null),
+          gene_structure:null
         };
       });
       applyImportedState(exampleVariants[0].meta, exampleVariants[0].crit, exampleVariants, obj.genotype_review || {}, obj.provenance || sourceExamples[0].provenance);
@@ -2898,7 +3173,9 @@ technology_group: structured-genomics
       var importedVariants = sourceVariants.map(function(v){
         return {
           meta:metaFromPayload(v, review, caseCtx),
-          crit:criterionStateFromPayload(v.criteria || [])
+          crit:criterionStateFromPayload(v.criteria || []),
+          external_evidence:cloneData(v.external_evidence || null),
+          gene_structure:null
         };
       });
       if (!importedVariants.length) throw new Error('The case JSON does not contain any variants.');
@@ -2913,7 +3190,7 @@ technology_group: structured-genomics
 
     var importedMeta = metaFromPayload(obj, obj.review || {}, obj.case_context || {});
     var importedCrit = criterionStateFromPayload(obj.criteria || []);
-    applyImportedState(importedMeta, importedCrit, [{ meta:cloneMetaState(importedMeta), crit:cloneCritState(importedCrit) }], obj.genotype_review || {}, obj.provenance);
+    applyImportedState(importedMeta, importedCrit, [{ meta:cloneMetaState(importedMeta), crit:cloneCritState(importedCrit), external_evidence:cloneData(obj.external_evidence || null) }], obj.genotype_review || {}, obj.provenance);
     setJsonStatus('Loaded JSON report from ' + sourceLabel + '.');
   }
 
@@ -3083,20 +3360,21 @@ technology_group: structured-genomics
   document.getElementById('acmg-case-tabs').addEventListener('click', function(e){
     var t = e.target.closest('button'); if (!t) return;
     if (t.hasAttribute('data-variant')){
+      workflowView = 'variant';
+      captureGeneStructureForActiveVariant({ gene:meta.gene || '', coordinate:meta.coordinate || '' }, false);
       saveActiveVariant();
       loadVariantState(parseInt(t.getAttribute('data-variant'), 10));
-      scrollToSectionWithScoreboardOffset(document.querySelector('.acmg-editor'));
+      scrollToSectionWithScoreboardOffset(document.getElementById('acmg-variant-context-section'));
     } else if (t.getAttribute('data-tab') === 'case'){
-      scrollToSectionWithScoreboardOffset(document.querySelector('.acmg-editor'));
-      renderTabs();
+      setWorkflowView('variant');
+      scrollToSectionWithScoreboardOffset(document.getElementById('acmg-variant-context-section'));
     } else if (t.getAttribute('data-tab') === 'genotype'){
+      setWorkflowView('variant');
       scrollToSectionWithScoreboardOffset(document.getElementById('acmg-genotype-section'));
-      renderTabs();
-      t.classList.add('acmg-active');
     } else if (t.getAttribute('data-tab') === 'report'){
+      saveActiveVariant();
+      renderReport(compute());
       scrollToSectionWithScoreboardOffset(document.getElementById('acmg-report'));
-      renderTabs();
-      t.classList.add('acmg-active');
     }
   });
 
@@ -3105,9 +3383,11 @@ technology_group: structured-genomics
     inlineVariantTabs.addEventListener('click', function(e){
       var t = e.target.closest('button');
       if (!t || !t.hasAttribute('data-variant')) return;
+      workflowView = 'variant';
+      captureGeneStructureForActiveVariant({ gene:meta.gene || '', coordinate:meta.coordinate || '' }, false);
       saveActiveVariant();
       loadVariantState(parseInt(t.getAttribute('data-variant'), 10));
-      scrollToSectionWithScoreboardOffset(document.querySelector('.acmg-editor'));
+      scrollToSectionWithScoreboardOffset(document.getElementById('acmg-variant-context-section'));
     });
   }
 
@@ -3119,6 +3399,7 @@ technology_group: structured-genomics
       setJsonStatus('Joint variant input is limited to 5 variants in this free browser version. Contact admin@switzerlandomics.ch for a licence for unlimited joint variant input.', true);
       return;
     }
+    captureGeneStructureForActiveVariant({ gene:meta.gene || '', coordinate:meta.coordinate || '' }, false);
     saveActiveVariant();
     var base = variants[0] ? variants[0].meta : meta;
     variants.push({
@@ -3131,8 +3412,11 @@ technology_group: structured-genomics
         date:base.date || new Date().toISOString().slice(0,10),
         guideline:base.guideline || 'ACMG/AMP + Tavtigian point system'
       },
-      crit:emptyCritState()
+      crit:emptyCritState(),
+      external_evidence:null,
+      gene_structure:null
     });
+    workflowView = 'variant';
     activeVariant = variants.length - 1;
     loadVariantState(activeVariant);
   });
@@ -3209,18 +3493,89 @@ technology_group: structured-genomics
     setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
   }
   function stem(){
+    var d = meta.date || ((variants[0] && variants[0].meta && variants[0].meta.date) || new Date().toISOString().slice(0,10));
+    if (variants.length > 1) return 'acmg_case_' + d;
     var g = (meta.gene||'variant').replace(/[^a-z0-9._-]+/gi,'_');
-    var d = meta.date || new Date().toISOString().slice(0,10);
     return 'acmg_' + g + '_' + d;
   }
   function refreshReportForExport(){
+    captureGeneStructureForActiveVariant({ gene:meta.gene || '', coordinate:meta.coordinate || '' }, false);
     saveActiveVariant();
     renderReport(compute());
   }
 
-  document.getElementById('acmg-print').addEventListener('click', function(){
+  /*
+   * The live page intentionally shows only the compact report summary.
+   * Printing is different: the PDF must contain the complete clinical audit.
+   * Before print capture, refresh the report data, replace the summary DOM with
+   * the full export body, open every report disclosure in the actual DOM, and
+   * force layout. After printing, restore the compact screen summary exactly as
+   * the analyst saw it. This also handles browser-level Cmd/Ctrl+P via
+   * beforeprint rather than relying on descendant print CSS alone.
+   */
+  var reportPrintState = null;
+
+  function prepareReportForPrint(){
+    if (reportPrintState) return;
+
     refreshReportForExport();
-    window.print();
+
+    var report = document.getElementById('acmg-report');
+    var body = document.getElementById('acmg-report-body');
+    if (!report || !body) return;
+
+    reportPrintState = {
+      body: body,
+      screenHtml: body.innerHTML
+    };
+
+    body.innerHTML = lastReportBody;
+
+    Array.prototype.forEach.call(
+      body.querySelectorAll('details.acmg-report-detail'),
+      function(detail){ detail.open = true; }
+    );
+
+    // Force layout after replacing and expanding the printable report.
+    void report.offsetHeight;
+  }
+
+  function restoreReportAfterPrint(){
+    if (!reportPrintState) return;
+
+    if (reportPrintState.body && document.documentElement.contains(reportPrintState.body)){
+      reportPrintState.body.innerHTML = reportPrintState.screenHtml;
+    }
+
+    reportPrintState = null;
+  }
+
+  function waitForPrintableReportImages(){
+    var body = document.getElementById('acmg-report-body');
+    if (!body) return Promise.resolve();
+    var images = Array.prototype.slice.call(body.querySelectorAll('img'));
+    return Promise.all(images.map(function(img){
+      if (typeof img.decode === 'function'){
+        return img.decode().catch(function(){ return null; });
+      }
+      if (img.complete) return Promise.resolve();
+      return new Promise(function(resolve){
+        img.addEventListener('load', resolve, { once:true });
+        img.addEventListener('error', resolve, { once:true });
+      });
+    }));
+  }
+
+  window.addEventListener('beforeprint', prepareReportForPrint);
+  window.addEventListener('afterprint', restoreReportAfterPrint);
+
+  document.getElementById('acmg-print').addEventListener('click', function(){
+    prepareReportForPrint();
+    waitForPrintableReportImages().then(function(){
+      var printNow = function(){ window.print(); };
+      if (typeof window.requestAnimationFrame === 'function') window.requestAnimationFrame(printNow);
+      else window.setTimeout(printNow, 0);
+    });
   });
   document.getElementById('acmg-html').addEventListener('click', function(){
     refreshReportForExport();
@@ -3239,6 +3594,56 @@ technology_group: structured-genomics
     examplesBtn.addEventListener('click', function(){
       download(JSON.stringify(EXAMPLE_ACMG_JSON, null, 2), 'acmg_validator_three_completed_examples_with_metadata.json', 'application/json');
     });
+  }
+
+  function mergeExternalEvidenceIntoActiveVariant(validatorJson, rawPayload, summary, importMode){
+    saveActiveVariant();
+    var imported = validatorJson && validatorJson.variants && validatorJson.variants[0];
+    if (!imported) throw new Error('The evidence lookup did not return an ACMG Validator variant.');
+    var target = cloneVariantState(variants[activeVariant]);
+    var importedMeta = metaFromPayload(imported, validatorJson.review || {}, validatorJson.case_context || {});
+    var importedCrit = criterionStateFromPayload(imported.criteria || []);
+    var identityKeys = ['gene','transcript','hgvs_c','hgvs_p','build','coordinate','ref','alt','variant_type'];
+    identityKeys.forEach(function(key){ if (!target.meta[key] && importedMeta[key]) target.meta[key] = importedMeta[key]; });
+
+    var importedCount = 0, preservedCount = 0;
+    var importedCritState = cloneCritState(importedCrit);
+    CRITERIA.forEach(function(c){
+      var code = c[1];
+      if (!touchedFor(code, importedCritState)) return;
+      if (!touchedFor(code, target.crit)){
+        target.crit[code] = importedCritState[code];
+        importedCount++;
+      } else {
+        preservedCount++;
+      }
+    });
+
+    target.external_evidence = {
+      source:'GeneBe public API via Switzerland Omics proxy',
+      imported_at:new Date().toISOString(),
+      import_mode:importMode,
+      imported_criteria_count:importedCount,
+      preserved_criteria_count:preservedCount,
+      summary:cloneData(summary || {}),
+      validation:cloneData(imported.validation || {}),
+      evidence_summary:cloneData(imported.evidence_summary || {}),
+      raw:cloneData(rawPayload || {})
+    };
+    variants[activeVariant] = target;
+    meta = cloneMetaState(target.meta);
+    crit = cloneCritState(target.crit);
+    fillMetaFields();
+    buildLists();
+    applyFilter();
+    workflowView = 'variant';
+    recompute();
+    document.querySelectorAll('.acmg-criteria-group').forEach(function(panel){
+      var group = panel.getAttribute('data-criteria-group');
+      var groupSummary = criteriaCompletenessSummaryFor(crit, group);
+      if (groupSummary.flagged) panel.open = true;
+    });
+    return { imported:importedCount, preserved:preservedCount };
   }
 
   function bindGeneBeLookup(){
@@ -3305,23 +3710,6 @@ technology_group: structured-genomics
       return genebe.validatorBuildToGenome ? genebe.validatorBuildToGenome(build) : (build === 'GRCh37' ? 'hg19' : 'hg38');
     }
 
-    function currentReviewHasWork(){
-      if (variants.length > 1) return true;
-      var hasMeta = Object.keys(meta || {}).some(function(key){
-        var val = meta[key];
-        return val !== undefined && val !== null && val !== '' && val !== false;
-      });
-      if (hasMeta) return true;
-      var hasCriteria = Object.keys(crit || {}).some(function(code){
-        var row = crit[code] || {};
-        return row.status || row.evidence_status || row.caveat_status || row.notes || Object.keys(row.caveats || {}).length;
-      });
-      if (hasCriteria) return true;
-      return Object.keys(genotype || {}).some(function(key){
-        var val = genotype[key];
-        return val !== undefined && val !== null && val !== '';
-      });
-    }
 
     function loadLookupExample(example){
       setValue('acmg-genebe-chr', example.chr || '');
@@ -3413,14 +3801,6 @@ technology_group: structured-genomics
         return;
       }
 
-      if (currentReviewHasWork()){
-        var okToOverwrite = window.confirm('Importing external evidence will overwrite the current ACMG Validator work in this page. Continue?');
-        if (!okToOverwrite){
-          setStatus('Import cancelled. Current ACMG Validator work was not changed.');
-          return;
-        }
-      }
-
       lastValidatorJson = '';
       lastRawJson = '';
       lastValidatorFilename = 'acmg_validator_genebe.json';
@@ -3436,8 +3816,8 @@ technology_group: structured-genomics
         lastValidatorFilename = result.validatorFilename;
         lastRawFilename = result.rawFilename;
 
-        importAcmgJsonObject(result.validatorJson, 'external evidence lookup');
-        setStatus('Evidence imported. Review all suggested criteria before sign-off.', false, true);
+        var merged = mergeExternalEvidenceIntoActiveVariant(result.validatorJson, result.payload, result.summary, importMode);
+        setStatus('Evidence imported into Variant ' + (activeVariant + 1) + '. ' + merged.imported + ' untouched criterion suggestion(s) added; ' + merged.preserved + ' reviewed criterion/criteria preserved.', false, true);
         if (summaryBox){
           summaryBox.textContent = JSON.stringify(result.summary, null, 2);
           summaryBox.hidden = true;
@@ -3474,9 +3854,10 @@ technology_group: structured-genomics
     meta = {};
     crit = emptyCritState();
     activeVariant = 0;
+    workflowView = 'variant';
     genotype = {};
     provenance = { values:{}, extra:{} };
-    variants = [{ meta:cloneMetaState(meta), crit:cloneCritState(crit) }];
+    variants = [{ meta:cloneMetaState(meta), crit:cloneCritState(crit), external_evidence:null, gene_structure:null }];
     document.querySelectorAll('[data-meta]').forEach(function(el){
       if (el.type === 'checkbox') el.checked = false; else el.value = '';
     });
@@ -5110,10 +5491,19 @@ technology_group: structured-genomics
   var viewer = null;
   var lastKey = '';
   var timer = null;
+  var requestSerial = 0;
+  var loadInFlight = false;
+  var activeLoadDetail = null;
+  var loadedDetail = null;
+  var queuedDetail = null;
 
   var statusEl = document.getElementById('acmg-gsv-status');
   var cardEl = document.getElementById('acmg-gsv-card');
+  var canvasEl = document.getElementById('acmg-gsv-canvas');
+  var panelEl = document.getElementById('acmg-gsv-panel');
   var ensemblLinkEl = document.getElementById('acmg-gsv-ensembl-link');
+  var txSelectEl = document.getElementById('acmg-gsv-tx-select');
+  var pendingDetail = null;
 
   function setMutedStatus(message) {
     if (statusEl) {
@@ -5124,6 +5514,18 @@ technology_group: structured-genomics
 
   function normaliseGene(value) {
     return String(value || '').trim();
+  }
+
+  function normaliseViewGene(value) {
+    return String(value || '').trim().toUpperCase();
+  }
+
+  function normaliseViewCoordinate(value) {
+    return String(value || '').toLowerCase().replace(/[\s,]/g, '');
+  }
+
+  function makeViewKey(gene, coordinate) {
+    return normaliseViewGene(gene) + '|' + normaliseViewCoordinate(coordinate);
   }
 
   function parseCoordinate(value) {
@@ -5168,6 +5570,76 @@ technology_group: structured-genomics
     ensemblLinkEl.href = ensemblGeneUrl(data);
   }
 
+  function clearCanvasIdentity() {
+    if (!canvasEl) return;
+    canvasEl.removeAttribute('data-acmg-gene');
+    canvasEl.removeAttribute('data-acmg-coordinate');
+    canvasEl.removeAttribute('data-acmg-view-key');
+    canvasEl.removeAttribute('data-acmg-variant-index');
+  }
+
+  function canonicalDetail(detail, gene, coordinate) {
+    detail = detail || {};
+    var out = {
+      gene:gene || '',
+      coordinate:coordinate || '',
+      view_key:detail.view_key || makeViewKey(gene, coordinate)
+    };
+    if (detail.variant_index !== undefined && detail.variant_index !== null && detail.variant_index !== '') {
+      out.variant_index = Number(detail.variant_index);
+    }
+    return out;
+  }
+
+  /*
+   * The viewer is shared by all case variants. Mark the canvas only after the
+   * current load request has finished and the browser has had two paint frames
+   * to draw the plot. The main ACMG state accepts a snapshot only when this
+   * identity matches the active variant, so late responses cannot be assigned
+   * to the wrong report.
+   */
+  function emitLoaded(detail, requestId) {
+    detail = detail || {};
+    var fire = function () {
+      if (requestId !== undefined && requestId !== requestSerial) return;
+
+      if (pendingDetail) {
+        var desiredViewKey = pendingDetail.view_key || makeViewKey(pendingDetail.gene, pendingDetail.coordinate);
+        var emittedViewKey = detail.view_key || makeViewKey(detail.gene, detail.coordinate);
+        if (desiredViewKey !== emittedViewKey) return;
+        if (pendingDetail.variant_index !== undefined && pendingDetail.variant_index !== null && pendingDetail.variant_index !== '' &&
+            detail.variant_index !== undefined && detail.variant_index !== null && detail.variant_index !== '' &&
+            Number(pendingDetail.variant_index) !== Number(detail.variant_index)) return;
+      }
+
+      if (canvasEl) {
+        canvasEl.setAttribute('data-acmg-gene', String(detail.gene || '').trim());
+        canvasEl.setAttribute('data-acmg-coordinate', String(detail.coordinate || '').trim());
+        canvasEl.setAttribute('data-acmg-view-key', detail.view_key || makeViewKey(detail.gene, detail.coordinate));
+        if (detail.variant_index !== undefined && detail.variant_index !== null && detail.variant_index !== '') {
+          canvasEl.setAttribute('data-acmg-variant-index', String(detail.variant_index));
+        } else {
+          canvasEl.removeAttribute('data-acmg-variant-index');
+        }
+      }
+      loadedDetail = {
+        gene:detail.gene || '',
+        coordinate:detail.coordinate || '',
+        view_key:detail.view_key || makeViewKey(detail.gene, detail.coordinate),
+        variant_index:detail.variant_index
+      };
+      document.dispatchEvent(new CustomEvent('acmg:gsv:loaded', { detail:loadedDetail }));
+    };
+
+    if (typeof window.requestAnimationFrame === 'function') {
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(fire);
+      });
+    } else {
+      window.setTimeout(fire, 0);
+    }
+  }
+
   function initViewer() {
     if (viewer) return true;
 
@@ -5180,9 +5652,9 @@ technology_group: structured-genomics
       viewer = new GeneStructureViewer({
         api:      API,
         card:     cardEl,
-        canvas:   document.getElementById('acmg-gsv-canvas'),
+        canvas:   canvasEl,
         statusEl: statusEl,
-        txSelect: document.getElementById('acmg-gsv-tx-select'),
+        txSelect: txSelectEl,
         cardGene: document.getElementById('acmg-gsv-card-gene'),
         cardLoc:  document.getElementById('acmg-gsv-card-loc'),
         infoAsm:  document.getElementById('acmg-gsv-i-asm'),
@@ -5204,47 +5676,182 @@ technology_group: structured-genomics
   function loadFromAcmgState(detail) {
     if (!initViewer()) return;
 
-    var gene = normaliseGene(detail && detail.gene);
-    var coordinate = String((detail && detail.coordinate) || '').trim();
+    detail = detail || {};
+    var gene = normaliseGene(detail.gene);
+    var coordinate = String(detail.coordinate || '').trim();
     var position = parseCoordinate(coordinate);
 
     if (!gene) gene = parseGeneFromCoordinate(coordinate);
 
     if (!gene) {
+      clearCanvasIdentity();
+      loadedDetail = null;
       if (cardEl) cardEl.hidden = true;
       updateEnsemblLink(null);
       setMutedStatus('Gene structure viewer will load when a gene is entered.');
+
+      if (loadInFlight) {
+        queuedDetail = { gene:'', coordinate:'', variant_index:detail.variant_index, view_key:detail.view_key || makeViewKey('', '') };
+        return;
+      }
+
+      activeLoadDetail = null;
+      queuedDetail = null;
       lastKey = '';
       return;
     }
 
+    var requestDetail = canonicalDetail(detail, gene, coordinate);
     var key = gene + '|' + position;
-    if (key === lastKey) return;
+
+    /*
+     * Do not run concurrent loads against the one shared viewer/canvas. If the
+     * analyst switches variants while a request is in flight, retain only the
+     * latest requested view and load it immediately after the current request
+     * settles. This prevents an older response from drawing over a newer plot.
+     */
+    if (loadInFlight) {
+      if (key === lastKey) {
+        activeLoadDetail = requestDetail;
+        queuedDetail = null;
+      } else {
+        queuedDetail = detail;
+      }
+      return;
+    }
+
+    /*
+     * The same biological view may be reused by another case variant. Reusing
+     * pixels is fine, but that second variant still needs its own snapshot
+     * record. Emit a fresh capture event instead of treating same-key as a no-op.
+     */
+    if (key === lastKey) {
+      activeLoadDetail = requestDetail;
+      var canvasKey = canvasEl ? (canvasEl.getAttribute('data-acmg-view-key') || '') : '';
+      if (canvasKey === requestDetail.view_key && cardEl && !cardEl.hidden && canvasEl && canvasEl.width && canvasEl.height) {
+        emitLoaded(requestDetail, requestSerial);
+        return;
+      }
+      // A previous same-key load failed or never produced a usable canvas.
+      // Fall through and retry rather than permanently suppressing the view.
+    }
+
     lastKey = key;
+    var requestId = ++requestSerial;
+    loadInFlight = true;
+    loadedDetail = null;
+    activeLoadDetail = requestDetail;
+    clearCanvasIdentity();
 
     try {
       var maybePromise = viewer.load(gene, position);
-      if (maybePromise && typeof maybePromise.catch === 'function') {
-        maybePromise.catch(function () {
+      if (maybePromise && typeof maybePromise.then === 'function') {
+        maybePromise.then(function () {
+          if (requestId !== requestSerial) return;
+          loadInFlight = false;
+          if (queuedDetail) {
+            var nextDetail = queuedDetail;
+            queuedDetail = null;
+            loadFromAcmgState(nextDetail);
+            return;
+          }
+          emitLoaded(activeLoadDetail || requestDetail, requestId);
+        }).catch(function () {
+          if (requestId !== requestSerial) return;
+          loadInFlight = false;
+          activeLoadDetail = null;
+          loadedDetail = null;
+          clearCanvasIdentity();
+          if (queuedDetail) {
+            var nextDetail = queuedDetail;
+            queuedDetail = null;
+            loadFromAcmgState(nextDetail);
+            return;
+          }
           if (cardEl) cardEl.hidden = true;
           setMutedStatus('Gene structure viewer is offline and will return shortly.');
         });
+      } else {
+        window.setTimeout(function () {
+          if (requestId !== requestSerial) return;
+          loadInFlight = false;
+          if (queuedDetail) {
+            var nextDetail = queuedDetail;
+            queuedDetail = null;
+            loadFromAcmgState(nextDetail);
+            return;
+          }
+          emitLoaded(activeLoadDetail || requestDetail, requestId);
+        }, 0);
       }
     } catch (err) {
+      if (requestId !== requestSerial) return;
+      loadInFlight = false;
+      activeLoadDetail = null;
+      loadedDetail = null;
+      clearCanvasIdentity();
+      if (queuedDetail) {
+        var nextDetail = queuedDetail;
+        queuedDetail = null;
+        loadFromAcmgState(nextDetail);
+        return;
+      }
       if (cardEl) cardEl.hidden = true;
       setMutedStatus('Gene structure viewer is offline and will return shortly.');
     }
   }
 
   document.addEventListener('acmg:gsv:update', function (event) {
+    pendingDetail = event.detail || {};
+
+    var requestedViewKey = pendingDetail.view_key || makeViewKey(pendingDetail.gene, pendingDetail.coordinate);
+    var canvasViewKey = canvasEl ? (canvasEl.getAttribute('data-acmg-view-key') || '') : '';
+    if (canvasViewKey && requestedViewKey !== canvasViewKey) {
+      clearCanvasIdentity();
+      loadedDetail = null;
+    }
+
+    if (panelEl && !panelEl.open) {
+      setMutedStatus('Open this panel to load the gene structure view.');
+      return;
+    }
     window.clearTimeout(timer);
     timer = window.setTimeout(function () {
-      loadFromAcmgState(event.detail || {});
+      loadFromAcmgState(pendingDetail);
     }, 250);
   });
 
-  setMutedStatus('Gene structure viewer will load when a gene is entered.');
+  if (panelEl) {
+    panelEl.addEventListener('toggle', function () {
+      if (!panelEl.open) return;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () {
+        loadFromAcmgState(pendingDetail || {});
+      }, 50);
+    });
+  }
+
+  /*
+   * Transcript selection redraws the same loaded canvas. Re-capture only when
+   * a current view has completed; never relabel an old canvas while a different
+   * variant is still loading.
+   */
+  if (txSelectEl) {
+    txSelectEl.addEventListener('change', function () {
+      if (!loadedDetail || loadInFlight) return;
+
+      var redrawDetail = loadedDetail;
+      loadedDetail = null;
+      clearCanvasIdentity();
+      document.dispatchEvent(new CustomEvent('acmg:gsv:invalidated', { detail:redrawDetail }));
+
+      // The viewer's own change handler redraws the transcript on this canvas.
+      // Re-mark and snapshot it only after the redraw has reached the screen.
+      emitLoaded(redrawDetail, requestSerial);
+    });
+  }
+
+  setMutedStatus('Open this panel to load the gene structure view.');
 }());
 </script>
-
 
