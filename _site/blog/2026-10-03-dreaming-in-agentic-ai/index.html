@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dreaming in agentic AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="A practical architecture for persistent agent memory, skills, retrieval and out-of-band consolidation." />
+  <meta property="og:title" content="Dreaming in agentic AI"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="A practical architecture for persistent agent memory, skills, retrieval and out-of-band consolidation."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">Dreaming in agentic AI</h1>
+                <div class="content"><p>2026-10-03</p>
+
+<p>We have been working on <strong>dreaming</strong> for agentic AI. It is a periodic, out-of-band process that analyses agent activity and updates persistent memory for future sessions. It improves the context available to later agents while leaving the underlying foundation model unchanged. We use it within a broader architecture that separates stable skills, task-specific retrieval, working memory and longer-term memory consolidation.</p>
+
+<p>Foundation models have broad capabilities but little inherent knowledge of a private organisation. They do not know an internal codebase, deployment procedure, project history, scientific convention or individual working preference unless that information enters the context. Long-running agentic systems therefore need some of this information to persist across otherwise independent sessions.</p>
+
+<h2 id="skills-and-external-memory">Skills and external memory</h2>
+
+<p>The simplest persistent context is a skill file loaded when an agent starts a task (i.e. <em>SKILLS.md</em>). Skills are useful, and we use them extensively. For instance, we built <a href="https://biologyskills.com/">biologyskills.com</a> and make it freely available as a collection of domain-specific operating rules for biological AI agents. Skills alone, however, do not provide the full context needed by long-running agentic systems.</p>
+
+<p>A skill file (and skills directory) works well for compact operating instructions, but larger collections become inefficient if every file enters every context window. We use <strong>progressive disclosure</strong>, where a skill exposes enough metadata for an agent to judge relevance and loads detailed instructions or references only when needed.</p>
+
+<p>Biology Skills contains reviewed guidance on required context, failure modes, evidence boundaries and expert stop conditions. The same structure can be used privately for repository conventions, deployment procedures, assay rules, validated data sources, reporting requirements or regulated workflows.</p>
+
+<p>Skills and memory have different roles. Skills encode reviewed procedures and domain rules, while memory records information that emerges during work, such as a corrected command, failed tool configuration, project-specific preference or new dependency. Persistent memory therefore adds a dynamic layer that curated skills alone do not provide.</p>
+
+<h2 id="retrieval-before-agent-memory">Retrieval before agent memory</h2>
+
+<p>Usually retrieval-augmented generation (RAG) is useful to understand and use before adopting more complex multi-agent systems. For instance, we used it in <a href="https://switzerlandomics.ch/technologies/panelAppRexAi/">PanelAppRex AI</a>. While building, we harmonised curated disease-gene panels, gene identifiers, inheritance information, phenotypes and supporting evidence into a reusable data layer for precision medicine, with the AI-assisted generation of summaries conditioned on the disease panel being examined (Quant group et al., 2026).</p>
+
+<p>Retrieval constrains the evidence before the model receives it. The knowledge about hundreds of interacting proteins is much larger than the information required for a particular disease panel, so the system first selects the relevant biological context and then generates a compact representation. This representation is curated only to the context of the given disease and constituent proteins in that pathway. The curated panel membership remains unchanged. The system is described in the <a href="https://switzerlandomics.ch/pages/panelAppRexAi_about/">PanelAppRex explainer</a> and the associated <a href="https://doi.org/10.1093/bioadv/vbag115">publication</a>.</p>
+
+<p>RAG can be used to construct context for the current task from a knowledge base. Persistent memory carries useful information between tasks. Dreaming examines accumulated activity across tasks and updates the memory available to future sessions.</p>
+
+<h2 id="memory-as-shared-mutable-state">Memory as shared mutable state</h2>
+
+<p>Persistent memory becomes a shared mutable state when many agents operate over the same projects. Concurrent writers can overwrite each other, incorrect observations can propagate into later sessions, and old instructions can remain after the underlying system changes. We therefore treat memory updates as versioned operations that retain their originating session, author, time, previous state and supporting evidence.</p>
+
+<p>Concurrent writes can use <strong>optimistic concurrency control</strong>. An agent records a content hash before preparing an edit and verifies the hash again before committing. If another process changed the memory in the meantime, the write fails and the agent reloads the current version before generating a new edit.</p>
+
+<p>Permissions define which memories an agent may modify. Shared organisational knowledge can remain read-only to ordinary agents, while project or agent working memory can permit writes. A common API can expose these stores to different agent interfaces without coupling accumulated knowledge to one model or product.</p>
+
+<p>For instance, we have a private system called <strong>Dante</strong>. It began as a secure HPC deployment for evidence-backed genetic report generation using a DeepSeek open-weight model for document preparation (<strong>Figure 1</strong>). It converted interpreted genomic findings into structured clinical reports, including standardised variant nomenclature, supporting evidence and confidence estimates. We later ended the original reporting workflow and repurposed Dante as an internal agentic system that combines persistent project context, private organisational skills and agent workflows under separate permission and retention rules (<strong>Figure 2</strong>).</p>
+
+<p><img src="/images/ai/dante_figure_original_system.png" alt="The original Dante system." style="width: 100%;" /></p>
+
+<p><strong>Figure 1. Original Dante reporting architecture</strong>. <em>Deterministic genomic processing and evidence retrieval surround a local DeepSeek-R1 7B component used for short interpretation text, with Dante assembling the final actionable genetic report.</em></p>
+
+<p><img src="/images/ai/dante_agentic_dreaming.png" alt="Agentic dreaming system." style="width: 100%;" /></p>
+
+<p><strong>Figure 2. Agentic system architecture</strong>. <em>Dante was shown in Fig. 1 and here it is included as one specialist agent within a larger workflow, supported by persistent memory and skills, with a separate dreaming loop that consolidates cross-session evidence into reviewed memory updates.</em></p>
+
+<h2 id="the-limit-of-in-band-memory">The limit of in-band memory</h2>
+
+<p>Memory written during task execution is <strong>in-band</strong>. The agent must complete the current task while deciding what future sessions should remember. An agent can record an immediate correction, such as a changed deployment command, but one session cannot easily detect a failure pattern distributed across many other sessions.</p>
+
+<p>Persistent memory also becomes stale. Procedures change, projects evolve and previously useful observations lose relevance. A maintenance process therefore needs a wider temporal view than an individual task agent.</p>
+
+<h2 id="the-dreaming-pipeline">The dreaming pipeline</h2>
+
+<p>Dreaming moves memory maintenance into a separate process with dedicated computation. It receives a snapshot of the current memory together with selected transcripts and execution metadata from recent agent sessions. A compact representation is:</p>
+
+<p><code class="language-plaintext highlighter-rouge">M_t + selected transcripts → per-session analysis → cross-session aggregation → proposed memory diff → review/commit → M_t+1</code></p>
+
+<p>The first stage analyses individual sessions for evidence that may affect persistent memory. Relevant signals include repeated mistakes, missing procedures, tool failures, corrections, recurring preferences and knowledge that agents repeatedly have to rediscover. Analysis can be distributed across multiple agents, with workers examining separate sessions or groups of sessions.</p>
+
+<p>An orchestrator aggregates these analyses across sessions. It distinguishes isolated events from recurrent patterns and can attach supporting sessions, prevalence estimates and a rationale to each proposed update. The result is an evidence-backed diff against the existing memory state.</p>
+
+<p>Dreaming can add new memories, update existing ones, remove obsolete material, merge duplicated information and reorganise content that has become difficult to retrieve. The updated memory state becomes available to subsequent sessions, whose activity later contributes evidence to another consolidation cycle.</p>
+
+<p>This creates two timescales of adaptation. In-band memory captures local information during task execution, while dreaming consolidates evidence across longer periods and multiple agents. The first provides rapid correction; the second provides cross-session maintenance.</p>
+
+<h2 id="updating-curated-skills">Updating curated skills</h2>
+
+<p>The same evidence can reveal gaps in curated skills. If agents repeatedly encounter a biological ambiguity that an existing skill does not address, the dreaming process can propose an addition and attach the sessions that motivated it.</p>
+
+<p>For resources such as Biology Skills, detection and publication remain separate. Proposed changes can be generated automatically, while promotion into a shared scientific skill remains subject to provenance, validation and review. This allows project memory to change quickly while stable domain guidance follows a more controlled process.</p>
+
+<h2 id="security-and-governance">Security and governance</h2>
+
+<p>A dreaming process should receive only transcripts compatible with the permissions of the memory it can update. Transcript selection therefore belongs inside the trusted orchestration layer. A team memory can be curated from sessions visible to that team without exposing unrelated user or organisational data.</p>
+
+<p>Language models can interpret sessions, identify patterns and draft memory changes. Access control, provenance, versioning, concurrency checks and commit rules should be enforced deterministically by the surrounding software.</p>
+
+<p>Persistent memory also creates a poisoning risk. Incorrect or malicious information can affect many later sessions once it enters shared context. Dreaming can identify contradictions or stale information, while permissioning, provenance, validation and controlled writes provide the primary safeguards.</p>
+
+<p>Human review can remain in the commit path for high-value or high-risk memory. Lower-risk working memories can use more autonomous update policies. The appropriate boundary depends on the consequence of an incorrect memory propagating into later tasks.</p>
+
+<h2 id="designing-the-whole-context-system">Designing the whole context system</h2>
+
+<p>Skills, retrieval, memory and dreaming address different parts of the context problem. Skills provide reviewed operating knowledge, retrieval selects external information for the current task, in-band memory records useful experience during work, and dreaming maintains persistent memory across sessions.</p>
+
+<p>This architecture produces <strong>continual adaptation at the agent-system level</strong>. The foundation model can remain fixed while the surrounding system accumulates knowledge about its organisation, projects, users and recurring failure modes.</p>
+
+<p>Dreaming adds inference cost because additional agents must inspect transcripts and maintain memory. The expected operational return comes from fewer repeated mistakes, less rediscovery and better context for later sessions. In long-running systems with repeated workflows, memory quality becomes part of the system architecture.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li>
+    <p><strong><a href="https://doi.org/10.1093/bioadv/vbag115">PanelAppRex aggregates disease gene panels and facilitates sophisticated search</a></strong><br />
+Quant Group, Simon Boutry, Ali Saadat, Sinisa Savic, Luregn J. Schlapbach, Jacques Fellay, Dylan Lawless. 
+<em>Bioinformatics Advances</em> (2026). DOI: <a href="https://doi.org/10.1093/bioadv/vbag115">10.1093/bioadv/vbag115</a>. <a href="https://academic.oup.com/bioinformaticsadvances/article-pdf/6/1/vbag115/68294343/vbag115.pdf">PDF</a> | <a href="https://vimeo.com/1193244150">Video</a> | <a href="https://switzerlandomics.ch/technologies/panelAppRexAi/">Application</a> | <a href="https://switzerlandomics.ch/pages/panelAppRexAi_about/">About</a></p>
+  </li>
+  <li>
+    <p><strong><a href="https://biologyskills.com/">Biology Skills</a></strong>.
+Biology Skills contributors. Version 0.1.0. Apache-2.0.  <a href="https://biologyskills.com/">Website</a> | <a href="https://github.com/biologyskills/biology-skills">Source repository</a></p>
+  </li>
+</ul>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
