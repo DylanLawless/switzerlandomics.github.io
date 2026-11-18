@@ -3,6 +3,7 @@ title: "Dreaming in agentic AI"
 layout: page
 description: "A practical architecture for persistent agent memory, skills, retrieval and out-of-band consolidation."
 date: 2026-10-03
+category: ai
 tags:
   - agentic-ai
   - ai

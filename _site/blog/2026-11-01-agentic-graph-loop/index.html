@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Building agentic systems with graphs and loops</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/png" sizes="32x32"   href="/images/favicon-32x32.png">
+  <link rel="apple-touch-icon"      sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+  <!-- Google Fonts CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Self host font -->
+  <!-- <link rel="preload" href="/assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin> -->
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <link href="/assets/css/custom.css" rel="stylesheet">
+  
+  <meta name="description" content="Connecting AI models, private knowledge and file operations through stateful workflows and human approval." />
+  <meta property="og:title" content="Building agentic systems with graphs and loops"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content=""/>
+  
+  <meta property="og:description" content="Connecting AI models, private knowledge and file operations through stateful workflows and human approval."/>
+  <meta name="twitter:card" content="summary"/>
+  
+  
+
+</head>
+
+<body class='page page-basic'>
+  <div id="main-menu-mobile" class="main-menu-mobile">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+  <div id="wrapper" class="wrapper">
+    <!-- <a href=""> -->
+
+<div class='header'>
+  <div class="container">
+    <div class="logo">
+      <a href="/">
+        <span><img width="50px" height="50px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div class="logo-mobile">
+      <a href="/">
+        <span><img width="39px" height="39px" alt="SwitzerlandOmics" src="/images/logo/logo_v2.svg" /></span>
+        <span class="logo-text">Switzerland Omics</span>
+      </a>
+    </div>
+    <div id="main-menu" class="main-menu">
+  
+  <ul>
+    
+    <li class="">
+      <a href="/technologies/">Technologies</a>
+    </li>
+    
+    <li class="">
+      <a href="/publications/">Publication</a>
+    </li>
+    
+    <li class="">
+      <a href="/releases/">Releases</a>
+    </li>
+    
+    <li class="">
+      <a href="/partnerships/">Partners</a>
+    </li>
+    
+    <li class="">
+      <a href="/about/">About</a>
+    </li>
+    
+    <li class="">
+      <a href="/team/">Team</a>
+    </li>
+    
+    <li class="">
+      <a href="/blog/">Blog</a>
+    </li>
+    
+    <li class="">
+      <a href="/contact/">Contact</a>
+    </li>
+    
+  </ul>
+</div>
+
+    <button id="toggle-main-menu-mobile" class="hamburger hamburger--slider" type="button" aria-label="Mobile Menu">
+  <span class="hamburger-box">
+    <span class="hamburger-inner"></span>
+  </span>
+</button>
+  </div>
+</div>
+
+
+
+
+
+
+    <div class="container pb-6 pt-6 pt-md-10 pb-md-10">
+    <div class="row justify-content-start">
+        <div class="col-12 col-md-8">
+            <div class="tech tech-single">
+                <h1 class="title">Building agentic systems with graphs and loops</h1>
+                <div class="content"><p>2026-11-01</p>
+
+<p>We have been building AI tools that work with project files, scientific knowledge and the context accumulated during a task. A language model can answer a question or write code, but a useful agentic system also needs to decide which information to retrieve, which tools to run and when to ask a person before making a change. We assemble workflows directly in whatever language is most suitable. However, the most common approach is to use Python. <strong>LangGraph</strong> offers an open-source way to express the same decisions as an explicit, stateful graph.</p>
+
+<p>In this post we are walking through a simple representation of our Dante system. A task can become a conversation, a search of a knowledge base or an instruction to edit a file. The AI-scalable part is what happens between the request and the action, particularly when the coding agent needs context from an earlier message or the user wants to revise their plan.</p>
+
+<p><img src="/images/ai/langgraph/langgraph_figure1.png" alt="Conceptual agent workflow with classification, chat, knowledge retrieval and coding routes." style="width: 100%;" /></p>
+
+<p><em>Figure 1. A classifier routes requests to specialist workflows; changes to files introduce an approval step.</em></p>
+
+<h2 id="from-models-to-a-workflow">From models to a workflow</h2>
+
+<p>LangChain provides integrations for chat models, embeddings, document stores and tools. LangGraph sits alongside it to organise <strong>nodes</strong> (operations), <strong>edges</strong> (transitions) and shared <strong>state</strong>. This allows us to coordinate different models and tools within the same workflow.</p>
+
+<p>We sometimes work on secure HPC platforms using locally hosted open-weight models. Commercial APIs such as OpenAI are often simpler for rapid development and testing. The choice is flexible: a node might call an OpenAI model, a local LLM, a private retrieval system or an external coding agent. The graph controls how these components interact without requiring them to use the same model.</p>
+
+<p>For a Python implementation, we can install <code class="language-plaintext highlighter-rouge">langgraph</code>, <code class="language-plaintext highlighter-rouge">langchain</code>, <code class="language-plaintext highlighter-rouge">langchain-openai</code>, <code class="language-plaintext highlighter-rouge">python-dotenv</code>, <code class="language-plaintext highlighter-rouge">pydantic</code> and <code class="language-plaintext highlighter-rouge">numpy</code> using <code class="language-plaintext highlighter-rouge">pip</code> or <code class="language-plaintext highlighter-rouge">uv</code>. For testing, I often use <code class="language-plaintext highlighter-rouge">init_chat_model("gpt-4.1-mini", model_provider="openai")</code>, with credentials loaded from <code class="language-plaintext highlighter-rouge">.env</code>.</p>
+
+<p>The most important concept to realise is that information is structured - whether you are are using ChatGPT in a web browser or some self-hosted model, the content is more than just the input/ouput message.
+Even a simple exchange has important metadata. LangChain represents the conversation as structured messages. For example, a shortened LangGraph result looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+    <span class="sh">"</span><span class="s">messages</span><span class="sh">"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="nc">HumanMessage</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="sh">"</span><span class="s">Hello, I need help</span><span class="sh">"</span><span class="p">),</span>
+        <span class="nc">AIMessage</span><span class="p">(</span>
+            <span class="n">content</span><span class="o">=</span><span class="sh">"</span><span class="s">Hello! How can I assist you today?</span><span class="sh">"</span><span class="p">,</span>
+            <span class="n">response_metadata</span><span class="o">=</span><span class="p">{</span><span class="sh">"</span><span class="s">model_name</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">gpt-4.1-mini-2025-04-14</span><span class="sh">"</span><span class="p">},</span>
+            <span class="n">usage_metadata</span><span class="o">=</span><span class="p">{</span><span class="sh">"</span><span class="s">input_tokens</span><span class="sh">"</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="sh">"</span><span class="s">output_tokens</span><span class="sh">"</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+            <span class="n">tool_calls</span><span class="o">=</span><span class="p">[]</span>
+        <span class="p">)</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">content</code> contains the conversation, while metadata records information such as model identity, token usage and tool calls. These are useful building blocks for monitoring and agent execution. We can also define our own variables to track what the system is doing, which decisions have been made and which operation should happen next.</p>
+
+<p>In LangGraph, we describe this shared information using a <strong>state schema</strong>. For our example, it is compact:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AgentState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+    <span class="n">messages</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="n">add_messages</span><span class="p">]</span>
+    <span class="n">message_intent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="bp">None</span>
+    <span class="n">next_node</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<p>Each node reads the current state and returns only the fields it changes. The <code class="language-plaintext highlighter-rouge">add_messages</code> reducer merges new messages into the conversation, while <code class="language-plaintext highlighter-rouge">message_intent</code> and <code class="language-plaintext highlighter-rouge">next_node</code> allow us to control the workflow explicitly.</p>
+
+<p>We register operations using <code class="language-plaintext highlighter-rouge">StateGraph(AgentState)</code> and <code class="language-plaintext highlighter-rouge">builder.add_node(...)</code>, then connect them using <code class="language-plaintext highlighter-rouge">add_edge(...)</code> or <code class="language-plaintext highlighter-rouge">add_conditional_edges(...)</code>. A checkpointer such as <code class="language-plaintext highlighter-rouge">InMemorySaver()</code> retains state between calls when the same <code class="language-plaintext highlighter-rouge">thread_id</code> is supplied in <code class="language-plaintext highlighter-rouge">config</code>. This allows successive operations to share conversation context, although the in-memory version does not survive a process restart.</p>
+
+<h2 id="connecting-knowledge-and-tools">Connecting knowledge and tools</h2>
+
+<p>A Pydantic classifier constrains the result to <code class="language-plaintext highlighter-rouge">Literal["chat", "knowledge", "code"]</code>. The graph routes that value to <code class="language-plaintext highlighter-rouge">chat_agent</code>, <code class="language-plaintext highlighter-rouge">rag_agent</code> or the coding approval path. Chat is simply <code class="language-plaintext highlighter-rouge">llm.invoke(state["messages"])</code>. The knowledge route embeds <code class="language-plaintext highlighter-rouge">Document</code> objects, stores them in an <code class="language-plaintext highlighter-rouge">InMemoryVectorStore</code>, retrieves matches with <code class="language-plaintext highlighter-rouge">similarity_search(query, k=3)</code> and places the selected passages into the model’s context.</p>
+
+<p>This is the point where a <strong>private knowledge base</strong> can become useful. Instead of asking a model to remember internal procedures, project history or experimental evidence, retrieval supplies the relevant material for the current question. The demonstration uses a small in-memory collection; a private deployment would substitute an access-controlled index and an embedding model compatible with its data-handling requirements.</p>
+
+<p>The coding route is different because it can modify files. There are several ways to provide this capability, including <strong>Claude Code, OpenAI Codex</strong>, or a custom agent that uses a local LLM with filesystem tools. LangGraph is independent of this choice and controls when the coding agent is invoked. For example, we sometimes use Claude Code in headless mode, called from Python using <code class="language-plaintext highlighter-rouge">subprocess.run(["claude", "-p", request, "--permission-mode", "acceptEdits"], cwd=workspace, ...)</code>. The coding agent handles file inspection and modification, while LangGraph manages the surrounding workflow and approval process.</p>
+
+<h2 id="pausing-before-a-file-edit">Pausing before a file edit</h2>
+
+<p>We do not want an ambiguous conversational instruction to edit a project immediately. LangGraph’s <code class="language-plaintext highlighter-rouge">interrupt(f"Approve: {request}")</code> pauses the coding path. The caller presents the proposed instruction and resumes the same thread with <code class="language-plaintext highlighter-rouge">graph.invoke(Command(resume=user_response), config=config)</code>. The chat and retrieval paths need no such approval step.</p>
+
+<p><img src="/images/ai/langgraph/langgraph_figure2.png" alt="LangGraph routes chat and retrieval directly while requiring approval before executing the coding agent." style="width: 100%;" /></p>
+
+<p><em>Figure 2. The first executable graph adds a human decision before the coding agent runs.</em></p>
+
+<p>Suppose we have already introduced ourselves to the assistant.
+Later, we ask it to modify our project:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; You: My name is Inigo Montoya. I am a Spanish fencer
+&gt;      and I work for a Sicilian named Vizzini.
+&gt; Assistant: Hello Inigo!
+&gt; ...
+&gt; You: Add an About the author section to README.md.
+&gt; Coding approval: Add a new "About the author" section with
+&gt;           a heading and several paragraphs about the author.
+&gt;           Approve this request? yes/no or other.
+&gt; You: Actually, just add a short, professional author credit.
+&gt; Coding approval: Add a brief author credit to README.md.
+&gt;           Approve this request? yes/no or other.
+&gt; You: Yes.
+&gt; Result: README.md updated.
+</code></pre></div></div>
+
+<p>Approval is rarely just yes or no. We may want to revise an instruction without starting again. LangGraph stores the decision in <code class="language-plaintext highlighter-rouge">next_node</code>: approval proceeds to <code class="language-plaintext highlighter-rouge">coding_agent</code>, denial reaches <code class="language-plaintext highlighter-rouge">END</code>, and a revision returns to <code class="language-plaintext highlighter-rouge">accept_coding</code> with the updated instruction. The coding agent only executes a request after we explicitly approve it.</p>
+
+<p><img src="/images/ai/langgraph/langgraph_figure3.png" alt="Conditional edges permit approval, denial or another approval cycle for a revised coding request." style="width: 100%;" /></p>
+
+<p><em>Figure 3. The approval node gains a revision loop rather than treating any new instruction as permission to execute.</em></p>
+
+<h2 id="passing-context-between-agents">Passing context between agents</h2>
+
+<p>Our approval loop now works, but there is another problem. The main assistant knows who Inigo Montoya is from our earlier conversation. The separately launched coding agent does not automatically receive that history. It might receive only:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; You: Add a short, professional author credit to README.md.
+&gt; Assistant: Who is the author? 
+</code></pre></div></div>
+
+<p>The instruction is missing the author’s name and background, even though the main assistant already knows both.
+We solve this by adding <code class="language-plaintext highlighter-rouge">prepare_coding_request</code>. Before asking for approval, this node uses the conversation history to prepare a complete instruction:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&gt; You: Add a short, professional author credit to README.md.
+&gt; Coding agent: working...
+&gt; Prepared request: "Add a short, professional author credit 
+&gt; to README.md for Inigo Montoya, a Spanish fencer."
+</code></pre></div></div>
+
+<p>Now the coding agent receives the relevant context. If we revise the request again, LangGraph returns to <code class="language-plaintext highlighter-rouge">prepare_coding_request</code>, incorporates our feedback and presents the new instruction for approval. Only the approved version is passed to the coding agent.</p>
+
+<p><img src="/images/ai/langgraph/langgraph_figure4.png" alt="Final workflow with conversation-aware coding request preparation before approval and execution." style="width: 100%;" /></p>
+
+<p><em>Figure 4. The final graph prepares a context-aware instruction and loops revisions back through that preparation step.</em></p>
+
+<p>This separation is useful beyond coding. The orchestration model can be replaced, retrieval can connect to a different knowledge store, and the executor can be a specialist agent without changing the overall workflow. It also makes the boundaries visible. <code class="language-plaintext highlighter-rouge">cwd=workspace</code> sets a working directory but is not a sandbox; calling Claude Code locally does not necessarily mean its model or data processing is local. Likewise, <code class="language-plaintext highlighter-rouge">OpenAIEmbeddings</code> sends content to an external service, so a fully private deployment needs a suitable local embedding path. Permissions, process failures and approval of actual changes still require engineering around the graph.</p>
+
+<p>The result is a compact system where we can connect conversation, private knowledge and file operations while keeping their responsibilities separate. 
+LangGraph provides the control flow in this example, but it is itself a replaceable framework. The underlying architecture can be implemented with other frameworks or custom code, just as the models and tools can be exchanged without changing the fundamental design.</p>
+
+<h1 id="refefences">Refefences</h1>
+
+<ul>
+  <li><strong><a href="https://github.com/langchain-ai/langgraph">LangGraph</a></strong> by LangChain. Open-source low-level orchestration framework for building stateful agents.</li>
+</ul>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  </div>
+  <div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-inner">
+          <p class="footer-title">Technically sound. Incredibly simple.</p>
+          <ul>
+            
+            
+            <li class="">
+              <a href="/">Home</a>
+            </li>
+            
+            <li class="">
+              <a href="/contact/">Contact</a>
+            </li>
+            
+            <li class="">
+              <a href="/legal/">Legal</a>
+            </li>
+            
+            <li class="">
+              <a href="/terms/">Terms</a>
+            </li>
+            
+            <li class="">
+              <a href="https://docs.switzerlandomics.ch">Docs</a>
+            </li>
+            
+            <li class="">
+              <a href="/learn/">Learn</a>
+            </li>
+            
+          </ul>
+
+
+        </div>
+             <p class="footer-legal">Switzerland Omics&reg; is a registered Swiss trademark.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="sub-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="sub-footer-inner">
+          
+            <div class="social">
+  
+    <a href="mailto:admin@switzerlandomics.ch" target="blank"><img src="/images/social/email.svg" title="Email" alt="Email" /></a>
+  
+    <a href="https://www.linkedin.com/company/switzerland-omics/" target="blank"><img src="/images/social/linkedin.svg" title="LinkedIn" alt="LinkedIn" /></a>
+  
+    <a href="https://www.youtube.com/@SwitzerlandOmics" target="blank"><img src="/images/social/youtube.svg" title="YouTube" alt="YouTube" /></a>
+  
+    <a href="https://www.swissgenomicsassociation.ch" target="blank"><img src="/images/social/swissgenomicsassociation.svg" title="Swiss Genomics Association" alt="Swiss Genomics Association" /></a>
+  
+</div>
+
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <script type="text/javascript" src="/assets/js/scripts.js"></script>
+  
+
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.getElementById('responsive-iframe');
+
+    function resizeIframe() {
+      try {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        const rawHeight = doc.documentElement.scrollHeight;
+        const paddedHeight = Math.ceil(rawHeight * 1.1);  // add 10%
+        <!-- const paddedHeight = Math.max(Math.ceil(rawHeight * 1.08)); // max height safeguard -->
+
+        iframe.style.height = paddedHeight + 'px';
+      } catch (e) {
+        console.warn('Could not auto-resize iframe:', e);
+      }
+    }
+
+    iframe.addEventListener('load', function () {
+      resizeIframe();
+      setTimeout(resizeIframe, 150);  // in case datatable renders late
+    });
+  });
+</script>
+</body>
+
+</html>
