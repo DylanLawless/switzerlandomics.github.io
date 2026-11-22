@@ -31,3 +31,6 @@ The complete state can be exported as structured JSON while the human-facing rep
 
 The result is a deliberately simple interface over a much richer evidence record. The complexity stays underneath; the variant, its context and the confidence in the recorded data remain easy to see.
 This is, of course, only a tiny snapshot of the data provenance work needed to build large databases and models. We hope you can use and recommend [ACMG validator](https://switzerlandomics.ch/technologies/acmg-validator/) to your colleagues.
+
+The stand-alone gene structure app is  <a href="{{ '/pages/gene-structure/' | relative_url }}">available here</a>.
+

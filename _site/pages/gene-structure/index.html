@@ -148,7 +148,9 @@
           <h1 id="gene-structure-title" class="title">Gene structure</h1>
 
           <form id="gene-structure-form">
-            <label for="gene-structure-gene">Gene</label>
+            <label for="gene-structure-gene">
+  A human gene symbol (<a href="https://www.genenames.org/" target="_blank" rel="noopener noreferrer">HGNC</a>)
+</label>
             <div class="input-action">
               <input id="gene-structure-gene" type="text" placeholder="TNFAIP3" autocomplete="off" spellcheck="false" maxlength="80" required="" />
               <button type="submit" class="button-link">Plot gene</button>
@@ -161,11 +163,6 @@
           </form>
 
           <div class="gsv-root" data-loaded="false">
-            <div id="gene-structure-status" class="gsv-status" role="status" aria-live="polite">Enter a gene symbol to load the gene structure view.</div>
-            <p>
-              <a id="gene-structure-ensembl-link" href="https://rest.ensembl.org" target="_blank" rel="noopener">Ensembl REST</a>
-            </p>
-
             <p id="gene-structure-view-note" hidden=""><span id="gene-structure-view-note-text"></span>
               <a id="gene-structure-view-all" href="#gene-structure-tx-select">View whole gene</a>
             </p>
@@ -202,7 +199,18 @@
               </div>
             </div>
 
+            <div class="figure-actions" role="group" aria-label="Download gene structure plot">
+              <button type="button" class="button-link" id="gene-structure-download-svg" disabled="">Download SVG</button>
+              <button type="button" class="button-link" id="gene-structure-download-png" disabled="">Download PNG</button>
+            </div>
+
             <div class="gsv-tooltip" id="gene-structure-tooltip" role="tooltip"></div>
+
+            <div id="gene-structure-status" class="gsv-status" role="status" aria-live="polite">Enter a gene symbol to load the gene structure view.</div>
+            <p>
+              <a id="gene-structure-ensembl-link" href="https://rest.ensembl.org" target="_blank" rel="noopener">Ensembl REST</a>
+            </p>
+
           </div>
 
           <hr />
@@ -220,6 +228,13 @@
               <dt>Details</dt><dd id="gene-structure-technical-message">Enter a gene symbol to begin.</dd>
             </dl>
           </details>
+
+<br />
+<p>
+  Read <a href="/blog/2026-10-29-seeing-a-variant-in-context/">About gene structure</a>.
+  Gene structure visualisation is also available in
+  <a href="/technologies/acmg-validator/">ACMG Validator</a>.
+</p>
 
         </div>
       </div>
@@ -243,6 +258,7 @@
 .gene-structure-app .gsv-root[data-loaded="false"] .gsv-canvas-wrap { min-height:150px; }
 .gene-structure-app .gsv-root[data-loaded="false"] canvas { visibility:hidden; }
 
+.gene-structure-app .figure-actions { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:.75rem; margin-top:1rem; }
 .gene-structure-app .definition-grid { display:grid; grid-template-columns:minmax(8rem,max-content) minmax(0,1fr); gap:.5rem 1rem; }
 .gene-structure-app .definition-grid dd { margin:0; overflow-wrap:anywhere; }
 
@@ -292,6 +308,8 @@
   var pending = null;
   var currentRequest = null;
   var serial = 0;
+  var downloadSVGButton = document.getElementById('gene-structure-download-svg');
+  var downloadPNGButton = document.getElementById('gene-structure-download-png');
 
   function setStatus(message, state) {
     statusEl.textContent = message;
@@ -392,6 +410,8 @@
     ensemblLinkEl.href = ENSEMBL;
     ensemblIdEl.textContent = '—';
     viewNote.hidden = true;
+    downloadSVGButton.disabled = true;
+    downloadPNGButton.disabled = true;
     legendExon.textContent = 'Coding exon';
     legendUtr.hidden = false;
     legendIntron.textContent = 'Intron (condensed)';
@@ -478,6 +498,8 @@
     viewerRoot.dataset.loaded = 'true';
     cardEl.hidden = false;
     txSelectEl.disabled = false;
+    downloadSVGButton.disabled = false;
+    downloadPNGButton.disabled = false;
     updateEnsemblLink(data);
     ensemblIdEl.textContent = data && data.id ? String(data.id) : '—';
     applyPositions();
@@ -592,6 +614,205 @@
       (errorMessage ? errorMessage + '. ' : '') + 'Viewer status: ' + viewerStatus);
     await diagnoseFailure(request, errorMessage, viewerStatus);
   }
+
+  /* As in Pedigree, SVG is the source of truth for both exports. The
+     renderer supplies true vector paths, while the page adds figure text. */
+  function escapeXML(value) {
+    return String(value).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&apos;' }[c];
+    });
+  }
+
+  function buildFigureSVG() {
+    if (!viewer || !currentRequest || !currentRequest.loaded || pending || loading) {
+      throw new Error('Plot a gene before exporting.');
+    }
+    if (typeof viewer.exportPlotSVG !== 'function') {
+      throw new Error('The standalone plot renderer does not support SVG export.');
+    }
+    var plot = viewer.exportPlotSVG();
+    var width = plot.width + 56;
+    var margin = 28;
+    var measure = canvasEl.getContext('2d');
+    var rootStyle = getComputedStyle(viewerRoot);
+    function colour(key, fallback) {
+      return rootStyle.getPropertyValue(key).trim() || fallback;
+    }
+    var ink = colour('--gsv-black', '#2f2f41');
+    var muted = colour('--gsv-steel', '#5c5a5a');
+    var border = colour('--gsv-border', '#dcdcdc');
+    var cds = colour('--gsv-cds', '#1e3a5f');
+    var utr = colour('--gsv-utr', '#7b9cbf');
+    var highlight = colour('--gsv-hl', '#e5261f');
+
+    function widthOf(value, font) {
+      measure.font = font;
+      return measure.measureText(String(value)).width;
+    }
+    function text(x, y, value, size, weight, fill) {
+      return '<text x="' + x + '" y="' + y + '" fill="' + escapeXML(fill) +
+        '" font-family="Arial,Helvetica,sans-serif" font-size="' + size +
+        '" font-weight="' + weight + '">' + escapeXML(value) + '</text>';
+    }
+    function wrapped(value, maxWidth, font) {
+      var result = [];
+      var line = '';
+      String(value).split(/\s+/).forEach(function (word) {
+        if (!word) return;
+        var next = line ? line + ' ' + word : word;
+        if (line && widthOf(next, font) > maxWidth) {
+          result.push(line);
+          line = word;
+        } else {
+          line = next;
+        }
+      });
+      if (line) result.push(line);
+      return result;
+    }
+
+    var elements = [];
+    var y = 38;
+    wrapped(document.getElementById('gene-structure-card-gene').textContent.trim(),
+      plot.width, '600 20px Arial').forEach(function (line) {
+      elements.push(text(margin, y, line, 20, 600, ink));
+      y += 27;
+    });
+    elements.push(text(margin, y + 1,
+      document.getElementById('gene-structure-card-loc').textContent.trim(), 14, 400, muted));
+    var plotY = y + 19;
+    elements.push('<g transform="translate(' + margin + ' ' + plotY + ')">' + plot.content + '</g>');
+
+    // The on-page legend is reused, including its whole-gene terminology.
+    var legendY = plotY + plot.height + 22;
+    var legendItems = [
+      { label: legendExon.textContent, type: 'box', fill: cds },
+      { label: 'UTR', type: 'box', fill: utr, hidden: legendUtr.hidden },
+      { label: legendIntron.textContent, type: 'line', fill: muted },
+      { label: 'Variant positions', type: 'box', fill: highlight }
+    ].filter(function (item) { return !item.hidden; });
+    var lx = margin;
+    legendItems.forEach(function (item) {
+      var itemWidth = widthOf(item.label, '13px Arial') + 36;
+      if (lx !== margin && lx + itemWidth > width - margin) {
+        lx = margin;
+        legendY += 22;
+      }
+      if (item.type === 'line') {
+        elements.push('<line x1="' + lx + '" y1="' + (legendY - 4) +
+          '" x2="' + (lx + 19) + '" y2="' + (legendY - 4) +
+          '" stroke="' + escapeXML(item.fill) + '" stroke-width="2" opacity=".45"/>');
+      } else {
+        elements.push('<rect x="' + lx + '" y="' + (legendY - 12) +
+          '" width="14" height="10" rx="2" fill="' + escapeXML(item.fill) + '"/>');
+      }
+      elements.push(text(lx + 23, legendY - 2, item.label, 13, 400, muted));
+      lx += itemWidth;
+    });
+    var ruleY = legendY + 16;
+    elements.push('<line x1="' + margin + '" y1="' + ruleY +
+      '" x2="' + (width - margin) + '" y2="' + ruleY +
+      '" stroke="' + escapeXML(border) + '" stroke-width="1"/>');
+
+    var info = [
+      ['Assembly:', 'gene-structure-i-asm'],
+      ['Strand:', 'gene-structure-i-str'],
+      ['Transcripts:', 'gene-structure-i-txn'],
+      ['Exons:', 'gene-structure-i-exn'],
+      ['Ensembl:', 'gene-structure-i-ensg']
+    ];
+    var infoY = ruleY + 25;
+    var ix = margin;
+    info.forEach(function (item) {
+      var label = item[0];
+      var value = document.getElementById(item[1]).textContent.trim();
+      var itemWidth = widthOf(label + ' ', '13px Arial') +
+        widthOf(value, '600 13px Arial') + 26;
+      if (ix !== margin && ix + itemWidth > width - margin) {
+        ix = margin;
+        infoY += 23;
+      }
+      elements.push('<text x="' + ix + '" y="' + infoY +
+        '" fill="' + escapeXML(muted) +
+        '" font-family="Arial,Helvetica,sans-serif" font-size="13">' +
+        escapeXML(label) + ' <tspan font-weight="600">' + escapeXML(value) + '</tspan></text>');
+      ix += itemWidth;
+    });
+    var height = infoY + 23;
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="' + width +
+      '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '">' +
+      '<rect x=".5" y=".5" width="' + (width - 1) + '" height="' +
+      (height - 1) + '" rx="6" fill="#ffffff" stroke="' + escapeXML(border) + '"/>' +
+      elements.join('') + '</svg>';
+  }
+
+  function exportFileName(extension) {
+    var gene = String(currentRequest.gene).toUpperCase().replace(/[^A-Z0-9._-]/g, '_');
+    var view = viewer.getView();
+    var mode = String(view ? view.label : 'transcript').replace(/[^a-zA-Z0-9._-]/g, '_');
+    return 'gene-structure_' + gene + '_' + mode + '.' + extension;
+  }
+
+  function saveBlob(name, blob) {
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = name;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
+  function downloadFigure(format) {
+    try {
+      var svg = buildFigureSVG();
+      var stem = exportFileName(format);
+      var svgBlob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+      if (format === 'svg') {
+        saveBlob(stem, svgBlob);
+        return;
+      }
+      // PNG is rendered from the same vector figure at 4× resolution.
+      var url = URL.createObjectURL(svgBlob);
+      var image = new Image();
+      image.onload = function () {
+        try {
+          var canvas = document.createElement('canvas');
+          canvas.width = image.naturalWidth * 4;
+          canvas.height = image.naturalHeight * 4;
+          var ctx = canvas.getContext('2d');
+          if (!ctx) throw new Error('Canvas export is unavailable.');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(function (blob) {
+            URL.revokeObjectURL(url);
+            if (!blob) {
+              setStatus('PNG export failed. SVG export remains available.', 'error');
+              return;
+            }
+            saveBlob(stem, blob);
+          }, 'image/png');
+        } catch (error) {
+          URL.revokeObjectURL(url);
+          setStatus('PNG export failed: ' + (error.message || error), 'error');
+        }
+      };
+      image.onerror = function () {
+        URL.revokeObjectURL(url);
+        setStatus('PNG export failed. SVG export remains available.', 'error');
+      };
+      image.src = url;
+    } catch (error) {
+      setStatus('Export failed: ' + (error.message || error), 'error');
+    }
+  }
+
+  downloadSVGButton.addEventListener('click', function () { downloadFigure('svg'); });
+  downloadPNGButton.addEventListener('click', function () { downloadFigure('png'); });
 
   viewAllLink.addEventListener('click', function (event) {
     event.preventDefault();

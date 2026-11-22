@@ -293,6 +293,10 @@
   /* ── shape helpers ──────────────────────────────────────────────────────  */
   function drawBox(ctx, x, y, w, h, r, fill, stroke) {
     if (w < 1) return;
+    if (typeof ctx.drawRoundedBox === 'function') {
+      ctx.drawRoundedBox(x, y, w, h, r, fill, stroke);
+      return;
+    }
     ctx.fillStyle   = fill;
     ctx.strokeStyle = stroke;
     ctx.lineWidth   = 0.5;
@@ -313,6 +317,89 @@
     ctx.arcTo(x,     y,     x + w, y,     r);
     ctx.closePath();
   }
+
+  /* The same plot commands are rendered to canvas on screen and vector
+     primitives for export. This keeps exon and marker projections identical. */
+  function escapeXML(value) {
+    return String(value).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&apos;' }[c];
+    });
+  }
+
+  function svgNumber(n) {
+    return String(Math.round(Number(n) * 1000) / 1000);
+  }
+
+  function svgPaint(colour, attr, opacity) {
+    var rgba = String(colour).match(/^rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)$/i);
+    if (rgba) {
+      return ' ' + attr + '="rgb(' + rgba[1] + ',' + rgba[2] + ',' + rgba[3] + ')" ' +
+        attr + '-opacity="' + svgNumber(Number(rgba[4]) * opacity) + '"';
+    }
+    return ' ' + attr + '="' + escapeXML(colour) + '"' +
+      (opacity !== 1 ? ' ' + attr + '-opacity="' + svgNumber(opacity) + '"' : '');
+  }
+
+  function SVGDrawingContext(measureContext) {
+    this.elements = [];
+    this.measureContext = measureContext;
+    this.path = [];
+    this.fillStyle = '#000';
+    this.strokeStyle = '#000';
+    this.globalAlpha = 1;
+    this.lineWidth = 1;
+    this.font = '12px sans-serif';
+    this.textAlign = 'left';
+    this.textBaseline = 'alphabetic';
+    this.dashes = [];
+  }
+  SVGDrawingContext.prototype.beginPath = function () { this.path = []; };
+  SVGDrawingContext.prototype.moveTo = function (x, y) {
+    this.path.push('M' + svgNumber(x) + ' ' + svgNumber(y));
+  };
+  SVGDrawingContext.prototype.lineTo = function (x, y) {
+    this.path.push('L' + svgNumber(x) + ' ' + svgNumber(y));
+  };
+  SVGDrawingContext.prototype.closePath = function () { this.path.push('Z'); };
+  SVGDrawingContext.prototype.setLineDash = function (values) { this.dashes = values.slice(); };
+  SVGDrawingContext.prototype.fillRect = function (x, y, w, h) {
+    this.elements.push('<rect x="' + svgNumber(x) + '" y="' + svgNumber(y) +
+      '" width="' + svgNumber(w) + '" height="' + svgNumber(h) + '"' +
+      svgPaint(this.fillStyle, 'fill', this.globalAlpha) + '/>');
+  };
+  SVGDrawingContext.prototype.drawRoundedBox = function (x, y, w, h, radius, fill, stroke) {
+    this.elements.push('<rect x="' + svgNumber(x) + '" y="' + svgNumber(y) +
+      '" width="' + svgNumber(w) + '" height="' + svgNumber(h) +
+      '" rx="' + svgNumber(Math.min(radius, w / 2)) + '"' +
+      svgPaint(fill, 'fill', this.globalAlpha) + svgPaint(stroke, 'stroke', this.globalAlpha) +
+      ' stroke-width="0.5"/>');
+  };
+  SVGDrawingContext.prototype.fill = function () {
+    this.elements.push('<path d="' + this.path.join(' ') + '"' +
+      svgPaint(this.fillStyle, 'fill', this.globalAlpha) + '/>');
+  };
+  SVGDrawingContext.prototype.stroke = function () {
+    this.elements.push('<path d="' + this.path.join(' ') + '" fill="none"' +
+      svgPaint(this.strokeStyle, 'stroke', this.globalAlpha) +
+      ' stroke-width="' + svgNumber(this.lineWidth) + '"' +
+      (this.dashes.length ? ' stroke-dasharray="' + this.dashes.map(svgNumber).join(' ') + '"' : '') + '/>');
+  };
+  SVGDrawingContext.prototype.measureText = function (value) {
+    this.measureContext.font = this.font;
+    return this.measureContext.measureText(value);
+  };
+  SVGDrawingContext.prototype.fillText = function (value, x, y) {
+    var size = Number((this.font.match(/(\d+(?:\.\d+)?)px/) || [null, 12])[1]);
+    var weight = /\b(?:[5-9]00|bold)\b/.test(this.font) ? '600' : '400';
+    var anchor = this.textAlign === 'center' ? 'middle' : (this.textAlign === 'right' ? 'end' : 'start');
+    // SVG text uses an alphabetic baseline. Canvas top/bottom use glyph bounds.
+    var baseline = y + (this.textBaseline === 'top' ? size * 0.85 :
+      this.textBaseline === 'bottom' ? -size * 0.15 : 0);
+    this.elements.push('<text x="' + svgNumber(x) + '" y="' + svgNumber(baseline) +
+      '" text-anchor="' + anchor + '" font-size="' + svgNumber(size) +
+      '" font-weight="' + weight + '" font-family="Arial,Helvetica,sans-serif"' +
+      svgPaint(this.fillStyle, 'fill', this.globalAlpha) + '>' + escapeXML(value) + '</text>');
+  };
 
   /* ── constructor ────────────────────────────────────────────────────────  */
   function GeneStructurePlot(config) {
@@ -486,7 +573,7 @@
   };
 
   /* ── private: render ────────────────────────────────────────────────────  */
-  GeneStructurePlot.prototype._render = function () {
+  GeneStructurePlot.prototype._render = function (vectorContext) {
     var self = this;
     var tx   = self._currentTx;
     if (!tx) return;
@@ -498,7 +585,7 @@
     var cdsStart = !wholeGene && tx.Translation ? tx.Translation.start : null;
     var cdsEnd   = !wholeGene && tx.Translation ? tx.Translation.end : null;
 
-    if (self._infoExn) {
+    if (!vectorContext && self._infoExn) {
       self._infoExn.textContent = wholeGene
         ? exons.length + ' combined regions (all transcripts)'
         : exons.length + ' (' + (tx.display_name || tx.id) + ')';
@@ -509,20 +596,21 @@
     var dpr    = Math.min(window.devicePixelRatio || 1, 2);
 
     /* canvas sizing */
-    var W      = Math.min(900, canvas.parentElement.clientWidth - 2);
+    var W      = vectorContext ? 900 : Math.min(900, canvas.parentElement.clientWidth - 2);
     var H      = PAD.top + EXON_H + PAD.bot;
     var DRAW_W = W - PAD.l - PAD.r;
     var EY     = PAD.top;            /* top of exon boxes */
     var LINE_Y = EY + EXON_H / 2;   /* backbone y */
 
-    canvas.width        = W * dpr;
-    canvas.height       = H * dpr;
-    canvas.style.width  = W + 'px';
-    canvas.style.height = H + 'px';
-
-    var ctx = canvas.getContext('2d');
-    ctx.scale(dpr, dpr);
-    ctx.clearRect(0, 0, W, H);
+    var ctx = vectorContext || canvas.getContext('2d');
+    if (!vectorContext) {
+      canvas.width        = W * dpr;
+      canvas.height       = H * dpr;
+      canvas.style.width  = W + 'px';
+      canvas.style.height = H + 'px';
+      ctx.scale(dpr, dpr);
+      ctx.clearRect(0, 0, W, H);
+    }
 
     /* Transcript view keeps the original projection. Whole-gene view adds
        non-exonic flanks, condensed by the same factor as introns. */
@@ -550,7 +638,7 @@
     }
 
     /* One projection for exons, markers and coordinate labels. */
-    canvas._gsv = { exons: exons, exBox: exBox, tx: tx, wholeGene: wholeGene };
+    if (!vectorContext) canvas._gsv = { exons: exons, exBox: exBox, tx: tx, wholeGene: wholeGene };
 
     /* ── backbone ───────────────────────────────────────────────────────── */
     ctx.strokeStyle = C.muted;
@@ -646,7 +734,7 @@
         groups.push([hit]);
       }
     });
-    canvas._gsv.markers = groups.map(function (group) {
+    if (!vectorContext) canvas._gsv.markers = groups.map(function (group) {
       return { x: group[Math.floor(group.length / 2)].x, positions: group };
     });
 
@@ -738,6 +826,19 @@
     ctx.textAlign    = 'left';
     ctx.textBaseline = 'top';
     ctx.fillText('10 kb', barX + barPx + 6, barY - 6);
+  };
+
+  /* Export the live plot geometry as real SVG primitives, never a bitmap.
+     UI composition (gene title, legend and metadata) belongs to the page. */
+  GeneStructurePlot.prototype.exportPlotSVG = function () {
+    if (!this._currentTx) throw new Error('Load a gene before exporting.');
+    var context = new SVGDrawingContext(this._canvas.getContext('2d'));
+    this._render(context);
+    return {
+      width: 900,
+      height: PAD.top + EXON_H + PAD.bot,
+      content: context.elements.join('')
+    };
   };
 
   /* ── private: canvas events ─────────────────────────────────────────────  */
