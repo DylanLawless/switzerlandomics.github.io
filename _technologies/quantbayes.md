@@ -148,10 +148,10 @@ In current workflows, evidence is tightly coupled to analysis pipelines. A unive
 <div class="table-responsive" markdown="block">
 | OS | File | SHA256 |
 | --- | --- | --- |
-| R package | [quantbayes_v0.1.0_R.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v0.1.0_R.tar.gz?download=1){:download="quantbayes_v0.1.0_R.tar.gz"} | `dfa919d1848070cf8125d49eb029dbfd49d09558cd84deb7d50c1a6c188f1f63` |
-| Linux x86_64 | [quantbayes_v1.0.0_linux_x86_64.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_linux_x86_64.tar.gz?download=1){:download="quantbayes_v1.0.0_linux_x86_64.tar.gz"} | `440c5d92354285a5b7790d19f017205a849ecb76a4fc80804f726d420f06080d` |
-| macOS universal | [quantbayes_v1.0.0_macos_universal.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_universal.tar.gz?download=1){:download="quantbayes_v1.0.0_macos_universal.tar.gz"} | `ab8824f0c29fce57328a3037677dbc20768b5a9d388fda1215362d1d3b99291e` |
-| macOS x86_64 | [quantbayes_v1.0.0_macos_x86_64.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_x86_64.tar.gz?download=1){:download="quantbayes_v1.0.0_macos_x86_64.tar.gz"} | `c15d4ac299d4f557941b1a8518e75c44fd026cf9908edf8e85475b9f9e056035` |
+| R package | [quantbayes_v0.1.0_R.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v0.1.0_R.tar.gz?download=1){:download="quantbayes_v0.1.0_R.tar.gz"} |                                                   `dfa919d1848070cf 8125d49eb029dbfd 49d09558cd84deb7 d50c1a6c188f1f63` |
+| Linux x86_64 | [quantbayes_v1.0.0_linux_x86_64.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_linux_x86_64.tar.gz?download=1){:download="quantbayes_v1.0.0_linux_x86_64.tar.gz"} |               `440c5d92354285a5 b7790d19f017205a 849ecb76a4fc8080 4f726d420f06080d` |
+| macOS universal | [quantbayes_v1.0.0_macos_universal.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_universal.tar.gz?download=1){:download="quantbayes_v1.0.0_macos_universal.tar.gz"} |   `ab8824f0c29fce57 328a3037677dbc20 768b5a9d388fda12 15362d1d3b99291e` |
+| macOS x86_64 | [quantbayes_v1.0.0_macos_x86_64.tar.gz](https://zenodo.org/records/17919369/files/quantbayes_v1.0.0_macos_x86_64.tar.gz?download=1){:download="quantbayes_v1.0.0_macos_x86_64.tar.gz"} |               `c15d4ac299d4f557 941b1a8518e75c44 fd026cf9908edf8e 85475b9f9e056035` |
 {: .table .table-hover}
 </div>
 
