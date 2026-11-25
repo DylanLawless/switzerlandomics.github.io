@@ -1,4 +1,5 @@
----
+<!-- 
+--- 
 title: "The evidence verification problem in professional ACMG/AMP implementation"
 layout: page
 description: "A professional implementation of ACMG/AMP criteria that preserves, validates and quantifies the evidence underlying genetic interpretation."
@@ -7,6 +8,7 @@ category: data
 tags:
   - data
 ---
+-->
 
 <p>{{ page.date | date: "%Y-%m-%d" }}</p>
 
